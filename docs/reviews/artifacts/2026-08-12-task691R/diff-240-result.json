@@ -1,0 +1,14 @@
+{
+  "expectedPerPhase": 120,
+  "beforeTupleCount": 120,
+  "afterTupleCount": 120,
+  "commonTupleCount": 120,
+  "missingFromBefore": [],
+  "missingFromAfter": [],
+  "erroredTuples": [],
+  "totalDiffCount": 0,
+  "tuplesWithDiffs": 0,
+  "movedPropertyNames": [],
+  "perTupleDiffs": {},
+  "assertionPassed": true
+}

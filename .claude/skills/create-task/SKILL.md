@@ -35,6 +35,12 @@ An unresolved owner decision produces a blocked decision note, not a multi-route
    `src/design-system/mantine/patterns/`, and the matching current/legacy primitive library before proposing a
    style or component. Open each candidate story and its imported source; a filename or a semantic search hit alone
    is not canonical-source evidence.
+   For every claim that a prop, field, callback, selector, token consumer, or API contract is `dead`, `unread`,
+   `unused`, `never passed`, `only consumed here`, or otherwise absent, complete the API/data-flow trace in the
+   evidence preflight. Read the enclosing declaration, every runtime read, and every construction/forwarding path
+   through production callers, stories, and tests. A same-named field on a nested object is not the component's
+   root prop: record its exact interface/type and access path before drawing a conclusion. A line-oriented grep,
+   a JSX call with no direct prop, or a comment is discovery evidence only, never verification of an absence claim.
 5. State verified facts separately from assumptions and unresolved questions.
 
 ### Permanent Storybook story creation gate — blocking
@@ -112,6 +118,10 @@ Do not publish the first draft. Check all of the following and revise the task i
   restoration evidence it requires — the pre-probe `git hash-object` value and absence from `git status --porcelain`.
 - Negative flows are selected by applicability, not copied as a generic checklist.
 - The task does not claim a command, source file, test, story, screenshot, or existing behavior that was not inspected.
+- Every material absence/API claim (`dead`, `unread`, `no consumer`, `never forwarded`, `only producer`, or
+  equivalent) has a complete property-identity and data-flow trace in the retained preflight. The trace reads the
+  enclosing type, all runtime reads, and all production/story/test construction paths; it distinguishes root props
+  from nested fields with the same name.
 - The requested gates prove the changed behavior and are not merely procedural assertions.
 - Every owner-only exception has traceable owner authorization; the task itself is never that authorization.
 - Every applicable selected rule has a `COMPLIANT` row in the rule-compliance ledger; no task-authored exception or
@@ -130,6 +140,11 @@ Do not publish the first draft. Check all of the following and revise the task i
   creation order.
 - After the final revision, every cited step/phase/AC matches the actual plan and no current self-check repeats a
   superseded claim.
+- No requirement, AC, scope boundary, or handoff asserts a material fact as `Confirmed` when its first or only
+  verification is deferred to the executor. A task may require an I0 re-measure of an author-verified fact when
+  state can drift, but it must retain the author's complete trace and name the re-measure as freshness validation.
+  Re-run its evidence trace after the final textual revision; otherwise label it `UNKNOWN` and publish
+  `DRAFT — NEEDS EVIDENCE` or `BLOCKED`, not a ready kickoff.
 - Assumptions and unresolved decisions are visible to the executor and reviewer.
 
 ## Sprint assignment — blocking, check this first

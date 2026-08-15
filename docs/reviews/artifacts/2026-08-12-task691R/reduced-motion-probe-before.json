@@ -1,0 +1,39 @@
+{
+  "staticDir": "C:\\Claude_Code_Projects\\lero-al-base\\storybook-static",
+  "control": {
+    "reducedMotion": "no-preference",
+    "mediaPrefersReducedMotionReduce": false,
+    "rest": {
+      "imgScale": "none",
+      "imgTransform": "none",
+      "imgTransitionDuration": "0.3s, 0.3s",
+      "titleColor": "rgb(0, 0, 0)"
+    },
+    "hover": {
+      "imgScale": "1.05",
+      "imgTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+      "imgTransitionDuration": "0.3s, 0.3s",
+      "titleColor": "rgb(236, 84, 71)"
+    }
+  },
+  "reducedMotion": {
+    "reducedMotion": "reduce",
+    "mediaPrefersReducedMotionReduce": true,
+    "rest": {
+      "imgScale": "none",
+      "imgTransform": "none",
+      "imgTransitionDuration": "0s",
+      "titleColor": "rgb(0, 0, 0)"
+    },
+    "hover": {
+      "imgScale": "1.05",
+      "imgTransform": "none",
+      "imgTransitionDuration": "0s",
+      "titleColor": "rgb(236, 84, 71)"
+    }
+  },
+  "controlHoverFired": true,
+  "rmTransformSuppressed": true,
+  "rmScaleSurvives": "1.05",
+  "passed": true
+}

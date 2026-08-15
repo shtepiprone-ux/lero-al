@@ -1,0 +1,50 @@
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 444 src/**/*.{tsx,ts,css} files
+    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)
+
+  ── SHARED  (6 findings) ──
+  src/components/shared/PerfDevOverlay.module.css  (6)
+    :25  [color:hex color]  "#000000d9"
+    :35  [color:hex color]  "#ffffff80"
+    :44  [color:hex color]  "#ffffffb3"
+    :53  [color:hex color]  "#fff3"
+    :62  [color:hex color]  "#fff6"
+    :71  [color:hex color]  "#fff9"
+
+  ── ADMIN  (1 finding) ──
+  src/components/admin/AdminUserAvatar.module.css  (1)
+    :16  [color:hex color]  "#0000004d"
+
+  ── LISTING  (6 findings) ──
+  src/modules/listings/components/ImageUpload.module.css  (2)
+    :17  [color:hex color]  "#00000080"
+    :26  [color:hex color]  "#0009"
+  src/modules/listings/components/LightboxView.module.css  (1)
+    :23  [color:hex color]  "#fffc"
+  src/modules/listings/components/ListingGallery.module.css  (3)
+    :28  [color:hex color]  "#00000080"
+    :38  [color:hex color]  "#0009"
+    :48  [color:hex color]  "#000000b3"
+
+  ── OTHER  (2 findings) ──
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css  (2)
+    :23  [color:hex color]  "#0009"
+    :33  [color:hex color]  "#0009"
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 15 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    color                15
+
+❌  check:design-tokens STRICT — 15 raw style-value violation(s) + 0 stale-marker(s) found.
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT_CODE=1

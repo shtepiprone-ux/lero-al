@@ -9,5 +9,6 @@
   "docs/sessions/task467-new-planted-containerescape-unstyledframe.json",
   "docs/sessions/task467-old-planted-containerescape-unstyledframe.json",
   "docs/sessions/task467-owner-final-rerun.log",
-  "scripts/check-mojibake.mjs"
+  "scripts/check-mojibake.mjs",
+  "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/**"
 ]

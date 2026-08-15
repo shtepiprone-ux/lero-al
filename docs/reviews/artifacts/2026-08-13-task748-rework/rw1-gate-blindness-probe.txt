@@ -1,0 +1,86 @@
+   stable  E1 PerfDevOverlay.tsx badge
+     before: bg-overlay/85 text-overlay-foreground rounded-lg px-3 py-2 font-mono text-[10px] leading-relaxed space-y-0.5 shadow-lg
+     after : Component_badge__h4sh rounded-lg px-3 py-2 font-mono text-[10px] leading-relaxed space-y-0.5 shadow-lg
+
+   stable  E2 PerfDevOverlay.tsx pressureClass (low-pressure branch)
+     before: text-overlay-foreground/70
+     after : Component_metricRow__h4sh
+
+   stable  E3 PerfDevOverlay.tsx LCP row
+     before: text-overlay-foreground/70
+     after : Component_metricRow__h4sh
+
+   stable  E4 PerfDevOverlay.tsx INP row
+     before: text-overlay-foreground/70
+     after : Component_metricRow__h4sh
+
+   stable  E5 PerfDevOverlay.tsx divider
+     before: border-t border-overlay-foreground/20 my-0.5
+     after : Component_divider__h4sh border-t my-0.5
+
+   stable  E6a PerfDevOverlay.tsx priority row (priorityOver=false)
+     before: text-overlay-foreground/70
+     after : Component_metricRow__h4sh
+
+>> DELTA  E6b PerfDevOverlay.tsx priority row (priorityOver=true)
+     before: text-destructive font-bold
+     after : Component_metricRow__h4sh text-destructive font-bold
+     !! MODULE CLASS PRESENT (expected omitted so the override utility wins the cascade)
+
+   stable  E7a PerfDevOverlay.tsx predictive row (predictiveOver=false)
+     before: text-overlay-foreground/70
+     after : Component_metricRow__h4sh
+
+>> DELTA  E7b PerfDevOverlay.tsx predictive row (predictiveOver=true)
+     before: text-destructive font-bold
+     after : Component_metricRow__h4sh text-destructive font-bold
+     !! MODULE CLASS PRESENT (expected omitted so the override utility wins the cascade)
+
+   stable  E8 PerfDevOverlay.tsx offLabel
+     before: text-overlay-foreground/40
+     after : Component_offLabel__h4sh
+
+   stable  E9 PerfDevOverlay.tsx guardStats
+     before: text-overlay-foreground/60
+     after : Component_guardStats__h4sh
+
+   stable  E10 PerfDevOverlay.tsx sourceLabel
+     before: text-overlay-foreground/50
+     after : Component_sourceLabel__h4sh
+
+   stable  E11 ListingGallery.tsx morePhotosOverlay
+     before: absolute inset-0 bg-overlay/50 flex flex-col items-center justify-center text-overlay-foreground gap-1
+     after : Component_morePhotosOverlay__h4sh absolute inset-0 flex flex-col items-center justify-center gap-1
+
+>> DELTA  E12 ListingGallery.tsx:123 photoCountButton
+     before: hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70
+     after : text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 Component_photoCountButton__h4sh gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto
+     !! OTHER UTILITIES NEWLY SURVIVE (expected, RR1/RR2 fix): hover:bg-muted text-foreground
+
+   stable  E13 MantineListingGalleryPattern.tsx photoCountBadge
+     before: absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-overlay/60 px-2 py-0.5 text-xs text-overlay-foreground
+     after : Component_photoCountBadge__h4sh absolute bottom-2 right-2 flex items-center gap-1 rounded-full px-2 py-0.5 text-xs
+
+   stable  E14 MantineListingGalleryPattern.tsx extraCountOverlay
+     before: absolute inset-0 flex items-center justify-center bg-overlay/60
+     after : Component_extraCountOverlay__h4sh absolute inset-0 flex items-center justify-center
+
+   stable  E15 ImageUpload.tsx hoverOverlay
+     before: absolute inset-0 bg-overlay/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2
+     after : Component_hoverOverlay__h4sh absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2
+
+   stable  E16 ImageUpload.tsx orderBadge
+     before: absolute bottom-2 left-2 h-5 w-5 rounded-full bg-overlay/60 text-overlay-foreground text-2xs font-bold flex items-center justify-center
+     after : Component_orderBadge__h4sh absolute bottom-2 left-2 h-5 w-5 rounded-full text-2xs font-bold flex items-center justify-center
+
+   stable  E17 LightboxView.tsx counter
+     before: absolute top-4 left-1/2 -translate-x-1/2 text-overlay-foreground/80 text-sm
+     after : Component_counter__h4sh absolute top-4 left-1/2 -translate-x-1/2 text-sm
+
+   stable  E18 AdminUserAvatar.tsx spinnerOverlay
+     before: absolute inset-0 flex items-center justify-center bg-overlay/30 rounded-full
+     after : Component_spinnerOverlay__h4sh absolute inset-0 flex items-center justify-center rounded-full
+
+Elements checked: 20, moved: 3, unexpected (not already known/fixed): 2
+FAIL (expected for this probe): the RR1-reverted E6b/E7b now show the module class present, which the fixed gate correctly reddens.
+EXIT_CODE=1

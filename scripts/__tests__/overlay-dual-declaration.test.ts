@@ -1,35 +1,53 @@
 // @vitest-environment node
 /**
- * Overlay dual-declaration sync gate (Task 692, R1–R5; escalated by the Task 693 review, F1).
+ * Overlay single-source gate (Task 692, R1-R5; escalated by Task 693's review, F1; rewritten by
+ * Task 695).
  *
- * `--overlay`/`--overlay-foreground` are deliberately declared twice in `src/app/globals.css` —
- * once inside `@theme inline` (so Tailwind can statically resolve the value and composite the
- * alpha-blended static fallback tier for every `bg-overlay/*`/`text-overlay-foreground/*` opacity
- * utility) and once inside `:root` (so the variables are emitted unconditionally for non-Tailwind
- * consumers such as `LightboxView.tsx`'s inline style and `MantineListingGalleryPattern.tsx`'s
- * `c=` prop, independent of whether any Tailwind utility survives the source scan). Task 690
- * deleted the `@theme` copy and silently degraded the fallback tier; Task 693 restored the pair
- * but the invariant was protected by a code comment only. This gate makes it machine-enforced: it
- * fails the instant the two copies diverge in value, either copy is removed, or `--color-overlay*`
- * — which must stay `@theme`-only (Task 693 R2) — leaks into `:root`.
+ * Through Task 693, `--overlay`/`--overlay-foreground` were deliberately declared TWICE in
+ * `src/app/globals.css` — once inside `@theme inline` (so Tailwind could statically resolve the
+ * value and composite the alpha-blended static fallback tier for every `bg-overlay/*`/
+ * `text-overlay-foreground/*` opacity utility) and once inside `:root` (so the variables were
+ * emitted unconditionally for non-Tailwind consumers such as `LightboxView.tsx`'s inline style and
+ * `MantineListingGalleryPattern.tsx`'s `c=` prop). This file's original form (Task 692) gated that
+ * dual-declaration invariant: it failed the instant the two copies diverged in value, either copy
+ * was removed, or `--color-overlay*` leaked into `:root`.
  *
- * NOTE for Task 695: once the last `bg-overlay*`/`text-overlay-foreground*` Tailwind utility is
- * migrated away, the `@theme` copy of `--overlay`/`--overlay-foreground` becomes legitimately
- * deletable. When that happens, UPDATE this gate to match the new single-declaration invariant —
- * do not delete it outright, or a resurrected `@theme` copy (or a `:root` copy left behind) would
- * again go unguarded.
+ * Task 695 migrated the last seven non-Tailwind `var(--color-overlay*)` consumers to
+ * `var(--overlay*)` directly, rewrote the one remaining Tailwind-scannable comment down to zero
+ * generated overlay utilities, and then deleted the `@theme inline` copy entirely — there is no
+ * longer a Tailwind opacity-modifier utility consuming it, so there is nothing left for that copy
+ * to statically resolve. The invariant this file guards is now SINGLE-source, not dual-source. Per
+ * this file's own prior NOTE (left by Task 692 for exactly this moment): rewritten, not deleted —
+ * a resurrected `@theme` copy, an orphaned `:root` removal, or a revived `bg-overlay*` utility
+ * would all be silent regressions with nothing else in the repo watching for them.
+ *
+ * Three invariants, each proven capable of failing on a planted violation (Task 695 kickoff AC5 —
+ * the exact defect Task 748 spent three review rounds on is a check that could not have come out
+ * wrong):
+ *   1. `--overlay` and `--overlay-foreground` are each declared EXACTLY ONCE in the whole file,
+ *      and that one declaration lives inside `:root` (not `@theme`, not `@theme inline`, not
+ *      re-introduced anywhere else).
+ *   2. `--color-overlay` and `--color-overlay-foreground` are declared NOWHERE in the file.
+ *   3. Zero `bg-overlay*` / `text-overlay-foreground*` / `border-overlay*` rules are generated in
+ *      the built bundle (`.next/static/css/*.css`) — the same census the kickoff's own §11 uses
+ *      for AC3, reused here as a machine-enforced gate rather than a one-off manual command.
+ *
+ * The planted-violation assertions run against literal in-memory fixture strings, never the real
+ * file — this file's job is to prove the CHECKING LOGIC reddens on the class of regression each
+ * invariant exists to catch, independent of whatever the real tree currently looks like.
  *
  * Run: npx vitest run scripts/__tests__/overlay-dual-declaration.test.ts
  */
 
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..', '..')
 const GLOBALS_CSS_PATH = join(ROOT, 'src', 'app', 'globals.css')
+const CSS_DIR = join(ROOT, '.next', 'static', 'css')
 
 function readGlobalsCss(): string {
   return readFileSync(GLOBALS_CSS_PATH, 'utf8')
@@ -38,20 +56,17 @@ function readGlobalsCss(): string {
 /**
  * Locates `openingLine {` and returns the text between it and its matching closing `}`, found by
  * brace-depth counting rather than a hard-coded line range (Task 692 A2) — the extraction must
- * keep working after an unrelated edit shifts every line number in the file.
+ * keep working after an unrelated edit shifts every line number in the file. Returns null if the
+ * opening line does not occur (used by invariant 1 to confirm `@theme inline` no longer exists).
  */
-function extractBlock(content: string, openingLine: string, blockLabel: string): string {
+function extractBlock(content: string, openingLine: string): string | null {
   const openIndex = content.indexOf(`${openingLine} {`)
-  if (openIndex === -1) {
-    throw new Error(`${GLOBALS_CSS_PATH}: could not find opening line "${openingLine} {" for ${blockLabel}`)
-  }
+  if (openIndex === -1) return null
   const bodyStart = openIndex + openingLine.length + 2
   let depth = 1
   let i = bodyStart
   while (depth > 0) {
-    if (i >= content.length) {
-      throw new Error(`${GLOBALS_CSS_PATH}: ${blockLabel} starting at "${openingLine} {" never closes`)
-    }
+    if (i >= content.length) throw new Error(`${openingLine} {" never closes`)
     if (content[i] === '{') depth++
     else if (content[i] === '}') depth--
     i++
@@ -59,69 +74,113 @@ function extractBlock(content: string, openingLine: string, blockLabel: string):
   return content.slice(bodyStart, i - 1)
 }
 
-/**
- * Returns the trimmed value of `varName: value;` inside `block`, requiring exactly one
- * declaration. Comparison is on the value only, not the trailing comment or column alignment
- * (Task 692 A1) — a reworded comment is not a regression, a changed value is.
- */
-function extractSingleDeclarationValue(block: string, varName: string, blockLabel: string): string {
-  const re = new RegExp(`^\\s*${varName}:\\s*([^;]+);`, 'gm')
-  const matches = [...block.matchAll(re)]
-  if (matches.length !== 1) {
-    throw new Error(
-      `${GLOBALS_CSS_PATH}: expected exactly one "${varName}" declaration inside ${blockLabel}, found ` +
-        `${matches.length}.`
-    )
-  }
-  return matches[0]![1]!.trim()
+/** Every top-level declaration of `varName:` anywhere in the (whole, not block-scoped) content. */
+function countDeclarationsAnywhere(content: string, varName: string): number {
+  const escaped = varName.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+  const re = new RegExp(`(?:^|[{;])\\s*${escaped}\\s*:`, 'gm')
+  return [...content.matchAll(re)].length
 }
 
-function countDeclarations(block: string, varName: string): number {
-  const re = new RegExp(`^\\s*${varName}:`, 'gm')
-  return [...block.matchAll(re)].length
+/** Every `.{bg,text,border}-overlay*{...}` rule in a CSS text blob (Task 695 kickoff §11/§13). */
+function countGeneratedOverlayUtilityRules(cssText: string): number {
+  const m = cssText.match(/\.(?:bg|text|border)-overlay[^{]*\{[^}]*\}/g)
+  return m ? m.length : 0
 }
 
-describe('overlay dual-declaration sync gate (Task 692, R1–R3)', () => {
-  it('--overlay and --overlay-foreground are declared exactly once per block and byte-identical in value between @theme inline and :root', () => {
+describe('overlay single-source gate (Task 692 origin, Task 695 rewrite)', () => {
+  it('invariant 1 — --overlay and --overlay-foreground are each declared exactly once, inside :root only', () => {
     const content = readGlobalsCss()
-    const themeBlock = extractBlock(content, '@theme inline', '@theme inline')
-    const rootBlock = extractBlock(content, ':root', ':root')
+    const rootBlock = extractBlock(content, ':root')
+    if (rootBlock === null) throw new Error(`${GLOBALS_CSS_PATH}: no top-level :root block found`)
 
-    const themeOverlay = extractSingleDeclarationValue(themeBlock, '--overlay', '@theme inline')
-    const rootOverlay = extractSingleDeclarationValue(rootBlock, '--overlay', ':root')
-    expect(
-      themeOverlay,
-      `${GLOBALS_CSS_PATH}: --overlay diverged between the two declarations — ` +
-        `@theme inline='${themeOverlay}' vs :root='${rootOverlay}'. These must stay value-identical ` +
-        `(Task 693/D19); see the comments above each block for why the pair is duplicated.`
-    ).toBe(rootOverlay)
+    for (const name of ['--overlay', '--overlay-foreground']) {
+      const totalCount = countDeclarationsAnywhere(content, name)
+      expect(
+        totalCount,
+        `${GLOBALS_CSS_PATH}: expected exactly 1 declaration of "${name}" in the whole file, found ${totalCount}. ` +
+          `The single source of truth is :root (Task 695 closed D19) — a second declaration anywhere ` +
+          `(a resurrected @theme copy, a duplicate :root block) is a regression.`
+      ).toBe(1)
 
-    const themeOverlayFg = extractSingleDeclarationValue(themeBlock, '--overlay-foreground', '@theme inline')
-    const rootOverlayFg = extractSingleDeclarationValue(rootBlock, '--overlay-foreground', ':root')
-    expect(
-      themeOverlayFg,
-      `${GLOBALS_CSS_PATH}: --overlay-foreground diverged between the two declarations — ` +
-        `@theme inline='${themeOverlayFg}' vs :root='${rootOverlayFg}'. These must stay value-identical ` +
-        `(Task 693/D19); see the comments above each block for why the pair is duplicated.`
-    ).toBe(rootOverlayFg)
+      const inRootCount = countDeclarationsAnywhere(rootBlock, name)
+      expect(
+        inRootCount,
+        `${GLOBALS_CSS_PATH}: "${name}"'s one declaration must live inside :root, but :root contains ${inRootCount} of them.`
+      ).toBe(1)
+    }
   })
 
-  it('--color-overlay and --color-overlay-foreground stay @theme-only and are never duplicated into :root', () => {
+  it('invariant 1 (planted) — a resurrected second declaration is detected', () => {
+    const plantedContent = `
+:root {
+  --overlay: oklch(0 0 0);
+  --overlay-foreground: oklch(1 0 0);
+}
+/* a resurrected @theme copy — must be caught */
+@theme inline {
+  --overlay: oklch(0 0 0);
+}
+`
+    const totalCount = countDeclarationsAnywhere(plantedContent, '--overlay')
+    expect(totalCount, 'planted double declaration must NOT be silently accepted as 1').toBe(2)
+    expect(totalCount).not.toBe(1)
+  })
+
+  it('invariant 2 — --color-overlay and --color-overlay-foreground are declared nowhere', () => {
     const content = readGlobalsCss()
-    const rootBlock = extractBlock(content, ':root', ':root')
+    for (const name of ['--color-overlay', '--color-overlay-foreground']) {
+      const count = countDeclarationsAnywhere(content, name)
+      expect(
+        count,
+        `${GLOBALS_CSS_PATH}: "${name}" must not be declared anywhere (Task 695 removed the last ` +
+          `Tailwind consumer that justified it) but was found ${count} time(s).`
+      ).toBe(0)
+    }
+  })
 
-    const colorOverlayInRoot = countDeclarations(rootBlock, '--color-overlay')
-    expect(
-      colorOverlayInRoot,
-      `${GLOBALS_CSS_PATH}: --color-overlay must stay @theme-only (Task 693 R2) but was found ` +
-        `${colorOverlayInRoot} time(s) inside :root.`
-    ).toBe(0)
+  it('invariant 2 (planted) — a re-introduced --color-overlay declaration is detected', () => {
+    const plantedContent = `
+:root {
+  --overlay: oklch(0 0 0);
+  --overlay-foreground: oklch(1 0 0);
+  --color-overlay-foreground: var(--overlay-foreground);
+}
+`
+    const count = countDeclarationsAnywhere(plantedContent, '--color-overlay-foreground')
+    expect(count, 'planted re-introduction of --color-overlay-foreground must NOT read as 0').toBe(1)
+    expect(count).not.toBe(0)
+  })
 
-    const colorOverlayFgInRoot = countDeclarations(rootBlock, '--color-overlay-foreground')
+  it('invariant 3 — zero bg|text|border-overlay* rules are generated in the built bundle', () => {
+    if (!existsSync(CSS_DIR)) {
+      throw new Error(`${CSS_DIR} not found — run "npm run build" first (this gate reads the shipped bundle, not source).`)
+    }
+    const cssFiles = readdirSync(CSS_DIR).filter((f) => f.endsWith('.css'))
+    expect(cssFiles.length, `no .css files found under ${CSS_DIR} — stale or missing build`).toBeGreaterThan(0)
+
+    let total = 0
+    const offenders: string[] = []
+    for (const f of cssFiles) {
+      const text = readFileSync(join(CSS_DIR, f), 'utf8')
+      const n = countGeneratedOverlayUtilityRules(text)
+      if (n > 0) {
+        total += n
+        offenders.push(`${f}: ${n}`)
+      }
+    }
     expect(
-      colorOverlayFgInRoot,
-      `${GLOBALS_CSS_PATH}: --color-overlay-foreground must stay @theme-only (Task 693 R2) but was found ` +
-        `${colorOverlayFgInRoot} time(s) inside :root.`
+      total,
+      `expected 0 generated bg|text|border-overlay* rules in the built bundle, found ${total} ` +
+        `(${offenders.join(', ') || 'n/a'}). A Tailwind-scannable comment or literal className ` +
+        `re-introduced an overlay utility candidate — see docs/sessions/2026-07-30-task690-overlay-root-relocation.md ` +
+        `and Task 695's session log for why this must stay 0.`
     ).toBe(0)
+  })
+
+  it('invariant 3 (planted) — a generated overlay utility rule is detected', () => {
+    const plantedCss = `.foo{color:red}.bg-overlay\\/95{background-color:color-mix(in oklab,var(--overlay) 95%,transparent)}`
+    const count = countGeneratedOverlayUtilityRules(plantedCss)
+    expect(count, 'planted generated overlay utility rule must NOT read as 0').toBe(1)
+    expect(count).not.toBe(0)
   })
 })

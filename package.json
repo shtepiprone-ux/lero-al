@@ -59,6 +59,8 @@
     "check:i18n-dynamic:update-baseline": "node scripts/check-i18n-dynamic.mjs --update-baseline",
     "check:file-integrity": "node scripts/check-file-integrity.mjs",
     "check:file-integrity:all": "node scripts/check-file-integrity.mjs --all",
+    "check:review-ledger": "node scripts/check-review-ledger.mjs",
+    "check:review-ledger:verify": "node scripts/check-review-ledger.mjs --verify-gate",
     "check:mojibake": "node scripts/check-mojibake.mjs",
     "check:story-coverage": "node scripts/check-story-coverage.mjs",
     "check:story-coverage:report": "node scripts/check-story-coverage.mjs --report",
@@ -82,6 +84,8 @@
     "check:homepage-grid:verify": "node scripts/check-homepage-grid.mjs --verify-gate",
     "check:click-shield": "node scripts/check-click-shield.mjs",
     "check:click-shield:verify": "node scripts/check-click-shield.mjs --verify-gate",
+    "check:css-vars": "node scripts/check-css-var-resolvability.mjs",
+    "check:css-vars:verify": "node scripts/check-css-var-resolvability.mjs --verify-gate",
     "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },

@@ -148,6 +148,16 @@ Approval requires:
 10. For UI work, the canonical UI decision record matches the real diff: reused sources are consumed without copied
    styles; extensions and new canonical sources have their canonical stories and required registrations in the same
    diff; no component-local hardcode is disguised as a scanner exception.
+11. A persisted `docs/reviews/*.review-ledger.json` covers every P0/P1/P2 criterion, passes
+    `npm run check:review-ledger`, and permits the chosen decision and handoff. Its derived coverage summary and
+    gate receipt must match that validator result; the gate certifies the record, while requirement status and
+    findings certify the implementation. A complete non-approved ledger therefore passes locally only with an open
+    finding and `PROHIBITED` handoff; it cannot approve a reviewable PR.
+12. For any generated selector, utility, policy-sensitive syntax, or cascade migration, the ledger is schema v4
+    and its one exact candidate, raw before/after rules, semantic assessment, negative probe, and base-revision
+    compiler proof all pass the review-ledger gate. `EQUIVALENT` needs owner authorization for each changed field;
+    `MISMATCH_RECORDED` needs an open primary finding for each unapproved changed field. A structural pass alone is
+    not semantic approval.
 
 ## Owner-native validation handoff
 

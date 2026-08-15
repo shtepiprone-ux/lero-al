@@ -16,6 +16,8 @@ import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeature
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { convertPrice as convertPriceMulti } from '@/lib/getExchangeRate'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
+import { cn } from '@/lib/utils'
+import styles from './ListingCard.module.css'
 
 export interface CardListingData extends ListingSnapshot {
   id:           string
@@ -51,11 +53,13 @@ interface ListingCardProps {
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
-// The centered rotated closed-overlay is plain Tailwind-styled markup (not the Badge component),
-// so it is unaffected by the Task 617 Badge migration below — left as-is.
+// The centered rotated closed-overlay is plain markup (not the Badge component), so it is
+// unaffected by the Task 617 Badge migration below — left as-is. Task 741 — de-Tailwind: values
+// are now `ListingCard.module.css` `@layer utilities` classes (`.closedOverlaySold`/
+// `.closedOverlayRented`) reproducing the retired Tailwind utilities' own compiled output.
 const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
-  sold:   'bg-status-info/80 border-status-info',
-  rented: 'bg-status-rented/80 border-status-rented',
+  sold:   styles.closedOverlaySold,
+  rented: styles.closedOverlayRented,
 }
 
 // Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —
@@ -150,7 +154,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive>
         {!coverImage && (
           <Center pos="absolute" inset={0}>
-            <Maximize2 className="h-6 w-6 text-muted-foreground" />
+            <Maximize2 className={styles.placeholderIcon} />
           </Center>
         )}
       </AppImage>
@@ -163,14 +167,14 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         onToggled={onFavoriteToggled}
         disabled={isClosed}
         disabledLabel={closedLabel}
-        className="shrink-0 -mt-0.5 -mr-1"
+        className={styles.inlineFavorite}
       />
     )
 
     const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
 
     const listFeatures = getCardFeatures(listing).map(f => ({
-      icon: <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />,
+      icon: <ListingFeatureIcon name={f.icon} className={styles.featureIcon} />,
       value: f.value,
     }))
 
@@ -198,7 +202,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     return (
       <Link
         href={`/${locale}/listings/${listing.slug}`}
-        className="listing-card listing-card--horizontal block"
+        className={cn('listing-card listing-card--horizontal', styles.card)}
         data-track="listing_click"
         data-listing-slug={listing.slug}
         onClick={() => onBeforeNavigate?.(listing.slug)}
@@ -241,7 +245,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
       {!coverImage && (
         <Center pos="absolute" inset={0}>
-          <Maximize2 className="h-8 w-8 text-muted-foreground" />
+          <Maximize2 className={styles.placeholderIconLarge} />
         </Center>
       )}
     </AppImage>
@@ -256,7 +260,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       disabled={isClosed}
       disabledLabel={closedLabel}
       overlay
-      className="shadow-sm"
+      className={styles.overlayFavorite}
     />
   )
 
@@ -268,7 +272,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
 
   // Features — icons pre-rendered as nodes so the pattern needs no app-specific icon map.
   const features = getCardFeatures(listing).map(f => ({
-    icon: <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />,
+    icon: <ListingFeatureIcon name={f.icon} className={styles.featureIcon} />,
     value: f.value,
   }))
 
@@ -294,7 +298,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   return (
     <Link
       href={`/${locale}/listings/${listing.slug}`}
-      className="listing-card listing-card--vertical block h-full"
+      className={cn('listing-card listing-card--vertical', styles.card, styles.cardVertical)}
       data-track="listing_click"
       data-listing-slug={listing.slug}
       onClick={() => onBeforeNavigate?.(listing.slug)}

@@ -1,0 +1,29 @@
+REVIEWER ADVERSARIAL PROBE — round 3, RW1/AC1.
+
+The executor's rw1-gate-blindness-probe.mjs tests one direction only: revert the RR1 fix at
+E6b/E7b. That proves the gate is no longer blind THERE. It does not prove the whitelist is
+signature-keyed rather than id-keyed-with-a-tweak. These four mutations test the other
+directions. Method: copy twmerge-class-resolution-all18.mjs, apply one mutation, run, discard.
+
+  drop-expected   E12: remove hover:bg-muted from the ghost prefix so an EXPECTED newly-
+                  surviving class can no longer appear.
+  extra-class     E12: add shadow-xl to the after side so an UNEXPECTED class newly survives.
+  module-missing  E11: a default-profile site loses its module class.
+  overlay-lingers E15: the overlay utility survives the migration.
+
+RESULTS (reviewer run, 2026-08-13):
+
+  drop-expected      exit=1   unexpected: 1   !! EXPECTED SURVIVING UTILITY MISSING: hover:bg-muted
+  extra-class        exit=1   unexpected: 1   !! OTHER UTILITIES NEWLY SURVIVE (unexpected): shadow-xl
+  module-missing     exit=1   unexpected: 1   !! MODULE CLASS MISSING (expected present)
+  overlay-lingers    exit=1   unexpected: 1   !! OVERLAY UTILITY STILL PRESENT AFTER MIGRATION: bg-overlay/50
+
+  unmutated real tree  exit=0   Elements checked: 20, moved: 1, unexpected: 0
+  executor's probe     exit=1   Elements checked: 20, moved: 3, unexpected: 2
+
+VERDICT: the whitelist keys on each site's own expected delta signature and is bidirectional —
+it reddens on a missing expected delta, an extra delta, a missing module class, and a lingering
+overlay utility. G1 is closed. Compare the round-2 probe
+(../2026-08-13-task748-round2/g1-gate-blindness.txt), which exited 0 on a full RR1 regression.
+
+Reproduce: see the mutation list above; each is a single string replacement in the CASES table.

@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lero.al/schemas/review-ledger-v4.json",
+  "title": "Fail-closed implementation review ledger",
+  "description": "The executable validation rules live in scripts/check-review-ledger.mjs. Schema v4 binds exact Tailwind evidence to a full immutable base commit and source path, and distinguishes an owner-authorized semantic delta from a finding-backed mismatch so a non-approved review can be retained and locally valid without being mistaken for approval.",
+  "type": "object",
+  "required": ["schemaVersion", "task", "review", "requirements", "findings", "handoff", "attestation"],
+  "properties": {
+    "schemaVersion": { "const": 3 },
+    "task": { "type": "string", "minLength": 1 },
+    "review": {
+      "type": "object",
+      "required": ["decision", "baseRevision", "reviewedRevision", "reviewedPaths", "supersedes", "coverage", "ledgerGate"],
+      "properties": {
+        "decision": { "enum": ["APPROVED", "APPROVED WITH NOTES", "NEEDS REVISION", "PARTIALLY VERIFIED", "BLOCKED"] },
+        "baseRevision": { "type": "string", "pattern": "^[0-9a-fA-F]{40}$" },
+        "reviewedRevision": { "type": "string", "minLength": 1 },
+        "reviewedPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "supersedes": { "$ref": "#/$defs/stringList" },
+        "coverage": {
+          "type": "object",
+          "required": ["total", "verified", "unverified", "openP0", "openP1", "openP2"],
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "verified": { "type": "integer", "minimum": 0 },
+            "unverified": { "type": "integer", "minimum": 0 },
+            "openP0": { "type": "integer", "minimum": 0 },
+            "openP1": { "type": "integer", "minimum": 0 },
+            "openP2": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "ledgerGate": {
+          "type": "object",
+          "required": ["command", "status", "exitCode"],
+          "properties": {
+            "command": { "type": "string", "minLength": 1 },
+            "status": { "enum": ["PASSED", "FAILED"] },
+            "exitCode": { "enum": [0, 1] }
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/requirement" }
+    },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "handoff": {
+      "type": "object",
+      "required": ["commitPush"],
+      "properties": { "commitPush": { "enum": ["ALLOWED", "PROHIBITED"] } }
+    },
+    "attestation": {
+      "type": "object",
+      "required": ["lowestEvidenceRequirement", "reviewer"],
+      "properties": {
+        "lowestEvidenceRequirement": { "type": "string", "minLength": 1 },
+        "reviewer": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "properties": {
+        "subjects": { "$ref": "#/$defs/nonEmptyStrings" },
+        "stories": { "$ref": "#/$defs/nonEmptyStrings" },
+        "locales": { "$ref": "#/$defs/nonEmptyStrings" },
+        "viewports": { "$ref": "#/$defs/nonEmptyStrings" },
+        "states": { "$ref": "#/$defs/nonEmptyStrings" },
+        "phases": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "requiredScope": {
+      "type": "object",
+      "properties": {
+        "subjects": { "$ref": "#/$defs/nonEmptyStrings" },
+        "stories": { "$ref": "#/$defs/nonEmptyStrings" },
+        "locales": { "$ref": "#/$defs/nonEmptyStrings" },
+        "viewports": { "$ref": "#/$defs/nonEmptyStrings" },
+        "states": { "$ref": "#/$defs/nonEmptyStrings" },
+        "phases": { "$ref": "#/$defs/nonEmptyStrings" },
+        "notApplicable": {
+          "type": "object",
+          "description": "Only for dimensions absent from this criterion; map each to a concrete reason. Do not also provide that dimension as an array.",
+          "properties": {
+            "stories": { "type": "string", "minLength": 1 },
+            "locales": { "type": "string", "minLength": 1 },
+            "viewports": { "type": "string", "minLength": 1 },
+            "states": { "type": "string", "minLength": 1 },
+            "phases": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "stringList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "semanticEnvelope": {
+      "type": "object",
+      "required": ["selector", "media", "supports", "layer", "specificity", "sourceOrder", "declarations", "customProperties"],
+      "properties": {
+        "selector": { "type": "string", "minLength": 1 },
+        "media": { "$ref": "#/$defs/stringList" },
+        "supports": { "$ref": "#/$defs/stringList" },
+        "layer": { "type": "string", "minLength": 1 },
+        "specificity": { "type": "string", "minLength": 1 },
+        "sourceOrder": { "type": "string", "minLength": 1 },
+        "declarations": { "$ref": "#/$defs/nonEmptyStrings" },
+        "customProperties": {
+          "type": "object",
+          "required": ["reads", "writes", "fallbacks"],
+          "properties": {
+            "reads": { "$ref": "#/$defs/stringList" },
+            "writes": { "$ref": "#/$defs/stringList" },
+            "fallbacks": { "$ref": "#/$defs/stringList" }
+          }
+        }
+      }
+    },
+    "semanticSide": {
+      "type": "object",
+      "required": ["artifact", "rawRule", "envelope"],
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "rawRule": { "type": "string", "minLength": 1 },
+        "envelope": { "$ref": "#/$defs/semanticEnvelope" }
+      }
+    },
+    "coverageGap": {
+      "type": "object",
+      "required": ["scope", "findingId", "reason"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "findingId": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "exactGeneratedSemantics": {
+      "type": "object",
+      "required": ["candidate", "assessment", "compiler", "before", "after", "allowedSemanticDeltas", "observedSemanticDeltas", "negativeProbes"],
+      "properties": {
+        "candidate": { "type": "string", "minLength": 1 },
+        "assessment": { "enum": ["EQUIVALENT", "MISMATCH_RECORDED"] },
+        "compiler": {
+          "type": "object",
+          "required": ["kind", "command", "version", "candidate"],
+          "properties": {
+            "kind": { "enum": ["TAILWIND_V4", "ARTIFACT_ONLY"] },
+            "command": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 },
+            "input": {
+              "type": "object",
+              "required": ["kind", "path", "revision"],
+              "properties": {
+                "kind": { "const": "BASE_REVISION_FILE" },
+                "path": { "type": "string", "minLength": 1 },
+                "revision": { "type": "string", "pattern": "^[0-9a-fA-F]{40}$" }
+              }
+            },
+            "candidate": { "type": "string", "minLength": 1 }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "kind": { "const": "TAILWIND_V4" } }, "required": ["kind"] },
+              "then": { "required": ["input"] }
+            }
+          ]
+        },
+        "before": { "$ref": "#/$defs/semanticSide" },
+        "after": { "$ref": "#/$defs/semanticSide" },
+        "allowedSemanticDeltas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["field", "ownerDecisionArtifact", "reason"],
+            "properties": {
+              "field": { "enum": ["selector", "media", "supports", "layer", "specificity", "sourceOrder", "declarations", "customProperties"] },
+              "ownerDecisionArtifact": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "observedSemanticDeltas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["field", "findingId", "reason"],
+            "properties": {
+              "field": { "enum": ["selector", "media", "supports", "layer", "specificity", "sourceOrder", "declarations", "customProperties"] },
+              "findingId": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "negativeProbes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["condition", "command", "artifact", "beforeOutcome", "afterOutcome", "equivalent"],
+            "properties": {
+              "condition": { "type": "string", "minLength": 1 },
+              "command": { "type": "string", "minLength": 1 },
+              "artifact": { "type": "string", "minLength": 1 },
+              "beforeOutcome": { "type": "string", "minLength": 1 },
+              "afterOutcome": { "type": "string", "minLength": 1 },
+              "equivalent": { "type": "boolean" },
+              "findingId": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "required": ["id", "priority", "status", "findingIds", "finalSubject", "requiredScope", "evidence", "coverageGaps", "semanticCheck"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "priority": { "enum": ["P0", "P1", "P2", "P3", "NOTE"] },
+        "status": { "enum": ["VERIFIED", "UNVERIFIED", "INFERENCE", "UNKNOWN", "BLOCKED"] },
+        "findingIds": { "$ref": "#/$defs/stringList" },
+        "finalSubject": {
+          "type": "object",
+          "required": ["path", "symbol", "diffHunks"],
+          "properties": {
+            "path": { "type": "string", "minLength": 1 },
+            "symbol": { "type": "string", "minLength": 1 },
+            "diffHunks": { "$ref": "#/$defs/nonEmptyStrings" }
+          }
+        },
+        "requiredScope": { "$ref": "#/$defs/requiredScope" },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["path", "command", "observable", "freshness", "coverageRole", "scope"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "command": { "type": "string", "minLength": 1 },
+              "observable": { "type": "string", "minLength": 1 },
+              "freshness": { "type": "string", "minLength": 1 },
+              "coverageRole": { "enum": ["COVERS", "GAP_WITNESS"] },
+              "scope": { "$ref": "#/$defs/scope" }
+            }
+          }
+        },
+        "coverageGaps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/coverageGap" }
+        },
+        "counterChecks": { "type": "array", "minItems": 1 },
+        "semanticCheck": {
+          "type": "object",
+          "required": ["mode", "reason"],
+          "properties": {
+            "mode": { "enum": ["EXACT_GENERATED", "NOT_APPLICABLE"] },
+            "reason": { "type": "string", "minLength": 1 }
+          }
+        },
+        "exactGeneratedSemantics": { "$ref": "#/$defs/exactGeneratedSemantics" }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["id", "priority", "status", "requirements", "requirementIds", "evidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "priority": { "enum": ["P0", "P1", "P2", "P3", "NOTE"] },
+        "status": { "enum": ["OPEN", "RESOLVED", "NOTE"] },
+        "requirements": { "type": "string", "minLength": 1 },
+        "requirementIds": { "$ref": "#/$defs/nonEmptyStrings" },
+        "evidence": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -75,9 +75,9 @@ const MOCK_SIGNED_IN_AUTH = {
   refreshUser: () => {},
 }
 
-function makeFixtureListing(l: string): CardListingData {
+function makeFixtureListing(l: string, status: CardListingData['status'] = 'active'): CardListingData {
   return {
-    id: 'story-listing-001',
+    id: `story-listing-001-${status}`,
     public_id: 1234,
     slug: 'modern-apartment-tirana-center',
     title: storyT(l, 'storybook.mantine.card_title_1'),
@@ -86,7 +86,7 @@ function makeFixtureListing(l: string): CardListingData {
     listing_type: 'sale',
     property_type: 'apartment',
     is_premium: false,
-    status: 'active',
+    status,
     created_at: FIXTURE_CREATED_AT,
     images: [
       { url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop', is_cover: true, order: 0 },
@@ -102,6 +102,13 @@ export const Default: Story = {
   render: (_args, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     const listing = makeFixtureListing(l)
+    // Task 741 §3.8 — production rendered proof of the migrated sold/rented overlay colours.
+    // `ListingCard.tsx`'s `isClosed` branch (`:267-269`) is the in-scope production consumer;
+    // authorised as a permanent `Default` export extension (single-export rule, governance §8)
+    // by the quoted 2026-08-14 owner decision (see the kickoff's canonical UI decision record).
+    // Sold then rented, in that DOM order, so a structural (never text) selector can find both.
+    const soldListing = makeFixtureListing(l, 'sold')
+    const rentedListing = makeFixtureListing(l, 'rented')
 
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
@@ -111,6 +118,8 @@ export const Default: Story = {
               <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
               <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
                 <ListingCard listing={listing} variant="vertical" rates={FIXTURE_RATES} />
+                <ListingCard listing={soldListing} variant="vertical" rates={FIXTURE_RATES} />
+                <ListingCard listing={rentedListing} variant="vertical" rates={FIXTURE_RATES} />
               </SimpleGrid>
             </Stack>
 

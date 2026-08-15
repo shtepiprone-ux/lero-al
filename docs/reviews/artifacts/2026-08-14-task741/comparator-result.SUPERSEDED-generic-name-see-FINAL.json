@@ -1,0 +1,597 @@
+{
+  "supportsOff": false,
+  "locales": [
+    "sq",
+    "en",
+    "uk",
+    "it"
+  ],
+  "viewports": [
+    "mobile-320",
+    "mobile-375",
+    "mobile-390",
+    "desktop-1024"
+  ],
+  "totalCells": 96,
+  "failCount": 0,
+  "identityFailCount": 0,
+  "hardErrors": [],
+  "cells": [
+    {
+      "cellKey": "mobile-320|sq|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|sq|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-320|sq|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-320|sq|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|sq|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-320|sq|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-320|en|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|en|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-320|en|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-320|en|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|en|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-320|en|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-320|uk|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|uk|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-320|uk|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-320|uk|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|uk|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-320|uk|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-320|it|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|it|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-320|it|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-320|it|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-320|it|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-320|it|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-375|sq|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|sq|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-375|sq|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-375|sq|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|sq|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-375|sq|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-375|en|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|en|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-375|en|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-375|en|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|en|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-375|en|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-375|uk|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|uk|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-375|uk|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-375|uk|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|uk|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-375|uk|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-375|it|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|it|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-375|it|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-375|it|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-375|it|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-375|it|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-390|sq|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|sq|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-390|sq|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-390|sq|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|sq|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-390|sq|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-390|en|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|en|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-390|en|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-390|en|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|en|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-390|en|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-390|uk|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|uk|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-390|uk|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-390|uk|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|uk|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-390|uk|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "mobile-390|it|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|it|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "mobile-390|it|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "mobile-390|it|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "mobile-390|it|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "mobile-390|it|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "desktop-1024|sq|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|sq|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "desktop-1024|sq|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "desktop-1024|sq|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|sq|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "desktop-1024|sq|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "desktop-1024|en|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|en|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "desktop-1024|en|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "desktop-1024|en|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|en|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "desktop-1024|en|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "desktop-1024|uk|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|uk|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "desktop-1024|uk|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "desktop-1024|uk|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|uk|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "desktop-1024|uk|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    },
+    {
+      "cellKey": "desktop-1024|it|sold|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+      "after": "oklab(0.577 -0.087 -0.150688 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|it|sold|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 240)",
+      "after": "oklch(0.577 0.174 240)"
+    },
+    {
+      "cellKey": "desktop-1024|it|sold|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-info/80 border-status-info",
+      "after": "_overlayLabel_opn5p_348 _closedOverlaySold_sj3p4_101"
+    },
+    {
+      "cellKey": "desktop-1024|it|rented|backgroundColor",
+      "status": "OK",
+      "before": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+      "after": "oklab(0.577 0.0735356 -0.157698 / 0.8)"
+    },
+    {
+      "cellKey": "desktop-1024|it|rented|borderColor",
+      "status": "OK",
+      "before": "oklch(0.577 0.174 295)",
+      "after": "oklch(0.577 0.174 295)"
+    },
+    {
+      "cellKey": "desktop-1024|it|rented|className",
+      "status": "INFO",
+      "before": "_overlayLabel_opn5p_348 bg-status-rented/80 border-status-rented",
+      "after": "_overlayLabel_opn5p_348 _closedOverlayRented_sj3p4_106"
+    }
+  ]
+}

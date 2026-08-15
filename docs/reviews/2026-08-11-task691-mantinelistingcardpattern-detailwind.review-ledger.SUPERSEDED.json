@@ -1,0 +1,973 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 2,
+  "task": "Task-691 — de-Tailwind MantineListingCardPattern (Sprint 46.4)",
+  "review": {
+    "decision": "NEEDS REVISION",
+    "reviewedRevision": "base HEAD 10bc8966c plus the uncommitted Task-691 change set",
+    "reviewedPaths": [
+      "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
+      "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md",
+      ".screenshots/task691-delta/computed-before.json",
+      ".screenshots/task691-delta/computed-after.json",
+      ".screenshots/task691-delta/capture-computed-styles.mjs",
+      ".screenshots/task691-delta/homepage-grid-run2-13FAIL-UNATTRIBUTED.txt",
+      ".screenshots/task691-delta/homepage-grid-run3-12FAIL-final.txt",
+      ".screenshots/rendered-assert/2026-08-11T13-23/manifest.json",
+      ".next/static/css/7367bbf2f9c0fb9d.css",
+      "node_modules/@mantine/core/styles.css",
+      "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "MantineListingCardPattern — all 27 className= code sites",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:162",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:290"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "27 className= code sites"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Source-text criterion: the site inventory is read from the .tsx, not rendered.",
+          "locales": "Source-text criterion; class attribution does not vary by locale.",
+          "viewports": "Source-text criterion; class attribution does not vary by viewport.",
+          "states": "Source-text criterion; class attribution does not vary by interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "command": "git --no-optional-locks diff src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "observable": "24 sites now reference styles.*; 3 remain literal Tailwind with an inline Task-691 D34 reason; grep -c className= is 28 with :73 a JSDoc line, so 27 code sites.",
+          "freshness": "final worktree diff for the reviewed change set",
+          "scope": {
+            "subjects": [
+              "27 className= code sites"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "No migrated site silently kept a Tailwind utility beyond the three reported.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "Remaining literal utilities in the final file are exactly overflow-hidden (list Card), flex/flex-col (grid Card) and leading-snug (both titles); each carries an inline D34-losing annotation."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Row asserts source-text attribution of class sites, not a generated-CSS equivalence."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "migrated declarations for the 24 moved sites",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "24 migrated declarations"
+        ],
+        "stories": [
+          "patterns-mantine-listingcardpattern--default",
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "rest"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": ".screenshots/task691-delta/computed-after.json",
+          "command": "node .screenshots/task691-delta/diff-computed-styles.mjs",
+          "observable": "Per-property computed values for 27 sites; reviewer re-diffed independently over 33 entries with only syntheticClass/note ignored and obtained diffCount 0.",
+          "freshness": "captured against the final storybook-static build for the reviewed diff",
+          "scope": {
+            "subjects": [
+              "24 migrated declarations"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "1024"
+            ],
+            "states": [
+              "rest"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The rendered matrix could substitute for the missing computed-style tuples.",
+          "kind": "EXECUTED",
+          "path": ".screenshots/rendered-assert/2026-08-11T13-23/manifest.json",
+          "result": "Refuted by rule: a visual matrix cannot prove flex-shrink, line-height or cascade standing. The matrix is byte-identical to the comparator but records pixel verdicts only, so it does not close the uncovered tuples."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Row asserts computed-value identity across tuples; the generated-rule envelope is carried by AC10."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "overlay.className pass-through at :315 and the untouched out-of-scope files",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:313"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "ListingCard.tsx",
+          "ListingCard.smoke.test.tsx",
+          "MantineListingCardPattern.smoke.test.tsx",
+          "overlay.className"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Byte-identity criterion over files, not rendered output.",
+          "locales": "File identity does not vary by locale.",
+          "viewports": "File identity does not vary by viewport.",
+          "states": "File identity does not vary by interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingCard.tsx",
+          "command": "git show HEAD:<path> | md5sum vs md5sum <path> for all three files",
+          "observable": "All three out-of-scope files are byte-identical to HEAD; overlay.className remains the third cn() argument at :315.",
+          "freshness": "final worktree state for the reviewed diff",
+          "scope": {
+            "subjects": [
+              "ListingCard.tsx",
+              "ListingCard.smoke.test.tsx",
+              "MantineListingCardPattern.smoke.test.tsx",
+              "overlay.className"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The 741 boundary could have been crossed by narrowing the MantineListingCardOverlay shape.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "Interface at :36-41 is outside the diff; className?: string survives and is still read at :315."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Byte-identity and prop pass-through, no generated CSS involved."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "overlay chip declarations reproducing bg-overlay/60, bg-overlay/30, text-overlay-foreground",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "6 overlay utilities",
+          "text-muted-foreground/70 sibling"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Compiled-declaration equivalence read from the shipped bundle, not per story.",
+          "locales": "Opacity-modifier compilation does not vary by locale.",
+          "viewports": "Opacity-modifier compilation does not vary by viewport.",
+          "states": "Chips render in the closed-overlay branch only; no interaction state varies the declaration."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".next/static/css/7367bbf2f9c0fb9d.css",
+          "command": "grep the shipped modules chunk for the migrated overlay declarations",
+          "observable": "Migrated declarations match the compiled opacity-modifier output rather than a hand-written color-mix.",
+          "freshness": "shipped bundle rebuilt after the final edit",
+          "scope": {
+            "subjects": [
+              "6 overlay utilities",
+              "text-muted-foreground/70 sibling"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "A D35-shaped opacity-modifier sibling was missed because the kickoff named only six.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
+          "result": "text-muted-foreground/70 was found by the executor and reproduced with the same two-rule discipline; the kickoff's six-utility census was incomplete, which is an orchestrator defect, not an implementation gap."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "Opacity-modifier utilities are the D35 family; v2 requires the exact removed candidates compiled from the real input, not the post-change bundle."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "bg-overlay/60, bg-overlay/30, text-overlay-foreground, text-muted-foreground/70",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "NOT RUN for these candidates",
+          "version": "tailwindcss 4.3.0",
+          "inputCss": "src/app/globals.css",
+          "candidate": "bg-overlay/60, bg-overlay/30, text-overlay-foreground, text-muted-foreground/70"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css",
+          "rawRule": "NOT RETAINED — the before rules were never compiled from the base revision; the reviewer read the post-change bundle, which v2 rejects as evidence for a removed rule.",
+          "envelope": {
+            "selector": "unknown",
+            "media": [],
+            "supports": [],
+            "layer": "unknown",
+            "specificity": "unknown",
+            "sourceOrder": "unknown",
+            "declarations": [],
+            "customProperties": {
+              "reads": [],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "rawRule": "Migrated chip declarations in the final module.",
+          "envelope": {
+            "selector": "single-class module selectors",
+            "media": [],
+            "supports": [],
+            "layer": "unlayered",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "no competing declaration observed",
+            "declarations": [
+              "color-mix(in oklab, ...) forms"
+            ],
+            "customProperties": {
+              "reads": [
+                "--overlay",
+                "--overlay-foreground",
+                "--muted-foreground"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "a competing unlayered declaration for the same chip property",
+            "command": "NOT RUN",
+            "artifact": "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css",
+            "beforeOutcome": "unknown — before rules not retained",
+            "afterOutcome": "no competing writer found in the shipped chunk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "module header D34 per-site disposition, :95-120",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:95"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "overflow-hidden (list Card)",
+          "flex/flex-col (grid Card)",
+          "leading-snug (both titles)"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Cascade-standing determination is a source/CSS property, established from Mantine's own stylesheet.",
+          "locales": "Cascade standing does not vary by locale.",
+          "viewports": "Cascade standing does not vary by viewport.",
+          "states": "Determined at rest; the three sites carry no state variant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "read the module header disposition against node_modules/@mantine/core Card/Text rules",
+          "observable": "Each losing site is named with the Mantine rule that outranks it; leading-snug is additionally recorded as a different value (Mantine --text-lh 20.02px), confirmed from the BEFORE capture.",
+          "freshness": "final module text for the reviewed diff",
+          "scope": {
+            "subjects": [
+              "overflow-hidden (list Card)",
+              "flex/flex-col (grid Card)",
+              "leading-snug (both titles)"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "A losing utility was silently promoted into a winning unlayered rule instead of being reported.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "All three remain literal Tailwind in the .tsx and are absent from the module; the AC required list-and-leave and that is what the diff shows."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Row asserts that three utilities were NOT migrated; no replacement rule exists to compare."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "rendered outcome of the full change set",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "mantine-only fail set"
+        ],
+        "stories": [
+          "patterns-mantine-listingcardpattern--default",
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "rest"
+        ],
+        "phases": [
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": ".screenshots/rendered-assert/2026-08-11T13-23/manifest.json",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "1164/1204 PASS, 18 FAIL, 22 AMBIGUOUS; reviewer's own set diff against the standing comparator gives added NONE / removed NONE; all 32 card cells pass; runMode mantine-only recorded.",
+          "freshness": "run against the storybook-static build of the final diff",
+          "scope": {
+            "subjects": [
+              "mantine-only fail set"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default",
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "rest"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "A matching total could hide a changed fail set.",
+          "kind": "EXECUTED",
+          "path": ".screenshots/rendered-assert/2026-08-10T11-43/manifest.json",
+          "result": "Compared as a set of (storyId, locale, viewport) rather than a count: 0 added, 0 removed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Rendered-verdict identity, not a generated-rule comparison."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "design-token markers and gate-visible surface of the new module",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:57"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "check:design-tokens",
+          "check:css-vars",
+          "check:stories",
+          "check:mojibake",
+          "check:file-integrity",
+          "check:homepage-grid"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Repo-wide gates, not per-story.",
+          "locales": "check:homepage-grid covers four locales internally; the other gates are locale-independent.",
+          "viewports": "check:homepage-grid covers its own width matrix internally; the other gates are viewport-independent.",
+          "states": "Static gates with no interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".screenshots/task691-delta/homepage-grid-run3-12FAIL-final.txt",
+          "command": "npm run check:design-tokens / check:css-vars / check:stories / check:mojibake / check:file-integrity (re-run by the reviewer) and check:homepage-grid (final run)",
+          "observable": "design-tokens 0 violations and 0 stale-markers, css-vars 0, stories 0, mojibake and file-integrity clean; homepage-grid 248/260 with the 12 pre-existing I-C Header cells only.",
+          "freshness": "reviewer re-ran the five fast gates against the final worktree",
+          "scope": {
+            "subjects": [
+              "check:design-tokens",
+              "check:css-vars",
+              "check:stories",
+              "check:mojibake",
+              "check:file-integrity",
+              "check:homepage-grid"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The new design-tokens markers could be blanket suppression rather than live-matched findings.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "The strict run reports 0 stale-marker(s); a marker with no matching finding would be reported stale, so every marker is matched to a real literal."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate exit codes and counts, not a generated-rule comparison."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "var(--color-badge-premium) and var(--shadow-listing-card-elevation-lg) references",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "--color-badge-premium",
+          "--shadow-listing-card-elevation-lg"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Token retention is a bundle property, not a story property.",
+          "locales": "Token retention does not vary by locale.",
+          "viewports": "Token retention does not vary by viewport.",
+          "states": "Token retention does not vary by interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".next/static/css/7367bbf2f9c0fb9d.css",
+          "command": "grep -c var(--color-badge-premium) and var(--shadow-listing-card-elevation-lg) in module source and in the shipped chunk",
+          "observable": "Each token is referenced once in the module source and once in the newly hashed shipped modules chunk, so neither lost its only consumer.",
+          "freshness": "shipped bundle rebuilt after the final edit",
+          "scope": {
+            "subjects": [
+              "--color-badge-premium",
+              "--shadow-listing-card-elevation-lg"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "A token could survive in source while dropping out of the shipped bundle.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css/7367bbf2f9c0fb9d.css",
+          "result": "Checked the chunk itself rather than the source only; both tokens present. The previous chunk hash fa22169b is stale and was not used."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Token-reference retention, not a generated-rule equivalence."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "client-bundle contribution of the changed pattern",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:162"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "/[locale] First Load JS"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Route bundle metric, not a story metric.",
+          "locales": "The /[locale] route is measured once by next build regardless of locale.",
+          "viewports": "Bundle size does not vary by viewport.",
+          "states": "Bundle size does not vary by interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
+          "command": "npm run build (I0 and final)",
+          "observable": "/[locale] First Load JS 619 kB before and 619 kB after, shared 184 kB both phases; delta 0, so D36's stop condition never armed.",
+          "freshness": "both phases recorded around the reviewed diff",
+          "scope": {
+            "subjects": [
+              "/[locale] First Load JS"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "A CSS-only migration could still move client JS through an import-graph change.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "The diff adds no import and removes none; the measured delta is 0 in both route and shared figures."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Bundle metric, not a generated-rule comparison."
+      }
+    },
+    {
+      "id": "AC10 / R10",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".card:hover .cardTitle replacing group-hover:[--text-color:var(--primary)]",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:228"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "27 sites property-level capture"
+        ],
+        "stories": [
+          "patterns-mantine-listingcardpattern--default",
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "rest",
+          "hover",
+          "archived"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": ".screenshots/task691-delta/capture-computed-styles.mjs",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs then node .screenshots/task691-delta/diff-computed-styles.mjs",
+          "observable": "Property-level getComputedStyle for 27 sites plus hover and archived states; reviewer's independent diff over 33 entries gives 0. The script pins viewport 1024x4000 at :92 and locale en with the pattern story at :96, so it measures one tuple.",
+          "freshness": "captured before and after the final edit against storybook-static",
+          "scope": {
+            "subjects": [
+              "27 sites property-level capture"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover",
+              "archived"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The replacement preserves the removed rule's full semantic envelope.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css",
+          "result": "Refuted. Compiling the exact candidate with the repo's own tailwindcss 4.3.0 and src/app/globals.css shows @media (hover: hover) on the removed rule; the replacement has no media wrapper. The shipped bundle confirms it: the sibling sits inside @media (hover:hover){...} while .card:hover .cardTitle has no open media block. Layer @layer utilities -> unlayered and specificity (0,1,0) -> (0,3,0) also changed. No owner decision authorizes any of the three deltas."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A generated Tailwind variant selector was removed and replaced by a hand-written descendant rule; the full envelope must be compared."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "group-hover:[--text-color:var(--primary)]",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "compile(readFileSync('src/app/globals.css')) then build(['group-hover:[--text-color:var(--primary)]']) via node_modules/tailwindcss/dist/lib.mjs",
+          "version": "tailwindcss 4.3.0",
+          "inputCss": "src/app/globals.css",
+          "candidate": "group-hover:[--text-color:var(--primary)]"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css",
+          "rawRule": ".group-hover\\:\\[--text-color\\:var\\(--primary\\)\\] { &:is(:where(.group):hover *) { @media (hover: hover) { --text-color: var(--primary); } } }",
+          "envelope": {
+            "selector": "ancestor .group hovered, descendant match via :is(:where(.group):hover *)",
+            "media": [
+              "(hover: hover)"
+            ],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "layered, therefore loses to any unlayered rule regardless of order",
+            "declarations": [
+              "--text-color: var(--primary)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--primary"
+              ],
+              "writes": [
+                "--text-color"
+              ],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "rawRule": ".card:hover .cardTitle { --text-color: var(--primary); }",
+          "envelope": {
+            "selector": "real ancestor .card hovered, descendant .cardTitle",
+            "media": [],
+            "supports": [],
+            "layer": "unlayered",
+            "specificity": "(0,3,0)",
+            "sourceOrder": "unlayered, therefore competes on specificity and order",
+            "declarations": [
+              "--text-color: var(--primary)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--primary"
+              ],
+              "writes": [
+                "--text-color"
+              ],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "hover: none (coarse pointer / touch)",
+            "command": "NOT RUN — requires a persisted browser probe under both the before and after builds",
+            "artifact": "docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css",
+            "beforeOutcome": "Declaration inactive: the @media (hover: hover) wrapper excludes coarse-pointer devices entirely.",
+            "afterOutcome": "Declaration active whenever :hover matches, which on touch browsers occurs on tap and persists — an observable behaviour change not covered by the emulated-desktop rendered matrix."
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC11 / R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "shipped module classes for the reviewed diff",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:228"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "npm run build",
+          "shipped bundle freshness"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Build-level criterion.",
+          "locales": "Route table is emitted once.",
+          "viewports": "Build output does not vary by viewport.",
+          "states": "Build output does not vary by interaction state."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".next/static/css/7367bbf2f9c0fb9d.css",
+          "command": "npm run build (final) and grep the shipped chunk for the new module classes",
+          "observable": "Build exits 0 at 54 route rows and 40/40 static pages; cardTitle, overlayLabel, locationText, cardIcon and the .card:hover .cardTitle rule are present in the shipped chunk, so the build corresponds to the reviewed diff.",
+          "freshness": "bundle rebuilt after the final edit; verified by class presence rather than by transcript alone",
+          "scope": {
+            "subjects": [
+              "npm run build",
+              "shipped bundle freshness"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The build transcript could predate the final edit.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css/7367bbf2f9c0fb9d.css",
+          "result": "Checked the emitted classes rather than the transcript: the post-edit rules are in the shipped chunk, so the build is not stale."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Build exit and artifact freshness, not a generated-rule equivalence."
+      }
+    },
+    {
+      "id": "AC12 / R12",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
+        "symbol": "session log and backlog state for Task 691",
+        "diffHunks": [
+          "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "session log",
+          "docs/backlog.md line budget"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Documentation criterion.",
+          "locales": "Documentation criterion.",
+          "viewports": "Documentation criterion.",
+          "states": "Documentation criterion."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
+          "command": "wc -l docs/backlog.md and read the session log",
+          "observable": "Session log exists at the kickoff's §7 path with the ten required sections; docs/backlog.md is 80 lines, at the budget.",
+          "freshness": "final worktree state",
+          "scope": {
+            "subjects": [
+              "session log",
+              "docs/backlog.md line budget"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The session log's summary could misdescribe the retry history.",
+          "kind": "EXECUTED",
+          "path": ".screenshots/task691-delta/homepage-grid-run2-13FAIL-UNATTRIBUTED.txt",
+          "result": "Contradiction found: three homepage-grid transcripts exist, and run2 carries a 13th FAIL absent from the baseline. The summary says one re-run. Recorded as finding F2; the artifact itself is correctly labelled UNATTRIBUTED with no causal story attached."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation criterion."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F0",
+      "priority": "P0",
+      "status": "OPEN",
+      "requirements": "AC10 / R10",
+      "evidence": "Dropped behavioural guard. The exact removed candidate group-hover:[--text-color:var(--primary)], compiled from the base revision with the repo's own tailwindcss 4.3.0 and src/app/globals.css, carries @media (hover: hover) (docs/reviews/artifacts/2026-08-11-task691-hover-envelope.css). The replacement .card:hover .cardTitle carries none, and the shipped bundle confirms the sibling is inside @media (hover:hover) while the replacement is not. On coarse-pointer devices the original never applied; the replacement applies on tap and persists. The module header states the opposite. Layer and specificity also changed. No allowedSemanticDeltas cite an owner decision, so every delta is uncited."
+    },
+    {
+      "id": "F1",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "AC2 / R2, AC10 / R10",
+      "evidence": ".screenshots/task691-delta/capture-computed-styles.mjs pins viewport 1024x4000 at :92 and locale en with only patterns-mantine-listingcardpattern--default at :96. AC10 as written requires both enrolled stories, and the Q3 profile requires four locales and four viewports. Site 229 is additionally a synthetic node that renders in neither story. The rendered matrix cannot substitute for a computed-style capture. Re-run the same script at the missing tuples, or record an owner decision narrowing AC10."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC12 / R12",
+      "evidence": "Three homepage-grid transcripts exist (51 FAIL contaminated, 13 FAIL UNATTRIBUTED, 12 FAIL final) but the completion summary states one authorized re-run. Retry classification requires each execution to be recorded separately and forbids relabelling a contaminated run as an authorized retry. The run1 race attribution is itself INFERENCE without an A/B, though grid-not-found across unrelated stories makes it an invalid measurement either way. Correct the summary; no re-work."
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC5 / R5",
+      "evidence": "leading-snug has never applied on either card title: Mantine's Text sets line-height via --text-lh (measured 20.02px) unlayered, so the @layer utilities copy always lost. Correctly left untouched under AC5's list-and-leave rule, but it is a real latent typography item and needs its own number (746, verified free). A follow-up does not repair this task's status and is recorded here only as residue."
+    },
+    {
+      "id": "F4",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC4 / R4, AC11 / R11",
+      "evidence": "Two orchestrator defects in the kickoff, found by the executor: the route table is 54 rows and the kickoff said 53, and §3.5 named six overlay utilities while a seventh D35-shaped sibling (text-muted-foreground/70) exists. Neither affects the implementation."
+    }
+  ],
+  "handoff": {
+    "commitPush": "PROHIBITED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC10 / R10",
+    "reviewer": "Opus"
+  }
+}

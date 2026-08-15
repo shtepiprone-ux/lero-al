@@ -1,0 +1,13 @@
+
+> lero-al@0.1.0 check:css-vars
+> node scripts/check-css-var-resolvability.mjs
+
+🔍  check:css-vars — owned custom properties (globals.css @theme/@theme inline/:root): 257
+    Arm A (shipped CSS) — owned names referenced: 78
+    Arm B (src/**/*.{css,tsx,ts}, excl. globals.css) — owned names referenced: 55
+    Dynamic var() construction sites: 8 raw, 0 in-class (prefix could name an owned token)
+
+ℹ️   0 fallback-bearing owned reference(s) — non-blocking (R10):
+
+✅  check:css-vars — 0 violations, 0 in-class dynamic sites.
+EXIT_CODE=0

@@ -1,0 +1,762 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-695 — retire the --color-overlay* namespace and the @theme inline overlay copy (Sprint 46.5, Q4 Release/Critical Flow)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "f42e9b855bcd119ad2041c0daf1c5b6d06d637c4",
+    "reviewedRevision": "base f42e9b855bcd119ad2041c0daf1c5b6d06d637c4 plus the uncommitted 695 change set: 8 modified files, 2 new untracked directories, 1 new session log — plus 3 reviewer edits applied in-round on owner instruction (F1, F8, the stale owned-name count)",
+    "reviewedPaths": [
+      "src/app/globals.css",
+      "src/modules/listings/components/LightboxView.tsx",
+      "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx",
+      "src/components/shared/PerfDevOverlay.tsx",
+      "scripts/__tests__/overlay-dual-declaration.test.ts",
+      "scripts/check-css-var-resolvability.mjs",
+      "scripts/__tests__/css-var-resolvability.test.ts",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-13-task695-overlay-namespace-exit.md",
+      "docs/reviews/artifacts/2026-08-13-task695",
+      "docs/reviews/artifacts/2026-08-13-task695-review"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 10,
+      "verified": 10,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-13-task695-overlay-namespace-exit.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/LightboxView.tsx",
+        "symbol": "LIGHTBOX_ACTION_ICON_STYLE --ai-* properties, Modal.Content scrim style, active-thumbnail borderColor — the 6 of 7 migrated var(--color-overlay*) sites; the 7th is MantineListingGalleryPattern.tsx's Text c= prop",
+        "diffHunks": [
+          "src/modules/listings/components/LightboxView.tsx:46-49",
+          "src/modules/listings/components/LightboxView.tsx:90",
+          "src/modules/listings/components/LightboxView.tsx:163",
+          "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:93"
+        ]
+      },
+      "requiredScope": {
+        "subjects": ["src/** non-comment var(--color-overlay*) references"],
+        "notApplicable": {
+          "stories": "a source-tree census is story-independent",
+          "locales": "a source-tree census is locale-independent",
+          "viewports": "a source-tree census is viewport-independent",
+          "states": "a source-tree census has no runtime state dimension",
+          "phases": "the census is an absolute count against the final tree, not a before/after comparison"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-reference-census.log",
+          "command": "the kickoff §13 reference-census one-liner, re-derived by the reviewer against the current tree rather than read from this log",
+          "observable": "TOTAL 0. Reviewer re-ran the same one-liner independently: TOTAL 0. A separate reviewer grep for the literal string --color-overlay anywhere under src/ returns only 13 prose mentions inside .module.css header comments, no var() reference.",
+          "freshness": "reviewer re-derivation 2026-08-13/14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["src/** non-comment var(--color-overlay*) references"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the census one-liner cannot see the references because its single-line comment filter hides them",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-tailwind-census.log",
+          "result": "REFUTED — the same command returned 7 live hits at I0 (8 raw, 1 of them a multi-line comment continuation the executor identified and excluded) and 0 now, so the detector demonstrably sees this reference shape."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R1 is a source-tree absence criterion, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs",
+        "symbol": "captureLightboxCell / captureGalleryCell over VIEWPORTS × LOCALES — the two-phase real-DOM comparator, I0 export f42e9b855 versus this worktree",
+        "diffHunks": [
+          "docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs:78-95",
+          "docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs:216-262"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "modalScrim.backgroundColor",
+          "actionIconRest.backgroundColor",
+          "actionIconRest.color",
+          "actionIconHover.backgroundColor",
+          "actionIconHover.color",
+          "thumbBorder.borderColor",
+          "extraCountText.color"
+        ],
+        "locales": ["sq", "en", "uk", "it"],
+        "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024"],
+        "phases": ["before", "after"],
+        "notApplicable": {
+          "stories": "each measured subject belongs to exactly one canonical story (LightboxView.stories.tsx or ListingGalleryPattern.stories.tsx); the story is a property of the subject, not an independent dimension",
+          "states": "rest and hover are enumerated as separate subjects rather than as a state dimension, because only the ActionIcon subjects have a hover rule"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/real-comparator-result.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs",
+          "observable": "totalCells 112, failCount 0, zero non-OK cells. viewports [mobile-320, mobile-375, mobile-390, desktop-1024], locales [sq, en, uk, it]. Reviewer inspected the cell values rather than the summary: the scrim reads oklab(0 0 0 / 0.95), ActionIcon rest oklab(1 0 0 / 0.1), hover oklab(1 0 0 / 0.2), thumbnail border and Text colour oklch(1 0 0) — identical on both sides and identical at 320px and 1024px, so this is not a both-sides-empty pass.",
+          "freshness": "owner-run 2026-08-14 on the reviewer-patched comparator, against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "modalScrim.backgroundColor",
+              "actionIconRest.backgroundColor",
+              "actionIconRest.color",
+              "actionIconHover.backgroundColor",
+              "actionIconHover.color",
+              "thumbBorder.borderColor",
+              "extraCountText.color"
+            ],
+            "locales": ["sq", "en", "uk", "it"],
+            "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024"],
+            "phases": ["before", "after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the comparator cannot fail — it would report PASS on a moved value too",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695/real-comparator-PLANTED.json",
+          "result": "REFUTED — --plant corrupts two AFTER-side cells at the pinned pair (en, desktop-1024) and the run reports failCount 2 of 112, COMPARATOR: FAIL, non-zero exit. The failing cellKeys are exactly lightbox|desktop-1024|en|actionIconHover.backgroundColor and gallery|desktop-1024|en|extraCountText.color."
+        },
+        {
+          "claim": "the BEFORE and AFTER phases could be the same build, which would make 112 identical cells vacuous",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695/comparator-real-run-4vp.log",
+          "result": "PARTIALLY REFUTED — the reviewer proved the AFTER phase is genuinely post-migration: storybook-static/ contains zero occurrences of --color-overlay, and the compiled chunk storybook-static/assets/LightboxView-*.js carries the literal 'var(--overlay-foreground) 10%'. The BEFORE phase lives at ../lero-al-i0-f42e9b8, outside the reviewed repo, and the owner confirmed it still contains --color-overlay. The comparator itself asserts only that the BEFORE directory exists, not its revision — recorded as open finding F2."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R2 is measured as computed-style equivalence on real rendered elements in both phases, which is a stronger observation than a generated-rule envelope comparison; no Tailwind candidate class is involved in any of the seven sites."
+      }
+    },
+    {
+      "id": "R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/shared/PerfDevOverlay.tsx",
+        "symbol": "PerfOverlayContent priority-budget comment — the second Tailwind-scannable overlay-utility candidate, not named in the kickoff's §7 scope table; the first is LightboxView.tsx's Modal.Content comment",
+        "diffHunks": [
+          "src/components/shared/PerfDevOverlay.tsx:75-87",
+          "src/modules/listings/components/LightboxView.tsx:75-92"
+        ]
+      },
+      "requiredScope": {
+        "subjects": ["generated .{bg,text,border}-overlay* rules in .next/static/css/*.css"],
+        "notApplicable": {
+          "stories": "a built-bundle census is story-independent",
+          "locales": "a built-bundle census is locale-independent",
+          "viewports": "the census counts rule declarations, not rendered output",
+          "states": "the census counts rule declarations, not runtime state",
+          "phases": "recorded at three ordered points (I0, post-comment-rewrite, final) inside the evidence rather than as a two-valued dimension"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-generated-utility-census.log",
+          "command": "the kickoff §13 generated-utility census, re-derived by the reviewer against .next/static/css",
+          "observable": "TOTAL 0, reproduced independently by the reviewer. Ordered trajectory retained: I0 = 5 (not the kickoff's predicted 3), post-comment-rewrite = 0, post-@theme-deletion = 0, final = 0. The two unpredicted rules came from PerfDevOverlay.tsx's literal 'text-overlay-foreground/70' inside a JSX comment.",
+          "freshness": "reviewer re-derivation 2026-08-13/14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["generated .{bg,text,border}-overlay* rules in .next/static/css/*.css"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/step3-post-comment-build.log",
+          "command": "npm run build after the comment rewrites, before the @theme deletion (kickoff §9 step 3)",
+          "observable": "exit 0, and the generated-utility count is 0 at this point — establishing that the @theme copy had no remaining compiled consumer before it was deleted, which is the ordering constraint D35 imposes.",
+          "freshness": "executor run 2026-08-13, retained transcript",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["generated .{bg,text,border}-overlay* rules in .next/static/css/*.css"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the census regex cannot match a generated overlay rule, so 0 proves nothing",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695/I0-build.log",
+          "result": "REFUTED — the identical regex returned 5 rules at I0 against the same bundle shape, and the rewritten 692 gate's invariant-3 plant returns 1 on a synthetic .bg-overlay\\/95 rule."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R3 asserts the absence of a generated rule class; there is no surviving candidate whose semantics could be compared."
+      }
+    },
+    {
+      "id": "R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "@theme inline overlay block (deleted, 4 names) and the :root overlay pair (:455-456, byte-unchanged)",
+        "diffHunks": ["src/app/globals.css:70-85", "src/app/globals.css:439-456"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the deleted @theme inline overlay block",
+          "the surviving :root --overlay/--overlay-foreground declarations",
+          "the eight .module.css var(--overlay*) consumers named in kickoff §3.4"
+        ],
+        "notApplicable": {
+          "stories": "a stylesheet-declaration criterion is story-independent",
+          "locales": "a stylesheet-declaration criterion is locale-independent",
+          "viewports": "a stylesheet-declaration criterion is viewport-independent",
+          "states": "a stylesheet-declaration criterion has no runtime state dimension",
+          "phases": "the surviving declarations are compared before/after inside the git diff evidence rather than as a separate dimension"
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/globals.css",
+          "command": "git diff src/app/globals.css, read in full by the reviewer rather than taken from the report",
+          "observable": "The @theme inline block's 4 names are removed. The two :root declaration lines appear as unchanged context in the diff — only the surrounding comment block changed, so :455-456 is byte-identical, which is the AC4 P0 claim. --color-overlay and --color-overlay-foreground are declared nowhere; the reviewer confirmed extractOwnedNames(globals.css) has neither.",
+          "freshness": "reviewer inspection 2026-08-13/14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the deleted @theme inline overlay block",
+              "the surviving :root --overlay/--overlay-foreground declarations"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-check-css-vars.log",
+          "command": "npm run check:css-vars, re-run by the reviewer after the in-round F1 fix",
+          "observable": "0 violations, 0 in-class dynamic sites, owned=257, Arm A refs 78, Arm B refs 55 — every §3.4 consumer still resolves. Independently corroborated: Arm B owned-name references fell 57 -> 55 between I0 and final, exactly the two deleted --color-overlay* names, which the executor's own report does not cite.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["the eight .module.css var(--overlay*) consumers named in kickoff §3.4"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "a green check:css-vars is evidence the deletion was safe",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-check-css-vars.log",
+          "result": "NOT RELIED ON — the kickoff §3.5.4 states, and Task 743 proved, that deleting a token un-owns it together with its orphaned consumers, so this gate cannot witness this class of deletion. It is cited here only for the surviving :root consumers, which are not orphaned. The load-bearing evidence for R4 is the git diff and R2's rendered proof."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R4 is a declaration-site criterion in the authored stylesheet, not a generated-rule equivalence claim."
+      }
+    },
+    {
+      "id": "R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F3", "F4", "F5"],
+      "finalSubject": {
+        "path": "scripts/__tests__/overlay-dual-declaration.test.ts",
+        "symbol": "three single-source invariants replacing the now-vacuous dual-declaration assertions, each with a planted-violation spec",
+        "diffHunks": ["scripts/__tests__/overlay-dual-declaration.test.ts:90-186"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "invariant 1 — --overlay/--overlay-foreground declared exactly once, inside :root",
+          "invariant 2 — --color-overlay* declared nowhere",
+          "invariant 3 — zero generated bg|text|border-overlay* rules in the built bundle"
+        ],
+        "notApplicable": {
+          "stories": "a source/bundle assertion gate is story-independent",
+          "locales": "a source/bundle assertion gate is locale-independent",
+          "viewports": "a source/bundle assertion gate is viewport-independent",
+          "states": "a source/bundle assertion gate has no runtime state dimension",
+          "phases": "each invariant is asserted against the final tree and separately against a planted fixture, recorded per subject"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/step6-overlay-gate-test.log",
+          "command": "npx vitest run scripts/__tests__/overlay-dual-declaration.test.ts",
+          "observable": "6 passed (6) — three real-tree assertions plus three planted-violation specs. The reviewer read the rewritten file and re-derived each invariant by hand against the tree: --overlay and --overlay-foreground each occur exactly once in globals.css and both inside the file's single :root block; --color-overlay* occur zero times; the bundle census is 0.",
+          "freshness": "executor run 2026-08-13, transcript retained; reviewer re-derived the assertions independently 2026-08-13/14",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "invariant 1 — --overlay/--overlay-foreground declared exactly once, inside :root",
+              "invariant 2 — --color-overlay* declared nowhere",
+              "invariant 3 — zero generated bg|text|border-overlay* rules in the built bundle"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-vitest-full.log",
+          "command": "npx vitest run (full suite), re-run after the reviewer's in-round F1 fix",
+          "observable": "Test Files 80 passed (80), Tests 1351 passed (1351), EXIT_CODE=0 — identical to the pre-fix baseline, so the rewritten gate stays green and nothing else regressed.",
+          "freshness": "owner-run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "invariant 1 — --overlay/--overlay-foreground declared exactly once, inside :root",
+              "invariant 2 — --color-overlay* declared nowhere",
+              "invariant 3 — zero generated bg|text|border-overlay* rules in the built bundle"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the planted specs prove nothing because they run against in-memory fixtures rather than the real file",
+          "kind": "adversarial-reading-of-the-gate-source",
+          "path": "scripts/__tests__/overlay-dual-declaration.test.ts",
+          "result": "PARTIALLY REFUTED — the plants feed the SAME counting helpers (countDeclarationsAnywhere, countGeneratedOverlayUtilityRules) that the real-tree assertions call, so they do exercise the checking logic, and each plant asserts .not.toBe(<the real assertion's expected value>). Two residual weaknesses remain and are recorded as open P3 findings rather than argued away: invariant 1's 'only inside :root' arm has no plant at all (F3), and the plants assert on the helpers rather than on the invariant bodies, so loosening a real-tree expectation would leave every plant green (F4)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R5 is a gate-sensitivity criterion, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F1", "F9"],
+      "finalSubject": {
+        "path": "scripts/check-css-var-resolvability.mjs",
+        "symbol": "runPlantP3 re-pointed from the deleted --color-overlay-foreground to --text-3xl, plus its over-match guard rebuilt in-round (F1) and runControlC3's owned-count expectation moved 259 -> 257",
+        "diffHunks": [
+          "scripts/check-css-var-resolvability.mjs:758-820",
+          "scripts/check-css-var-resolvability.mjs:876-910",
+          "scripts/check-css-var-resolvability.mjs:29-31"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "P3's replacement target and its measured pre-plant precondition",
+          "P3's over-match guard",
+          "the owned-name count expectations that the deletion invalidated"
+        ],
+        "notApplicable": {
+          "stories": "a gate self-test is story-independent",
+          "locales": "a gate self-test is locale-independent",
+          "viewports": "a gate self-test is viewport-independent",
+          "states": "a gate self-test has no runtime state dimension",
+          "phases": "the gate is run red (pre-fix) and green (post-fix) and both transcripts are retained, recorded per subject"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-verify-gate.log",
+          "command": "npm run check:css-vars -- --verify-gate, re-run by the reviewer after the in-round F1 fix",
+          "observable": "8/8, exit 0. P3 reports 'Arm A silent (0 refs to check) + Arm B correctly reported unresolved --text-3xl at src/app/[locale]/page.tsx:31'. C3 reports owned=257 (expect 257). The reviewer measured P3's precondition against the real bundle rather than trusting the comment: --text-3xl has exactly 1 shipped declaration site and 0 shipped var() references, is present in extractOwnedNames(globals.css), and has a live TSX consumer at page.tsx:31 — the same shape the retired target had.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P3's replacement target and its measured pre-plant precondition",
+              "the owned-name count expectations that the deletion invalidated"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/f1-overmatch-guard-probe.log",
+          "command": "node docs/reviews/artifacts/2026-08-13-task695-review/f1-overmatch-guard-probe.mjs",
+          "observable": "ARM 1 correct removal -> removed=[--text-3xl], newGuard.fires=false. ARM 2 planted over-match -> removed=[--text-3xl,--text-4xl], newGuard.fires=true. ARM 3 same plant judged by the RETIRED sibling-count guard -> --text-3xl--line-height 0 -> 0, oldGuard.fires=false. The rebuilt guard is shown live and the guard it replaced is shown inert, against the real shipped bundle.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["P3's over-match guard"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the submitted P3 re-point restored the gate intact — 8/8 green is sufficient evidence",
+          "kind": "adversarial-measurement-of-the-gate's-own-guard",
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/f1-overmatch-guard-probe.mjs",
+          "result": "REFUTED as submitted, then fixed in-round. The submitted re-point kept a guard comparing the declaration-site count of --text-3xl--line-height before and after the plant. The reviewer measured that name in the shipped bundle: 0 sites, so the comparison was 0 -> 0 unconditionally and could not have come out wrong, while the code comment asserted it 'proves the removal regex doesn't over-match'. The gate was 8/8 green throughout — the defect was invisible to the gate's own result. Replaced with a name-agnostic declared-name-set diff and re-verified 8/8; see finding F1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R6 is a gate-sensitivity criterion, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/LightboxView.tsx",
+        "symbol": "the Modal.Content comment — cascade-trap record preserved, Tailwind-scannable utility string removed",
+        "diffHunks": ["src/modules/listings/components/LightboxView.tsx:75-92"]
+      },
+      "requiredScope": {
+        "subjects": ["the LightboxView Modal.Content comment", "the PerfDevOverlay priority-budget comment"],
+        "notApplicable": {
+          "stories": "a source-comment criterion is story-independent",
+          "locales": "a source-comment criterion is locale-independent",
+          "viewports": "a source-comment criterion is viewport-independent",
+          "states": "a source-comment criterion has no runtime state dimension",
+          "phases": "the before and after text are both present in the git diff evidence"
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/LightboxView.tsx",
+          "command": "git diff on both comment blocks, read in full by the reviewer",
+          "observable": "The rewritten comment still records the exact cascade-layer trap: 'same cascade-layer trap as LIGHTBOX_ACTION_ICON_STYLE above (Mantine's Paper, which Modal.Content renders through, sets its own unlayered background-color)', plus the compound-API and no-Modal.Header rationale. OQ1 is resolved as prose — the literal utility-class strings are dropped rather than broken across a boundary. PerfDevOverlay's comment likewise keeps its full tailwind-merge conflict-group explanation while naming the utility descriptively.",
+          "freshness": "reviewer inspection 2026-08-13/14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["the LightboxView Modal.Content comment", "the PerfDevOverlay priority-budget comment"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the rewrite dropped the cascade-trap record along with the utility string",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/LightboxView.tsx",
+          "result": "REFUTED — the Mantine Paper unlayered-background-color sentence survives verbatim in the rewritten comment, and AC3's bundle census is 0, so both halves of R7 hold simultaneously."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R7 is a documentation-content criterion paired with R3's bundle census."
+      }
+    },
+    {
+      "id": "R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/LightboxView.tsx",
+        "symbol": "the critical-flow subject named at docs/critical-flow-registry.md:105 — listing-detail gallery lightbox stacking, Task 612, suite ListingGallery.portal.smoke.test.tsx",
+        "diffHunks": ["src/modules/listings/components/LightboxView.tsx:46-49", "src/modules/listings/components/LightboxView.tsx:90"]
+      },
+      "requiredScope": {
+        "subjects": ["ListingGallery.portal.smoke.test.tsx"],
+        "notApplicable": {
+          "stories": "the critical-flow suite is a jsdom test file, not a story",
+          "locales": "the suite asserts portalling and z-index structure, which is locale-independent",
+          "viewports": "the suite asserts DOM structure, not layout at a width",
+          "states": "the suite enumerates its own states internally",
+          "phases": "the suite is run once against the final tree; the registry requires the real result, not a comparison"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/step8-critical-flow-suite.log",
+          "command": "npx vitest run src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx",
+          "observable": "Test Files 1 passed (1), Tests 4 passed (4), EXIT_CODE=0. The test file is unmodified — the reviewer confirmed it does not appear in git status --porcelain, which lists exactly 8 modified files and none of them is this suite.",
+          "freshness": "executor run 2026-08-13, transcript retained; reviewer confirmed the file is unmodified 2026-08-13/14",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["ListingGallery.portal.smoke.test.tsx"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the suite passes because it was edited to pass",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-vitest-full.log",
+          "result": "REFUTED — git status --porcelain does not list the suite among the 8 modified files, and the full 80-file run that contains it is 1351/1351 green, unchanged from the pre-review baseline."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R8 is a regression-suite result criterion, per clause 15."
+      }
+    },
+    {
+      "id": "R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": ["F6"],
+      "finalSubject": {
+        "path": "docs/backlog.md",
+        "symbol": "D19 marked CLOSED in the binding-decisions block; both globals.css comment records rewritten to the single-source state",
+        "diffHunks": ["docs/backlog.md:72", "src/app/globals.css:439-453"]
+      },
+      "requiredScope": {
+        "subjects": ["D19's entry in the decisions block", "both globals.css overlay comment records"],
+        "notApplicable": {
+          "stories": "a documentation criterion is story-independent",
+          "locales": "a documentation criterion is locale-independent",
+          "viewports": "a documentation criterion is viewport-independent",
+          "states": "a documentation criterion has no runtime state dimension",
+          "phases": "before and after text are both present in the git diff evidence"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/backlog.md",
+          "command": "git diff docs/backlog.md, plus a reviewer grep for the literal string 'Keep both copies' across src/, docs/ and scripts/",
+          "observable": "D19 now reads 'CLOSED 2026-08-13 (695). Overlay pair no longer declared in @theme inline; :root is the single source.' The @theme inline comment record is gone with its block; the :root record is rewritten to describe the single-source state and why the @theme copy existed. The grep returns exactly one hit — inside the executor's own session log, quoting the criterion — and zero in any live record.",
+          "freshness": "reviewer inspection and grep 2026-08-13/14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["D19's entry in the decisions block", "both globals.css overlay comment records"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "closing D19 in the backlog leaves other live records still describing the dual-declaration state",
+          "kind": "EXECUTED",
+          "path": "docs/backlog.md",
+          "result": "PARTIALLY CONFIRMED — no record still says 'Keep both copies', but six .module.css header comments still cite globals.css:70-85/:459-471 for the overlay block and describe the removal in the future tense ('which Task 695 removes'). Those line ranges now point at the semantic-token block and the dark-mode header. Non-functional, out of the kickoff's §7 scope table, recorded as open finding F6."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R9 is a documentation-state criterion."
+      }
+    },
+    {
+      "id": "R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": ["F2", "F7", "F10"],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task695-overlay-namespace-exit.md",
+        "symbol": "the standing-gate transcript set and the session log that cites it",
+        "diffHunks": [
+          "docs/reviews/artifacts/2026-08-13-task695:new-directory",
+          "docs/reviews/artifacts/2026-08-13-task695-review:new-directory"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "build and First Load JS",
+          "typecheck",
+          "check:design-tokens",
+          "check:css-vars",
+          "check:stories",
+          "check:mojibake",
+          "check:file-integrity",
+          "check:review-ledger",
+          "full vitest",
+          "docs/backlog.md line budget"
+        ],
+        "notApplicable": {
+          "stories": "standing gates are repo-wide, not per-story",
+          "locales": "standing gates are locale-independent",
+          "viewports": "standing gates are viewport-independent",
+          "states": "standing gates have no runtime state dimension",
+          "phases": "build is recorded at I0 and final; the rest are absolute results against the final tree"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-build.log",
+          "command": "npm run build",
+          "observable": "exit 0, /[locale] First Load JS 619 kB. The reviewer went further than the reported figure and diffed the whole route table between I0-build.log and final-build.log: byte-identical across every route, so D36's 'no increase' condition holds for the entire table, not just the one row.",
+          "freshness": "executor run 2026-08-13, transcript retained; reviewer diffed the two tables 2026-08-13/14",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["build and First Load JS"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-typecheck.log",
+          "command": "npx tsc --noEmit",
+          "observable": "exit 0, no output.",
+          "freshness": "executor run 2026-08-13, transcript retained",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["typecheck"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-check-design-tokens.log",
+          "command": "npm run check:design-tokens",
+          "observable": "0 violations across 444 scanned files, re-run by the reviewer after the in-round fixes.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:design-tokens"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-check-css-vars.log",
+          "command": "npm run check:css-vars",
+          "observable": "0 violations, 0 in-class dynamic sites, re-run by the reviewer after the in-round fixes.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:css-vars"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-check-stories.log",
+          "command": "npm run check:stories",
+          "observable": "127 files checked, 0 violations, EXIT_CODE=0.",
+          "freshness": "executor run 2026-08-13, transcript retained",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:stories"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix2-check-mojibake.log",
+          "command": "npm run check:mojibake",
+          "observable": "0 artifacts in 2367 files, EXIT_CODE=0 — re-run after the reviewer re-encoded two owner-produced transcripts that PowerShell had written as UTF-16LE (see finding F10).",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:mojibake"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix2-check-file-integrity.log",
+          "command": "npm run check:file-integrity",
+          "observable": "all 51 file(s) clean, EXIT_CODE=0 — re-run after the same re-encoding. Before it, this gate was red with 'NUL bytes present' on both 4-viewport comparator transcripts.",
+          "freshness": "reviewer run 2026-08-14 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:file-integrity"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695/final-check-review-ledger.log",
+          "command": "npm run check:review-ledger",
+          "observable": "2 ledger files validated, both valid fail-closed review ledgers, EXIT_CODE=0. This ledger is validated separately and its receipt is recorded in review.ledgerGate.",
+          "freshness": "executor run 2026-08-13, transcript retained",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["check:review-ledger"] }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix-vitest-full.log",
+          "command": "npx vitest run (full suite)",
+          "observable": "Test Files 80 passed (80), Tests 1351 passed (1351), EXIT_CODE=0 — identical counts to the pre-review baseline, so the reviewer's in-round edit to check-css-var-resolvability.mjs regressed nothing.",
+          "freshness": "owner-run 2026-08-14 against the reviewed worktree, after two invalid attempts were rejected (a 32/80 filtered run and a run where vitest never started)",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["full vitest"] }
+        },
+        {
+          "path": "docs/backlog.md",
+          "command": "wc -l docs/backlog.md against git show HEAD:docs/backlog.md | wc -l",
+          "observable": "80 and 80 — content replaced in place, no growth, no BACKLOG LIMIT BREACH. Baseline taken from HEAD, not from the post-edit file.",
+          "freshness": "reviewer re-derivation 2026-08-13/14",
+          "coverageRole": "COVERS",
+          "scope": { "subjects": ["docs/backlog.md line budget"] }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the standing-gate figures were copied from a previous session's transcripts rather than run for this task",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-13-task695-review/postfix2-check-file-integrity.log",
+          "result": "REFUTED for every gate the reviewer could execute — design-tokens, css-vars, mojibake, file-integrity, verify-gate and the F1 probe were all re-run by the reviewer in-round against this worktree, and the full vitest and both comparator runs by the owner. Only build, typecheck, stories and review-ledger are read from the executor's retained transcripts, because the reviewer's shell reaches this repo through a Linux bridge whose node_modules are Windows-native."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "R10 is a standing-gate result criterion."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED in-round by the reviewer, on owner instruction, before commit. runPlantP3's over-match guard compared countDeclarationSites of --text-3xl--line-height before and after the plant; that name is not emitted in the shipped bundle at all (Tailwind inlines line-height into the .text-3xl utility), so the comparison was 0 -> 0 unconditionally and could never fire, while the code comment claimed it 'proves the removal regex doesn't over-match it'. Under the retired target the same guard was live (--overlay-foreground, 1 -> 1). This is the defect class the kickoff's own Handoff names — 'what would have to be broken for this to redden? If nothing, that artifact is the defect' — introduced into the gate's own self-test by the change meant to restore it, and invisible to the gate's 8/8 result. Replaced with a name-agnostic guard: diff the declared-name set of the plant's target file before and after removeDeclarationLine and require that exactly one name disappeared and that it is the plant's target. That guard is structurally always live, because declaredBefore is non-empty by construction, and it catches any over-match rather than one named sibling.",
+      "requirementIds": ["R6"],
+      "evidence": "scripts/check-css-var-resolvability.mjs:774-800; docs/reviews/artifacts/2026-08-13-task695-review/f1-overmatch-guard-probe.mjs and .log (ARM 2 fires on a planted over-match that removes --text-3xl and --text-4xl; ARM 3 shows the retired guard silent on the identical plant); docs/reviews/artifacts/2026-08-13-task695-review/postfix-verify-gate.log (8/8, exit 0 after the fix)."
+    },
+    {
+      "id": "F8",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED in-round on owner instruction, before commit. AC2's rendered proof was captured at a single width — the comparator hardcoded const VIEWPORT = 1024 — while the kickoff §11 declares 'Q3's visual matrix applies to both rendered surfaces' and docs/qa-profiles.md:15 defines Q3 as 'all required Storybook/app widths and all four locales, including mobile stress cells'. The canonical Mantine story matrix is 320/375/390/1024 (check-stories-rendered.mjs MANTINE_VIEWPORTS), so 1 of 4 required widths was captured, and the three mobile widths the profile explicitly calls stress cells were neither measured nor declared as a scoped exception; docs/qa-profiles.md:67 states Q3 cannot be approved without full visual proof. Neither the executor's report nor the reviewer's first pass caught it. Substantive risk was low — all seven migrated sites are inline styles and a Mantine c= prop with no media query — but a silently narrowed matrix is not a declared one. The reviewer parameterised the comparator over MANTINE_VIEWPORTS and the owner re-ran both arms.",
+      "requirementIds": ["R2"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs:78-95 and :216-262; docs/reviews/artifacts/2026-08-13-task695/real-comparator-result.json (112 cells, 0 failures, all four widths present, values at 320px identical to 1024px); docs/reviews/artifacts/2026-08-13-task695/real-comparator-PLANTED.json (2 of 112 fail at the pinned pair, exit 1)."
+    },
+    {
+      "id": "F9",
+      "priority": "P3",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED in-round. check-css-var-resolvability.mjs:30's header docblock still asserted 'zero of the 259 owned names start with --mantine' after Task 695 took the real count to 257. The substance of the claim held; only the number was stale. Rewritten count-free — 'NO owned name starts with --mantine' — rather than updated to 257, because the count is already gated by runControlC3 and re-hardcoding it in prose recreates the same drift on the next token change. The reviewer swept the repo for other live occurrences: the only remaining 259s are the two explanatory '259 -> 257' comments, a line reference in ListingCard.module.css, and frozen historical transcripts.",
+      "requirementIds": ["R6"],
+      "evidence": "scripts/check-css-var-resolvability.mjs:29-31; reviewer grep for '259' across scripts/, src/ and this task's artifact directory."
+    },
+    {
+      "id": "F10",
+      "priority": "P3",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED in-round. Windows PowerShell 5.1's > redirect writes UTF-16LE, so the owner-produced comparator transcripts landed with NUL bytes and a BOM; check:file-integrity reported 'NUL bytes present — file is corrupt' on both, and a later vitest attempt also tripped check:mojibake with 'Not valid UTF-8'. The reviewer re-encoded the two comparator transcripts to UTF-8 without BOM via iconv — a byte-preserving encoding normalisation of the same content, recorded here explicitly because it touches transcript files — and the vitest log was regenerated by the owner through cmd's byte-passthrough redirect. Recorded so the convention is written down: capture Windows transcripts through cmd /c, not PowerShell's >.",
+      "requirementIds": ["R10"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task695-review/postfix2-check-file-integrity.log (51/51 clean); docs/reviews/artifacts/2026-08-13-task695-review/postfix2-check-mojibake.log (0 artifacts in 2367 files)."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "The comparator has no build-identity precondition. requireI0Export() asserts only that the BEFORE directory exists, never that it is the pre-migration revision, so pointing LERO_I0_EXPORT_DIR at a copy of the current tree would produce 112 trivially identical cells and PASS. The reviewer closed the AFTER half from outside the artifact (storybook-static contains zero --color-overlay, and the compiled LightboxView chunk carries var(--overlay-foreground) 10%) and the owner confirmed the BEFORE export still contains --color-overlay, so the recorded result stands — this is hardening, not a refutation. Suggested fix: assert BEFORE's bundle contains var(--color-overlay and AFTER's contains zero, and fail closed otherwise. That is the check that would catch comparing a build to itself.",
+      "requirementIds": ["R2", "R10"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task695/real-before-after-comparator.mjs:98-110."
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "Invariant 1 of the rewritten 692 gate asserts two things — that each name is declared exactly once in the whole file, and that the one declaration lives inside :root — but only the first has a plant. The uncovered regression is a declaration relocated out of :root while the total count stays 1 (back into @theme inline, or into .dark): the existing plant is silent on it and only the untested arm catches it. extractBlock is never exercised against any fixture, so if it ever returned the whole file the second assertion would silently degrade into a duplicate of the first. AC5's wording is 'a planted violation of each invariant it asserts'. Fix is roughly four lines: a fixture with --overlay declared once inside @theme inline and a :root block that does not contain it, asserting the :root-scoped count is 0.",
+      "requirementIds": ["R5"],
+      "evidence": "scripts/__tests__/overlay-dual-declaration.test.ts:91-127."
+    },
+    {
+      "id": "F4",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "The three planted specs assert on the counting helpers rather than on the invariant bodies. Each asserts the helper's return value and mirrors the real expectation with .not.toBe(...), which is a reasonable proxy and matches the precedent this repo already uses, but it means loosening a real-tree assertion — .toBe(1) to .toBeGreaterThan(0), say — would leave all three plants green. The executor documented the choice in §7 of the session log rather than hiding it. Stronger form, if the owner wants it: run the invariant body over the planted fixture and assert it throws.",
+      "requirementIds": ["R5"],
+      "evidence": "scripts/__tests__/overlay-dual-declaration.test.ts:113-127, :141-152, :180-185."
+    },
+    {
+      "id": "F5",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "Invariant 3 makes the unit suite depend on a built .next. It throws when .next/static/css is absent, which is correctly fail-closed, but npx vitest run now hard-fails in any environment that has not built — a fresh clone, or a CI job that runs tests before the build. It also passes against a stale build, since nothing checks freshness. Worth deciding whether a bundle assertion belongs in vitest or in a separate check: script that already sequences after the build.",
+      "requirementIds": ["R5"],
+      "evidence": "scripts/__tests__/overlay-dual-declaration.test.ts:154-178."
+    },
+    {
+      "id": "F6",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "Stale cross-references left behind. Six .module.css header comments still cite globals.css:70-85/:459-471 for the overlay block and describe its removal in the future tense ('which Task 695 removes'); those ranges now point at the semantic-token block and the dark-mode header. MantineListingGalleryPattern.module.css:16 still carries a 'Note for Task 695:' handoff describing work this task completed. None is functional and none is in the kickoff's §7 scope table, but the purpose of those records is navigability.",
+      "requirementIds": ["R9"],
+      "evidence": "src/components/admin/AdminUserAvatar.module.css:2-4; src/components/shared/PerfDevOverlay.module.css:2-4; src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css:2-4 and :16; src/modules/listings/components/ImageUpload.module.css:2-4; src/modules/listings/components/LightboxView.module.css:2-4; src/modules/listings/components/ListingGallery.module.css:2-4."
+    },
+    {
+      "id": "F7",
+      "priority": "P3",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED 2026-08-14, on owner instruction, before commit. Artifact-citation drift inside the task's own evidence directory: the session log's §4.4 table cited final-check-mojibake.log (2338 files) and final-check-file-integrity.log (23 files) while the directory also held -v2 reruns at 2355 and 41 files taken after the log was written, so the cited numbers predated the evidence they covered; step7-verify-gate-8of8.log was cited as the 8/8 proof but shows 'C3 (PASS) — block: owned=257 (expect 259)', an intermediate state where the comparison had been updated and the message string had not; and the 28-cell comparator-real-run.log and comparator-planted-run.log cited result JSONs that the 112-cell F8 rerun had overwritten, leaving both dangling. All six citations in the session log were repointed — §1's R2/AC2 row, §4.2's real and planted runs, §4.3 step 5, and §4.4's mojibake and file-integrity rows — and a dated note 'Post-review artifact reconciliation — 2026-08-14' records that the 4-viewport rerun supersedes the 28-cell transcripts. The two superseded logs were renamed to *.SUPERSEDED-28cell.log by the owner rather than deleted, so the 28-cell run stays auditable. No transcript's contents were edited; only the log's references to them.",
+      "requirementIds": ["R10"],
+      "evidence": "docs/sessions/2026-08-13-task695-overlay-namespace-exit.md:10-19 (the dated reconciliation note), :26 (R2/AC2 row → comparator-real-run-4vp.log 112/112 and comparator-planted-run-4vp.log 2/112, plant pinned at en × desktop-1024), :106-109 (§4.2 run citations), :122-123 (§4.3 step 5 → docs/reviews/artifacts/2026-08-13-task695-review/postfix-verify-gate.log), :136-137 (§4.4 → final-check-mojibake-v2.log 2355 files, final-check-file-integrity-v2.log 41/41), :215 (§8 handoff → 112/112 PASS and --plant 2/112 FAIL); docs/reviews/artifacts/2026-08-13-task695/comparator-real-run.SUPERSEDED-28cell.log and comparator-planted-run.SUPERSEDED-28cell.log (retired by rename, contents untouched); reviewer grep across the session log for the retired filenames and the superseded counts (28/28, 2/28, 2338, 23/23, step7-verify-gate-8of8) returns no residual hit."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "R10",
+    "reviewer": "Opus orchestrator review, round 1, 2026-08-13/14. Every P0 was re-derived against the tree rather than read from the report: both §13 censuses re-run to 0, the globals.css diff read in full to confirm :root:455-456 is byte-unchanged, extractOwnedNames measured at 257 with exactly the two --color-overlay* names absent, P3's replacement precondition measured against the real bundle (1 shipped declaration, 0 shipped var() references, owned, live consumer at page.tsx:31), the AFTER storybook build proven post-migration from its own compiled output, the comparator's cell values inspected for non-degeneracy rather than its summary line, and the I0 and final route tables diffed byte-for-byte. Two defects were found that the executor's report and the second reviewer's pass both missed: F1, a gate self-test guard that could not have come out wrong, invisible to the gate's own 8/8 green; and F8, an AC2 matrix silently narrowed to one of four required widths. Both were fixed in-round on owner instruction and re-verified, F1 with a probe that shows the new guard firing and the retired one silent on the identical plant. Finding tally at close: 10 findings, 5 RESOLVED in-round (F1 and F8 at P2, F9, F10 and F7 at P3) and 5 OPEN, all P3 and none blocking — F2 (comparator has no build-identity precondition), F3 (invariant 1's only-inside-:root arm is asserted but never planted), F4 (the plants assert on the counting helpers rather than the invariant bodies), F5 (invariant 3 makes the unit suite depend on a built .next) and F6 (six .module.css comments cite globals.css line ranges the deletion invalidated). F7 was closed last, after the session log's six stale citations were repointed and the two 28-cell comparator transcripts were retired to *.SUPERSEDED-28cell.log rather than deleted. R10's build, typecheck, stories and review-ledger rows are read from the executor's retained transcripts rather than re-executed, because this reviewer's shell reaches the repo through a Linux bridge and the repo's node_modules are Windows-native; that is the lowest-evidence row in this ledger and it is named here rather than left to inference. Nothing is committed — that remains the owner's action under standing git policy, which also means AC10's 'every cited path committed, git ls-files count quoted per path' is not satisfiable by an executor and is a defect in the kickoff, not in the work."
+  }
+}

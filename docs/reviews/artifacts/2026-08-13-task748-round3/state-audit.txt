@@ -1,0 +1,35 @@
+STATE AUDIT — reviewer, round 3, 2026-08-13T17:54Z
+
+$ git rev-parse HEAD
+647b95adf0e4c76a24a88b21aa199692cf6aa3fc
+
+src/ untouched this round — file mtimes all predate the 17:1x session start:
+  12:59:29 src/components/shared/PerfDevOverlay.module.css
+  13:52:14 src/components/shared/PerfDevOverlay.tsx
+  13:54:40 src/modules/listings/components/ListingGallery.module.css
+  RR1 fix intact:
+    83:        <div className={cn(!priorityOver && styles.metricRow, priorityOver && 'text-destructive font-bold')}>
+    88:        <div className={cn(!predictiveOver && styles.metricRow, predictiveOver && 'text-destructive font-bold')}>
+  RR2 override intact:
+    71:    color: var(--foreground);
+
+$ git diff src/app/globals.css | wc -l
+0
+
+$ <the §13 census one-liner>
+TOTAL 0
+
+$ git ls-files <each cited path> | wc -l
+  docs/reviews/artifacts/2026-08-13-task748                                                  14
+  docs/reviews/artifacts/2026-08-13-task748-rework                                           63
+  docs/reviews/artifacts/2026-08-13-task748-round2                                           9
+  docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json             1
+
+brand[9] vs the comparator's injected MANTINE_BRAND_9:
+  23:  '#8E322B', // 9 — brand-900
+  282:const MANTINE_BRAND_9 = '#8E322B'; // src/design-system/brand.ts brand[9] — light-only theme, static
+
+H2 arithmetic reconciliation of the un-transcripted gate numbers:
+  report: check:mojibake 0/2318 — reviewer measured 2322 with 4 reviewer probe files present; 2322-4 = 2318 EXACT
+  report: check:file-integrity 24/24 — 6 M artifacts + 1 M session log + 1 M backlog + 6 M src + 6 ?? src modules + 4 ?? new artifacts = 24 EXACT
+  retained transcripts under those names are the PREVIOUS session's: 2303 files / 76 files (14:48), i.e. different runs

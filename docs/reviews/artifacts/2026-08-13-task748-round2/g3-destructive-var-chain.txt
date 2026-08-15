@@ -1,0 +1,19 @@
+PROOF G3 - why the PerfDevOverlay Part B witness measures rgb(0, 0, 0) on both sides.
+
+Variable chain for .text-destructive:
+  bundle rule           .text-destructive{color:var(--destructive)}
+  globals.css:411      --destructive:         var(--brand-900);      (inside :root, line 350)
+  globals.css:365      --brand-900: var(--mantine-color-brand-9);  /* #8E322B */
+  --mantine-color-brand-9 present in .next/static/css ?  NO
+
+MantineProvider injects the --mantine-color-* set at RUNTIME. A harness page that serves
+only the concatenated .next/static/css therefore leaves the chain unresolved, the
+declaration is invalid at computed-value time, and color falls back to the UA default for
+a <button> (canvastext) = rgb(0, 0, 0). That is a measurement artefact of the harness, not
+a value either phase of the app renders. A fail-closed comparator should reject an
+initial-value fallback rather than score it as a match.
+
+Also corrected: the session log cites oklch(0.58 0.22 27) as "the real production value"
+measured by the reviewer. It is not — that was a PLACEHOLDER in the reviewer's own
+cascade-repro.mjs, now labelled as such. The real value is #8E322B (--mantine-color-brand-9).
+F-A was and remains a DELTA claim, unaffected by which red stands in.

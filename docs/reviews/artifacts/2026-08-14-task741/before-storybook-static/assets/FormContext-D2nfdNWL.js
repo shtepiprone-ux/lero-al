@@ -1,0 +1,1 @@
+import{r}from"./iframe-BWqC60Cj.js";import{N as t}from"./useRenderElement-DCWLj8DQ.js";const e=r.createContext({formRef:{current:{fields:new Map}},errors:{},clearErrors:t,validationMode:"onSubmit",submitAttemptedRef:{current:!1}});function s(){return r.useContext(e)}export{s as u};

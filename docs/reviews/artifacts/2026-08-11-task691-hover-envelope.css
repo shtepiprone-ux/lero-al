@@ -1,0 +1,16 @@
+/* Task 691 review — EXACT candidate 'group-hover:[--text-color:var(--primary)]' compiled from the repo's own
+   tailwindcss 4.3.0 with src/app/globals.css as the real compiler input. Base revision: HEAD 10bc8966c (the
+   pre-change state; the Task 691 edit is uncommitted). NOT a sibling utility, NOT the post-change bundle. */
+
+.group-hover\:\[--text-color\:var\(--primary\)\] {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        --text-color: var(--primary);
+      }
+    }
+  }
+}
+/* AFTER — the replacement, verbatim from the final module and the shipped chunk: */
+   228:.card:hover .cardTitle {
+   229-  --text-color: var(--primary);
+   230-}

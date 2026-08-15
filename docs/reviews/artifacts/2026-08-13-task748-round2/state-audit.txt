@@ -1,0 +1,28 @@
+STATE AUDIT — reviewer, round 2, 2026-08-13T15:03Z
+
+$ git rev-parse HEAD
+ce22b1b5ee8e7e78f5923b77c56f7fc485ac6522
+
+$ <the §13 census one-liner, verbatim>
+TOTAL 0
+
+$ git --no-optional-locks diff src/app/globals.css
+(empty)
+
+$ wc -l docs/backlog.md
+80 docs/backlog.md
+
+$ git --no-optional-locks status --short docs/reviews/artifacts/2026-08-13-task748/ docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json
+ M docs/reviews/artifacts/2026-08-13-task748/README.md
+ M docs/reviews/artifacts/2026-08-13-task748/cascade-repro.mjs
+(only the reviewer's own round-2 correction to cascade-repro.mjs/README.md; the executor touched neither)
+
+$ npm run check:mojibake | tail -1
+check:mojibake: 0 artifacts in 2311 files
+
+aria-expanded emitted by base-ui Button?
+0
+0
+dark variant strategy:
+27:@custom-variant dark (&:is(.dark *));
+any .dark toggle in src/:

@@ -1,0 +1,1 @@
+import{N as n,V as i,a as t}from"./notificationVariants-Cpi4EkRJ.js";import{n as a}from"./iframe-BWqC60Cj.js";function s(o,r){a.show({message:r,color:t[o],icon:i[o],autoClose:n})}const e={success:o=>s("success",o),error:o=>s("error",o),info:o=>s("info",o),warning:o=>s("warning",o)};export{e as t};

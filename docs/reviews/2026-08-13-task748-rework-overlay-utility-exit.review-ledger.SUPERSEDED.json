@@ -1,0 +1,684 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-748 REWORK — RR1–RR7 remediation of the overlay utility exit (Sprint 46.11, round 2)",
+  "review": {
+    "decision": "NEEDS REVISION",
+    "baseRevision": "ce22b1b5ee8e7e78f5923b77c56f7fc485ac6522",
+    "reviewedRevision": "base ce22b1b5ee8e7e78f5923b77c56f7fc485ac6522 (docs-only on top of the parent I0 d3ffd6d6c51d9e968a47aabaaff46dcd69055a0f, so src/ content is identical to that I0) plus the UNCOMMITTED Task 748 REWORK change set. This ledger reviews the remediation of the three P0 findings raised by its predecessor. The two code fixes are correct and independently re-verified; every open finding here is in the evidence apparatus, not in src/ — but one of them (G3) defeats a P0 acceptance criterion of the rework contract and is graded accordingly. The reviewer wrote no file under src/ and committed nothing; the only reviewer edits are a self-correction to two of its own round-1 artifacts.",
+    "reviewedPaths": [
+      "src/components/shared/PerfDevOverlay.tsx",
+      "src/components/shared/PerfDevOverlay.module.css",
+      "src/modules/listings/components/ListingGallery.tsx",
+      "src/modules/listings/components/ListingGallery.module.css",
+      "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx",
+      "src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css",
+      "src/modules/listings/components/ImageUpload.tsx",
+      "src/modules/listings/components/ImageUpload.module.css",
+      "src/modules/listings/components/LightboxView.tsx",
+      "src/modules/listings/components/LightboxView.module.css",
+      "src/components/admin/AdminUserAvatar.tsx",
+      "src/components/admin/AdminUserAvatar.module.css",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+      "docs/reviews/artifacts/2026-08-13-task748-rework"
+    ],
+    "supersedes": [
+      "docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.SUPERSEDED.json"
+    ],
+    "coverage": {
+      "total": 7,
+      "verified": 3,
+      "unverified": 4,
+      "openP0": 1,
+      "openP1": 3,
+      "openP2": 4
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "RR1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/shared/PerfDevOverlay.tsx",
+        "symbol": "cn(!priorityOver && styles.metricRow, priorityOver && 'text-destructive font-bold') at :82, and the predictive row at :87",
+        "diffHunks": [
+          "PerfDevOverlay.tsx:74-88"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "PerfDevOverlay priority row",
+          "PerfDevOverlay predictive row"
+        ],
+        "states": [
+          "over-budget",
+          "under-budget"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "class-list resolution is story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/rr1-branch-equivalence.txt",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-round2/rr1-branch-equivalence.mjs",
+          "observable": "4 branches checked, 0 not equivalent, exit 0. over-budget: both sides resolve to exactly 'text-destructive font-bold'. under-budget: 'text-overlay-foreground/70' -> the module class, the intended migration.",
+          "freshness": "reviewer run 2026-08-13 against the reviewed worktree, expressions transcribed from git show d3ffd6d6c and the current tree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "PerfDevOverlay priority row",
+              "PerfDevOverlay predictive row"
+            ],
+            "states": [
+              "over-budget",
+              "under-budget"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the executor's Part B harness cell is what verifies RR1",
+          "kind": "independent-method",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/g3-destructive-var-chain.txt",
+          "result": "REFUTED as the primary proof — that cell measures rgb(0, 0, 0) on both sides because --destructive cannot resolve there. RR1 is nevertheless VERIFIED, on the class-list comparison above, which needs no stylesheet and cannot be fooled by an unresolvable custom property."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR1 is a class-list equivalence criterion; the module rule text is unchanged from the parent submission and was verified there."
+      }
+    },
+    {
+      "id": "RR2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "G6"
+      ],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingGallery.module.css",
+        "symbol": ".photoCountButton and its @media (hover: hover) :hover override",
+        "diffHunks": [
+          "ListingGallery.module.css .photoCountButton block"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "ListingGallery photo-count Button"
+        ],
+        "states": [
+          "rest",
+          "hover",
+          "aria-expanded",
+          "dark"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "ListingGallery has no canonical story — established by the parent's own corrected §3.6",
+          "locales": "no measured property depends on locale",
+          "viewports": "the hover rule is width-independent; the button is md:hidden but the cascade is not viewport-conditional"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "command": "read ListingGallery.module.css; grep aria-expanded in node_modules/@base-ui/react/button/Button.js; grep the dark variant strategy and any .dark toggle in src/",
+          "observable": "rest color var(--overlay-foreground); hover color var(--foreground) under the same @media (hover: hover) guard the pre-migration .hover\\:text-foreground:hover carried — exact reproduction of the measured pre-migration cascade. aria-expanded: 0 occurrences in base-ui's Button and not passed at the call site. dark: is @custom-variant dark (&:is(.dark *)), class-based, and no ThemeProvider/next-themes/.dark toggle exists in src/ — so neither state is reachable.",
+          "freshness": "reviewer run 2026-08-13 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "ListingGallery photo-count Button"
+            ],
+            "states": [
+              "rest",
+              "hover",
+              "aria-expanded",
+              "dark"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+          "observable": "listingGallery-photoCountButton rest oklch(1 0 0) and hover oklch(0.145 0 0), before === after at 320/375/480",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "ListingGallery photo-count Button"
+            ],
+            "states": [
+              "rest",
+              "hover"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the two N/A state dispositions were asserted rather than measured",
+          "kind": "dependency-and-source-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "result": "REFUTED — both were re-measured by the reviewer from node_modules and from globals.css, and both hold. The executor's DOM evidence is correct."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The owner authorised an exact-equivalence implementation that intentionally reproduces a losing cascade outcome, so the criterion is rendered-state equivalence, not compiled-rule identity with a Tailwind candidate."
+      }
+    },
+    {
+      "id": "RR3",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+        "symbol": "the replacement two-phase comparator, Part A and Part B",
+        "diffHunks": [
+          "PART_A_SITES and capturePartACell",
+          "PART_B_WITNESSES and capturePartBCell"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Part A — the 3 story-backed sites",
+          "Part B — the PerfDevOverlay budget rows",
+          "Part B — the ListingGallery photo-count Button"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Part B's subjects have no story by construction — that is why the harness-page route was authorised",
+          "locales": "Part A runs all four; locale is not where the criterion fails",
+          "viewports": "Part A runs all fourteen; viewport is not where the criterion fails",
+          "states": "handled per subject inside each part"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+          "observable": "Part A: 168 cells, all OK. Both phases resolve a REAL element in their own DOM — BEFORE by its pre-migration Tailwind class in a clean I0 storybook build, AFTER by its hashed module class — and diff two real getComputedStyle captures. This is the genuine live/live diff RR3.1 required.",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Part A — the 3 story-backed sites"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-PLANTED.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs --plant",
+          "observable": "2 failures, exit 1 — the plant corrupts the AFTER (subject) measurement in both Part A and Part B, as RR3.3 required, and both reddened",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Part A — the 3 story-backed sites",
+              "Part B — the ListingGallery photo-count Button"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs (Part B, listingGallery-photoCountButton rest + hover at 320/375/480)",
+          "observable": "before === after in all 6 cells: rest oklch(1 0 0), hover oklch(0.145 0 0). Unlike the PerfDevOverlay witness, this one does resolve the property under test — --overlay-foreground and --foreground are both static :root values present in the bundle — so the cell is a real measurement, subject only to the fixture-provenance defect recorded as G4.",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Part B — the ListingGallery photo-count Button"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/g3-destructive-var-chain.txt",
+          "command": "trace .text-destructive's custom-property chain against .next/static/css",
+          "observable": "the PerfDevOverlay witness measures rgb(0, 0, 0) on both sides because --mantine-color-brand-9 is runtime-injected and absent from the static bundle; the comparator scores an initial-value fallback as a match, defeating AC3's fail-closed requirement",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "GAP_WITNESS",
+          "scope": {
+            "subjects": [
+              "Part B — the PerfDevOverlay budget rows"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [
+        {
+          "scope": {
+            "subjects": [
+              "Part B — the PerfDevOverlay budget rows"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          },
+          "findingId": "G3",
+          "reason": "Both phases report rgb(0, 0, 0) — the UA default for a <button> after --destructive fails to resolve — so the cell can neither confirm the fix nor detect a break on the property under test, and the comparator scores the fallback as agreement rather than failing closed. That is a direct miss against AC3, hence G3 is P0. It would still have caught an unfixed state, because the module rule resolves without Mantine's runtime variables, so the failure is in the apparatus and not in what ships."
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "Part B's className strings are byte-identical to the real tailwind-merge output, as the comparator's own header states",
+          "kind": "fixture-vs-computation",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/g4-fixture-vs-real-classlist.txt",
+          "result": "REFUTED, exit 1 — the BEFORE fixture carries text-foreground and hover:bg-muted, which real tailwind-merge deletes, as that very folder's own E12 row shows. The measured value is right only because .text-overlay-foreground source-orders after .text-foreground at equal specificity."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR3 is a measurement-apparatus criterion."
+      }
+    },
+    {
+      "id": "RR4",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": [
+        "G1",
+        "G2"
+      ],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs",
+        "symbol": "the re-run D34 pass and its regression gate (KNOWN_FIXED, line 89)",
+        "diffHunks": [
+          "line 25 KNOWN_FIXED",
+          "line 89 isKnown",
+          "E6a/E6b/E7a/E7b"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "all 18 touched elements",
+          "the gate's ability to fail on the 3 fixed sites"
+        ],
+        "notApplicable": {
+          "stories": "class-list resolution is story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "both branches of each conditional site are enumerated as separate cases",
+          "phases": "before and after are compared inside each case"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs",
+          "observable": "19 cases, coverage of all 18 touched elements with both branches of the two conditional rows — the re-measurement itself is complete and its per-site conclusions for the 16 untouched sites are correct. But E6b and E7b are printed as DELTA with 'OVERLAY DECLARATION ADDED' although their before and after strings are byte-identical.",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "all 18 touched elements"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/g1-gate-blindness.txt",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-round2/g1-gate-blindness-probe.mjs",
+          "observable": "the submitted harness with the RR1 fix reverted still reports 'unexpected (not already known/fixed): 0' and exits 0, with a summary line identical to the passing run",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "GAP_WITNESS",
+          "scope": {
+            "subjects": [
+              "the gate's ability to fail on the 3 fixed sites"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [
+        {
+          "scope": {
+            "subjects": [
+              "the gate's ability to fail on the 3 fixed sites"
+            ]
+          },
+          "findingId": "G1",
+          "reason": "The whitelist at line 89 keys on the case id, unconditionally, so E6/E7/E12 can never contribute to unexpectedMoves. A full regression of RR1 or of RR2's compensation passes the gate at exit 0. The three sites the gate exists to protect are the three it cannot see."
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "the DELTA rows for E6b/E7b are a real finding the gate correctly forgives",
+          "kind": "string-identity-check",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/rr1-branch-equivalence.txt",
+          "result": "REFUTED — the two strings are byte-identical ('text-destructive font-bold'), so there is no delta to forgive. The detector never checks whether the after side carries a module class, an assumption that stopped holding the moment RR1 began omitting it conditionally. The summary should read moved: 1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR4 is a cascade-contest re-measurement criterion."
+      }
+    },
+    {
+      "id": "RR5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+        "symbol": "§R6 — 695 handoff, all 7 live references",
+        "diffHunks": [
+          "§R6"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "everything that still keeps the --color-overlay* namespace alive"
+        ],
+        "notApplicable": {
+          "stories": "an inventory is story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748/live-color-overlay-refs.txt",
+          "command": "enumerate non-comment var(--color-overlay*) references under src/ and compare against §R6's list",
+          "observable": "all 7 named with file and line, correctly scoped out as not-to-be-migrated, and correctly identified as the real remaining obstacle to 695 rather than the two comment strings",
+          "freshness": "reviewer run 2026-08-13; §R6 re-read the same day",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "everything that still keeps the --color-overlay* namespace alive"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the executor migrated one of the seven while reporting it",
+          "kind": "diff-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "result": "REFUTED — all 7 are still present and unmodified; no src/ file outside the parent's named scope was touched"
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR5 is a reporting-completeness criterion."
+      }
+    },
+    {
+      "id": "RR6",
+      "priority": "P1",
+      "status": "UNVERIFIED",
+      "findingIds": [
+        "G8"
+      ],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework",
+        "symbol": "the relocated evidence set",
+        "diffHunks": [
+          "new directory, 40+ files"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every evidence path the report or a ledger cites"
+        ],
+        "notApplicable": {
+          "stories": "retention is story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "command": "git status --short over the artifact directories; check .gitignore coverage",
+          "observable": "NOT MET. AC6 requires that every cited evidence path resolve FROM A FRESH CLONE and that git status --porcelain not show the artifact folder as ??. Both halves fail: git ls-files docs/reviews/artifacts/2026-08-13-task748-rework returns 0, likewise …-task748-round2 and this ledger itself, and all three appear as ?? in porcelain. Untracked files are absent from a clone by definition. What HAS been achieved is the relocation out of the ignored .screenshots/ path, which is what F-F was about — but relocation is a precondition of AC6, not AC6. The reviewer's round-1 folder IS tracked (14 files, committed in ce22b1b5e) and was not modified by the executor; that is the shape the rework set has not yet reached.",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "GAP_WITNESS",
+          "scope": {
+            "subjects": [
+              "every evidence path the report or a ledger cites"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [
+        {
+          "scope": {
+            "subjects": [
+              "every evidence path the report or a ledger cites"
+            ]
+          },
+          "findingId": "G8",
+          "reason": "No fresh-clone check can pass while the artifact set is untracked, so the criterion is not merely unproven — it is currently false. It becomes provable only after a commit; staging removes the ?? marker but puts nothing in a clone."
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "moving the evidence out of .screenshots/ satisfies AC6",
+          "kind": "criterion-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "result": "REFUTED — AC6's binding clause is 'resolves from a fresh clone'. Relocation out of an ignored path is necessary and not sufficient; only a commit puts a file in a clone. An earlier issue of this ledger graded RR6 VERIFIED on the relocation alone, which was wrong and is corrected here."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR6 is an evidence-retention criterion."
+      }
+    },
+    {
+      "id": "RR7",
+      "priority": "P0",
+      "status": "INFERENCE",
+      "findingIds": [
+        "G7"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+        "symbol": "the standing-gate table and AC7 restatement",
+        "diffHunks": [
+          "§REWORK gate table"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "census",
+          "globals.css",
+          "the standing gates"
+        ],
+        "notApplicable": {
+          "stories": "gate results are story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt",
+          "command": "the §13 census one-liner; git diff src/app/globals.css; wc -l docs/backlog.md; npm run check:mojibake; npm run check:review-ledger --file",
+          "observable": "census TOTAL 0; globals.css diff empty; backlog 80 lines; mojibake clean; ledger gate clean. Re-measured by the reviewer.",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "census",
+              "globals.css",
+              "the standing gates"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/vitest-full-rework.txt",
+          "command": "npx vitest run",
+          "observable": "80 files, 1347/1347 passed, exit 0 — executor's native run; the reviewer's bridge cannot execute vitest (Windows-built rollup binding on a Linux bridge)",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the standing gates"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the reviewer independently confirmed the test suite and build figures",
+          "kind": "environment-limitation",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round2/README.md",
+          "result": "NOT REFUTED — it did not. Census, globals.css, backlog length, mojibake and the ledger gate were re-measured here; vitest, build and the repo-wide ledger run are carried from the executor's native transcripts. Hence INFERENCE, and G7."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RR7 is a no-regression criterion over standing gates."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "G1",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "The RR4 regression gate cannot fail on the three sites it exists to protect. twmerge-class-resolution-all18.mjs:89 computes isKnown with clauses that are unconditional on the whitelist entry — c.id.includes('priority row') || c.id.includes('predictive row') || c.id.includes('photoCountButton') — so E6/E7/E12 can never increment unexpectedMoves. Reverting the RR1 fix leaves the gate at exit 0 with a summary line identical to the passing run. This is the project's own named Sprint 52 defect class: a blocking gate that silently never fires. The whitelist must key on the expected delta SIGNATURE for each site, so that a different delta — or a delta where none is expected — still reddens.",
+      "requirementIds": [
+        "RR4"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/g1-gate-blindness.txt and its re-runnable probe g1-gate-blindness-probe.mjs — the submitted harness byte-identical except the RR1 fix is reverted in the two E*b after-side expressions; output shows both rows as DELTA, 'unexpected (not already known/fixed): 0', EXIT_CODE=0."
+    },
+    {
+      "id": "G2",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "The RR4 artifact contradicts the submission's headline claim. E6b and E7b print '>> DELTA … !! OVERLAY DECLARATION ADDED (twMerge had deleted the utility before)' on rows whose before and after strings are byte-identical ('text-destructive font-bold'). The detector only tests whether an overlay utility reached the element BEFORE; it never checks whether the after side carries a module class — an assumption inherited from the reviewer's own round-1 9-case witness, which stopped holding the moment RR1 began omitting the module class conditionally. The report then rationalises the false positive: 'RR1/RR2 fixed them at the CSS-module level, not by restoring the deleted-utility className behavior.' For E6b/E7b that is wrong — `!priorityOver && styles.metricRow` is precisely restoring it. The summary should read moved: 1 (E12 only), and the submission's 'class-list identity … zero delta' claim should match its own artifact.",
+      "requirementIds": [
+        "RR4"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt lines 25-28 and 75-78 (identical before/after strings, DELTA verdict) against docs/reviews/artifacts/2026-08-13-task748-round2/rr1-branch-equivalence.txt (4 branches, 0 not equivalent, exit 0)."
+    },
+    {
+      "id": "G3",
+      "priority": "P0",
+      "status": "OPEN",
+      "requirements": "P0 because it defeats RR3/AC3 directly: the rework contract required a comparator that measures real before/after values or fails closed, and for this witness it does neither. Both PerfDevOverlay Part B cells report rgb(0, 0, 0): .text-destructive{color:var(--destructive)} -> globals.css:411 --destructive: var(--brand-900) -> :365 --brand-900: var(--mantine-color-brand-9), which MantineProvider injects at runtime and which is absent from .next/static/css. In a bare harness page the chain is unresolved, the declaration is invalid at computed-value time, and color falls back to the UA default for a <button>. The comparator scores that fallback as agreement instead of rejecting it, so the cell can neither confirm the fix nor detect a break on the property under test. §R2 attributes the difference to 'a purpose-built reduced stylesheet vs the full concatenated bundle' — the symptom, not the cause — and cites oklch(0.58 0.22 27) as the reviewer's measurement of 'the real production value'; that was a placeholder in the reviewer's own harness, now labelled as such, and the real value is #8E322B. The cell would still have caught an unfixed state, because the module rule resolves without Mantine's runtime variables, which is why this is a P0 in the apparatus and not a rendered regression. Fix: inject Mantine's runtime custom properties into the harness page, or assert that a measured value is not the property's initial/UA default and fail the cell when it is.",
+      "requirementIds": [
+        "RR3"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/g3-destructive-var-chain.txt — the full variable chain plus the negative result for --mantine-color-brand-9 across every file in .next/static/css. Reviewer self-correction appended to docs/reviews/artifacts/2026-08-13-task748/README.md and to cascade-repro.mjs's header."
+    },
+    {
+      "id": "G4",
+      "priority": "P2",
+      "status": "OPEN",
+      "requirements": "A provenance claim in the comparator is false. real-before-after-comparator.mjs:38-40 states the Part B className strings are 'verified byte-identical against twmerge-class-resolution-all18.mjs's output, not invented'. For the two ListingGallery witnesses the BEFORE fixture carries text-foreground and hover:bg-muted, which real tailwind-merge deletes — as that same folder's own E12 row shows. The measured colour is nevertheless correct, because .text-overlay-foreground source-orders after .text-foreground at equal specificity in the shipped bundle, but that is luck the fixture does not encode. Either derive the strings from the real expressions or drop the byte-identical claim.",
+      "requirementIds": [
+        "RR3"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/g4-fixture-vs-real-classlist.txt — exit 1, 'present in the fixture but NOT in the real class list: text-foreground hover:bg-muted'."
+    },
+    {
+      "id": "G5",
+      "priority": "P2",
+      "status": "OPEN",
+      "requirements": "The replacement comparator is not reproducible from a fresh clone. BEFORE_STATIC (line 57) and buildHarnessCss's argument (line 292) hardcode C:/Claude_Code_Projects/lero-al-i0-d3ffd6/..., an absolute machine-local path outside the repository, so the harness runs only on the machine that happens to hold that export at that exact location. Both paths DO currently exist on the owner's machine (owner-confirmed 2026-08-13) — the defect is the external absolute dependency and the resulting non-reproducibility, not a missing directory. It should take the I0 revision as an argument and create the export itself via git archive, or resolve the path relative to the repo root and fail with a clear actionable message when it is absent.",
+      "requirementIds": [
+        "RR3"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs:57 and :292 — two hardcoded absolute paths outside the repository, with no argument or fallback. REVIEWER CORRECTION (round 2): this finding first asserted the export had been deleted. That was unfounded. The reviewer's bridge mounts only C:\\Claude_Code_Projects\\lero-al, so no sibling directory is observable from it, and a failing `ls` there was evidence of the mount boundary, not of a deletion. The owner confirms both paths exist. See docs/reviews/artifacts/2026-08-13-task748-round2/README.md, 'Reviewer corrections'."
+    },
+    {
+      "id": "G6",
+      "priority": "P2",
+      "status": "OPEN",
+      "requirements": "RR2's owner authorisation is recorded as prose without a cited artifact. §R3 states 'Owner answer (2026-08-13): authorized exact equivalence, with the exact form specified…', but the rework kickoff required an owner-decision artifact cited in the report, and an executor asserting an owner decision it cannot point at is exactly what a review must not wave through. The owner has since confirmed the authorisation directly to the reviewer (2026-08-13, round-2 review thread), so the decision itself is sound and RR2 is VERIFIED — this ledger is that citation. §R3 should reference it so the record is self-contained.",
+      "requirementIds": [
+        "RR2"
+      ],
+      "evidence": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md §R3, lines 336-345 — the authorisation appears with no artifact reference. Owner confirmation obtained by the reviewer in the round-2 review thread and recorded here."
+    },
+    {
+      "id": "G7",
+      "priority": "P2",
+      "status": "OPEN",
+      "requirements": "Three reported results are carried, not independently re-verified: the 1347/1347 vitest suite with its 4/4 portal arm, npm run build's exit code and 619 kB First Load JS, and the repo-wide check:review-ledger run. The reviewer's Linux bridge cannot execute vitest or the ledger validator's Tailwind arm because node_modules holds Windows-built rollup and lightningcss bindings. Census, globals.css, backlog length, mojibake and the single-file ledger gate were re-measured here. Recorded so the ledger's weakest evidence is named rather than implied; same limitation class as the one recorded for Task 700.",
+      "requirementIds": [
+        "RR7"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/README.md, section 'Not re-run by the reviewer'. Executor transcripts at docs/reviews/artifacts/2026-08-13-task748-rework/vitest-full-rework.txt, portal-smoke-rework.txt, check-review-ledger-repowide.txt."
+    },
+    {
+      "id": "G8",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "The evidence set is not committed, so AC6's fresh-clone condition is not demonstrated — and, as things stand, is false. docs/reviews/artifacts/2026-08-13-task748-rework/, docs/reviews/artifacts/2026-08-13-task748-round2/ and docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json all return 0 from git ls-files and appear as ?? in git status --porcelain; a clone of this repository contains none of them. Note that staging is NOT the closing action: it clears the ?? marker but a staged-uncommitted file is still absent from any clone. The closing action is a docs-only commit of the artifact set, exactly as the owner did for the round-1 folder in ce22b1b5e — which is available now, because commitPush: PROHIBITED governs the src/ change set under review, not the evidence record about it. Until that commit exists, RR6 stays UNVERIFIED and no report may describe these paths as tracked or as fresh-clone resolvable. Reviewer note: AC6's own second clause ('staged, not ??') is weaker than its first and should have read 'committed'; the fresh-clone clause governs.",
+      "requirementIds": [
+        "RR6"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt and a per-path git ls-files sweep: …-task748 -> 14 tracked; …-task748-rework -> 0; …-task748-round2 -> 0; the round-2 ledger -> 0; the REWORK2 kickoff -> 0. AC6 verbatim at tasks/Sprints/Sprint_46_kickoff_prompt_Task_748_REWORK_OverlayUtilityExit_DeTailwind.md:217-218."
+    }
+  ],
+  "handoff": {
+    "commitPush": "PROHIBITED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "RR7",
+    "reviewer": "Opus orchestrator review, round 2 (corrected twice, 2026-08-13, on owner instruction). Both code fixes were re-derived independently rather than read from the report: RR1 by evaluating the real className expressions from both trees across all four branches, RR2 by re-reading the module rule against the measured pre-migration cascade and re-checking both N/A state claims from node_modules and globals.css. Three corrections to this ledger's own earlier issues, all owner-raised and all accepted: G3 was mis-graded P1 while defeating a P0 criterion; G5 asserted a deletion the reviewer could not have observed from a bridge that mounts only the repository; and RR6 was graded VERIFIED on relocation out of .screenshots/ when its criterion is fresh-clone resolvability, which untracked files cannot satisfy. No open finding is a rendered regression. The reviewer wrote no file under src/."
+  }
+}

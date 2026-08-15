@@ -1,0 +1,6 @@
+
+> lero-al@0.1.0 check:css-vars
+> node scripts/check-css-var-resolvability.mjs
+
+❌  check:css-vars — shipped CSS (newest 2026-08-13T12:46:00.215Z) is older than src\design-system\mantine\patterns\MantineListingGalleryPattern.module.css (2026-08-13T13:00:01.959Z) — rebuild with "npm run build"
+EXIT_CODE=1

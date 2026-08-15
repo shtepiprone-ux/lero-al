@@ -1,0 +1,166 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-000 — short outcome",
+  "review": {
+    "decision": "PARTIALLY VERIFIED",
+    "baseRevision": "0000000000000000000000000000000000000000",
+    "reviewedRevision": "worktree or immutable commit identity inspected after the final change",
+    "reviewedPaths": [
+      "src/example.ts",
+      "docs/sessions/2026-01-01-task000-example.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 1,
+      "verified": 0,
+      "unverified": 1,
+      "openP0": 0,
+      "openP1": 1,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": ["F1"],
+      "finalSubject": {
+        "path": "src/example.ts",
+        "symbol": "ExampleComponent",
+        "diffHunks": ["src/example.ts:42"]
+      },
+      "requiredScope": {
+        "subjects": ["ExampleComponent/default"],
+        "stories": ["patterns-example--default"],
+        "locales": ["en", "sq", "uk", "it"],
+        "viewports": ["320", "1024"],
+        "states": ["rest", "hover"],
+        "phases": ["before", "after"],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-01-01-task000-example.md",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "Persisted manifest records the exact visual verdict for the listed tuples.",
+          "freshness": "final build for the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["ExampleComponent/default"],
+            "stories": ["patterns-example--default"],
+            "locales": ["en", "sq", "uk", "it"],
+            "viewports": ["320", "1024"],
+            "states": ["rest", "hover"],
+            "phases": ["before", "after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The negative interaction/state cannot pass through the positive-path assertion.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-01-01-task000-example.md",
+          "result": "Quote the observed failing arm or a concrete contradictory artifact."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "Use EXACT_GENERATED for generated CSS/selectors/policy-sensitive syntax; otherwise use NOT_APPLICABLE with the concrete reason."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "The exact removed candidate; never a sibling utility or example.",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "Record the exact compiler command that generated the before rule.",
+          "version": "tailwindcss <installed-version>",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "0000000000000000000000000000000000000000"
+          },
+          "candidate": "Must exactly equal exactGeneratedSemantics.candidate."
+        },
+        "before": {
+          "artifact": "docs/sessions/2026-01-01-task000-before-generated.css",
+          "rawRule": "The exact generated before-rule, including every @media/@supports wrapper, retained verbatim in the artifact.",
+          "envelope": {
+            "selector": "Normalized semantic selector relation, with exact syntax retained in rawRule.",
+            "media": ["(hover: hover)"],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Concrete source-order observation.",
+            "declarations": ["--text-color: var(--primary)"],
+            "customProperties": {
+              "reads": ["--primary"],
+              "writes": ["--text-color"],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/example.module.css",
+          "rawRule": "The exact replacement rule, including every @media/@supports wrapper, retained verbatim in the artifact.",
+          "envelope": {
+            "selector": "Normalized semantic selector relation, with exact syntax retained in rawRule.",
+            "media": ["(hover: hover)"],
+            "supports": [],
+            "layer": "unlayered",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Concrete source-order observation.",
+            "declarations": ["--text-color: var(--primary)"],
+            "customProperties": {
+              "reads": ["--primary"],
+              "writes": ["--text-color"],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "layer",
+            "ownerDecisionArtifact": "tasks/example-owner-decision.md",
+            "reason": "An owner decision explicitly authorizes this otherwise observable cascade change."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "hover: none",
+            "command": "Run a persisted browser probe under both before and after builds.",
+            "artifact": "docs/sessions/2026-01-01-task000-negative-probe.json",
+            "beforeOutcome": "The declaration is inactive.",
+            "afterOutcome": "The declaration is inactive.",
+            "equivalent": true
+          }
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "AC1 / R1",
+      "requirementIds": ["AC1 / R1"],
+      "evidence": "Path and observed behavior. An OPEN P0/P1/P2 finding forbids an approval decision."
+    }
+  ],
+  "handoff": {
+    "commitPush": "PROHIBITED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC1 / R1",
+    "reviewer": "Opus"
+  }
+}

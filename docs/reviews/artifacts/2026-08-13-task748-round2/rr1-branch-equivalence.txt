@@ -1,0 +1,16 @@
+EQUIVALENT  priority row, over=false
+    before: "text-overlay-foreground/70"
+    after : "PerfDevOverlay_metricRow__hash"
+EQUIVALENT  priority row, over=true
+    before: "text-destructive font-bold"
+    after : "text-destructive font-bold"
+EQUIVALENT  predictive row, over=false
+    before: "text-overlay-foreground/70"
+    after : "PerfDevOverlay_metricRow__hash"
+EQUIVALENT  predictive row, over=true
+    before: "text-destructive font-bold"
+    after : "text-destructive font-bold"
+
+branches checked: 4, not equivalent: 0
+RR1: PASS — over-budget branches are byte-identical; under-budget branches swap the utility for the module class, which is the intended migration.
+EXIT_CODE=0

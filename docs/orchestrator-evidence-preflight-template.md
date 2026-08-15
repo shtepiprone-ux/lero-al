@@ -27,6 +27,35 @@ valid.
 
 No row may claim more than its command or artifact actually observes.
 
+### 2b. API and data-flow absence claims (when applicable)
+
+Complete one row for every material claim that a prop, field, callback, selector, or token consumer is `dead`,
+`unread`, `unused`, `never passed`, `never forwarded`, `only` used by a named site, or otherwise absent. Do not
+collapse same-named fields from different types into one row.
+
+| Claim | Exact property identity and enclosing declaration | Runtime reads | Production/story/test constructors, forwarding, spreads, and nested paths | Search plus contrary probe | Conclusion / status |
+|---|---|---|---|---|---|
+| | `Type.field` + path/line and enclosing block | path/line or none | path/line or none, with branch scope | exact query, raw result, and same-name/indirect counter-check | `VERIFIED` / `UNKNOWN` / `BLOCKED` |
+
+`VERIFIED dead` requires the declaration identity and a complete runtime-read census. `VERIFIED nobody supplies it`
+also requires the construction/forwarding census. If a nested or indirect path remains uninspected, use `UNKNOWN`;
+do not state the claim as a confirmed requirement, AC, scope boundary, or handoff fact.
+
+### 2a. Review-source and conclusion audit (implementation reviews)
+
+List the evidence you personally opened, not files merely named by the executor. Every P0/P1 AC and every material
+review conclusion needs a row. `INFERENCE` and `UNKNOWN` are valid outcomes; do not write a causal conclusion as
+`VERIFIED` without a concrete falsification.
+
+| AC / conclusion | Task/rule files opened | Complete producing function/branch opened | Exact diff/artifact opened | Counter-check performed | Classification |
+|---|---|---|---|---|---|
+| | paths/sections | path + symbol/line and all relevant exits | manifest/log/screenshot/status path | contradictory branch, alternate input, or failure path | `VERIFIED` / `INFERENCE` / `UNKNOWN` / `BLOCKED` |
+
+For a claim containing "only", "never", "always", "caused by", "not caused by", or "flake", name the exact
+counter-check. If a changed rendered cell is in scope, open its full before/after manifest entries, its screenshot
+when retained, and the assertion plus readiness/validity code that emitted the verdict. A total, fail-set name, or
+single style signal is not a sufficient explanation.
+
 ## 3. Command and artifact contract
 
 | Command / script | Reads | Writes or can overwrite | Output schema / verdict enum inspected | Expected exit semantics | Safe at scheduled step? |
@@ -78,6 +107,7 @@ non-growing consolidation plan. Scope, Out of scope, verification, completion re
 | Dirty-worktree manifest or clean isolation | Every starting porcelain entry covered by `orchestrator-dirty-worktree-manifest-template.md`, or recorded proof of an isolated clean worktree | `VERIFIED` / `BLOCKED` |
 | Stateful measurement timing | Every new scanned/input artifact named, with its creation point relative to each baseline/count/manifest command | `VERIFIED` / `BLOCKED` |
 | Revision consistency | Every step/phase/AC reference and current self-check recomputed after the last edit; superseded claims marked historical | `VERIFIED` / `BLOCKED` |
+| API/data-flow revision check | Every material absence/API trace in §2b re-run after the final textual revision; no current section still asserts a superseded identity or conclusion | `VERIFIED` / `BLOCKED` |
 
 Never use the task document itself as evidence of owner approval. A raw final status is not a delta in a dirty
 worktree. If an artifact could change the measured input set, the task must either schedule it after the measurement
@@ -121,6 +151,19 @@ unexpected path and a changed value; manual quotation is not a gate.
 - [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
 - [ ] The current task text has no stale step reference or self-check claim contradicted by its latest revision.
 - [ ] Every material claim has a recorded falsification attempt.
+- [ ] Every material absence/API claim has a complete §2b trace: exact enclosing type, runtime reads,
+      production/story/test construction paths, and a contrary probe. Same-named root and nested fields are not
+      conflated.
+- [ ] No `Confirmed` requirement, AC, scope boundary, or handoff fact has its first or only verification deferred
+      to the executor. Any executor I0 re-measure is explicitly freshness validation of a retained author trace;
+      material API/data-flow traces were re-run after the final textual revision.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
+- [ ] For an implementation review, the source-and-conclusion audit covers every P0/P1 AC and material conclusion.
+- [ ] Every statement of exclusivity, causality, or flakiness has a recorded counter-check; otherwise it is labelled
+      `INFERENCE` or `UNKNOWN`.
+- [ ] Every changed rendered comparator cell has before/after entry, assertion/guard, and retained visual evidence
+      inspected where available.
+- [ ] No approval decision depends on an unmet/unverified primary AC, a likely-cause narrative, or an unfiled
+      follow-up task.
 
 If any required checkbox is false, do not publish the task as ready or approve the review.

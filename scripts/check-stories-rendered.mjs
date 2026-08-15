@@ -52,6 +52,7 @@ import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkGeometryIntegrity } from './geometry-integrity.mjs';
 import { MANTINE_STORY_TITLE_PREFIXES, MANTINE_STORY_ENROLLED_TITLES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { describeRunMode } from './lib/rendered-run-mode.mjs';
 
 // Crash guards: ensure the process always exits with a controlled integer
 // code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
@@ -1577,6 +1578,28 @@ async function runAssert() {
       console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}; enrolled: ${Object.keys(MANTINE_STORY_ENROLLED_TITLES).join(', ') || 'none'}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
       console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
     }
+
+    // Task 742 (R4) — a NOT RUN line so a transcript pasted into a session log carries its own
+    // gaps, naming exactly which phases this run mode does not execute.
+    const preRunModeInfo = describeRunMode({
+      fastMode: FAST_MODE,
+      mantineOnly: MANTINE_ONLY,
+      counts: {
+        storiesRendered: MANTINE_ONLY
+          ? mantineStories.length
+          : FAST_MODE
+            ? ASSERT_STORIES.length + mantineStories.length
+            : ASSERT_STORIES.length + mantineStories.length + geometryOnlyStories.length,
+        cellsRendered: MANTINE_ONLY
+          ? totalMantineCells
+          : FAST_MODE
+            ? totalAssertCells + totalMantineCells
+            : totalAssertCells + totalMantineCells + totalGeometryCells,
+      },
+    });
+    if (preRunModeInfo.phasesSkipped.length > 0) {
+      console.log(preRunModeInfo.noteLine);
+    }
     console.log('');
 
     const MAX_ATTEMPTS = 3;
@@ -1780,8 +1803,23 @@ async function runAssert() {
       unstyledRender:      matrix.filter(c => c.assertions?.styleIntegrity?.failReason === 'unstyled-render').length,
     };
 
+    // Task 742 (R1/R3) — the mode/skip description consumed by both the manifest and the
+    // inventory header below. `total` (matrix.length) is the count of cells this run actually
+    // rendered, never a sum of the ASSERT_STORIES/mantineStories/geometryOnlyStories array
+    // lengths — the exact fix for the false "full global-enumeration" claim §3.2 documented.
+    const storiesRenderedFinal = MANTINE_ONLY
+      ? mantineStories.length
+      : FAST_MODE
+        ? ASSERT_STORIES.length + mantineStories.length
+        : ASSERT_STORIES.length + mantineStories.length + geometryOnlyStories.length;
+    const modeInfo = describeRunMode({
+      fastMode: FAST_MODE,
+      mantineOnly: MANTINE_ONLY,
+      counts: { storiesRendered: storiesRenderedFinal, cellsRendered: total },
+    });
+
     const manifestPath = join(outputDir, 'manifest.json');
-    writeFileSync(manifestPath, JSON.stringify({ timestamp, summary, matrix }, null, 2), 'utf8');
+    writeFileSync(manifestPath, JSON.stringify({ timestamp, runMode: modeInfo.runMode, phasesSkipped: modeInfo.phasesSkipped, summary, matrix }, null, 2), 'utf8');
 
     // ── Task 547 — stable selector normalization ────────────────────────
     // Mantine's useId() produces a fresh random suffix on every Storybook build (see the
@@ -1797,10 +1835,16 @@ async function runAssert() {
       '# Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)',
       '',
       `**Harness:** \`scripts/check-stories-rendered.mjs\` + \`scripts/geometry-integrity.mjs\` (Task 467 R1–R4/B1–B8) — run timestamp recorded in \`.screenshots/rendered-assert/<ts>/manifest.json\``,
-      `**Run mode:** ${FAST_MODE ? '--fast' : 'full'} (320/375/390 × sq/en/uk/it) | **Scope:** ${FAST_MODE ? 'ASSERT_STORIES (' + ASSERT_STORIES.length + ' stories) + Mantine gate (' + mantineStories.length + ' stories), ' + (totalAssertCells + totalMantineCells) + ' cells' : 'Global enumeration (' + (ASSERT_STORIES.length + mantineStories.length + geometryOnlyStories.length) + ' stories, ' + total + ' cells)'}`,
+      `**Run mode:** ${modeInfo.runMode} (320/375/390 × sq/en/uk/it) | **Scope:** ${modeInfo.scopeLine}`,
       '',
       '> **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.',
-      `> ${FAST_MODE ? 'Task 467 INCOMPLETE for full global inventory — pending owner NATIVE full run.' : 'Full global-enumeration run.'}`,
+      // Task 742 (R2) — --mantine-only previously fell through to the "full" arm here (both
+      // ternaries below branched on FAST_MODE only), so a --mantine-only run's persisted report
+      // claimed "Full global-enumeration run." over a story count including stories it never
+      // rendered. modeInfo.noteLine states the real mode and NOT RUN phases instead; the
+      // pre-existing --fast "INCOMPLETE" message is preserved as-is (A1 — its bar is lower, it
+      // was never claiming full-enumeration wording to begin with).
+      `> ${FAST_MODE && !MANTINE_ONLY ? 'Task 467 INCOMPLETE for full global inventory — pending owner NATIVE full run.' : modeInfo.noteLine}`,
       '',
       '## Summary (three-bucket model + style integrity)',
       '',

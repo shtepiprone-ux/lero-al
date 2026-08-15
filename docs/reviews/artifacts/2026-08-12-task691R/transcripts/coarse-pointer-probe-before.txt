@@ -1,0 +1,17 @@
+{
+  "mediaHoverHover": false,
+  "mediaPointerCoarse": true,
+  "mediaPointerFine": false,
+  "before": {
+    "imgScale": "none",
+    "imgTransform": "none",
+    "titleColor": "rgb(0, 0, 0)"
+  },
+  "afterTap": {
+    "imgScale": "none",
+    "imgTransform": "none",
+    "titleColor": "rgb(0, 0, 0)"
+  },
+  "neitherEffectFired": true
+}
+EXIT_CODE=0

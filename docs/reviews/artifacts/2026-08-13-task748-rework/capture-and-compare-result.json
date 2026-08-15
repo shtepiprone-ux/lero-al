@@ -1,0 +1,2304 @@
+{
+  "plant": false,
+  "expectedCells": 168,
+  "actualCells": 168,
+  "failCount": 0,
+  "results": [
+    {
+      "cellKey": "photoCountBadge|sq|320",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|375",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|390",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|480",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|680",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|768",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|810",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|960",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|1024",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|1200",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|1440",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|1920",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|sq|2560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|320",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|375",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|390",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|480",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|680",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|768",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|810",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|960",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|1024",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|1200",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|1440",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|1920",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|en|2560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|320",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|375",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|390",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|480",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|680",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|768",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|810",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|960",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|1024",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|1200",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|1440",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|1920",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|uk|2560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|320",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|375",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|390",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|480",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|680",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|768",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|810",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|960",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|1024",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|1200",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|1440",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|1920",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "photoCountBadge|it|2560",
+      "hashedClass": "_photoCountBadge_17fpp_22",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        },
+        "color": {
+          "real": "oklch(1 0 0)",
+          "expected": "oklch(1 0 0)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|320",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|375",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|390",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|480",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|680",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|768",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|810",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|960",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|1024",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|1200",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|1440",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|1920",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|sq|2560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|320",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|375",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|390",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|480",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|680",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|768",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|810",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|960",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|1024",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|1200",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|1440",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|1920",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|en|2560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|320",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|375",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|390",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|480",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|680",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|768",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|810",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|960",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|1024",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|1200",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|1440",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|1920",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|uk|2560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|320",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|375",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|390",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|480",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|680",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|768",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|810",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|960",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|1024",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|1200",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|1440",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|1920",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "extraCountOverlay|it|2560",
+      "hashedClass": "_extraCountOverlay_17fpp_32",
+      "status": "OK",
+      "props": {
+        "backgroundColor": {
+          "real": "oklab(0 0 0 / 0.6)",
+          "expected": "oklab(0 0 0 / 0.6)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|320",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|375",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|390",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|480",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|680",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|768",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|810",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|960",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|1024",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|1200",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|1440",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|1920",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|sq|2560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|320",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|375",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|390",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|480",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|680",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|768",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|810",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|960",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|1024",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|1200",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|1440",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|1920",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|en|2560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|320",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|375",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|390",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|480",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|680",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|768",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|810",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|960",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|1024",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|1200",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|1440",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|1920",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|uk|2560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|320",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|375",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|390",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|480",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|680",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|768",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|810",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|960",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|1024",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|1200",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|1440",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|1920",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    },
+    {
+      "cellKey": "counter|it|2560",
+      "hashedClass": "_counter_u2cmr_22",
+      "status": "OK",
+      "props": {
+        "color": {
+          "real": "oklab(1 0 0 / 0.8)",
+          "expected": "oklab(1 0 0 / 0.8)",
+          "match": true
+        }
+      }
+    }
+  ]
+}

@@ -8,6 +8,16 @@ on:
       - 'scripts/**'
       - 'eslint.config.mjs'
       - 'package.json'
+      - 'tasks/**'
+      - 'docs/agent-contract.md'
+      - 'docs/orchestrator-procedures.md'
+      - 'docs/orchestrator-role.md'
+      - 'docs/review-ledger.schema.json'
+      - 'docs/review-ledger-template.json'
+      - 'docs/qa-profiles.md'
+      - 'docs/storybook-governance.md'
+      - 'docs/critical-flow-registry.md'
+      - 'docs/reviews/**'
       - 'messages/**'
       - '.github/workflows/**'
 
@@ -20,6 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,6 +47,14 @@ jobs:
 
       - name: ESLint (with governance rules)
         run: npm run lint
+
+      - name: Review-ledger gate (fail-closed approval evidence)
+        env:
+          REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: npm run check:review-ledger -- --ci
+
+      - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
+        run: npm run check:review-ledger:verify
 
       - name: Gate unit tests (check-stories gate correctness)
         run: npm test
@@ -304,6 +324,17 @@ jobs:
 
       - name: Build production bundle
         run: npm run build
+
+      - name: CSS var() resolvability gate (Task 700 — blocking, no continue-on-error)
+        # Reads the just-built .next/static/css bundle (Arm A) and src/**/*.{css,tsx,ts}
+        # (Arm B), so it must run after "Build production bundle" and needs no server.
+        # Redirected to a file, exit code captured as its own statement — never trust a
+        # piped command's exit code (this project's evidence-capture rule).
+        run: |
+          npm run check:css-vars > css-vars.log 2>&1
+          exit_code=$?
+          cat css-vars.log
+          exit $exit_code
 
       - name: Start production server
         # Backgrounded within the job's persistent shell so it stays alive into the next step

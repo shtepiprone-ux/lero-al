@@ -1,0 +1,6 @@
+target file: .next/static/css/9da9f59077fdb31e.css
+ARM 1  correct removal        -> removed=[--text-3xl]  newGuard.fires=false  (expected false)
+ARM 2  planted over-match     -> removed=[--text-3xl,--text-4xl]  newGuard.fires=true  (expected true)
+ARM 3  same plant, OLD guard  -> --text-3xl--line-height 0 -> 0  oldGuard.fires=false  (expected false — this is the F1 defect)
+PROBE: PASS — new guard is live, retired guard was inert
+EXIT_CODE=0

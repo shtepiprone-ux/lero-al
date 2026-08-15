@@ -1,0 +1,52 @@
+Wrote C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-14-task741\comparator-result.json
+Total cells: 16, property failures: 16, identity failures: 0, hard errors: 48
+COMPARATOR: FAIL (hard errors — asset/network fault, not a colour comparison):
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+  [after] 404 /assets/ListingCard-Co937xeB.css 
+  [after] bad-status http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css 404
+  [after] requestfailed http://127.0.0.1:6532/assets/ListingCard-Co937xeB.css net::ERR_ABORTED
+EXIT_CODE=1

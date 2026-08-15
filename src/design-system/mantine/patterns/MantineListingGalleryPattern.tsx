@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Image, SimpleGrid, UnstyledButton, Paper, Text } from '@mantine/core'
 import { Camera, Maximize2 } from 'lucide-react'
 import { LightboxView, type LightboxViewLabels } from '@/modules/listings/components/LightboxView'
+import { cn } from '@/lib/utils'
+import styles from './MantineListingGalleryPattern.module.css'
 
 export interface MantineListingGalleryImage {
   url: string
@@ -64,7 +66,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
       >
         <Image src={images[0].url} alt={title} radius="lg" fit="cover" className="h-full w-full" />
         {images.length > 1 && (
-          <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-overlay/60 px-2 py-0.5 text-xs text-overlay-foreground">
+          <div className={cn(styles.photoCountBadge, 'absolute bottom-2 right-2 flex items-center gap-1 rounded-full px-2 py-0.5 text-xs')}>
             <Camera className="h-3 w-3" aria-hidden="true" />
             <span>
               {images.length} {labels.photoCountSuffix}
@@ -87,8 +89,8 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
               >
                 <Image src={img.url} alt="" radius="md" fit="cover" className="h-full w-full" />
                 {isLastVisible && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-overlay/60">
-                    <Text size="sm" fw={600} c="var(--color-overlay-foreground)">
+                  <div className={cn(styles.extraCountOverlay, 'absolute inset-0 flex items-center justify-center')}>
+                    <Text size="sm" fw={600} c="var(--overlay-foreground)">
                       +{extraCount}
                     </Text>
                   </div>

@@ -1,0 +1,19 @@
+
+> lero-al@0.1.0 check:css-vars
+> node scripts/check-css-var-resolvability.mjs --verify-gate
+
+🔬 check:css-vars self-test (--verify-gate) — 4 plants FAIL, 4 controls PASS
+
+✅  baseline (unmodified temp copy): 0 violations, 0 in-class dynamic sites (owned=257, Arm A refs=78, Arm B refs=55)
+
+✅  P1 (FAIL) — Arm A correctly reported unresolved --radius-md at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-bosswb/css/9da9f59077fdb31e.css:1 after its declaration was renamed to --radius-md-renamed
+✅  P2 (FAIL) — Arm A correctly reported unresolved --color-badge-premium at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-bosswb/css/b0a53219d9eda3b2.css:1 after its declaration was deleted
+❌  P3 (FAIL) — pre-plant census failed — --color-overlay-foreground has 0 declaration site(s) and 0 shipped var() reference(s) (expected 1 decl, 0 refs — no further lifeline unproven)
+✅  P4 (FAIL) — in-class dynamic site correctly reported: ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-bosswb/src/__task700_verify_gate_fixture_p4.tsx:1 prefix "--space-"
+✅  C1 (PASS) — var(--color-badge-reduced, red) reported only in the non-blocking fallback list, never as a violation
+✅  C2 (PASS) — --app-shell-navbar-width is not owned and appears in no report
+❌  C3 (PASS) — block: owned=257 (expect 259), --spacing-N excluded=true | line: line comment at theme.ts:280 correctly stripped
+✅  C4 (PASS) — 8 "--mantine-color-" dynamic site(s) found, all out-of-class=true
+
+❌  2/8 verify-gate assertion(s) did not behave as expected.
+EXIT_CODE=1

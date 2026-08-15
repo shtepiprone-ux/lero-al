@@ -1,0 +1,9 @@
+src/modules/listings/components/LightboxView.tsx:46  '--ai-bg': 'color-mix(in oklab, var(--color-overlay-foreground) 10%, transparent)',
+src/modules/listings/components/LightboxView.tsx:47  '--ai-hover': 'color-mix(in oklab, var(--color-overlay-foreground) 20%, transparent)',
+src/modules/listings/components/LightboxView.tsx:48  '--ai-color': 'var(--color-overlay-foreground)',
+src/modules/listings/components/LightboxView.tsx:49  '--ai-hover-color': 'var(--color-overlay-foreground)',
+src/modules/listings/components/LightboxView.tsx:87  style={{ backgroundColor: 'color-mix(in oklab, var(--color-overlay) 95%, transparent)' }}
+src/modules/listings/components/LightboxView.tsx:160  style={{ borderColor: activeIndex === i ? 'var(--color-overlay-foreground)' : 'transparent' }}
+src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:93  <Text size="sm" fw={600} c="var(--color-overlay-foreground)">
+
+TOTAL LIVE (non-comment) var(--color-overlay*) REFERENCES: 7

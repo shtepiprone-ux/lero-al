@@ -8,6 +8,8 @@ import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { removeUserAvatar } from '@/modules/admin/actions'
 import { AppImage } from '@/components/ui/AppImage'
+import { cn } from '@/lib/utils'
+import styles from './AdminUserAvatar.module.css'
 
 const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source before crop
 const MIN_DIM = 256
@@ -166,7 +168,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
           )}
         </div>
         {(uploading || removing) && (
-          <div className="absolute inset-0 flex items-center justify-center bg-overlay/30 rounded-full">
+          <div className={cn(styles.spinnerOverlay, 'absolute inset-0 flex items-center justify-center rounded-full')}>
             <Loader2 className="h-6 w-6 text-white animate-spin" />
           </div>
         )}

@@ -1,0 +1,1 @@
+import{j as s}from"./iframe-BWqC60Cj.js";import{I as t}from"./input-ByZEYirH.js";import{c as i}from"./utils-D5ceN5oG.js";function m({className:n,...o}){return s.jsx(t,{className:i("h-10 rounded-xl",n),...o})}m.__docgenInfo={description:"Admin-canonical Input: h-10 rounded-xl (40px height, consistent across all admin forms).",methods:[],displayName:"AdminInput"};export{m as A};

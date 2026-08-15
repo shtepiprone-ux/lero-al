@@ -234,6 +234,99 @@ Review implementation evidence, not the author's explanation.
    `create canonical` was selected. A missing record or uncited "no story" claim is missing P1 evidence.
 10. Produce exactly one decision.
 
+### Proof-carrying review and adversarial pass (mandatory)
+
+Complete the review sections of `docs/orchestrator-evidence-preflight-template.md` before choosing a decision. The
+review record must list every task/rule file, changed source/test file, producing implementation, and validation
+artifact actually opened. Reading a worker report, a task title, or a quoted command result does not satisfy any of
+those entries.
+
+For every P0/P1 acceptance criterion, record all of the following in the requirement ledger or review evidence:
+
+| AC / conclusion | Observed result | Exact producing source inspected | Exact artifact or command output inspected | Counter-check | Classification |
+|---|---|---|---|---|---|
+| | | path + symbol/line | manifest/log/screenshot/diff + command where applicable | contradictory branch, alternate input, or failure path | `VERIFIED` / `INFERENCE` / `UNKNOWN` / `BLOCKED` |
+
+- Before saying a function or condition "only", "never", or "always" does something, read its complete relevant
+  body and enumerate every return/override branch that can affect the claim. A short line window or a matching
+  `rg` hit is not enough.
+- Keep source semantics, command/artifact semantics, computed state, geometry, and rendered pixels separate. A
+  screenshot does not prove a causal mechanism; a computed style does not prove the geometry it supposedly caused.
+- A claim that a regression is a flake or "not caused by this diff" needs a controlled A/B comparison, reproduction,
+  or another concrete falsification. A diff that does not touch an obvious assertion is useful evidence, but is not
+  sufficient causal proof; report the cell as `UNATTRIBUTED`/`INFERENCE` until the cause is established.
+- For every changed cell in a rendered baseline/fail-set comparison, inspect the complete before/after manifest
+  entries, the relevant screenshots when available, and the exact assertion and readiness/validity guards that
+  produced the verdict. A count or one diagnostic signal alone cannot settle the cell's cause.
+- Verify final repository reality as well as task behavior: final diff/status paths, scope, session-log path,
+  backlog references, and every proposed follow-up's actual filed or reserved state. A proposed or unfiled task is
+  not a correction.
+
+After the evidence pass, perform an adversarial pass: for each material conclusion, identify the most direct source
+branch, artifact, or counterexample that could falsify it and inspect it. Record the result. If that pass changes a
+conclusion, revise the ledger and decision rather than retaining the earlier narrative.
+
+### Approval-closure gate (mandatory, fail-closed)
+
+Do not choose an approval decision until the reviewer has closed every P0/P1 ledger row against the **final reviewed
+diff**. For each row, the review record must carry a scope certificate with all applicable fields:
+
+| Required field | What the reviewer records |
+|---|---|
+| Final subject | Changed source path/symbol and the exact final diff hunk it proves |
+| Required scope | Every named consumer, branch/state, Storybook ID, locale, viewport, matrix mode, and before/final phase |
+| Exact evidence | Artifact path plus the command/result/schema actually opened; build or manifest freshness where relevant |
+| Observable claim | The specific source, computed, geometric, rendered, or gate property that artifact can prove |
+| Counter-check | The most direct contrary branch, artifact, or generated form inspected, with its observed result |
+| Verdict | `VERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED` — never a bare checkmark |
+
+Persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json`, using
+`docs/review-ledger-template.json`, and run `npm run check:review-ledger -- --file <ledger>`. The validator checks
+retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, derived coverage
+totals, gate receipt consistency, decision consistency, finding-to-requirement links, and the non-approved handoff
+ban. CI requires a changed **approved** valid ledger for any reviewable task, source, workflow, or review-governance
+change.
+`requiredScope.notApplicable` is the only allowed way to declare a dimension not applicable, and it requires a
+concrete reason; leaving the dimension out is an evidence gap. Only evidence with `coverageRole: "COVERS"` closes a
+tuple. If it leaves any tuple uncovered, enumerate the exact complement in `coverageGaps`, link it to an open
+P0/P1/P2 finding, and keep the row non-`VERIFIED`; a `GAP_WITNESS` may prove the absence but never closes it. Copy
+`review.coverage` and `review.ledgerGate` only from the final validator run. The gate records ledger integrity, not
+an approval result: a complete `NEEDS REVISION` ledger passes locally with its findings and `PROHIBITED` handoff
+intact. Each non-`VERIFIED` primary row names its open finding in `findingIds`, and each finding must reciprocally
+name the requirement in `requirementIds`. A prose or JSON claim cannot make either a malformed ledger or a failed
+implementation pass.
+
+The reviewer must compare the certificate's required scope to the artifact's real scope before using the result.
+A capture of one story, locale, viewport, state, or synthetic node does not cover another required one; a visual
+matrix does not substitute for a required computed-style/cascade capture; a count does not substitute for the set or
+per-cell records the criterion requires. `diffCount: 0` proves only the named fields for the targets actually
+captured. Every omitted required target is `UNVERIFIED` and blocks approval.
+
+For generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
+the input removed or replaced. Compare its full semantic envelope — ancestor/descendant relation, selector
+specificity, `@media`/`@supports` wrappers, layer, source-order dependence, declarations, and custom-property
+behavior — rather than comparing only computed desktop values or declaration text. Schema v4 records this as
+machine-compared before/after values: retain the full 40-character base commit, exactly one candidate, compiler
+version, and each raw rule. For Tailwind, `compiler.input` must be a `BASE_REVISION_FILE` at that identical base
+commit; the validator fetches the CSS through `git show <base>:<path>` and compiles the named candidate, rather than
+trusting a CSS string, a path value, a sibling utility, or the current worktree. It also rejects imported repository
+stylesheets that changed since the base and checks imported package styles against the base lockfile. A nearby example, a comment, or a
+final bundle that no longer contains the removed rule is not evidence. For `assessment: "EQUIVALENT"`, every changed
+envelope field must cite a retained owner decision and the adversarial counter-check must persist an equivalent
+negative probe. For a non-approved `assessment: "MISMATCH_RECORDED"`, every unapproved changed field must instead
+cite an open P0/P1/P2 finding through `observedSemanticDeltas`; a non-equivalent probe cites that same finding. An
+uncited guard, declaration, or custom-property delta is a P0 regression, never a reason to make the ledger invalid.
+
+For retry-based evidence, read the binding decision and the task's acceptance criterion before classifying runs.
+Record every execution separately as invalid/contaminated, initial valid result, or authorized re-run with its
+reason. Do not infer a retry count from the number of command executions, relabel a contaminated run as an
+authorized retry, or replace an `UNATTRIBUTED` result with a causal story that was not measured.
+
+The final review must state the lowest-evidence row, not only the strongest result. If an artifact is stale,
+missing, narrower than required, or contradictory, downgrade the decision before writing required-next-actions.
+Owner commit/push commands may be emitted only after this locked decision; a non-approved decision must contain no
+commit or push handoff.
+
 Allowed decisions:
 
 - `APPROVED`
@@ -253,6 +346,11 @@ Decision criteria:
   remains.
 - `PARTIALLY VERIFIED`: actual implementation was inspected, but only part of the required evidence is available.
 - `BLOCKED`: required access, context, owner decision, environment, or dependency prevents meaningful review.
+
+These decision rules are fail-closed: an unmet, changed, or unverified P0/P1/P2 acceptance criterion is never
+converted into an approval by asserting that its intent was met, by a likely-cause explanation, or by promising a
+follow-up. Use `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED` as the evidence warrants. A requirement may be
+changed only by an explicit owner decision recorded before the verdict.
 
 ### Owner-native validation handoff
 

@@ -1,0 +1,20 @@
+[90m│[39m  [33m621.86 kB[39m[22m[2m │ gzip: 182.58 kB[22m
+[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/DocsRenderer-LL677BLK-C1kRTzjK.js[39m[1m[33m[39m
+[90m│[39m  [33m833.37 kB[39m[22m[2m │ gzip: 266.39 kB[22m
+[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/iframe-24k7YsK-.js[39m
+[90m│[39m  [36m[39m[1m[33m1,941.25 kB[39m[22m[2m │ gzip: 553.64 kB[22m
+[90m│[39m
+[33m▲[39m  [43mVite[49m[33m
+[90m│[39m  (!) Some chunks are larger than 500 kB after minification. Consider:
+[90m│[39m  - Using dynamic import() to code-split the application
+[90m│[39m  - Use build.rollupOptions.output.manualChunks to improve chunking:
+[90m│[39m  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+[90m│[39m  - Adjust chunk size limit for this warning via
+[90m│[39m  build.chunkSizeWarningLimit.[39m
+[90m│[39m  [43mVite[49m [32m✓ built in 24.95s[39m
+[90m│[39m
+[32m◇[39m  Output directory: C:/Claude_Code_Projects/lero-al/storybook-static
+[90m│[39m
+[90m└[39m  Storybook build completed successfully
+
+EXIT_CODE=0

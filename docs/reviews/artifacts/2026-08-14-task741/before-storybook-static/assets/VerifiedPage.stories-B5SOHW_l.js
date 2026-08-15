@@ -1,0 +1,27 @@
+import{j as o}from"./iframe-BWqC60Cj.js";import{s as l}from"./_storyI18n-DUPbxmag.js";import{l as L}from"./index-C8MEBqML.js";import{b as q}from"./button-DqckHWPj.js";import{c as w}from"./utils-D5ceN5oG.js";import{C}from"./circle-check-CnzcspZt.js";import{C as H}from"./circle-x-DcKQfgdG.js";import"./preload-helper-Dp1pzeXC.js";import"./index-D4MQtXW4.js";import"./useButton-62N7Qls-.js";import"./useIsoLayoutEffect-BlzvCgLy.js";import"./useRenderElement-DCWLj8DQ.js";import"./createLucideIcon-DZTr3VOw.js";function i({variant:s,title:r,body:a,ctaLabel:t,ctaHref:e}){const j=s==="success";return o.jsx("div",{"data-testid":"verified-page",className:"min-h-[60vh] flex items-center justify-center px-4",children:o.jsxs("div",{className:"max-w-sm w-full bg-card border rounded-2xl shadow-sm p-8 flex flex-col items-center gap-5 text-center",children:[j?o.jsx(C,{className:"h-14 w-14 text-status-success shrink-0"}):o.jsx(H,{className:"h-14 w-14 text-destructive shrink-0"}),o.jsxs("div",{className:"flex flex-col gap-2",children:[o.jsx("h1",{className:"text-xl font-bold",children:r}),o.jsx("p",{className:"text-sm text-muted-foreground",children:a})]}),o.jsx(L,{href:e,className:w(q({size:"xl"}),"w-full justify-center"),children:t})]})})}i.__docgenInfo={description:"",methods:[],displayName:"VerifiedCard",props:{variant:{required:!0,tsType:{name:"union",raw:"'success' | 'error' | 'syncfail'",elements:[{name:"literal",value:"'success'"},{name:"literal",value:"'error'"},{name:"literal",value:"'syncfail'"}]},description:""},title:{required:!0,tsType:{name:"string"},description:""},body:{required:!0,tsType:{name:"string"},description:""},ctaLabel:{required:!0,tsType:{name:"string"},description:""},ctaHref:{required:!0,tsType:{name:"string"},description:""}}};var v,_,m,p,f,b,g,h,y,x,S,T;const B={title:"Auth/VerifiedPage",tags:["autodocs"]},n={render:(s,r)=>{var a,t;const e=(t=r==null||(a=r.globals)===null||a===void 0?void 0:a.locale)!==null&&t!==void 0?t:"sq";return o.jsx(i,{variant:"success",title:l(e,"auth.verified_title"),body:l(e,"auth.verified_body"),ctaLabel:l(e,"auth.verified_browse"),ctaHref:`/${e}/listings`})}},c={render:(s,r)=>{var a,t;const e=(t=r==null||(a=r.globals)===null||a===void 0?void 0:a.locale)!==null&&t!==void 0?t:"sq";return o.jsx(i,{variant:"error",title:l(e,"auth.verified_error_title"),body:l(e,"auth.verified_error_body"),ctaLabel:l(e,"auth.login"),ctaHref:`/${e}/auth/login`})}},d={render:(s,r)=>{var a,t;const e=(t=r==null||(a=r.globals)===null||a===void 0?void 0:a.locale)!==null&&t!==void 0?t:"sq";return o.jsx(i,{variant:"syncfail",title:l(e,"auth.verified_error_title"),body:l(e,"auth.verified_nosession_body"),ctaLabel:l(e,"auth.login"),ctaHref:`/${e}/auth/login`})}},u={render:(s,r)=>{var a,t;const e=(t=r==null||(a=r.globals)===null||a===void 0?void 0:a.locale)!==null&&t!==void 0?t:"sq";return o.jsx(i,{variant:"error",title:l(e,"auth.verified_error_title"),body:l(e,"auth.verified_error_body"),ctaLabel:l(e,"auth.login"),ctaHref:`/${e}/auth/login`})},globals:{viewport:{value:"mobile320",isRotated:!1}}};n.parameters={...n.parameters,docs:{...(v=n.parameters)===null||v===void 0?void 0:v.docs,source:{originalSource:`{
+  render: (_, context) => {
+    const locale = context?.globals?.locale as string ?? 'sq';
+    return <VerifiedCard variant="success" title={storyT(locale, 'auth.verified_title')} body={storyT(locale, 'auth.verified_body')} ctaLabel={storyT(locale, 'auth.verified_browse')} ctaHref={\`/\${locale}/listings\`} />;
+  }
+}`,...(m=n.parameters)===null||m===void 0||(_=m.docs)===null||_===void 0?void 0:_.source}}};c.parameters={...c.parameters,docs:{...(p=c.parameters)===null||p===void 0?void 0:p.docs,source:{originalSource:`{
+  render: (_, context) => {
+    const locale = context?.globals?.locale as string ?? 'sq';
+    return <VerifiedCard variant="error" title={storyT(locale, 'auth.verified_error_title')} body={storyT(locale, 'auth.verified_error_body')} ctaLabel={storyT(locale, 'auth.login')} ctaHref={\`/\${locale}/auth/login\`} />;
+  }
+}`,...(b=c.parameters)===null||b===void 0||(f=b.docs)===null||f===void 0?void 0:f.source}}};d.parameters={...d.parameters,docs:{...(g=d.parameters)===null||g===void 0?void 0:g.docs,source:{originalSource:`{
+  render: (_, context) => {
+    const locale = context?.globals?.locale as string ?? 'sq';
+    return <VerifiedCard variant="syncfail" title={storyT(locale, 'auth.verified_error_title')} body={storyT(locale, 'auth.verified_nosession_body')} ctaLabel={storyT(locale, 'auth.login')} ctaHref={\`/\${locale}/auth/login\`} />;
+  }
+}`,...(y=d.parameters)===null||y===void 0||(h=y.docs)===null||h===void 0?void 0:h.source}}};u.parameters={...u.parameters,docs:{...(x=u.parameters)===null||x===void 0?void 0:x.docs,source:{originalSource:`{
+  render: (_, context) => {
+    const locale = context?.globals?.locale as string ?? 'sq';
+    return <VerifiedCard variant="error" title={storyT(locale, 'auth.verified_error_title')} body={storyT(locale, 'auth.verified_error_body')} ctaLabel={storyT(locale, 'auth.login')} ctaHref={\`/\${locale}/auth/login\`} />;
+  },
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
+}`,...(T=u.parameters)===null||T===void 0||(S=T.docs)===null||S===void 0?void 0:S.source}}};const D=["Success","ErrorState","SyncFail","LocaleStress"];export{c as ErrorState,u as LocaleStress,n as Success,d as SyncFail,D as __namedExportsOrder,B as default};

@@ -1,0 +1,29 @@
+/*
+ * Task 748 — the 1 `--color-overlay*`-derived Tailwind utility site in LightboxView.tsx,
+ * reproduced as a CSS-module rule reading the `:root` `--overlay-foreground` variable (never
+ * `--color-overlay-foreground`, which Task 695 removes — see globals.css:70-85/:459-471).
+ *
+ * D34 (2026-08-13): measured cascade WINNER — the counter `div` is a plain child of
+ * `Modal.Body`'s inner flex wrapper; no Mantine component sets `color` directly on this specific
+ * element (only `color` inheritance from ancestors exists, which always loses to any explicit
+ * rule on the element itself, layered or not). Stays unlayered, same as
+ * MantineListingCardPattern.module.css's D34-winning rules.
+ *
+ * D35: `text-overlay-foreground/80` reproduces Tailwind's own compiled two-rule form — static
+ * fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
+ * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
+ *
+ * Note for Task 695 (R11): this file's `LIGHTBOX_ACTION_ICON_STYLE` comment block above the
+ * component (`bg-overlay/95 equivalent`, `bg-overlay/95 className` mentions) still contains the
+ * literal string `bg-overlay/95` — Tailwind's scanner reads comments too, so that utility keeps
+ * being generated though nothing renders it. Left untouched; 695 decides whether to rewrite it.
+ */
+
+.counter {
+  color: #fffc; /* text-overlay-foreground/80 static fallback */ /* design-tokens-allow: #fffc — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .counter {
+    color: color-mix(in oklab, var(--overlay-foreground) 80%, transparent);
+  }
+}

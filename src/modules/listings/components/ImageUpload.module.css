@@ -1,0 +1,33 @@
+/*
+ * Task 748 — the 3 `--color-overlay*`-derived Tailwind utility sites in ImageUpload.tsx,
+ * reproduced as CSS-module rules reading the `:root` `--overlay`/`--overlay-foreground` pair
+ * (never `--color-overlay*`, which Task 695 removes — see globals.css:70-85/:459-471).
+ *
+ * D34 (2026-08-13): both sites are measured cascade WINNERS — plain `div`/`span` markup inside
+ * `AppImage`'s children slot; AppImage sets no `background-color`/`color` on its children, so
+ * nothing contests either element. Stays unlayered, same as MantineListingCardPattern.module.css's
+ * D34-winning rules.
+ *
+ * D35: both `bg-overlay/NN` sites reproduce Tailwind's own compiled two-rule form — static
+ * fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
+ * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
+ */
+
+.hoverOverlay {
+  background-color: #00000080; /* bg-overlay/50 static fallback */ /* design-tokens-allow: #00000080 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .hoverOverlay {
+    background-color: color-mix(in oklab, var(--overlay) 50%, transparent);
+  }
+}
+
+.orderBadge {
+  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+  color: var(--overlay-foreground); /* text-overlay-foreground */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .orderBadge {
+    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+  }
+}

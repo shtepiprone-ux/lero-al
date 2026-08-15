@@ -1,0 +1,1 @@
+function s(e){return{length:e.length>=8,uppercase:/[A-Z]/.test(e),lowercase:/[a-z]/.test(e),digit:/[0-9]/.test(e),special:/[!@#$%*=]/.test(e)}}function r(e){const t=s(e);return Object.values(t).every(Boolean)}export{r as a,s as c};

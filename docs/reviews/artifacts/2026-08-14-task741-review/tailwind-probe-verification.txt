@@ -1,0 +1,68 @@
+Task 741 review 1 — verification that every exactGeneratedSemantics row satisfies
+check-review-ledger.mjs's validateTailwindCompiler()
+
+Why this transcript exists
+--------------------------
+`npm run check:review-ledger -- --file docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.json`
+runs `TAILWIND_PROBE_SCRIPT` in a child process. That probe loads `@tailwindcss/node`, which loads
+`lightningcss`'s platform-native binding. The reviewer's shell reaches this repository through a
+Linux mount, while `node_modules/` was installed on Windows, so the probe cannot start there:
+
+    Error: Cannot find module '../lightningcss.linux-x64-gnu.node'
+
+That is a platform limitation of the reviewer's shell, not a ledger defect. To avoid asserting a
+gate result that was never measured, the exact checks `validateTailwindCompiler()` performs were
+re-implemented verbatim and executed against a clean Linux install of the same compiler version
+(tailwindcss 4.3.0), compiling `src/app/globals.css` at review.baseRevision
+fc04a01c544a6396179a5283edd2b6f2fd106ebf.
+
+Checks re-implemented verbatim from scripts/check-review-ledger.mjs
+------------------------------------------------------------------
+  canonicalCss()            :366-371
+  wrapperConditions()       :373-381
+  extractCandidateRule()    :554-568
+  compiled-vs-rawRule       :722-724   canonicalCss(compiled) === canonicalCss(before.rawRule)
+  before.envelope.media     :726-728
+  before.envelope.supports  :729-731
+  after wrapper consistency :validateSemanticSide envelope/rawRule agreement
+
+Result
+------
+PASS  AC4 / R4.1   candidate=bg-status-info/80
+PASS  AC4 / R4.2   candidate=border-status-info
+PASS  AC4 / R4.3   candidate=bg-status-rented/80
+PASS  AC4 / R4.4   candidate=border-status-rented
+
+All exact-generated rows would pass validateTailwindCompiler on a platform where the Tailwind
+probe can run.
+
+Residual validator state on the reviewer's Linux shell
+------------------------------------------------------
+Six violations remain there, and only six:
+
+  - requirements[3..6].exactGeneratedSemantics.compiler could not compile the exact candidate
+      (x4 — the native-binding failure above)
+  - review.ledgerGate.status claims PASSED, but this ledger evaluates to FAILED
+  - review.ledgerGate.exitCode claims 0, but this ledger evaluates to 1
+      (x2 — the receipt check is downstream of the four probe failures and clears with them)
+
+Every other rule the validator enforces — schema version, immutable base revision, reviewed paths,
+required-scope enumeration, tuple coverage, coverage-gap decomposition, finding-to-requirement
+reciprocity, OPEN-P0/P1/P2 gap linkage, semantic-delta accounting, negative-probe consistency,
+derived coverage totals, and the non-approved handoff ban — already passes on the reviewer's shell.
+
+Closing step — DONE
+-------------------
+The real gate was re-run on Windows, where the probe loads:
+
+    npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.json
+    -> valid fail-closed review ledger, exit 0   (2026-08-14)
+
+All four exact-generated rows compiled and byte-matched there, confirming this transcript's
+prediction. The retained ledgerGate receipt (PASSED / 0) records that run, so no further validation
+is outstanding.
+
+Review state, canonical
+-----------------------
+review.coverage: 12 total, 8 VERIFIED, 4 UNVERIFIED, 7 open P2 findings (F1-F7).
+F8 is a required evidence-apparatus hardening outside a ledger row.

@@ -5,6 +5,7 @@ import { Modal, ActionIcon, UnstyledButton } from '@mantine/core'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { AppImage } from '@/components/ui/AppImage'
 import { cn } from '@/lib/utils'
+import styles from './LightboxView.module.css'
 
 interface LightboxImage {
   url: string
@@ -42,10 +43,10 @@ export interface LightboxViewProps {
  */
 const LIGHTBOX_ACTION_ICON_STYLE = {
   position: 'absolute',
-  '--ai-bg': 'color-mix(in oklab, var(--color-overlay-foreground) 10%, transparent)',
-  '--ai-hover': 'color-mix(in oklab, var(--color-overlay-foreground) 20%, transparent)',
-  '--ai-color': 'var(--color-overlay-foreground)',
-  '--ai-hover-color': 'var(--color-overlay-foreground)',
+  '--ai-bg': 'color-mix(in oklab, var(--overlay-foreground) 10%, transparent)',
+  '--ai-hover': 'color-mix(in oklab, var(--overlay-foreground) 20%, transparent)',
+  '--ai-color': 'var(--overlay-foreground)',
+  '--ai-hover-color': 'var(--overlay-foreground)',
 } as CSSProperties
 
 export function LightboxView({
@@ -71,19 +72,22 @@ export function LightboxView({
       radius={0}
       keepMounted={false}
     >
-      {/* No Modal.Overlay — this component's own scrim (bg-overlay/95 equivalent on Content) IS
-          the backdrop; a second Mantine overlay would double-darken. Compound API (not the
-          shorthand <Modal>) so aria-label lands on Modal.Content — the actual role="dialog"
-          element — instead of the outer root wrapper (verified via Mantine source: the
-          shorthand spreads extra props onto ModalRoot→ModalBase's Box, not ModalBaseContent's
-          Paper). No Modal.Header — a visible title bar would break the full-bleed media view.
-          Scrim color via inline `style`, NOT a `bg-overlay/95` className — same cascade-layer
-          trap as `LIGHTBOX_ACTION_ICON_STYLE` above (Mantine's `Paper`, which `Modal.Content`
-          renders through, sets its own unlayered `background-color`). `--color-overlay` is the
-          exact semantic token `bg-overlay` itself resolves to. */}
+      {/* No Modal.Overlay — this component's own scrim (a 95%-opaque black wash painted on
+          Content) IS the backdrop; a second Mantine overlay would double-darken. Compound API
+          (not the shorthand <Modal>) so aria-label lands on Modal.Content — the actual
+          role="dialog" element — instead of the outer root wrapper (verified via Mantine
+          source: the shorthand spreads extra props onto ModalRoot→ModalBase's Box, not
+          ModalBaseContent's Paper). No Modal.Header — a visible title bar would break the
+          full-bleed media view. Scrim color via inline `style`, NOT a Tailwind opacity-modifier
+          className — same cascade-layer trap as `LIGHTBOX_ACTION_ICON_STYLE` above (Mantine's
+          `Paper`, which `Modal.Content` renders through, sets its own unlayered
+          `background-color`). `--overlay` is the single-source token this scrim reads (Task
+          695 — the Tailwind-utility-shaped className this comment used to name is gone from
+          the codebase, and so is the `@theme inline` copy that once fed its static
+          fallback). */}
       <Modal.Content
         aria-label={labels.close}
-        style={{ backgroundColor: 'color-mix(in oklab, var(--color-overlay) 95%, transparent)' }}
+        style={{ backgroundColor: 'color-mix(in oklab, var(--overlay) 95%, transparent)' }}
       >
         <Modal.Body className="h-full flex items-center justify-center">
           <div className="relative w-full h-full flex items-center justify-center">
@@ -103,7 +107,7 @@ export function LightboxView({
             </ActionIcon>
 
             {/* Counter */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-overlay-foreground/80 text-sm">
+            <div className={cn(styles.counter, 'absolute top-4 left-1/2 -translate-x-1/2 text-sm')}>
               {labels.counter(activeIndex + 1, images.length)}
             </div>
 
@@ -156,7 +160,7 @@ export function LightboxView({
                     'relative h-14 w-20 shrink-0 rounded-lg overflow-hidden border-2',
                     activeIndex === i ? 'opacity-100' : 'opacity-60 hover:opacity-100',
                   )}
-                  style={{ borderColor: activeIndex === i ? 'var(--color-overlay-foreground)' : 'transparent' }}
+                  style={{ borderColor: activeIndex === i ? 'var(--overlay-foreground)' : 'transparent' }}
                 >
                   <AppImage variant="gallery-strip" src={img.url} alt="" />
                 </UnstyledButton>

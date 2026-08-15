@@ -1,0 +1,607 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-748 REWORK2 — evidence-apparatus remediation, RW1–RW7 (Sprint 46.11, round 3)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "647b95adf0e4c76a24a88b21aa199692cf6aa3fc",
+    "reviewedRevision": "base 647b95adf0e4c76a24a88b21aa199692cf6aa3fc plus the uncommitted REWORK2 change set: 6 modified files and 4 new files under docs/reviews/artifacts/2026-08-13-task748-rework/, the session log, and docs/backlog.md. No src/ file was modified this round — verified by mtime (all src/ paths predate the 17:1x session) and by the RR1/RR2 lines being byte-intact. The Task 748 src/ change set itself carries forward unchanged from the round-2 ledger, where it was verified. Neither reviewer artifact folder nor any ledger was modified by the executor.",
+    "reviewedPaths": [
+      "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/rw1-gate-blindness-probe.mjs",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-PLANTED.json",
+      "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-OMIT-MANTINE-VARS.json",
+      "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+      "docs/backlog.md"
+    ],
+    "supersedes": [
+      "docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json",
+      "docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.SUPERSEDED.json"
+    ],
+    "coverage": {
+      "total": 8,
+      "verified": 8,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-rework2-evidence-apparatus.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "RW1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs",
+        "symbol": "SITE_PROFILES / DEFAULT_PROFILE — the signature-keyed regression gate replacing the id-keyed whitelist",
+        "diffHunks": [
+          "SITE_PROFILES map",
+          "the per-case verdict block"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the gate's ability to fail on the 3 protected sites",
+          "the gate's ability to pass on the real tree"
+        ],
+        "notApplicable": {
+          "stories": "class-list resolution is story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "both branches of each conditional site are separate cases",
+          "phases": "before and after are compared inside each case"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/rw1-signature-gate-adversarial.txt",
+          "command": "four reviewer-authored mutations of the submitted gate, each run to completion",
+          "observable": "drop-expected -> EXPECTED SURVIVING UTILITY MISSING: hover:bg-muted, exit 1. extra-class -> OTHER UTILITIES NEWLY SURVIVE (unexpected): shadow-xl, exit 1. module-missing -> MODULE CLASS MISSING, exit 1. overlay-lingers -> OVERLAY UTILITY STILL PRESENT AFTER MIGRATION: bg-overlay/50, exit 1. Unmutated real tree: 20 elements, moved 1, unexpected 0, exit 0.",
+          "freshness": "reviewer run 2026-08-13 against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate's ability to fail on the 3 protected sites",
+              "the gate's ability to pass on the real tree"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/rw1-gate-blindness-probe.mjs",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/rw1-gate-blindness-probe.mjs",
+          "observable": "the executor's own probe, RR1 reverted: 20 elements, moved 3, unexpected 2, exit 1 — re-run by the reviewer, not read from the transcript",
+          "freshness": "reviewer re-run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate's ability to fail on the 3 protected sites"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the whitelist is still id-keyed, merely tuned so the executor's one probe reddens",
+          "kind": "adversarial-mutation-in-the-other-direction",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/rw1-signature-gate-adversarial.txt",
+          "result": "REFUTED — mutations at E11, E12 and E15, none of which the executor's probe touches, each redden with the specific correct diagnosis. The gate checks module presence, lingering overlay utilities, unexpected newly-surviving classes AND missing expected ones, per site. Compare the round-2 probe, which exited 0 on a full RR1 regression."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW1 is a gate-sensitivity criterion."
+      }
+    },
+    {
+      "id": "RW2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt",
+        "symbol": "the E6b/E7b verdicts and the moved: count",
+        "diffHunks": [
+          "E6b row",
+          "E7b row",
+          "summary line"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "E6b/E7b verdicts",
+          "the moved count",
+          "all 18 touched elements"
+        ],
+        "notApplicable": {
+          "stories": "story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "enumerated per case",
+          "phases": "compared inside each case"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs, re-run by the reviewer",
+          "observable": "E6b and E7b print 'stable' with byte-identical before/after; summary reads 'Elements checked: 20, moved: 1, unexpected: 0'; the moved site is E12 alone. Case coverage is now E1..E18 including the a/b branch variants — E18 is present, so the latent splice bug that had been silently dropping it is fixed and the 'all 18 elements' claim is true for the first time.",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "E6b/E7b verdicts",
+              "the moved count",
+              "all 18 touched elements"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the previous round's 'all 18 elements' coverage claim was already true",
+          "kind": "case-enumeration",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "REFUTED — it was not. The executor found a missing CASES placeholder that made a splice silently delete E18, so the prior run covered 17 elements while claiming 18. Found and fixed unprompted, in the same file RW1 required editing; the reviewer confirms E18 now appears."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW2 is an artifact/report consistency criterion."
+      }
+    },
+    {
+      "id": "RW3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+        "symbol": "MANTINE_RUNTIME_VARS_CSS injection and the control-element UNRESOLVED guard in capturePartBCell",
+        "diffHunks": [
+          "MANTINE_BRAND_9 / MANTINE_RUNTIME_VARS_CSS",
+          "the control-button comparison and UNRESOLVED status"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the PerfDevOverlay Part B witness",
+          "the comparator's refusal to score an unresolved property"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "the Part B subjects have no story by construction",
+          "locales": "the property under test is locale-independent",
+          "viewports": "PerfDevOverlay is a fixed dev overlay",
+          "states": "the over-budget branch is the state under test"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+          "observable": "both PerfDevOverlay Part B cells now read rgb(142, 50, 43) on BOTH sides, status OK — the property under test resolves. 176 cells, 0 failures. rgb(142,50,43) = #8E322B = brand[9], independently confirmed against src/design-system/brand.ts:23.",
+          "freshness": "executor run 2026-08-13 at 17:39, after the final edit to the comparator at 17:21 — mtime ordering checked by the reviewer",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the PerfDevOverlay Part B witness"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-OMIT-MANTINE-VARS.json",
+          "command": "node docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs --omit-mantine-vars",
+          "observable": "with the runtime variable deliberately absent, both cells return status UNRESOLVED with value === controlValue === rgb(0, 0, 0), failCount 2, exit 1 — the comparator now refuses the fallback instead of scoring it as agreement",
+          "freshness": "executor run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the comparator's refusal to score an unresolved property"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the guard just asserts the known-good value, so it would not catch an unresolved property on some other cell",
+          "kind": "mechanism-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/README.md",
+          "result": "REFUTED — the guard measures an unstyled control button in the same page and flags UNRESOLVED whenever the probe's computed value does not differ from the control's. No value is hardcoded in the comparison, and it applies to every Part B cell and every property, not only the one G3 was filed against."
+        },
+        {
+          "claim": "the injected #8E322B is a stale transcription that could silently diverge from the theme",
+          "kind": "source-of-truth-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "PARTLY — it is a literal, not an import (brand.ts is TypeScript and the harness is plain .mjs). The reviewer confirms it currently equals brand[9] exactly. It is injected identically into both phases, so a future drift would move the absolute value on both sides and leave the before/after delta — the thing this comparator measures — unaffected. Recorded as H4, a note, not a defect."
+        },
+        {
+          "claim": "the H1 output-path fix invalidates the three result JSONs, which predate it",
+          "kind": "change-surface-analysis",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+          "result": "REFUTED — the fix replaces a filename selection and touches no measurement, cell, probe or comparison. The reviewer could not re-run the comparator (Playwright plus the I0 export, neither reachable from the bridge), so the JSONs stand for the runs they record; the reviewer did confirm the file still parses and that requireI0Export() emits its actionable message, which independently re-verifies RW5's failure path."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW3 is a measurement-validity criterion."
+      }
+    },
+    {
+      "id": "RW4",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+        "symbol": "PHOTO_COUNT_BEFORE / PHOTO_COUNT_AFTER_TEMPLATE / PERF_OVER_* — Part B fixtures computed at module load",
+        "diffHunks": [
+          "the cn() import and the computed constants"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Part B className fixtures"
+        ],
+        "notApplicable": {
+          "stories": "story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "both states use the same computed constants",
+          "phases": "both phases are computed the same way"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "read real-before-after-comparator.mjs:239-245",
+          "observable": "the file now imports twMerge and clsx, defines cn = twMerge(clsx(...)) identically to src/lib/utils.ts:4, and derives every Part B className by calling it — PHOTO_COUNT_BEFORE = cn(GHOST, '<local before>'), so text-foreground and hover:bg-muted are evicted by the real algorithm rather than typed in by hand. The false byte-identical claim G4 was filed against is gone with the fixture it described.",
+          "freshness": "reviewer read 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Part B className fixtures"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the strings are still hand-authored, just moved",
+          "kind": "source-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "REFUTED — what is hand-authored is now only the INPUT to cn() (the ghost variant string and the local className), which is the same thing the component itself passes; the resolved list is computed. That is the correct boundary."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW4 is a fixture-provenance criterion."
+      }
+    },
+    {
+      "id": "RW5",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs",
+        "symbol": "I0_EXPORT_DIR resolution and requireI0Export()",
+        "diffHunks": [
+          "I0_EXPORT_DIR / BEFORE_STATIC / BEFORE_NEXT_CSS_DIR",
+          "requireI0Export"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the comparator's I0 dependency"
+        ],
+        "notApplicable": {
+          "stories": "story-independent",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "affects both phases identically"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "grep for absolute paths and read the resolution block",
+          "observable": "I0_EXPORT_DIR = LERO_I0_EXPORT_DIR if set, else resolve(ROOT, '..', 'lero-al-i0-d3ffd6'); requireI0Export() checks both subpaths and prints the git archive recipe plus both placement options before exiting. The only remaining absolute path in the file is inside the explanatory comment that records why the old one was wrong.",
+          "freshness": "reviewer read 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the comparator's I0 dependency"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "a repo-relative default is just the same hardcoding one level up",
+          "kind": "failure-path-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "PARTLY, and acceptably — the default is a convention, but it is overridable by environment variable and, crucially, its absence now produces an actionable message naming the revision and the command to build it, rather than an opaque ENOENT. That is what AC5 asked for."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW5 is a reproducibility criterion."
+      }
+    },
+    {
+      "id": "RW6",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+        "symbol": "§R3 citation block and §S5",
+        "diffHunks": [
+          "§R3 Citation paragraph",
+          "§S5"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the RR2 owner-authorisation citation"
+        ],
+        "notApplicable": {
+          "stories": "documentation criterion",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "grep every docs/reviews/*.json path in the session log and test each for existence; inspect the two annotated transcript rows and the path-liveness note",
+          "observable": "§R3 carries a Citation paragraph naming the ledger and finding G6 explicitly, and §S5 repeats it. AC6 asks for a LIVE citation, and at first issue of this ledger it was not: this very review's supersession renamed the cited file, so §R3, §S5, §S6 and the log header pointed at a path that no longer existed. Repaired in-round BY THE REVIEWER, since the reviewer's own rename caused it — the four citations now carry the .SUPERSEDED.json name, and the two remaining occurrences of the old filename are command transcripts (§7 and §S7's check:review-ledger --file rows) left verbatim because rewriting them would misstate what was executed, each annotated as historical and covered by a rename map inserted at the top of the log. Verified: every ledger path cited in the log now resolves on disk; zero bare unannotated dead paths remain.",
+          "freshness": "reviewer read and repair 2026-08-13, re-verified after the edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the RR2 owner-authorisation citation"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "RW6 could be graded VERIFIED on the citation as originally written",
+          "kind": "path-liveness",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/README.md",
+          "result": "REFUTED at first issue, and the owner caught it: this ledger filed the staleness as H6 and then left RW6 VERIFIED anyway — the same internal inconsistency as round 2's openP0:0 beside an UNVERIFIED P0 row. A dead path is not a live citation. RW6 is VERIFIED now because the paths were actually repaired, not because the finding was noted."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW6 is a citation criterion."
+      }
+    },
+    {
+      "id": "RW7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+        "symbol": "§S6 — commit status table",
+        "diffHunks": [
+          "§S6"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every artifact directory and ledger the previous round cited"
+        ],
+        "notApplicable": {
+          "stories": "documentation criterion",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "git ls-files over each cited path; git log",
+          "observable": "commit 647b95adf committed the rework folder (63), the round-2 reviewer folder (9), the round-2 ledger (1), the round-1 SUPERSEDED ledger (1) and the REWORK2 kickoff (1); the round-1 reviewer folder was already at 14 from ce22b1b5e. Every path the previous round's report and ledger cite is now in a clone. G8 is closed.",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every artifact directory and ledger the previous round cited"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "this round's own new evidence is committed too",
+          "kind": "porcelain-reread",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "NOT REFUTED — it is not, and the executor says so plainly in §S6 rather than describing it as tracked, which is what AC8 required. The same is true of this reviewer's round-3 folder. Recorded as H5, a note for the owner's docs-only commit."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW7 is an evidence-durability criterion."
+      }
+    },
+    {
+      "id": "RW8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md",
+        "symbol": "§S6/§S7 — per-path disclosure (AC8) and src/ integrity plus standing gates (AC9)",
+        "diffHunks": [
+          "§S6",
+          "§S7"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "per-path commit disclosure",
+          "src/ integrity",
+          "standing gates"
+        ],
+        "notApplicable": {
+          "stories": "not a UI criterion",
+          "locales": "locale-independent",
+          "viewports": "viewport-independent",
+          "states": "state-independent",
+          "phases": "final tree only"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "command": "src/ mtime sweep; grep the RR1/RR2 lines; git diff src/app/globals.css; the §13 census; check:mojibake; check:file-integrity; check:review-ledger --file",
+          "observable": "Every src/ path predates this session; the RR1 conditional-omission lines at PerfDevOverlay.tsx:83,:88 and RR2's color: var(--foreground) at ListingGallery.module.css:71 are byte-intact; globals.css diff 0 lines; census TOTAL 0; mojibake and file-integrity clean; the round-2 ledger validates. §S6 states per-path commit status with git ls-files counts and calls nothing tracked while uncommitted.",
+          "freshness": "reviewer run 2026-08-13",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "per-path commit disclosure",
+              "src/ integrity",
+              "standing gates"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "the standing-gate figures in §S7 are supported by retained transcripts from this round",
+          "kind": "transcript-freshness-audit",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt",
+          "result": "REFUTED as to the transcripts, CONFIRMED as to the figures. Every transcript under those names is the previous session's (14:0x-14:48); nothing was retained this round. But the figures are not stale: the reviewer reconciled them arithmetically — mojibake 2318 = the 2322 the reviewer measured minus its own 4 probe files; file-integrity 24 = the exact changed-plus-untracked count. The old transcripts read 2303 and 76, i.e. different runs. Recorded as H2."
+        },
+        {
+          "claim": "build, typecheck and vitest needed re-running this round",
+          "kind": "change-surface-analysis",
+          "path": "docs/reviews/artifacts/2026-08-13-task748-round3/README.md",
+          "result": "REFUTED — no src/ file changed, verified by mtime and by the RR1/RR2 lines being intact, so a docs-and-scripts-only round cannot move build output or test results and the round-2 ledger's figures carry by construction. The executor re-ran build anyway (exit 0, 619 kB unchanged). Likewise no ledger changed, so the repo-wide validator status is unchanged from its round-2 baseline."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "RW8 is a disclosure and no-regression criterion."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "H1",
+      "priority": "P3",
+      "status": "RESOLVED",
+      "requirements": "RESOLVED in-round by the reviewer, on owner instruction, before commit. real-before-after-comparator.mjs's outPath ternary considered only PLANT, so --omit-mantine-vars overwrote the clean artifact — which is what produced an omit transcript reading 'Wrote ...real-comparator-result.json' and an OMIT-MANTINE-VARS.json made by an unrecorded manual copy. Each mode now writes its own filename. The change selects an output path and touches no measurement, so the three existing result JSONs remain valid for the runs they record; they predate the edit and were not regenerated, which is stated in the code comment beside the fix.",
+      "requirementIds": [
+        "RW3"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs:477; omit-mantine-vars-run-transcript.txt (names real-comparator-result.json); mtimes real-comparator-OMIT-MANTINE-VARS.json 17:39:29 < real-comparator-result.json 17:39:37."
+    },
+    {
+      "id": "H2",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "No standing-gate transcript was retained for this round, while files under the expected names exist from the previous session and would mislead an auditor. §S7 presents mojibake, file-integrity, typecheck, build and both check:review-ledger modes as this round's results; every retained transcript for those is 14:0x-14:48, whereas this round's work is 17:18-17:39. The two ledger-gate transcripts are worse than merely old: check-review-ledger-file.txt records a --file run against docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json, a path that no longer exists, while §S7 claims the command targeted the -rework- path. The REWORK2 kickoff §5 said to run it natively and record the real result; the running happened, the recording did not. The figures themselves are sound — the reviewer reconciled mojibake and file-integrity arithmetically and re-ran both, plus check:review-ledger --file — so this is a retention and citation defect, not a false claim. Graded P3 for that reason, but it is the third appearance of the same class in this task and the next submission should retain a transcript per gate per round.",
+      "requirementIds": [
+        "RW8"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt, 'H2 arithmetic reconciliation'. mtime sweep of docs/reviews/artifacts/2026-08-13-task748-rework/*.txt: only rw1-gate-blindness-probe.txt (17:18:53), twmerge-class-resolution-all18.txt (17:18:59) and the three comparator transcripts (17:39:55) are from this round. check-review-ledger-file.txt (14:45:37) names a ledger path that no longer exists."
+    },
+    {
+      "id": "H3",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "The UNRESOLVED guard compares the probe against an unstyled control element, so it will also fire when a rule legitimately computes to the same value the control gets — for `color` on a button, a genuinely black rule would be reported UNRESOLVED. That is a false positive in the fail-safe direction and costs nothing today, since no Part B subject resolves to the UA default. Worth a line in the comparator's header so a future author does not chase it as a bug.",
+      "requirementIds": [
+        "RW3"
+      ],
+      "evidence": "real-before-after-comparator.mjs, capturePartBCell: `if (cs.value === cs.controlValue) return { status: 'UNRESOLVED' … }`."
+    },
+    {
+      "id": "H4",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "MANTINE_BRAND_9 is a literal ('#8E322B') with a comment naming src/design-system/brand.ts brand[9] as its source, not an import — brand.ts is TypeScript and the harness is plain .mjs, so the tradeoff is defensible and was disclosed. The reviewer confirms it currently equals brand[9] exactly. Because it is injected identically into both phases, drift would move the absolute value on both sides and leave the measured delta unaffected.",
+      "requirementIds": [
+        "RW3"
+      ],
+      "evidence": "src/design-system/brand.ts:23 '#8E322B' vs real-before-after-comparator.mjs:282 const MANTINE_BRAND_9 = '#8E322B'."
+    },
+    {
+      "id": "H5",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "This round's own evidence is not yet committed: 4 new files and 6 modified files under docs/reviews/artifacts/2026-08-13-task748-rework/, plus the session log and docs/backlog.md, plus this reviewer's docs/reviews/artifacts/2026-08-13-task748-round3/ and this ledger. The executor disclosed this correctly in §S6 rather than calling it tracked. A docs-only commit by the owner closes it, exactly as 647b95adf did for rounds 1-2. Also: the reviewer left four adversarial probe copies at docs/reviews/artifacts/_to_delete/ because the review bridge cannot delete files; that folder is reviewer scratch and should be removed.",
+      "requirementIds": [
+        "RW7"
+      ],
+      "evidence": "git status --porcelain; docs/reviews/artifacts/2026-08-13-task748-round3/README.md, 'Reviewer cleanup owed to the owner'."
+    },
+    {
+      "id": "H6",
+      "priority": "NOTE",
+      "status": "RESOLVED",
+      "requirements": "Both slips resolved. The RW7 row's '63' mislabel is corrected in the review narrative (63 is the rework folder; round-1 is 14, as §S6's own table always had it). The stale ledger citations were repaired by the reviewer across the log header, §R3, §S5 and §S6, with the two command transcripts left verbatim, annotated, and backed by a rename map at the top of the log. The breakage was caused by this review's own supersession rename, so the repair was the reviewer's to make; RW6 is VERIFIED on the repaired state, not on the finding having been noted.",
+      "requirementIds": [
+        "RW6",
+        "RW7"
+      ],
+      "evidence": "git ls-files sweep in docs/reviews/artifacts/2026-08-13-task748-round3/state-audit.txt; docs/sessions/2026-08-13-task748-overlay-utility-exit.md §R3:382, §S6."
+    },
+    {
+      "id": "H7",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "Approving Task 748 does not unblock Task 695. The Tailwind-utility side is finished — census 0, and the bundle retains only the two scanner-visible comment strings — but the --color-overlay* namespace still has 7 live static var() references (LightboxView.tsx :46 :47 :48 :49 :87 :160 and MantineListingGalleryPattern.tsx :93), and --color-overlay* is declared only in the @theme inline block 695 deletes. Those are out of 748's scope by design and correctly reported. 695 needs an owner decision on them before its own exit condition closes.",
+      "requirementIds": [
+        "RW8"
+      ],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/live-color-overlay-refs.txt; docs/sessions/2026-08-13-task748-overlay-utility-exit.md §R6."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "RW8",
+    "reviewer": "Opus orchestrator review, round 3, 2026-08-13. Every requirement was re-derived rather than read from the report: both gate scripts re-run, four adversarial mutations authored and run against the new gate, the comparator's three result JSONs audited for content and for mtime ordering against the script that produced them, the injected brand constant checked against brand.ts, the fixture computation and path resolution read in source, and the census, globals.css diff, mojibake, file-integrity, ledger gate and git ls-files sweep re-measured. Not re-run here: npm run build, npm run typecheck, npx vitest and the repo-wide ledger validator, which the reviewer's Linux bridge cannot execute — carried, and sound by construction because no src/ file and no ledger changed this round. Owner correction accepted at issue two of this ledger: RW6 had been left VERIFIED while H6 recorded its citation as dead — a dead path is not a live citation, and the rename that killed it was this review's own. The paths were repaired rather than argued around, H1 was fixed in the same pass, and RW6 now rests on the repaired state. This ledger supersedes both earlier issues; the corrections they record (G3's grading, G5's unfounded deletion claim, RR6's premature VERIFIED) were the reviewer's own and are retained in those files rather than erased."
+  }
+}

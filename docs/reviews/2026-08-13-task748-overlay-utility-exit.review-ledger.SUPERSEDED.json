@@ -1,0 +1,289 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-748 — clear the last 24 --color-overlay* utilities so 695's exit condition becomes reachable (Sprint 46.11)",
+  "review": {
+    "decision": "NEEDS REVISION",
+    "baseRevision": "d3ffd6d6c51d9e968a47aabaaff46dcd69055a0f",
+    "reviewedRevision": "base d3ffd6d6c51d9e968a47aabaaff46dcd69055a0f plus the UNCOMMITTED Task 748 change set on task/q0-ci-rendered-locale-split. Worktree at review time: six .tsx modified (+29/-20 total), six new *.module.css (257 lines), docs/backlog.md modified in place (80 lines, unchanged count), docs/sessions/2026-08-13-task748-overlay-utility-exit.md new. src/app/globals.css is absent from git status entirely. Nothing was committed or pushed; the reviewer wrote no file under src/.",
+    "reviewedPaths": [
+      "src/components/shared/PerfDevOverlay.tsx",
+      "src/components/shared/PerfDevOverlay.module.css",
+      "src/modules/listings/components/ListingGallery.tsx",
+      "src/modules/listings/components/ListingGallery.module.css",
+      "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx",
+      "src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css",
+      "src/modules/listings/components/ImageUpload.tsx",
+      "src/modules/listings/components/ImageUpload.module.css",
+      "src/modules/listings/components/LightboxView.tsx",
+      "src/modules/listings/components/LightboxView.module.css",
+      "src/components/admin/AdminUserAvatar.tsx",
+      "src/components/admin/AdminUserAvatar.module.css",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-13-task748-overlay-utility-exit.md"
+    ],
+    "supersedes": [],
+    "coverage": { "total": 12, "verified": 4, "unverified": 8, "openP0": 3, "openP1": 2, "openP2": 1 },
+    "ledgerGate": { "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json", "status": "PASSED", "exitCode": 0 }
+  },
+  "requirements": [
+    {
+      "id": "R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": { "path": "src/components/shared/PerfDevOverlay.tsx", "symbol": "the 24 migrated className sites across all six components", "diffHunks": ["PerfDevOverlay 11, ListingGallery 5, MantineListingGalleryPattern 3, ImageUpload 3, LightboxView 1, AdminUserAvatar 1"] },
+      "requiredScope": { "subjects": ["src/** className positions"], "notApplicable": { "stories": "a source census is story-independent", "locales": "class names do not vary by locale", "viewports": "class names do not vary by viewport", "states": "the census reads source, not rendered state", "phases": "final tree only; the I0 count is the kickoff's, not a criterion" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/census-final-reviewer.txt", "command": "the §13 census one-liner, verbatim, re-run by the reviewer", "observable": "TOTAL 0", "freshness": "run 2026-08-13 against the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["src/** className positions"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/bundle-layer-and-offsets.txt", "command": "grep the emitted .next/static/css for overlay utility selectors", "observable": ".text-overlay-foreground NOT FOUND; the only surviving overlay utilities are .bg-overlay and the two-tier .bg-overlay\\/95, both scanner-visible via LightboxView.tsx's comment", "freshness": "final build in the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["src/** className positions"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the census could return 0 because the command is blind, not because the utilities are gone", "kind": "independent-bundle-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/bundle-layer-and-offsets.txt", "result": "REFUTED — the shipped bundle independently confirms the disappearance; .text-overlay-foreground is absent from every file in .next/static/css" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R1 is a source-census criterion; it makes no claim about a generated rule's semantics." }
+    },
+    {
+      "id": "R2",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-A", "F-B", "F-C"],
+      "finalSubject": { "path": "src/components/shared/PerfDevOverlay.tsx", "symbol": "cn(styles.metricRow, priorityOver && 'text-destructive font-bold') at :76 and :81; ListingGallery.tsx:123 cn(styles.photoCountButton, …) on Button variant=\"ghost\"", "diffHunks": ["PerfDevOverlay.tsx:76", "PerfDevOverlay.tsx:81", "ListingGallery.tsx:123"] },
+      "requiredScope": { "subjects": ["PerfDevOverlay budget rows :76/:81", "ListingGallery photo-count Button :123", "the remaining 21 migrated sites"], "states": ["rest", "hover"], "phases": ["before", "after"], "notApplicable": { "stories": "two of the three subjects have no story; the defect is class-list resolution, not story rendering", "locales": "no measured property depends on locale", "viewports": "no measured property depends on viewport; the ListingGallery button is md:hidden but its hover rule is width-independent" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/cascade-repro.txt", "command": "node docs/reviews/artifacts/2026-08-13-task748/cascade-repro.mjs --chromium <chrome>", "observable": "14/14 cells matched the recorded expectation. PerfDevOverlay budget row color: oklch(0.58 0.22 27) BEFORE vs oklab(1 0 0 / 0.7) AFTER. ListingGallery button hovered color: oklch(0.15 0 0) BEFORE vs oklch(1 0 0) AFTER.", "freshness": "run 2026-08-13 on the reviewed change set", "coverageRole": "COVERS", "scope": { "subjects": ["PerfDevOverlay budget rows :76/:81", "ListingGallery photo-count Button :123"], "states": ["rest", "hover"], "phases": ["before", "after"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt", "command": "node docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.mjs", "observable": "3 of 9 sites move their effective declaration set; the 6 controls do not", "freshness": "run 2026-08-13 with the repo's own tailwind-merge and clsx", "coverageRole": "COVERS", "scope": { "subjects": ["PerfDevOverlay budget rows :76/:81", "ListingGallery photo-count Button :123"], "states": ["rest", "hover"], "phases": ["before", "after"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/executor-comparator/capture-and-compare-result.json", "command": "node .screenshots/task748-overlay/capture-and-compare.mjs", "observable": "168/168 OK, failCount 0 — but every 'expected' value is a synthetic probe carrying the intended declaration, not a pre-migration capture", "freshness": "executor run, 2026-08-13, retained here so the citation resolves in a fresh clone", "coverageRole": "GAP_WITNESS", "scope": { "subjects": ["the remaining 21 migrated sites"] } }
+      ],
+      "coverageGaps": [
+        { "scope": { "subjects": ["the remaining 21 migrated sites"], "states": ["rest", "hover"], "phases": ["before", "after"] }, "findingId": "F-C", "reason": "No before/after capture exists for any site. The executor's 168-cell comparator reconstructs its 'before' side from the intended declaration text, so it cannot observe a change caused by which classes reach the element — the mechanism behind F-A and F-B. Twenty-one sites are therefore unmeasured against their pre-migration render, and the two the reviewer did measure both moved." }
+      ],
+      "counterChecks": [
+        { "claim": "the measured deltas are an artefact of the reviewer's reduced stylesheet rather than the real cascade", "kind": "control-site-in-same-run", "path": "docs/reviews/artifacts/2026-08-13-task748/cascade-repro.txt", "result": "REFUTED — the ctrl-* pair, a site where twMerge was doing no work, is byte-identical before and after in the same run and the same stylesheet; only the two disputed sites move" },
+        { "claim": "the CSS-module rule might be layered, in which case it would not outrank the Tailwind utilities it now coexists with", "kind": "emitted-artifact-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/emitted-module-chunk-ListingGallery.css", "result": "REFUTED — the emitted module chunk contains no @layer at all, while the utility bundle declares @layer theme, base, components, utilities; unlayered beats layered unconditionally" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "The defect is not in the reproduced rule text, which R3 verifies as exact. It is in which declarations reach the element once the utility leaves the className, so the auditable object is the resolved class list plus layer order, recorded in twmerge-class-resolution.txt and emitted-module-chunk-ListingGallery.css." }
+    },
+    {
+      "id": "R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": { "path": "src/components/shared/PerfDevOverlay.module.css", "symbol": "the 11 opacity-modifier rules across the six modules", "diffHunks": ["all six new *.module.css files"] },
+      "requiredScope": { "subjects": ["the 11 D35 opacity-modifier utilities", "the plain text-overlay-foreground utility"], "notApplicable": { "stories": "rule text is story-independent", "locales": "rule text is locale-independent", "viewports": "rule text is viewport-independent", "states": "both the static and @supports tier are compared as text", "phases": "the compiled before-side is the fixed reference" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/emitted-module-chunk-ListingGallery.css", "command": "read the emitted CSS-module chunk from .next/static/css", "observable": "static fallback then @supports (color:color-mix(in lab,red,red)) in that order for every modifier rule, and the hover:bg-overlay/70 site reproduces its @media (hover:hover) wrapper on both tiers", "freshness": "final build in the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["the 11 D35 opacity-modifier utilities", "the plain text-overlay-foreground utility"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the hex fallbacks were transcribed by hand rather than taken from a real build", "kind": "arithmetic-and-formatting-audit", "path": "docs/reviews/artifacts/2026-08-13-task748/emitted-module-chunk-ListingGallery.css", "result": "REFUTED — every value equals round(alpha × 255) over oklch(0 0 0)/oklch(1 0 0), and the shortening is inconsistent in exactly Tailwind's way (#0009 short, #000000d9 long); a hand transcription would not reproduce that asymmetry" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "Rule-text equivalence was audited against the emitted chunk rather than recompiled candidate-by-candidate; the candidates no longer exist as Tailwind candidates post-migration, so a TAILWIND_V4 compile of them against the base revision would be measuring a different tree than the one under review." }
+    },
+    {
+      "id": "R4",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-A", "F-B"],
+      "finalSubject": { "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md", "symbol": "§4 — the per-site D34 table, '24 sites measured, 24 winners, 0 losers'", "diffHunks": ["§4 rows 1–11", "§4 row 13–15"] },
+      "requiredScope": { "subjects": ["all 24 migrated sites"], "states": ["rest", "hover"], "notApplicable": { "stories": "a cascade measurement is story-independent", "locales": "no contest depends on locale", "viewports": "no contest depends on viewport", "phases": "D34 asks only about the pre-migration cascade" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt", "command": "node docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.mjs", "observable": "at PerfDevOverlay :76/:81 the overlay utility never reached the element before — twMerge deleted it, so the site had no winner to reproduce; at ListingGallery :123 removing the utility frees text-foreground and hover:bg-muted to survive", "freshness": "run 2026-08-13", "coverageRole": "COVERS", "scope": { "subjects": ["all 24 migrated sites"], "states": ["rest", "hover"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/bundle-layer-and-offsets.txt", "command": "brace-depth walk of the utility bundle", "observable": ".hover\\:text-foreground:hover sits at braceDepth 2 inside @layer utilities and outranks .text-overlay-foreground (0-1-0) by specificity in the same layer — so the migrated utility was a LOSER in the hover state, not a winner", "freshness": "final build in the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["all 24 migrated sites"], "states": ["rest", "hover"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "§4's byte-offset measurement settles the ListingGallery button contest", "kind": "selector-set-audit", "path": "docs/reviews/artifacts/2026-08-13-task748/bundle-layer-and-offsets.txt", "result": "REFUTED — §4 compared .text-foreground (0-1-0) only. The ghost variant also emits hover:text-foreground, which twMerge kept on both sides and which beats the overlay utility on specificity. The measured pair was not the deciding pair." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R4 is a cascade-outcome criterion about the pre-migration tree, not a rule-text equivalence claim." }
+    },
+    {
+      "id": "R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": { "path": "src/modules/listings/components/LightboxView.module.css", "symbol": "every overlay rule in the six new modules", "diffHunks": ["all six new *.module.css files"] },
+      "requiredScope": { "subjects": ["the six new CSS modules"], "notApplicable": { "stories": "a source grep is story-independent", "locales": "locale-independent", "viewports": "viewport-independent", "states": "state-independent", "phases": "final tree only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/emitted-module-chunk-ListingGallery.css", "command": "grep -c \"var(--color-overlay\" over the six new modules, and read the emitted chunk", "observable": "0 in all six sources; the emitted chunk reads var(--overlay) and var(--overlay-foreground) only", "freshness": "final build and final tree", "coverageRole": "COVERS", "scope": { "subjects": ["the six new CSS modules"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "reading --overlay instead of --color-overlay could change the rendered value", "kind": "token-definition-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "result": "REFUTED — globals.css:84-85 defines --color-overlay: var(--overlay) and --color-overlay-foreground: var(--overlay-foreground); the pair is value-identical by construction" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R5 is a custom-property-provenance criterion, satisfied by reading the emitted declarations." }
+    },
+    {
+      "id": "R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": { "path": "src/app/globals.css", "symbol": "the dual --overlay / --color-overlay declaration", "diffHunks": ["none — the file is unmodified"] },
+      "requiredScope": { "subjects": ["src/app/globals.css"], "notApplicable": { "stories": "a diff is story-independent", "locales": "locale-independent", "viewports": "viewport-independent", "states": "state-independent", "phases": "final tree only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/globals-css-diff.txt", "command": "git --no-optional-locks diff src/app/globals.css", "observable": "empty; the file does not appear in git status at all", "freshness": "run 2026-08-13 against the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["src/app/globals.css"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "an empty diff could mean the file was staged rather than untouched", "kind": "porcelain-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/globals-css-diff.txt", "result": "REFUTED — git status --porcelain for that path is also empty, so nothing is staged either" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R6 asserts the absence of a change; there is no generated rule to compare." }
+    },
+    {
+      "id": "R7",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-A", "F-B"],
+      "finalSubject": { "path": "src/modules/listings/components/ListingGallery.tsx", "symbol": "the className expression at :123 and PerfDevOverlay.tsx:76/:81", "diffHunks": ["ListingGallery.tsx:123", "PerfDevOverlay.tsx:76", "PerfDevOverlay.tsx:81"] },
+      "requiredScope": { "subjects": ["the rendered class list on each touched element"], "notApplicable": { "stories": "class-list resolution is story-independent", "locales": "locale-independent", "viewports": "viewport-independent", "states": "resolution happens once per render, not per state", "phases": "compared across before/after inside the same witness" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt", "command": "node docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.mjs", "observable": "at ListingGallery:123 the classes text-foreground and hover:bg-muted survive ONLY after the change; at PerfDevOverlay :76/:81 an overlay declaration reaches the element ONLY after the change", "freshness": "run 2026-08-13", "coverageRole": "COVERS", "scope": { "subjects": ["the rendered class list on each touched element"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the session log's §8 statement that only overlay classes moved is sufficient for AC7", "kind": "source-vs-dom-distinction", "path": "docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt", "result": "REFUTED at DOM level — §8 is true of the source diff and false of the rendered class list, because cn() is twMerge(clsx(...)) and a hashed module class does not participate in conflict resolution" }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R7 is a no-collateral-change criterion measured on the resolved class list, not on a compiled rule." }
+    },
+    {
+      "id": "R8",
+      "priority": "P0",
+      "status": "INFERENCE",
+      "findingIds": ["F-E"],
+      "finalSubject": { "path": "src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx", "symbol": "the critical-flow regression suite named at docs/critical-flow-registry.md:105", "diffHunks": ["unmodified — verified by git status"] },
+      "requiredScope": { "subjects": ["ListingGallery.portal.smoke.test.tsx"], "notApplicable": { "stories": "a unit suite has no story", "locales": "locale-independent", "viewports": "viewport-independent", "states": "state-independent", "phases": "final tree only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "command": "npx vitest run src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx", "observable": "executor reports 4/4 PASS; the reviewer's re-run aborted with MODULE_NOT_FOUND on rollup/dist/native.js because node_modules holds Windows bindings and the reviewer's bridge is Linux. Test file confirmed unmodified via git status.", "freshness": "executor run 2026-08-13; reviewer attempt 2026-08-13, environment-blocked", "coverageRole": "COVERS", "scope": { "subjects": ["ListingGallery.portal.smoke.test.tsx"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the suite result can be taken as independently confirmed", "kind": "environment-limitation", "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "result": "NOT REFUTED — it cannot. The status is INFERENCE, not VERIFIED, and F-E records why. Same limitation class as the one recorded for Task 700." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R8 is a test-execution criterion." }
+    },
+    {
+      "id": "R9",
+      "priority": "P1",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-C"],
+      "finalSubject": { "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md", "symbol": "§6 — the 168-tuple comparator, and §9's story-backing correction", "diffHunks": ["§6", "§9"] },
+      "requiredScope": { "subjects": ["MantineListingGalleryPattern photoCountBadge", "MantineListingGalleryPattern extraCountOverlay", "LightboxView counter"], "phases": ["before", "after"], "notApplicable": { "stories": "the two canonical stories are fixed by the corrected §3.6 and are not a variable of this row", "locales": "the executor ran all four; locale is not where the criterion fails", "viewports": "the executor ran all fourteen; viewport is not where the criterion fails", "states": "all three sites are rest-state only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/executor-comparator/capture-and-compare-result.json", "command": "node .screenshots/task748-overlay/capture-and-compare.mjs", "observable": "168/168 cells OK, failCount 0 — the migrated elements do render the intended declarations", "freshness": "executor run 2026-08-13, retained under docs/reviews/artifacts so the citation resolves in a fresh clone", "coverageRole": "COVERS", "scope": { "subjects": ["MantineListingGalleryPattern photoCountBadge", "MantineListingGalleryPattern extraCountOverlay", "LightboxView counter"], "phases": ["after"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/executor-comparator/README.md", "command": "read capture-and-compare.mjs:147-164", "observable": "the 'expected' side is a synthetic probe built from the intended declaration text; no pre-migration capture exists in the run, and --plant corrupts that expected side rather than the subject", "freshness": "as submitted", "coverageRole": "GAP_WITNESS", "scope": { "subjects": ["MantineListingGalleryPattern photoCountBadge", "MantineListingGalleryPattern extraCountOverlay", "LightboxView counter"] } }
+      ],
+      "coverageGaps": [
+        { "scope": { "subjects": ["MantineListingGalleryPattern photoCountBadge", "MantineListingGalleryPattern extraCountOverlay", "LightboxView counter"], "phases": ["before"] }, "findingId": "F-C", "reason": "§10.5 required a capture before AND after. The submitted harness builds its before-side from the intended declaration rather than from the pre-migration tree, so the before phase is unmeasured for all three story-backed sites. The substitution is described in §6 but is not listed among §11's deviations, and §6 asserts it is stronger than a live/live diff — which is false for exactly the failure mode F-A and F-B occupy." }
+      ],
+      "counterChecks": [
+        { "claim": "§9's correction to the kickoff's §3.6 story-backing table is itself wrong", "kind": "story-import-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "result": "REFUTED — the correction is right. src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx:5 imports MantineListingGalleryPattern, and no file under src/ imports the legacy ListingGallery from a story. The executor measured the kickoff rather than transcribing it." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R9 is a rendered-coverage criterion, not a rule-text criterion." }
+    },
+    {
+      "id": "R10",
+      "priority": "P1",
+      "status": "INFERENCE",
+      "findingIds": ["F-E"],
+      "finalSubject": { "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md", "symbol": "§7 — npm run build exit 0, /[locale] First Load JS 619 kB at I0 and final", "diffHunks": ["§7"] },
+      "requiredScope": { "subjects": ["/[locale] First Load JS"], "notApplicable": { "stories": "a build metric has no story", "locales": "the route group is measured as one", "viewports": "viewport-independent", "states": "state-independent", "phases": "the executor reports both I0 and final; the reviewer re-ran neither" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "command": "npm run build", "observable": "executor reports exit 0 twice and 619 kB unchanged; the reviewer did not re-run the build and did not independently re-derive the figure", "freshness": "executor run 2026-08-13", "coverageRole": "COVERS", "scope": { "subjects": ["/[locale] First Load JS"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the reviewer confirmed the First Load JS figure", "kind": "self-audit", "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "result": "NOT REFUTED — the reviewer did not. The status is INFERENCE. The reviewed .next tree is the executor's own final build, so re-reading it would restate the executor's claim rather than test it." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R10 is a bundle-budget criterion." }
+    },
+    {
+      "id": "R11",
+      "priority": "P2",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-D"],
+      "finalSubject": { "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md", "symbol": "§10 and §12 — what is handed to Task 695 as the remaining --color-overlay* residue", "diffHunks": ["§10", "§12"] },
+      "requiredScope": { "subjects": ["everything that still keeps the --color-overlay* namespace alive"], "notApplicable": { "stories": "a residue inventory is story-independent", "locales": "locale-independent", "viewports": "viewport-independent", "states": "state-independent", "phases": "final tree only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/bundle-layer-and-offsets.txt", "command": "grep the emitted bundle for surviving overlay utility rules", "observable": "exactly two survive — .bg-overlay and the two-tier .bg-overlay\\/95 — so §10's expansion of R11 is correct and complete for the scanner-visible half", "freshness": "final build in the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["everything that still keeps the --color-overlay* namespace alive"] } },
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/live-color-overlay-refs.txt", "command": "enumerate non-comment var(--color-overlay*) references under src/", "observable": "7 live static references remain: LightboxView.tsx :46 :47 :48 :49 :87 :160 and MantineListingGalleryPattern.tsx :93. --color-overlay* is declared only in the @theme inline block Task 695 deletes; :root carries --overlay/--overlay-foreground alone.", "freshness": "run 2026-08-13 against the reviewed worktree", "coverageRole": "COVERS", "scope": { "subjects": ["everything that still keeps the --color-overlay* namespace alive"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "the seven live references are out of Task 748's scope, so omitting them from the handoff is harmless", "kind": "scope-vs-handoff-distinction", "path": "docs/reviews/artifacts/2026-08-13-task748/live-color-overlay-refs.txt", "result": "PARTLY — they are indeed out of R1's className scope and must not be migrated here without a scope extension. But AC11's purpose is to tell 695 what remains, and §12 tells it the scope is clear while naming only the two comment strings. One of the seven is noted in a CSS-module comment; six are named nowhere in the report." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R11 is a reporting-completeness criterion." }
+    },
+    {
+      "id": "R12",
+      "priority": "P1",
+      "status": "UNVERIFIED",
+      "findingIds": ["F-F"],
+      "finalSubject": { "path": "docs/sessions/2026-08-13-task748-overlay-utility-exit.md", "symbol": "§7 — gate transcripts and their retention location", "diffHunks": ["§7", "§8"] },
+      "requiredScope": { "subjects": ["the retained gate and comparator transcripts"], "notApplicable": { "stories": "transcript retention is story-independent", "locales": "locale-independent", "viewports": "viewport-independent", "states": "state-independent", "phases": "final tree only" } },
+      "evidence": [
+        { "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "command": "npm run typecheck; inspect .gitignore:55 against the cited evidence paths; wc -l docs/backlog.md", "observable": "typecheck re-run by the reviewer, zero diagnostics; backlog is 80 lines, within the limit; but every transcript §7 cites lives under .screenshots/, excluded by .gitignore:55", "freshness": "run 2026-08-13", "coverageRole": "COVERS", "scope": { "subjects": ["the retained gate and comparator transcripts"] } }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        { "claim": "retaining transcripts locally satisfies 'transcripts retained'", "kind": "prior-finding-reread", "path": "docs/reviews/artifacts/2026-08-13-task748/README.md", "result": "REFUTED — Task 691's review closed finding F-U on exactly this: an active ledger citing .screenshots/** is unresolvable in CI or a fresh clone, and 691's closure moved 38 files into a tracked docs/reviews/artifacts/ folder. Task 748 reopened the same defect." }
+      ],
+      "semanticCheck": { "mode": "NOT_APPLICABLE", "reason": "R12 is an evidence-retention and standing-gate criterion." }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-A",
+      "priority": "P0",
+      "status": "OPEN",
+      "requirements": "PerfDevOverlay's over-budget rows lose their destructive colour. Before, cn('text-overlay-foreground/70', priorityOver && 'text-destructive font-bold') resolved through tailwind-merge to 'text-destructive font-bold' — the overlay utility never reached the element, so the row rendered red. After, the hashed module class does not participate in conflict resolution, both classes reach the DOM, and the unlayered module rule outranks @layer utilities' .text-destructive. The row renders bold white. §4's D34 verdict for sites 1–11 ('no Mantine/shadcn ancestor CSS — WINNER (trivial)') looked only for ancestor CSS and missed a contest on the element itself. Fix must preserve the prior conditional composition for both budget rows and prove it for priorityOver=true and predictiveOver=true.",
+      "requirementIds": ["R2", "R4", "R7"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/cascade-repro.txt — fa-before color oklch(0.58 0.22 27), fa-after color oklab(1 0 0 / 0.7), measured rest and hover, 14/14 cells matched. Mechanism in docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt. Layer premise in docs/reviews/artifacts/2026-08-13-task748/emitted-module-chunk-ListingGallery.css (no @layer) and bundle-layer-and-offsets.txt (.text-destructive at braceDepth 1 inside @layer utilities). Sites: PerfDevOverlay.tsx:76 and :81."
+    },
+    {
+      "id": "F-B",
+      "priority": "P0",
+      "status": "OPEN",
+      "requirements": "ListingGallery's photo-count Button changes hovered text colour. The ghost variant emits hover:text-foreground, which tailwind-merge kept on both sides; in @layer utilities it beats .text-overlay-foreground on specificity (0-2-0 vs 0-1-0), so before the change the migrated utility was a hover-state D34 LOSER. The unlayered module rule promotes it. This is a D34 loser under §3.4, not a latent contrast fix, and §10.3's rule is that a loser is left as a literal Tailwind class and reported. Per §3.4/§10.3 the disposition is an owner decision: leave the utility in place (AC1 and 695's exit condition then do not close) or authorise an exact-equivalence implementation with recorded before/after values. Not to be absorbed silently either way.",
+      "requirementIds": ["R2", "R4", "R7"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/cascade-repro.txt — fb-before hover color oklch(0.15 0 0) vs fb-after hover color oklch(1 0 0); background-color identical at oklab(0 0 0 / 0.7) on both sides. Class-list mechanism in twmerge-class-resolution.txt: text-foreground and hover:bg-muted survive only after. Specificity and layer premise in bundle-layer-and-offsets.txt (.hover\\:text-foreground:hover at braceDepth 2 inside @layer utilities). Site: ListingGallery.tsx:123, reachable below 768px on any hover-capable pointer; the component is live via GalleryIsland.tsx:20."
+    },
+    {
+      "id": "F-C",
+      "priority": "P0",
+      "status": "OPEN",
+      "requirements": "The submitted comparator cannot observe F-A or F-B by construction, and §10.5 was substituted without being declared a deviation. §10.5 required capture before AND after; §6 uses a single build and compares each migrated element against a synthetic probe carrying the intended declaration text. That answers whether the new rule produces the intended colour, never whether the element renders what it rendered before — so any change caused by which classes reach the element is invisible. §6 further claims the method is stronger than a two-build live/live diff, which is false for this failure mode. Coverage is also 3 of 24 sites, and --plant corrupts the expected side rather than the subject. Replacement must capture a clean I0 worktree and the final tree, compare real elements, fail closed on missing/error/diff, plant against the after-side, and carry dedicated witnesses for the PerfDevOverlay budget rows and the mobile ListingGallery button in both rest and hover.",
+      "requirementIds": ["R2", "R9"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/executor-comparator/capture-and-compare.mjs lines 147-164 — the expected value is getComputedStyle of a probe whose cssText is built from `decl`, the intended declaration; line 155 shows --plant replacing that expected value with rgb(1, 2, 3). No pre-migration capture appears anywhere in the run. Contrast with the Task 691R closure, which captured a clean base worktree at 2ad067bc1 across 240 tuples in two real phases."
+    },
+    {
+      "id": "F-D",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "The Task 695 handoff is incomplete. The utility census is genuinely zero and the bundle genuinely retains only the two scanner-visible strings, but the --color-overlay* namespace still has 7 live static var() references in src/**, and --color-overlay* is declared only in the @theme inline block 695 deletes. §12's '695 unblock status' names the scope as fully migrated and §10 names only the comment mentions; six of the seven references appear nowhere in the report and the seventh only in a CSS-module comment. These references are out of Task 748's R1 scope and must not be migrated without a scope extension — but the report cannot leave 695 believing comments are the only remainder.",
+      "requirementIds": ["R11"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/live-color-overlay-refs.txt — LightboxView.tsx:46,:47,:48,:49 (LIGHTBOX_ACTION_ICON_STYLE), :87 (Modal.Content scrim), :160 (active thumbnail borderColor); MantineListingGalleryPattern.tsx:93 (Text c=). globals.css:84-85 is the only declaration site for the --color-* copy; :470-471 carries only --overlay/--overlay-foreground."
+    },
+    {
+      "id": "F-E",
+      "priority": "P2",
+      "status": "OPEN",
+      "requirements": "Two reported results could not be independently re-run by the reviewer and are carried, not verified: the 1347/1347 vitest suite with its 4/4 portal smoke arm (R8), and the npm run build First Load JS figure (R10). The vitest block is environmental — node_modules holds Windows-built rollup bindings and the reviewer's bridge is Linux, so requiring rollup/dist/native.js throws MODULE_NOT_FOUND. The build was not re-run because the reviewed .next tree is the executor's own output, so re-reading it would restate the claim rather than test it. Recorded so the ledger's weakest evidence is named rather than implied.",
+      "requirementIds": ["R8", "R10"],
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748/README.md, section 'Not re-run by the reviewer'. Same limitation class as the one recorded for Task 700, where the unit suite was re-run owner-natively after the review environment's win32-only @rollup binding blocked it."
+    },
+    {
+      "id": "F-F",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "All of Task 748's evidence is retained only under .screenshots/task748-overlay/, excluded by .gitignore:55, so every path §7 and §12 cite is unresolvable in CI or a fresh clone. This is the defect Task 691's review recorded as F-U and closed by moving 38 files into tracked docs/reviews/artifacts/2026-08-12-task691R/. At re-submission the harness, the before/after JSON, the diff and the text transcripts must be tracked under docs/reviews/artifacts/<date>-task748/. The reviewer's own citations were copied into the non-ignored docs/reviews/artifacts/2026-08-13-task748/executor-comparator/ and become portable once staged and committed; that copy is the reviewer discharging its own obligation and does not close this finding.",
+      "requirementIds": ["R12"],
+      "evidence": ".gitignore:55 excludes /.screenshots/. docs/backlog-archive.md:11 records the Task 691 precedent verbatim: 'the 691R ledger initially cited .screenshots/**, excluded by .gitignore:55 and therefore unresolvable in CI or a fresh clone. All 43 cited paths now exist, tracked, under docs/reviews/artifacts/2026-08-12-task691R/ (38 files, 6.9 MB).'"
+    }
+  ],
+  "handoff": { "commitPush": "PROHIBITED" },
+  "attestation": {
+    "lowestEvidenceRequirement": "R10",
+    "reviewer": "Opus orchestrator review, 2026-08-13. Every claim recorded as VERIFIED was re-measured against the reviewed worktree by the reviewer; R8 and R10 are INFERENCE and F-E names why. The reviewer wrote no file under src/ and committed nothing."
+  }
+}

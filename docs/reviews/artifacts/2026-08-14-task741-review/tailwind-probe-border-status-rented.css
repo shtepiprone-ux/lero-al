@@ -1,0 +1,13 @@
+/* Task 741 review 1 — reviewer-side Tailwind v4 probe output, retained verbatim.
+   Reproduced independently of the executor's evidence by compiling src/app/globals.css at base
+   revision fc04a01c544a6396179a5283edd2b6f2fd106ebf with tailwindcss 4.3.0 and building exactly
+   one candidate, using the same compile() call check-review-ledger.mjs's TAILWIND_PROBE_SCRIPT
+   issues. The block below is extractCandidateRule()'s exact output for the candidate named in
+   the filename, and is the byte source of this candidate's before.rawRule in the ledger. */
+
+/* candidate: border-status-rented */
+@layer utilities {
+  .border-status-rented {
+    border-color: var(--status-rented);
+  }
+}

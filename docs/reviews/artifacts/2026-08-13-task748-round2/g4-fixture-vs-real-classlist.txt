@@ -1,0 +1,12 @@
+real twMerge output : hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70
+comparator fixture  : text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70
+present in the fixture but NOT in the real class list: text-foreground hover:bg-muted
+
+Why the measured value is nevertheless right: the extra `text-foreground` (0-1-0) loses
+to `.text-overlay-foreground` (0-1-0) on source order in the shipped bundle
+(byte 46187 > 44970 — see ../2026-08-13-task748/bundle-layer-and-offsets.txt), and the
+extra `hover:bg-muted` only affects background-color, which this witness does not read.
+The witness is correct by accident, on a fact its fixture does not encode.
+
+G4: the byte-identical claim is FALSE
+EXIT_CODE=1

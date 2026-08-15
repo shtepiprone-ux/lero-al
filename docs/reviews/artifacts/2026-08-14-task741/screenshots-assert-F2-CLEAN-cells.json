@@ -1,0 +1,1794 @@
+[
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-listingcard--default__sq__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7967,
+        "variance": 4225.69
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-listingcard--default__sq__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.8313,
+        "variance": 4268.04
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-listingcard--default__sq__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.8249,
+        "variance": 4268.81
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-listingcard--default__sq__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.6793,
+        "variance": 3350.47
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-listingcard--default__en__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7931,
+        "variance": 4236.36
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-listingcard--default__en__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.8293,
+        "variance": 4266.64
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-listingcard--default__en__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.8233,
+        "variance": 4268.13
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-listingcard--default__en__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.6792,
+        "variance": 3355.94
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-listingcard--default__uk__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7968,
+        "variance": 4236.74
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-listingcard--default__uk__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.8303,
+        "variance": 4279.63
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-listingcard--default__uk__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.8238,
+        "variance": 4279.82
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-listingcard--default__uk__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.6776,
+        "variance": 3356.77
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-listingcard--default__it__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.8027,
+        "variance": 4232.19
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-listingcard--default__it__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.8359,
+        "variance": 4267.29
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-listingcard--default__it__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.829,
+        "variance": 4267.51
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/ListingCard/Default",
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-listingcard--default__it__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.6812,
+        "variance": 3360.78
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.745,
+        "variance": 2868.6
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7493,
+        "variance": 2922.67
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.7497,
+        "variance": 2919.72
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.8657,
+        "variance": 2612.89
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7384,
+        "variance": 2896.87
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7435,
+        "variance": 2943.27
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.7442,
+        "variance": 2944
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.8621,
+        "variance": 2624.89
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7496,
+        "variance": 2871.46
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7305,
+        "variance": 2944.04
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.75,
+        "variance": 2931.68
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.8365,
+        "variance": 2617.26
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.7496,
+        "variance": 2896.79
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7527,
+        "variance": 2947.54
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.752,
+        "variance": 2949.73
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": true,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "heroSearchWrapInBand": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.8716,
+        "variance": 2617.6
+      }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  }
+]

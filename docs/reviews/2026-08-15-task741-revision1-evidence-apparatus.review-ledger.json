@@ -1,0 +1,1640 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-741 Revision 1 — evidence apparatus rebuilt (F1–F7 closed)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "fc04a01c544a6396179a5283edd2b6f2fd106ebf",
+    "reviewedRevision": "worktree at base fc04a01c544a6396179a5283edd2b6f2fd106ebf with the Task 741 implementation and Revision 1 evidence-apparatus rework applied, inspected after the final change (2026-08-15)",
+    "reviewedPaths": [
+      "docs/backlog.md",
+      "docs/reviews/artifacts/2026-08-14-task741",
+      "docs/reviews/artifacts/2026-08-14-task741-review",
+      "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static",
+      "docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs",
+      "docs/sessions/2026-08-14-task741-closedoverlaystyle-module-exit.md",
+      "scripts/mojibake-allowlist.json",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx",
+      "src/modules/listings/components/ListingCard.module.css",
+      "src/modules/listings/components/ListingCard.tsx",
+      "src/stories/mantine/primitives/ListingCard.stories.tsx",
+      "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+      "tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md",
+      "tasks/Sprints/Sprint_46_task741-revision-1-evidence-apparatus.md"
+    ],
+    "supersedes": [
+      "docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json"
+    ],
+    "coverage": {
+      "total": 12,
+      "verified": 12,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-15-task741-revision1-evidence-apparatus.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.tsx",
+        "symbol": "CLOSED_OVERLAY_STYLE",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.tsx:56-62"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "CLOSED_OVERLAY_STYLE.sold",
+          "CLOSED_OVERLAY_STYLE.rented"
+        ],
+        "states": [
+          "sold",
+          "rented"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A TypeScript constant's literal values are read from source, not from a rendered story; the rendered arm is AC2 / R2.",
+          "locales": "The constant carries no translated text; the label is supplied separately by ListingCard.tsx.",
+          "viewports": "The constant is viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingCard.tsx",
+          "command": "direct source read of the reviewed worktree plus git diff",
+          "observable": "Both map values are styles.closedOverlaySold / styles.closedOverlayRented; no Tailwind literal remains in the constant.",
+          "freshness": "reviewed worktree, final diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "CLOSED_OVERLAY_STYLE.sold",
+              "CLOSED_OVERLAY_STYLE.rented"
+            ],
+            "states": [
+              "sold",
+              "rented"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A Tailwind literal could survive elsewhere in the same file and still reach the overlay element.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ListingCard.tsx",
+          "result": "Refuted: the reviewer's own grep -rnoP '(bg|border)-status-(info|rented)(/\\d+)?' over src/** returns zero hits in this file and zero /80 hits anywhere in the tree; the only route to the overlay element is CLOSED_OVERLAY_STYLE via ListingCard.tsx:268."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This row asserts the value of a TypeScript constant, not a generated CSS rule; the generated-form claim is carried by AC4 / R4.1-R4.4."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F6",
+        "F7"
+      ],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": ".closedOverlaySold / .closedOverlayRented",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:86-120"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "sold overlay label",
+          "rented overlay label"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "mobile-320",
+          "mobile-375",
+          "mobile-390",
+          "desktop-1024"
+        ],
+        "states": [
+          "@supports supported",
+          "@supports unsupported"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-FINAL.json",
+          "command": "node docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs",
+          "observable": "Computed backgroundColor and borderColor of both overlay label elements, captured from the SAME story id in both phases (two-phase-comparator.mjs:104, STORY_ID). 64 property comparisons, 0 MOVED, 0 identity failures, 0 hard errors. Values carry the color-mix tier: oklab(0.577 -0.087 -0.150688 / 0.8) and oklab(0.577 0.0735356 -0.157698 / 0.8), identical BEFORE and AFTER.",
+          "freshness": "Revision 1 final run against the in-repo BEFORE witness (untracked, lands with this task's commit) and the final AFTER build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold overlay label",
+              "rented overlay label"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ],
+            "states": [
+              "@supports supported"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-supports-off-CLEAN-final.json",
+          "command": "node docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs --supports-off",
+          "observable": "The same 64 comparisons with every color-mix @supports block stripped from every served stylesheet in both phases (stripCounts {before:2272, after:2256}, both asserted > 0 or the run fails closed). Reviewer-verified as a real tier disable rather than a claimed one: the captured values become fully opaque oklch(0.577 0.174 240) and oklch(0.577 0.174 295), i.e. the D35-degraded base tier, versus the alpha-bearing oklab(... / 0.8) of the normal run. 0 MOVED.",
+          "freshness": "Revision 1 final run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold overlay label",
+              "rented overlay label"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ],
+            "states": [
+              "@supports unsupported"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The comparator cannot detect a real regression in the migrated color-mix tier (Review 1 F1: the plant was an in-memory mutation).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-PLANT-A.json",
+          "result": "Refuted. The in-memory --plant mode is deleted from the script. Real plant A edits .closedOverlaySold's color-mix tier 80% -> 60% in ListingCard.module.css, rebuilds Storybook and re-runs: exactly 16/64 MOVED, all *|sold|backgroundColor, before oklab(... / 0.8) vs after oklab(... / 0.6) — a genuinely re-rendered value. rented and both borderColor sets are untouched, so the failure decomposition is the predicted one. Reverted and re-run clean at comparator-result-POST-PLANT-A-clean.json."
+        },
+        {
+          "claim": "The --supports-off mode could silently degrade into a duplicate of the normal run and report a meaningless pass (Review 1 F6).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-supports-off-PLANT-B.json",
+          "result": "Refuted on two independent arms. (a) The mode fails closed if either phase's strip count is 0. (b) Real plant B changes the BASE tier .closedOverlaySold background-color from var(--status-info) to var(--status-rented) and re-runs --supports-off: exactly 16/64 MOVED, before oklch(0.577 0.174 240) vs after oklch(0.577 0.174 295) — the base tier is demonstrably the tier being measured. The clean run's fully-opaque values independently corroborate that the color-mix tier really is absent."
+        },
+        {
+          "claim": "The before/after comparison is across two different stories with different preview wrappers (Review 1 F7).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs",
+          "result": "Refuted: the script now holds a single const STORY_ID = 'mantine-primitives-listingcard--default' used for both phases. BEFORE is built in a throwaway git worktree at the base revision with only the permanent ListingCard.stories.tsx extension copied on top, and the live tree is proven untouched by git hash-object before and after."
+        },
+        {
+          "claim": "A missing stylesheet could yield a partially styled render that the colour comparison passes anyway (Review 1 F8).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-F8-missing-asset.log",
+          "result": "Refuted: with the AFTER witness's ListingCard-*.css chunk removed, the run exits 1 reporting 48 hard errors (404 / bad-status / requestfailed) and explicitly does NOT return a colour verdict. Restored and re-run clean at comparator-result-F8-restored-clean.json."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This row asserts rendered computed-style identity, not the generated rule form; the generated-form claim is carried by AC4 / R4.1-R4.4 and is VERIFIED there."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "MantineListingCardOverlay JSDoc + the three duplicate sites",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:36-44",
+          "src/stories/patterns/mantine/ListingCardPattern.stories.tsx:120-126",
+          "src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:105"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the four retired utility strings across all of src/**"
+        ],
+        "states": [
+          "source census",
+          "compiled census"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A census is a whole-tree property, not a per-story one.",
+          "locales": "Class-name literals carry no locale.",
+          "viewports": "A census is viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-14-task741-closedoverlaystyle-module-exit.md",
+          "command": "reviewer's independent grep -rnoP '(bg|border)-status-(info|rented)(/\\d+)?' src/",
+          "observable": "Zero occurrences of the four retired strings in src/**; the surviving /10, /15, /20 and /30 hits are the documented out-of-scope consumers in badge.tsx, AdminListingsTable.tsx, ListingStatusBanner.tsx and ListingDetailView.tsx.",
+          "freshness": "re-run by the reviewer against the reviewed worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the four retired utility strings across all of src/**"
+            ],
+            "states": [
+              "source census"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/i0-build.log",
+          "command": "npm run build (I0, before any edit) plus the executor compiled census",
+          "observable": "The compiled census at I0 was 6: the two /80 two-tier pairs and the two grouped bare-border rules were present in the shipped CSS before the migration.",
+          "freshness": "I0 build for the base revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the four retired utility strings across all of src/**"
+            ],
+            "states": [
+              "compiled census"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/final-build.log",
+          "command": "reviewer's independent grep for status-info\\\\/80 and status-rented\\\\/80 across every file in .next/static/css",
+          "observable": "Zero occurrences across all eight shipped CSS bundles of the final build.",
+          "freshness": "final build for the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the four retired utility strings across all of src/**"
+            ],
+            "states": [
+              "compiled census"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A census of 0 could be produced by a regex that cannot match, or by a build whose content scan silently omitted a source.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/final-build.log",
+          "result": "Refuted on both arms: the same reviewer regex returns 20 live hits for the out-of-scope /10-/30 siblings, so it can match; and the final bundle still emits .bg-status-info\\/10 and .border-status-info\\/20, so the content scan did reach the sources. Only the four retired candidates are absent."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A census asserts the absence of source literals and compiled selectors, not the semantics of one generated rule."
+      }
+    },
+    {
+      "id": "AC4 / R4.1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": ".closedOverlaySold",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:86-120",
+          "src/modules/listings/components/ListingCard.tsx:59-61"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "sold closed-overlay background-color"
+        ],
+        "states": [
+          "@supports supported",
+          "@supports unsupported"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "This row asserts the exact generated/authored CSS form for one candidate, not a rendered result; the rendered arm is AC2 / R2, which carries its own story scope and is UNVERIFIED.",
+          "locales": "The compiled rule contains no locale-dependent value; the identical declaration is emitted for every locale.",
+          "viewports": "The candidate is emitted with no media wrapper (probe media: []), so it is viewport-invariant by construction."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-info-80.css",
+          "command": "node --input-type=module --eval <check-review-ledger.mjs TAILWIND_PROBE_SCRIPT> with REVIEW_LEDGER_TAILWIND_CANDIDATE='bg-status-info/80'",
+          "observable": "The exact rule tailwindcss 4.3.0 generates for this one candidate from globals.css at the base revision, including its @supports wrapper, tier order and declarations.",
+          "freshness": "compiled by the reviewer from globals.css at review.baseRevision; globals.css is byte-identical between that revision and the reviewed worktree (git diff --quiet HEAD -- src/app/globals.css)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold closed-overlay background-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/ListingCard.module.css",
+          "command": "direct source read of the reviewed worktree",
+          "observable": "The authored replacement rule and its @layer/@supports wrappers.",
+          "freshness": "reviewed worktree, final diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold closed-overlay background-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reproduction could have been copied from a surviving sibling utility (/10, /15, /20, /30) rather than from this exact retired candidate.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-info-80.css",
+          "result": "Refuted: the candidate was compiled in isolation by name, so compiler.build(['bg-status-info/80']) emits this rule and no sibling. The shipped bundle corroborates independently: .next/static/css/1321d82f6c973f30.css carries the same two-tier form for the surviving siblings and zero occurrences of the /80 selectors."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A Tailwind-generated utility is replaced by an authored CSS Modules rule; per docs/agent-contract.md this is a generated-CSS and cascade migration, so the exact generated form must be inspected rather than inferred from a nearby utility or a comment."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "bg-status-info/80",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "compile(globals.css@fc04a01c5, { base: <repo root>, from: src/app/globals.css }).build(['bg-status-info/80'])",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "fc04a01c544a6396179a5283edd2b6f2fd106ebf"
+          },
+          "candidate": "bg-status-info/80"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-info-80.css",
+          "rawRule": ".bg-status-info\\/80 {\n    background-color: var(--status-info);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--status-info) 80%, transparent);\n    }\n  }",
+          "envelope": {
+            "selector": ".bg-status-info\\/80",
+            "media": [],
+            "supports": [
+              "(color: color-mix(in lab, red, red))"
+            ],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside Tailwind's own @layer utilities block in the app stylesheet, after @layer theme, base and components.",
+            "declarations": [
+              "background-color: var(--status-info)",
+              "background-color: color-mix(in oklab, var(--status-info) 80%, transparent)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-info"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/listings/components/ListingCard.module.css",
+          "rawRule": "  .closedOverlaySold {\n    background-color: var(--status-info); /* retired status-info bg utility's static fallback */\n    border-color:      var(--status-info); /* retired status-info border utility */\n  }\n\n  .closedOverlayRented {\n    background-color: var(--status-rented); /* retired status-rented bg utility's static fallback */\n    border-color:      var(--status-rented); /* retired status-rented border utility */\n  }\n}\n@supports (color: color-mix(in lab, red, red)) {\n  @layer utilities {\n    .closedOverlaySold {\n      background-color: color-mix(in oklab, var(--status-info) 80%, transparent); /* retired status-info bg utility, color-mix tier */\n    }\n    .closedOverlayRented {\n      background-color: color-mix(in oklab, var(--status-rented) 80%, transparent); /* retired status-rented bg utility, color-mix tier */\n    }\n  }\n}",
+          "envelope": {
+            "selector": ".closedOverlaySold",
+            "media": [],
+            "supports": [
+              "(color: color-mix(in lab, red, red))"
+            ],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside the colocated CSS Module's own @layer utilities block; in the shipped bundle b309f7c20a50f5b3.css the base tier precedes the @supports tier, preserving the compiled candidate's tier order.",
+            "declarations": [
+              "background-color: var(--status-info)",
+              "background-color: color-mix(in oklab, var(--status-info) 80%, transparent)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-info"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "@supports (color: color-mix(in lab, red, red)) evaluates false",
+            "command": "TAILWIND_PROBE_SCRIPT for 'bg-status-info/80' (before) and direct read of src/modules/listings/components/ListingCard.module.css (after)",
+            "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-info-80.css",
+            "beforeOutcome": "Base tier applies unchanged: background-color: var(--status-info), fully opaque (the D35-degraded static fallback).",
+            "afterOutcome": "Base tier applies unchanged: background-color: var(--status-info), fully opaque (the D35-degraded static fallback).",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC4 / R4.2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": ".closedOverlaySold",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:86-120",
+          "src/modules/listings/components/ListingCard.tsx:59-61"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "sold closed-overlay border-color"
+        ],
+        "states": [
+          "@supports supported",
+          "@supports unsupported"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "This row asserts the exact generated/authored CSS form for one candidate, not a rendered result; the rendered arm is AC2 / R2, which carries its own story scope and is UNVERIFIED.",
+          "locales": "The compiled rule contains no locale-dependent value; the identical declaration is emitted for every locale.",
+          "viewports": "The candidate is emitted with no media wrapper (probe media: []), so it is viewport-invariant by construction."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-info.css",
+          "command": "node --input-type=module --eval <check-review-ledger.mjs TAILWIND_PROBE_SCRIPT> with REVIEW_LEDGER_TAILWIND_CANDIDATE='border-status-info'",
+          "observable": "The exact rule tailwindcss 4.3.0 generates for this one candidate from globals.css at the base revision, including its @supports wrapper, tier order and declarations.",
+          "freshness": "compiled by the reviewer from globals.css at review.baseRevision; globals.css is byte-identical between that revision and the reviewed worktree (git diff --quiet HEAD -- src/app/globals.css)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold closed-overlay border-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/ListingCard.module.css",
+          "command": "direct source read of the reviewed worktree",
+          "observable": "The authored replacement rule and its @layer/@supports wrappers.",
+          "freshness": "reviewed worktree, final diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "sold closed-overlay border-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reproduction could have been copied from a surviving sibling utility (/10, /15, /20, /30) rather than from this exact retired candidate.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-info.css",
+          "result": "Refuted: the candidate was compiled in isolation by name, so compiler.build(['border-status-info']) emits this rule and no sibling. The shipped bundle corroborates independently: .next/static/css/1321d82f6c973f30.css carries the same two-tier form for the surviving siblings and zero occurrences of the /80 selectors."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A Tailwind-generated utility is replaced by an authored CSS Modules rule; per docs/agent-contract.md this is a generated-CSS and cascade migration, so the exact generated form must be inspected rather than inferred from a nearby utility or a comment."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "border-status-info",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "compile(globals.css@fc04a01c5, { base: <repo root>, from: src/app/globals.css }).build(['border-status-info'])",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "fc04a01c544a6396179a5283edd2b6f2fd106ebf"
+          },
+          "candidate": "border-status-info"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-info.css",
+          "rawRule": ".border-status-info {\n    border-color: var(--status-info);\n  }",
+          "envelope": {
+            "selector": ".border-status-info",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside Tailwind's own @layer utilities block in the app stylesheet, after @layer theme, base and components.",
+            "declarations": [
+              "border-color: var(--status-info)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-info"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/listings/components/ListingCard.module.css",
+          "rawRule": "  .closedOverlaySold {\n    background-color: var(--status-info); /* retired status-info bg utility's static fallback */\n    border-color:      var(--status-info); /* retired status-info border utility */\n  }",
+          "envelope": {
+            "selector": ".closedOverlaySold",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside the colocated CSS Module's own @layer utilities block; in the shipped bundle b309f7c20a50f5b3.css the base tier precedes the @supports tier, preserving the compiled candidate's tier order.",
+            "declarations": [
+              "border-color: var(--status-info)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-info"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "@supports (color: color-mix(in lab, red, red)) evaluates false",
+            "command": "TAILWIND_PROBE_SCRIPT for 'border-status-info' (before) and direct read of src/modules/listings/components/ListingCard.module.css (after)",
+            "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-info.css",
+            "beforeOutcome": "Declaration is unconditional and unaffected: border-color: var(--status-info).",
+            "afterOutcome": "Declaration is unconditional and unaffected: border-color: var(--status-info).",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC4 / R4.3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": ".closedOverlayRented",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:86-120",
+          "src/modules/listings/components/ListingCard.tsx:59-61"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "rented closed-overlay background-color"
+        ],
+        "states": [
+          "@supports supported",
+          "@supports unsupported"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "This row asserts the exact generated/authored CSS form for one candidate, not a rendered result; the rendered arm is AC2 / R2, which carries its own story scope and is UNVERIFIED.",
+          "locales": "The compiled rule contains no locale-dependent value; the identical declaration is emitted for every locale.",
+          "viewports": "The candidate is emitted with no media wrapper (probe media: []), so it is viewport-invariant by construction."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-rented-80.css",
+          "command": "node --input-type=module --eval <check-review-ledger.mjs TAILWIND_PROBE_SCRIPT> with REVIEW_LEDGER_TAILWIND_CANDIDATE='bg-status-rented/80'",
+          "observable": "The exact rule tailwindcss 4.3.0 generates for this one candidate from globals.css at the base revision, including its @supports wrapper, tier order and declarations.",
+          "freshness": "compiled by the reviewer from globals.css at review.baseRevision; globals.css is byte-identical between that revision and the reviewed worktree (git diff --quiet HEAD -- src/app/globals.css)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "rented closed-overlay background-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/ListingCard.module.css",
+          "command": "direct source read of the reviewed worktree",
+          "observable": "The authored replacement rule and its @layer/@supports wrappers.",
+          "freshness": "reviewed worktree, final diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "rented closed-overlay background-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reproduction could have been copied from a surviving sibling utility (/10, /15, /20, /30) rather than from this exact retired candidate.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-rented-80.css",
+          "result": "Refuted: the candidate was compiled in isolation by name, so compiler.build(['bg-status-rented/80']) emits this rule and no sibling. The shipped bundle corroborates independently: .next/static/css/1321d82f6c973f30.css carries the same two-tier form for the surviving siblings and zero occurrences of the /80 selectors."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A Tailwind-generated utility is replaced by an authored CSS Modules rule; per docs/agent-contract.md this is a generated-CSS and cascade migration, so the exact generated form must be inspected rather than inferred from a nearby utility or a comment."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "bg-status-rented/80",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "compile(globals.css@fc04a01c5, { base: <repo root>, from: src/app/globals.css }).build(['bg-status-rented/80'])",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "fc04a01c544a6396179a5283edd2b6f2fd106ebf"
+          },
+          "candidate": "bg-status-rented/80"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-rented-80.css",
+          "rawRule": ".bg-status-rented\\/80 {\n    background-color: var(--status-rented);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--status-rented) 80%, transparent);\n    }\n  }",
+          "envelope": {
+            "selector": ".bg-status-rented\\/80",
+            "media": [],
+            "supports": [
+              "(color: color-mix(in lab, red, red))"
+            ],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside Tailwind's own @layer utilities block in the app stylesheet, after @layer theme, base and components.",
+            "declarations": [
+              "background-color: var(--status-rented)",
+              "background-color: color-mix(in oklab, var(--status-rented) 80%, transparent)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-rented"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/listings/components/ListingCard.module.css",
+          "rawRule": "  .closedOverlayRented {\n    background-color: var(--status-rented); /* retired status-rented bg utility's static fallback */\n    border-color:      var(--status-rented); /* retired status-rented border utility */\n  }\n}\n@supports (color: color-mix(in lab, red, red)) {\n  @layer utilities {\n    .closedOverlaySold {\n      background-color: color-mix(in oklab, var(--status-info) 80%, transparent); /* retired status-info bg utility, color-mix tier */\n    }\n    .closedOverlayRented {\n      background-color: color-mix(in oklab, var(--status-rented) 80%, transparent); /* retired status-rented bg utility, color-mix tier */\n    }\n  }\n}",
+          "envelope": {
+            "selector": ".closedOverlayRented",
+            "media": [],
+            "supports": [
+              "(color: color-mix(in lab, red, red))"
+            ],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside the colocated CSS Module's own @layer utilities block; in the shipped bundle b309f7c20a50f5b3.css the base tier precedes the @supports tier, preserving the compiled candidate's tier order.",
+            "declarations": [
+              "background-color: var(--status-rented)",
+              "background-color: color-mix(in oklab, var(--status-rented) 80%, transparent)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-rented"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "@supports (color: color-mix(in lab, red, red)) evaluates false",
+            "command": "TAILWIND_PROBE_SCRIPT for 'bg-status-rented/80' (before) and direct read of src/modules/listings/components/ListingCard.module.css (after)",
+            "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-bg-status-rented-80.css",
+            "beforeOutcome": "Base tier applies unchanged: background-color: var(--status-rented), fully opaque (the D35-degraded static fallback).",
+            "afterOutcome": "Base tier applies unchanged: background-color: var(--status-rented), fully opaque (the D35-degraded static fallback).",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC4 / R4.4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": ".closedOverlayRented",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:86-120",
+          "src/modules/listings/components/ListingCard.tsx:59-61"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "rented closed-overlay border-color"
+        ],
+        "states": [
+          "@supports supported",
+          "@supports unsupported"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "This row asserts the exact generated/authored CSS form for one candidate, not a rendered result; the rendered arm is AC2 / R2, which carries its own story scope and is UNVERIFIED.",
+          "locales": "The compiled rule contains no locale-dependent value; the identical declaration is emitted for every locale.",
+          "viewports": "The candidate is emitted with no media wrapper (probe media: []), so it is viewport-invariant by construction."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-rented.css",
+          "command": "node --input-type=module --eval <check-review-ledger.mjs TAILWIND_PROBE_SCRIPT> with REVIEW_LEDGER_TAILWIND_CANDIDATE='border-status-rented'",
+          "observable": "The exact rule tailwindcss 4.3.0 generates for this one candidate from globals.css at the base revision, including its @supports wrapper, tier order and declarations.",
+          "freshness": "compiled by the reviewer from globals.css at review.baseRevision; globals.css is byte-identical between that revision and the reviewed worktree (git diff --quiet HEAD -- src/app/globals.css)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "rented closed-overlay border-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/ListingCard.module.css",
+          "command": "direct source read of the reviewed worktree",
+          "observable": "The authored replacement rule and its @layer/@supports wrappers.",
+          "freshness": "reviewed worktree, final diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "rented closed-overlay border-color"
+            ],
+            "states": [
+              "@supports supported",
+              "@supports unsupported"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reproduction could have been copied from a surviving sibling utility (/10, /15, /20, /30) rather than from this exact retired candidate.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-rented.css",
+          "result": "Refuted: the candidate was compiled in isolation by name, so compiler.build(['border-status-rented']) emits this rule and no sibling. The shipped bundle corroborates independently: .next/static/css/1321d82f6c973f30.css carries the same two-tier form for the surviving siblings and zero occurrences of the /80 selectors."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A Tailwind-generated utility is replaced by an authored CSS Modules rule; per docs/agent-contract.md this is a generated-CSS and cascade migration, so the exact generated form must be inspected rather than inferred from a nearby utility or a comment."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "border-status-rented",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "compile(globals.css@fc04a01c5, { base: <repo root>, from: src/app/globals.css }).build(['border-status-rented'])",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "fc04a01c544a6396179a5283edd2b6f2fd106ebf"
+          },
+          "candidate": "border-status-rented"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-rented.css",
+          "rawRule": ".border-status-rented {\n    border-color: var(--status-rented);\n  }",
+          "envelope": {
+            "selector": ".border-status-rented",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside Tailwind's own @layer utilities block in the app stylesheet, after @layer theme, base and components.",
+            "declarations": [
+              "border-color: var(--status-rented)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-rented"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/listings/components/ListingCard.module.css",
+          "rawRule": "  .closedOverlayRented {\n    background-color: var(--status-rented); /* retired status-rented bg utility's static fallback */\n    border-color:      var(--status-rented); /* retired status-rented border utility */\n  }",
+          "envelope": {
+            "selector": ".closedOverlayRented",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside the colocated CSS Module's own @layer utilities block; in the shipped bundle b309f7c20a50f5b3.css the base tier precedes the @supports tier, preserving the compiled candidate's tier order.",
+            "declarations": [
+              "border-color: var(--status-rented)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--status-rented"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "@supports (color: color-mix(in lab, red, red)) evaluates false",
+            "command": "TAILWIND_PROBE_SCRIPT for 'border-status-rented' (before) and direct read of src/modules/listings/components/ListingCard.module.css (after)",
+            "artifact": "docs/reviews/artifacts/2026-08-14-task741-review/tailwind-probe-border-status-rented.css",
+            "beforeOutcome": "Declaration is unconditional and unaffected: border-color: var(--status-rented).",
+            "afterOutcome": "Declaration is unconditional and unaffected: border-color: var(--status-rented).",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "MantineListingCardOverlay.className",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:36-44"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "overlay.className pass-through"
+        ],
+        "states": [
+          "layout=grid",
+          "layout=list"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "The contract is asserted at the component boundary by a unit test; the story arm is AC6 / R6.",
+          "locales": "The class string carries no locale.",
+          "viewports": "The prop is viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx",
+          "command": "npx vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx",
+          "observable": "An arbitrary non-Tailwind class (consumer-overlay-hook) reaches the rendered overlay element in grid layout, and no overlay renders in list layout. The public type MantineListingCardOverlay.className?: string is unchanged.",
+          "freshness": "final worktree, 5/5 pass",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "overlay.className pass-through"
+            ],
+            "states": [
+              "layout=grid",
+              "layout=list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The pass-through assertion could pass even if the pattern dropped overlay.className.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/smoke-test-planted-violation.log",
+          "result": "Refuted by a real source plant: MantineListingCardPattern.tsx:320 changed to cn(styles.overlayLabel); vitest exits 1 with 'Expected the element to have class: consumer-overlay-hook / Received: _overlayLabel_c737cc'. The reviewer confirmed cn(styles.overlayLabel, overlay.className) is restored at :320 in the final worktree."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A TypeScript prop contract asserted by a unit test, not a generated CSS rule."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+        "symbol": "Default.play",
+        "diffHunks": [
+          "src/stories/patterns/mantine/ListingCardPattern.stories.tsx:205-217"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "story play() pass-through assertion",
+          "smoke-test pass-through assertion"
+        ],
+        "stories": [
+          "patterns-mantine-listingcardpattern--default"
+        ],
+        "states": [
+          "assertion holds",
+          "assertion violated"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "The pass-through property under test is the presence of an arbitrary class on the rendered element, which is locale-invariant.",
+          "viewports": "Neither assertion reads a geometric property."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/smoke-test-planted-violation.log",
+          "command": "npx vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx, clean and under a source plant",
+          "observable": "The smoke-test half fails on a planted violation (exit 1, 1 failed / 4 passed) and passes clean (5/5).",
+          "freshness": "Revision 1 final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "smoke-test pass-through assertion"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "states": [
+              "assertion holds",
+              "assertion violated"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/screenshots-assert-F2-PLANTED-cells.json",
+          "command": "npm run screenshots:assert (with the source plant at MantineListingCardPattern.tsx:320)",
+          "observable": "The story play() half is now gate-observable. The story sets parameters.throwPlayFunctionExceptions:true locally, which overrides storybook/test's project-level false per prepareStory's combineParameters precedence, so a failed expect() rethrows. Every one of the 16 planted cells for this story carries domFailed:true, failReason:'sb-show-errordisplay', failDetail:'expected null not to be null' AND consoleErrors:[\"Error rendering story 'patterns-mantine-listingcardpattern--default':\"] — the latter matching check-stories-rendered.mjs:879. Gate exits 1.",
+          "freshness": "Revision 1 planted run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "story play() pass-through assertion"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "states": [
+              "assertion violated"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/screenshots-assert-F2-CLEAN-cells.json",
+          "command": "npm run screenshots:assert (plant reverted)",
+          "observable": "All 32 in-scope cells across both Task 741 stories pass with 0 pageErrors, 0 consoleErrors and domFailed false.",
+          "freshness": "Revision 1 clean run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "story play() pass-through assertion"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "states": [
+              "assertion holds"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The play() assertion is invisible to the gate because storybook/test disables rethrow project-wide (Review 1 F2).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/screenshots-assert-F2-PLANTED-cells.json",
+          "result": "Refuted by the retained per-cell manifest of a real gate run under a real source plant: both independent failure signals are present in every affected cell, and the gate exits 1. The in-tree story comment (untracked, lands with this task's commit) now states this mechanism correctly and also records, rather than hides, that waitForStoryReady:574 alone would treat an errored story as ready — it is the later render-failure check that catches it."
+        },
+        {
+          "claim": "The clean run's process exit code proves nothing because the unscoped gate cannot exit 0 on this tree.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/screenshots-assert-mantineonly-failset-diff.txt",
+          "result": "Addressed at set level rather than by count. The CI-blocking invocation is `npm run screenshots:assert -- --mantine-only` (.github/workflows/governance-pr.yml:181). Two independently captured runs in this task both report 1164/1204 PASS, 18 FAIL, 22 AMBIGUOUS — byte-identical to the Task 742 standing baseline — and a mechanical set diff of their enumerated fail cells gives 0 added / 0 removed. All 18 are AdminUsersTable, HeroSearch or NotificationBellView; zero involve ListingCard or ListingCardPattern."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "An assertion-liveness property of a test and a story, not a generated CSS rule."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "src/stories/mantine/primitives/ListingCard.stories.tsx",
+        "symbol": "Default",
+        "diffHunks": [
+          "src/stories/mantine/primitives/ListingCard.stories.tsx:78-125"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "extended Default grid section"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "mobile-320",
+          "mobile-375",
+          "mobile-390",
+          "desktop-1024"
+        ],
+        "states": [
+          "story lint",
+          "rendered geometry"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/REVISION1-final-check-stories.log",
+          "command": "npm run check:stories",
+          "observable": "Static story lint: 127 files, 0 violations.",
+          "freshness": "Revision 1 final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "extended Default grid section"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ],
+            "states": [
+              "story lint"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/screenshots-assert-F2-CLEAN-cells.json",
+          "command": "npm run screenshots:assert (clean)",
+          "observable": "Rendered geometry of the tripled Default grid at all four canonical Mantine viewports x 4 locales: 16/16 cells for mantine-primitives-listingcard--default pass, with no overflow, offscreen-control or geometry finding.",
+          "freshness": "Revision 1 clean run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "extended Default grid section"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ],
+            "states": [
+              "rendered geometry"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The permanent story extension could have introduced a rendered-geometry regression that only check:stories was asked about (Review 1 F3).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741-review/screenshots-assert-mantineonly-failset-diff.txt",
+          "result": "Refuted on both arms: the per-cell manifest shows 16/16 clean for this story, and the enumerated --mantine-only fail set is unchanged at 18 cells with 0 added / 0 removed, none of them a ListingCard cell."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A story-content and rendered-geometry property, not a generated CSS rule."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.tsx",
+        "symbol": "ListingCard critical-flow suite",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.tsx:56-62"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "ListingCard critical flow"
+        ],
+        "states": [
+          "13 existing assertions"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A unit suite, not a story.",
+          "locales": "The suite pins its own fixtures.",
+          "viewports": "jsdom; viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/critical-flow-suite.log",
+          "command": "npx vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+          "observable": "13/13 pass with the file unmodified.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "ListingCard critical flow"
+            ],
+            "states": [
+              "13 existing assertions"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The suite could have been edited to keep it green.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/check-file-integrity.log",
+          "result": "Refuted: the path is absent from git status --porcelain in the reviewer's own run against the reviewed worktree, and check:file-integrity enumerates the changed set without it."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "An existing unit suite's result, not a generated CSS rule."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F5",
+        "F4",
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs",
+        "symbol": "BEFORE_STATIC resolution and cell accounting",
+        "diffHunks": [
+          "docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs:59-75",
+          "docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs:197-211"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "retained evidence set"
+        ],
+        "states": [
+          "gate transcripts present",
+          "re-runnable",
+          "self-consistent"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Evidence retention is a repository property, not a per-story one.",
+          "locales": "Locale-invariant.",
+          "viewports": "Viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/REVISION1-final-check-file-integrity-v2.log",
+          "command": "reviewer re-run of npm run check:file-integrity plus a read of every retained transcript",
+          "observable": "All retained artifacts are present and clean (451 files checked, 0 defects in the reviewer re-run); every standing gate the kickoff requires exits 0.",
+          "freshness": "Revision 1 final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retained evidence set"
+            ],
+            "states": [
+              "gate transcripts present"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static",
+          "command": "node docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs (requireBuild precondition)",
+          "observable": "The BEFORE witness is retained inside the repository at a stated path (untracked, lands with this task's commit) (14 MB / 371 files), under docs/ which src/app/globals.css:11 excludes from Tailwind's content scan, so it cannot resurrect retired utilities. requireBuild now fails closed when the directory, iframe.html, or the CSS bundle iframe.html references is missing or empty, naming the exact path and the rebuild recipe. The comparator is therefore re-runnable by a reviewer.",
+          "freshness": "Revision 1 final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retained evidence set"
+            ],
+            "states": [
+              "re-runnable"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-FINAL.json",
+          "command": "status census of the retained comparator JSON",
+          "observable": "The retained result is 64 OK plus 32 INFO rows. The session log, the comparator header and docs/backlog.md now all read \"64 property comparisons + 32 className observations (96 recorded rows)\"; no surviving document states \"96 cells\".",
+          "freshness": "Revision 1 final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retained evidence set"
+            ],
+            "states": [
+              "self-consistent"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The BEFORE witness is still unreachable, so the comparator cannot be reproduced (Review 1 F5).",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static",
+          "result": "Refuted by directory inspection: the witness exists in-repo at the path the script resolves, and the fail-closed precondition was itself exercised by the F8 asset-removal proof, which detected a missing bundle rather than proceeding."
+        },
+        {
+          "claim": "A superseded artifact could still be mistaken for current evidence.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-PLANTED.SUPERSEDED-r1-synthetic-plant.json",
+          "result": "Addressed in review 2: the discredited Review 1 in-memory-plant artifacts were renamed to *.SUPERSEDED-r1-synthetic-plant.* and the generically named comparator-result.json to *.SUPERSEDED-generic-name-see-FINAL.json, so the only citable current results are comparator-result-FINAL.json and comparator-result-supports-off-CLEAN-final.json. This superseded ledger's evidence paths were repointed to the new names so both remain resolvable."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Evidence retention and internal consistency, not a generated CSS rule."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC2 / R2",
+      "requirementIds": [
+        "AC2 / R2"
+      ],
+      "evidence": "Closed. The in-memory --plant mode is deleted from two-phase-comparator.mjs. Real plant A (color-mix tier 80% -> 60%, rebuilt) yields exactly 16/64 MOVED, all *|sold|backgroundColor, with a genuinely re-rendered value (alpha 0.8 -> 0.6); reverted and re-run clean. Verified by the reviewer against comparator-result-PLANT-A.json and comparator-result-POST-PLANT-A-clean.json. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC6 / R6",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "Closed. The story sets parameters.throwPlayFunctionExceptions:true locally, overriding storybook/test's project-level false, and the failure was measured THROUGH the real gate rather than an ad-hoc probe: every planted cell carries failReason 'sb-show-errordisplay', failDetail 'expected null not to be null' and consoleErrors [\"Error rendering story '...':\"], and the gate exits 1; clean re-run passes 32/32 in-scope cells. The in-tree story comment (untracked, lands with this task's commit) now states the real mechanism and records the waitForStoryReady readiness-layer hazard instead of hiding it. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC7 / R7",
+      "requirementIds": [
+        "AC7 / R7"
+      ],
+      "evidence": "Closed. The tripled Default grid was measured by screenshots:assert: 16/16 cells pass across 4 locales x 4 canonical Mantine viewports, and the --mantine-only fail set is unchanged at 0 added / 0 removed. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F4",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "Closed. Every surviving document reads \"64 property comparisons + 32 className observations (96 recorded rows)\"; the reviewer confirmed no \"96 cells\" phrasing remains in the session log, the comparator header or docs/backlog.md. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F5",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "Closed. The BEFORE witness (14 MB / 371 files) is retained in-repo (untracked, lands with this task's commit) at docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/, inside docs/ which is excluded from the Tailwind content scan, and requireBuild fails closed on a missing or empty directory, iframe.html or referenced CSS bundle. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F6",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC2 / R2",
+      "requirementIds": [
+        "AC2 / R2"
+      ],
+      "evidence": "Closed. --supports-off strips every color-mix @supports block from every served stylesheet in both phases and fails closed if either strip count is 0. The reviewer independently confirmed the tier is genuinely disabled rather than merely claimed: captured values become fully opaque oklch(...) instead of the alpha-bearing oklab(... / 0.8). Real plant B on the base tier yields 16/64 MOVED. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "F7",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC2 / R2",
+      "requirementIds": [
+        "AC2 / R2"
+      ],
+      "evidence": "Closed. Both phases capture the same story id (two-phase-comparator.mjs:104). BEFORE is built in a throwaway git worktree at the base revision with only the permanent story extension copied on top; live-tree non-interference proven by git hash-object before and after. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+    },
+    {
+      "id": "N1",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "scripts/mojibake-allowlist.json gains a permanent glob exempting the whole 14 MB in-repo BEFORE witness from encoding hygiene. The reviewer verified the exemption is warranted and tightly scoped: removing the entry and re-running yields exactly 7 hits, all structurally intentional U+FFFD literals in bundled vendor JS (u+=\"\\uFFFD\", >1114111?\"\\uFFFD\":, .indexOf(\"\\uFFFD\")>=0, and a cp1252 table {0:\"\\uFFFD\",128:\"\\u20ac\"}), with zero invalid-UTF-8 files, and the glob matches only that directory. It is nevertheless a standing-gate exemption created to accommodate evidence, on an immutable build artifact. Owner-visible note, not a defect. The revision brief's alternative — a manifest-derived, hash-verified minimal witness — would likely have avoided the vendor JS entirely and is the better shape if this pattern recurs."
+    },
+    {
+      "id": "N2",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "two-phase-comparator.mjs writes a generically named comparator-result.json that whichever run executed last overwrites; during Revision 1 both the F8 asset-removal run and the final clean run wrote it. Explicitly named -FINAL copies exist and are what this ledger cites, and review 2 renamed the generic file to comparator-result.SUPERSEDED-generic-name-see-FINAL.json, but the script should write a run-distinguished filename rather than rely on rename-after-the-fact."
+    },
+    {
+      "id": "N3",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "The --supports-off strip counts differ between phases (before 2272, after 2256) and no document explains the 16-block delta. It is not a defect — the two phases are different Storybook builds and the clean run's fully-opaque captured values independently prove both phases were stripped — but one sentence in the session log would close the question rather than leave a reader to derive it."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC9 / R9",
+    "reviewer": "Opus"
+  }
+}

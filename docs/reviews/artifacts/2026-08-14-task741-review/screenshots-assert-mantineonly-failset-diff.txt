@@ -1,0 +1,66 @@
+Task 741 review 2 — `screenshots:assert -- --mantine-only` fail-set identity (D37 form)
+
+Why this transcript exists
+--------------------------
+Revision 1 recorded that the `--mantine-only` run exits 1 on "18 pre-existing unrelated failures"
+and named three story families. That is a count plus a narrative, not the D37 bar this repository
+sets for a standing baseline: the fail set must be compared AS A SET and reported as
+`0 added / 0 removed` (see the Task 742 archive row, which closed under exactly that form).
+
+This transcript supplies the missing set comparison. It is derived mechanically from two
+independently captured runs retained in this task's own evidence directory, by parsing each log's
+`❌ Failed cells:` block and diffing the resulting sets.
+
+Inputs (both retained under docs/reviews/artifacts/2026-08-14-task741/)
+----------------------------------------------------------------------
+  run A  screenshots-assert-F2-CLEAN-mantineonly.log          (F2 clean run, plant reverted)
+  run B  REVISION1-screenshots-assert-mantineonly-FINAL.log   (Revision 1 final run)
+
+Totals
+------
+  run A   Results: 1164/1204 PASS, 18 FAIL, 22 AMBIGUOUS
+  run B   Results: 1164/1204 PASS, 18 FAIL, 22 AMBIGUOUS
+
+Both triples are byte-identical to the canonical standing baseline recorded in the Task 742
+archive row (`1164/1204, 18 FAIL, 22 AMBIGUOUS`, fail set byte-identical, 0 added / 0 removed).
+
+Set comparison
+--------------
+  added   (present in B, absent from A):  none  ->  0 added
+  removed (present in A, absent from B):  none  ->  0 removed
+
+Enumerated fail set (18 cells, identical in both runs)
+------------------------------------------------------
+  Admin/AdminUsersTable/Default                  x sq x mobile-320
+  Admin/AdminUsersTable/Default                  x uk x mobile-320
+  Mantine/Primitives/HeroSearch/Default          x en x mobile-320
+  Mantine/Primitives/HeroSearch/Default          x en x mobile-375
+  Mantine/Primitives/HeroSearch/Default          x en x mobile-390
+  Mantine/Primitives/HeroSearch/Default          x it x mobile-320
+  Mantine/Primitives/HeroSearch/Default          x it x mobile-375
+  Mantine/Primitives/HeroSearch/Default          x it x mobile-390
+  Mantine/Primitives/HeroSearch/Default          x sq x mobile-320
+  Mantine/Primitives/HeroSearch/Default          x sq x mobile-375
+  Mantine/Primitives/HeroSearch/Default          x sq x mobile-390
+  Mantine/Primitives/HeroSearch/Default          x uk x mobile-320
+  Mantine/Primitives/HeroSearch/Default          x uk x mobile-375
+  Mantine/Primitives/HeroSearch/Default          x uk x mobile-390
+  Mantine/Primitives/NotificationBellView/Default x en x mobile-390
+  Mantine/Primitives/NotificationBellView/Default x it x mobile-390
+  Mantine/Primitives/NotificationBellView/Default x sq x mobile-390
+  Mantine/Primitives/NotificationBellView/Default x uk x mobile-390
+
+Zero of the 18 involve ListingCard or ListingCardPattern. The failure reasons are
+`horizontal overflow` + `offscreen-control` (AdminUsersTable) and `text button not full-width at
+<640` (HeroSearch, NotificationBellView) — all pre-existing conditions unrelated to Task 741's
+scope, and none of them a Task 741 story.
+
+Scope note, recorded rather than assumed
+----------------------------------------
+`-- --mantine-only` is the CI-blocking invocation, verified at `.github/workflows/governance-pr.yml:181`
+(`run: npm run screenshots:assert -- --mantine-only`), with the rationale in the comment at :173.
+The unscoped full run cannot exit 0 on this tree: `docs/storybook-governance.md:810` documents the
+pre-existing non-Mantine Phase-1 failures as a standing condition of the full run, and :553 records
+the authoritative full run exiting with controlled code 1. Revision 1's in-scope evidence for the
+full run is the per-cell manifest (`screenshots-assert-F2-CLEAN-cells.json`, 32/32 in-scope cells
+pass, 0 render failures), not the process exit code.

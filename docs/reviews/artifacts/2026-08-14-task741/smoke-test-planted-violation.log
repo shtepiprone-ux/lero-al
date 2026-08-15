@@ -1,0 +1,32 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx (5 tests | 1 failed) 145ms
+     × forwards an arbitrary consumer-supplied class to the rendered overlay element in layout="grid" 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — overlay.className pass-through contract (Task 741) > forwards an arbitrary consumer-supplied class to the rendered overlay element in layout="grid"
+Error: [2mexpect([22m[31melement[39m[2m).toHaveClass([22m[32m[32m"consumer-overlay-hook"[32m[39m[2m)[22m
+
+Expected the element to have class:
+[32m  consumer-overlay-hook[39m
+Received:
+[31m  _overlayLabel_c737cc[39m
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:114:23
+    112|     renderPattern({ ...baseProps(), overlay: { label: 'SOLD', classNam…
+    113|     const overlayEl = screen.getByText('SOLD')
+    114|     expect(overlayEl).toHaveClass('consumer-overlay-hook')
+       |                       ^
+    115|   })
+    116| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  14:29:54
+   Duration  1.90s (transform 123ms, setup 86ms, import 875ms, tests 145ms, environment 664ms)
+
+EXIT_CODE=1

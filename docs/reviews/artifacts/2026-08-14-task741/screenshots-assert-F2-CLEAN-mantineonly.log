@@ -1,0 +1,107 @@
+
+> lero-al@0.1.0 screenshots:assert
+> node scripts/check-stories-rendered.mjs --mantine-only
+
+📸  Starting rendered assertion (mantine-only mode)
+    Output: .screenshots/rendered-assert/2026-08-14T20-47/
+
+Mantine selected: 72; non-Mantine excluded: 239
+mantine-only run. NOT RUN: Phase 1 (ASSERT_STORIES — including the 4 `.listing-card` anchor rows: system-featuredlistings--default, system-latestlistings--default, system-similarlistings--default, patterns-mantine-homepagelistinggrids--default); Phase 2 (geometry-only sweep).
+
+  mantine: ✗✓✓✓✓✓✓✓✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓?✓✓✓?✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✓✓✗✗✗✓✓✗✗✗✓✓✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✓✓✓✗✓✓✓✗✓✓✓✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓????✓✓✓????✓✓✓????✓✓✓????✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓
+
+
+Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md
+Results: 1164/1204 PASS, 18 FAIL, 22 AMBIGUOUS (needs-owner-decision)
+  offscreen-control: 2
+  ambiguous-overlap: 22
+flaky-recovered: 0
+Manifest: .screenshots/rendered-assert/2026-08-14T20-47/manifest.json
+PNGs: .screenshots/rendered-assert/2026-08-14T20-47/*.png
+
+❌ Failed cells:
+  Admin/AdminUsersTable/Default × sq × mobile-320
+    ✗ horizontal overflow detected
+    ✗ geometry [offscreen-control]: #mantine-m9mxyo99h-tab-verified — ✓ Agjentë të verifikuar
+  Admin/AdminUsersTable/Default × uk × mobile-320
+    ✗ horizontal overflow detected
+    ✗ geometry [offscreen-control]: #mantine-5o5fpc7t4-tab-verified — ✓ Верифіковані агенти
+  Mantine/Primitives/HeroSearch/Default × sq × mobile-320
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × sq × mobile-375
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × sq × mobile-390
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × en × mobile-320
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × en × mobile-375
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × en × mobile-390
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × uk × mobile-320
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × uk × mobile-375
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × uk × mobile-390
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × it × mobile-320
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × it × mobile-375
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/HeroSearch/Default × it × mobile-390
+    ✗ text button not full-width at <640: 2
+  Mantine/Primitives/NotificationBellView/Default × sq × mobile-390
+    ✗ text button not full-width at <640: Shëno të gjitha si të lexuara
+  Mantine/Primitives/NotificationBellView/Default × en × mobile-390
+    ✗ text button not full-width at <640: Mark all as read
+  Mantine/Primitives/NotificationBellView/Default × uk × mobile-390
+    ✗ text button not full-width at <640: Позначити всі як прочитані
+  Mantine/Primitives/NotificationBellView/Default × it × mobile-390
+    ✗ text button not full-width at <640: Segna tutte come lette
+
+⚠️  22 cells have ambiguous findings (needs-owner-decision):
+  Mantine/Primitives/Combobox/Default × sq × mobile-390
+    ? [ambiguous-overlap]: #mantine-vidpyo0cu ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-390
+    ? [ambiguous-overlap]: #mantine-zyml0qt2t ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-390
+    ? [ambiguous-overlap]: #mantine-v1v1zfgjp ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-390
+    ? [ambiguous-overlap]: #mantine-8jarzobdj ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/Tabs/Default × sq × mobile-320
+    ? [ambiguous-offscreen]: #mantine-kpw9qez3h-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+  Mantine/Primitives/Tabs/Default × it × mobile-320
+    ? [ambiguous-offscreen]: #mantine-fyk5taumk-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+EXIT_CODE=1

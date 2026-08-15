@@ -1,0 +1,594 @@
+[
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.5995,
+        "variance": 4284.59
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7511,
+        "variance": 7510.84
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.749,
+        "variance": 8088.83
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__sq__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.7433,
+        "variance": 9790.39
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.5995,
+        "variance": 4284.59
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7511,
+        "variance": 7510.84
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.749,
+        "variance": 8088.83
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__en__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.7433,
+        "variance": 9790.39
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.5995,
+        "variance": 4284.59
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7511,
+        "variance": 7510.84
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.749,
+        "variance": 8088.83
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__uk__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.7433,
+        "variance": 9790.39
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.5995,
+        "variance": 4284.59
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.7511,
+        "variance": 7510.84
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.749,
+        "variance": 8088.83
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Patterns/Mantine/ListingCardPattern/Default",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "patterns-mantine-listingcardpattern--default__it__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Error rendering story 'patterns-mantine-listingcardpattern--default':"
+        ],
+        "domFailed": true,
+        "failReason": "sb-show-errordisplay",
+        "failDetail": "expected null not to be null"
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.7433,
+        "variance": 9790.39
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  }
+]

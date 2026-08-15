@@ -82,4 +82,39 @@
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a); /* design-tokens-allow: #0000001a — Tailwind's own compiled shadow-sm color fallback (MobileBottomNavView.module.css:87 precedent for the same raw value on shadow-lg); no §22 token represents this specific alpha-black */ /* design-tokens-allow: --tw-shadow: 1px — shadow-sm's own compiled offset-y/blur expansion, no §22.4 length token composes this box-shadow layer (Task 715 precedent, MobileBottomNavView.module.css:87) */ /* design-tokens-allow: --tw-shadow: 3px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: 2px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: -1px — same shadow-sm expansion */
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); /* shadow-sm */
   }
+
+  /* Task 741 — CLOSED_OVERLAY_STYLE de-Tailwind (:58-61 -> :268). Reproduces the two retired
+     status-info and status-rented background/border utilities' OWN compiled output verbatim
+     (`.next/static/css/9da9f59077fdb31e.css`), including the D35-degraded static fallback:
+     `--color-status-info`/`--color-status-rented` alias a runtime `var()` (`globals.css:80-81`),
+     so Tailwind could not statically composite the (formerly) 80%-opacity background modifier and
+     the base tier is a bare, fully-opaque `var(--status-*)` — this is already the shipped
+     behaviour, not a regression to fix (D35). The `#0000004d` composited-hex idiom used by
+     `.overlayCenter` above does NOT apply here (owner decision 2026-08-14): that rule's source,
+     `--overlay`, is a literal (`oklch(0 0 0)`), so Tailwind COULD composite it; `--status-info`/
+     `--status-rented` are runtime aliases, so Tailwind could not, and the module must not "fix"
+     that by hex-flattening it either. Stays `@layer utilities` per D34 — this is a straight D28
+     migration of a utility that already loses to Mantine's unlayered CSS, not a cascade-trap fix
+     (contrast `MantineListingCardPattern.module.css`, deliberately unlayered). Deliberate prose,
+     no Tailwind-utility-shaped literal below — Task 695 F8/741 §3.2's scanned-comment hazard: a
+     scanner-matched string in a comment gets re-extracted as a live candidate and regenerated. */
+  .closedOverlaySold {
+    background-color: var(--status-info); /* retired status-info bg utility's static fallback */
+    border-color:      var(--status-info); /* retired status-info border utility */
+  }
+
+  .closedOverlayRented {
+    background-color: var(--status-rented); /* retired status-rented bg utility's static fallback */
+    border-color:      var(--status-rented); /* retired status-rented border utility */
+  }
+}
+@supports (color: color-mix(in lab, red, red)) {
+  @layer utilities {
+    .closedOverlaySold {
+      background-color: color-mix(in oklab, var(--status-info) 80%, transparent); /* retired status-info bg utility, color-mix tier */
+    }
+    .closedOverlayRented {
+      background-color: color-mix(in oklab, var(--status-rented) 80%, transparent); /* retired status-rented bg utility, color-mix tier */
+    }
+  }
 }

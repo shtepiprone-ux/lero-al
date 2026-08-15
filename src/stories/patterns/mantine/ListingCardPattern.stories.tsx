@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SimpleGrid, Image, Stack, Divider, Title } from '@mantine/core';
 import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
+import { expect } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
@@ -116,8 +117,12 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
     badges.push({ label: storyT(l, 'storybook.mantine.card_badge_archived'), color: 'gray' });
   }
 
+  // Task 741 — the pattern's colour styling is retired; this story now proves only the
+  // `overlay.className` pass-through CONTRACT with a non-Tailwind hook class the scanner cannot
+  // resolve to a utility. Production's real sold/rented colours are proven by
+  // `ListingCard.stories.tsx` through the real `ListingCard` (the actual producer, Task 741 §3.8).
   const overlay: MantineListingCardOverlay | undefined = sold
-    ? { label: storyT(l, 'storybook.mantine.card_overlay_sold'), className: 'bg-status-info/80 border-status-info' }
+    ? { label: storyT(l, 'storybook.mantine.card_overlay_sold'), className: 'consumer-overlay-hook' }
     : undefined;
 
   return (
@@ -196,5 +201,38 @@ export const Default: Story = {
         </Stack>
       </Stack>
     );
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  play: async ({ canvasElement, globals }) => {
+    // Task 741 R6/AC6 — proves the `overlay.className` pass-through CONTRACT: an arbitrary
+    // consumer-supplied class (`consumer-overlay-hook`, not a Tailwind-resolvable utility) must
+    // reach the rendered overlay label element.
+    //
+    // Gate-observability (Revision 1, F2): `storybook/test`'s project-level preview annotation
+    // sets `throwPlayFunctionExceptions: false`, which makes Storybook's play-function runner
+    // swallow a failed `expect()` into a bare `console.error` that matches none of
+    // `check-stories-rendered.mjs`'s four `consoleErrors` patterns — the gate would be blind. This
+    // story sets `throwPlayFunctionExceptions: true` locally (story annotations win over the
+    // project-level default per `prepareStory`'s `combineParameters` precedence), so a failed
+    // `expect()` here rethrows instead of being caught. Storybook's `renderException` then both (a)
+    // sets `sb-show-errordisplay` on `document.body`, which `check-stories-rendered.mjs`'s render
+    // check evaluates first and reports as `failReason: 'sb-show-errordisplay'`, and (b)
+    // independently logs `Error rendering story '<id>':`, one of the four patterns its
+    // `consoleErrors` collector matches — either signal alone fails the gate, so the assertion is
+    // real and gate-observable, not cosmetic. Verified through the real gate at
+    // `docs/reviews/artifacts/2026-08-14-task741/` (source plant at
+    // `MantineListingCardPattern.tsx:320`, `cn(styles.overlayLabel, overlay.className)` ->
+    // `cn(styles.overlayLabel)`; `screenshots:assert` exits non-zero, this cell's manifest entry
+    // carries `failReason: 'sb-show-errordisplay'`, `failDetail: 'expected null not to be null'`,
+    // and `consoleErrors: ["Error rendering story '...':"]`).
+    //
+    // Adjacent hazard, stated plainly and not papered over: `waitForStoryReady` (a separate,
+    // earlier readiness wait) returns `{ ready: true }` once `document.body` carries
+    // `sb-show-errordisplay`, so THAT layer alone treats an errored story as ready. It is the
+    // later render-failure check — not the readiness wait — that actually catches this failure.
+    const locale = (globals?.locale as string) ?? 'en';
+    const hookEl = canvasElement.querySelector('.consumer-overlay-hook');
+    expect(hookEl).not.toBeNull();
+    expect(hookEl?.textContent).toBe(storyT(locale, 'storybook.mantine.card_overlay_sold'));
   },
 };

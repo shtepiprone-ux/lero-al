@@ -53,11 +53,13 @@ interface ListingCardProps {
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
-// The centered rotated closed-overlay is plain Tailwind-styled markup (not the Badge component),
-// so it is unaffected by the Task 617 Badge migration below — left as-is.
+// The centered rotated closed-overlay is plain markup (not the Badge component), so it is
+// unaffected by the Task 617 Badge migration below — left as-is. Task 741 — de-Tailwind: values
+// are now `ListingCard.module.css` `@layer utilities` classes (`.closedOverlaySold`/
+// `.closedOverlayRented`) reproducing the retired Tailwind utilities' own compiled output.
 const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
-  sold:   'bg-status-info/80 border-status-info',
-  rented: 'bg-status-rented/80 border-status-rented',
+  sold:   styles.closedOverlaySold,
+  rented: styles.closedOverlayRented,
 }
 
 // Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —

@@ -102,7 +102,15 @@ describe('MantineListingCardPattern — layout="list" (Task 606, ported legacy h
   })
 
   it('does NOT render the overlay in list mode (badge conveys sold/rented status instead)', () => {
-    renderPattern({ ...baseProps('list'), overlay: { label: 'SOLD', className: 'bg-status-info/80' } })
+    renderPattern({ ...baseProps('list'), overlay: { label: 'SOLD', className: 'consumer-overlay-hook' } })
     expect(screen.queryByText('SOLD')).not.toBeInTheDocument()
+  })
+})
+
+describe('MantineListingCardPattern — overlay.className pass-through contract (Task 741)', () => {
+  it('forwards an arbitrary consumer-supplied class to the rendered overlay element in layout="grid"', () => {
+    renderPattern({ ...baseProps(), overlay: { label: 'SOLD', className: 'consumer-overlay-hook' } })
+    const overlayEl = screen.getByText('SOLD')
+    expect(overlayEl).toHaveClass('consumer-overlay-hook')
   })
 })

@@ -36,7 +36,11 @@ export interface MantineListingCardFeature {
 export interface MantineListingCardOverlay {
   /** Already-translated, already-uppercased label (e.g. "SOLD"). */
   label: string
-  /** Status color classes (e.g. `bg-status-info/80 border-status-info`) — a presentation-layer constant. */
+  /**
+   * Arbitrary consumer-supplied class, merged onto the overlay label element via `cn()`
+   * (Task 741 — the pattern itself carries no status-color styling; the consumer owns the
+   * visual treatment entirely, e.g. `ListingCard.tsx`'s sold/rented closed-listing colors).
+   */
   className?: string
 }
 

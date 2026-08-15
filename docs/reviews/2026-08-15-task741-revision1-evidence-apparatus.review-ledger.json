@@ -160,7 +160,7 @@
           "path": "docs/reviews/artifacts/2026-08-14-task741/comparator-result-FINAL.json",
           "command": "node docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs",
           "observable": "Computed backgroundColor and borderColor of both overlay label elements, captured from the SAME story id in both phases (two-phase-comparator.mjs:104, STORY_ID). 64 property comparisons, 0 MOVED, 0 identity failures, 0 hard errors. Values carry the color-mix tier: oklab(0.577 -0.087 -0.150688 / 0.8) and oklab(0.577 0.0735356 -0.157698 / 0.8), identical BEFORE and AFTER.",
-          "freshness": "Revision 1 final run against the in-repo BEFORE witness (untracked, lands with this task's commit) and the final AFTER build",
+          "freshness": "Revision 1 final run against the in-repo BEFORE witness (committed 0295d7f10) and the final AFTER build",
           "coverageRole": "COVERS",
           "scope": {
             "subjects": [
@@ -1214,7 +1214,7 @@
           "claim": "The play() assertion is invisible to the gate because storybook/test disables rethrow project-wide (Review 1 F2).",
           "kind": "EXECUTED",
           "path": "docs/reviews/artifacts/2026-08-14-task741/screenshots-assert-F2-PLANTED-cells.json",
-          "result": "Refuted by the retained per-cell manifest of a real gate run under a real source plant: both independent failure signals are present in every affected cell, and the gate exits 1. The in-tree story comment (untracked, lands with this task's commit) now states this mechanism correctly and also records, rather than hides, that waitForStoryReady:574 alone would treat an errored story as ready — it is the later render-failure check that catches it."
+          "result": "Refuted by the retained per-cell manifest of a real gate run under a real source plant: both independent failure signals are present in every affected cell, and the gate exits 1. The in-tree story comment (committed 0295d7f10) now states this mechanism correctly and also records, rather than hides, that waitForStoryReady:574 alone would treat an errored story as ready — it is the later render-failure check that catches it."
         },
         {
           "claim": "The clean run's process exit code proves nothing because the unscoped gate cannot exit 0 on this tree.",
@@ -1473,7 +1473,7 @@
         {
           "path": "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static",
           "command": "node docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs (requireBuild precondition)",
-          "observable": "The BEFORE witness is retained inside the repository at a stated path (untracked, lands with this task's commit) (14 MB / 371 files), under docs/ which src/app/globals.css:11 excludes from Tailwind's content scan, so it cannot resurrect retired utilities. requireBuild now fails closed when the directory, iframe.html, or the CSS bundle iframe.html references is missing or empty, naming the exact path and the rebuild recipe. The comparator is therefore re-runnable by a reviewer.",
+          "observable": "The BEFORE witness is retained inside the repository at a stated path (committed 0295d7f10) (14 MB / 371 files), under docs/ which src/app/globals.css:11 excludes from Tailwind's content scan, so it cannot resurrect retired utilities. requireBuild now fails closed when the directory, iframe.html, or the CSS bundle iframe.html references is missing or empty, naming the exact path and the rebuild recipe. The comparator is therefore re-runnable by a reviewer.",
           "freshness": "Revision 1 final worktree",
           "coverageRole": "COVERS",
           "scope": {
@@ -1547,7 +1547,7 @@
       "requirementIds": [
         "AC6 / R6"
       ],
-      "evidence": "Closed. The story sets parameters.throwPlayFunctionExceptions:true locally, overriding storybook/test's project-level false, and the failure was measured THROUGH the real gate rather than an ad-hoc probe: every planted cell carries failReason 'sb-show-errordisplay', failDetail 'expected null not to be null' and consoleErrors [\"Error rendering story '...':\"], and the gate exits 1; clean re-run passes 32/32 in-scope cells. The in-tree story comment (untracked, lands with this task's commit) now states the real mechanism and records the waitForStoryReady readiness-layer hazard instead of hiding it. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+      "evidence": "Closed. The story sets parameters.throwPlayFunctionExceptions:true locally, overriding storybook/test's project-level false, and the failure was measured THROUGH the real gate rather than an ad-hoc probe: every planted cell carries failReason 'sb-show-errordisplay', failDetail 'expected null not to be null' and consoleErrors [\"Error rendering story '...':\"], and the gate exits 1; clean re-run passes 32/32 in-scope cells. The in-tree story comment (committed 0295d7f10) now states the real mechanism and records the waitForStoryReady readiness-layer hazard instead of hiding it. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
     },
     {
       "id": "F3",
@@ -1577,7 +1577,7 @@
       "requirementIds": [
         "AC9 / R9"
       ],
-      "evidence": "Closed. The BEFORE witness (14 MB / 371 files) is retained in-repo (untracked, lands with this task's commit) at docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/, inside docs/ which is excluded from the Tailwind content scan, and requireBuild fails closed on a missing or empty directory, iframe.html or referenced CSS bundle. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
+      "evidence": "Closed. The BEFORE witness (14 MB / 371 files) is retained in-repo (committed 0295d7f10) at docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/, inside docs/ which is excluded from the Tailwind content scan, and requireBuild fails closed on a missing or empty directory, iframe.html or referenced CSS bundle. Original finding text retained in docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json."
     },
     {
       "id": "F6",

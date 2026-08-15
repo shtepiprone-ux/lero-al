@@ -194,7 +194,7 @@ rented overlay's pre-migration colour (the pattern story had no rented demo). Re
    **Superseded, Revision 1 (F5 witness retention, §2.2 of the revision brief):** the out-of-repo path is no
    longer the default. `docs/` is already excluded from Tailwind's content scan
    (`src/app/globals.css:11`, `@source not "../../docs"`), so the BEFORE witness now lives at
-   `docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/` (retained in-repo (untracked, lands with this task's commit), 14 MB / 371 files) —
+   `docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/` (retained in-repo (committed 0295d7f10), 14 MB / 371 files) —
    safe from the same resurrection hazard without needing a path outside the repo. `LERO_BEFORE_STATIC_DIR`
    remains as an override only. See §12.
 2. **Fabricated i18n key in the reversible probe.** The first probe attempt used
@@ -277,7 +277,7 @@ Proof through the real gate (not a probe): source plant at `MantineListingCardPa
   `ListingCard.module.css` stay at HEAD there. Live-tree non-interference proven by `git hash-object`
   before/after (`c72fcd9a0…`/`f645043 1a…` unchanged) and the worktree's own diff (only the copied story file
   modified, matching hash `b65552e2…` = the live tree's).
-- **Closes F5 (witness retention)** — BEFORE output (14 MB / 371 files) retained in-repo (untracked, lands with this task's commit) at
+- **Closes F5 (witness retention)** — BEFORE output (14 MB / 371 files) retained in-repo (committed 0295d7f10) at
   `docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/`, safe from Tailwind's content scan
   (`docs/` excluded, `src/app/globals.css:11`). `requireBuild` now fail-closes if the directory, `iframe.html`,
   or its referenced CSS bundle is missing/empty, naming the exact path and rebuild recipe.
@@ -347,7 +347,7 @@ confirmed 0 failures, 0 hard errors. Evidence: `comparator-F8-missing-asset.log`
 | `src/stories/patterns/mantine/ListingCardPattern.stories.tsx` | F2 — story-local `throwPlayFunctionExceptions: true`; `play()` comment rewritten to the real, gate-verified mechanism |
 | `src/modules/listings/components/ListingCard.module.css` | Touched only transiently for plants A/B, reverted byte-identical each time (`git diff --stat` unchanged at 35 insertions throughout) |
 | `docs/reviews/artifacts/2026-08-14-task741/two-phase-comparator.mjs` | Rebuilt: single story both phases, in-repo witness + fail-closed precondition, real plants only (no `--plant`), `--supports-off` mode, fail-closed server + hard-error collectors |
-| `docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/` | New — BEFORE witness, retained in-repo (untracked, lands with this task's commit) (14 MB / 371 files) |
+| `docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/` | New — BEFORE witness, retained in-repo (committed 0295d7f10) (14 MB / 371 files) |
 | `docs/reviews/artifacts/2026-08-14-task741/*.log`, `*.json` | New — every run's transcript and result cited above |
 | `docs/sessions/2026-08-14-task741-closedoverlaystyle-module-exit.md` | This section, plus the §1/§2/§6/§7/§9/§10 corrections above |
 | `docs/backlog.md` | Task 741 row updated — see final handoff |

@@ -43,20 +43,31 @@ scope, tolerance and exemption predicate byte-unchanged.
 
 | Task | Scope, verified 2026-08-15 |
 |---|---|
-| **749** | All three components in one kickoff (owner decision 2026-08-15: one task, not three). Three independent mechanisms, one exit criterion. |
+| **749** | All three components in one kickoff (owner decision 2026-08-15: one task, not three). Three independent mechanisms, one exit criterion. **Revision 1 in flight** — HeroSearch and NotificationBellView landed clean; AdminUsersTable re-routed to `ScrollArea` after its first mechanism was measured to regress 8 non-target cells. Brief: `Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`. |
 
 ## Exit criteria
 
 1. `npm run screenshots:assert -- --mantine-only` exits **0** with `18 FAIL -> 0 FAIL`, reported as a **set diff**
    against the 18-cell baseline above (D37 form), not as a count.
-2. The **22 `AMBIGUOUS`** cells are untouched and still 22. They are `ambiguousOverlap` only, carry no product
-   verdict, and are out of scope for this sprint. A change in that number is a regression to report, not a win.
-3. `scripts/check-stories-rendered.mjs` has an **empty diff**. No new `MANTINE_PATTERN_KNOWN_FAILURES` entry, no
-   change to `FULL_WIDTH_TOLERANCE`, no new exemption, no widened `isChipSetMember`, no story-id allowlist.
+2. **Amended 2026-08-15 (Revision 1).** The **22 pre-existing `ambiguousOverlap`** cells are untouched and diff to
+   `0 added / 0 removed`. They carry no product verdict and are out of scope. **One permitted addition:** up to
+   **+2 `ambiguous-offscreen`** cells (`AdminUsersTable × {sq,uk} × mobile-320`), if and only if the owner-elected
+   `ScrollArea` mechanism (owner decisions D-5/D-6, 2026-08-15) resolves there — the gate's own designed category
+   for swipe-scrollable tab strips (`geometry-integrity.mjs:383-396`). The original criterion said "still 22" and
+   was written before the theme's `flexWrap: 'nowrap'` owner-P0 rule (`theme.ts:830`) had been read. Any other
+   movement in that set is still a regression to report, not a win.
+3. **Amended 2026-08-15 (owner D-8, Revision 2).** The gate is not made skippable, non-blocking, or
+   baseline-comparing, and no per-story exemption is added. `FULL_WIDTH_TOLERANCE`, `isChipSetMember`, the viewport
+   sets and `MANTINE_PATTERN_KNOWN_FAILURES` stay byte-unchanged. **Two authorised gate diffs:**
+   `geometry-integrity.mjs` Checks 1 and 3 gain the scroll-awareness Check 2 already has, and the Task 529
+   `GEOMETRY_ALLOWLIST` row for `mantine-primitives-tabs--default` is **retired** — replaced by that DOM-measured
+   predicate, the same allowlist→predicate direction Tasks 724R and 726 took. The original criterion forbade any
+   diff here; it was written before the detector was enumerated.
 4. `.github/workflows/governance-pr.yml` has an **empty diff** for the `rendered-proof` job. The gate is not made
    skippable, non-blocking, or baseline-comparing by this sprint.
-5. Every fix is a **CSS/layout change in product code**, proven by a planted-violation arm that can demonstrably
-   fail — per the recurring-failure-mode rule in `docs/backlog.md`.
+5. **Amended 2026-08-15 (Revision 2).** Every **product** fix is a CSS/layout change in product code, and the one
+   authorised **gate** fix (criterion 3) is a DOM-measured predicate, never an allowlist row. Both kinds need a
+   two-armed plant that can demonstrably fail — per the recurring-failure-mode rule in `docs/backlog.md`.
 
 ## Explicitly NOT in this sprint
 

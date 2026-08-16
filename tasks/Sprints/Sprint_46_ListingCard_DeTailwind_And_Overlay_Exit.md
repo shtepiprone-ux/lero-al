@@ -21,12 +21,13 @@ close until 691 and 702 land.
 > `KICKOFF FILED` for an approved-and-committed 702, and an executor was offered it as live work), and one state
 > column is the fix. Cross-check against `docs/backlog.md`'s registry before trusting either.
 
-> **Task 741 lifecycle correction (2026-08-16 — takes precedence over the historical Review 2 text
-> in its row below).** Review 2 verified the rebuilt evidence apparatus; it did not establish a clean
-> all-PR integration. PR #6 failed four blocking checks and PR #7 still failed Rendered Proof. PR #8
-> (`58d0ab6c8`) contains PR #7 and is green, but **741 is `CLOSURE REOPENED`, not complete**, until
-> that PR merges and a final review records the resulting `main` SHA. Do not merge or cherry-pick
-> PR #6/#7; they are superseded candidates.
+> **Task 741 final-review closure (2026-08-16 — takes precedence over the historical Review 2
+> text in its row below).** PR #8 is integrated into `main` as `95215314e`; PR #6 is closed, and
+> PR #7's head was already contained in PR #8. Review 2 verified the evidence apparatus; the
+> post-merge verdict is **`APPROVED WITH NOTES`**. C3 in `check:css-vars -- --verify-gate` was
+> corrected from the stale 257 expectation to the real 256 after Task 749; its self-check is 8/8,
+> the fresh-build css-var gate is clean, typecheck passes and full Vitest is 80 files / 1355 tests.
+> Do not merge or cherry-pick the superseded PRs.
 
 | # | State | Scope | Depends on |
 |---|---|---|---|

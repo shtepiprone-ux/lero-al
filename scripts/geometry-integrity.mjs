@@ -246,15 +246,21 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
       return false;
     }
 
+    // Task 749 revision 2 — the shared per-node test for "is this a deliberate horizontal-scroll
+    // container" (overflow-x:auto|scroll + Mantine ScrollArea's own data-scrollbars marker).
+    // Extracted so Checks 1, 2, and 3 share one definition and cannot drift.
+    function isHorizontalScrollContainer(node) {
+      const cs = window.getComputedStyle(node);
+      if (!/auto|scroll/.test(cs.overflowX)) return false;
+      const scrollbars = node.getAttribute('data-scrollbars');
+      return scrollbars === 'x' || scrollbars === 'xy';
+    }
+
     function hasHorizontalScrollAncestor(el) {
       if (isInsideOverlayBody(el)) return false;
       let parent = el.parentElement;
       while (parent && parent !== document.body && parent !== document.documentElement) {
-        const cs = window.getComputedStyle(parent);
-        if (/auto|scroll/.test(cs.overflowX)) {
-          const scrollbars = parent.getAttribute('data-scrollbars');
-          if (scrollbars === 'x' || scrollbars === 'xy') return true;
-        }
+        if (isHorizontalScrollContainer(parent)) return true;
         parent = parent.parentElement;
       }
       return false;
@@ -363,6 +369,21 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
                 details: `scrollWidth=${check.scrollWidth}, clientWidth=${check.clientWidth}, text="${text.slice(0, 40)}", textOverflow=ellipsis`,
                 reason: 'intentional ellipsis with accessible name or content link',
               });
+            } else if (isHorizontalScrollContainer(check) && !isInsideOverlayBody(el)) {
+              // Task 749 revision 2 — the clipping ancestor being examined by THIS walk is
+              // itself a deliberate horizontal-scroll container (e.g. Mantine ScrollArea): the
+              // "clipped" text is reachable by scrolling, same R1 rule Check 2 already applies.
+              // Only the examined node is tested, so an element clipped by a plain
+              // overflow:hidden box that merely happens to sit inside a scroller further up is
+              // NOT excused — the walk stops at the first clipping ancestor, which is the one
+              // that actually clips it.
+              ambiguous.push({
+                failReason: 'ambiguous-text-clipped-scrollable',
+                selector: selectorFor(el),
+                label: labelFor(el),
+                details: `scrollWidth=${check.scrollWidth}, clientWidth=${check.clientWidth}, text="${text.slice(0, 40)}", horizontal scroll container`,
+                reason: 'text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2',
+              });
             } else {
               violations.push({
                 failReason: 'text-clipped',
@@ -438,7 +459,14 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
       const escapeLeft = parentRect.left - elRect.left;
       const escapeTop = parentRect.top - elRect.top;
 
-      if (escapeRight > tol || escapeBottom > tol || escapeLeft > tol || escapeTop > tol) {
+      // Task 749 revision 2 — a deliberate horizontal-scroll container's own horizontal escape
+      // is not a defect (the content is reachable by scrolling); a vertical escape from the SAME
+      // container still is, so escapeBottom/escapeTop are never gated here.
+      const horizScroller = isHorizontalScrollContainer(clipParent);
+      const hardEscapeRight = horizScroller ? 0 : escapeRight;
+      const hardEscapeLeft = horizScroller ? 0 : escapeLeft;
+
+      if (hardEscapeRight > tol || escapeBottom > tol || hardEscapeLeft > tol || escapeTop > tol) {
         const alreadyReported = violations.some(
           v => v.selector === selectorFor(el) && v.failReason === 'text-clipped'
         );
@@ -448,6 +476,23 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
             selector: selectorFor(el),
             label: labelFor(el),
             details: `escapes by R=${Math.round(escapeRight)} B=${Math.round(escapeBottom)} L=${Math.round(escapeLeft)} T=${Math.round(escapeTop)}px`,
+          });
+        }
+      } else if (horizScroller && (escapeRight > tol || escapeLeft > tol)) {
+        // The only escapes are horizontal, inside a deliberate scroller — visible debt, not a
+        // silent pass. Never suppressed for an already-reported text-clipped selector, matching
+        // the hard-violation arm's own guard, so a cell doesn't carry both a violation and an
+        // ambiguous entry for the identical selector.
+        const alreadyReported = violations.some(
+          v => v.selector === selectorFor(el) && v.failReason === 'text-clipped'
+        );
+        if (!alreadyReported) {
+          ambiguous.push({
+            failReason: 'ambiguous-outside-scrollable',
+            selector: selectorFor(el),
+            label: labelFor(el),
+            details: `escapes by R=${Math.round(escapeRight)} L=${Math.round(escapeLeft)}px, horizontal scroll container`,
+            reason: 'element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2',
           });
         }
       }

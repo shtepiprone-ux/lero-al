@@ -29,12 +29,15 @@ export function NotificationCenter({ notifications, onRead }: Props) {
 
   return (
     <div data-testid="notification-center" className="flex flex-1 min-h-0 flex-col overflow-hidden">
-      {/* Header — Task 593: <390px the mark-all button drops to its own row below the title,
-          full-width with flush-left content (owner decision 2026-07-14); ≥390px reverts to the
-          original single-row layout (title left, button right) byte-for-byte. `min-[390px]:` is
-          the same Tailwind arbitrary-breakpoint convention as Task 590's HeaderView split — not a
-          new named breakpoint token. */}
-      <div className="flex flex-col notification-compact:flex-row notification-compact:items-center notification-compact:justify-between gap-2 px-4 py-3 border-b shrink-0">
+      {/* Header — Task 593: <640px the mark-all button drops to its own row below the title,
+          full-width with flush-left content (owner decision 2026-07-14); >=640px reverts to the
+          original single-row layout (title left, button right) byte-for-byte. Task 724 first
+          retargeted this from the custom 390px breakpoint token to the canonical 640px `sm`, but
+          that retarget was never committed to this file (724R V4 reverted the NotificationCenter.tsx
+          portion pending an owner decision superseding 593); Task 749 D-2 (2026-08-15) is that
+          decision, so the threshold now moves 390 -> 640 using Tailwind's stock `sm:` breakpoint
+          instead of the now-deleted custom token. */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>
         {hasUnread && (
           <Button
@@ -45,7 +48,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
             disabled={isPending}
             justify="flex-start"
             styles={{ label: { textAlign: 'left' } }}
-            className="w-full notification-compact:w-auto"
+            className="w-full sm:w-auto"
           >
             {t('mark_all_read')}
           </Button>

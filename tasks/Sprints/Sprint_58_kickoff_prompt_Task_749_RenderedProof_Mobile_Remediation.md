@@ -3,7 +3,8 @@
 **Sprint:** 58 — The rendered gate's 18 blocking cells (`tasks/Sprints/Sprint_58_Rendered_Proof_Eighteen_Blocking_Cells.md`)
 **Type:** UI defect remediation (product CSS/layout), 3 components, 1 gate exit code
 **QA profile:** `Q3 Full Visual Matrix`
-**Status:** KICKOFF FILED — ready for a fresh Sonnet session
+**Status:** **REVISION 1 IN FLIGHT** (2026-08-15) — §6.A, AC2, AC8, AC11, AC12 and plants P1a/P1b are superseded by
+`tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`. Everything else stands as written.
 **Authorizing owner decisions:** 2026-08-15 (three, quoted verbatim in §2)
 
 ---
@@ -232,6 +233,9 @@ it is a documentation defect for the reviewer, not something to edit in this tas
 
 ### 6.A `AdminUsersTable` — let the grown tabs wrap
 
+> ⚠️ **SUPERSEDED 2026-08-15 — see `tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`.**
+> Revision 1 replaces this section. Do not execute the text below it.
+
 Add a Mantine `styles` prop to the `Tabs` at `AdminUsersTable.tsx:422-435`:
 
 ```
@@ -382,7 +386,9 @@ and both tabs are fully visible with no horizontal scroll.
 - **AC1 [R1]** Given the post-fix `--mantine-only` manifest, when the two `Admin/AdminUsersTable/Default` x
   `mobile-320` cells for `sq` and `uk` are read, then `noHorizontalOverflow === true` and
   `visualIntegrity.violations` is `[]` — and the same holds for `en` and `it`.
-- **AC2 [R1]** Given before/after PNG md5s for `Admin/AdminUsersTable/Default`, when compared, then **every**
+- **AC2 [R1]** — **RETIRED, superseded by AC2R in Revision 1** (unsatisfiable: the tab strip is
+  content-width, so no mechanism that fixes 320 leaves the long-label locales byte-identical elsewhere).
+  ~~Given before/after PNG md5s for `Admin/AdminUsersTable/Default`, when compared, then **every**~~
   `mobile-375`, `mobile-390` and `desktop-1024` cell is md5-identical, and every md5 change is at `mobile-320`.
   The changed set is enumerated in the report; it is not summarized as "expected".
 - **AC3 [R2]** Given the post-fix manifest, when the 12 `HeroSearch/Default` mobile cells are read, then
@@ -398,7 +404,8 @@ and both tabs are fully visible with no horizontal scroll.
   then `fullWidthButtonsAtMobile === true` and `popupBottomSheetAtMobile` is still `true`.
 - **AC7 [R7]** Given a computed-style probe at 390 and at 640, when the mark-all button is measured, then at 390 it
   is full-width with the header stacked in a column, and at 640 it is content-width with the header in a row.
-- **AC8 [R8]** Given `grep -rn "notification-compact" src/`, when run, then it returns **0** matches, and
+- **AC8 [R8]** — **RETIRED, superseded by AC8R in Revision 1** (its zero-diff arm contradicts the
+  `toBe(257)` assertion at `css-var-resolvability.test.ts:205`, which reads the real `globals.css`).
   `git diff --stat -- scripts/__tests__/css-var-resolvability.test.ts` is empty.
 - **AC9 [R9]** Given `npm run test`, when it completes, then it exits 0, the `MantineCountButton` smoke suite
   contains new cases proving (a) `iconOnlyBelow` alone behaves exactly as before, (b) `iconOnlyAbove` alone has no
@@ -406,11 +413,13 @@ and both tabs are fully visible with no horizontal scroll.
 - **AC10 [R10]** Given `git status --porcelain` at final state, when read, then neither
   `scripts/check-stories-rendered.mjs` nor `.github/workflows/governance-pr.yml` appears, and no path outside §4's
   write set appears.
-- **AC11 [R11]** Given `npm run screenshots:assert -- --mantine-only`, when run to completion, then stdout contains
+- **AC11 [R11]** — **superseded by AC11R** (PASS count depends on Revision 1 checkpoint R1).
+  ORIGINAL: Given `npm run screenshots:assert -- --mantine-only`, when run to completion, then stdout contains
   `1182/1204 PASS, 0 FAIL` and the process **exits 0**. (`22 AMBIGUOUS` is printed and does not affect the exit
   code — `check-stories-rendered.mjs:1996` gates `exitCode = 1` on `failed > 0` only, and the zero-FAIL branch at
   `:2065-2073` prints `All hard assertions PASSED`.)
-- **AC12 [R12]** Given the before and after manifests, when `matrix.filter(c => c.verdict === 'ambiguous')` is
+- **AC12 [R12]** — **superseded by AC12R** (a +2 `ambiguous-offscreen` delta is permitted).
+  ORIGINAL: Given the before and after manifests, when `matrix.filter(c => c.verdict === 'ambiguous')` is
   diffed as a **set**, then `0 added / 0 removed` and the count is 22.
 - **AC13 [R13]** Given the §9 plant matrix, when each arm is executed, then each produces the stated observable and
   the restore run returns the fail set to the AC11 state with `git status --porcelain` clean of plant paths.
@@ -431,8 +440,8 @@ file and its absence from `git status --porcelain` afterwards.
 
 | # | Plant | Consumed by | Required observable | Why this arm exists |
 |---:|---|---|---|---|
-| P1a | Remove **both** `whiteSpace: 'normal'` and `minWidth: 0` from the `Tabs` `styles` prop | AC1 | the same **2** cells (`sq`,`uk` x 320) fail with `offscreen-control`, right=360/339 | proves the fix, not the environment, is what turned them green |
-| P1b | Remove **only** `minWidth: 0`, keep `whiteSpace: 'normal'` | AC1 | **measure and record** — predicted still green at today's label lengths | states honestly which half is load-bearing; a fix whose second half is never tested is a fix with an untested half |
+| P1a | **RETIRED (Revision 1 §9)** — Remove **both** `whiteSpace: 'normal'` and `minWidth: 0` from the `Tabs` `styles` prop | AC1 | the same **2** cells (`sq`,`uk` x 320) fail with `offscreen-control`, right=360/339 | proves the fix, not the environment, is what turned them green |
+| P1b | **RETIRED (Revision 1 §9)** — Remove **only** `minWidth: 0`, keep `whiteSpace: 'normal'` | AC1 | **measure and record** — predicted still green at today's label lengths | states honestly which half is load-bearing; a fix whose second half is never tested is a fix with an untested half |
 | P2a | Remove `flex-basis: 100%` from `.filtersControl` | AC3 | the same **12** HeroSearch cells fail with `failingButtonLabels: ["2"]` | proves the CSS, not the prop, carries the width |
 | P2b | Remove **only** `iconOnlyAbove={640}`, keep the CSS | AC3, AC4 | the gate stays **green** (0 FAIL) while the button renders full-width **icon-only** | **the important arm.** It proves the gate cannot see D-3's label requirement, so AC4's DOM probe — not the gate — is the only control over the owner's actual decision. Report this explicitly. |
 | P3a | Restore `notification-compact:` on both lines of `NotificationCenter.tsx` | AC6 | the same **4** cells x `mobile-390` fail with `failingButtonLabels: ["Mark all as read"]` (locale-translated) | proves the threshold move, not an unrelated reflow, cleared them |

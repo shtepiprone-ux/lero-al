@@ -1,0 +1,382 @@
+===== src/app/globals.css
+0	6	src/app/globals.css
+-----
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 776afb600..5c9b368e7 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -26,12 +26,6 @@
+
+ @custom-variant dark (&:is(.dark *));
+
+-/* Task 593's owner-approved compact notification layout threshold. Named here so
+-   consumers use a stable responsive token instead of repeating min-[390px]. */
+-@theme {
+-  --breakpoint-notification-compact: 24.375rem;
+-}
+-
+ /* ─────────────────────────────────────────────
+    LERO.AL DESIGN SYSTEM — Real Estate Marketplace 2025-2026
+    All colors are WCAG AA compliant (4.5:1 minimum for text)
+
+===== src/components/admin/AdminUsersTable.tsx
+10	5	src/components/admin/AdminUsersTable.tsx
+-----
+diff --git a/src/components/admin/AdminUsersTable.tsx b/src/components/admin/AdminUsersTable.tsx
+index 147239a7a..3b0df9fd5 100644
+--- a/src/components/admin/AdminUsersTable.tsx
++++ b/src/components/admin/AdminUsersTable.tsx
+@@ -418,7 +418,10 @@ export function AdminUsersTable({
+
+   return (
+     <Stack gap="md" data-testid="admin-users-table">
+-      {/* Tabs — full-width on mobile via Tabs.List grow */}
++      {/* Tabs — content-width pill strip inside a horizontal ScrollArea (theme.ts:830), matching
++          Tabs.stories.tsx:36. `grow` removed (Task 749 rev.1, D-6): it was already inert (each tab
++          is pinned at max-content by `min-width: auto`), and under a full-width track it would
++          stretch each tab to ~50% of the strip, a design change nobody asked for. */}
+       <Tabs
+         value={activeTab}
+         onChange={(tab) => navigate({
+@@ -428,10 +431,12 @@ export function AdminUsersTable({
+           q: null,
+         })}
+       >
+-        <Tabs.List grow>
+-          <Tabs.Tab value="all">{t('tab_all')}</Tabs.Tab>
+-          <Tabs.Tab value="verified">{t('tab_verified')}</Tabs.Tab>
+-        </Tabs.List>
++        <ScrollArea type="auto" scrollbars="x" scrollbarSize={0}>
++          <Tabs.List>
++            <Tabs.Tab value="all">{t('tab_all')}</Tabs.Tab>
++            <Tabs.Tab value="verified">{t('tab_verified')}</Tabs.Tab>
++          </Tabs.List>
++        </ScrollArea>
+       </Tabs>
+
+       {activeTab === 'verified' ? (
+
+===== src/components/shared/HeroSearchView.module.css
+11	1	src/components/shared/HeroSearchView.module.css
+-----
+diff --git a/src/components/shared/HeroSearchView.module.css b/src/components/shared/HeroSearchView.module.css
+index 8c4935109..d0b9f79e7 100644
+--- a/src/components/shared/HeroSearchView.module.css
++++ b/src/components/shared/HeroSearchView.module.css
+@@ -100,9 +100,19 @@
+     }
+   }
+
+-  /* Site #7 — MantineCountButton (shrink-0) */
++  /* Site #7 — MantineCountButton (shrink-0). Task 749 D-3: full-width + 44px touch-target floor
++     below 640, reset at 40rem so the 640-859 icon-only band and the >=860 icon+label band stay
++     byte-identical to before this task. */
+   .filtersControl {
+     flex-shrink: 0; /* shrink-0 — I1 */
++    flex-basis: 100%;
++    min-height: var(--space-11);
++  }
++  @media (min-width: 40rem) {
++    .filtersControl {
++      flex-basis: auto;
++      min-height: 0;
++    }
+   }
+
+   /* Site #8 — Search Button (px-6 font-semibold basis-full sm:basis-full[dropped, see header] md:grow-0 md:basis-auto) */
+
+===== src/components/shared/HeroSearchView.tsx
+1	0	src/components/shared/HeroSearchView.tsx
+-----
+diff --git a/src/components/shared/HeroSearchView.tsx b/src/components/shared/HeroSearchView.tsx
+index 0aec2dbd8..6e482e9f5 100644
+--- a/src/components/shared/HeroSearchView.tsx
++++ b/src/components/shared/HeroSearchView.tsx
+@@ -129,6 +129,7 @@ export function HeroSearchView({
+               variant="default"
+               count={activeFiltersCount}
+               iconOnlyBelow={860}
++              iconOnlyAbove={640}
+               onClick={onOpenFilters}
+               aria-label={t('advanced_filters')}
+               leftSection={<SlidersHorizontal size={16} />}
+
+===== src/design-system/mantine/patterns/MantineCountButton.tsx
+17	2	src/design-system/mantine/patterns/MantineCountButton.tsx
+-----
+diff --git a/src/design-system/mantine/patterns/MantineCountButton.tsx b/src/design-system/mantine/patterns/MantineCountButton.tsx
+index 497dcff69..4ccea4764 100644
+--- a/src/design-system/mantine/patterns/MantineCountButton.tsx
++++ b/src/design-system/mantine/patterns/MantineCountButton.tsx
+@@ -19,6 +19,12 @@ export interface MantineCountButtonProps extends ButtonProps {
+    * nameless icon button (agent-contract clause 11 a11y requirement).
+    */
+   iconOnlyBelow?: number
++  /**
++   * Optional lower bound for `iconOnlyBelow`. When set, the collapse applies only while the
++   * viewport is >= this width AND < `iconOnlyBelow`. Unset (default) = no lower bound, so an
++   * instance that sets only `iconOnlyBelow` renders exactly as before.
++   */
++  iconOnlyAbove?: number
+ }
+
+ /**
+@@ -74,7 +80,7 @@ export interface MantineCountButtonProps extends ButtonProps {
+  * state, and Mantine's own `.inner` flex gap keeps them apart from each other).
+  */
+ export function MantineCountButton({
+-  count, rightSection, children, variant, iconOnlyBelow, px, ...props
++  count, rightSection, children, variant, iconOnlyBelow, iconOnlyAbove, px, ...props
+ }: MantineCountButtonProps) {
+   const isFilledHost = variant === undefined || variant === 'filled'
+   const countBadge = count && count > 0
+@@ -96,7 +102,16 @@ export function MantineCountButton({
+     false,
+     { getInitialValueInEffect: true },
+   )
+-  const collapsed = iconOnlyBelow != null && belowThreshold
++  // `iconOnlyAbove` (Task 749) — second unconditional query, same SSR-safe idiom mirrored: unset
++  // uses `(min-width: 0px)`, which always matches, so the unset case is inert (never narrows the
++  // collapse). Both hooks start `false`, so `collapsed` is `false` on the server and on the
++  // client's first render exactly as before.
++  const aboveFloor = useMediaQuery(
++    iconOnlyAbove != null ? `(min-width: ${iconOnlyAbove}px)` : '(min-width: 0px)',
++    false,
++    { getInitialValueInEffect: true },
++  )
++  const collapsed = iconOnlyBelow != null && belowThreshold && aboveFloor
+
+   return (
+     <Button
+
+===== src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+78	0	src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+-----
+diff --git a/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx b/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+index df819ab13..7d622c328 100644
+--- a/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
++++ b/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+@@ -229,3 +229,81 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
+     expect(onClick).toHaveBeenCalled()
+   })
+ })
++
++// Task 749 — simulates a viewport width against the query strings the component builds, so the
++// two independent `useMediaQuery` calls (`belowThreshold` / `aboveFloor`) resolve independently
++// instead of both following one blanket mockReturnValue.
++function mockViewport(width: number) {
++  mockUseMediaQuery.mockImplementation((query: string) => {
++    const maxMatch = query.match(/max-width: (\d+)px/)
++    const minMatch = query.match(/min-width: (\d+)px/)
++    if (maxMatch) return width <= Number(maxMatch[1])
++    if (minMatch) return width >= Number(minMatch[1])
++    return false
++  })
++}
++
++describe('MantineCountButton — iconOnlyAbove lower bound (Task 749)', () => {
++  it('(a) iconOnlyBelow alone behaves exactly as before — collapses below threshold with no floor', () => {
++    mockViewport(320)
++    render(
++      withProvider(
++        <MantineCountButton iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
++          Advanced filters
++        </MantineCountButton>,
++      ),
++    )
++    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
++    expect(screen.getByTestId('icon')).toBeInTheDocument()
++  })
++
++  it('(b) iconOnlyAbove alone has no effect — collapse never engages without iconOnlyBelow', () => {
++    mockViewport(320)
++    render(
++      withProvider(
++        <MantineCountButton iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
++          Advanced filters
++        </MantineCountButton>,
++      ),
++    )
++    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
++  })
++
++  it('(c) both together collapse only inside the [iconOnlyAbove, iconOnlyBelow) band', () => {
++    // below the floor (320 < 640): full-width labelled button, not collapsed
++    mockViewport(320)
++    const { unmount: unmount1 } = render(
++      withProvider(
++        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
++          Advanced filters
++        </MantineCountButton>,
++      ),
++    )
++    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
++    unmount1()
++
++    // inside the band (640 <= 700 < 860): icon-only, collapsed
++    mockViewport(700)
++    const { unmount: unmount2 } = render(
++      withProvider(
++        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
++          Advanced filters
++        </MantineCountButton>,
++      ),
++    )
++    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
++    expect(screen.getByRole('button', { name: 'Advanced filters' })).toBeInTheDocument()
++    unmount2()
++
++    // above the upper bound (1000 >= 860): full label, not collapsed
++    mockViewport(1000)
++    render(
++      withProvider(
++        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
++          Advanced filters
++        </MantineCountButton>,
++      ),
++    )
++    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
++  })
++})
+
+===== src/modules/notifications/components/NotificationCenter.tsx
+10	7	src/modules/notifications/components/NotificationCenter.tsx
+-----
+diff --git a/src/modules/notifications/components/NotificationCenter.tsx b/src/modules/notifications/components/NotificationCenter.tsx
+index 5c149f0f7..198fdffdd 100644
+--- a/src/modules/notifications/components/NotificationCenter.tsx
++++ b/src/modules/notifications/components/NotificationCenter.tsx
+@@ -29,12 +29,15 @@ export function NotificationCenter({ notifications, onRead }: Props) {
+
+   return (
+     <div data-testid="notification-center" className="flex flex-1 min-h-0 flex-col overflow-hidden">
+-      {/* Header — Task 593: <390px the mark-all button drops to its own row below the title,
+-          full-width with flush-left content (owner decision 2026-07-14); ≥390px reverts to the
+-          original single-row layout (title left, button right) byte-for-byte. `min-[390px]:` is
+-          the same Tailwind arbitrary-breakpoint convention as Task 590's HeaderView split — not a
+-          new named breakpoint token. */}
+-      <div className="flex flex-col notification-compact:flex-row notification-compact:items-center notification-compact:justify-between gap-2 px-4 py-3 border-b shrink-0">
++      {/* Header — Task 593: <640px the mark-all button drops to its own row below the title,
++          full-width with flush-left content (owner decision 2026-07-14); >=640px reverts to the
++          original single-row layout (title left, button right) byte-for-byte. Task 724 first
++          retargeted this from the custom 390px breakpoint token to the canonical 640px `sm`, but
++          that retarget was never committed to this file (724R V4 reverted the NotificationCenter.tsx
++          portion pending an owner decision superseding 593); Task 749 D-2 (2026-08-15) is that
++          decision, so the threshold now moves 390 -> 640 using Tailwind's stock `sm:` breakpoint
++          instead of the now-deleted custom token. */}
++      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 py-3 border-b shrink-0">
+         <p className="text-sm font-semibold">{t('title')}</p>
+         {hasUnread && (
+           <Button
+@@ -45,7 +48,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
+             disabled={isPending}
+             justify="flex-start"
+             styles={{ label: { textAlign: 'left' } }}
+-            className="w-full notification-compact:w-auto"
++            className="w-full sm:w-auto"
+           >
+             {t('mark_all_read')}
+           </Button>
+
+===== tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
+16	7	tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
+-----
+diff --git a/tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md b/tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
+index acdc58e87..2a00d005f 100644
+--- a/tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
++++ b/tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
+@@ -3,7 +3,8 @@
+ **Sprint:** 58 — The rendered gate's 18 blocking cells (`tasks/Sprints/Sprint_58_Rendered_Proof_Eighteen_Blocking_Cells.md`)
+ **Type:** UI defect remediation (product CSS/layout), 3 components, 1 gate exit code
+ **QA profile:** `Q3 Full Visual Matrix`
+-**Status:** KICKOFF FILED — ready for a fresh Sonnet session
++**Status:** **REVISION 1 IN FLIGHT** (2026-08-15) — §6.A, AC2, AC8, AC11, AC12 and plants P1a/P1b are superseded by
++`tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`. Everything else stands as written.
+ **Authorizing owner decisions:** 2026-08-15 (three, quoted verbatim in §2)
+
+ ---
+@@ -232,6 +233,9 @@ it is a documentation defect for the reviewer, not something to edit in this tas
+
+ ### 6.A `AdminUsersTable` — let the grown tabs wrap
+
++> ⚠️ **SUPERSEDED 2026-08-15 — see `tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`.**
++> Revision 1 replaces this section. Do not execute the text below it.
++
+ Add a Mantine `styles` prop to the `Tabs` at `AdminUsersTable.tsx:422-435`:
+
+ ```
+@@ -382,7 +386,9 @@ and both tabs are fully visible with no horizontal scroll.
+ - **AC1 [R1]** Given the post-fix `--mantine-only` manifest, when the two `Admin/AdminUsersTable/Default` x
+   `mobile-320` cells for `sq` and `uk` are read, then `noHorizontalOverflow === true` and
+   `visualIntegrity.violations` is `[]` — and the same holds for `en` and `it`.
+-- **AC2 [R1]** Given before/after PNG md5s for `Admin/AdminUsersTable/Default`, when compared, then **every**
++- **AC2 [R1]** — **RETIRED, superseded by AC2R in Revision 1** (unsatisfiable: the tab strip is
++  content-width, so no mechanism that fixes 320 leaves the long-label locales byte-identical elsewhere).
++  ~~Given before/after PNG md5s for `Admin/AdminUsersTable/Default`, when compared, then **every**~~
+   `mobile-375`, `mobile-390` and `desktop-1024` cell is md5-identical, and every md5 change is at `mobile-320`.
+   The changed set is enumerated in the report; it is not summarized as "expected".
+ - **AC3 [R2]** Given the post-fix manifest, when the 12 `HeroSearch/Default` mobile cells are read, then
+@@ -398,7 +404,8 @@ and both tabs are fully visible with no horizontal scroll.
+   then `fullWidthButtonsAtMobile === true` and `popupBottomSheetAtMobile` is still `true`.
+ - **AC7 [R7]** Given a computed-style probe at 390 and at 640, when the mark-all button is measured, then at 390 it
+   is full-width with the header stacked in a column, and at 640 it is content-width with the header in a row.
+-- **AC8 [R8]** Given `grep -rn "notification-compact" src/`, when run, then it returns **0** matches, and
++- **AC8 [R8]** — **RETIRED, superseded by AC8R in Revision 1** (its zero-diff arm contradicts the
++  `toBe(257)` assertion at `css-var-resolvability.test.ts:205`, which reads the real `globals.css`).
+   `git diff --stat -- scripts/__tests__/css-var-resolvability.test.ts` is empty.
+ - **AC9 [R9]** Given `npm run test`, when it completes, then it exits 0, the `MantineCountButton` smoke suite
+   contains new cases proving (a) `iconOnlyBelow` alone behaves exactly as before, (b) `iconOnlyAbove` alone has no
+@@ -406,11 +413,13 @@ and both tabs are fully visible with no horizontal scroll.
+ - **AC10 [R10]** Given `git status --porcelain` at final state, when read, then neither
+   `scripts/check-stories-rendered.mjs` nor `.github/workflows/governance-pr.yml` appears, and no path outside §4's
+   write set appears.
+-- **AC11 [R11]** Given `npm run screenshots:assert -- --mantine-only`, when run to completion, then stdout contains
++- **AC11 [R11]** — **superseded by AC11R** (PASS count depends on Revision 1 checkpoint R1).
++  ORIGINAL: Given `npm run screenshots:assert -- --mantine-only`, when run to completion, then stdout contains
+   `1182/1204 PASS, 0 FAIL` and the process **exits 0**. (`22 AMBIGUOUS` is printed and does not affect the exit
+   code — `check-stories-rendered.mjs:1996` gates `exitCode = 1` on `failed > 0` only, and the zero-FAIL branch at
+   `:2065-2073` prints `All hard assertions PASSED`.)
+-- **AC12 [R12]** Given the before and after manifests, when `matrix.filter(c => c.verdict === 'ambiguous')` is
++- **AC12 [R12]** — **superseded by AC12R** (a +2 `ambiguous-offscreen` delta is permitted).
++  ORIGINAL: Given the before and after manifests, when `matrix.filter(c => c.verdict === 'ambiguous')` is
+   diffed as a **set**, then `0 added / 0 removed` and the count is 22.
+ - **AC13 [R13]** Given the §9 plant matrix, when each arm is executed, then each produces the stated observable and
+   the restore run returns the fail set to the AC11 state with `git status --porcelain` clean of plant paths.
+@@ -431,8 +440,8 @@ file and its absence from `git status --porcelain` afterwards.
+
+ | # | Plant | Consumed by | Required observable | Why this arm exists |
+ |---:|---|---|---|---|
+-| P1a | Remove **both** `whiteSpace: 'normal'` and `minWidth: 0` from the `Tabs` `styles` prop | AC1 | the same **2** cells (`sq`,`uk` x 320) fail with `offscreen-control`, right=360/339 | proves the fix, not the environment, is what turned them green |
+-| P1b | Remove **only** `minWidth: 0`, keep `whiteSpace: 'normal'` | AC1 | **measure and record** — predicted still green at today's label lengths | states honestly which half is load-bearing; a fix whose second half is never tested is a fix with an untested half |
++| P1a | **RETIRED (Revision 1 §9)** — Remove **both** `whiteSpace: 'normal'` and `minWidth: 0` from the `Tabs` `styles` prop | AC1 | the same **2** cells (`sq`,`uk` x 320) fail with `offscreen-control`, right=360/339 | proves the fix, not the environment, is what turned them green |
++| P1b | **RETIRED (Revision 1 §9)** — Remove **only** `minWidth: 0`, keep `whiteSpace: 'normal'` | AC1 | **measure and record** — predicted still green at today's label lengths | states honestly which half is load-bearing; a fix whose second half is never tested is a fix with an untested half |
+ | P2a | Remove `flex-basis: 100%` from `.filtersControl` | AC3 | the same **12** HeroSearch cells fail with `failingButtonLabels: ["2"]` | proves the CSS, not the prop, carries the width |
+ | P2b | Remove **only** `iconOnlyAbove={640}`, keep the CSS | AC3, AC4 | the gate stays **green** (0 FAIL) while the button renders full-width **icon-only** | **the important arm.** It proves the gate cannot see D-3's label requirement, so AC4's DOM probe — not the gate — is the only control over the owner's actual decision. Report this explicitly. |
+| P3a | Restore `notification-compact:` on both lines of `NotificationCenter.tsx` | AC6 | the same **4** cells x `mobile-390` fail with `failingButtonLabels: ["Mark all as read"]` (locale-translated) | proves the threshold move, not an unrelated reflow, cleared them |
+
+===== src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx (F7, separately authorised after S0′)
+9	3	src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+-----
+diff --git a/src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx b/src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+index 17c214976..dca687b5c 100644
+--- a/src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
++++ b/src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+@@ -147,9 +147,15 @@ vi.mock('@mantine/core', () => {
+       ),
+     )
+
+-  // ScrollArea — transparent wrapper
+-  const ScrollArea = ({ children, ...props }: any) =>
++  // ScrollArea — transparent wrapper. Task 749 rev.3: `type`/`scrollbars`/`scrollbarSize` are
++  // Mantine-only props; the real ScrollArea consumes them, so this mock must NOT spread them
++  // onto a DOM node — React warns "does not recognize the scrollbarSize prop on a DOM element".
++  const ScrollArea = ({ children, ...props }: any) => {
++    delete props.type
++    delete props.scrollbars
++    delete props.scrollbarSize
++    return React.createElement('div', { 'data-mantine': 'scroll-area', ...props }, children)
++  }
+
+===== Native receipt — 2026-08-16
+Codex reviewer ran `node_modules\\.bin\\vitest.cmd run src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx`.
+Result: 1 test file passed, 21 tests passed, exit 0; the prior `scrollbarSize` React warning was absent.

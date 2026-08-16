@@ -147,9 +147,15 @@ vi.mock('@mantine/core', () => {
       ),
     )
 
-  // ScrollArea — transparent wrapper
-  const ScrollArea = ({ children, ...props }: any) =>
-    React.createElement('div', { 'data-mantine': 'scroll-area', ...props }, children)
+  // ScrollArea — transparent wrapper. Task 749 rev.3: `type`/`scrollbars`/`scrollbarSize` are
+  // Mantine-only props; the real ScrollArea consumes them, so this mock must NOT spread them
+  // onto a DOM node — React warns "does not recognize the scrollbarSize prop on a DOM element".
+  const ScrollArea = ({ children, ...props }: any) => {
+    delete props.type
+    delete props.scrollbars
+    delete props.scrollbarSize
+    return React.createElement('div', { 'data-mantine': 'scroll-area', ...props }, children)
+  }
 
   // Box
   const Box = ({ children, ...props }: any) =>

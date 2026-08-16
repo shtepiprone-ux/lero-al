@@ -632,12 +632,14 @@ const GEOMETRY_ALLOWLIST = [
   // clear-X sits with a clear visible gap from the date text/placeholder, never touching or
   // occluding it (§18.9 iron rule) — the SAME rendered proof PasswordInput's exemption above relied on.
   { storyId: 'mantine-primitives-rangedatepicker--default', failReason: 'element-overlap', reason: 'trigger clear-X ActionIcon is intentionally overlaid inside the input box (icon-in-field pattern, same as PasswordInput above), not a layout defect' },
-  // Task 529 — Tabs/Default's tab bar is an intentional horizontal-scroll ("swipe on overflow",
-  // per the story's own label) container at narrow viewports — a tab clipped at the visible
-  // edge is reachable by scrolling, not a real text-clip defect. Matches the project's
-  // established swipe-scroll tab-bar convention (ScrollArea, ADR: Tabs/SegmentedControl always
-  // single row).
-  { storyId: 'mantine-primitives-tabs--default', failReason: 'text-clipped', reason: 'intentional horizontal swipe-scroll tab bar — clipped tab is reachable by scrolling, not a layout defect' },
+  // Task 529's `mantine-primitives-tabs--default` / `text-clipped` entry was RETIRED by Task 749
+  // revision 2 (2026-08-15, owner D-8): `geometry-integrity.mjs` Check 1 now carries a
+  // DOM-measured `isHorizontalScrollContainer` predicate (shared with Checks 2 and 3) that
+  // downgrades a horizontal-scroll-container's own clipped text to `ambiguous-text-clipped-scrollable`
+  // structurally, for every story, not just this one — the same allowlist→measured-predicate
+  // direction Tasks 724R/726 already took for the `role="group"` skip. See the Task 749 revision 2
+  // session log for the plant (P-G3) that proves the structural rule, not the deleted row, is what
+  // keeps this story's cells green.
   // Task 567 round-2's `mantine-primitives-filterspanelshell--default` / `element-overlap` entry
   // was REMOVED by Task 569 (2026-07-10): Check 4 in `geometry-integrity.mjs` is now clip-aware
   // (the same `overflow:auto|hidden|scroll` ancestor-intersection Check 3/outside-container

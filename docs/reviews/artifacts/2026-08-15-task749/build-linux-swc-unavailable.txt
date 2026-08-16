@@ -1,0 +1,22 @@
+# NOT the AC-R2-8 transcript. This is a FAILED build attempted from the mounted Linux workspace on 2026-08-16.
+# node_modules was installed on Windows, so the linux/x64 SWC binary is absent. Retained only as evidence that
+# this tree can be built ONLY on the owner machine, which is why the AC-R2-8 transcript must be owner-native.
+
+> lero-al@0.1.0 build
+> next build
+
+   Downloading swc package @next/swc-wasm-nodejs... to /sessions/rcw-01e5c9gfmspimagqcskrjwjv/.cache/next-swc
+ ⚠ Attempted to load /sessions/rcw-01e5c9gfmspimagqcskrjwjv/mnt/lero-al/node_modules/next/next-swc-fallback/@next/swc-linux-x64-gnu/next-swc.linux-x64-gnu.node, but it was not installed
+ ⚠ Attempted to load /sessions/rcw-01e5c9gfmspimagqcskrjwjv/mnt/lero-al/node_modules/next/next-swc-fallback/@next/swc-linux-x64-musl/next-swc.linux-x64-musl.node, but it was not installed
+ ⚠ Attempted to load @next/swc-linux-x64-gnu, but it was not installed
+ ⚠ Attempted to load @next/swc-linux-x64-musl, but it was not installed
+ ⚠ [TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo EAI_AGAIN registry.npmjs.org] {
+    errno: -3001,
+    code: 'EAI_AGAIN',
+    syscall: 'getaddrinfo',
+    hostname: 'registry.npmjs.org'
+  }
+}
+ ⨯ Failed to load SWC binary for linux/x64, see more info here: https://nextjs.org/docs/messages/failed-loading-swc
+EXIT=1

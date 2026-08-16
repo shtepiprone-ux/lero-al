@@ -1,0 +1,831 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-749 Revision 2 — scroll-aware geometry Checks 1 and 3; Task 529 allowlist retired",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "963c57bcf146fa1e7a9ca04f51f03d98f35644d9",
+  "reviewedRevision": "worktree at base 963c57bcf146fa1e7a9ca04f51f03d98f35644d9 with Task 749 (kickoff + revisions 1 and 2) applied, inspected after the final restore run 2026-08-15T18-14",
+  "reviewedPaths": [
+   "scripts/geometry-integrity.mjs",
+   "scripts/check-stories-rendered.mjs",
+   "scripts/__tests__/css-var-resolvability.test.ts",
+   "src/components/admin/AdminUsersTable.tsx",
+   ".screenshots/rendered-assert/2026-08-15T14-47",
+   ".screenshots/rendered-assert/2026-08-15T15-36",
+   ".screenshots/rendered-assert/2026-08-15T16-08",
+   ".screenshots/rendered-assert/2026-08-15T16-39",
+   ".screenshots/rendered-assert/2026-08-15T17-11",
+   ".screenshots/rendered-assert/2026-08-15T17-43",
+   ".screenshots/rendered-assert/2026-08-15T18-14",
+   "docs/sessions/2026-08-15-task749-rendered-proof-mobile-remediation.md",
+   "docs/backlog.md",
+   "tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md",
+   "tasks/Sprints/Sprint_58_Task_749_revision_2_GeometryScrollAwareness.md",
+   "tasks/Sprints/Sprint_58_Task_749_revision_2_evidence_preflight.md",
+   "tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md",
+   ".screenshots/task749-evidence",
+   ".next/BUILD_ID",
+   "docs/reviews/artifacts/2026-08-15-task749",
+   "src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 9,
+   "verified": 9,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-15-task749-revision2-geometry-scroll-awareness.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC-R2-1",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/geometry-integrity.mjs",
+    "symbol": "isHorizontalScrollContainer + Check 1 arm",
+    "diffHunks": [
+     "scripts/geometry-integrity.mjs:249-260",
+     "scripts/geometry-integrity.mjs:372-386"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "isHorizontalScrollContainer + Check 1 arm"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "covered by the rendered matrix",
+     "locales": "all 4 covered",
+     "viewports": "320/375/390/1024 covered"
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/geometry-integrity.mjs",
+     "command": "reviewer read the diff directly and re-derived summary/matrix fields from the four retained plant manifests",
+     "observable": "Final manifest 18-14: the 3 admin-adminuserstable--default cells carry violations:[] and ambiguous-text-clipped-scrollable; verdict=ambiguous. Plant runs 16-08 (P-G1, scrollbars=y) = 3 hard text-clipped and 17-43 (P-G4, genuine clipped probe) = 16 hard text-clipped both restore the hard arm.",
+     "freshness": "reviewed worktree, final state 2026-08-15",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "isHorizontalScrollContainer + Check 1 arm"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The downgrade might blanket-excuse the component rather than depend on the measured signal pair.",
+     "kind": "EXECUTED",
+     "path": ".screenshots/rendered-assert/2026-08-15T16-08/manifest.json",
+     "result": "Refuted: with data-scrollbars flipped to y the same 3 cells return to hard text-clipped (summary.failed=3, textClipped=3)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-2",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/geometry-integrity.mjs",
+    "symbol": "Check 3 horizontal-escape gate",
+    "diffHunks": [
+     "scripts/geometry-integrity.mjs:459-497"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "Check 3 horizontal-escape gate"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "2 stories affected",
+     "locales": "all 4",
+     "viewports": "320/375"
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/geometry-integrity.mjs",
+     "command": "reviewer re-derived both summaries from the retained manifests",
+     "observable": "Plant run 16-39 (Check 3 reverted, Check 1 fixed) = summary.failed 6, outsideContainer 6, textClipped 0 — the masking prediction is now EXECUTED. With Check 3 restored, final manifest 18-14 has outsideContainer 0.",
+     "freshness": "reviewed worktree, final state 2026-08-15",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "Check 3 horizontal-escape gate"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Check 3 was already harmless and its half of the fix was unnecessary.",
+     "kind": "EXECUTED",
+     "path": ".screenshots/rendered-assert/2026-08-15T16-39/manifest.json",
+     "result": "Refuted: 6 cells across 2 stories hard-fail outside-container once Check 1 stops masking them — 2 more stories/cells than the revision brief predicted."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-3R",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F6"
+   ],
+   "finalSubject": {
+    "path": "scripts/check-stories-rendered.mjs",
+    "symbol": "GEOMETRY_ALLOWLIST — Task 529 row retired",
+    "diffHunks": [
+     "scripts/check-stories-rendered.mjs:635-642"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "(a) 22 pre-existing ambiguousOverlap cells unchanged, 0 added / 0 removed",
+     "(b) exactly 5 new ambiguous cells, enumerated",
+     "(c) Tabs/Default totals 4 ambiguous cells",
+     "(d) summary.failed 0 and summary.offscreenControl 0",
+     "(e) no other cell in the 1204-cell matrix changes verdict"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "the criterion is stated over the whole rendered matrix, so no story is out of scope",
+     "locales": "all 4 covered",
+     "viewports": "all per-story viewport sets covered"
+    }
+   },
+   "evidence": [
+    {
+     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "command": "reviewer set-diffed the ambiguous cell sets of manifests 14-47 and 18-14 and read summary.failed / summary.offscreenControl",
+     "observable": "(a) all 22 pre-existing ambiguousOverlap cells still ambiguous, 0 added / 0 removed. (c) mantine-primitives-tabs--default holds 4 ambiguous cells. (d) summary.failed 0, summary.offscreenControl 0, and the two ambiguous-offscreen entries from Check 2 are still present.",
+     "freshness": "reviewed worktree, final run 2026-08-15T18-14",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "(a) 22 pre-existing ambiguousOverlap cells unchanged, 0 added / 0 removed",
+       "(c) Tabs/Default totals 4 ambiguous cells",
+       "(d) summary.failed 0 and summary.offscreenControl 0"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    },
+    {
+     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "command": "reviewer diffed verdict per cell across all 1204 cells of manifest 14-47 vs 18-14, keyed by storyId|locale|viewport",
+     "observable": "(b)+(e) EXACTLY 5 cells changed verdict in the whole matrix: admin-adminuserstable--default sq*mobile-320, sq*mobile-375, uk*mobile-320 (fail -> ambiguous) and mantine-primitives-tabs--default sq*mobile-375, uk*mobile-320 (pass -> ambiguous). The other 1199 cells hold their verdict. Matrix size identical, 1204 = 1204. Independently re-derived by the Codex reviewer.",
+     "freshness": "reviewed worktree, final run 2026-08-15T18-14",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "(b) exactly 5 new ambiguous cells, enumerated",
+       "(e) no other cell in the 1204-cell matrix changes verdict"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Retiring the allowlist merely removed redundant cover, so the new ambiguous cells are bookkeeping rather than real findings.",
+     "kind": "EXECUTED",
+     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "result": "Refuted. Tabs/Default sq*375 and uk*320 were pass:true in 14-47 and are ambiguous in 18-14: the Task 529 allowlist row had been converting real clipping findings into pass since Task 529, while the structural predicate converts the same findings into visible ambiguous debt. An allowlist row is strictly more permissive than the predicate that replaced it."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Rendered-matrix delta criterion, not a generated-form claim."
+   }
+  },
+  {
+   "id": "AC-R2-4",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": ".screenshots/rendered-assert",
+    "symbol": "AdminUsersTable PNG identity",
+    "diffHunks": [
+     "n/a — rendered artifact comparison"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "AdminUsersTable PNG identity"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "AdminUsersTable",
+     "locales": "all 4",
+     "viewports": "320/375/390/1024"
+    }
+   },
+   "evidence": [
+    {
+     "path": ".screenshots/rendered-assert",
+     "command": "reviewer ran md5sum over both directories independently of the executor report (16 files compared, 16 SAME, 0 DIFF)",
+     "observable": "All 16 admin-adminuserstable--default PNGs are md5-identical between 14-47 and 18-14: the gate diff altered zero CSS.",
+     "freshness": "reviewed worktree, final state 2026-08-15",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "AdminUsersTable PNG identity"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A gate-only change could still move rendered pixels.",
+     "kind": "EXECUTED",
+     "path": ".screenshots/rendered-assert/2026-08-15T18-14",
+     "result": "Refuted by the reviewer own md5 sweep: 16/16 identical."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-6",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+    "symbol": "summary",
+    "diffHunks": [
+     "n/a — manifest field read"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "summary"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "whole 1204-cell matrix",
+     "locales": "all 4",
+     "viewports": "per-story sets"
+    }
+   },
+   "evidence": [
+    {
+     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "command": "reviewer read manifest.summary and scanned every matrix cell for violations",
+     "observable": "summary = passed 1177, failed 0, ambiguousOnly 27; no cell anywhere carries a visualIntegrity violation; exit 0 follows from check-stories-rendered.mjs:1996 gating exitCode on failed > 0.",
+     "freshness": "reviewed worktree, final state 2026-08-15",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "summary"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The 0-FAIL result could be a one-run artifact.",
+     "kind": "EXECUTED",
+     "path": ".screenshots/rendered-assert/2026-08-15T15-36/manifest.json",
+     "result": "Refuted: run 15-36 (before the plants) and run 18-14 (after all four plants were reverted) produce the identical triple 1177/0/27 — D37-form reproducibility the executor did not claim."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-7",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/__tests__/css-var-resolvability.test.ts",
+    "symbol": "owned.size expectation",
+    "diffHunks": [
+     "scripts/__tests__/css-var-resolvability.test.ts:202-208"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "owned.size expectation"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "n/a",
+     "locales": "n/a",
+     "viewports": "n/a"
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/__tests__/css-var-resolvability.test.ts",
+     "command": "reviewer read both diffs directly",
+     "observable": "Exactly one expectation changed, 257 -> 256, with the comment form the revision brief specified verbatim; the synthetic fixture at :170/:185 is untouched. globals.css diff removes only the @theme block and its comment.",
+     "freshness": "reviewed worktree, final state 2026-08-15",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "owned.size expectation"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The token might still have a consumer in src/.",
+     "kind": "EXECUTED",
+     "path": "src",
+     "result": "Refuted earlier in this task and unchanged: grep -rn notification-compact src/ returns 0."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC10",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-stories-rendered.mjs",
+    "symbol": "worktree scope",
+    "diffHunks": [
+     "n/a — git status"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "worktree scope"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "n/a",
+     "locales": "n/a",
+     "viewports": "n/a"
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/check-stories-rendered.mjs",
+     "command": "reviewer ran git --no-optional-locks status --porcelain and git diff --stat",
+     "observable": "The final worktree retains the authorised Task 749 product/gate paths, the two pre-existing untracked CI-fixture logs, and review evidence. The one post-S0′ source addition is the authorised F7 test-mock correction at src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx (9/3), separately diff-audited and natively tested. No plant path survives; Tabs.stories.tsx (P-G4 probe) is absent, and .github/workflows/governance-pr.yml is untouched.",
+     "freshness": "reviewed worktree, final state 2026-08-16",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "worktree scope"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A plant could have leaked into the final tree.",
+     "kind": "EXECUTED",
+     "path": "src/components/admin/AdminUsersTable.tsx",
+     "result": "Refuted: Tabs.stories.tsx and AdminUsersTable scrollbars=y are both absent from the diff; AdminUsersTable blob is 3b0df9fd5, the hash the session log records for the post-restore state."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-5R",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F4"
+   ],
+   "finalSubject": {
+    "path": "docs/sessions/2026-08-15-task749-rendered-proof-mobile-remediation.md",
+    "symbol": "content witnesses",
+    "diffHunks": [
+     "n/a — session log 13.5"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "authorized-content audit of the 8 accepted paths",
+     "S0-prime for Revision 3"
+    ],
+    "states": [
+     "post-fix"
+    ],
+    "phases": [
+     "before",
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "n/a",
+     "locales": "n/a",
+     "viewports": "n/a"
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/reviews/artifacts/2026-08-15-task749/authorized-content-audit.txt",
+     "command": "git diff --numstat and git diff for each of the 8 accepted paths, persisted verbatim (20260 bytes)",
+     "observable": "All 8 numstat pairs match the Revision 3 table exactly: globals.css 0/6, AdminUsersTable.tsx 10/5, HeroSearchView.module.css 11/1, HeroSearchView.tsx 1/0, MantineCountButton.tsx 17/2, MantineCountButton.smoke.test.tsx 78/0, NotificationCenter.tsx 10/7, kickoff .md 16/7. Each diff contains only its authorized edit.",
+     "freshness": "reviewed worktree 2026-08-16",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "authorized-content audit of the 8 accepted paths"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/reviews/artifacts/2026-08-15-task749/S0-prime-witnesses.txt",
+     "command": "SHA-256 over the 12 paths captured BEFORE the first Revision 3 write, then native PowerShell Get-FileHash re-verification after",
+     "observable": "12/12 hashes match. The digests themselves are persisted, not just a verdict. S0′ covers the 12 paths already modified at capture; the later, authorised F7 test-mock correction is correctly absent from that historical set and is separately diff-audited and natively tested.",
+     "freshness": "captured 2026-08-16 before first write; Codex native re-verification after",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "S0-prime for Revision 3"
+      ],
+      "states": [
+       "post-fix"
+      ],
+      "phases": [
+       "before",
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The original S0 was reconstructed after the fact.",
+     "kind": "EXECUTED",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/S0-prime-witnesses.txt",
+     "result": "Explicitly NOT done. The pre-Revision-2 S0 is unrecoverable and was not fabricated. The owner formally accepted the authorized-content diff audit as its REPLACEMENT on 2026-08-16, verbatim: \"Я формально приймаю цей audit як заміну невідновлюваного AC-R2-5; не називай його відновленим старим S0.\" S0-prime witnesses cover Revision 3 only and are labelled as such."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "No generated selector, utility or cascade migration in this diff; the change is a JS predicate in a Node gate script plus a per-story allowlist deletion."
+   }
+  },
+  {
+   "id": "AC-R2-8",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F5"
+   ],
+   "finalSubject": {
+    "path": "docs/sessions/2026-08-15-task749-rendered-proof-mobile-remediation.md",
+    "symbol": "npm run build transcript",
+    "diffHunks": [
+     "n/a — required evidence artifact"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "npm run build",
+     "npm run build transcript"
+    ],
+    "states": [
+     "final"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "n/a",
+     "locales": "n/a",
+     "viewports": "n/a"
+    }
+   },
+   "evidence": [
+    {
+     "path": ".next/BUILD_ID",
+     "command": "stat on .next/BUILD_ID and read of its content",
+     "observable": "BUILD_ID mtime 2026-08-15 18:45:50 is later than the last source edit (scripts/geometry-integrity.mjs, 17:41:11) and later than the final gate run 18-14. Next.js writes BUILD_ID at the end of a successful build, so this is real freshness evidence — but it is not the retained transcript the AC requires, and it does not carry an exit code.",
+     "freshness": "reviewed worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "npm run build"
+      ],
+      "states": [
+       "final"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": ".next/BUILD_ID",
+     "command": "owner-native PowerShell run of npm.cmd run build, output pasted into the review thread 2026-08-16",
+     "observable": "Build reported \"Compiled successfully in 40s\", type check, page data, 40/40 static pages, build traces and page optimisation all green, with the full route table printed and no error line. This is strong owner-native evidence that the build exits 0 on this exact tree. It is NOT the retained transcript the AC requires: the output lives in a chat thread, and orchestrator-rule-compliance-ledger-template.md rule 7 excludes manual transcription as COMPLIANT evidence for a mandatory rule. Converting it needs one command that writes the file itself - Revision 3 section 3.3.",
+     "freshness": "owner-native, 2026-08-16",
+     "coverageRole": "GAP_WITNESS",
+     "scope": {
+      "subjects": [
+       "npm run build transcript"
+      ],
+      "states": [
+       "final"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
+     "command": "owner-native PowerShell Tee-Object run 2026-08-16; reviewer decoded the file and ran npm run check:mojibake",
+     "observable": "The transcript now EXISTS and was written by the command itself, not transcribed: 9600 bytes, 91 lines, contains \"Compiled successfully\", \"40/40\", and a final line exactly \"EXIT=0\" — the reviewer decoded it and re-derived all three. SUBSTANCE OF THE AC IS MET. BUT the artifact is UTF-16LE with a BOM (ff fe) and carries 120 mangled glyphs from the PowerShell code page, and it REDDENS A STANDING GATE: npm run check:mojibake now FAILS with \"docs/reviews/artifacts/2026-08-15-task749/build-final.txt -> Not valid UTF-8\". A retained transcript that breaks the repository encoding gate and cannot be read by grep or diff does not satisfy \"transcript retained\" — the point of the artifact is third-party re-derivability. Known failure mode with precedent: Task 695 review F10 re-encoded two PowerShell UTF-16 transcripts for the same reason.",
+     "freshness": "owner-native, 2026-08-16",
+     "coverageRole": "GAP_WITNESS",
+     "scope": {
+      "subjects": [
+       "npm run build transcript"
+      ],
+      "states": [
+       "final"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
+     "command": "owner-native PowerShell build transcript, re-encoded UTF-16LE -> UTF-8 no BOM by the reviewer (Task 695 F10 precedent); npm run check:mojibake re-run after",
+     "observable": "5104 bytes, UTF-8, no BOM, contains \"Compiled successfully\", \"40/40\" and a final line exactly EXIT=0. check:mojibake now reports \"0 artifacts in 2825 files\" — the gate the UTF-16 form reddened is green again. Content is byte-faithful to the owner run; only the character encoding changed.",
+     "freshness": "owner-native 2026-08-16, re-encoded same day",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "npm run build",
+       "npm run build transcript"
+      ],
+      "states": [
+       "final"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "BUILD_ID proves the build exited 0.",
+     "kind": "EXECUTED",
+     "path": ".next/BUILD_ID",
+     "result": "Refuted. Its content is the random id 77yJ_2E7NYkia1HPekXkc; only its mtime carries information, and mtime is freshness, not an exit code. The first version of this review stated \"BUILD_ID = 18:45:50\", conflating a timestamp with file content."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Evidence-artifact requirement, not a generated-form claim."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC-R2-6",
+   "requirementIds": [
+    "AC-R2-6"
+   ],
+   "evidence": "check-stories-rendered.mjs:1804 computes summary.ambiguousOverlap as \"any cell with >=1 ambiguous entry\" and :1859 prints it as the row \"| ambiguous-overlap | 27 |\". After this task that number aggregates FIVE distinct reasons (measured in 18-14: ambiguous-overlap 4, ambiguous-offscreen 4, text-clipped-ellipsis 16, ambiguous-text-clipped-scrollable 18, ambiguous-outside-scrollable 6). A reader takes the row at face value. NOT CAUSED BY THIS DIFF — the counter already aggregated three reasons before it, so this is a pre-existing reporting defect surfaced and widened here, in the same family as reserved Task 738 (\"a gate that reports a number which reads as coverage\"). Filed as a follow-up rather than held against this task; that disposition is the reviewer decision and is stated openly rather than by re-grading severity."
+  },
+  {
+   "id": "F2",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC-R2-1",
+   "requirementIds": [
+    "AC-R2-1"
+   ],
+   "evidence": "Check 3 new ambiguous arm reuses an alreadyReported guard that inspects only text-clipped VIOLATIONS, so a selector already downgraded by Check 1 can receive a second ambiguous entry from Check 3. Measured in 18-14: mantine-primitives-tabs--default x sq x mobile-320 carries 3 ambiguous-text-clipped-scrollable plus 1 ambiguous-outside-scrollable. Cell verdict and exit code are unaffected; this is entry-level noise in the ambiguous list a triaging owner has to read."
+  },
+  {
+   "id": "F3",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC-R2-6",
+   "requirementIds": [
+    "AC-R2-6"
+   ],
+   "evidence": "Patterns/Mantine/EmptyLoadingErrorState/Default x sq x mobile-375 failed with blank-canvas during the P-G4 run (17-43) and the session log records it as \"an unrelated capture flake, not investigated further\". orchestrator-procedures.md requires a named counter-check for any flakiness claim; without one the correct label is UNKNOWN, not flake. Mitigating and the reason this is P3: the cell is absent from both clean runs (15-36 and 18-14) and the story is untouched by this diff."
+  },
+  {
+   "id": "F4",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "AC-R2-5R",
+   "requirementIds": [
+    "AC-R2-5R"
+   ],
+   "evidence": "Evidence form, and the reason AC-R2-5 could not be verified — regraded P3 -> P2 on owner challenge. The Revision 2 brief sent evidence to gitignored .screenshots/task749-evidence/, which exists but is empty; its original S0 cannot be recovered. RESOLVED 2026-08-16: replaced, not recovered. The owner formally accepted the persisted eight-path authorized-content audit as a final-state substitute, and S0′ with stored digests covers the 12 paths already modified at Revision 3 start. Codex natively re-verified those digests with PowerShell Get-FileHash: 12/12 match. The separately authorised F7 mock correction occurred after S0′ and is explicitly audit- and test-covered rather than falsely claimed to be inside that witness set."
+  },
+  {
+   "id": "N1",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC-R2-3R",
+   "requirementIds": [
+    "AC-R2-3R"
+   ],
+   "evidence": "Governance result worth recording in docs/storybook-governance.md by a follow-up: retiring the Task 529 GEOMETRY_ALLOWLIST row proved that an allowlist entry is strictly MORE permissive than the structural predicate that replaced it. It had been converting two real Tabs/Default findings (sq x 375, uk x 320) into pass:true, invisibly, since Task 529. The predicate converts the same findings into ambiguous. This is the sharpest evidence yet for the allowlist-to-measured-predicate direction Tasks 724R and 726 established."
+  },
+  {
+   "id": "N2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC-R2-3R",
+   "requirementIds": [
+    "AC-R2-3R"
+   ],
+   "evidence": "Orchestrator prediction defect, recorded against the reviewer and not the executor. The Revision 2 brief predicted 25 AMBIGUOUS and \"Tabs/Default still exactly 2 cells\"; the measured result is 27 and 4. This is the fourth consecutive round in which a count the orchestrator asserted without enumerating the affected set was wrong. The executor ran the deviation down and reported it precisely instead of reconciling to the table, which is the behaviour the brief asked for."
+  },
+  {
+   "id": "F5",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "AC-R2-8",
+   "requirementIds": [
+    "AC-R2-8"
+   ],
+   "evidence": "Review defect. AC-R2-8 (npm run build exit 0, transcript retained) was OMITTED from the first version of this ledger, so an APPROVED WITH NOTES was issued without the artifact orchestrator-role.md approval item 6 makes mandatory. Compounding it, the reviewer wrote \".next/BUILD_ID = 18:45:50\" — that is the file mtime; the content is a random id. The freshness argument survives (BUILD_ID is written on successful completion, and its mtime post-dates every source edit and the final gate run) but it is not a transcript and it is not an exit code. Required correction: retain the build transcript, and re-run the build if the transcript was not captured. UPDATE 2026-08-16: the transcript now exists and the reviewer independently decoded EXIT=0 from it, so the build claim itself is settled. The row stays UNVERIFIED for one remaining reason, not a bookkeeping one: the file is UTF-16LE with a BOM and npm run check:mojibake FAILS on it right now, so committing it lands a red standing gate. Remediation is one re-run written as UTF-8 without BOM — on Windows PowerShell 5.1, Set-Content -Encoding utf8 writes a BOM and will NOT satisfy the gate; use [IO.File]::WriteAllText with (New-Object Text.UTF8Encoding $false), and set [Console]::OutputEncoding to UTF-8 first so the box-drawing and check glyphs are not mangled at capture time. RESOLVED 2026-08-16: build-final.txt now exists as UTF-8 without BOM, carries EXIT=0, and check:mojibake is green (0 artifacts / 2825 files)."
+  },
+  {
+   "id": "F6",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "AC-R2-3R",
+   "requirementIds": [
+    "AC-R2-3R"
+   ],
+   "evidence": "Closed. ORIGINAL DEFECT: AC-R2-3 was graded VERIFIED although its literal text (\"Tabs/Default still ambiguousOverlap and still exactly 2 cells\") was unmet — the final manifest has 4 — and the deviation was filed as a NOTE instead of an unmet criterion. PROVENANCE CORRECTION: AC-R2-3R was proposed by the reviewer, and its five cells were derived from the whole-matrix verdict diff of manifests 14-47 and 18-14. The earlier weak replacement (\"pre-existing 22 unchanged, 0 removed, Check 2 unchanged\") is REJECTED because it would not bound new ambiguous cells. The only acceptance relied on is the owner's explicit 2026-08-15 confirmation: \"Підтверджую AC-R2-3R у формі (a)-(e). Дозволяю перевести лише AC-R2-3R у VERIFIED. AC-R2-5 та AC-R2-8 залишаються UNVERIFIED; commitPush: PROHIBITED до їх закриття.\" AC-R2-3R is VERIFIED on its existing whole-matrix evidence."
+  },
+  {
+   "id": "F7",
+   "priority": "P3",
+   "status": "RESOLVED",
+   "requirements": "AC10",
+   "requirementIds": [
+    "AC10"
+   ],
+   "evidence": "New React warning in a critical-flow registry test, attributable to this diff and surfaced by the owner native run 2026-08-16. src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx mocked ScrollArea by spreading Mantine-only props onto a DOM node; Task 749 added camel-case scrollbarSize={0}, which React warns about. RESOLVED 2026-08-16: the mock now removes type, scrollbars, and scrollbarSize before the DOM spread (numstat 9/3). Codex ran the native scoped Vitest suite: 1 file passed, 21 tests passed, exit 0, and the scrollbarSize warning was absent. Production is unaffected; real Mantine consumes these props."
+  }
+ ],
+  "handoff": {
+  "commitPush": "ALLOWED"
+  },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC-R2-5R",
+  "reviewer": "Codex — Revision 3 corrective review, 2026-08-16"
+ }
+}

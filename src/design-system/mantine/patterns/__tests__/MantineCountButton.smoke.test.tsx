@@ -229,3 +229,81 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
     expect(onClick).toHaveBeenCalled()
   })
 })
+
+// Task 749 — simulates a viewport width against the query strings the component builds, so the
+// two independent `useMediaQuery` calls (`belowThreshold` / `aboveFloor`) resolve independently
+// instead of both following one blanket mockReturnValue.
+function mockViewport(width: number) {
+  mockUseMediaQuery.mockImplementation((query: string) => {
+    const maxMatch = query.match(/max-width: (\d+)px/)
+    const minMatch = query.match(/min-width: (\d+)px/)
+    if (maxMatch) return width <= Number(maxMatch[1])
+    if (minMatch) return width >= Number(minMatch[1])
+    return false
+  })
+}
+
+describe('MantineCountButton — iconOnlyAbove lower bound (Task 749)', () => {
+  it('(a) iconOnlyBelow alone behaves exactly as before — collapses below threshold with no floor', () => {
+    mockViewport(320)
+    render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
+
+  it('(b) iconOnlyAbove alone has no effect — collapse never engages without iconOnlyBelow', () => {
+    mockViewport(320)
+    render(
+      withProvider(
+        <MantineCountButton iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
+  })
+
+  it('(c) both together collapse only inside the [iconOnlyAbove, iconOnlyBelow) band', () => {
+    // below the floor (320 < 640): full-width labelled button, not collapsed
+    mockViewport(320)
+    const { unmount: unmount1 } = render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
+    unmount1()
+
+    // inside the band (640 <= 700 < 860): icon-only, collapsed
+    mockViewport(700)
+    const { unmount: unmount2 } = render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Advanced filters' })).toBeInTheDocument()
+    unmount2()
+
+    // above the upper bound (1000 >= 860): full label, not collapsed
+    mockViewport(1000)
+    render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
+  })
+})

@@ -19,6 +19,12 @@ export interface MantineCountButtonProps extends ButtonProps {
    * nameless icon button (agent-contract clause 11 a11y requirement).
    */
   iconOnlyBelow?: number
+  /**
+   * Optional lower bound for `iconOnlyBelow`. When set, the collapse applies only while the
+   * viewport is >= this width AND < `iconOnlyBelow`. Unset (default) = no lower bound, so an
+   * instance that sets only `iconOnlyBelow` renders exactly as before.
+   */
+  iconOnlyAbove?: number
 }
 
 /**
@@ -74,7 +80,7 @@ export interface MantineCountButtonProps extends ButtonProps {
  * state, and Mantine's own `.inner` flex gap keeps them apart from each other).
  */
 export function MantineCountButton({
-  count, rightSection, children, variant, iconOnlyBelow, px, ...props
+  count, rightSection, children, variant, iconOnlyBelow, iconOnlyAbove, px, ...props
 }: MantineCountButtonProps) {
   const isFilledHost = variant === undefined || variant === 'filled'
   const countBadge = count && count > 0
@@ -96,7 +102,16 @@ export function MantineCountButton({
     false,
     { getInitialValueInEffect: true },
   )
-  const collapsed = iconOnlyBelow != null && belowThreshold
+  // `iconOnlyAbove` (Task 749) — second unconditional query, same SSR-safe idiom mirrored: unset
+  // uses `(min-width: 0px)`, which always matches, so the unset case is inert (never narrows the
+  // collapse). Both hooks start `false`, so `collapsed` is `false` on the server and on the
+  // client's first render exactly as before.
+  const aboveFloor = useMediaQuery(
+    iconOnlyAbove != null ? `(min-width: ${iconOnlyAbove}px)` : '(min-width: 0px)',
+    false,
+    { getInitialValueInEffect: true },
+  )
+  const collapsed = iconOnlyBelow != null && belowThreshold && aboveFloor
 
   return (
     <Button

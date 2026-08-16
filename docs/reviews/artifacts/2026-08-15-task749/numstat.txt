@@ -1,0 +1,12 @@
+4	4	docs/backlog.md
+4	1	scripts/__tests__/css-var-resolvability.test.ts
+8	6	scripts/check-stories-rendered.mjs
+51	6	scripts/geometry-integrity.mjs
+0	6	src/app/globals.css
+10	5	src/components/admin/AdminUsersTable.tsx
+11	1	src/components/shared/HeroSearchView.module.css
+1	0	src/components/shared/HeroSearchView.tsx
+17	2	src/design-system/mantine/patterns/MantineCountButton.tsx
+78	0	src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+10	7	src/modules/notifications/components/NotificationCenter.tsx
+16	7	tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md

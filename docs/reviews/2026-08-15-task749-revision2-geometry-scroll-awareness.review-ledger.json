@@ -4,29 +4,22 @@
  "task": "Task-749 Revision 2 — scroll-aware geometry Checks 1 and 3; Task 529 allowlist retired",
  "review": {
   "decision": "APPROVED WITH NOTES",
-  "baseRevision": "963c57bcf146fa1e7a9ca04f51f03d98f35644d9",
-  "reviewedRevision": "worktree at base 963c57bcf146fa1e7a9ca04f51f03d98f35644d9 with Task 749 (kickoff + revisions 1 and 2) applied, inspected after the final restore run 2026-08-15T18-14",
+  "baseRevision": "92685011a23500caa05f7129193ec42fa1a94f8c",
+  "reviewedRevision": "Task 749 branch at 2e5d5fb8175343b897258001d6c8c68b59941335, inspected after the final restore run 2026-08-15T18-14 and reconciled for CI-addressable evidence",
   "reviewedPaths": [
    "scripts/geometry-integrity.mjs",
    "scripts/check-stories-rendered.mjs",
    "scripts/__tests__/css-var-resolvability.test.ts",
    "src/components/admin/AdminUsersTable.tsx",
-   ".screenshots/rendered-assert/2026-08-15T14-47",
-   ".screenshots/rendered-assert/2026-08-15T15-36",
-   ".screenshots/rendered-assert/2026-08-15T16-08",
-   ".screenshots/rendered-assert/2026-08-15T16-39",
-   ".screenshots/rendered-assert/2026-08-15T17-11",
-   ".screenshots/rendered-assert/2026-08-15T17-43",
-   ".screenshots/rendered-assert/2026-08-15T18-14",
+   "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
    "docs/sessions/2026-08-15-task749-rendered-proof-mobile-remediation.md",
    "docs/backlog.md",
    "tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md",
    "tasks/Sprints/Sprint_58_Task_749_revision_2_GeometryScrollAwareness.md",
    "tasks/Sprints/Sprint_58_Task_749_revision_2_evidence_preflight.md",
    "tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md",
-   ".screenshots/task749-evidence",
-   ".next/BUILD_ID",
    "docs/reviews/artifacts/2026-08-15-task749",
+   "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
    "src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx"
   ],
   "supersedes": [],
@@ -101,7 +94,7 @@
     {
      "claim": "The downgrade might blanket-excuse the component rather than depend on the measured signal pair.",
      "kind": "EXECUTED",
-     "path": ".screenshots/rendered-assert/2026-08-15T16-08/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "result": "Refuted: with data-scrollbars flipped to y the same 3 cells return to hard text-clipped (summary.failed=3, textClipped=3)."
     }
    ],
@@ -165,7 +158,7 @@
     {
      "claim": "Check 3 was already harmless and its half of the fix was unnecessary.",
      "kind": "EXECUTED",
-     "path": ".screenshots/rendered-assert/2026-08-15T16-39/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "result": "Refuted: 6 cells across 2 stories hard-fail outside-container once Check 1 stops masking them — 2 more stories/cells than the revision brief predicted."
     }
    ],
@@ -211,7 +204,7 @@
    },
    "evidence": [
     {
-     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "command": "reviewer set-diffed the ambiguous cell sets of manifests 14-47 and 18-14 and read summary.failed / summary.offscreenControl",
      "observable": "(a) all 22 pre-existing ambiguousOverlap cells still ambiguous, 0 added / 0 removed. (c) mantine-primitives-tabs--default holds 4 ambiguous cells. (d) summary.failed 0, summary.offscreenControl 0, and the two ambiguous-offscreen entries from Check 2 are still present.",
      "freshness": "reviewed worktree, final run 2026-08-15T18-14",
@@ -232,7 +225,7 @@
      }
     },
     {
-     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "command": "reviewer diffed verdict per cell across all 1204 cells of manifest 14-47 vs 18-14, keyed by storyId|locale|viewport",
      "observable": "(b)+(e) EXACTLY 5 cells changed verdict in the whole matrix: admin-adminuserstable--default sq*mobile-320, sq*mobile-375, uk*mobile-320 (fail -> ambiguous) and mantine-primitives-tabs--default sq*mobile-375, uk*mobile-320 (pass -> ambiguous). The other 1199 cells hold their verdict. Matrix size identical, 1204 = 1204. Independently re-derived by the Codex reviewer.",
      "freshness": "reviewed worktree, final run 2026-08-15T18-14",
@@ -257,7 +250,7 @@
     {
      "claim": "Retiring the allowlist merely removed redundant cover, so the new ambiguous cells are bookkeeping rather than real findings.",
      "kind": "EXECUTED",
-     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "result": "Refuted. Tabs/Default sq*375 and uk*320 were pass:true in 14-47 and are ambiguous in 18-14: the Task 529 allowlist row had been converting real clipping findings into pass since Task 529, while the structural predicate converts the same findings into visible ambiguous debt. An allowlist row is strictly more permissive than the predicate that replaced it."
     }
    ],
@@ -272,7 +265,7 @@
    "status": "VERIFIED",
    "findingIds": [],
    "finalSubject": {
-    "path": ".screenshots/rendered-assert",
+    "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
     "symbol": "AdminUsersTable PNG identity",
     "diffHunks": [
      "n/a — rendered artifact comparison"
@@ -297,7 +290,7 @@
    },
    "evidence": [
     {
-     "path": ".screenshots/rendered-assert",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "command": "reviewer ran md5sum over both directories independently of the executor report (16 files compared, 16 SAME, 0 DIFF)",
      "observable": "All 16 admin-adminuserstable--default PNGs are md5-identical between 14-47 and 18-14: the gate diff altered zero CSS.",
      "freshness": "reviewed worktree, final state 2026-08-15",
@@ -321,7 +314,7 @@
     {
      "claim": "A gate-only change could still move rendered pixels.",
      "kind": "EXECUTED",
-     "path": ".screenshots/rendered-assert/2026-08-15T18-14",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "result": "Refuted by the reviewer own md5 sweep: 16/16 identical."
     }
    ],
@@ -336,7 +329,7 @@
    "status": "VERIFIED",
    "findingIds": [],
    "finalSubject": {
-    "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+    "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
     "symbol": "summary",
     "diffHunks": [
      "n/a — manifest field read"
@@ -361,7 +354,7 @@
    },
    "evidence": [
     {
-     "path": ".screenshots/rendered-assert/2026-08-15T18-14/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "command": "reviewer read manifest.summary and scanned every matrix cell for violations",
      "observable": "summary = passed 1177, failed 0, ambiguousOnly 27; no cell anywhere carries a visualIntegrity violation; exit 0 follows from check-stories-rendered.mjs:1996 gating exitCode on failed > 0.",
      "freshness": "reviewed worktree, final state 2026-08-15",
@@ -385,7 +378,7 @@
     {
      "claim": "The 0-FAIL result could be a one-run artifact.",
      "kind": "EXECUTED",
-     "path": ".screenshots/rendered-assert/2026-08-15T15-36/manifest.json",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/rendered-assert-evidence-summary.md",
      "result": "Refuted: run 15-36 (before the plants) and run 18-14 (after all four plants were reverted) produce the identical triple 1177/0/27 — D37-form reproducibility the executor did not claim."
     }
    ],
@@ -641,10 +634,10 @@
    },
    "evidence": [
     {
-     "path": ".next/BUILD_ID",
-     "command": "stat on .next/BUILD_ID and read of its content",
-     "observable": "BUILD_ID mtime 2026-08-15 18:45:50 is later than the last source edit (scripts/geometry-integrity.mjs, 17:41:11) and later than the final gate run 18-14. Next.js writes BUILD_ID at the end of a successful build, so this is real freshness evidence — but it is not the retained transcript the AC requires, and it does not carry an exit code.",
-     "freshness": "reviewed worktree",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
+     "command": "historical .next/BUILD_ID freshness check; retained build transcript recorded below",
+     "observable": "The historical BUILD_ID check established freshness only; it did not establish an exit code and is not used as the current proof. The retained transcript below is the CI-addressable evidence for this requirement.",
+     "freshness": "historical observation, superseded by retained transcript",
      "coverageRole": "COVERS",
      "scope": {
       "subjects": [
@@ -659,7 +652,7 @@
      }
     },
     {
-     "path": ".next/BUILD_ID",
+     "path": "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
      "command": "owner-native PowerShell run of npm.cmd run build, output pasted into the review thread 2026-08-16",
      "observable": "Build reported \"Compiled successfully in 40s\", type check, page data, 40/40 static pages, build traces and page optimisation all green, with the full route table printed and no error line. This is strong owner-native evidence that the build exits 0 on this exact tree. It is NOT the retained transcript the AC requires: the output lives in a chat thread, and orchestrator-rule-compliance-ledger-template.md rule 7 excludes manual transcription as COMPLIANT evidence for a mandatory rule. Converting it needs one command that writes the file itself - Revision 3 section 3.3.",
      "freshness": "owner-native, 2026-08-16",
@@ -717,10 +710,10 @@
    "coverageGaps": [],
    "counterChecks": [
     {
-     "claim": "BUILD_ID proves the build exited 0.",
+     "claim": "The retained build transcript was altered beyond encoding normalisation.",
      "kind": "EXECUTED",
-     "path": ".next/BUILD_ID",
-     "result": "Refuted. Its content is the random id 77yJ_2E7NYkia1HPekXkc; only its mtime carries information, and mtime is freshness, not an exit code. The first version of this review stated \"BUILD_ID = 18:45:50\", conflating a timestamp with file content."
+     "path": "docs/reviews/artifacts/2026-08-15-task749/build-final.txt",
+     "result": "Refuted. The retained UTF-8 transcript ends with EXIT=0 and contains the successful compile and 40/40 static-page markers. The review records the earlier BUILD_ID mtime mistake as historical context only; it is not current evidence."
     }
    ],
    "semanticCheck": {

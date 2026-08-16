@@ -3,10 +3,16 @@
 **Task path:** `tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md`
 (companion: `tasks/Sprints/Sprint_46_task741-preflight-ledger-and-contract.md`)
 
-**Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
+**Executor status at handoff: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
 Executor: Sonnet, `.claude/skills/execute-task/SKILL.md`. This report is factual evidence only — not a review,
 not a verdict, not self-approval. A separate Opus orchestrator session decides whether to run `review-task`.
+
+**Lifecycle correction (2026-08-16): `CLOSURE REOPENED`.** Review 2's `APPROVED WITH NOTES` is retained as
+the historical verdict on Revision 1's evidence apparatus, not a final all-PR closeout. PR #6 failed Governance,
+Click-Shield, Homepage and Rendered Proof; PR #7 still failed Rendered Proof. PR #8 (`58d0ab6c8`) contains PR #7
+and is the first clean integration candidate, but 741 remains open until PR #8 merges and a final review records
+the resulting `main` SHA. PR #6 and PR #7 are superseded candidates: do not merge or cherry-pick them.
 
 ---
 
@@ -397,4 +403,3 @@ exemption for the in-repo witness (verified warranted and tightly scoped — 7 h
 U+FFFD literals in bundled vendor JS, 0 invalid-UTF-8 files — but still a standing-gate exemption
 created to accommodate evidence); the comparator's generic output filename; and the unexplained
 16-block `--supports-off` strip-count delta between phases.
-

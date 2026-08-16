@@ -38,7 +38,7 @@
 
 ## Sprints
 
-> **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs live at `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`. Closed sprints are one archive row each.
+> **Task 741 lifecycle correction (2026-08-16).** Review 2 is evidence-apparatus-only, not a closure decision: 741 is **REOPENED** because PR #6 failed four blocking checks and PR #7 still failed Rendered Proof. PR #8 (`58d0ab6c8`) contains PR #7 and is green, but 741 is not complete until #8 merges and a final review records the `main` SHA; never merge or cherry-pick #6/#7 — close them as superseded after #8. **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs live at `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`. Closed sprints are one archive row each.
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): ✅ **694** · ✅ **702** · ✅ **691** · 695 · 700 · 741. 🟠 OPEN, **5 of 10 landed** (694, 702, 700 — 2026-08-10; **742** — 2026-08-11, all `APPROVED WITH NOTES` and archived; **691** — 2026-08-13, `APPROVED`, `53b35b312`). Unfiled follow-ups: **743** (46.8), **744** (46.9), **745** (46.10, the capture-validity guard gap 742's run exposed). **691 has landed: 741 is UNBLOCKED; 748 is ✅ `APPROVED WITH NOTES`** (Opus review 3, 2026-08-13). **695 is ✅ `APPROVED WITH NOTES`** (Opus review 1, 2026-08-14, `commitPush: ALLOWED`, **not yet committed**) — the 7 refs 748 correctly did not migrate are on the `:root` pair, `--color-overlay*` and the `@theme inline` copy are gone, D19 closed; 6 P3 notes open. **741 is ✅ `APPROVED WITH NOTES`** (Opus review 2, 2026-08-15, `commitPush: ALLOWED`, **not yet committed**) — F1–F7 all closed in Revision 1 and re-verified by the reviewer; 3 P3 notes open. Narrow revision brief: `tasks/Sprints/Sprint_46_task741-revision-1-evidence-apparatus.md`; session `docs/sessions/2026-08-14-task741-closedoverlaystyle-module-exit.md`. **D28 + D34 + D36 + D37 bind it.**
 **Sprint 55 — ARIA semantics no gate sees** (`tasks/Sprints/Sprint_55_ARIA_Semantics_No_Gate_Sees.md`): **730** · **731**, both from 726’s review. Opened 2026-08-08 — 46/52/54 all fail the goal-fit test (table in the plan file). Its transferable output is exit criterion 4: name the detector that would have caught these, or record in writing why none is worth building. 🟠 OPEN, **zero landed tasks**.
@@ -46,7 +46,7 @@
 **Sprint 57 — Delete what no longer earns its place** (`tasks/Sprints/Sprint_57_Delete_What_No_Longer_Earns_Its_Place.md`): **676** · **682**. Opened 2026-08-08. Pure removal, both proven inert before deletion rather than after. Owner cleanup step 3 stays in Sprint 46, not here. 🟠 OPEN.
 **Sprint 58 — The rendered gate's 18 blocking cells** (`tasks/Sprints/Sprint_58_Rendered_Proof_Eighteen_Blocking_Cells.md`): **749**. Owner decision kept `Rendered Proof (Mantine)` blocking; the 18 product defects are fixed instead of baselined. **749 is `APPROVED WITH NOTES`, 9/9 VERIFIED, merge pending**; its Task 593 supersession is applied. The sprint stays open only until this approved branch lands; its P3 notes belong to follow-up work.
 
-## Task registry — single source for every open number. Last used **750**, NEXT FREE **751**
+## Task registry — single source for every open number. Last used **750**, NEXT FREE **751**. **Task 741 exception:** its row records the historical Review 2 result; the current lifecycle state is the `CLOSURE REOPENED` correction above.
 
 | # | State | What |
 |---|---|---|

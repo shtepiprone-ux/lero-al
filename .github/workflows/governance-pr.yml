@@ -56,6 +56,11 @@ jobs:
       - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
         run: npm run check:review-ledger:verify
 
+      - name: Build production bundle for compiled-bundle unit tests
+        # overlay-dual-declaration.test.ts verifies the shipped CSS under .next/static/css; it
+        # is a compiled-bundle test, so the bundle must exist before the generic npm test step.
+        run: npm run build
+
       - name: Gate unit tests (check-stories gate correctness)
         run: npm test
 
@@ -291,20 +296,16 @@ jobs:
     # app (all four existing jobs use build-storybook) — this is new infrastructure, not a copy of
     # an existing job.
     #
-    # ⚠️ KNOWN PRECONDITION, not yet satisfied as of this task (session log,
-    # docs/sessions/2026-08-09-task727-click-shield-ci-and-contextual-n6.md): `npm start` boots
-    # cleanly with NO Supabase env vars, but every request 500s at runtime ("Your project's URL
-    # and Key are required to create a Supabase client!", thrown from middleware on every route,
-    # verified empirically by removing .env.local and hitting a fresh `next start`). No workflow
-    # in this repository currently references any Supabase secret (grep across .github/workflows/
-    # confirms zero hits), and `.env.local` is gitignored/untracked, so a fresh checkout has none
-    # of these values. Until NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY exist as
-    # repository secrets (owner action — outside git, cannot be done from this task's write set),
-    # this job will build successfully and then fail at the wait-for-ready step (every route
-    # 500s). Wired below by name so it starts working the moment those secrets are added.
+    # The real app's middleware needs these public Supabase runtime values even for a local
+    # production server. They are supplied as repository secrets; `.env.local` is intentionally
+    # neither read nor committed by CI.
     env:
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      # Enables the otherwise-404 CI-only modal fixture used by check:click-shield. This avoids
+      # making a blocking interaction gate depend on a mutable database listing slug.
+      CLICK_SHIELD_CI_FIXTURE: '1'
 
     steps:
       - name: Checkout
@@ -318,6 +319,20 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Verify required Supabase CI configuration
+        # The app's default-locale resolver creates an admin client. Fail before the browser
+        # harness starts if a required secret is absent; otherwise every route becomes Next's
+        # error page and the gate can report only the secondary "zero candidates" symptom.
+        run: |
+          missing=0
+          for name in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Required GitHub Actions secret is unavailable: $name"
+              missing=1
+            fi
+          done
+          exit "$missing"
 
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps

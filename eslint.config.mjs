@@ -103,6 +103,8 @@ const eslintConfig = defineConfig([
     "scripts/**",
     // Storybook static build output — minified bundles trigger false-positive lint errors.
     "storybook-static/**",
+    // Task 741's retained BEFORE witness is a generated Storybook static bundle, not authored code.
+    "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/**",
   ]),
   // ── Import governance ─────────────────────────────────────────────────────
   //

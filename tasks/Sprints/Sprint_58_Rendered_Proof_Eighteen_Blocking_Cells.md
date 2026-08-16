@@ -43,7 +43,7 @@ scope, tolerance and exemption predicate byte-unchanged.
 
 | Task | Scope, verified 2026-08-15 |
 |---|---|
-| **749** | All three components in one kickoff (owner decision 2026-08-15: one task, not three). Three independent mechanisms, one exit criterion. **Revision 1 in flight** — HeroSearch and NotificationBellView landed clean; AdminUsersTable re-routed to `ScrollArea` after its first mechanism was measured to regress 8 non-target cells. Brief: `Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md`. |
+| **749** | All three components in one kickoff (owner decision 2026-08-15: one task, not three). Three independent mechanisms, one exit criterion. **`APPROVED WITH NOTES`, 9/9 VERIFIED, merge pending** — the final route is AdminUsersTable `ScrollArea`, HeroSearch three-band control, NotificationCenter 390→640, then Revision 2's measured scroll-aware gate correction and Revision 3 evidence remediation. PR #8 has 7/7 checks green; P3 notes route to follow-up 750 rather than blocking this landing. |
 
 ## Exit criteria
 

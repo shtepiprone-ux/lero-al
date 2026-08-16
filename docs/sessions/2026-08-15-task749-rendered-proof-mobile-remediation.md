@@ -6,8 +6,11 @@
 **Revision 1:** `tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md` — see §12 below.
 **Revision 2:** `tasks/Sprints/Sprint_58_Task_749_revision_2_GeometryScrollAwareness.md` (+ its evidence preflight)
 — see §13 below.
-**Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 2) — `0 FAIL` reached, all plants confirmed, all
-gates green. **Never self-approved.**
+**Historical executor status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 2) — `0 FAIL` reached,
+all plants confirmed and gates green. **Never self-approved.**
+**Current review outcome (2026-08-16):** `APPROVED WITH NOTES` — review ledger 9/9 `VERIFIED`, no open
+P0/P1/P2 and `commitPush: ALLOWED`; PR #8 is committed and awaits merge. Revision 3 closed F4/F5 with tracked,
+re-derivable evidence. P3 findings F1–F3 remain follow-up work only.
 
 ---
 
@@ -646,7 +649,7 @@ this revision's diff) and their inputs are untouched by this revision's write se
   This session's edits kept the line count unchanged rather than adding history, per the preflight's own
   corrective-action note; the breach itself is unresolved and needs Opus consolidation.
 
-### 13.10 Final status (revision 2): `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
+### 13.10 Historical executor status (revision 2): `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 
 `0 FAIL` reached (`1177/1204 PASS, 0 FAIL, 27 AMBIGUOUS`, exit 0). All three original product fixes (AdminUsersTable
 via `ScrollArea` + scroll-aware gate, HeroSearch three-band collapse, NotificationCenter 390→640) are in place and

@@ -5,7 +5,7 @@
  "review": {
   "decision": "APPROVED WITH NOTES",
   "baseRevision": "92685011a23500caa05f7129193ec42fa1a94f8c",
-  "reviewedRevision": "Task 749 branch at 2e5d5fb8175343b897258001d6c8c68b59941335, inspected after the final restore run 2026-08-15T18-14 and reconciled for CI-addressable evidence",
+  "reviewedRevision": "Task 749 source changes through 3deacff707cc291db7264b0ed2df5396ee89ccf4, re-reviewed natively on 2026-08-16; PR #8 CI run #64 passed all seven checks",
   "reviewedPaths": [
    "scripts/geometry-integrity.mjs",
    "scripts/check-stories-rendered.mjs",

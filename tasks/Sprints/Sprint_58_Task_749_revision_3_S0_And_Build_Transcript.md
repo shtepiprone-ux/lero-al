@@ -52,8 +52,8 @@ line for each path.
 | 2 | `src/components/admin/AdminUsersTable.tsx` | `Tabs.List` wrapped in `ScrollArea type="auto" scrollbars="x" scrollbarSize={0}`; `grow` removed; the stale `:421` comment replaced | `10 5` |
 | 3 | `src/components/shared/HeroSearchView.module.css` | `.filtersControl` gains `flex-basis:100%` + `min-height: var(--space-11)`, reset inside `@media (min-width: 40rem)` | `11 1` |
 | 4 | `src/components/shared/HeroSearchView.tsx` | `iconOnlyAbove={640}` added — one line | `1 0` |
-| 5 | `src/design-system/mantine/patterns/MantineCountButton.tsx` | `iconOnlyAbove?: number` prop, second `useMediaQuery`, composed `collapsed` | `17 2` |
-| 6 | `…/patterns/__tests__/MantineCountButton.smoke.test.tsx` | additive cases only, zero deletions | `78 0` |
+| 5 | `src/design-system/mantine/patterns/MantineCountButton.tsx` | `iconOnlyAbove?: number` prop, existing `useMediaQuery` narrowed into a range, composed `collapsed` | `15 2` |
+| 6 | `…/patterns/__tests__/MantineCountButton.smoke.test.tsx` | additive cases, including the 640/860 range boundaries | `76 0` |
 | 7 | `src/modules/notifications/components/NotificationCenter.tsx` | `notification-compact:` → `sm:` on `:37` and `:48`; the Task 593 comment updated | `10 7` |
 | 8 | `tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md` | SUPERSEDED/RETIRED markers only | `16 7` |
 

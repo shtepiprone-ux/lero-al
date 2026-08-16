@@ -557,8 +557,8 @@
    "evidence": [
     {
      "path": "docs/reviews/artifacts/2026-08-15-task749/authorized-content-audit.txt",
-     "command": "git diff --numstat and git diff for each of the 8 accepted paths, persisted verbatim (20260 bytes)",
-     "observable": "All 8 numstat pairs match the Revision 3 table exactly: globals.css 0/6, AdminUsersTable.tsx 10/5, HeroSearchView.module.css 11/1, HeroSearchView.tsx 1/0, MantineCountButton.tsx 17/2, MantineCountButton.smoke.test.tsx 78/0, NotificationCenter.tsx 10/7, kickoff .md 16/7. Each diff contains only its authorized edit.",
+     "command": "git diff --numstat and git diff for each of the 8 accepted paths, persisted verbatim",
+     "observable": "All 8 final numstat pairs match the Revision 3 table exactly: globals.css 0/6, AdminUsersTable.tsx 10/5, HeroSearchView.module.css 11/1, HeroSearchView.tsx 1/0, MantineCountButton.tsx 15/2, MantineCountButton.smoke.test.tsx 76/0, NotificationCenter.tsx 10/7, kickoff .md 16/7. The audit retains the initial CountButton snapshot and then records the final CI correction that replaces its two-query implementation with one range query; the final diff contains only the authorized edit.",
      "freshness": "reviewed worktree 2026-08-16",
      "coverageRole": "COVERS",
      "scope": {

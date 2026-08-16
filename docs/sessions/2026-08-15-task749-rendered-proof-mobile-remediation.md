@@ -77,7 +77,7 @@ mobile-320 — confirmed directly by screenshot inspection (see §6), not inferr
 | Path | Reason |
 |---|---|
 | `src/components/admin/AdminUsersTable.tsx` | Added `styles={{ tab: { whiteSpace: 'normal', minWidth: 0 } }}` to `<Tabs>` per kickoff §6.A (defect found, see §5/§6) |
-| `src/design-system/mantine/patterns/MantineCountButton.tsx` | Added `iconOnlyAbove` prop + second `useMediaQuery` per kickoff §6.B1 |
+| `src/design-system/mantine/patterns/MantineCountButton.tsx` | Added `iconOnlyAbove` prop and narrowed the existing `useMediaQuery` into one range query per kickoff §6.B1 |
 | `src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx` | Added 3 new test cases proving `iconOnlyAbove` additivity per AC9 |
 | `src/components/shared/HeroSearchView.tsx` | Added `iconOnlyAbove={640}` per kickoff §6.B2 |
 | `src/components/shared/HeroSearchView.module.css` | `.filtersControl` gains base full-width + `var(--space-11)` floor, reset at 40rem per kickoff §6.B3 |

@@ -230,16 +230,14 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
   })
 })
 
-// Task 749 — simulates a viewport width against the query strings the component builds, so the
-// two independent `useMediaQuery` calls (`belowThreshold` / `aboveFloor`) resolve independently
-// instead of both following one blanket mockReturnValue.
+// Task 749 — simulates a viewport width against the combined min/max media query the component
+// builds instead of following one blanket mockReturnValue.
 function mockViewport(width: number) {
   mockUseMediaQuery.mockImplementation((query: string) => {
     const maxMatch = query.match(/max-width: (\d+)px/)
     const minMatch = query.match(/min-width: (\d+)px/)
-    if (maxMatch) return width <= Number(maxMatch[1])
-    if (minMatch) return width >= Number(minMatch[1])
-    return false
+    return (!maxMatch || width <= Number(maxMatch[1]))
+      && (!minMatch || width >= Number(minMatch[1]))
   })
 }
 
@@ -282,8 +280,8 @@ describe('MantineCountButton — iconOnlyAbove lower bound (Task 749)', () => {
     expect(screen.getByText('Advanced filters')).toBeInTheDocument()
     unmount1()
 
-    // inside the band (640 <= 700 < 860): icon-only, collapsed
-    mockViewport(700)
+    // at the inclusive floor (640 <= width < 860): icon-only, collapsed
+    mockViewport(640)
     const { unmount: unmount2 } = render(
       withProvider(
         <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
@@ -295,8 +293,8 @@ describe('MantineCountButton — iconOnlyAbove lower bound (Task 749)', () => {
     expect(screen.getByRole('button', { name: 'Advanced filters' })).toBeInTheDocument()
     unmount2()
 
-    // above the upper bound (1000 >= 860): full label, not collapsed
-    mockViewport(1000)
+    // at the exclusive upper bound (860): full label, not collapsed
+    mockViewport(860)
     render(
       withProvider(
         <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">

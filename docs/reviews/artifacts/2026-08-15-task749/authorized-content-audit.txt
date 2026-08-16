@@ -102,10 +102,10 @@ index 0aec2dbd8..6e482e9f5 100644
                leftSection={<SlidersHorizontal size={16} />}
 
 ===== src/design-system/mantine/patterns/MantineCountButton.tsx
-17	2	src/design-system/mantine/patterns/MantineCountButton.tsx
+15	2	src/design-system/mantine/patterns/MantineCountButton.tsx
 -----
 diff --git a/src/design-system/mantine/patterns/MantineCountButton.tsx b/src/design-system/mantine/patterns/MantineCountButton.tsx
-index 497dcff69..4ccea4764 100644
+index 497dcff69..16042f8cd 100644
 --- a/src/design-system/mantine/patterns/MantineCountButton.tsx
 +++ b/src/design-system/mantine/patterns/MantineCountButton.tsx
 @@ -19,6 +19,12 @@ export interface MantineCountButtonProps extends ButtonProps {
@@ -130,47 +130,47 @@ index 497dcff69..4ccea4764 100644
  }: MantineCountButtonProps) {
    const isFilledHost = variant === undefined || variant === 'filled'
    const countBadge = count && count > 0
-@@ -96,7 +102,16 @@ export function MantineCountButton({
+@@ -92,10 +98,17 @@ export function MantineCountButton({
+
+   // See the `iconOnlyBelow` doc block above for the full SSR-safety rationale.
+   const belowThreshold = useMediaQuery(
+-    iconOnlyBelow != null ? `(max-width: ${iconOnlyBelow - 1}px)` : '(max-width: 0px)',
++    iconOnlyBelow != null
++      ? iconOnlyAbove != null
++        ? `(min-width: ${iconOnlyAbove}px) and (max-width: ${iconOnlyBelow - 1}px)`
++        : `(max-width: ${iconOnlyBelow - 1}px)`
++      : '(max-width: 0px)',
      false,
      { getInitialValueInEffect: true },
    )
--  const collapsed = iconOnlyBelow != null && belowThreshold
-+  // `iconOnlyAbove` (Task 749) — second unconditional query, same SSR-safe idiom mirrored: unset
-+  // uses `(min-width: 0px)`, which always matches, so the unset case is inert (never narrows the
-+  // collapse). Both hooks start `false`, so `collapsed` is `false` on the server and on the
-+  // client's first render exactly as before.
-+  const aboveFloor = useMediaQuery(
-+    iconOnlyAbove != null ? `(min-width: ${iconOnlyAbove}px)` : '(min-width: 0px)',
-+    false,
-+    { getInitialValueInEffect: true },
-+  )
-+  const collapsed = iconOnlyBelow != null && belowThreshold && aboveFloor
++  // Task 749 narrows the pre-existing query into a range without adding a second viewport hook.
++  // It remains false on the server and the first client render, so the pre-hydration output is
++  // unchanged; with no `iconOnlyBelow`, `iconOnlyAbove` remains inert.
+   const collapsed = iconOnlyBelow != null && belowThreshold
 
    return (
      <Button
 
 ===== src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
-78	0	src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+76	0	src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
 -----
 diff --git a/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx b/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
-index df819ab13..7d622c328 100644
+index df819ab13..a6a99750e 100644
 --- a/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
 +++ b/src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
-@@ -229,3 +229,81 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
+@@ -229,3 +229,79 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
      expect(onClick).toHaveBeenCalled()
    })
  })
 +
-+// Task 749 — simulates a viewport width against the query strings the component builds, so the
-+// two independent `useMediaQuery` calls (`belowThreshold` / `aboveFloor`) resolve independently
-+// instead of both following one blanket mockReturnValue.
++// Task 749 — simulates a viewport width against the combined min/max media query the component
++// builds instead of following one blanket mockReturnValue.
 +function mockViewport(width: number) {
 +  mockUseMediaQuery.mockImplementation((query: string) => {
 +    const maxMatch = query.match(/max-width: (\d+)px/)
 +    const minMatch = query.match(/min-width: (\d+)px/)
-+    if (maxMatch) return width <= Number(maxMatch[1])
-+    if (minMatch) return width >= Number(minMatch[1])
-+    return false
++    return (!maxMatch || width <= Number(maxMatch[1]))
++      && (!minMatch || width >= Number(minMatch[1]))
 +  })
 +}
 +
@@ -213,8 +213,8 @@ index df819ab13..7d622c328 100644
 +    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
 +    unmount1()
 +
-+    // inside the band (640 <= 700 < 860): icon-only, collapsed
-+    mockViewport(700)
++    // at the inclusive floor (640 <= width < 860): icon-only, collapsed
++    mockViewport(640)
 +    const { unmount: unmount2 } = render(
 +      withProvider(
 +        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
@@ -226,8 +226,8 @@ index df819ab13..7d622c328 100644
 +    expect(screen.getByRole('button', { name: 'Advanced filters' })).toBeInTheDocument()
 +    unmount2()
 +
-+    // above the upper bound (1000 >= 860): full label, not collapsed
-+    mockViewport(1000)
++    // at the exclusive upper bound (860): full label, not collapsed
++    mockViewport(860)
 +    render(
 +      withProvider(
 +        <MantineCountButton iconOnlyBelow={860} iconOnlyAbove={640} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">

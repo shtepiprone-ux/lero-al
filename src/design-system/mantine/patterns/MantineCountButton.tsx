@@ -98,20 +98,18 @@ export function MantineCountButton({
 
   // See the `iconOnlyBelow` doc block above for the full SSR-safety rationale.
   const belowThreshold = useMediaQuery(
-    iconOnlyBelow != null ? `(max-width: ${iconOnlyBelow - 1}px)` : '(max-width: 0px)',
+    iconOnlyBelow != null
+      ? iconOnlyAbove != null
+        ? `(min-width: ${iconOnlyAbove}px) and (max-width: ${iconOnlyBelow - 1}px)`
+        : `(max-width: ${iconOnlyBelow - 1}px)`
+      : '(max-width: 0px)',
     false,
     { getInitialValueInEffect: true },
   )
-  // `iconOnlyAbove` (Task 749) — second unconditional query, same SSR-safe idiom mirrored: unset
-  // uses `(min-width: 0px)`, which always matches, so the unset case is inert (never narrows the
-  // collapse). Both hooks start `false`, so `collapsed` is `false` on the server and on the
-  // client's first render exactly as before.
-  const aboveFloor = useMediaQuery(
-    iconOnlyAbove != null ? `(min-width: ${iconOnlyAbove}px)` : '(min-width: 0px)',
-    false,
-    { getInitialValueInEffect: true },
-  )
-  const collapsed = iconOnlyBelow != null && belowThreshold && aboveFloor
+  // Task 749 narrows the pre-existing query into a range without adding a second viewport hook.
+  // It remains false on the server and the first client render, so the pre-hydration output is
+  // unchanged; with no `iconOnlyBelow`, `iconOnlyAbove` remains inert.
+  const collapsed = iconOnlyBelow != null && belowThreshold
 
   return (
     <Button

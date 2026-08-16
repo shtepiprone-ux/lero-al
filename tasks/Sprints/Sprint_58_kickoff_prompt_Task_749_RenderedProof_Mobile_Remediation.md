@@ -269,18 +269,26 @@ shortened translation. Truncating a tab label is a content change nobody authori
 iconOnlyAbove?: number
 ```
 
-Implement with a **second unconditional `useMediaQuery`** mirroring the existing one at `:94-98` — same
-`getInitialValueInEffect: true`, same `false` initial value, and the same never-matching-when-unset idiom the
-existing hook uses (`'(min-width: 0px)'` is the inverse of `'(max-width: 0px)'`; it always matches, so the unset
-case is inert). Compose:
+Implement by narrowing the existing unconditional `useMediaQuery` at `:94-98` into one min/max range — same
+`getInitialValueInEffect: true` and same `false` initial value. The unset case retains the existing
+`'(max-width: 0px)'` sentinel, so `iconOnlyAbove` without `iconOnlyBelow` remains inert. Compose:
 
 ```
-const collapsed = iconOnlyBelow != null && belowThreshold && aboveFloor
+const belowThreshold = useMediaQuery(
+  iconOnlyBelow != null
+    ? iconOnlyAbove != null
+      ? `(min-width: ${iconOnlyAbove}px) and (max-width: ${iconOnlyBelow - 1}px)`
+      : `(max-width: ${iconOnlyBelow - 1}px)`
+    : '(max-width: 0px)',
+  false,
+  { getInitialValueInEffect: true },
+)
+const collapsed = iconOnlyBelow != null && belowThreshold
 ```
 
-**SSR safety is unchanged and must be proven, not assumed:** both hooks start `false`, so `collapsed` is `false` on
-the server and on the client's first render exactly as today. The only behavioural change is post-hydration and
-only for an instance that sets both props.
+**SSR safety is unchanged and must be proven, not assumed:** the existing hook starts `false`, so `collapsed` is
+`false` on the server and on the client's first render exactly as today. The only behavioural change is
+post-hydration and only for an instance that sets both props.
 
 **B2. `HeroSearchView.tsx:128-138`** — add `iconOnlyAbove={640}` next to the existing `iconOnlyBelow={860}`. Change
 nothing else in that element. **Keep `aria-label={t('advanced_filters')}` at `:133`.** It is still required by the
@@ -377,7 +385,7 @@ and both tabs are fully visible with no horizontal scroll.
 | Concurrent writer | **No** | No writes added | N/A | — |
 | **Long-translation stress** | **Yes** | The 2 failing AdminUsersTable cells are `sq`/`uk` only | uk and sq wrap rather than overflow at 320 | AC1, all 4 locales at 320 |
 | **Zero/empty state** | **Yes** | `MantineCountButton` renders no badge at `count` 0/undefined (`:80-81`); `NotificationCenter` renders no button when `hasUnread` is false (`:28`, `:39`) | the `all read` and `empty` sections of `NotificationBellView.stories.tsx` still render no button, and the gate still reports `fullWidthButtonsAtMobile` for the remaining one | AC6, AC9 |
-| **SSR / hydration** | **Yes** | B1 adds a second `useMediaQuery` | server and first client render are unchanged; no React hydration warning | AC9, `npm run check:hydration` |
+| **SSR / hydration** | **Yes** | B1 narrows the existing `useMediaQuery` into one range query | server and first client render are unchanged; no React hydration warning | AC9, `npm run check:hydration` |
 
 ---
 

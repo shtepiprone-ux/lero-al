@@ -8,11 +8,12 @@
 Executor: Sonnet, `.claude/skills/execute-task/SKILL.md`. This report is factual evidence only — not a review,
 not a verdict, not self-approval. A separate Opus orchestrator session decides whether to run `review-task`.
 
-**Lifecycle correction (2026-08-16): `CLOSURE REOPENED`.** Review 2's `APPROVED WITH NOTES` is retained as
-the historical verdict on Revision 1's evidence apparatus, not a final all-PR closeout. PR #6 failed Governance,
-Click-Shield, Homepage and Rendered Proof; PR #7 still failed Rendered Proof. PR #8 (`58d0ab6c8`) contains PR #7
-and is the first clean integration candidate, but 741 remains open until PR #8 merges and a final review records
-the resulting `main` SHA. PR #6 and PR #7 are superseded candidates: do not merge or cherry-pick them.
+**Final-review closure (2026-08-16): `APPROVED WITH NOTES`.** Review 2's `APPROVED WITH NOTES` remains the
+historical verdict on Revision 1's evidence apparatus; the final closeout is this post-merge review. PR #8 is in
+`main` as `95215314e`; PR #6 is closed, and PR #7's head was already contained in PR #8. C3 in
+`check:css-vars -- --verify-gate` was corrected from the stale 257 expectation to the real 256 after Task 749;
+the self-check is 8/8, the fresh-build css-var gate is clean, typecheck passes and full Vitest is 80 files / 1355
+tests. Do not merge or cherry-pick either superseded PR.
 
 ---
 

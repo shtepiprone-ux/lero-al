@@ -1,0 +1,176 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 741 — final post-merge closeout",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "95215314e228e692b234b0fa173e34246f303d52",
+    "reviewedRevision": "1bd1c0debfe30077231c5b17094435845685bcc0 inspected after the final closeout change on 2026-08-16",
+    "reviewedPaths": [
+      "scripts/check-css-var-resolvability.mjs",
+      "scripts/__tests__/css-var-resolvability.test.ts",
+      "src/app/globals.css",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-14-task741-closedoverlaystyle-module-exit.md",
+      "tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md",
+      "tasks/Sprints/Sprint_46_task741-revision-1-evidence-apparatus.md",
+      "docs/reviews/artifacts/2026-08-16-task741-final-closeout",
+      "docs/reviews/2026-08-16-task741-final-closeout.review-ledger.json"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 2,
+      "verified": 2,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-16-task741-final-closeout.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC-C3 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-css-var-resolvability.mjs",
+        "symbol": "runControlC3",
+        "diffHunks": [
+          "scripts/check-css-var-resolvability.mjs:885-918"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "C3 owned-token invariant"
+        ],
+        "states": [
+          "baseline",
+          "P1-P4 planted failures",
+          "C1-C4 controls"
+        ],
+        "phases": [
+          "final"
+        ],
+        "notApplicable": {
+          "stories": "This is a static CSS-variable gate, not a Storybook interaction.",
+          "locales": "The ownership count is locale-invariant.",
+          "viewports": "The ownership count is viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-16-task741-final-closeout/validation.txt",
+          "command": "npm.cmd run check:css-vars -- --verify-gate; npm.cmd run check:css-vars; npm.cmd run test -- scripts/__tests__/css-var-resolvability.test.ts",
+          "observable": "The current tree owns 256 custom properties; the C3 control expects 256 and passes, all four planted failure arms still fail, all four controls pass, the production gate has 0 violations, and its source-level unit suite passes 27/27.",
+          "freshness": "owner-native final closeout run at reviewed commit 1bd1c0debfe30077231c5b17094435845685bcc0",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "C3 owned-token invariant"
+            ],
+            "states": [
+              "baseline",
+              "P1-P4 planted failures",
+              "C1-C4 controls"
+            ],
+            "phases": [
+              "final"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "C3 could be made green by changing only its expected count while the real globals.css ownership set remained different.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-16-task741-final-closeout/validation.txt",
+          "result": "The same final run measured the real tree as owned=256, the production checker as 0 violations, and the test that reads globals.css as 27/27; the C3 expectation equals that measured source count."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "C3 validates a source-derived ownership count and planted gate liveness; it does not replace or generate a CSS selector."
+      }
+    },
+    {
+      "id": "AC-Lifecycle / R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/backlog.md",
+        "symbol": "Task 741 final-review closure",
+        "diffHunks": [
+          "docs/backlog.md:41",
+          "docs/backlog.md:49"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Task 741 post-merge lifecycle state"
+        ],
+        "states": [
+          "main ancestry",
+          "superseded PR disposition"
+        ],
+        "phases": [
+          "final"
+        ],
+        "notApplicable": {
+          "stories": "Lifecycle closure is a repository-history property, not a story.",
+          "locales": "Git ancestry and pull-request state are locale-invariant.",
+          "viewports": "Git ancestry and pull-request state are viewport-invariant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-16-task741-final-closeout/git-integration.txt",
+          "command": "git fetch origin --prune; git rev-parse origin/main; git merge-base --is-ancestor b3472378f origin/main; git merge-base --is-ancestor 0295d7f10 origin/main; git merge-base --is-ancestor 2cd8e712a origin/main; inspect GitHub PR #6 and #7",
+          "observable": "The PR base is main 95215314e228e692b234b0fa173e34246f303d52; both Task 741 commits and the PR #7 head are ancestors of it; GitHub shows PR #6 Closed and PR #7 Merged.",
+          "freshness": "final closeout integration check on 2026-08-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Task 741 post-merge lifecycle state"
+            ],
+            "states": [
+              "main ancestry",
+              "superseded PR disposition"
+            ],
+            "phases": [
+              "final"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The closeout could cite commits that exist only on a side branch rather than in main.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-16-task741-final-closeout/git-integration.txt",
+          "result": "Each git merge-base --is-ancestor command exited 0 against origin/main, so the implementation, evidence and PR #7 head are all in the base branch rather than merely reachable from a side branch."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The criterion verifies repository integration and documentation lifecycle state, not generated CSS semantics."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC-C3 / R1",
+    "reviewer": "Codex"
+  }
+}

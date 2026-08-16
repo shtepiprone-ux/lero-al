@@ -885,9 +885,10 @@ function runControlC3(tree) {
   const globalsRaw = readFileSync(tree.globalsPath, 'utf8');
   const ownedSet = extractOwnedNames(globalsRaw);
   // 259 -> 257 (Task 695): --color-overlay and --color-overlay-foreground no
-  // longer exist anywhere in globals.css, so the owned set shrinks by exactly
-  // those two names. Measured against the real post-695 tree, 2026-08-13.
-  const blockOk = ownedSet.size === 257 && !ownedSet.has('--spacing-N');
+  // longer exist anywhere in globals.css. 257 -> 256 (Task 749): the now-unused
+  // --breakpoint-notification-compact token was removed. Keep this control tied
+  // to the current real tree; the unit test asserts the same measured count.
+  const blockOk = ownedSet.size === 256 && !ownedSet.has('--spacing-N');
 
   const themePath = join(tree.srcDir, 'design-system/mantine/theme.ts');
   let lineOk = true;
@@ -914,7 +915,7 @@ function runControlC3(tree) {
   }
   const ok = blockOk && lineOk;
   record('C3', 'PASS', ok,
-    `block: owned=${ownedSet.size} (expect 257), --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
+    `block: owned=${ownedSet.size} (expect 256), --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
 }
 
 function runControlC4(tree) {

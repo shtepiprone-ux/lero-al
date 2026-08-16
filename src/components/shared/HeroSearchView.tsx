@@ -129,6 +129,7 @@ export function HeroSearchView({
               variant="default"
               count={activeFiltersCount}
               iconOnlyBelow={860}
+              iconOnlyAbove={640}
               onClick={onOpenFilters}
               aria-label={t('advanced_filters')}
               leftSection={<SlidersHorizontal size={16} />}

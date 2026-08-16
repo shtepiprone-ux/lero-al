@@ -1,0 +1,20 @@
+ M docs/backlog.md
+ M scripts/__tests__/css-var-resolvability.test.ts
+ M scripts/check-stories-rendered.mjs
+ M scripts/geometry-integrity.mjs
+ M src/app/globals.css
+ M src/components/admin/AdminUsersTable.tsx
+ M src/components/shared/HeroSearchView.module.css
+ M src/components/shared/HeroSearchView.tsx
+ M src/design-system/mantine/patterns/MantineCountButton.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+ M src/modules/notifications/components/NotificationCenter.tsx
+ M tasks/Sprints/Sprint_58_kickoff_prompt_Task_749_RenderedProof_Mobile_Remediation.md
+?? .click-shield-ci-fixture.stderr.log
+?? .click-shield-ci-fixture.stdout.log
+?? docs/reviews/2026-08-15-task749-revision2-geometry-scroll-awareness.review-ledger.json
+?? docs/reviews/artifacts/2026-08-15-task749/
+?? docs/sessions/2026-08-15-task749-rendered-proof-mobile-remediation.md
+?? tasks/Sprints/Sprint_58_Task_749_revision_1_AdminUsersTable_ScrollArea.md
+?? tasks/Sprints/Sprint_58_Task_749_revision_3_S0_And_Build_Transcript.md
+?? tasks/Sprints/Sprint_58_Task_749_revision_3_evidence_preflight.md

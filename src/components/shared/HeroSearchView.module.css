@@ -100,9 +100,19 @@
     }
   }
 
-  /* Site #7 — MantineCountButton (shrink-0) */
+  /* Site #7 — MantineCountButton (shrink-0). Task 749 D-3: full-width + 44px touch-target floor
+     below 640, reset at 40rem so the 640-859 icon-only band and the >=860 icon+label band stay
+     byte-identical to before this task. */
   .filtersControl {
     flex-shrink: 0; /* shrink-0 — I1 */
+    flex-basis: 100%;
+    min-height: var(--space-11);
+  }
+  @media (min-width: 40rem) {
+    .filtersControl {
+      flex-basis: auto;
+      min-height: 0;
+    }
   }
 
   /* Site #8 — Search Button (px-6 font-semibold basis-full sm:basis-full[dropped, see header] md:grow-0 md:basis-auto) */

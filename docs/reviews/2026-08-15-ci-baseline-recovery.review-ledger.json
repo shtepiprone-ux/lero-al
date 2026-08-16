@@ -1,0 +1,203 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "CI baseline recovery after Task 741",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "92685011a23500caa05f7129193ec42fa1a94f8c",
+    "reviewedRevision": "codex/fix-task741-lint-baseline final worktree",
+    "reviewedPaths": [
+      "eslint.config.mjs",
+      "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx",
+      "src/design-system/mantine/patterns/responsiveBottomSheet.tsx",
+      "scripts/check-click-shield.mjs",
+      "scripts/check-homepage-grid.mjs",
+      "src/modules/listings/components/FeaturedListingsView.tsx",
+      "src/modules/listings/components/FeaturedListingsView.module.css",
+      ".github/workflows/governance-pr.yml",
+      "src/components/ci/ClickShieldModalFixture.tsx",
+      "src/app/[locale]/ci/click-shield-modal/page.tsx"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 3,
+      "verified": 3,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-15-ci-baseline-recovery.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "eslint.config.mjs",
+        "symbol": "globalIgnores generated Task 741 witness",
+        "diffHunks": [
+          "eslint.config.mjs:106-107",
+          "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx:80",
+          "src/design-system/mantine/patterns/responsiveBottomSheet.tsx:66"
+        ]
+      },
+      "requiredScope": {
+        "subjects": ["generated Storybook witness and repaired JSX comments"],
+        "states": ["lint"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "Static lint checks the repository rather than a Storybook story.",
+          "locales": "Static lint has no locale dimension.",
+          "viewports": "Static lint has no viewport dimension."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-15-ci-baseline-recovery/verification-summary.md",
+          "command": "npm.cmd run lint",
+          "observable": "ESLint completed with 0 errors; retained warnings are pre-existing and are enumerated in the command output.",
+          "freshness": "final CI baseline recovery worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["generated Storybook witness and repaired JSX comments"],
+            "states": ["lint"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Ignoring the generated witness could have hidden an authored-source violation.",
+          "kind": "EXECUTED",
+          "path": "eslint.config.mjs",
+          "result": "The ignore is limited to the retained Storybook static directory; the two authored JSX files are linted and have no remaining react/jsx-no-comment-textnodes or react/no-unescaped-entities errors."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This is an ESLint file-selection and JSX-syntax correction, not a generated CSS semantic change."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/FeaturedListingsView.tsx",
+        "symbol": "FeaturedListingsView responsive header contract",
+        "diffHunks": [
+          "src/modules/listings/components/FeaturedListingsView.tsx:46-53",
+          "src/modules/listings/components/FeaturedListingsView.module.css:19-32",
+          "scripts/check-homepage-grid.mjs:122-160",
+          "scripts/check-homepage-grid.mjs:404-452"
+        ]
+      },
+      "requiredScope": {
+        "subjects": ["Featured header"],
+        "stories": ["system-featuredlistings--default"],
+        "locales": ["sq", "en", "uk", "it"],
+        "viewports": ["320", "640", "1440"],
+        "states": ["compact column", "wide row"],
+        "phases": ["after"],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-15-ci-baseline-recovery/verification-summary.md",
+          "command": "node scripts/check-homepage-grid.mjs",
+          "observable": "Full 260-cell Homepage Grid gate passes; I-C verifies the intentional compact 320px column branch and the 640px/1440px wide-row contract in every locale.",
+          "freshness": "final CI baseline recovery worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["Featured header"],
+            "stories": ["system-featuredlistings--default"],
+            "locales": ["sq", "en", "uk", "it"],
+            "viewports": ["320", "640", "1440"],
+            "states": ["compact column", "wide row"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The CSS-module responsive rule could make the I-C plant ineffective or relax the existing wide-row geometry assertion.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-grid.mjs",
+          "result": "check:homepage-grid:verify passed: the unmodified 260-cell matrix passed, all seven plants tripped their own invariant, and the final 260-cell post-plant re-check had 0 failures. The wide-row rect-delta assertion still applies from 640px upward."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The authored CSS-module responsive rule is covered by the rendered matrix; no generated-CSS candidate comparison applies."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-click-shield.mjs",
+        "symbol": "base, Drawer, and guarded LightboxView Modal scenarios",
+        "diffHunks": ["scripts/check-click-shield.mjs:147-199", "scripts/check-click-shield.mjs:430-443"]
+      },
+      "requiredScope": {
+        "subjects": ["Click-Shield interactive surfaces"],
+        "locales": ["sq", "en", "uk", "it"],
+        "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024"],
+        "states": ["base", "Drawer open", "Modal open"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "The gate exercises production application routes, not Storybook stories."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-15-ci-baseline-recovery/verification-summary.md",
+          "command": "node scripts/check-click-shield.mjs --scenario=base|drawer|modal against a production build with CLICK_SHIELD_CI_FIXTURE=1",
+          "observable": "All three 16-cell matrices pass: 0 interceptions, 0 empty candidate cells, and every Drawer/Modal cell proves that a dialog opened.",
+          "freshness": "final CI baseline recovery worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["Click-Shield interactive surfaces"],
+            "locales": ["sq", "en", "uk", "it"],
+            "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024"],
+            "states": ["base", "Drawer open", "Modal open"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A data-dependent listing route or a fixed interceptor that is itself the hit target could create a false green or false fatal result.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-15-ci-baseline-recovery/verification-summary.md",
+          "result": "The former mutable listing route returned 404 locally; the guarded fixture opens the real LightboxView in every cell. The base matrix measures the 320px nav overlap as scroll-clearable after traversal starts at the interceptor itself."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This repairs browser-harness route and DOM traversal behavior, not generated CSS semantics."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC3 / R3",
+    "reviewer": "Codex"
+  }
+}

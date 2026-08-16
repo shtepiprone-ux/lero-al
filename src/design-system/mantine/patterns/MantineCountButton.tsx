@@ -19,6 +19,12 @@ export interface MantineCountButtonProps extends ButtonProps {
    * nameless icon button (agent-contract clause 11 a11y requirement).
    */
   iconOnlyBelow?: number
+  /**
+   * Optional lower bound for `iconOnlyBelow`. When set, the collapse applies only while the
+   * viewport is >= this width AND < `iconOnlyBelow`. Unset (default) = no lower bound, so an
+   * instance that sets only `iconOnlyBelow` renders exactly as before.
+   */
+  iconOnlyAbove?: number
 }
 
 /**
@@ -74,7 +80,7 @@ export interface MantineCountButtonProps extends ButtonProps {
  * state, and Mantine's own `.inner` flex gap keeps them apart from each other).
  */
 export function MantineCountButton({
-  count, rightSection, children, variant, iconOnlyBelow, px, ...props
+  count, rightSection, children, variant, iconOnlyBelow, iconOnlyAbove, px, ...props
 }: MantineCountButtonProps) {
   const isFilledHost = variant === undefined || variant === 'filled'
   const countBadge = count && count > 0
@@ -92,10 +98,17 @@ export function MantineCountButton({
 
   // See the `iconOnlyBelow` doc block above for the full SSR-safety rationale.
   const belowThreshold = useMediaQuery(
-    iconOnlyBelow != null ? `(max-width: ${iconOnlyBelow - 1}px)` : '(max-width: 0px)',
+    iconOnlyBelow != null
+      ? iconOnlyAbove != null
+        ? `(min-width: ${iconOnlyAbove}px) and (max-width: ${iconOnlyBelow - 1}px)`
+        : `(max-width: ${iconOnlyBelow - 1}px)`
+      : '(max-width: 0px)',
     false,
     { getInitialValueInEffect: true },
   )
+  // Task 749 narrows the pre-existing query into a range without adding a second viewport hook.
+  // It remains false on the server and the first client render, so the pre-hydration output is
+  // unchanged; with no `iconOnlyBelow`, `iconOnlyAbove` remains inert.
   const collapsed = iconOnlyBelow != null && belowThreshold
 
   return (

@@ -26,12 +26,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Task 593's owner-approved compact notification layout threshold. Named here so
-   consumers use a stable responsive token instead of repeating min-[390px]. */
-@theme {
-  --breakpoint-notification-compact: 24.375rem;
-}
-
 /* ─────────────────────────────────────────────
    LERO.AL DESIGN SYSTEM — Real Estate Marketplace 2025-2026
    All colors are WCAG AA compliant (4.5:1 minimum for text)

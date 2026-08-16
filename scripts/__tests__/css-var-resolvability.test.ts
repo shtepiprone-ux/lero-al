@@ -202,7 +202,10 @@ describe('extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :roo
     // longer exist anywhere in globals.css (the @theme inline overlay copy was
     // deleted once its last Tailwind-scanned utility was gone), so the owned
     // set shrinks by exactly those two names. Measured 2026-08-13.
-    expect(owned.size).toBe(257)
+    // 257 -> 256 (Task 749): --breakpoint-notification-compact deleted with its last consumer
+    // (NotificationCenter's 390px threshold retargeted to the canonical 640px sm, owner decision
+    // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    expect(owned.size).toBe(256)
     // --spacing-N is prose inside a comment at globals.css:146-150 (draft 1's
     // own D2 defect) — must never be counted.
     expect(owned.has('--spacing-N')).toBe(false)

@@ -16,6 +16,20 @@
  * `margin-bottom:8px` except the last, which gets `0`). Reproduced below the same way.
  */
 
+/* Featured header — compact stack below 640px, then restore the original inline row. The
+ * former nested `styles={{ root: { '@media …' } }}` object was not emitted by Mantine, leaving
+ * the header stacked at every width. A CSS module is the real responsive mechanism. */
+.headerRow {
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media (min-width: 40em) {
+  .headerRow {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
 /* Site #1 — CardSkeleton root <Box> (rounded-xl border bg-card overflow-hidden) */
 .skeletonCard {
   border-radius: calc(var(--radius) * 1.5); /* rounded-xl — measured 18px, I2 */

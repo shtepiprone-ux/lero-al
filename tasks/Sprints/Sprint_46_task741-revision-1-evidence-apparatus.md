@@ -57,11 +57,17 @@ It is still required work: §3 is an exit criterion, not a suggestion.
 > Recorded in `docs/reviews/2026-08-14-task741-closedoverlaystyle-module-exit.review-ledger.SUPERSEDED.json`,
 > which validated `valid fail-closed review ledger`, exit 0 (Windows run, 2026-08-14).
 
-**Current canonical state — Review 2, `docs/reviews/2026-08-15-task741-revision1-evidence-apparatus.review-ledger.json`:**
+**Review 2 evidence-only result (historical) —
+`docs/reviews/2026-08-15-task741-revision1-evidence-apparatus.review-ledger.json`:**
 **`review.coverage`: 12 total, 12 `VERIFIED`, 0 `UNVERIFIED`, 0 open P0/P1/P2. F1–F7 `RESOLVED`;
 3 P3 notes open (`N1`–`N3`), none blocking. `decision: APPROVED WITH NOTES`,
-`handoff.commitPush: ALLOWED`.** That ledger supersedes the Review 1 one and is the artifact to quote.
-Quote this block, not the historical one above.
+`handoff.commitPush: ALLOWED`.** It supersedes Review 1 for the **Revision 1 evidence apparatus only**.
+
+**Current lifecycle state (2026-08-16): `CLOSURE REOPENED`.** The Review 2 ledger was recorded before
+a clean end-to-end PR result existed. PR #6 failed Governance, Click-Shield, Homepage and Rendered Proof;
+PR #7 contained CI remediation but still failed Rendered Proof. PR #8 (`58d0ab6c8`) contains the PR #7
+commits and is green, but 741 cannot be quoted as complete until PR #8 merges and a final review records
+the resulting `main` SHA. Do not merge or cherry-pick PR #6/#7; close them as superseded after PR #8 lands.
 
 ## 1. F2 — make `play()` genuinely gate-observable (story-local)
 

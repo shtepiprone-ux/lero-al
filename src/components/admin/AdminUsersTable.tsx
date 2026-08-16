@@ -418,7 +418,10 @@ export function AdminUsersTable({
 
   return (
     <Stack gap="md" data-testid="admin-users-table">
-      {/* Tabs — full-width on mobile via Tabs.List grow */}
+      {/* Tabs — content-width pill strip inside a horizontal ScrollArea (theme.ts:830), matching
+          Tabs.stories.tsx:36. `grow` removed (Task 749 rev.1, D-6): it was already inert (each tab
+          is pinned at max-content by `min-width: auto`), and under a full-width track it would
+          stretch each tab to ~50% of the strip, a design change nobody asked for. */}
       <Tabs
         value={activeTab}
         onChange={(tab) => navigate({
@@ -428,10 +431,12 @@ export function AdminUsersTable({
           q: null,
         })}
       >
-        <Tabs.List grow>
-          <Tabs.Tab value="all">{t('tab_all')}</Tabs.Tab>
-          <Tabs.Tab value="verified">{t('tab_verified')}</Tabs.Tab>
-        </Tabs.List>
+        <ScrollArea type="auto" scrollbars="x" scrollbarSize={0}>
+          <Tabs.List>
+            <Tabs.Tab value="all">{t('tab_all')}</Tabs.Tab>
+            <Tabs.Tab value="verified">{t('tab_verified')}</Tabs.Tab>
+          </Tabs.List>
+        </ScrollArea>
       </Tabs>
 
       {activeTab === 'verified' ? (

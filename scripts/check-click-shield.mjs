@@ -144,19 +144,13 @@ const N6_EXEMPT_PREDICATE_BODY = `
   return el.closest(dialogSelector) === null;
 `;
 
-// Task 727 R5 — the real listing this repository has today for the Modal scenario (verified live
-// 2026-08-09: `/en/listings/11-mr7ucly4` renders `.listing-gallery` with 5 images and its cover
-// opens `LightboxView`, a real Modal.Root/Modal.Content role="dialog"). The Task 612 fixture slug
-// (`test-7-molyl9c8`, used by scripts/task612-qa-listinggallery-lightbox-portal.mjs, 2026-07-16)
-// no longer resolves — confirmed 404 today — so listing slugs are not a stable long-term fixture;
-// overridable via CLICK_SHIELD_MODAL_SLUG for whoever next needs to replace this one. See the
-// Task 727 session log for the full repository search this scenario choice is based on: NO
-// production Mantine Modal is reachable from the homepage at all — MantineModal
-// (design-system/mantine/patterns/MantineModal.tsx) has zero production consumers, so the
-// homepage-only route set this gate used before this task cannot exercise a Modal scenario.
-const MODAL_SCENARIO_SLUG = process.env.CLICK_SHIELD_MODAL_SLUG ?? '11-mr7ucly4';
+// CI baseline recovery (2026-08-15) — listing slugs are mutable data, so they are not a valid
+// blocking-CI fixture. The guarded `/${locale}/ci/click-shield-modal` route mounts the actual
+// production LightboxView under the ordinary locale layout. It is reachable only when the
+// workflow sets CLICK_SHIELD_CI_FIXTURE=1; every ordinary runtime returns 404. This preserves a
+// real Modal.Root/Modal.Content interaction without making CI depend on a database row.
 
-// Task 727 R5 — three real scenarios driven against the running app (replacing the synthetic
+// Task 727 R5 — three scenarios driven against the running app (replacing the synthetic
 // self-test as the source of "did the fix work" evidence for CI). `trigger` is a Playwright
 // locator clicked before the hit-test runs; `null` for the untouched base scenario. Every
 // triggered scenario's cell is a HARD FAILURE (see openScenarioOverlay below) if the trigger
@@ -186,13 +180,9 @@ const SCENARIOS = [
   },
   {
     name: 'modal',
-    label: 'Listing lightbox open (Mantine Modal, role="dialog")',
-    // LightboxView (src/modules/listings/components/LightboxView.tsx) — the ONLY production
-    // Mantine Modal (Modal.Root/Modal.Content, role="dialog") in the app. Reuses the Task 612
-    // precedent (scripts/task612-qa-listinggallery-lightbox-portal.mjs) for driving this exact
-    // component against a real listing rather than inventing a synthetic fixture for it.
-    route: (locale) => `/${locale}/listings/${MODAL_SCENARIO_SLUG}`,
-    trigger: '.listing-gallery .cursor-zoom-in',
+    label: 'LightboxView open (Mantine Modal, role="dialog")',
+    route: (locale) => `/${locale}/ci/click-shield-modal`,
+    trigger: '[data-click-shield-modal-trigger]',
   },
 ];
 
@@ -402,7 +392,11 @@ async function hitTestPage(page) {
         // non-fixed/sticky positioned ancestors; keyed purely on computed `position`, never a
         // component name or author-applied attribute (Task 724 F1).
         function nearestFixedOrStickyAncestorOf(el) {
-          let p = el.parentElement;
+          // `elementFromPoint()` can return the fixed/sticky surface itself (for example the
+          // mobile nav) instead of one of its descendants. Starting at `el` handles that real
+          // shape; starting at parentElement misclassified a scroll-clearable overlap as
+          // permanent because it skipped the interceptor's own computed position.
+          let p = el;
           while (p) {
             const pos = window.getComputedStyle(p).position;
             if (pos === 'fixed' || pos === 'sticky') return p;

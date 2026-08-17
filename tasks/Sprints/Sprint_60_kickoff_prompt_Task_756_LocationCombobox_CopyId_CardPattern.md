@@ -9,6 +9,36 @@ the homepage listing card path and share one rendered surface. **Zero visual del
 
 **Runs before Task 757** — see "The duplicated fragment" below.
 
+## Resume state — work already in the tree (read this before the table below)
+
+**This task was started once and abandoned mid-flight, with no session log.** Roughly two thirds of it is sitting
+uncommitted in the working tree. Do **not** revert it and do **not** trust the "exact current state" table below as a
+description of the files on disk — that table records the state at design time, **before** this partial work. Re-read
+every file and reconcile against `git diff` and `git status` first; report the reconciliation in your own words as the
+first section of your session log, since no prior report exists.
+
+Verified 2026-08-17:
+
+| Scope | State | Notes |
+|---|---|---|
+| `MantineAddItemPanel.tsx` (new, untracked) | **Done, and good** | The canonical shared-fragment component. Owns only the outer chrome; `mt` is an optional prop so `LocationCombobox`'s trailing `mt-1` is not baked into shared chrome; `bg-muted/30` is reproduced as the literal `color-mix()` per D35. Keep it — this is the decision Task 757 must follow. |
+| `patterns/index.ts` | **Done** | Exports the new panel (+3 lines). |
+| `MantineCopyIdButton.tsx` + `.module.css` | **Done, but leaves the token gate red** | See the violations below — closing them is part of this task, not someone else's debt. |
+| `MantineListingCardPattern.tsx` + `.module.css` | **Done** | Verify the `:77` consumer contract comment was actually checked, not just edited around. |
+| `LocationCombobox.tsx` | **NOT STARTED — unchanged** | The panel exists but its only current consumer never adopted it. This is the largest remaining piece and the reason the task is not finishable as-is. |
+
+**`check:design-tokens --strict` currently fails on the in-flight work**, all four findings in
+`src/design-system/mantine/patterns/MantineCopyIdButton.module.css`:
+
+- `:25` `gap: 0.125rem` — raw CSS length
+- `:26` `border-radius: 0.25rem` — raw CSS length, **plus** a stale inline suppression marker on the same line whose
+  value is no longer detected there
+- `:43` `box-shadow: 1px` — raw length inside a shorthand
+
+The gate must exit 0 before this task can be reported as implemented. Fix the values or add justified markers — but a
+stale marker is itself a violation, so do not simply re-point it.
+
+
 ## Exact current state — read 2026-08-16, verify before editing
 
 ### 1. `src/components/shared/LocationCombobox.tsx` (195 lines)

@@ -14,6 +14,23 @@ edit files those tasks created or last touched (`FilterMultiToggle.tsx`, `Filter
 `NotificationItem.module.css`, `MobileNavDrawer.module.css`). Starting before they land makes the
 diff unreviewable. Verify with `git log --oneline -6` and STOP if they are absent.
 
+## Task 756 runs first (owner decision, 2026-08-17 — supersedes the earlier deferral)
+
+**Task 756 must be committed before this task starts**, on the same terms as 752-755 above. Verify with
+`git log --oneline -8` and STOP if it is absent.
+
+Two consequences:
+
+1. **`check:design-tokens` must be green again.** The 3 `css-length` violations and the 1 stale marker currently in
+   `src/design-system/mantine/patterns/MantineCopyIdButton.module.css` belong to 756's own unfinished work and are
+   756's to close. If they are still present when you start, 756 is not actually done — STOP and report, do not absorb
+   its debt into this task.
+2. **Take a fresh AC1 baseline.** The owner's `screenshots:assert:fast` run of 2026-08-17
+   (`.screenshots/rendered-assert/2026-08-17T18-35/`) was captured while 756 was half-finished, so once 756 lands that
+   run is stale and cannot support "no other cell changed verdict". Capture your own before-run immediately prior to
+   item 1, and diff against that.
+
+
 ## Pre-read (load ONLY these)
 
 - `docs/agent-contract.md` (clauses 1, 2, 9)
@@ -137,8 +154,9 @@ fixtures, behaving correctly) · the ~97 catalogued admin/RVS geometry defects r
   show it exits non-zero with the new message and **zero scenarios executed**; then run it against
   `npm run build` + `npm start` (with `CLICK_SHIELD_CI_FIXTURE=1`) and show it proceeds normally.
   A gate that only passes is not evidence — the refusal path is the point.
-- **AC5** — `npm run typecheck`, `check:design-tokens`, `check:i18n`, `check:mojibake`,
-  `check:stories`, `npm run build` all exit 0, plus `npx vitest run src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx`.
+- **AC5** — `npm run typecheck`, `check:design-tokens`, `check:i18n`, `check:mojibake`, `check:stories` and
+  `npm run build` all exit 0, plus `npx vitest run src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx`.
+  With 756 landed there is no known-red gate left: a non-zero exit is a real finding, not inherited debt.
 - **AC6** — no rendered product change. The `Mantine/Primitives/FilterControls` cells must be
   byte-identical before and after item 2, since removing a redundant class must not move a pixel.
 
@@ -158,9 +176,6 @@ Item order 1 → 2 → 3 → 4. `npm run typecheck` → targeted `vitest` → `n
 transcripts, and the computed-style readings. Four consecutive Sprint 60 tasks captured proof into
 scratch directories and deleted it; that stops here.
 
-Note that `check:design-tokens --strict` may still fail on `MantineCopyIdButton.module.css` if Task
-756 is still uncommitted. That is not yours — report its exit code honestly and state the violations
-are out of scope.
 
 ## Report contract
 

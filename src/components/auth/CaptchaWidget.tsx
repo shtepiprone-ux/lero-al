@@ -3,6 +3,7 @@
 import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { useTranslations } from 'next-intl'
+import { Text } from '@mantine/core'
 
 export interface CaptchaWidgetHandle {
   reset: () => void
@@ -28,9 +29,12 @@ function CaptchaDevFallback({
   }, [])
 
   return (
-    <p className="text-xs text-muted-foreground text-center py-1" role="note">
+    // lh is 19.5px (not text-xs's paired 16px): globals.css's `p { @apply leading-relaxed }`
+    // base rule applies to this element's underlying <p> and measures 19.5px in the real
+    // AuthSheet render — matched here for zero visual delta, not derived from text-xs.
+    <Text size="xs" lh="19.5px" c="var(--muted-foreground)" ta="center" py={4} role="note">
       {label}
-    </p>
+    </Text>
   )
 }
 
@@ -62,7 +66,7 @@ export const CaptchaWidget = forwardRef<CaptchaWidgetHandle, CaptchaWidgetProps>
         onExpire={onExpire}
         options={{ theme, size: 'flexible' }}
         aria-label={t('captcha_aria_label')}
-        className="w-full"
+        style={{ width: '100%' }}
       />
     )
   },

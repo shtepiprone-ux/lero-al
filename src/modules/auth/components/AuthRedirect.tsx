@@ -28,6 +28,7 @@ import { useEffect, useRef, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { Center } from '@mantine/core'
 import { openAuthSheet, AUTH_SHEET_CLOSED_EVENT, type AuthSheetView } from '@/lib/auth/authSheet'
 import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
 import { useUser } from '@/modules/auth/hooks/useUser'
@@ -110,8 +111,8 @@ export function AuthRedirect({ view, next, sessionLost }: Props) {
   }, [cancelDestination, status, router])
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center" aria-live="polite">
+    <Center mih="60vh" aria-live="polite">
       <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" aria-label={tc('loading')} />
-    </div>
+    </Center>
   )
 }

@@ -13,28 +13,32 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * harness will NOT auto-click it open — this story renders it `opened` directly (no trigger, per
  * the primitive's controlled API — the hamburger trigger stays container-owned in `Header.tsx`).
  *
- * Only the LOGGED-IN fixture is rendered open. A naive attempt to also render a second,
- * simultaneously-opened logged-out `MobileNavDrawer` was tried and empirically confirmed to
- * reproduce the exact Task 578/585 defect class: two independent, uncontrolled overlays anchored
- * to the same screen position (both `MantineDrawer`s render at `position:fixed; right:0` on
- * desktop, and both as full-width bottom sheets on mobile) — the second-mounted one completely
- * hides the first, at every breakpoint. Resolved the same way Task 585 resolved `UserMenu`: render
- * ONE open fixture (logged-in — the superset: user header + full nav + destructive Logout) and
- * verify the logged-out branch (nav + Login/Register/Register-as-agent) by code inspection of
- * `MobileNavDrawer.tsx`'s `{user ? … : …}` conditionals, not by forking the primitive or stacking
- * a second open overlay.
+ * Only ONE fixture is rendered open per page load. A naive attempt to render two
+ * simultaneously-opened `MobileNavDrawer`s (logged-in + logged-out) was tried and empirically
+ * confirmed to reproduce the exact Task 578/585 defect class: two independent, uncontrolled
+ * overlays anchored to the same screen position (both `MantineDrawer`s render at
+ * `position:fixed; right:0` on desktop, and both as full-width bottom sheets on mobile) — the
+ * second-mounted one completely hides the first, at every breakpoint. Resolved the same way
+ * Task 585 resolved `UserMenu`: exactly one open `MobileNavDrawer` per render, its auth state
+ * controlled by the `loggedIn` arg (default `true`, the superset: user header + full nav +
+ * destructive Logout) — Task 755 added this arg so the logged-out branch (nav +
+ * Login/Register/Register-as-agent) can be captured as rendered evidence on a SEPARATE page
+ * load (`&args=loggedIn:false`), not just verified by code inspection.
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/MobileNavDrawer',
   parameters: { skipCanvas: true, layout: 'fullscreen' },
+  args: { loggedIn: true },
+  argTypes: { loggedIn: { control: 'boolean' } },
 }
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: (_args, context) => {
+  render: (args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const loggedIn = (args as { loggedIn?: boolean }).loggedIn ?? true
 
     return (
       <MantineStoryShell>
@@ -44,7 +48,7 @@ export const Default: Story = {
         <MobileNavDrawer
           opened
           onClose={() => {}}
-          user={{ name: 'Alba Krasniqi', avatar_url: null }}
+          user={loggedIn ? { name: 'Alba Krasniqi', avatar_url: null } : null}
           locale={locale}
           onNavigate={() => {}}
           onOpenAuth={() => {}}

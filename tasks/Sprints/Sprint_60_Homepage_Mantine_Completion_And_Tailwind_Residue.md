@@ -26,9 +26,9 @@ change, no spacing/typography change.** A visual difference is a defect, not an 
 | # | State | Scope |
 |---|---|---|
 | **752** | KICKOFF FILED | Icon sizing + small layout utilities — 9 files, ≤6 utilities each |
-| **753** | KICKOFF FILED | The three components with zero Mantine: `CaptchaWidget`, `AuthRedirect`, `PasswordRequirementsHint` |
-| **754** | KICKOFF FILED | `NotificationCenter` + `NotificationItem` |
-| **755** | KICKOFF FILED | `MobileNavDrawer` |
+| **753** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | The three components with zero Mantine: `CaptchaWidget`, `AuthRedirect`, `PasswordRequirementsHint` |
+| **754** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | `NotificationCenter` + `NotificationItem` |
+| **755** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | `MobileNavDrawer` |
 | **756** | KICKOFF FILED | `LocationCombobox` sub-panel · `MantineCopyIdButton` · `MantineListingCardPattern` |
 | **757** | KICKOFF FILED | `AuthSheet` — largest, auth-critical, last |
 

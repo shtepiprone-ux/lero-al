@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { ROOMS_OPTIONS } from '@/modules/listings/constants'
 
 interface FilterRoomsRowProps {
@@ -13,7 +13,11 @@ interface FilterRoomsRowProps {
 
 export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
   return (
-    <div {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} className="flex gap-2 flex-wrap">
+    // `flex-wrap` className is a deliberate compatibility anchor (redundant with the `wrap="wrap"`
+    // prop below — same computed flex-wrap value) so filterLeafComponents.smoke.test.tsx's
+    // `container.querySelector('.flex-wrap')` root lookup keeps resolving; that test file is out
+    // of this task's scope to edit.
+    <Group {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} gap="xs" wrap="wrap" className="flex-wrap">
       {ROOMS_OPTIONS.map(opt => {
         const strVal = String(opt)
         return (
@@ -21,13 +25,13 @@ export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRow
             key={opt}
             type="button"
             variant={selected.includes(strVal) ? 'filled' : 'default'}
-            className="shrink-0"
+            style={{ flexShrink: 0 }}
             onClick={() => onToggle(strVal)}
           >
             {opt === 5 ? '5+' : opt}
           </Button>
         )
       })}
-    </div>
+    </Group>
   )
 }

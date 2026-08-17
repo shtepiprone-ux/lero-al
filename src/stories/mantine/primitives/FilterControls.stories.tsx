@@ -49,7 +49,9 @@ function RangeInputsDemo({ minPlaceholder, maxPlaceholder }: { minPlaceholder: s
   )
 }
 
-function MultiToggleDemo({ getLabel, ariaLabel }: { getLabel: (key: string) => string; ariaLabel: string }) {
+function MultiToggleDemo({
+  getLabel, ariaLabel, className,
+}: { getLabel: (key: string) => string; ariaLabel: string; className?: string }) {
   const [selected, setSelected] = useState<string[]>(['good'])
   return (
     <FilterMultiToggle
@@ -57,6 +59,7 @@ function MultiToggleDemo({ getLabel, ariaLabel }: { getLabel: (key: string) => s
       selected={selected}
       getLabel={getLabel}
       ariaLabel={ariaLabel}
+      className={className}
       onToggle={value =>
         setSelected(prev => (prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]))
       }
@@ -99,6 +102,21 @@ export const Default: Story = {
               English string in every locale — kept as a source comment only, never rendered. */}
           <Stack gap="xs">
             <MultiToggleDemo getLabel={getLabel} ariaLabel={storyT(locale, 'common.condition')} />
+          </Stack>
+
+          {/* FilterMultiToggle (vertical branch, Task 752R) — the same component with the
+              `className="flex-col gap-1.5"` override the 3 live ListingsFilters.tsx mobile-drawer
+              call sites pass. No story previously exercised this branch (Task 752 note); this is
+              the coverage gap that let the justify="flex-start" label-centering regression ship. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              FilterMultiToggle — vertical branch (mobile filters drawer, className=&quot;flex-col gap-1.5&quot;)
+            </Text>
+            <MultiToggleDemo
+              getLabel={getLabel}
+              ariaLabel={`${storyT(locale, 'common.condition')} (vertical)`}
+              className="flex-col gap-1.5"
+            />
           </Stack>
 
           {/* FilterRoomsRow — §6a Button toggles over room counts, one pre-selected */}

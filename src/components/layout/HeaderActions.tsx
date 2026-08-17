@@ -31,7 +31,7 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
           miw="2.75rem"
           aria-label={t('favorites')}
         >
-          <Heart className="size-5" />
+          <Heart size={20} />
         </ActionIcon>
       ) : (
         <ActionIcon
@@ -41,7 +41,7 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
           aria-label={t('favorites')}
           onClick={() => onOpenAuth('login')}
         >
-          <Heart className="size-5" />
+          <Heart size={20} />
         </ActionIcon>
       )}
 

@@ -131,7 +131,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   // `[data-fav-disabled]`/`[data-pending]` attribute selectors instead compete with Mantine's
   // own unlayered CSS on equal footing via specificity (0,2,0 vs Mantine's plain-class (0,1,0)),
   // which lets `:hover` correctly cascade over the resting state.
-  const icon = <Heart className={cn('h-4 w-4', !disabled && favorited && 'fill-current')} />
+  const icon = <Heart size={16} className={cn(!disabled && favorited && 'fill-current')} />
 
   // See the `overlay` doc block above — inline style is the only mechanism that reliably wins
   // over ActionIcon's own unlayered `position: relative`, for these 3 position-only properties.

@@ -1,0 +1,6 @@
+/* divide-y reproduction (D28 mechanism-only): Tailwind's `.divide-y > :not(:last-child)` puts a
+   1px border on all but the last child; a top-border on all but the first produces the identical
+   single line between every adjacent pair. No Mantine prop equivalent exists for this. */
+.list > :not(:first-child) {
+  border-top: 1px solid var(--border); /* design-tokens-allow: border-top: 1px — divide-y reproduction, matches Tailwind's own compiled .divide-y border-width */
+}

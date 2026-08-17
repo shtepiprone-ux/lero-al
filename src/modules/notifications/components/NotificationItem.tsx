@@ -5,8 +5,10 @@ import { useTransition } from 'react'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale as DfLocale } from 'date-fns'
+import { Anchor, Box, Group, Text } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { formatCount } from '@/lib/formatters'
+import styles from './NotificationItem.module.css'
 
 const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
@@ -168,43 +170,94 @@ export function NotificationItem({ notification, onRead }: Props) {
   }
 
   const content = (
-    <div
+    <Group
+      wrap="nowrap"
+      align="flex-start"
+      gap="sm"
+      px="md"
+      py="sm"
       className={cn(
-        'flex items-start gap-3 px-4 py-3 transition-colors',
-        !notification.is_read && 'bg-primary/5',
-        !notification.is_read && !isPending && 'cursor-pointer hover:bg-primary/10',
-        isPending && 'opacity-60',
+        styles.root,
+        !notification.is_read && styles.unread,
+        !notification.is_read && !isPending && styles.interactive,
+        isPending && styles.pending,
       )}
       onClick={handleClick}
       role={!notification.is_read ? 'button' : undefined}
       tabIndex={!notification.is_read ? 0 : undefined}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
     >
-      <span className="text-base shrink-0 mt-0.5" aria-hidden>
+      {/* text-base has no explicit leading-* class -> falls back to the `p{}`/`span{}` browser
+          default (24px, text-base's own paired line-height; no globals.css base rule targets
+          `span`), reproduced explicitly since Mantine Text's own default would otherwise differ. */}
+      <Text
+        component="span"
+        fz="1rem"
+        lh="1.5rem"
+        style={{ flexShrink: 0, marginTop: '0.125rem' }} // design-tokens-allow: : '0.125rem' — reproduces the original mt-0.5 (2px) icon offset, px-equal literal per Task 752/753 precedent
+        aria-hidden
+      >
         {TYPE_ICON[notification.type] ?? '🔔'}
-      </span>
-      <div className="flex-1 min-w-0">
-        <p className={cn('text-sm leading-snug whitespace-normal break-words', !notification.is_read && 'font-medium')}>
+      </Text>
+      <Box style={{ flex: '1 1 0%', minWidth: 0 }}>
+        {/* lh=1.375 (leading-snug) — this <p> keeps its explicit leading-snug class pre-migration,
+            so text-sm's own paired 20px line-height never applied; reproduced exactly. */}
+        <Text
+          size="sm"
+          fw={!notification.is_read ? 500 : undefined}
+          lh={1.375}
+          style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
+        >
           {displayTitle}
-        </p>
-        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 whitespace-normal break-words">
+        </Text>
+        {/* lh=1.625 (leading-relaxed) — no explicit leading-* class pre-migration, so globals.css's
+            `p { @apply leading-relaxed }` base rule won over text-xs's own paired 16px line-height
+            (see Task 753 finding); reproduced exactly, not approximated. */}
+        <Text
+          size="xs"
+          c="var(--muted-foreground)"
+          lh={1.625}
+          lineClamp={2}
+          mt={2}
+          style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
+        >
           {displayBody}
-        </p>
-        <p className="text-2xs text-muted-foreground/60 mt-1">
+        </Text>
+        {/* text-2xs = 10px (globals.css --text-2xs, no Mantine token — D28 raw-literal exemption).
+            text-muted-foreground/60 is an opacity-modified token (D35): reproduced as the exact
+            color-mix() Tailwind itself compiles to (verified in the built CSS), not aliased to a
+            bare var() and not approximated to a flat color. */}
+        <Text
+          fz="0.625rem"
+          c="color-mix(in oklab, var(--muted-foreground) 60%, transparent)"
+          lh={1.625}
+          mt="0.25rem"
+        >
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}
-        </p>
-      </div>
+        </Text>
+      </Box>
       {!notification.is_read && (
-        <span className="h-2 w-2 rounded-full bg-primary shrink-0 mt-1.5" aria-label={t('unread_count', { count: 1 })} />
+        <Box
+          h={8}
+          w={8}
+          bdrs="pill"
+          bg="var(--primary)"
+          mt={6}
+          style={{ flexShrink: 0 }}
+          aria-label={t('unread_count', { count: 1 })}
+        />
       )}
-    </div>
+    </Group>
   )
 
   if (notification.link) {
     return (
-      <a href={notification.link} className="block hover:no-underline" onClick={handleClick}>
+      // c="inherit" — the original <a> relied on Tailwind Preflight's `a { color: inherit }`;
+      // Mantine's Anchor defaults to its own link color otherwise, which leaked into the
+      // (unstyled) title text through normal CSS inheritance. Measured and fixed (Task 754).
+      <Anchor href={notification.link} display="block" underline="never" c="inherit" onClick={handleClick}>
         {content}
-      </a>
+      </Anchor>
     )
   }
 

@@ -376,6 +376,17 @@
   --primary-foreground:  var(--neutral-0);           /* White — 3.55:1, AA large text ✓ */
   --primary-hover:       var(--brand-800);           /* #BD4339 — 4.9:1 ✓ WCAG AA */
 
+  /* Hero surface — the homepage hero band's own background (owner decision 2026-08-18).
+     Deliberately NOT --primary/--brand-*: the hero band is a darker, less saturated coral
+     than the brand primary, which stays #EC5447 everywhere else (buttons, links, badges,
+     price, ring). Hand-authored like --brand-950 because it is not a step of the brand tuple
+     in src/design-system/brand.ts — editing that tuple must NOT move this surface.
+     Single consumers: src/app/[locale]/page.tsx hero <Box>, mirrored by the HeroSearch stories.
+     White on #C45C50: 4.03:1 — WCAG AA large text/UI ✓ (was 3.55:1 under --primary).
+     No .dark override: dark mode is dormant (see the .dark brand note) and this band is the
+     same coral in both schemes, exactly as --primary is. */
+  --hero-bg:             #C45C50;
+
   /* Secondary — neutral light, for secondary buttons/tags */
   --secondary:           var(--neutral-100);
   --secondary-foreground: var(--neutral-900);

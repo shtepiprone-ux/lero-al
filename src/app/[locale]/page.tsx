@@ -25,7 +25,7 @@ export default async function HomePage() {
     <Stack gap={0}>
 
       {/* ── Hero ── */}
-      <Box component="section" bg="var(--primary)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+      <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
         <Box className="container-wide">
           <Box maw={768} mx="auto" ta="center" mb={40}>
             <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--text-3xl)', sm: 'var(--text-4xl)', md: 'var(--text-5xl)' }} mb="md">

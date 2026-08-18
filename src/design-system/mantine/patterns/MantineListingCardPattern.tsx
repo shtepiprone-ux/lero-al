@@ -73,8 +73,12 @@ export interface MantineListingCardPatternProps {
    * `layout='grid'`: floats on the image — the node must self-position via
    * `absolute top-2 right-2` (the contract the real `FavoriteButton` already follows).
    * `layout='list'`: sits inline in the info column's top row next to `typeLabel` — the node
-   * must NOT be absolutely positioned (matches the legacy horizontal branch's own
-   * `className="shrink-0 -mt-0.5 -mr-1"` contract).
+   * must NOT be absolutely positioned. The contract is still live (Task 756 — corrected this
+   * comment, which cited a Tailwind string no longer used verbatim): the real consumer,
+   * `ListingCard.tsx`'s `inlineFavorite`, now applies `styles.inlineFavorite`
+   * (`ListingCard.module.css`), a CSS Module class that reproduces the identical
+   * `flex-shrink:0` / `margin-top:-2px` / `margin-right:-4px` declarations under a different
+   * name, not the literal `"shrink-0 -mt-0.5 -mr-1"` string.
    */
   favorite?: ReactNode
   typeLabel?: string
@@ -207,7 +211,7 @@ export function MantineListingCardPattern({
               )}
               {favorite}
             </Group>
-            <Text component="h3" fw={600} size="sm" lineClamp={2} className={cn(styles.cardTitle, 'leading-snug')}>
+            <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
               {data.title}
             </Text>
           </Box>
@@ -339,7 +343,7 @@ export function MantineListingCardPattern({
             {typeLabel}
           </Text>
         )}
-        <Text component="h3" fw={600} size="sm" lineClamp={2} className={cn(styles.cardTitle, 'leading-snug')}>
+        <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
           {data.title}
         </Text>
         <Group gap={4} wrap="nowrap">

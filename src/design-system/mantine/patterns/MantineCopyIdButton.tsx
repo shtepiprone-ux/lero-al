@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { UnstyledButton } from '@mantine/core'
 import { Copy, Check } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import styles from './MantineCopyIdButton.module.css'
 
 export interface MantineCopyIdButtonProps {
@@ -43,15 +42,12 @@ export function MantineCopyIdButton({ id, label, copyLabel, copiedLabel }: Manti
       title={id}
       aria-label={copied ? copiedLabel : copyLabel}
       data-copy-id
-      className={cn(
-        styles.copyId,
-        'font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded',
-      )}
+      className={styles.copyId}
     >
       {label}
       {copied
-        ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-        : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+        ? <Check size={10} className={styles.copiedIcon} />
+        : <Copy size={10} className={styles.notCopiedIcon} />
       }
     </UnstyledButton>
   )

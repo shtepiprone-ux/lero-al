@@ -29,7 +29,7 @@ change, no spacing/typography change.** A visual difference is a defect, not an 
 | **753** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | The three components with zero Mantine: `CaptchaWidget`, `AuthRedirect`, `PasswordRequirementsHint` |
 | **754** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | `NotificationCenter` + `NotificationItem` |
 | **755** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | `MobileNavDrawer` |
-| **756** | KICKOFF FILED | `LocationCombobox` sub-panel · `MantineCopyIdButton` · `MantineListingCardPattern` |
+| **756** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` | `LocationCombobox` sub-panel · `MantineCopyIdButton` · `MantineListingCardPattern` |
 | **757** | KICKOFF FILED | `AuthSheet` — largest, auth-critical, last |
 
 This table is the single state source for Sprint 60.

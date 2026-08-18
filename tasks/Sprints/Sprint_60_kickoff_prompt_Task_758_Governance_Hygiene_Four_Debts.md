@@ -14,22 +14,18 @@ edit files those tasks created or last touched (`FilterMultiToggle.tsx`, `Filter
 `NotificationItem.module.css`, `MobileNavDrawer.module.css`). Starting before they land makes the
 diff unreviewable. Verify with `git log --oneline -6` and STOP if they are absent.
 
-## Task 756 runs first (owner decision, 2026-08-17 — supersedes the earlier deferral)
+## Task 756 landed — prerequisite satisfied (verified 2026-08-18)
 
-**Task 756 must be committed before this task starts**, on the same terms as 752-755 above. Verify with
-`git log --oneline -8` and STOP if it is absent.
+Task 756 is committed as `29f9b16de` and pushed; its rework (R2) closed the `leading-snug` regression the review
+found. Two consequences for this task, both already checked by the orchestrator:
 
-Two consequences:
-
-1. **`check:design-tokens` must be green again.** The 3 `css-length` violations and the 1 stale marker currently in
-   `src/design-system/mantine/patterns/MantineCopyIdButton.module.css` belong to 756's own unfinished work and are
-   756's to close. If they are still present when you start, 756 is not actually done — STOP and report, do not absorb
-   its debt into this task.
-2. **Take a fresh AC1 baseline.** The owner's `screenshots:assert:fast` run of 2026-08-17
-   (`.screenshots/rendered-assert/2026-08-17T18-35/`) was captured while 756 was half-finished, so once 756 lands that
-   run is stale and cannot support "no other cell changed verdict". Capture your own before-run immediately prior to
-   item 1, and diff against that.
-
+1. **`check:design-tokens --strict` is green — 0 violations, 0 stale markers.** The four findings that sat in
+   `MantineCopyIdButton.module.css` across four consecutive reviews are closed with justified markers. There is no
+   inherited red gate: under AC5 a non-zero exit is now a real finding of yours.
+2. **Take your own AC1 baseline.** The owner's `screenshots:assert:fast` run of 2026-08-17
+   (`.screenshots/rendered-assert/2026-08-17T18-35/`) predates 756 and is stale — it was captured while 756 was
+   half-finished. Capture a fresh before-run immediately prior to item 1 and diff against that, not against the
+   2026-08-17 manifest.
 
 ## Pre-read (load ONLY these)
 
@@ -91,7 +87,7 @@ branches.
 
 ---
 
-## Item 3 — Complete the `transition-property` lists in two CSS Modules
+## Item 3 — Complete the `transition-property` lists in three CSS Modules
 
 **Evidence.** Tailwind v4.3.0 compiles `.transition-colors` to:
 
@@ -99,19 +95,23 @@ branches.
 transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to
 ```
 
-`src/modules/notifications/components/NotificationItem.module.css` (Task 754) and
-`src/components/layout/MobileNavDrawer.module.css` (Task 755) both stop at `stroke`. Visually this
-is a no-op — neither element has a gradient — but `getComputedStyle(el).transitionProperty` returns a
-different string, so the "0 mismatches" claims in both session logs had a blind spot on the exact
-property those modules exist to reproduce.
+Three modules stop at `stroke`:
 
-**Required change.** Append `--tw-gradient-from, --tw-gradient-via, --tw-gradient-to` to the
-`transition-property` declaration in both files, so each is a literal match for what Tailwind emits.
-Do not change `transition-timing-function` or `transition-duration` — those already resolve to
-identical computed values (`cubic-bezier(.4,0,.2,1)` and `.15s`) and their shorter `var()` form is
-correct.
+- `src/modules/notifications/components/NotificationItem.module.css` (Task 754)
+- `src/components/layout/MobileNavDrawer.module.css` (Task 755)
+- `src/design-system/mantine/patterns/MantineCopyIdButton.module.css` (found during the Task 756 review)
 
----
+Visually all three are no-ops — none of those elements has a gradient — but
+`getComputedStyle(el).transitionProperty` returns a different string, so the "0 mismatches" claims in the 754 and
+755 session logs had a blind spot on the exact property those modules exist to reproduce.
+
+**There is already a correct reference in the repo.** `src/design-system/mantine/patterns/MantineListingCardPattern.module.css:222`
+carries the complete form — the three `--tw-gradient-*` entries **and** the `var(--tw-ease, …)` /
+`var(--tw-duration, …)` wrappers. Match that shape; do not invent a fourth variant.
+
+**Required change.** Bring all three files to a literal match with what Tailwind emits. Do not otherwise alter
+`transition-timing-function` or `transition-duration` where their shorter `var()` form already resolves to the same
+computed value (`cubic-bezier(.4,0,.2,1)` and `.15s`) — changing those is not part of this item.
 
 ## Item 4 — Add a dev-server preflight to `check:click-shield`
 

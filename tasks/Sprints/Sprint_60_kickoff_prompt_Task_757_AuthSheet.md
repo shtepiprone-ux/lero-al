@@ -18,6 +18,59 @@ sub-panel fragment is migrated, and this task follows that decision rather than 
 requires.** If no entry exists, stop and report `BLOCKED` — do not proceed on the assumption that auth is
 uncovered.
 
+## What Sprint 60 learned — mandatory, not advisory (added 2026-08-18, after 752-756 landed)
+
+This file is ~161 utilities on a critical flow mounted by `Header.tsx:66-75` on **every page**. Two of the five
+completed tasks in this sprint shipped a visual regression of the same kind, and both were caught only in review.
+At this file's scale the same mistake is not a 16px nudge — it is an auth surface that silently changes.
+
+### 1. Establish, per utility, whether it currently renders — before replacing it
+
+`@mantine/core/styles.css` ships with **no `@layer` wrapper**; Tailwind utilities live in `@layer utilities`.
+Unlayered CSS beats layered CSS regardless of specificity or source order. So **any Tailwind class on a Mantine
+component that competes with a declaration Mantine's own root class already sets has never rendered.**
+
+Proven twice this sprint:
+
+| Task | Utility | Mantine root sets | Was it live? | What went wrong |
+|---|---|---|---|---|
+| 752 | `justify-start` / `text-left` on `Button` | `display:inline-block`, `text-align:center` | **No** | Replaced with `justify="flex-start"`, which *does* work — labels moved 16.1px in the vertical branch |
+| 756 | `leading-snug` on `Text` | `line-height: var(--text-lh, …)` | **No** | Moved into a CSS Module — line-height went 20.02px → 19.25px on every listing-card title |
+
+**Required procedure for every utility in your census.** Read the property off the component's own compiled CSS in
+`node_modules/@mantine/core/styles/<Component>.css` first. Then:
+
+- Mantine sets that property → the utility is **inert**. **Delete it and substitute nothing.** Record it in the
+  census as `inert — removed, never rendered`, naming the Mantine declaration that beat it.
+- Mantine does not set it → the utility is **live**. Reproduce it exactly (prop, style, or CSS Module).
+
+`AuthSheet.tsx` imports `Alert`, `Button`, `InputLabel`, `PasswordInput`, `Text` and `TextInput`. Every Tailwind
+class sitting on one of those is a candidate. Do not assume; read the CSS.
+
+### 2. Class-derived expectation is not evidence
+
+Task 756's first pass compared the after-state against "what the Tailwind class should produce" and passed a real
+regression, because the expectation and the after-state were derived from the same assumption. AC3 here is satisfied
+only by a **genuine before/after DOM capture**: check out the pre-migration content, capture, restore, capture again,
+diff. Record a `git hash-object` witness before the swap, after the swap, and after the restore, so the restoration
+is proven rather than asserted — the protocol in `docs/sessions/evidence/task756/ac3-before-after-witness.log`.
+
+**Retain the artifacts under `docs/sessions/evidence/task757/`.** Four tasks in this sprint captured proof into
+scratch directories and deleted it; 756 was the first to keep it. Keep it.
+
+### 3. The shared fragment decision is made — do not re-decide it
+
+Task 756 landed as `29f9b16de`. The canonical component is
+`src/design-system/mantine/patterns/MantineAddItemPanel.tsx`, exported from the patterns barrel. It owns **only**
+the outer chrome (`border` / `rounded-xl` / `p-3` / `gap-2` / `bg-muted/30`), callers own their fields as children,
+and a caller's own leading margin is passed via the optional `mt` prop rather than baked in — `LocationCombobox`
+passes `mt={4}` for its former `mt-1`. `bg-muted/30` is reproduced as the literal
+`color-mix(in oklab, var(--muted) 30%, transparent)` Tailwind itself compiles, per D35.
+
+`AuthSheet`'s add-company panel used the identical fragment verbatim. Consume the component; do not fork it, do not
+re-derive the decision, and do not modify it for this task's convenience — if it genuinely does not fit, STOP and
+report rather than editing a component another surface already depends on.
+
 ## Exact current state — read 2026-08-16, verify before editing
 
 The file carries ~161 Tailwind utility tokens across ~25 distinct `className` literals. Confirmed samples:
@@ -84,10 +137,14 @@ rule, or Supabase call · any string change.
 - **AC2** — the `critical-flow-registry.md` entry is named and its required automated regression evidence produced and passing.
 - **AC3** — rendered evidence, zero visual delta, at 320 / 375 / 390 / 480 / 768 / 1024 / 1440, all four locales at 320 and at the desktop width, `uk@320` mandatory — for **each** of: login · registration · recovery · the success state · at least one validation-error state.
 - **AC4** — the "or" separator renders identically before and after, shown side by side.
-- **AC5** — the shared fragment is migrated exactly as Task 756's report specifies; the report quotes that decision.
+- **AC5** — the add-company panel consumes `MantineAddItemPanel` from the patterns barrel unmodified; the report
+  quotes Task 756's decision and states which props were used.
 - **AC6** — all three auth flows completed end to end manually, with the transcript recorded; no console error introduced.
 - **AC7** — `npm run typecheck`, `check:design-tokens`, `check:i18n`, `check:locale-leak`, `npm run build` all exit 0.
 - **AC8** — no string content changed; `check:i18n` key parity unchanged.
+- **AC9** — the census in AC1 classifies **every** utility that sat on a Mantine component as `live` or `inert`,
+  each with the Mantine declaration consulted. Every `inert` one is deleted with nothing substituted. A utility
+  replaced by a working prop without this classification is a failed AC, even if the render happens to match.
 
 ## Verification plan
 

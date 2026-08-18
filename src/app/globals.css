@@ -385,7 +385,7 @@
      White on #C45C50: 4.03:1 — WCAG AA large text/UI ✓ (was 3.55:1 under --primary).
      No .dark override: dark mode is dormant (see the .dark brand note) and this band is the
      same coral in both schemes, exactly as --primary is. */
-  --hero-bg:             #C45C50;
+  --hero-bg:             #B85C50;
 
   /* Secondary — neutral light, for secondary buttons/tags */
   --secondary:           var(--neutral-100);

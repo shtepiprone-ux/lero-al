@@ -1,0 +1,22 @@
+
+> lero-al@0.1.0 check:click-shield
+> node scripts/check-click-shield.mjs
+
+
+🔍 Click-shield hit-test gate
+   Target: http://127.0.0.1:3000
+   Scenarios: base, drawer, modal
+   Locales: sq, en, uk, it
+   Viewports: mobile-320, mobile-375, mobile-390, desktop-1024
+
+
+❌ DEV-SERVER DETECTED — refusing to run against `npm run dev`.
+   Found <nextjs-portal> at http://127.0.0.1:3000/sq — this is the Next.js DevTools overlay,
+   present only under `next dev`, covering the whole viewport. Every candidate on every cell
+   would report a false interception attributed to it, not a real click-shield defect.
+   This gate requires a local PRODUCTION build:
+     npm run build
+     CLICK_SHIELD_CI_FIXTURE=1 npm start
+     BASE_URL=http://127.0.0.1:3000 CLICK_SHIELD_CI_FIXTURE=1 npm run check:click-shield
+
+EXIT_CODE=2

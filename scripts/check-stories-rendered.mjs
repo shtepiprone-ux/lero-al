@@ -192,10 +192,12 @@ const ASSERT_STORIES = [
   { id: 'primitives-command--mobile-bottom-sheet', label: 'Command/MobileBottomSheet',        anchors: [{ type: 'slot', value: 'command', label: 'command' }] },
   { id: 'primitives-sheet--mobile-bottom-sheet',   label: 'Sheet/MobileBottomSheet',          anchors: [{ type: 'slot', value: 'sheet-content', label: 'sheet-content' }] },
   { id: 'primitives-navigationmenu--mobile-open',  label: 'NavigationMenu/MobileOpen',        anchors: [{ type: 'slot', value: 'navigation-menu-popup', label: 'nav-popup' }] },
-  // ── Notification (3 — Task 424) ──
-  { id: 'notifications-notificationcenter--default',          label: 'NotificationCenter/Default',          anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
-  { id: 'notifications-notificationcenter--mobile-bottom-sheet', label: 'NotificationCenter/MobileBottomSheet', anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
-  { id: 'notifications-notificationcenter--empty',            label: 'NotificationCenter/Empty',            anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
+  // NotificationCenter coverage: `Mantine/Primitives/NotificationBellView` (in
+  // MANTINE_OVERLAY_PRIMITIVES) scripted-clicks the bell open and asserts geometry against the
+  // real NotificationCenter + NotificationItem via the opened-popover path. The three
+  // `Notifications/NotificationCenter` rows once here (Task 424) pointed at a story file that no
+  // longer exists — every cell failed `render failure [sb-show-errordisplay]`, silently skipped
+  // by `--mantine-only`. Removed, not replaced (Task 758 item 1).
   // ── ListingDetailView (3 — Task 468 dedup: 14→3) ──
   { id: 'listings-listingdetailview--public-listing',            label: 'ListingDetailView/Public',                  anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
   { id: 'listings-listingdetailview--staff-preview-unpublished', label: 'ListingDetailView/StaffPreviewUnpublished', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },

@@ -1004,6 +1004,41 @@ async function runChecks() {
   console.log('');
 
   const browser = await chromium.launch({ headless: true });
+
+  // Task 758 item 4 — dev-server preflight. This gate is designed for a local PRODUCTION build
+  // (governance-pr.yml: npm run build -> npm start -> check:click-shield). Run against
+  // `npm run dev` instead, every candidate on every cell reports a false interception attributed
+  // to `<nextjs-portal>` at (0,0) — the Next.js DevTools overlay, which exists only under `next
+  // dev` and paints over the whole viewport. `document.querySelector('nextjs-portal')` is the
+  // observed marker. Same principle the modal scenario already applies (A2): a result from a
+  // target this gate cannot validly measure must refuse to produce a verdict, not report a
+  // filtered or partial one — so this probe runs BEFORE the first scenario and exits immediately,
+  // with zero scenarios executed, rather than letting the false positives surface downstream.
+  const preflightPage = await browser.newPage();
+  let devServerDetected = false;
+  try {
+    await preflightPage.goto(`${BASE_URL}/${LOCALES[0]}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    devServerDetected = await preflightPage.evaluate(() => !!document.querySelector('nextjs-portal'));
+  } catch {
+    // Preflight navigation failure (server unreachable, wrong URL, etc.) is a real harness
+    // problem — let the normal per-cell try/catch in the scenario loop below handle and report
+    // it with its own diagnostics, rather than masking it behind this probe.
+  } finally {
+    await preflightPage.close();
+  }
+  if (devServerDetected) {
+    console.error('\n❌ DEV-SERVER DETECTED — refusing to run against `npm run dev`.');
+    console.error(`   Found <nextjs-portal> at ${BASE_URL}/${LOCALES[0]} — this is the Next.js DevTools overlay,`);
+    console.error('   present only under `next dev`, covering the whole viewport. Every candidate on every cell');
+    console.error('   would report a false interception attributed to it, not a real click-shield defect.');
+    console.error('   This gate requires a local PRODUCTION build:');
+    console.error('     npm run build');
+    console.error('     CLICK_SHIELD_CI_FIXTURE=1 npm start');
+    console.error('     BASE_URL=http://127.0.0.1:3000 CLICK_SHIELD_CI_FIXTURE=1 npm run check:click-shield\n');
+    await browser.close();
+    process.exit(2);
+  }
+
   const cells = [];
   let emptyCandidateCells = 0;
   let scenarioOpenFailures = 0;

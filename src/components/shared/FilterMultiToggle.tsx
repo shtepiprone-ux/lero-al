@@ -1,7 +1,6 @@
 'use client'
 
 import { Button, Group, Stack } from '@mantine/core'
-import { cn } from '@/lib/utils'
 
 interface FilterMultiToggleProps {
   options: readonly { value: string; labelKey: string }[]
@@ -35,18 +34,14 @@ export function FilterMultiToggle({
 
   if (vertical) {
     return (
-      <Stack {...rootProps} gap={6} className={className}>
+      <Stack {...rootProps} gap={6} className={className} data-testid="filter-chip-row">
         {buttons}
       </Stack>
     )
   }
 
-  // `flex-wrap` className is a deliberate compatibility anchor (redundant with the `wrap="wrap"`
-  // prop below — same computed flex-wrap value) so filterLeafComponents.smoke.test.tsx's
-  // `container.querySelector('.flex-wrap')` root lookup keeps resolving; that test file is out
-  // of this task's scope to edit.
   return (
-    <Group {...rootProps} gap="xs" wrap="wrap" className={cn('flex-wrap', className)}>
+    <Group {...rootProps} gap="xs" wrap="wrap" className={className} data-testid="filter-chip-row">
       {buttons}
     </Group>
   )

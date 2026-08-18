@@ -13,11 +13,7 @@ interface FilterRoomsRowProps {
 
 export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
   return (
-    // `flex-wrap` className is a deliberate compatibility anchor (redundant with the `wrap="wrap"`
-    // prop below — same computed flex-wrap value) so filterLeafComponents.smoke.test.tsx's
-    // `container.querySelector('.flex-wrap')` root lookup keeps resolving; that test file is out
-    // of this task's scope to edit.
-    <Group {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} gap="xs" wrap="wrap" className="flex-wrap">
+    <Group {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} gap="xs" wrap="wrap" data-testid="filter-chip-row">
       {ROOMS_OPTIONS.map(opt => {
         const strVal = String(opt)
         return (

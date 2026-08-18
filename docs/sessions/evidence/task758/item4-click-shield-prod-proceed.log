@@ -1,0 +1,79 @@
+
+> lero-al@0.1.0 check:click-shield
+> node scripts/check-click-shield.mjs
+
+
+🔍 Click-shield hit-test gate
+   Target: http://127.0.0.1:3000
+   Scenarios: base, drawer, modal
+   Locales: sq, en, uk, it
+   Viewports: mobile-320, mobile-375, mobile-390, desktop-1024
+
+
+── Scenario: base — Base route (untouched) ──
+   [base] /sq × mobile-320: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /sq × mobile-375: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /sq × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=25, excluded(below/above-fold)=0
+      cleared:      <a class="FooterView_footerLink__SWOcW mantine-Text-root mantine-Anchor-root"> "Shto njoftim" @ scrollY=1717 (fixed/sticky interceptor <a class="MobileBottomNavView_navItem__q7rhi MobileBottomNavView_navItemActive__KCmPo">, nearest positioned ancestor: <nav class="mobile-bottom-nav MobileBottomNavView_navBar__O_rgE mantine-hidden-from-md"> @ (0,788 390x56))
+   [base] /sq × desktop-1024: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions
+   [base] /en × mobile-320: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /en × mobile-375: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /en × mobile-390: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /en × desktop-1024: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions
+   [base] /uk × mobile-320: ✅ PASS (1 transient, scroll-cleared) — checked=26, excluded(below/above-fold)=0
+      cleared:      <a class="FooterView_brandLink__MJuqX mantine-Text-root mantine-Anchor-root"> "Lero.al" @ scrollY=1669 (fixed/sticky interceptor <a class="MobileBottomNavView_navItem__q7rhi MobileBottomNavView_navItemActive__KCmPo">, nearest positioned ancestor: <nav class="mobile-bottom-nav MobileBottomNavView_navBar__O_rgE mantine-hidden-from-md"> @ (0,756 320x56))
+   [base] /uk × mobile-375: ✅ PASS — checked=26, excluded(below/above-fold)=0, 0 interceptions
+   [base] /uk × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=26, excluded(below/above-fold)=0
+      cleared:      <a class="FooterView_footerLink__SWOcW mantine-Text-root mantine-Anchor-root"> "Додати оголошення" @ scrollY=1731 (fixed/sticky interceptor <a class="MobileBottomNavView_navItem__q7rhi">, nearest positioned ancestor: <nav class="mobile-bottom-nav MobileBottomNavView_navBar__O_rgE mantine-hidden-from-md"> @ (0,788 390x56))
+   [base] /uk × desktop-1024: ✅ PASS — checked=24, excluded(below/above-fold)=0, 0 interceptions
+   [base] /it × mobile-320: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /it × mobile-375: ✅ PASS — checked=25, excluded(below/above-fold)=0, 0 interceptions
+   [base] /it × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=25, excluded(below/above-fold)=0
+      cleared:      <a class="FooterView_footerLink__SWOcW mantine-Text-root mantine-Anchor-root"> "Aggiungi annuncio" @ scrollY=1731 (fixed/sticky interceptor <a class="MobileBottomNavView_navItem__q7rhi MobileBottomNavView_navItemActive__KCmPo">, nearest positioned ancestor: <nav class="mobile-bottom-nav MobileBottomNavView_navBar__O_rgE mantine-hidden-from-md"> @ (0,788 390x56))
+   [base] /it × desktop-1024: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions
+
+── Scenario: drawer — AuthSheet open (Mantine Drawer, role="dialog") ──
+   [drawer] /sq × mobile-320: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /sq × mobile-375: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /sq × mobile-390: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /sq × desktop-1024: ✅ PASS — checked=31, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /en × mobile-320: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /en × mobile-375: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /en × mobile-390: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /en × desktop-1024: ✅ PASS — checked=31, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /uk × mobile-320: ✅ PASS — checked=33, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /uk × mobile-375: ✅ PASS — checked=33, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /uk × mobile-390: ✅ PASS — checked=33, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /uk × desktop-1024: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /it × mobile-320: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /it × mobile-375: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /it × mobile-390: ✅ PASS — checked=32, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [drawer] /it × desktop-1024: ✅ PASS — checked=31, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+
+── Scenario: modal — LightboxView open (Mantine Modal, role="dialog") ──
+   [modal] /sq/ci/click-shield-modal × mobile-320: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × mobile-375: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × mobile-390: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=20, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-320: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-375: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-390: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=20, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-320: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-375: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-390: ✅ PASS — checked=23, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=21, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-320: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-375: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-390: ✅ PASS — checked=22, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=20, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+
+── Summary ──────────────────────────────────────────────────
+   Scenarios: 3  Cells: 48  Elements checked: 1256  Excluded (below/above-fold): 0  Interceptions: 0  Cleared (transient): 4  Empty-candidate cells: 0  Scenario-open failures: 0
+   [base] cells=16  checked=396  excluded=0  violations=0
+   [drawer] cells=16  checked=512  excluded=0  violations=0
+   [modal] cells=16  checked=348  excluded=0  violations=0
+
+✅ No click-shield interceptions detected.
+
+EXIT_CODE=0

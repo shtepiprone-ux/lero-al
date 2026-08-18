@@ -1,0 +1,17 @@
+{
+  "notificationItem": {
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionDuration": "0.15s"
+  },
+  "mobileNavDrawer": {
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionDuration": "0.15s"
+  },
+  "copyIdButton": {
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionDuration": "0.15s"
+  }
+}

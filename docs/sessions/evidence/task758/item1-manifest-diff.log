@@ -1,0 +1,73 @@
+before cells: 2312 after cells: 2276
+removed (in before, not in after): 36 [
+  'notifications-notificationcenter--default|sq|mobile-320',
+  'notifications-notificationcenter--default|sq|mobile-375',
+  'notifications-notificationcenter--default|sq|mobile-390',
+  'notifications-notificationcenter--default|en|mobile-320',
+  'notifications-notificationcenter--default|en|mobile-375',
+  'notifications-notificationcenter--default|en|mobile-390',
+  'notifications-notificationcenter--default|uk|mobile-320',
+  'notifications-notificationcenter--default|uk|mobile-375',
+  'notifications-notificationcenter--default|uk|mobile-390',
+  'notifications-notificationcenter--default|it|mobile-320',
+  'notifications-notificationcenter--default|it|mobile-375',
+  'notifications-notificationcenter--default|it|mobile-390',
+  'notifications-notificationcenter--mobile-bottom-sheet|sq|mobile-320',
+  'notifications-notificationcenter--mobile-bottom-sheet|sq|mobile-375',
+  'notifications-notificationcenter--mobile-bottom-sheet|sq|mobile-390',
+  'notifications-notificationcenter--mobile-bottom-sheet|en|mobile-320',
+  'notifications-notificationcenter--mobile-bottom-sheet|en|mobile-375',
+  'notifications-notificationcenter--mobile-bottom-sheet|en|mobile-390',
+  'notifications-notificationcenter--mobile-bottom-sheet|uk|mobile-320',
+  'notifications-notificationcenter--mobile-bottom-sheet|uk|mobile-375',
+  'notifications-notificationcenter--mobile-bottom-sheet|uk|mobile-390',
+  'notifications-notificationcenter--mobile-bottom-sheet|it|mobile-320',
+  'notifications-notificationcenter--mobile-bottom-sheet|it|mobile-375',
+  'notifications-notificationcenter--mobile-bottom-sheet|it|mobile-390',
+  'notifications-notificationcenter--empty|sq|mobile-320',
+  'notifications-notificationcenter--empty|sq|mobile-375',
+  'notifications-notificationcenter--empty|sq|mobile-390',
+  'notifications-notificationcenter--empty|en|mobile-320',
+  'notifications-notificationcenter--empty|en|mobile-375',
+  'notifications-notificationcenter--empty|en|mobile-390',
+  'notifications-notificationcenter--empty|uk|mobile-320',
+  'notifications-notificationcenter--empty|uk|mobile-375',
+  'notifications-notificationcenter--empty|uk|mobile-390',
+  'notifications-notificationcenter--empty|it|mobile-320',
+  'notifications-notificationcenter--empty|it|mobile-375',
+  'notifications-notificationcenter--empty|it|mobile-390'
+]
+added (in after, not in before): 0 []
+verdict changed (same key, different verdict): 6
+[
+  {
+    "k": "mantine-primitives-checkbox--default|sq|mobile-390",
+    "before": "fail",
+    "after": "pass"
+  },
+  {
+    "k": "mantine-primitives-navigationmenu--default|uk|desktop-1024",
+    "before": "pass",
+    "after": "fail"
+  },
+  {
+    "k": "mantine-primitives-popover--default|en|mobile-320",
+    "before": "fail",
+    "after": "pass"
+  },
+  {
+    "k": "mantine-primitives-popover--default|it|mobile-390",
+    "before": "fail",
+    "after": "pass"
+  },
+  {
+    "k": "mantine-primitives-popover--default|it|desktop-1024",
+    "before": "fail",
+    "after": "pass"
+  },
+  {
+    "k": "primitives-dialog--mobile-full-width|sq|mobile-320",
+    "before": "pass",
+    "after": "fail"
+  }
+]

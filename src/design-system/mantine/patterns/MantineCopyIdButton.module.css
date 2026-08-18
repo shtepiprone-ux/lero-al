@@ -24,7 +24,7 @@
   align-items: center;
   gap: 0.125rem; /* design-tokens-allow: gap: 0.125rem — Tailwind's compiled gap-0.5 (2px) verbatim; no --spacing-* token matches this exact icon-to-label gap */
   border-radius: 0.25rem; /* design-tokens-allow: border-radius: 0.25rem — Tailwind's bare `rounded` default (4px); not this project's --radius-* scale (sm=7.2px/md=9.6px/lg=12px), reproduced verbatim */
-  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
   transition-timing-function: var(--default-transition-timing-function);
   transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default), confirmed defined in the built CSS; the static scanner cannot see through the opaque `@import "tailwindcss"` */
 }

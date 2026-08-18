@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Button, Group, Text, TextInput } from '@mantine/core';
+import { Button, Flex, Text, TextInput } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 // Direct file import (not the `patterns` barrel) — check:story-coverage (scripts/check-story-coverage.mjs)
 // resolves import specifiers to concrete file paths and the manifest entry below is the component
@@ -20,7 +20,8 @@ const meta: Meta<typeof MantineAddItemPanel> = {
           'both used the identical Tailwind fragment `"border rounded-xl p-3 flex flex-col gap-2 ' +
           'bg-muted/30"` verbatim. Owns ONLY the outer chrome (border/radius/padding/gap/background); ' +
           'callers own their own field layout as children. Viewport and locale switched via Storybook ' +
-          'toolbar.',
+          "toolbar. The children below mirror LocationCombobox's real composition, including its " +
+          'button row, so this fixture is a faithful reference rather than an arbitrary arrangement.',
       },
     },
   },
@@ -37,10 +38,10 @@ export const Default: Story = {
       <MantineAddItemPanel>
         <Text size="xs" fw={600}>{storyT(l, 'storybook.mantine.action_add_new')}</Text>
         <TextInput placeholder={storyT(l, 'storybook.mantine.form_address')} radius="lg" />
-        <Group gap="xs">
+        <Flex direction={{ base: 'column', sm: 'row' }} gap="xs">
           <Button type="button">{storyT(l, 'storybook.mantine.admin_add_label')}</Button>
           <Button type="button" variant="default">{storyT(l, 'storybook.mantine.action_cancel')}</Button>
-        </Group>
+        </Flex>
       </MantineAddItemPanel>
     );
   },

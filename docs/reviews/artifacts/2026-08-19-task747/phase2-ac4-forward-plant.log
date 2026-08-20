@@ -1,0 +1,4 @@
+❌ CLAIM-STALE docs/sessions/2026-08-20-task747-phase2-ledger-claim-projection.md:70: CLAIM-STALE — "docs/reviews/2026-08-16-task741-final-closeout.review-ledger.json" claims "APPROVED" but the ledger derives "APPROVED WITH NOTES".
+
+Results: 0 PASS / 1 DRIFT / 0 BAD-INPUT
+EXIT_CODE=1

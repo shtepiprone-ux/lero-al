@@ -62,6 +62,7 @@
     "check:review-ledger": "node scripts/check-review-ledger.mjs",
     "check:review-ledger:verify": "node scripts/check-review-ledger.mjs --verify-gate",
     "check:mojibake": "node scripts/check-mojibake.mjs",
+    "check:ledger-claim-projection": "node scripts/check-ledger-claim-projection.mjs",
     "check:story-coverage": "node scripts/check-story-coverage.mjs",
     "check:story-coverage:report": "node scripts/check-story-coverage.mjs --report",
     "check:story-coverage:update-exempt": "node scripts/check-story-coverage.mjs --update-exempt",

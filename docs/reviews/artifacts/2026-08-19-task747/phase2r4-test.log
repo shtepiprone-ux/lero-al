@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  81 passed (81)
+      Tests  1400 passed (1400)
+   Start at  15:20:02
+   Duration  18.14s (transform 7.21s, setup 11.07s, import 85.81s, tests 52.53s, environment 103.78s)
+
+EXIT_CODE=0

@@ -1,204 +1,74 @@
-# Task 747 — Phase 1 rework brief (REVISION 3)
+# Task 747 — Phase 1 rework brief (REVISION 5)
 
-**Sprint:** 61 · **Kickoff:** `Sprint_61_kickoff_prompt_Task_747_Ledger_State_Projection_Gate.md` (unchanged, still
-the authority) · **Target artifact:** `tasks/Sprints/Sprint_61_Task_747_phase1_decision.md`
-**Status:** Phase 1 REOPENED. `REVISION 2` was rejected in orchestrator review. Phase 2 remains blocked.
-**Still binding:** no file under `scripts/`, `scripts/__tests__/` or `package.json` may be touched. This is a
-document-only rework.
+**Status:** READY FOR EXECUTOR — document-only Phase 1 rework. Phase 2 remains blocked until the owner approves the resulting decision. This brief replaces rejected REVISION 4; do not execute an earlier brief.
 
-## 0. What happened, so you do not repeat it
+**Authority:** Sprint_61_kickoff_prompt_Task_747_Ledger_State_Projection_Gate.md remains binding. The only pre-existing owner decision is D1: any ledgerHash mismatch is LEDGER-MOVED; a matching hash with a different claim is CLAIM-STALE; both matching is pass. This brief is an executor contract, not an owner approval.
 
-`REVISION 1` and `REVISION 2` were written by the orchestrator, not by an executor, and were not independently
-reviewed before delivery. Two independent adversarial reviews then found two P0s and nine further defects, several
-of them introduced by those very edits. Read §2 as a list of corrections to a flawed document, not as a fresh
-design. The mechanism choice (inline HTML-comment marker) survives; most of the reasoning around it does not.
+## 1. Deliverable and write set
 
-## 1. Owner decisions (quoted — these are settled, do not re-open)
+Rewrite Sprint_61_Task_747_phase1_decision.md as REVISION 5, no more than 70 lines, answering Q1–Q4 below. Update the Task 747 row in docs/backlog.md concisely and add one new Phase 1 session log. Do not edit any earlier session log, superseded ledger, docs/backlog-archive.md, scripts/, scripts/__tests__/, package.json, or workflow file.
 
-**D1 — AC5, decided 2026-08-20:**
+Do not self-approve. No Phase 2 code, test, marker, or package-script write is allowed in this session.
 
-> Обирайте 1 — literal: будь-який hash mismatch → LEDGER-MOVED. Правило має бути таким: — ledgerHash збігається,
-> але значення різні → CLAIM-STALE. — ledgerHash не збігається — незалежно від того, збігається value чи ні →
-> LEDGER-MOVED. — Збігаються і hash, і value → pass. Так AC5 виконується буквально: будь-яка зміна source ledger
-> робить pin застарілим і дає окремий failure. Фраза в decision про "correct-by-coincidence … passes" має бути
-> прибрана.
+## 2. Q1 — chosen marker format
 
-That truth table is total and replaces the conditional table in `REVISION 2`. `D1` ceases to be an open question.
+The live claim is a visible, declared inline HTML element, not a hidden HTML comment and not a registry entry. It contains the whole visible value the control verifies:
 
-**D2 — process, decided 2026-08-20:** the executor writes `REVISION 3`; the orchestrator reviews it. Author and
-reviewer must not be the same agent.
+~~~md
+Open: <span data-ledger-claim data-source="docs/reviews/example.review-ledger.json" data-field="openP0" data-ledger-hash="<git-hash-object>">4 P0</span>
+~~~
 
-## 2. Mandatory corrections
+For data-field="decision", the element body is the complete visible decision, for example APPROVED WITH NOTES. There is no separate value attribute.
 
-Each item states the defect, the evidence, and what the corrected document must say. Every line/file reference below
-was verified against the tree on 2026-08-20.
+This is not a generic N P0 grep: the checker discovers only literal data-ledger-claim elements; data-field declares the ledger association; and it reads only that element's body. For openP0/openP1/openP2, the body must equal exactly the derived number followed by P0/P1/P2. For decision, it must equal review.decision exactly. The P0/P1/P2 label must be inside the element, never beside it.
 
-### R1 — P0. Delete the legal-`source` restriction. Establish validity by delegation instead.
+All attribute values are double-quoted. data-source, data-field, and data-ledger-hash are mandatory; data-ledger-claim is the required marker attribute. A marker is one line, has no nested marker, has no unknown or duplicate attribute, no > or HTML entity in an attribute or body, and uses a 40-character lower-case hexadecimal data-ledger-hash. Missing, duplicate, unknown, or malformed attributes; malformed quoting; nested markup; and malformed body are distinct bad-input messages with exit 2. Markers inside fenced code blocks or inline code spans are ignored by the checker; this is a checker-evaluated syntax rule, not an author exemption.
 
-`REVISION 2` ruled that `source` must end `.review-ledger.json`, making `*.SUPERSEDED.json` bad input. That makes
-**AC3 unreachable**: instance ⓐ *is* `docs/reviews/2026-08-12-task691-….review-ledger.SUPERSEDED.json`, so the named
-acceptance fixture would exit 2 with no ledger-derived value, and AC3 plus Appendix A checkpoint 4 both require the
-derived value in the message. The restriction is also unforced: `parseFileArgument` (`check-review-ledger.mjs:1284-1300`)
-applies **no** suffix or directory filter, and `--file` routes any path through the full
-`validateLedger(…, { checkPaths: true })` at `:1347` — proof: `node scripts/check-review-ledger.mjs --file package.json`
-schema-validates `package.json` as a ledger.
+Reject all four preflight alternatives in the decision: fenced block (visible block noise), YAML front-matter (one value-set per file cannot express backlog rows), generated region (would imply document writes), and registry JSON (duplicates the visible claim elsewhere). State that the chosen visible inline element is a fifth mechanism.
 
-**Required:** `source` is any path under `docs/reviews/` ending `.review-ledger.json` **or**
-`.review-ledger.SUPERSEDED.json`. Validity is established **per source, at check time**, by
-`node scripts/check-review-ledger.mjs --file <source>` — exit 0 means the ledger is internally consistent, including
-its `review.coverage`. This is what actually closes the "an unvalidated ledger could lie" gap; a path ban never did.
+## 3. Q2 and Q4 — fields, sources, validation
 
-**Record these consequences in the document** (they bind Phase 2):
+v1 fields are openP0, openP1, openP2, and decision. Defer total, verified, unverified, and handoff.commitPush.
 
-- delegation costs one Node spawn per **distinct** source — dedup by source; measured 76 ms–1466 ms each, because
-  `validateLedger({checkPaths:true})` invokes a native CSS compiler (`lightningcss`);
-- `--file` returns **only 0 or 1**. Missing file, missing argument and schema-invalid all return 1. Exit 2 must be
-  synthesized by the new checker;
-- `--file` output is emoji prose on stdout+stderr with embedded multi-line Node stack traces and no `--json`. Consume
-  the **exit code only**; do not grep the text;
-- `--file` skips what the default walk does at `:1296-1297` (draft/superseded discovery) and `:1358` (orphaned-
-  superseded back-reference). A `--file` PASS therefore does **not** imply `npm run check:review-ledger` passes.
+- openP0/openP1/openP2: derive from findings where priority equals the field priority and status === OPEN (check-review-ledger.mjs:927-929). Do not read review.coverage.
+- decision: read and string-compare review.decision.
 
-### R2 — P0. Define what is *not* a marker. The document currently breaks AC2 against itself.
+A production data-source must be a normalized repository-relative path below docs/reviews/ ending exactly in .review-ledger.json. Paths with .., *.SUPERSEDED.json, and *.DRAFT.json are illegal production sources: exit 2. The historical Task 691 superseded ledger is not a production source.
 
-`tasks/Sprints/*.md` is in the declared scan scope, and line 12 of the decision document is a complete, literal
-`<!-- ledger-claim: source=docs/reviews/<name>.review-ledger.json field=openP0 value=4 … -->`. On its first run the
-control would fail on the file that specifies it — `<name>` does not exist. AC2 requires exit 0 on today's tree.
+Before evaluating a production source, the checker must:
 
-**Required:** the format must exclude markers inside fenced code blocks and inline code spans, stated as part of the
-format, not as an implementation detail. The corrected document must be checkable by its own rule.
+1. fail SHALLOW-REPOSITORY with exit 2 if git rev-parse --is-shallow-repository reports true;
+2. check that the source exists and is readable, otherwise emit a named exit-2 error; and
+3. run node scripts/check-review-ledger.mjs --file <source> once per distinct source. A non-zero result is SOURCE-VALIDATION-FAILED, exit 2. Do not parse the validator's prose output or claim that the source is specifically invalid: the result can also mean the validator environment is unavailable.
 
-### R3 — P1. State exit-1/exit-2 precedence for an absent `source`.
+Missing, unreadable, illegal, or unvalidated source; unavailable git; and unsupported field all fail closed with exit 2. v1 has no SOURCE-RETIRED branch: a missing source cannot be evaluated and is bad input. This deliberately avoids inferring historical renames from the current tree.
 
-`REVISION 2` classified a missing source as exit 2 in Q4 *and* as exit 1 `SOURCE-RETIRED` in the failure table, with
-no ordering rule — so `SOURCE-RETIRED` could never fire. R1 dissolves most of this case (a superseded path is now a
-legal source), but the branch still exists when a source is gone from disk entirely.
+If one run contains both bad input and drift, print all drift findings but return exit 2.
 
-**Required:** successor resolution is attempted **before** bad input is declared. If a retained ledger names
-`<source-stem>.review-ledger.SUPERSEDED.json` in `review.supersedes`, the result is exit 1 `SOURCE-RETIRED` and the
-message names the successor path; otherwise exit 2. Note the verified caveat: 2 of the 5 `*.SUPERSEDED.json` files
-were *born* superseded (git status `A`) and never had a retained stem, so the substitution cannot resolve for them.
+## 4. Q3 — liveness and lifecycle
 
-### R4 — P1. AC1: compare all four enumerated mechanisms, and admit the choice is a fifth.
+Scan docs/backlog.md, tasks/Sprints/*.md, and docs/sessions/**/*.md, but inspect only declared markers. A file or number with no marker silently passes. Never open docs/backlog-archive.md; JSON is read only when named as a marker source.
 
-The rejection table lists mechanisms 2, 3 and 4 only. Preflight §4 mechanism 1 is *"fenced code block with a declared
-source path and `key=value` fields"* — it is neither adopted nor rejected, while the adopted mechanism (inline HTML
-comment) is not any of the four. AC1 requires the document to name **every** rejected alternative with its reason.
+A marker exists only while its carrier document is live. Immediately before closing a session log or sprint, or migrating a backlog row to the archive, remove every marker from that carrier; then close or archive it. A closed or archived document is never re-pinned or otherwise edited to clear this gate. The Phase 2 evidence must demonstrate this lifecycle and show docs/backlog-archive.md plus two closed session logs unflagged and byte-unchanged.
 
-**Required:** a rejection row for mechanism 1, and one sentence stating plainly that the chosen mechanism is a fifth
-option with why it beats mechanism 1 (a fenced block visibly alters the rendered document; the HTML comment does not).
+## 5. Bidirectionality and Phase 2 proof
 
-### R5 — P1. Implement D1's truth table verbatim; delete the old conditional table.
+The decision must reproduce D1's full table verbatim:
 
-Three rows, total, no conditions: hash matches + values differ → `CLAIM-STALE`; hash differs → `LEDGER-MOVED`
-regardless of value; hash and value both match → pass. Delete the sentence about a correct-by-coincidence claim
-passing with a stale pin, and delete the matching entry from the limitations list. `D1` is no longer an open decision.
+| Current hash | Visible element body | Result |
+|---|---|---|
+| matches data-ledger-hash | differs from ledger-derived text | CLAIM-STALE, exit 1 |
+| differs | any body | LEDGER-MOVED, exit 1 |
+| matches | equals ledger-derived text | pass |
 
-### R6 — P1. Session logs return to scan scope. `D2` was never an owner decision.
+Every drift message names the marker file and line, claimed visible text, and ledger-derived text.
 
-`REVISION 2` escalated the session-log exclusion to the owner on the grounds that the repository has no machine-
-readable closed-signal. Its own Q3 rule dissolves that: unmarked prose is a silent pass, so an unmarked closed
-session log costs nothing and is never flagged, and AC6 is satisfied because the control reports and never rewrites.
+After owner approval, Phase 2 must add one checker, its unit tests, one check: script, and at least one real visible marker on a live claim. AC3 is a test-only reconstruction under scripts/__tests__/fixtures/: it contains the Task 691 state openP0: 4 and a visible 2 P0 claim, and must report the file, claim, and derived value.
 
-**Required:** `docs/sessions/**` joins the scan scope; kickoff §1's three surfaces are all covered; the `D2` block is
-deleted. If you disagree, the burden is to show a *concrete* file that would be wrongly flagged — not a category.
+AC4 edits only the visible element body and restores it. AC5 edits a real retained ledger, keeps that ledger valid with every required coordinated change, proves LEDGER-MOVED, and fully restores it. Do not describe the AC5 four-edit recipe as viable until it is demonstrated in the Phase 2 plant. A --verify-gate flag may supplement, never replace, the real plants.
 
-### R7 — P1. The plants must be real and restorable. In-memory arms do not satisfy AC4/AC5.
+## 6. Verification and handoff
 
-AC4 requires the `git hash-object` of the touched file and both runs recorded; AC5 requires a restore; checkpoint 5
-requires *"both restore clean"*. Nothing is touched by an in-memory fixture, so there is nothing to hash and nothing
-to restore. The stated justification was also wrong: editing a finding's `status` **together with** the matching
-`coverage.openP0` keeps the ledger valid under `validateCoverageSummary` (`:917-936`) *and* moves the derived value,
-so a real, valid, restorable reverse plant is available in-tree.
+For this document-only rework, record git status --porcelain before and after, hashes before/after for every file changed in this session, npm run check:mojibake, npm run check:file-integrity, npm run build, and line counts for the decision (at most 70) and backlog (at most 80). The session report maps Q1–Q4 and this brief's requirements to the actual text written.
 
-**Required:** AC4/AC5 are recorded plants on real files with before/after hashes and restores. `--verify-gate` may
-ship **in addition**, as a repeatable arm and still as a flag on the single new script (kickoff §4 allows one
-`check:` entry), but it does not replace the recorded plants.
-
-### R8 — P1. The gate must not ship inert.
-
-The tree carries zero markers, and `REVISION 2` never commits Phase 2 to authoring one. AC2 and checkpoint 3 would
-then pass by checking nothing, and kickoff §1's objective — *make a live state claim checkable* — would not be
-advanced by the delivered artifact.
-
-**Required:** Phase 2 authors at least one marker on a real live claim. Verified constraint to design around: **all
-seven retained ledgers have `openP0 = openP1 = openP2 = 0`**, so a numeric marker on today's tree can only assert
-zero. `decision` is where a non-trivial live claim exists; the backlog row for a task with a retained ledger is the
-natural first site.
-
-### R9 — P1. The `ledgerHash` rationale is empirically false. Fix the reason, then keep or drop the method.
-
-`REVISION 2` justifies `git hash-object` by claiming an in-process SHA-1 would diverge on "this CRLF checkout".
-Measured: `.gitattributes` line 1 is `* text=auto eol=lf`, `core.autocrlf=false`; across all 7 retained ledgers,
-`docs/backlog.md` and the decision document — **0 CRLF bytes and 0 hash divergence**. A 2952-file sweep found 5
-divergences, all build-log artifacts, no ledger and no markdown.
-
-**Required:** delete the CRLF claim. Either keep `git hash-object` and justify it honestly (it is the identity git
-itself records, and it stays correct if `.gitattributes` ever changes), or compute in-process and say why that is
-safe here. Do not keep a decision propped up by a false measurement.
-
-### R10 — P2. Assert the "no marked claim" negative flow, do not merely decide it.
-
-Kickoff §7 requires that row to be *"asserted either way"*, and AC7 requires the new unit arms present. Silent pass
-needs its own unit arm.
-
-### R11 — P2. Fix the citations.
-
-- `:1064` is the body of `walkLedgers`, **not** `runValidation` — which begins at `:1291` and calls `walkLedgers` at
-  `:1315`, only in the non-`--file`, non-`--ci` branch.
-- The walk **recurses into subdirectories** (`:1057`), so the retained set is not a fixed seven; "12 on disk, 7
-  validated" is today's count, not a property of the rule.
-- *"`:988-989` … the validator only asserts membership in `VALID_DECISIONS`. Nothing is derived"* — the **read**
-  classification is right, the word *only* is wrong: `review.decision` is additionally cross-validated at
-  `:1028-1044`, `:860-862`, and feeds `validateGateReceipt` at `:955-963`.
-- The same `:1064` error is mirrored in `docs/backlog.md` and must be corrected there too.
-
-### R12 — P2. Meet the length requirement.
-
-Kickoff §3 asks for *"a short written decision — one page."* `REVISION 2` is 128 lines / ~1300 words. With `D1` and
-`D2` deleted (R5, R6), the AC1 load-bearing content — Q1–Q4 plus four rejection rows — fits in roughly 45 lines.
-**Target ≤ 70 lines.** Justifications that belong in a review do not belong in a decision.
-
-### R13 — P3. `D3` is the only open owner decision left. State a recommendation with it.
-
-Claim lifecycle: all `tasks/Sprints/*.md` are scanned including closed sprints, so a marker outliving its sprint
-stays live and can demand re-pinning. Marker presence separates marked from unmarked, not LIVE from HISTORY. Keep
-`D3` open, but do not present it neutrally — recommend one option and say why.
-
-### R14 — P3. State consistency.
-
-`docs/backlog.md` row 747 and the decision document must agree on the revision number. They currently do not.
-
-## 3. Do not undo these — they were verified correct
-
-- The `openP0/openP1/openP2` derivation: count `findings` where `priority === '<PN>'` **and** `status === 'OPEN'`
-  (`:927-929`). Independently re-derived across all 7 retained ledgers: agrees 7/7. `PRIMARY_PRIORITIES` (`:922`)
-  gates only `total`/`verified`/`unverified` — the three fields v1 defers.
-- Exit 1 (detected failure) vs exit 2 (cannot evaluate), per `check-assertion-liveness.mjs:93,98`.
-- `--verify-gate` as a flag on one binary, matching `check-review-ledger.mjs` (`:1292`, `:1381`).
-- Silent pass on unmarked prose, forced by AC2.
-- Scope discipline: nothing outside kickoff §5, nothing wired into `governance-pr.yml`, no auto-fix, no history
-  edits, 746 and 750 not folded in.
-
-## 4. Acceptance for this rework
-
-R1–R14 addressed · document ≤ 70 lines · all four enumerated mechanisms carry a rejection reason and the fifth is
-declared · D1's truth table verbatim · only `D3` left open · `docs/backlog.md` consistent and ≤ 80 lines · every
-line-number citation re-verified against the file before it is written · zero files under `scripts/`,
-`scripts/__tests__/`, `package.json`.
-
-## 5. Verification plan
-
-```
-git status --porcelain                       # before first write
-#   … write REVISION 3 …
-npm run check:mojibake                       # touched text files
-npm run check:file-integrity
-npm run build                                # Q1 profile, non-Q0
-wc -l tasks/Sprints/Sprint_61_Task_747_phase1_decision.md   # ≤ 70
-wc -l docs/backlog.md                        # ≤ 80
-git status --porcelain                       # compare to the start snapshot
-```
-
-Report `git hash-object` before/after for every changed file — the previous session's contract miss. Status is
-`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `BLOCKED`, never self-approved.
+The executor's final status is IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. The next action is one independent review of REVISION 5. Only after the owner approves that decision may Sonnet receive the kickoff plus the approved decision for Phase 2.

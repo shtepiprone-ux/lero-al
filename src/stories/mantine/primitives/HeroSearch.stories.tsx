@@ -48,12 +48,13 @@ export const Default: Story = {
 
     return (
       <MantineStoryShell>
-        {/* Task 670: production hero background is `bg="var(--primary)"` (solid coral,
-            `src/app/[locale]/page.tsx:27`, since Task 659) — the gradient this section used to
-            render here was stale (pre-659). Task 712: renders the SAME Mantine `Box` composition
-            production renders (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>`
-            wrapper, no raw Tailwind utility (cl. 16c parity). */}
-        <Box component="section" bg="var(--primary)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+        {/* Task 670: production hero background is `bg="var(--hero-bg)"` (solid coral,
+            `src/app/[locale]/page.tsx:27`, since Task 659; retokenized off `--primary` onto its
+            own `--hero-bg` token 2026-08-18) — the gradient this section used to render here was
+            stale (pre-659). Task 712: renders the SAME Mantine `Box` composition production
+            renders (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>` wrapper, no
+            raw Tailwind utility (cl. 16c parity). */}
+        <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
           <Box className="container-wide">
             <HeroSearchView
               locations={locations}
@@ -90,7 +91,7 @@ export const Default: Story = {
 export const Fallback: Story = {
   render: () => (
     <MantineStoryShell>
-      <Box component="section" bg="var(--primary)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+      <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
         <Box className="container-wide">
           <HeroSearchFallback />
         </Box>

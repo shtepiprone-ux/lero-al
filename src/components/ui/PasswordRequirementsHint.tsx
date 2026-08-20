@@ -2,7 +2,7 @@
 
 import { Check, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { cn } from '@/lib/utils'
+import { Group, Stack, Text } from '@mantine/core'
 import {
   checkPasswordRules,
   allPasswordRulesMet,
@@ -18,14 +18,22 @@ interface RuleRowProps {
 
 function RuleRow({ met, label }: RuleRowProps) {
   return (
-    <li className={cn('flex items-start gap-1.5 text-xs', met ? 'text-status-success' : 'text-muted-foreground')}>
+    <Group
+      component="li"
+      gap={6}
+      wrap="nowrap"
+      align="flex-start"
+      fz="xs"
+      lh="1rem"
+      c={met ? 'var(--status-success)' : 'var(--muted-foreground)'}
+    >
       {met ? (
-        <Check className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true" />
+        <Check size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
       ) : (
-        <X className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true" />
+        <X size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
       )}
       <span>{label}</span>
-    </li>
+    </Group>
   )
 }
 
@@ -40,17 +48,19 @@ export function PasswordRequirementsHint({ value }: PasswordRequirementsHintProp
   const allMet = Object.values(rules).every(Boolean)
 
   return (
-    <div data-testid="password-requirements-hint" className="flex flex-col gap-1 mt-1">
+    <Stack data-testid="password-requirements-hint" gap={4} mt={4}>
       {hasInput && !allMet && (
-        <p className="text-xs text-destructive">{t('password_requirements_error')}</p>
+        // lh matches the pre-migration <p>'s measured 19.5px (globals.css `p { @apply
+        // leading-relaxed }` base rule), not text-xs's paired 16px — see CaptchaWidget.tsx.
+        <Text size="xs" lh="19.5px" c="var(--destructive)">{t('password_requirements_error')}</Text>
       )}
-      <ul className="flex flex-col gap-1">
+      <Stack component="ul" gap={4} style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         <RuleRow met={rules.length}    label={t('password_rule_length')} />
         <RuleRow met={rules.uppercase} label={t('password_rule_uppercase')} />
         <RuleRow met={rules.lowercase} label={t('password_rule_lowercase')} />
         <RuleRow met={rules.digit}     label={t('password_rule_digit')} />
         <RuleRow met={rules.special}   label={t('password_rule_special')} />
-      </ul>
-    </div>
+      </Stack>
+    </Stack>
   )
 }

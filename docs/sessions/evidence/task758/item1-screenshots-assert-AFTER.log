@@ -1,0 +1,1074 @@
+
+> lero-al@0.1.0 screenshots:assert:fast
+> node scripts/check-stories-rendered.mjs --fast
+
+📸  Starting rendered assertion (fast/mobile mode)
+    Assert stories: 88 | Viewports: 3 | Locales: 4
+    Output: .screenshots/rendered-assert/2026-08-18T09-15/
+
+    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: Mantine/Primitives/, Patterns/Mantine/; enrolled: Admin/AdminUsersTable): 73 (1220 cells @ 320/375/390/1024 × 4 locales + 52 per-story extra-viewport cells (Task 573); 12 overlay stories asserted OPENED via scripted click)
+    Geometry-only stories: 154 (1848 cells at 320/375/390 × 4 locales)
+fast run. NOT RUN: Phase 2 (geometry-only sweep).
+
+  mantine: ??✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓?✓✓✓?✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓~✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓????✓✓✓????✓✓✓????✓✓✓????✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓??✓✓✓✓✓✓?✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✓✗✗✗✓✗✗✗✓✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓
+✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓??✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓????????????????????????✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓RRRRRRRRRRRR✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓????????????
+
+Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md
+Results: 2003/2276 PASS, 195 FAIL, 12 OUT-OF-RANGE, 66 AMBIGUOUS (needs-owner-decision)
+  blank-canvas: 2
+  blank-screenshot: 2
+  text-clipped: 40
+  offscreen-control: 85
+  outside-container: 34
+  element-overlap: 24
+  bottomsheet-overflow: 36
+  ambiguous-overlap: 66
+  unstyled-render: 12
+flaky-recovered: 1
+  Recovered cells (passed only after retry):
+    Mantine/Primitives/MobileBottomNavView/Authenticated × it × mobile-320 (retries: 1)
+Manifest: .screenshots/rendered-assert/2026-08-18T09-15/manifest.json
+PNGs: .screenshots/rendered-assert/2026-08-18T09-15/*.png
+
+❌ Failed cells:
+  Mantine/Primitives/NavigationMenu/Default × uk × desktop-1024
+    ✗ render failure [blank-canvas]: near-uniform (bg=100.0%, var=0.0)
+    ✗ horizontal overflow detected
+  Patterns/Mantine/AddItemPanel/Default × sq × mobile-320
+    ✗ text button not full-width at <640: Shto, Anulo
+  Patterns/Mantine/AddItemPanel/Default × sq × mobile-375
+    ✗ text button not full-width at <640: Shto, Anulo
+  Patterns/Mantine/AddItemPanel/Default × sq × mobile-390
+    ✗ text button not full-width at <640: Shto, Anulo
+  Patterns/Mantine/AddItemPanel/Default × en × mobile-320
+    ✗ text button not full-width at <640: Add, Cancel
+  Patterns/Mantine/AddItemPanel/Default × en × mobile-375
+    ✗ text button not full-width at <640: Add, Cancel
+  Patterns/Mantine/AddItemPanel/Default × en × mobile-390
+    ✗ text button not full-width at <640: Add, Cancel
+  Patterns/Mantine/AddItemPanel/Default × uk × mobile-320
+    ✗ text button not full-width at <640: Додати, Скасувати
+  Patterns/Mantine/AddItemPanel/Default × uk × mobile-375
+    ✗ text button not full-width at <640: Додати, Скасувати
+  Patterns/Mantine/AddItemPanel/Default × uk × mobile-390
+    ✗ text button not full-width at <640: Додати, Скасувати
+  Patterns/Mantine/AddItemPanel/Default × it × mobile-320
+    ✗ text button not full-width at <640: Aggiungi, Annulla
+  Patterns/Mantine/AddItemPanel/Default × it × mobile-375
+    ✗ text button not full-width at <640: Aggiungi, Annulla
+  Patterns/Mantine/AddItemPanel/Default × it × mobile-390
+    ✗ text button not full-width at <640: Aggiungi, Annulla
+  Tabs/Default × uk × mobile-320
+    ✗ geometry [offscreen-control]: #base-ui-_r_3_ — Профіль
+  AdminSidebar/MobileDrawerOpen × sq × mobile-320
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Cilësimet e faqes") — Cilësimet e faqes
+    ✗ geometry [bottomsheet-overflow]: a("Lejet") — Lejet
+  AdminSidebar/MobileDrawerOpen × sq × mobile-375
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Cilësimet e faqes") — Cilësimet e faqes
+    ✗ geometry [bottomsheet-overflow]: a("Lejet") — Lejet
+  AdminSidebar/MobileDrawerOpen × sq × mobile-390
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Cilësimet e faqes") — Cilësimet e faqes
+    ✗ geometry [bottomsheet-overflow]: a("Lejet") — Lejet
+  AdminSidebar/MobileDrawerOpen × en × mobile-320
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Site settings") — Site settings
+    ✗ geometry [bottomsheet-overflow]: a("Permissions") — Permissions
+  AdminSidebar/MobileDrawerOpen × en × mobile-375
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Site settings") — Site settings
+    ✗ geometry [bottomsheet-overflow]: a("Permissions") — Permissions
+  AdminSidebar/MobileDrawerOpen × en × mobile-390
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Site settings") — Site settings
+    ✗ geometry [bottomsheet-overflow]: a("Permissions") — Permissions
+  AdminSidebar/MobileDrawerOpen × uk × mobile-320
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Налаштування сайту") — Налаштування сайту
+    ✗ geometry [bottomsheet-overflow]: a("Дозволи") — Дозволи
+  AdminSidebar/MobileDrawerOpen × uk × mobile-375
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Налаштування сайту") — Налаштування сайту
+    ✗ geometry [bottomsheet-overflow]: a("Дозволи") — Дозволи
+  AdminSidebar/MobileDrawerOpen × uk × mobile-390
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Налаштування сайту") — Налаштування сайту
+    ✗ geometry [bottomsheet-overflow]: a("Дозволи") — Дозволи
+  AdminSidebar/MobileDrawerOpen × it × mobile-320
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Impostazioni sito") — Impostazioni sito
+    ✗ geometry [bottomsheet-overflow]: a("Permessi") — Permessi
+  AdminSidebar/MobileDrawerOpen × it × mobile-375
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Impostazioni sito") — Impostazioni sito
+    ✗ geometry [bottomsheet-overflow]: a("Permessi") — Permessi
+  AdminSidebar/MobileDrawerOpen × it × mobile-390
+    ✗ geometry [bottomsheet-overflow]: a("Footer") — Footer
+    ✗ geometry [bottomsheet-overflow]: a("Impostazioni sito") — Impostazioni sito
+    ✗ geometry [bottomsheet-overflow]: a("Permessi") — Permessi
+  AdminSupportManager/Default × sq × mobile-320
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitI hapurMbështet
+    ✗ geometry [text-clipped]: [role="button"]("Disputa pagese për depozitën e") — Disputa pagese për depozitën e qirasëI zgjidhurMbështetjeAnk
+  AdminSupportManager/Default × sq × mobile-375
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitI hapurMbështet
+  AdminSupportManager/Default × sq × mobile-390
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitI hapurMbështet
+  AdminSupportManager/Default × en × mobile-320
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitOpenSupportRepo
+    ✗ geometry [text-clipped]: [role="button"]("Disputa pagese për depozitën e") — Disputa pagese për depozitën e qirasëResolvedSupportReporter
+  AdminSupportManager/Default × en × mobile-375
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitOpenSupportRepo
+  AdminSupportManager/Default × en × mobile-390
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitOpenSupportRepo
+  AdminSupportManager/Default × uk × mobile-320
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitВідкритийПідтри
+    ✗ geometry [text-clipped]: [role="button"]("Disputa pagese për depozitën e") — Disputa pagese për depozitën e qirasëВирішенийПідтримкаСкарж
+  AdminSupportManager/Default × uk × mobile-375
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitВідкритийПідтри
+  AdminSupportManager/Default × uk × mobile-390
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitВідкритийПідтри
+  AdminSupportManager/Default × it × mobile-320
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitApertoSupportoS
+    ✗ geometry [text-clipped]: [role="button"]("Disputa pagese për depozitën e") — Disputa pagese për depozitën e qirasëRisoltoSupportoSegnalan
+  AdminSupportManager/Default × it × mobile-375
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitApertoSupportoS
+  AdminSupportManager/Default × it × mobile-390
+    ✗ geometry [text-clipped]: [role="button"]("Nuk mund të redaktoj njoftimin") — Nuk mund të redaktoj njoftimin pas publikimitApertoSupportoS
+  RVS/Populated × sq × mobile-320
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentVilë m") — E re1Shitje · ApartamentVilë me Kopsht në DurrësDurrës270 m²
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1001") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentStudio") — E re1Shitje · ApartamentStudio në Lagjen SaukSauk180 m²80 00
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1002") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentHapësi") — E re1Shitje · ApartamentHapësirë Zyre në KombinatKombinat290
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1003") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentPentho") — E re1Shitje · ApartamentPenthouse në BllokuBlloku1100 m²110 
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1004") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentShtëpi") — E re1Shitje · ApartamentShtëpi Plazhi në VlorëVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1005") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentShtëpi Pus") — 1Shitje · ApartamentShtëpi Pushimi në BeratBerat1120 m²140 0
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1006") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentApartament") — 1Shitje · ApartamentApartament i Rinovuar në ElbasanElbasan2
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1007") — Kopjo ID-në e njoftimit
+  RVS/Populated × sq × mobile-375
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentVilë m") — E re1Shitje · ApartamentVilë me Kopsht në DurrësDurrës270 m²
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentStudio") — E re1Shitje · ApartamentStudio në Lagjen SaukSauk180 m²80 00
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1002") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentHapësi") — E re1Shitje · ApartamentHapësirë Zyre në KombinatKombinat290
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1003") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentPentho") — E re1Shitje · ApartamentPenthouse në BllokuBlloku1100 m²110 
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1004") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentShtëpi") — E re1Shitje · ApartamentShtëpi Plazhi në VlorëVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1005") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentShtëpi Pus") — 1Shitje · ApartamentShtëpi Pushimi në BeratBerat1120 m²140 0
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1006") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentApartament") — 1Shitje · ApartamentApartament i Rinovuar në ElbasanElbasan2
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1007") — Kopjo ID-në e njoftimit
+  RVS/Populated × sq × mobile-390
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentVilë m") — E re1Shitje · ApartamentVilë me Kopsht në DurrësDurrës270 m²
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentStudio") — E re1Shitje · ApartamentStudio në Lagjen SaukSauk180 m²80 00
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1002") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentHapësi") — E re1Shitje · ApartamentHapësirë Zyre në KombinatKombinat290
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1003") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentPentho") — E re1Shitje · ApartamentPenthouse në BllokuBlloku1100 m²110 
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1004") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("E re1Shitje · ApartamentShtëpi") — E re1Shitje · ApartamentShtëpi Plazhi në VlorëVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1005") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentShtëpi Pus") — 1Shitje · ApartamentShtëpi Pushimi në BeratBerat1120 m²140 0
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1006") — Kopjo ID-në e njoftimit
+    ✗ geometry [offscreen-control]: a("1Shitje · ApartamentApartament") — 1Shitje · ApartamentApartament i Rinovuar në ElbasanElbasan2
+    ✗ geometry [offscreen-control]: button — Shto te preferuarat
+    ✗ geometry [offscreen-control]: button("#1007") — Kopjo ID-në e njoftimit
+  RVS/Populated × en × mobile-320
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentVilla ") — New1For sale · ApartmentVilla with Garden in DurrësDurrës270
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1001") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentStudio") — New1For sale · ApartmentStudio Flat in SaukSauk180 m²80,000 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1002") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentOffice") — New1For sale · ApartmentOffice Space in KombinatKombinat290 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1003") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentPentho") — New1For sale · ApartmentPenthouse in BllokuBlloku1100 m²110,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1004") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentBeach ") — New1For sale · ApartmentBeach House in VlorëVlorë2110 m²125,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1005") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentMountain ") — 1For sale · ApartmentMountain Retreat in BeratBerat1120 m²14
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1006") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentRenovated") — 1For sale · ApartmentRenovated Apartment in ElbasanElbasan21
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1007") — Copy listing ID
+  RVS/Populated × en × mobile-375
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentVilla ") — New1For sale · ApartmentVilla with Garden in DurrësDurrës270
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentStudio") — New1For sale · ApartmentStudio Flat in SaukSauk180 m²80,000 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1002") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentOffice") — New1For sale · ApartmentOffice Space in KombinatKombinat290 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1003") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentPentho") — New1For sale · ApartmentPenthouse in BllokuBlloku1100 m²110,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1004") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentBeach ") — New1For sale · ApartmentBeach House in VlorëVlorë2110 m²125,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1005") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentMountain ") — 1For sale · ApartmentMountain Retreat in BeratBerat1120 m²14
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1006") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentRenovated") — 1For sale · ApartmentRenovated Apartment in ElbasanElbasan21
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1007") — Copy listing ID
+  RVS/Populated × en × mobile-390
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentVilla ") — New1For sale · ApartmentVilla with Garden in DurrësDurrës270
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentStudio") — New1For sale · ApartmentStudio Flat in SaukSauk180 m²80,000 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1002") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentOffice") — New1For sale · ApartmentOffice Space in KombinatKombinat290 
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1003") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentPentho") — New1For sale · ApartmentPenthouse in BllokuBlloku1100 m²110,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1004") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("New1For sale · ApartmentBeach ") — New1For sale · ApartmentBeach House in VlorëVlorë2110 m²125,
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1005") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentMountain ") — 1For sale · ApartmentMountain Retreat in BeratBerat1120 m²14
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1006") — Copy listing ID
+    ✗ geometry [offscreen-control]: a("1For sale · ApartmentRenovated") — 1For sale · ApartmentRenovated Apartment in ElbasanElbasan21
+    ✗ geometry [offscreen-control]: button — Add to favorites
+    ✗ geometry [offscreen-control]: button("#1007") — Copy listing ID
+  RVS/Populated × uk × mobile-320
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираВілла з ") — Нове1Продаж · КвартираВілла з садом у ДурресіDurrës270 m²65 
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираСтудія в") — Нове1Продаж · КвартираСтудія в районі СаукSauk180 m²80 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1002") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираОфісне п") — Нове1Продаж · КвартираОфісне приміщення в КомбінатіKombinat2
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1003") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПентхаус") — Нове1Продаж · КвартираПентхаус у БлокуBlloku1100 m²110 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1004") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПляжний ") — Нове1Продаж · КвартираПляжний будинок у ВльоріVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1005") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираГірський буд") — 1Продаж · КвартираГірський будиночок у БератіBerat1120 m²140
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1006") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираВідремонтова") — 1Продаж · КвартираВідремонтована квартира в ЕльбасаніElbasan
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1007") — Скопіювати ID оголошення
+  RVS/Populated × uk × mobile-375
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираВілла з ") — Нове1Продаж · КвартираВілла з садом у ДурресіDurrës270 m²65 
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираСтудія в") — Нове1Продаж · КвартираСтудія в районі СаукSauk180 m²80 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1002") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираОфісне п") — Нове1Продаж · КвартираОфісне приміщення в КомбінатіKombinat2
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1003") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПентхаус") — Нове1Продаж · КвартираПентхаус у БлокуBlloku1100 m²110 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1004") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПляжний ") — Нове1Продаж · КвартираПляжний будинок у ВльоріVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1005") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираГірський буд") — 1Продаж · КвартираГірський будиночок у БератіBerat1120 m²140
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1006") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираВідремонтова") — 1Продаж · КвартираВідремонтована квартира в ЕльбасаніElbasan
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1007") — Скопіювати ID оголошення
+  RVS/Populated × uk × mobile-390
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираВілла з ") — Нове1Продаж · КвартираВілла з садом у ДурресіDurrës270 m²65 
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираСтудія в") — Нове1Продаж · КвартираСтудія в районі СаукSauk180 m²80 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1002") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираОфісне п") — Нове1Продаж · КвартираОфісне приміщення в КомбінатіKombinat2
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1003") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПентхаус") — Нове1Продаж · КвартираПентхаус у БлокуBlloku1100 m²110 000 E
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1004") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("Нове1Продаж · КвартираПляжний ") — Нове1Продаж · КвартираПляжний будинок у ВльоріVlorë2110 m²12
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1005") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираГірський буд") — 1Продаж · КвартираГірський будиночок у БератіBerat1120 m²140
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1006") — Скопіювати ID оголошення
+    ✗ geometry [offscreen-control]: a("1Продаж · КвартираВідремонтова") — 1Продаж · КвартираВідремонтована квартира в ЕльбасаніElbasan
+    ✗ geometry [offscreen-control]: button — Додати в обрані
+    ✗ geometry [offscreen-control]: button("#1007") — Скопіювати ID оголошення
+  RVS/Populated × it × mobile-320
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoVilla con Giardino a DurazzoD
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1001") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoMonolocale nel Quartiere Sauk
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1002") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoUfficio nel KombinatKombinat2
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1003") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoAttico nel BllokuBlloku1100 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1004") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoCasa al Mare a ValonaVlorë211
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1005") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoRifu") — 1In vendita · AppartamentoRifugio Montano a BeratBerat1120 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1006") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoAppa") — 1In vendita · AppartamentoAppartamento Ristrutturato a Elbas
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1007") — Copia ID annuncio
+  RVS/Populated × it × mobile-375
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoVilla con Giardino a DurazzoD
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoMonolocale nel Quartiere Sauk
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1002") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoUfficio nel KombinatKombinat2
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1003") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoAttico nel BllokuBlloku1100 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1004") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoCasa al Mare a ValonaVlorë211
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1005") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoRifu") — 1In vendita · AppartamentoRifugio Montano a BeratBerat1120 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1006") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoAppa") — 1In vendita · AppartamentoAppartamento Ristrutturato a Elbas
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1007") — Copia ID annuncio
+  RVS/Populated × it × mobile-390
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoVilla con Giardino a DurazzoD
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoMonolocale nel Quartiere Sauk
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1002") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoUfficio nel KombinatKombinat2
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1003") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoAttico nel BllokuBlloku1100 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1004") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("Nuovo1In vendita · Appartament") — Nuovo1In vendita · AppartamentoCasa al Mare a ValonaVlorë211
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1005") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoRifu") — 1In vendita · AppartamentoRifugio Montano a BeratBerat1120 m
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1006") — Copia ID annuncio
+    ✗ geometry [offscreen-control]: a("1In vendita · AppartamentoAppa") — 1In vendita · AppartamentoAppartamento Ristrutturato a Elbas
+    ✗ geometry [offscreen-control]: button — Aggiungi ai preferiti
+    ✗ geometry [offscreen-control]: button("#1007") — Copia ID annuncio
+  Dialog/MobileFullWidth × sq × mobile-320
+    ✗ render failure [blank-canvas]: near-uniform (bg=100.0%, var=0.0)
+    ✗ horizontal overflow detected
+  AdminReportsManager/Default × sq × mobile-320
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/Default × sq × mobile-375
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/Default × sq × mobile-390
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/Default × en × mobile-320
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/Default × en × mobile-375
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/Default × en × mobile-390
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/Default × uk × mobile-320
+    ✗ geometry [offscreen-control]: button("На розгляді") — На розгляді
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/Default × uk × mobile-375
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/Default × uk × mobile-390
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/Default × it × mobile-320
+    ✗ geometry [offscreen-control]: button("In revisione") — In revisione
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/Default × it × mobile-375
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/Default × it × mobile-390
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/DialogOwnerRow × sq × mobile-320
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/DialogOwnerRow × sq × mobile-375
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/DialogOwnerRow × sq × mobile-390
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/DialogOwnerRow × en × mobile-320
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/DialogOwnerRow × en × mobile-375
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/DialogOwnerRow × en × mobile-390
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/DialogOwnerRow × uk × mobile-320
+    ✗ geometry [text-clipped]: [data-slot="button"]("Взяти на розгляд") — Взяти на розгляд
+    ✗ geometry [text-clipped]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [text-clipped]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [offscreen-control]: button("На розгляді") — На розгляді
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/DialogOwnerRow × uk × mobile-375
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/DialogOwnerRow × uk × mobile-390
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/DialogOwnerRow × it × mobile-320
+    ✗ geometry [offscreen-control]: button("In revisione") — In revisione
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/DialogOwnerRow × it × mobile-375
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/DialogOwnerRow × it × mobile-390
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/FullManagement × sq × mobile-320
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [outside-container]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/FullManagement × sq × mobile-375
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [outside-container]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/FullManagement × sq × mobile-390
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [outside-container]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Refuzo") — Refuzo
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Zgjidh") — Zgjidh
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/FullManagement × en × mobile-320
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [outside-container]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/FullManagement × en × mobile-375
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [outside-container]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/FullManagement × en × mobile-390
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [outside-container]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Dismiss") — Dismiss
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Resolve") — Resolve
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/FullManagement × uk × mobile-320
+    ✗ geometry [text-clipped]: #base-ui-_r_c_ — Очікує▼
+    ✗ geometry [text-clipped]: [data-slot="button"]("Застосувати") — Застосувати
+    ✗ geometry [text-clipped]: [data-slot="button"]("Взяти на розгляд") — Взяти на розгляд
+    ✗ geometry [text-clipped]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [text-clipped]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [text-clipped]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [offscreen-control]: button("На розгляді") — На розгляді
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/FullManagement × uk × mobile-375
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [outside-container]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [outside-container]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/FullManagement × uk × mobile-390
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [outside-container]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [outside-container]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/FullManagement × it × mobile-320
+    ✗ geometry [offscreen-control]: button("In revisione") — In revisione
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [outside-container]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  AdminReportsManager/FullManagement × it × mobile-375
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [outside-container]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  AdminReportsManager/FullManagement × it × mobile-390
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [outside-container]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Rifiuta") — Rifiuta
+    ✗ geometry [bottomsheet-overflow]: [data-slot="button"]("Risolvi") — Risolvi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  AdminReportsManager/TerminalReopen × sq × mobile-320
+    ✗ geometry [offscreen-control]: button("Të gjitha1") — Të gjitha1
+    ✗ geometry [offscreen-control]: button("Në pritje") — Në pritje
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/TerminalReopen × sq × mobile-375
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/TerminalReopen × sq × mobile-390
+    ✗ geometry [offscreen-control]: button("Zgjidhur1") — Zgjidhur1
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+  AdminReportsManager/TerminalReopen × en × mobile-320
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/TerminalReopen × en × mobile-375
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/TerminalReopen × en × mobile-390
+    ✗ geometry [offscreen-control]: button("Resolved1") — Resolved1
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+  AdminReportsManager/TerminalReopen × uk × mobile-320
+    ✗ geometry [text-clipped]: #base-ui-_r_c_ — Вирішено▼
+    ✗ geometry [text-clipped]: [data-slot="button"]("Застосувати") — Застосувати
+    ✗ geometry [text-clipped]: [data-testid="reopen-btn"] — Повторно відкрити
+    ✗ geometry [text-clipped]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [offscreen-control]: button("Всі1") — Всі1
+    ✗ geometry [offscreen-control]: button("Очікують") — Очікують
+    ✗ geometry [offscreen-control]: button("На розгляді") — На розгляді
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/TerminalReopen × uk × mobile-375
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/TerminalReopen × uk × mobile-390
+    ✗ geometry [offscreen-control]: button("Вирішено1") — Вирішено1
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+  AdminReportsManager/TerminalReopen × it × mobile-320
+    ✗ geometry [offscreen-control]: button("Tutte1") — Tutte1
+    ✗ geometry [offscreen-control]: button("In attesa") — In attesa
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/TerminalReopen × it × mobile-375
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/TerminalReopen × it × mobile-390
+    ✗ geometry [offscreen-control]: button("Risolte1") — Risolte1
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+  AdminReportsManager/DeleteConfirm × sq × mobile-320
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/DeleteConfirm × sq × mobile-375
+    ✗ geometry [offscreen-control]: button("Në shqyrtim") — Në shqyrtim
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/DeleteConfirm × sq × mobile-390
+    ✗ geometry [offscreen-control]: button("Zgjidhur") — Zgjidhur
+    ✗ geometry [offscreen-control]: button("Refuzuar") — Refuzuar
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Fshi
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Fshi
+  AdminReportsManager/DeleteConfirm × en × mobile-320
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/DeleteConfirm × en × mobile-375
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/DeleteConfirm × en × mobile-390
+    ✗ geometry [offscreen-control]: button("Resolved") — Resolved
+    ✗ geometry [offscreen-control]: button("Dismissed") — Dismissed
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Delete
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Delete
+  AdminReportsManager/DeleteConfirm × uk × mobile-320
+    ✗ geometry [text-clipped]: [data-slot="button"]("Взяти на розгляд") — Взяти на розгляд
+    ✗ geometry [text-clipped]: [data-slot="button"]("Відхилити") — Відхилити
+    ✗ geometry [text-clipped]: [data-slot="button"]("Вирішити") — Вирішити
+    ✗ geometry [text-clipped]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [offscreen-control]: button("На розгляді") — На розгляді
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/DeleteConfirm × uk × mobile-375
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/DeleteConfirm × uk × mobile-390
+    ✗ geometry [offscreen-control]: button("Вирішено") — Вирішено
+    ✗ geometry [offscreen-control]: button("Відхилено") — Відхилено
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Видалити
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Видалити
+  AdminReportsManager/DeleteConfirm × it × mobile-320
+    ✗ geometry [offscreen-control]: button("In revisione") — In revisione
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  AdminReportsManager/DeleteConfirm × it × mobile-375
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  AdminReportsManager/DeleteConfirm × it × mobile-390
+    ✗ geometry [offscreen-control]: button("Risolte") — Risolte
+    ✗ geometry [offscreen-control]: button("Rifiutate") — Rifiutate
+    ✗ geometry [outside-container]: [data-testid="delete-btn"] — Elimina
+    ✗ geometry [bottomsheet-overflow]: [data-testid="delete-btn"] — Elimina
+  Planted/ClippedButtonText × sq × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × sq × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × sq × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × en × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × en × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × en × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × uk × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × uk × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × uk × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × it × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × it × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/ClippedButtonText × it × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-clipped-btn"] — Btn-467: very long label that definitely gets clipped beyond
+  Planted/OverlappingActions × sq × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × sq × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × sq × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × en × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × en × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × en × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × uk × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × uk × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × uk × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × it × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × it × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OverlappingActions × it × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-overlap-a"] ↔ [data-testid="planted-overlap-b"] — "Btn-A #467" ↔ "Btn-B #467"
+  Planted/OffViewportControl × sq × mobile-320
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × sq × mobile-375
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × sq × mobile-390
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × en × mobile-320
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × en × mobile-375
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × en × mobile-390
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × uk × mobile-320
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × uk × mobile-375
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × uk × mobile-390
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × it × mobile-320
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × it × mobile-375
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/OffViewportControl × it × mobile-390
+    ✗ geometry [offscreen-control]: [data-testid="planted-offscreen-btn"] — Off-screen #467
+  Planted/ContainerClipped × sq × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × sq × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × sq × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × en × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × en × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × en × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × uk × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × uk × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × uk × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × it × mobile-320
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × it × mobile-375
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerClipped × it × mobile-390
+    ✗ geometry [text-clipped]: [data-testid="planted-container-btn"] — Wide-btn #467 inside narrow container
+  Planted/ContainerEscape × sq × mobile-320
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × sq × mobile-375
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × sq × mobile-390
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × en × mobile-320
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × en × mobile-375
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × en × mobile-390
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × uk × mobile-320
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × uk × mobile-375
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × uk × mobile-390
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × it × mobile-320
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × it × mobile-375
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/ContainerEscape × it × mobile-390
+    ✗ geometry [outside-container]: [data-testid="planted-escape-btn"] — #467
+  Planted/UnstyledFrame × sq × mobile-320 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × sq × mobile-375 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × sq × mobile-390 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × en × mobile-320 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × en × mobile-375 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × en × mobile-390 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × uk × mobile-320 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × uk × mobile-375 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × uk × mobile-390 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × it × mobile-320 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × it × mobile-375 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/UnstyledFrame × it × mobile-390 (after 2 retries)
+    ✗ render failure [unstyled-render]
+    ✗ horizontal overflow detected
+    ✗ style [unstyled-render]: bodyMargin=8px, sheets=true, font="Open Sans", system-ui, -apple, ctrl=false
+  Planted/ScrollVisibleOverlap × sq × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × sq × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × sq × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × en × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × en × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × en × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × uk × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × uk × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × uk × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × it × mobile-320
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × it × mobile-375
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+  Planted/ScrollVisibleOverlap × it × mobile-390
+    ✗ geometry [element-overlap]: [data-testid="planted-scroll-visible-a"] ↔ [data-testid="planted-scroll-visible-b"] — "Visible-A #569" ↔ "Visible-B #569"
+
+⚠️  66 cells have ambiguous findings (needs-owner-decision):
+  Admin/AdminUsersTable/Default × sq × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-ma1c1pa0c-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-ma1c1pa0c-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-ma1c1pa0c-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-ma1c1pa0c-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Admin/AdminUsersTable/Default × sq × mobile-375
+    ? [ambiguous-text-clipped-scrollable]: #mantine-xs79s73u5-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-xs79s73u5-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Admin/AdminUsersTable/Default × uk × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-enrqpi3wn-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-enrqpi3wn-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-enrqpi3wn-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-enrqpi3wn-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Combobox/Default × sq × mobile-390
+    ? [ambiguous-overlap]: #mantine-y4zinxy3a ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-390
+    ? [ambiguous-overlap]: #mantine-zqseq7nls ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-390
+    ? [ambiguous-overlap]: #mantine-amht2wsba ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-390
+    ? [ambiguous-overlap]: #mantine-f7ighlr77 ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/Tabs/Default × sq × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-2g4gkczmo-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-2g4gkczmo-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-2g4gkczmo-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-2g4gkczmo-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-2g4gkczmo-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × sq × mobile-375
+    ? [ambiguous-text-clipped-scrollable]: #mantine-nf3nn7s52-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-nf3nn7s52-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-nf3nn7s52-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-outside-scrollable]: #mantine-nf3nn7s52-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × uk × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-o58qm9b7l-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-o58qm9b7l-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-o58qm9b7l-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-outside-scrollable]: #mantine-o58qm9b7l-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × it × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-849tob2ma-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-849tob2ma-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-849tob2ma-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-849tob2ma-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-849tob2ma-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  AdminUsersTable/Default × sq × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-yph8dg98h-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-yph8dg98h-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-yph8dg98h-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-yph8dg98h-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  AdminUsersTable/Default × sq × mobile-375
+    ? [ambiguous-text-clipped-scrollable]: #mantine-z834wcl5k-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-z834wcl5k-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  AdminUsersTable/Default × uk × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-jmlyfy1j8-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-jmlyfy1j8-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-jmlyfy1j8-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-jmlyfy1j8-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Planted/AmbiguousOverlap × sq × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × sq × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × sq × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × en × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × en × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × en × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × uk × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × uk × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × uk × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × it × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × it × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/AmbiguousOverlap × it × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-ambiguous-trigger"] ↔ [data-testid="planted-ambiguous-popup"] — library-internal or position:absolute/fixed over own trigger/anchor
+  Planted/IntentionalEllipsis × sq × mobile-320
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × sq × mobile-375
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × sq × mobile-390
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × en × mobile-320
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × en × mobile-375
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × en × mobile-390
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × uk × mobile-320
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × uk × mobile-375
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × uk × mobile-390
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × it × mobile-320
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × it × mobile-375
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/IntentionalEllipsis × it × mobile-390
+    ? [text-clipped-ellipsis]: [data-testid="planted-ellipsis-link"] — intentional ellipsis with accessible name or content link
+  Planted/OverlayNoBackdrop × sq × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × sq × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × sq × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × en × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × en × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × en × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × uk × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × uk × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × uk × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × it × mobile-320
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × it × mobile-375
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+  Planted/OverlayNoBackdrop × it × mobile-390
+    ? [ambiguous-overlap]: [data-testid="planted-no-backdrop-bg"] ↔ [data-testid="planted-no-backdrop-sheet-btn"] — background page content behind an opened overlay's backdrop
+
+ℹ️  12 cells are out-of-viewport-range (verdict=out-of-range, not product defects):
+  Planted/LargeRangeGuard × sq × mobile-320 (range: min=1024)
+  Planted/LargeRangeGuard × sq × mobile-375 (range: min=1024)
+  Planted/LargeRangeGuard × sq × mobile-390 (range: min=1024)
+  Planted/LargeRangeGuard × en × mobile-320 (range: min=1024)
+  Planted/LargeRangeGuard × en × mobile-375 (range: min=1024)
+  Planted/LargeRangeGuard × en × mobile-390 (range: min=1024)
+  Planted/LargeRangeGuard × uk × mobile-320 (range: min=1024)
+  Planted/LargeRangeGuard × uk × mobile-375 (range: min=1024)
+  Planted/LargeRangeGuard × uk × mobile-390 (range: min=1024)
+  Planted/LargeRangeGuard × it × mobile-320 (range: min=1024)
+  Planted/LargeRangeGuard × it × mobile-375 (range: min=1024)
+  Planted/LargeRangeGuard × it × mobile-390 (range: min=1024)

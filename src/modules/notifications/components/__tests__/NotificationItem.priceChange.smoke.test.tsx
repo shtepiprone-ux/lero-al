@@ -12,15 +12,35 @@
  */
 
 import React from 'react'
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeAll, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { NextIntlClientProvider } from 'next-intl'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { NotificationItem } from '../NotificationItem'
 import type { Notification } from '@/types/database'
 
 const NBSP = String.fromCharCode(160)
+
+beforeAll(() => {
+  // jsdom has no matchMedia — MantineProvider's color-scheme detection needs it
+  // (same stub convention as ListingCard.smoke.test.tsx).
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  )
+})
 
 function loadMessages(locale: string) {
   return JSON.parse(readFileSync(join(process.cwd(), 'messages', `${locale}.json`), 'utf-8'))
@@ -46,9 +66,11 @@ function renderPriceChangeNotification(locale: string) {
     },
   }
   return render(
-    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
-      <NotificationItem notification={notification} onRead={() => {}} />
-    </NextIntlClientProvider>,
+    <MantineProvider theme={theme}>
+      <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
+        <NotificationItem notification={notification} onRead={() => {}} />
+      </NextIntlClientProvider>
+    </MantineProvider>,
   )
 }
 

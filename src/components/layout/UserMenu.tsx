@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Button, Avatar } from '@mantine/core'
+import { Button, Avatar, Text } from '@mantine/core'
 import { ChevronDown, User, ListPlus, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
 import { MantineDropdownMenu, type DropdownMenuItemDef } from '@/design-system/mantine/patterns'
 
@@ -40,7 +40,7 @@ export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout }: Us
           leftSection={<Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={28} />}
           rightSection={<ChevronDown size={12} />}
         >
-          <span className="max-w-30 truncate">{user.name}</span>
+          <Text component="span" truncate inherit maw={120}>{user.name}</Text>
         </Button>
       }
       items={items}

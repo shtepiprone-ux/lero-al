@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@mantine/core'
+import { Button, Group } from '@mantine/core'
 import { ROOMS_OPTIONS } from '@/modules/listings/constants'
 
 interface FilterRoomsRowProps {
@@ -13,7 +13,7 @@ interface FilterRoomsRowProps {
 
 export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
   return (
-    <div {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} className="flex gap-2 flex-wrap">
+    <Group {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} gap="xs" wrap="wrap" data-testid="filter-chip-row">
       {ROOMS_OPTIONS.map(opt => {
         const strVal = String(opt)
         return (
@@ -21,13 +21,13 @@ export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRow
             key={opt}
             type="button"
             variant={selected.includes(strVal) ? 'filled' : 'default'}
-            className="shrink-0"
+            style={{ flexShrink: 0 }}
             onClick={() => onToggle(strVal)}
           >
             {opt === 5 ? '5+' : opt}
           </Button>
         )
       })}
-    </div>
+    </Group>
   )
 }

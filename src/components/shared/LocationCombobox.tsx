@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react'
 import type { KeyboardEventHandler } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { MapPin } from 'lucide-react'
-import { Anchor, Button, TextInput, Text } from '@mantine/core'
-import { MantineCombobox } from '@/design-system/mantine/patterns'
+import { Anchor, Button, Flex, TextInput, Text } from '@mantine/core'
+import { MantineCombobox, MantineAddItemPanel } from '@/design-system/mantine/patterns'
 import { cn, capitalize, normalizeSearch } from '@/lib/utils'
 
 export interface LocationOption {
@@ -118,7 +118,7 @@ export function LocationCombobox({
         onChange={v => onChange(v || null)}
         variant="input"
         clearLabel={tc('all_locations')}
-        icon={<MapPin className="h-4 w-4" />}
+        icon={<MapPin size={16} />}
         placeholder={resolvedPlaceholder}
         error={error}
         onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
@@ -147,7 +147,7 @@ export function LocationCombobox({
             + {tc('add_location')}
           </Anchor>
           {showAdd && (
-            <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30 mt-1">
+            <MantineAddItemPanel mt={4}>
               <Text size="xs" fw={600}>{tc('new_location')}</Text>
               <TextInput
                 value={addName}
@@ -169,7 +169,7 @@ export function LocationCombobox({
               {addError && (
                 <Text size="xs" c="red.6">{addError}</Text>
               )}
-              <div className="flex flex-col sm:flex-row gap-2">
+              <Flex direction={{ base: 'column', sm: 'row' }} gap="xs">
                 <Button
                   type="button"
                   onClick={handleAdd}
@@ -185,8 +185,8 @@ export function LocationCombobox({
                 >
                   {tc('cancel')}
                 </Button>
-              </div>
-            </div>
+              </Flex>
+            </MantineAddItemPanel>
           )}
         </>
       )}

@@ -15,6 +15,30 @@ $ARGUMENTS
 
 Act as the task architect. Produce an executable, evidence-based task for a fresh Sonnet session. Do not implement product code while using this skill.
 
+## Evidence-first critical stance
+
+Treat every user premise, executor claim, existing task, and prior agent statement as an unverified claim until its
+evidence has been inspected. Do not agree merely because a claim was stated confidently, requested by the owner, or
+would make a convenient task. If the evidence contradicts a premise, state the contradiction directly and preserve
+the evidence; do not reframe it into a more agreeable requirement.
+
+- Do not apologize, empathize, praise, reassure, soften criticism, or add conversational padding.
+- Do not invent or imply facts, requirements, acceptance criteria, root causes, scope, file paths, commands, test
+  results, owner decisions, or implementation details.
+- Do not report an inspection, command, test, search, or validation as completed unless its actual result was read.
+- Do not convert an assumption, a plausible implementation, a weak search result, or an absence of evidence into a
+  verified fact.
+- Use these labels for every material claim in working notes and task output:
+  - `FACT` — directly supported by an inspected file, diff, command output, test result, or cited source.
+  - `INFERENCE` — a conclusion that follows from named facts; show the reasoning.
+  - `UNKNOWN` — not established by available evidence.
+  - `CONFLICT` — two requirements or sources cannot both be satisfied; quote both and request an owner decision.
+  - `BLOCKED` — the exact missing evidence or decision prevents an executable task.
+- State material contradictions, missing evidence, and rejected premises before proposing work. A task is not a
+  vehicle for validating the user's desired conclusion.
+- If a requested task is not supported by evidence or contains an unresolved conflict, publish `BLOCKED` or
+  `DRAFT — NEEDS EVIDENCE`; do not fabricate a ready-to-execute kickoff.
+
 For any token-consumption requirement, follow [“A documented token is not an implemented token — grep the definition, never the table”](../../../docs/orchestrator-procedures.md).
 
 Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
@@ -183,24 +207,29 @@ Use these headings in the saved task file:
 14. `Completion report contract`
 15. `Task quality gate`
 
-End the response with the task path, the selected QA profile, the requirements that remain ambiguous or conflicting, and any owner decision still needed.
+End the response with the task path, the selected QA profile, the requirements that remain ambiguous or conflicting,
+and any owner decision still needed. Put `FACTS`, `INFERENCES`, `UNKNOWNS`, and `CONFLICTS` before that summary;
+write `None` for an empty category rather than omitting it.
 
 ## Owner-run Git handoff
 
-After saving and verifying the task artifact, emit an owner-run commit handoff when this task design changed task or
-documentation artifacts. List every changed path explicitly, then provide only:
+After saving and verifying the task artifact, emit an owner-run commit and push handoff when this task design changed
+task or documentation artifacts. List every changed path explicitly, then provide only:
 
 ```powershell
 git add <explicit-task-or-doc-paths>
 git commit -m "docs(TaskN): <short description>"
+git push -u <verified-remote> <verified-branch>
 ```
 
-Never execute the commands. Never use `git add -A`, `git add -u`, wildcards, `git push`, or a command that stages an
-uninspected file. Before emitting the handoff, inspect read-only `git status --short` and reconcile all changed or
-untracked paths with the task/document artifacts created in this session. Include every reconciled artifact exactly
-once. List unrelated parallel changes as `EXCLUDED AS UNRELATED` without staging them; they do not block a handoff.
-Use `STATUS/REPORT MISMATCH` only for a path that should belong to this task/design but is missing, undocumented, or
-ambiguous, and withhold the handoff only in that case.
+Never execute the commands. Never use `git add -A`, `git add -u`, wildcards, a bare `git push`, or a command that
+stages an uninspected file. Before emitting the handoff, inspect the current branch and remote/upstream with read-only
+Git and replace both push placeholders with verified values. If the branch has no upstream, use `-u` with the verified
+remote and current branch; otherwise use the verified remote and upstream branch. Inspect read-only `git status
+--short` and reconcile all changed or untracked paths with the task/document artifacts created in this session. Include
+every reconciled artifact exactly once. List unrelated parallel changes as `EXCLUDED AS UNRELATED` without staging
+them; they do not block a handoff. Use `STATUS/REPORT MISMATCH` only for a path that should belong to this task/design
+but is missing, undocumented, or ambiguous, and withhold the handoff only in that case.
 Also inspect `.git/index.lock` before the handoff. If active Git processes exist, return `GIT WRITE BLOCKED` and do
 not emit a handoff. If no Git process is active, delete only the exact project-local `.git/index.lock`, confirm it is
 gone, re-run read-only `git status --short`, and reconcile paths again. Do not delete another `.git` file or run Git

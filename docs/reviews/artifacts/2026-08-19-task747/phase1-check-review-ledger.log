@@ -1,0 +1,13 @@
+
+> lero-al@0.1.0 check:review-ledger
+> node scripts/check-review-ledger.mjs
+
+✅ docs/reviews/2026-08-12-task691R-mantinelistingcardpattern-remediation.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-13-task695-overlay-namespace-exit.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-13-task748-rework2-evidence-apparatus.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-15-ci-baseline-recovery.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-15-task741-revision1-evidence-apparatus.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-15-task749-revision2-geometry-scroll-awareness.review-ledger.json — valid fail-closed review ledger
+✅ docs/reviews/2026-08-16-task741-final-closeout.review-ledger.json — valid fail-closed review ledger
+✅ check:review-ledger PASSED — 7 ledger file(s) validated
+EXIT_CODE=0

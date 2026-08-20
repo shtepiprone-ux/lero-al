@@ -109,3 +109,6 @@ export type { RangeDatePickerProps, DateRange } from './RangeDatePicker'
 
 export { MantineFilterSection } from './MantineFilterSection'
 export type { MantineFilterSectionProps } from './MantineFilterSection'
+
+export { MantineAddItemPanel } from './MantineAddItemPanel'
+export type { MantineAddItemPanelProps } from './MantineAddItemPanel'

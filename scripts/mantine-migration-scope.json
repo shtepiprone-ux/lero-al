@@ -13,5 +13,7 @@
   "src/design-system/mantine/patterns/MantineFilterSection.tsx",
   "src/components/shared/FiltersPanel.tsx",
   "src/modules/locations/components/PopularLocationsView.tsx",
-  "src/components/layout/MobileBottomNavView.tsx"
+  "src/components/layout/MobileBottomNavView.tsx",
+  "src/design-system/mantine/patterns/MantineAddItemPanel.tsx",
+  "src/components/shared/LocationCombobox.tsx"
 ]

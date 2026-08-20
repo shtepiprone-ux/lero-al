@@ -1,0 +1,18 @@
+{
+  "_fixtureNote": "Task 747 AC3 — test-only reconstruction of Task 691 instance (a). Not a real review ledger and never passed to check-review-ledger.mjs. Reproduces the historical drift: three markdown sites claimed 2 P0 while the ledger (docs/reviews/2026-08-12-task691-mantinelistingcardpattern-detailwind.review-ledger.SUPERSEDED.json) actually held openP0: 4, and check:review-ledger stayed green the whole time because nothing compared the two.",
+  "schemaVersion": 4,
+  "task": "Task 691 — reconstruction fixture",
+  "review": {
+    "decision": "NEEDS REVISION",
+    "coverage": { "total": 12, "verified": 3, "unverified": 9, "openP0": 4, "openP1": 2, "openP2": 1 }
+  },
+  "findings": [
+    { "id": "F-1", "priority": "P0", "status": "OPEN" },
+    { "id": "F-2", "priority": "P0", "status": "OPEN" },
+    { "id": "F-3", "priority": "P0", "status": "OPEN" },
+    { "id": "F-4", "priority": "P0", "status": "OPEN" },
+    { "id": "F-5", "priority": "P1", "status": "OPEN" },
+    { "id": "F-6", "priority": "P1", "status": "OPEN" },
+    { "id": "F-7", "priority": "P2", "status": "OPEN" }
+  ]
+}

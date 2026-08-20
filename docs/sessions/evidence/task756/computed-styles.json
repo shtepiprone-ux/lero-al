@@ -1,0 +1,1080 @@
+{
+  "results": {
+    "copyIdButton": [
+      {
+        "width": 320,
+        "locale": "sq",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Kopjo ID-në",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID u kopjua",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "en",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copy ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copied",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "uk",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Скопіювати ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID скопійовано",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "it",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copia ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copiato",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 390,
+        "locale": "en",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copy ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copied",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 768,
+        "locale": "en",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copy ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copied",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copy ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copied",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "sq",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Kopjo ID-në",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID u kopjua",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copy ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copied",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "uk",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Скопіювати ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID скопійовано",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "it",
+        "data": [
+          {
+            "text": "#1234",
+            "ariaLabel": "Copia ID",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklab(0.556 0 0 / 0.7)",
+            "iconOpacity": "0.5"
+          },
+          {
+            "text": "#5678",
+            "ariaLabel": "ID copiato",
+            "gap": "2px",
+            "borderRadius": "4px",
+            "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+            "transitionDuration": "0.15s",
+            "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "color": "oklab(0.556 0 0 / 0.7)",
+            "iconWidth": "10px",
+            "iconHeight": "10px",
+            "iconColor": "oklch(0.527 0.173 150)",
+            "iconOpacity": "1"
+          }
+        ]
+      }
+    ],
+    "locationCombobox": [
+      {
+        "width": 320,
+        "locale": "sq",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "column",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "en",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "column",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "uk",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "column",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "it",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "column",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 390,
+        "locale": "en",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "column",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 768,
+        "locale": "en",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "sq",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "uk",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "it",
+        "data": {
+          "hookClassPresent": true,
+          "iconWidth": "16px",
+          "iconHeight": "16px",
+          "panelFound": true,
+          "panelBorder": "1px solid oklch(0.922 0 0)",
+          "panelBorderRadius": "12px",
+          "panelPadding": "12px",
+          "panelGap": "8px",
+          "panelBackgroundColor": "oklab(0.961 0 0 / 0.3)",
+          "panelMarginTop": "4px",
+          "buttonCount": 2,
+          "buttonRowFlexDirection": "row",
+          "buttonRowGap": "8px"
+        }
+      }
+    ],
+    "listingCardPattern": [
+      {
+        "width": 320,
+        "locale": "sq",
+        "data": [
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "en",
+        "data": [
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "uk",
+        "data": [
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 320,
+        "locale": "it",
+        "data": [
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 390,
+        "locale": "en",
+        "data": [
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 768,
+        "locale": "en",
+        "data": [
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "data": [
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "sq",
+        "data": [
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Apartament modern në Tiranë",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "data": [
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Modern Apartment in Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "uk",
+        "data": [
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Сучасна квартира в Тірані",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      {
+        "width": 1440,
+        "locale": "it",
+        "data": [
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          },
+          {
+            "text": "Appartamento moderno a Tirana",
+            "lineHeight": "19.25px",
+            "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    ],
+    "addItemPanel": [
+      {
+        "width": 320,
+        "locale": "sq",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "en",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "uk",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 320,
+        "locale": "it",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 390,
+        "locale": "en",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 768,
+        "locale": "en",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "sq",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "uk",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      },
+      {
+        "width": 1440,
+        "locale": "it",
+        "data": {
+          "found": true,
+          "border": "1px solid oklch(0.922 0 0)",
+          "borderRadius": "12px",
+          "padding": "12px",
+          "gap": "8px",
+          "backgroundColor": "oklab(0.961 0 0 / 0.3)"
+        }
+      }
+    ]
+  },
+  "failures": []
+}

@@ -1,0 +1,23 @@
+Task 756 R2 — AC3 genuine before/after DOM comparison for MantineListingCardPattern .cardTitle line-height
+
+BEFORE file hash (git rev-parse HEAD:path, pre-migration MantineListingCardPattern.tsx):
+  8cd9276f99b85287760123a9e2c3f8f039b6a0ff
+AFTER file hash (working-tree MantineListingCardPattern.tsx, leading-snug removed, fixed .module.css):
+  a005679707f1c2c22fa932779375a58c38bf8872
+
+Swap-and-restore witness:
+  1. git hash-object of backed-up working file before swap: a005679707f1c2c22fa932779375a58c38bf8872
+  2. git show HEAD:path written over working file; git hash-object after swap: 8cd9276f99b85287760123a9e2c3f8f039b6a0ff (matches git rev-parse HEAD:path)
+  3. npm run build-storybook (BEFORE state) -> build-storybook-before.log, EXIT_CODE=0
+  4. Playwright capture (BEFORE) -> ac3-cardtitle-lineheight-BEFORE.json
+  5. Backed-up file restored over working file; git hash-object after restore: a005679707f1c2c22fa932779375a58c38bf8872 (matches step 1, restoration proven)
+  6. npm run build-storybook (AFTER state) -> build-storybook-after.log, EXIT_CODE=0
+  7. Playwright capture (AFTER) -> ac3-cardtitle-lineheight-AFTER.json
+
+diff BEFORE AFTER: (see below, empty = byte-identical)
+(no output above = identical)
+
+MantineListingCardPattern.module.css hash check (P1 fix target — this file was NOT swapped,
+it never needed to be: after deleting the inert 'line-height: 1.375' block it is now byte-identical to HEAD):
+  git rev-parse HEAD:...module.css   = 5769e852ac1f18bcafa7e7c4f791080e08985843
+  git hash-object (working tree, post-fix) = 5769e852ac1f18bcafa7e7c4f791080e08985843

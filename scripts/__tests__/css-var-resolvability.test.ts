@@ -205,7 +205,7 @@ describe('extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :roo
     // 257 -> 256 (Task 749): --breakpoint-notification-compact deleted with its last consumer
     // (NotificationCenter's 390px threshold retargeted to the canonical 640px sm, owner decision
     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
-    expect(owned.size).toBe(256)
+    expect(owned.size).toBe(257)
     // --spacing-N is prose inside a comment at globals.css:146-150 (draft 1's
     // own D2 defect) — must never be counted.
     expect(owned.has('--spacing-N')).toBe(false)

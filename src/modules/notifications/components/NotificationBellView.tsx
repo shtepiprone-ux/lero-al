@@ -36,7 +36,7 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
           disabled={unreadCount === 0}
         >
           <ActionIcon variant="default" aria-label={t('title')} mih="2.75rem" miw="2.75rem">
-            <Bell className="h-5 w-5" />
+            <Bell size={20} />
           </ActionIcon>
         </Indicator>
       }

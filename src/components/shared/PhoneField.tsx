@@ -21,7 +21,7 @@
 
 import { useState, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { InputLabel, TextInput } from '@mantine/core'
+import { Group, InputLabel, Stack, TextInput } from '@mantine/core'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
 import {
   COUNTRY_CODES,
@@ -142,12 +142,15 @@ export function PhoneField({
   )
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <Stack gap={6}>
       {label && <InputLabel>{label}</InputLabel>}
       {/* Always inline row: [compact country selector] [national input flex-1]
           The PhoneField container inherits its parent's full width (clause 11) — the
           country trigger is the ONE documented compact exemption (Task 556). */}
-      <div className="flex flex-row gap-2">
+      {/* align="stretch" replicates the original plain `<div className="flex flex-row gap-2">`'s
+          browser-default align-items:stretch — Group's own default is align="center", which
+          visually sank the country trigger when the sibling TextInput grew taller (error state). */}
+      <Group gap="xs" wrap="nowrap" align="stretch">
         <MantineCombobox
           options={countryOptions}
           value={dialCode}
@@ -171,7 +174,7 @@ export function PhoneField({
           error={error}
           style={{ flex: 1, minWidth: 0 }}
         />
-      </div>
-    </div>
+      </Group>
+    </Stack>
   )
 }

@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { Avatar, Button } from '@mantine/core'
+import { Avatar, Button, Divider, Group, Stack, Text } from '@mantine/core'
 import { LogOut } from 'lucide-react'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
+import styles from './MobileNavDrawer.module.css'
 
 type MobileAuthView = 'login' | 'register' | 'register-agent'
 
@@ -17,8 +18,6 @@ export interface MobileNavDrawerProps {
   onOpenAuth: (view: MobileAuthView) => void
   onLogout: () => void
 }
-
-const navLinkClass = 'text-sm font-medium text-foreground/80 hover:text-foreground transition-colors'
 
 export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onOpenAuth, onLogout }: MobileNavDrawerProps) {
   const t = useTranslations('nav')
@@ -40,73 +39,87 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
 
   return (
     <MantineDrawer opened={opened} onClose={onClose} side="right" size="xs">
-      <div className="flex flex-col gap-6">
+      <Stack gap="xl">
         {user && (
-          <div className="flex items-center gap-3 pb-4 border-b">
-            <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
-            <div>
-              <p className="font-medium text-sm">{user.name}</p>
-            </div>
-          </div>
+          // Nested Stack (gap="md"=16px, matching pb-4) so the outer Stack's own gap="xl"
+          // (24px, matching gap-6) still lands cleanly between this block and <nav> — Divider
+          // itself carries no margin, so nesting is required to reproduce the original's
+          // non-uniform 16px-then-24px spacing exactly (see Task 755 report).
+          <Stack gap="md">
+            <Group gap="sm">
+              <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
+              {/* lh=1.625 (leading-relaxed) — this <p> had no explicit leading-* class
+                  pre-migration, so globals.css's `p { @apply leading-relaxed }` base rule won
+                  over text-sm's own paired 20px line-height (see Task 753/754 finding). */}
+              <Text size="sm" fw={500} lh={1.625}>{user.name}</Text>
+            </Group>
+            <Divider color="var(--border)" />
+          </Stack>
         )}
 
-        <nav className="flex flex-col gap-4">
-          <Link href={`/${locale}`} className={navLinkClass} onClick={() => navigate(`/${locale}`)}>
+        <Stack component="nav" gap="md">
+          <Link href={`/${locale}`} className={styles.navLink} onClick={() => navigate(`/${locale}`)}>
             {t('home')}
           </Link>
-          <Link href={`/${locale}/listings`} className={navLinkClass} onClick={() => navigate(`/${locale}/listings`)}>
+          <Link href={`/${locale}/listings`} className={styles.navLink} onClick={() => navigate(`/${locale}/listings`)}>
             {t('listings')}
           </Link>
           {user && (
             <>
-              <Link href={`/${locale}/cabinet`} className={navLinkClass} onClick={() => navigate(`/${locale}/cabinet`)}>
+              <Link href={`/${locale}/cabinet`} className={styles.navLink} onClick={() => navigate(`/${locale}/cabinet`)}>
                 {t('profile')}
               </Link>
               <Link
                 href={`/${locale}/cabinet?tab=listings`}
-                className={navLinkClass}
+                className={styles.navLink}
                 onClick={() => navigate(`/${locale}/cabinet?tab=listings`)}
               >
                 {t('my_listings')}
               </Link>
-              <Link href={`/${locale}/favorites`} className={navLinkClass} onClick={() => navigate(`/${locale}/favorites`)}>
+              <Link href={`/${locale}/favorites`} className={styles.navLink} onClick={() => navigate(`/${locale}/favorites`)}>
                 {t('favorites')}
               </Link>
               <Link
                 href={`/${locale}/listings/create`}
-                className={navLinkClass}
+                className={styles.navLink}
                 onClick={() => navigate(`/${locale}/listings/create`)}
               >
                 {t('add_listing')}
               </Link>
             </>
           )}
-        </nav>
+        </Stack>
 
         {!user && (
-          <div className="border-t pt-4 flex flex-col gap-2">
-            <Button variant="default" fullWidth onClick={() => openAuth('login')}>
-              {t('login')}
-            </Button>
-            <Button variant="filled" fullWidth onClick={() => openAuth('register')}>
-              {t('register')}
-            </Button>
-            {/* §6a-link — STOP-AND-ASK resolved (owner 2026-07-13): left-aligned, no icon today,
-                consistent with the Logout link below; centered/iconed is a flagged follow-up, not this task. */}
-            <Button
-              variant="transparent"
-              fullWidth
-              justify="flex-start"
-              styles={{ root: { paddingLeft: 0 } }}
-              onClick={() => openAuth('register-agent')}
-            >
-              {t('register_agent')}
-            </Button>
-          </div>
+          // Divider first, then a nested gap="xs"(8px, matching gap-2) group of buttons —
+          // same non-uniform-spacing reasoning as the user block above.
+          <Stack gap="md">
+            <Divider color="var(--border)" />
+            <Stack gap="xs">
+              <Button variant="default" fullWidth onClick={() => openAuth('login')}>
+                {t('login')}
+              </Button>
+              <Button variant="filled" fullWidth onClick={() => openAuth('register')}>
+                {t('register')}
+              </Button>
+              {/* §6a-link — STOP-AND-ASK resolved (owner 2026-07-13): left-aligned, no icon today,
+                  consistent with the Logout link below; centered/iconed is a flagged follow-up, not this task. */}
+              <Button
+                variant="transparent"
+                fullWidth
+                justify="flex-start"
+                styles={{ root: { paddingLeft: 0 } }}
+                onClick={() => openAuth('register-agent')}
+              >
+                {t('register_agent')}
+              </Button>
+            </Stack>
+          </Stack>
         )}
 
         {user && (
-          <div className="border-t pt-4">
+          <Stack gap="md">
+            <Divider color="var(--border)" />
             <Button
               variant="transparent"
               color="red"
@@ -118,9 +131,9 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
             >
               {t('logout')}
             </Button>
-          </div>
+          </Stack>
         )}
-      </div>
+      </Stack>
     </MantineDrawer>
   )
 }

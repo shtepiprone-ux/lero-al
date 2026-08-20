@@ -1,0 +1,68 @@
+[
+  {
+    "width": 320,
+    "locale": "en",
+    "hMd5": "a6b0842cf87dfa47f0540e6ca29ede27",
+    "vMd5": "9f29942339193f9667f88b4ea228ec29"
+  },
+  {
+    "width": 320,
+    "locale": "sq",
+    "hMd5": "6ae7761df157bc4b0d85a99612fbf1a5",
+    "vMd5": "789b67fd8e53b2b2b6f8b14512b24669"
+  },
+  {
+    "width": 320,
+    "locale": "uk",
+    "hMd5": "1a6238d7de3a14451bd7f354ea5852b8",
+    "vMd5": "106070dcd7201f1a02fecc3d586c6007"
+  },
+  {
+    "width": 320,
+    "locale": "it",
+    "hMd5": "2982054ccb909987721a78c1749ff3fc",
+    "vMd5": "144ad392427a17bd314f67c76202af0a"
+  },
+  {
+    "width": 390,
+    "locale": "en",
+    "hMd5": "36d7c6e304b73ae1d8ee256d83abad5c",
+    "vMd5": "abcce091137142a2a0e3ce4d12d8dc68"
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "hMd5": "9275fab79176a91d1116f7299f02a882",
+    "vMd5": "1ab6e4b2f67a47b2a2a99f71f57363c2"
+  },
+  {
+    "width": 1024,
+    "locale": "en",
+    "hMd5": "ec01a01f453d4217031a9ece5defd535",
+    "vMd5": "c4a482b0fbeeaabffde80e0affea356d"
+  },
+  {
+    "width": 1440,
+    "locale": "en",
+    "hMd5": "7b2cd2a5902704781837f8e99304274c",
+    "vMd5": "c060c08bb59c2e0e895129b2c1b55933"
+  },
+  {
+    "width": 1440,
+    "locale": "sq",
+    "hMd5": "a886399738f7f8a4f2433853d2da4321",
+    "vMd5": "e5c2019422df690883fa662ab824b3fb"
+  },
+  {
+    "width": 1440,
+    "locale": "uk",
+    "hMd5": "b921cbca1f465c09107d64ead44a5f9f",
+    "vMd5": "48d42d01bbece761aa088168376ee101"
+  },
+  {
+    "width": 1440,
+    "locale": "it",
+    "hMd5": "63d51f149ff821c7b81e2f70b589c9e8",
+    "vMd5": "72625746bc29fab59ab8712b10e0c3a3"
+  }
+]

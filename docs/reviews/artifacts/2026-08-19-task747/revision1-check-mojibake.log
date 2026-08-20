@@ -1,0 +1,4 @@
+check:mojibake — scanning 2925 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 2925 files
+EXIT_CODE=0

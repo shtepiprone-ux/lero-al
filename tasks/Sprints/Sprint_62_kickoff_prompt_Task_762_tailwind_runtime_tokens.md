@@ -1,4 +1,4 @@
-# Task 763 — Tailwind runtime tokens in CSS Modules: the detector first, then the five modules
+# Task 762 — Tailwind runtime tokens in CSS Modules: the detector first, then the five modules
 
 **Sprint:** 62 (**PROPOSED** — see "Sprint assignment") · **Type:** Governance gate + UI mechanism (D28)
 **QA profile:** `Q4 Release/Critical Flow` · **Status:** KICKOFF FILED 2026-08-21
@@ -15,23 +15,32 @@ also proved is that **no gate in this repository can see this class of defect**,
 
 So this task builds the control first and the fix second.
 
-## Sprint assignment — needs an owner decision, do not start without it
+## Sprint assignment — RECORDED, not pending
 
-No open sprint fits. Goal-fit test against every open sprint, run 2026-08-21:
+Task **762** belongs to **Sprint 62 - "Tailwind runtime tokens outlive Tailwind"**
+(`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`), opened 2026-08-21 by the orchestrator
+together with this kickoff. Opening the sprint is an orchestrator action under the owner rule of 2026-08-01; the
+first draft of this kickoff wrongly deferred it to the owner and thereby blocked its own executor. Corrected.
+
+Goal-fit test against every open sprint, run 2026-08-21 - none fits, which is what justifies opening a new one:
 
 | Sprint | Goal | Fit |
 |---|---|---|
-| 46 | ListingCard de-Tailwind + overlay exit | Partial — covers 1 of the 5 files, excludes the other 4 and the gate |
+| 46 | ListingCard de-Tailwind + overlay exit | Partial - covers 1 of the 5 files, excludes the other 4 and the gate |
 | 55 | ARIA semantics no gate sees | No |
-| 56 | Raw enum leaks and the blind detector | Closest *in kind* — a detector blind spot — but its subject is enum leaks |
+| 56 | Raw enum leaks and the detector that cannot see them | Closest *in kind* - a detector blind spot - but its subject is enum leaks |
 | 57 | Delete what no longer earns its place | No |
+| 59 | Route-level inventory before any migration claim | No - inventory, not remediation |
+| 60 | Homepage: Mantine completion and Tailwind residue | Closed 2026-08-21; its scope was the homepage file set |
 | 61 | The projection layer no gate reads | No |
 
-Recommendation: a new **Sprint 62 — "Tailwind runtime tokens outlive Tailwind"**, which is where the follow-ups
-named in §"Out of scope" also belong. The owner assigns; this kickoff does not create a sprint file.
+The owner may reassign this task to another sprint at any point; that is a routing change, not a gate on starting
+work. **Nothing in this section blocks the executor.**
 
-Task number **763** is the next free one: 757/758 are the highest on disk; 760, 761 and 762 are already named in
-`docs/backlog.md`.
+Task number **762** is taken from `docs/backlog.md`'s own registry line, which read `Last used **761**, NEXT FREE
+**762**` before this kickoff. The first draft misread that line as "762 is already used" and claimed 763 - the
+registry line names the next *free* number, not a taken one. The registry is advanced to `Last used **762**,
+NEXT FREE **763**` in the same edit that files this task.
 
 ## Exact current state — measured 2026-08-21, with the method and its limits stated
 
@@ -225,7 +234,7 @@ grep -rn -- "var(--default-transition" src/    # AC4: must be empty
 # AC2: the two-armed plant with its pre-plant census
 ```
 
-Retain every artifact under `docs/sessions/evidence/task763/`.
+Retain every artifact under `docs/sessions/evidence/task762/`.
 
 ## Pre-read (from `docs/rule-index.md`, current Mantine path)
 

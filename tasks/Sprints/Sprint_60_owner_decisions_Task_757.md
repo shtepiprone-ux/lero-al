@@ -280,3 +280,47 @@ selected: restore the actual `22.5px`, expressed in Mantine.
 D757-4a (AC7 wording), D757-5 (excluded paths), D757-6 (Google Auth follow-up), and the `transition-property`
 half of D757-7. The `--tw-leading` half of D757-7 is superseded in effect by 757R, which removes the literals'
 counterpart dependency entirely.
+
+---
+
+## D757-9 — Envelope deltas of the four Task 757R exact-semantics rows (APPROVED)
+
+**Recorded 2026-08-21, owner.** Authorises the envelope deltas — `selector`, `layer`, `specificity`,
+`sourceOrder`, `declarations`, `customProperties` — of the four `EXACT_GENERATED` rows of Task 757R
+(`text-lg`, `text-sm`, `text-xs`, `transition-colors`), **solely as the unavoidable consequence of moving a
+Tailwind utility onto Mantine props**.
+
+**Explicitly not a waiver of visual or behavioural deltas.** The authorisation is conditional on the render
+matching the pre-757 baseline exactly. That condition is met and, for the first time in this task's history,
+**measured rather than derived** — owner-run `getComputedStyle` on the live `register_success` screen,
+2026-08-21:
+
+```json
+{ "text": "Реєстрацію завершено", "fontSize": "18px", "lineHeight": "22.5px",
+  "letterSpacing": "-0.45px", "fontWeight": "600" }
+```
+
+`letter-spacing: -0.45px` is `-0.025em` at 18px, which additionally proves the element still renders as a real
+`<h3>` and still inherits the `h1..h6` base rule after being wrapped in a Mantine `Text` — the negative probe the
+Task 757 ledger could only record as an inference.
+
+**Bounds set by the owner:** the four Task 757R rows only. Does **not** extend to the other modules carrying
+`--default-transition-*`, to the Google Auth task, to Task 756, or to any future migration.
+
+### Owner condition: "the reduced-motion override must remain working" — how it is actually satisfied
+
+Recorded precisely rather than paraphrased, because the repository does not contain what that phrase literally
+names. There is **no `@media (prefers-reduced-motion: reduce)` rule anywhere in this codebase**; the Task 757R
+kickoff originally cited one and that citation was a task-design defect, corrected in Revision 1.
+
+The override that does exist, and that the condition is satisfied by, is the degraded-perf-tier rule at
+`globals.css:734-736`, whose attribute is set at runtime by `src/lib/performance/store.ts:148,165`. Task 757 had
+silently broken it — hashed CSS-Module class names no longer match `[class*="transition-"]`. Task 757R Revision 1
+restored it with a module-scoped guard, verified per class in both attribute states:
+
+| Class | no attribute | `data-perf-tier="low"` |
+|---|---|---|
+| `.linkMutedXs` · `.linkMutedSm` · `.agentBackLink` · `.linkPrimarySm` | `0.15s` | `0s` |
+
+If the owner wants a genuine `prefers-reduced-motion` override as well, that is a **new feature**, not part of
+Task 757R, and needs its own task.

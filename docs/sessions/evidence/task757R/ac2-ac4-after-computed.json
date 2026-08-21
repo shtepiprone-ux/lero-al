@@ -1,0 +1,32 @@
+{
+  "tag": "after",
+  "linkMutedXs_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke"
+  },
+  "linkPrimarySm_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke"
+  },
+  "agentBackLink_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke"
+  },
+  "linkMutedSm_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke"
+  },
+  "linkMutedXs_prefersReducedMotion_emulated": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  "linkMutedXs_dataPerfTierLow": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "className": "AuthSheet_linkMutedXs__16cmi"
+  }
+}

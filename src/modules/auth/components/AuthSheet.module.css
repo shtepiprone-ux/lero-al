@@ -11,16 +11,24 @@
    which stays unlayered on purpose because its job is to beat Mantine's own
    unlayered CSS on a Mantine component — not the case anywhere in this file).
 
-   transition-property/-timing-function/-duration on every hover link below reproduces
-   Tailwind's `transition-colors` utility verbatim, including its own internal timing
-   tokens (`--default-transition-timing-function` / `--default-transition-duration`,
-   both confirmed present in the built CSS) — same technique as
-   MantineCopyIdButton.module.css (Task 656).
+   transition-property on every hover link below reproduces Tailwind's `transition-colors`
+   utility verbatim. transition-timing-function/-duration reproduce the same utility's
+   computed values as literals (`cubic-bezier(0.4, 0, 0.2, 1)` / `150ms`), not as a
+   reference to a Tailwind runtime theme variable (Task 757R) — those variables are
+   undefined once Tailwind is removed from the project, and the project's own
+   `--ease-standard`/`--duration-*` tokens are declared inside `@theme inline` in
+   globals.css, which does not emit them as `:root` custom properties, so neither is
+   usable at runtime (verified against the built CSS; see the Task 757R session log).
 
    line-height is set explicitly everywhere a removed utility carried Tailwind's own
-   paired line-height (`.text-xs{font-size:.75rem;line-height:1rem}`,
-   `.text-sm{font-size:.875rem;line-height:1.25rem}` — confirmed in the built CSS,
-   `.next/static/css/*.css`); a bare native `<button>` does not reliably inherit an
+   paired line-height. The compiled `.text-xs`/`.text-sm` rules wrap that line-height in
+   a fallback read of the same non-inheriting Tailwind custom property that gates the
+   `h1..h6` rule discussed in the Task 757R kickoff §1 (confirmed verbatim in the built
+   CSS, `.next/static/css/*.css`; its `@property` declaration there sets
+   `inherits:false`). No element in this tree ever sets that property, so the fallback —
+   `1rem` for `.text-xs`, `1.25rem` for `.text-sm` — is always what actually renders on
+   a bare native `<button>`: the literal values used below are the correct value, not an
+   elided approximation. A bare native `<button>` also does not reliably inherit an
    ancestor's line-height and previously fell back to the browser's UA default
    (`normal`), which does not equal either value. */
 
@@ -31,8 +39,8 @@
   line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's text-xs paired line-height (16px), verbatim from the built CSS; no spacing or mantine line-height token equals this exact per-utility pairing */
   color: var(--muted-foreground);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-timing-function: var(--default-transition-timing-function);
-  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35), which does not emit it as a runtime :root custom property (verified: no match in .next/static/css/*.css), so it cannot be referenced here */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 .linkMutedXs:hover {
   color: var(--primary);
@@ -45,8 +53,8 @@
   color: var(--muted-foreground);
   text-align: center;
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-timing-function: var(--default-transition-timing-function);
-  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35), which does not emit it as a runtime :root custom property (verified: no match in .next/static/css/*.css), so it cannot be referenced here */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 .linkMutedSm:hover {
   color: var(--primary);
@@ -60,8 +68,8 @@
   margin-top: -0.25rem; /* design-tokens-allow: margin-top: -0.25rem — Tailwind's compiled -mt-1 (-4px) verbatim; no --spacing-* token expresses a negative offset */
   text-align: left;
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-timing-function: var(--default-transition-timing-function);
-  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35), which does not emit it as a runtime :root custom property (verified: no match in .next/static/css/*.css), so it cannot be referenced here */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 .agentBackLink:hover {
   color: var(--primary);
@@ -76,8 +84,8 @@
   text-decoration-line: underline;
   font-weight: 500;
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-timing-function: var(--default-transition-timing-function);
-  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35), which does not emit it as a runtime :root custom property (verified: no match in .next/static/css/*.css), so it cannot be referenced here */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 .linkPrimarySm:hover {
   color: color-mix(in oklab, var(--primary) 80%, transparent);
@@ -142,6 +150,20 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+/* Degraded-perf-tier guard (Task 757R Revision 1, R4). Before Task 757 these four links carried
+   the literal className "…transition-colors", which globals.css:734
+   ([data-perf-tier="low"] [class*="transition-"]) matched, zeroing their transition-duration on a
+   low-perf-tier device. They now carry hashed CSS-Module class names (e.g.
+   AuthSheet_linkMutedXs__16cmi) that contain no "transition-" substring, so that global rule no
+   longer matches them — a live behaviour regression against the pre-757 baseline. Restored here,
+   scoped to exactly these four classes; globals.css itself is a shared file and out of scope. */
+[data-perf-tier="low"] .linkMutedXs,
+[data-perf-tier="low"] .linkMutedSm,
+[data-perf-tier="low"] .agentBackLink,
+[data-perf-tier="low"] .linkPrimarySm {
+  transition-duration: 0ms;
 }
 
 } /* @layer utilities */

@@ -169,7 +169,8 @@ pre-757 metrics -> hover any of the four links -> the colour transition runs at 
 | Authorization/RLS | No | No action or route touched | Unchanged | `npm run test:auth` |
 | Offline/network | No | No network layer touched | Unchanged | N/A |
 | Concurrent writer | No | No data model touched | Unchanged | N/A |
-| `prefers-reduced-motion` | **Yes** | `globals.css:727-735` forces `transition-duration: 0ms !important` | The literal duration must remain overridable by that rule exactly as the `var()` form was | Computed-style probe under the emulated media feature, both values recorded |
+| ~~`prefers-reduced-motion`~~ **CORRECTED, see Revision 1** | **No** | No `@media (prefers-reduced-motion: reduce)` rule targets this surface anywhere in the repository | N/A | Task-design defect: the original citation was wrong |
+| `[data-perf-tier="low"]` degraded tier | **Yes** | `globals.css:734-736`, attribute set at runtime by `src/lib/performance/store.ts:148,165` | These four links must compute `transition-duration: 0s` while the attribute is present, exactly as they did before Task 757 | Computed-style probe with the attribute set on `documentElement`, recorded per class |
 
 ## Acceptance criteria
 
@@ -239,3 +240,114 @@ Task 757's approval is withdrawn. On 757R's approval, `docs/reviews/2026-08-21-t
 is renamed to `.review-ledger.SUPERSEDED.json` **atomically with** the creation of a valid successor ledger that names it
 in `review.supersedes` — never before, or the all-ledger gate fails on an orphan. Owner decisions D757-2 and D757-8 are
 withdrawn by D757-2b; D757-1, D757-3a, D757-4a, D757-5, D757-6 and the `transition-property` half of D757-7 stand.
+
+---
+
+# Revision 1 — 2026-08-21, after the orchestrator review
+
+**Re-entry mode: `remediation`.** The implementation is accepted except for the items below. Do not restart, do not
+re-derive what is already proven, and do not re-capture any preserved baseline.
+
+## Accepted and closed — do not redo
+
+R1, R2, R3, AC2, AC3, AC5, AC8 were reproduced independently by the reviewer: the `lh={1.25}` sites, the empty
+`--tw-|--default-transition` grep, the eight literal declarations, the identical `ac2-ac4-*-computed.json` values,
+the 78/78 zero-delta matrix with no null cells, and the five untouched sibling modules. `check:design-tokens
+--strict` was re-run by the reviewer: 0 violations, 0 stale markers, 0 missing-reason errors, exit 0.
+
+**Preserved artifacts — overwriting any of these is a task failure:**
+
+- `docs/sessions/evidence/task757R/ac3-full-matrix-before.json`
+- `docs/sessions/evidence/task757R/ac2-ac4-before-computed.json`
+
+They are the only valid pre-757R baselines and cannot be regenerated once the guard below is in place.
+`ac3-full-matrix-after.json` and `ac2-ac4-after-computed.json` **are** expected to be re-captured against the
+corrected build.
+
+## Task-design defect, corrected
+
+The negative-flow table cited `globals.css:727-735` as a `prefers-reduced-motion` override. That was wrong, and the
+executor was right to say so: no `@media (prefers-reduced-motion: reduce)` rule touches this surface. The row is
+corrected in place above. The reviewer then checked the branch that *is* there, and found a real regression — R4.
+
+## R4 (P2, blocking) — restore the degraded-tier behaviour
+
+`src/app/globals.css:734-736`:
+
+```css
+[data-perf-tier="low"] .transition,
+[data-perf-tier="low"] [class*="transition-"] { transition-duration: 0ms !important; }
+```
+
+The attribute is live: `src/lib/performance/store.ts:148` and `:165` set it on `document.documentElement`, wired by
+`src/components/shared/PerformanceStoreInit.tsx`.
+
+Before Task 757 all four links carried `className="… transition-colors"`, so `[class*="transition-"]` matched them
+and their transitions were instant on a low tier. They now carry hashed CSS Module names —
+`AuthSheet_linkMutedXs__16cmi`, `AuthSheet_linkMutedSm__as6gS`, `AuthSheet_agentBackLink__xBeZM`,
+`AuthSheet_linkPrimarySm__SSzA5` (read out of `.next/static/css/*.css`) — none of which contains the substring
+`transition-`. The rule no longer matches, so a low-tier device now animates where it used to be instant. That is
+the opposite of the optimisation's intent, and it is a behaviour delta against the pre-757 baseline this task's
+objective names as its target.
+
+**Required:** inside `AuthSheet.module.css`, restore the degraded-tier behaviour for exactly those four classes.
+
+- Scope the guard to the four classes. Do not add a blanket rule, and do not edit `globals.css` — it is a shared
+  file and out of scope.
+- **Verify, do not assume, how CSS Modules emits the ancestor attribute selector.** Read the emitted rule out of
+  `.next/static/css/*.css` and quote it in the report. If the plain form is rewritten, use `:global(...)`; if it is
+  not, say so with the quoted evidence rather than adding `:global` defensively.
+- Only `transition-duration` was zeroed by the original rule. Do not touch `transition-property` or
+  `transition-timing-function` in the guard.
+- Prove the guard is inert at the default tier: with no `data-perf-tier` attribute present, the four classes must
+  still compute `0.15s`.
+
+## R5 (P3) — correct the locale-leak attribution
+
+The report states the result is "unchanged from Task 757's own baseline". The AuthSheet share is unchanged — 6
+leaks, 2 story titles, `"Google"` × sq/uk/it, and 46 unique titles overall — but the **total moved 327 → 328**.
+Record the delta as a fact: the additional finding is in a non-AuthSheet story, this diff touches only
+`AuthSheet.tsx` and `AuthSheet.module.css` and therefore cannot produce it, and Task 757's per-story attribution is
+category-level and not granular enough to identify which story gained it. Do not describe the total as unchanged.
+
+## R6 (P3) — fix the remaining elided compiled rules in the module header
+
+`AuthSheet.module.css` lines 24-25 still quote `.text-xs{font-size:.75rem;line-height:1rem}` and
+`.text-sm{font-size:.875rem;line-height:1.25rem}`. The real compiled rules are
+`.text-xs{font-size:.75rem;line-height:var(--tw-leading,1rem)}` and
+`.text-sm{font-size:.875rem;line-height:var(--tw-leading,1.25rem)}`. The code is correct; the comment is not, and
+this exact elision — quoting the fallback as if it were the value — is what produced the `h3` defect in Task 757
+round 2. Correct both quotations and state why the literal is nonetheless right here (`--tw-leading` is
+`@property … inherits:false` and is set on no element in this tree).
+
+## Revised acceptance criteria
+
+- **AC4 (replaces the withdrawn `prefers-reduced-motion` row) / R4** — with `data-perf-tier="low"` set on
+  `document.documentElement`, a computed-style probe records `transition-duration: 0s` on one live instance of each
+  of the four classes. With the attribute absent, the same probe records `0.15s`. Both states captured in one
+  artifact, per class.
+- **AC9 / R4** — the emitted guard selector is quoted verbatim from `.next/static/css/*.css`.
+- **AC10 / R5** — the session log states the 327 → 328 delta and its attribution in the terms above.
+- **AC11 / R6** — the two corrected rule quotations appear in the module header.
+- **AC5 (re-stated)** — re-capture `ac3-full-matrix-after.json` only and compare against the **preserved**
+  `ac3-full-matrix-before.json`. Expected: 78/78 zero delta, since the guard is inert at the default tier the
+  matrix captures. A non-zero cell means the guard leaked.
+
+## Verification plan delta
+
+Re-run, because CSS changed: `npx tsc --noEmit` · `npm run check:design-tokens -- --strict` ·
+`npm run build` · `npm run build-storybook` · `npm run check:stories` · `npm run test:auth` · the AC5 after-capture ·
+the AC2/AC4 after-capture · the new AC4 degraded-tier probe.
+
+Do not re-run: any before-phase capture. `check:i18n`, `check:story-coverage` and `check:locale-leak` may be
+re-stated from this task's own prior run if no story or string changed; say which applies.
+
+Read-only Git only. Never run `git checkout`, `git stash` or any other mutating command to produce a prior build —
+if a prior-content build is needed, restore file content by copy and prove the restoration with a `git hash-object`
+witness, as Task 756 did.
+
+## Report contract delta
+
+Add: the quoted emitted guard selector · the per-class degraded-tier probe, both attribute states · the corrected
+locale-leak sentence · confirmation that both preserved baseline artifacts are byte-identical to their pre-revision
+state, with their hashes.

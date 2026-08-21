@@ -222,7 +222,7 @@ function ForgotPasswordView({
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
         <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
-        <Text component="h3" fw={600} size="lg" style={{ lineHeight: '1.75rem' }}>{t('forgot_password_success_title')}</Text>
+        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('forgot_password_success_title')}</Text>
         <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('forgot_password_success_body')}</Text>
         <button
           type="button"
@@ -651,7 +651,7 @@ function RegisterView({
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
         <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
-        <Text component="h3" fw={600} size="lg" style={{ lineHeight: '1.75rem' }}>{t('register_success_title')}</Text>
+        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('register_success_title')}</Text>
         <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('register_success_body')}</Text>
         <Button fullWidth mt="xs" onClick={onClose}>
           {t('register_success_go_home')}

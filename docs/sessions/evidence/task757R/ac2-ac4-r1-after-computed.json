@@ -1,0 +1,50 @@
+{
+  "linkMutedXs_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkMutedXs__16cmi"
+  },
+  "linkPrimarySm_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkPrimarySm__SSzA5"
+  },
+  "linkMutedXs_dataPerfTierLow": {
+    "transitionDuration": "0s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkMutedXs__16cmi"
+  },
+  "linkPrimarySm_dataPerfTierLow": {
+    "transitionDuration": "0s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkPrimarySm__SSzA5"
+  },
+  "agentBackLink_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_agentBackLink__xBeZM"
+  },
+  "agentBackLink_dataPerfTierLow": {
+    "transitionDuration": "0s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_agentBackLink__xBeZM"
+  },
+  "linkMutedSm_normal": {
+    "transitionDuration": "0.15s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkMutedSm__as6gS"
+  },
+  "linkMutedSm_dataPerfTierLow": {
+    "transitionDuration": "0s",
+    "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke",
+    "className": "AuthSheet_linkMutedSm__as6gS"
+  }
+}

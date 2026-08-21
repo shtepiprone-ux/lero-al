@@ -1,0 +1,147 @@
+/* Task 757 — de-Tailwind of AuthSheet.tsx.
+   Every rule here is a mechanism-only reproduction of a removed Tailwind utility's
+   exact computed value (D28) — none is a restyle. See the task 757 session log for
+   the property-by-property trace back to each original className.
+
+   Wrapped in @layer utilities (D34): every selector below targets a plain native
+   element (button/div/span/img) with no competing Mantine-generated unlayered CSS —
+   this module reproduces a removed Tailwind utility's cascade weight, it does not
+   need to override anything Mantine sets, so it belongs in the same layer the
+   removed utility classes lived in (unlike the 602/629/650/651/653/654/656 family,
+   which stays unlayered on purpose because its job is to beat Mantine's own
+   unlayered CSS on a Mantine component — not the case anywhere in this file).
+
+   transition-property/-timing-function/-duration on every hover link below reproduces
+   Tailwind's `transition-colors` utility verbatim, including its own internal timing
+   tokens (`--default-transition-timing-function` / `--default-transition-duration`,
+   both confirmed present in the built CSS) — same technique as
+   MantineCopyIdButton.module.css (Task 656).
+
+   line-height is set explicitly everywhere a removed utility carried Tailwind's own
+   paired line-height (`.text-xs{font-size:.75rem;line-height:1rem}`,
+   `.text-sm{font-size:.875rem;line-height:1.25rem}` — confirmed in the built CSS,
+   `.next/static/css/*.css`); a bare native `<button>` does not reliably inherit an
+   ancestor's line-height and previously fell back to the browser's UA default
+   (`normal`), which does not equal either value. */
+
+@layer utilities {
+
+.linkMutedXs {
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's text-xs paired line-height (16px), verbatim from the built CSS; no spacing or mantine line-height token equals this exact per-utility pairing */
+  color: var(--muted-foreground);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+}
+.linkMutedXs:hover {
+  color: var(--primary);
+}
+
+/* forgot-password back link — was "text-sm text-muted-foreground hover:text-primary transition-colors text-center" */
+.linkMutedSm {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem — Tailwind's text-sm paired line-height (20px), verbatim from the built CSS (.text-sm{font-size:.875rem;line-height:1.25rem}); no token equals this exact per-utility pairing */
+  color: var(--muted-foreground);
+  text-align: center;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+}
+.linkMutedSm:hover {
+  color: var(--primary);
+}
+
+/* register-agent back-to-standard link — was "text-sm text-muted-foreground hover:text-primary transition-colors -mt-1 text-left" */
+.agentBackLink {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem — Tailwind's text-sm paired line-height (20px), verbatim from the built CSS (.text-sm{font-size:.875rem;line-height:1.25rem}); no token equals this exact per-utility pairing */
+  color: var(--muted-foreground);
+  margin-top: -0.25rem; /* design-tokens-allow: margin-top: -0.25rem — Tailwind's compiled -mt-1 (-4px) verbatim; no --spacing-* token expresses a negative offset */
+  text-align: left;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+}
+.agentBackLink:hover {
+  color: var(--primary);
+}
+
+/* "no_account" / "have_account" register↔login switch links — was
+   "text-primary underline font-medium hover:text-primary/80 transition-colors" inside a text-sm parent */
+.linkPrimarySm {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem — Tailwind's text-sm paired line-height (20px), verbatim from the built CSS; set explicitly rather than relying on inheriting from the parent Text, since a bare <button> is not guaranteed to inherit it */
+  color: var(--primary);
+  text-decoration-line: underline;
+  font-weight: 500;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import "tailwindcss"` */
+}
+.linkPrimarySm:hover {
+  color: color-mix(in oklab, var(--primary) 80%, transparent);
+}
+
+/* "or" separator — a full-width rule with a background-masked centered label. Mantine's own
+   Divider label (Divider.css .m_9e365f20) was evaluated and rejected: it renders two shorter
+   line segments separated by a spacing gap from the label (no background mask) and applies no
+   text-transform, which is a structurally different render from this mask-based composition —
+   not a candidate for a zero-visual-delta swap. Reproduced 1:1 instead. */
+.orSeparator {
+  position: relative;
+}
+
+.orSeparatorLine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.orSeparatorLineInner {
+  width: 100%;
+  border-top: 1px solid var(--border); /* design-tokens-allow: border-top: 1px — Tailwind's bare `border-t` default hairline width; no spacing or radius token models a border width */
+}
+
+.orSeparatorLabelWrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's text-xs paired line-height (16px), verbatim from the built CSS; no token equals this exact per-utility pairing */
+  text-transform: uppercase;
+}
+
+.orSeparatorLabel {
+  background-color: var(--popover);
+  padding-inline: var(--mantine-spacing-xs);
+  color: var(--muted-foreground);
+}
+
+/* Provider-logo tile (36px), image variant — was "h-9 w-9 rounded-lg object-contain border bg-card shrink-0" */
+.logoImg {
+  height: 2.25rem; /* design-tokens-allow: height: 2.25rem — Tailwind's compiled h-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
+  width: 2.25rem; /* design-tokens-allow: width: 2.25rem — Tailwind's compiled w-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
+  border-radius: var(--radius-lg);
+  object-fit: contain;
+  border: 1px solid var(--border); /* design-tokens-allow: border: 1px — Tailwind's bare `border` default hairline width; no spacing or radius token models a border width */
+  background-color: var(--card);
+  flex-shrink: 0;
+}
+
+/* Provider-logo tile (36px), placeholder-icon variant — was
+   "h-9 w-9 rounded-lg border bg-card flex items-center justify-center shrink-0" */
+.logoPlaceholder {
+  height: 2.25rem; /* design-tokens-allow: height: 2.25rem — Tailwind's compiled h-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
+  width: 2.25rem; /* design-tokens-allow: width: 2.25rem — Tailwind's compiled w-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border); /* design-tokens-allow: border: 1px — Tailwind's bare `border` default hairline width; no spacing or radius token models a border width */
+  background-color: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+} /* @layer utilities */

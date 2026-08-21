@@ -11,8 +11,9 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Alert, Button, InputLabel, PasswordInput, Text, TextInput } from '@mantine/core'
-import { MantineCombobox, MantineDrawer } from '@/design-system/mantine/patterns'
+import { Alert, Box, Button, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+import { MantineAddItemPanel, MantineCombobox, MantineDrawer } from '@/design-system/mantine/patterns'
+import styles from './AuthSheet.module.css'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -96,7 +97,7 @@ function LoginView({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
       {sessionLost && (
         <Alert color="blueLight">{t('session_recovery_message')}</Alert>
       )}
@@ -114,17 +115,17 @@ function LoginView({
         autoComplete="email"
       />
 
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between">
+      <Stack gap={6}>
+        <Group justify="space-between" wrap="nowrap">
           <InputLabel htmlFor="login-password">{t('password')}</InputLabel>
           <button
             type="button"
             onClick={onForgotPassword}
-            className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            className={styles.linkMutedXs}
           >
             {t('forgot_password')}
           </button>
-        </div>
+        </Group>
         <PasswordInput
           id="login-password"
           value={password}
@@ -135,18 +136,18 @@ function LoginView({
           onVisibilityChange={setPasswordVisible}
           visibilityToggleButtonProps={{ 'aria-label': passwordVisible ? tc('hide_password') : tc('show_password') }}
         />
-      </div>
+      </Stack>
 
       <Button type="submit" fullWidth loading={loading} disabled={loading}>
         {t('login')}
       </Button>
 
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
+      <div className={styles.orSeparator}>
+        <div className={styles.orSeparatorLine}>
+          <span className={styles.orSeparatorLineInner} />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-popover px-2 text-muted-foreground">{t('or')}</span>
+        <div className={styles.orSeparatorLabelWrap}>
+          <span className={styles.orSeparatorLabel}>{t('or')}</span>
         </div>
       </div>
 
@@ -156,7 +157,7 @@ function LoginView({
         fullWidth
         onClick={handleGoogle}
         leftSection={
-          <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+          <svg style={{ width: 16, height: 16, flexShrink: 0 }} viewBox="0 0 24 24" aria-hidden="true">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
@@ -167,17 +168,17 @@ function LoginView({
         Google
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <Text ta="center" size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>
         {t('no_account')}{' '}
         <button
           type="button"
           onClick={onRegister}
-          className="text-primary underline font-medium hover:text-primary/80 transition-colors"
+          className={styles.linkPrimarySm}
         >
           {t('register')}
         </button>
-      </p>
-    </form>
+      </Text>
+    </Stack>
   )
 }
 
@@ -219,24 +220,24 @@ function ForgotPasswordView({
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center gap-4 pb-6 pt-2 text-center">
-        <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
-        <h3 className="font-semibold text-lg">{t('forgot_password_success_title')}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{t('forgot_password_success_body')}</p>
+      <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
+        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+        <Text component="h3" fw={600} size="lg" style={{ lineHeight: '1.75rem' }}>{t('forgot_password_success_title')}</Text>
+        <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('forgot_password_success_body')}</Text>
         <button
           type="button"
           onClick={onBack}
-          className="text-sm text-primary underline font-medium hover:text-primary/80 transition-colors"
+          className={styles.linkPrimarySm}
         >
           {t('forgot_password_back')}
         </button>
-      </div>
+      </Stack>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
-      <p className="text-sm text-muted-foreground">{t('forgot_password_body')}</p>
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+      <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>{t('forgot_password_body')}</Text>
 
       <TextInput
         id="forgot-email"
@@ -253,14 +254,14 @@ function ForgotPasswordView({
         <Alert color="red">{t('captcha_error_failed')}</Alert>
       )}
 
-      <div className="my-3">
+      <Box my="sm">
         <CaptchaWidget
           ref={widgetRef}
           onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
           onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
           onExpire={() => setCaptchaToken(null)}
         />
-      </div>
+      </Box>
 
       <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
         {t('forgot_password_submit')}
@@ -269,11 +270,11 @@ function ForgotPasswordView({
       <button
         type="button"
         onClick={onBack}
-        className="text-sm text-muted-foreground hover:text-primary transition-colors text-center"
+        className={styles.linkMutedSm}
       >
         ← {t('forgot_password_back')}
       </button>
-    </form>
+    </Stack>
   )
 }
 
@@ -292,7 +293,7 @@ function AgentCityField({
 }) {
   const { locations } = useLocations()
   return (
-    <div className="flex flex-col gap-1.5">
+    <Stack gap={6}>
       <InputLabel>{label}</InputLabel>
       <LocationCombobox
         locations={locations}
@@ -301,7 +302,7 @@ function AgentCityField({
         placeholder={placeholder}
         portal
       />
-    </div>
+    </Stack>
   )
 }
 
@@ -424,7 +425,7 @@ function CompanyField({
   }
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <Stack gap={6}>
       <InputLabel>{label}</InputLabel>
       <MantineCombobox
         options={options}
@@ -444,7 +445,7 @@ function CompanyField({
           + {addNewLabel}
         </Button>
       ) : (
-        <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30">
+        <MantineAddItemPanel>
           <TextInput
             value={newName}
             onChange={e => { setNewName(e.target.value); setDuplicate(null) }}
@@ -455,19 +456,19 @@ function CompanyField({
           />
 
           {/* Logo upload */}
-          <div className="flex flex-col gap-1">
+          <Stack gap={4}>
             <Text component="label" size="xs" c="dimmed">{t('company_logo')}</Text>
-            <div className="flex items-center gap-2">
+            <Group gap="xs" wrap="nowrap">
               {logoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={logoPreview}
                   alt="logo preview"
-                  className="h-9 w-9 rounded-lg object-contain border bg-card shrink-0"
+                  className={styles.logoImg}
                 />
               ) : (
-                <div className="h-9 w-9 rounded-lg border bg-card flex items-center justify-center shrink-0">
-                  <ImagePlus className="h-4 w-4 text-muted-foreground" />
+                <div className={styles.logoPlaceholder}>
+                  <ImagePlus size={16} style={{ color: 'var(--muted-foreground)' }} />
                 </div>
               )}
               <Button
@@ -496,23 +497,23 @@ function CompanyField({
                 ref={logoInputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
-                className="hidden"
+                hidden
                 onChange={e => {
                   const f = e.target.files?.[0]
                   if (f) handleLogoSelect(f)
                   e.target.value = ''
                 }}
               />
-            </div>
+            </Group>
             {logoError ? (
-              <p className="text-xs text-destructive">{logoError}</p>
+              <Text size="xs" style={{ color: 'var(--destructive)', lineHeight: '1.625' }}>{logoError}</Text>
             ) : (
-              <p className="text-[10px] text-muted-foreground">{t('company_logo_hint')}</p>
+              <Text fz={10} style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>{t('company_logo_hint')}</Text>
             )}
-          </div>
+          </Stack>
 
           {duplicate && (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <Flex direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }} gap="xs">
               <Text size="xs" c="dimmed">{t('company_exists')}</Text>
               <Button
                 type="button"
@@ -521,10 +522,10 @@ function CompanyField({
               >
                 {tc('select')}
               </Button>
-            </div>
+            </Flex>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-2 pt-1">
+          <Flex direction={{ base: 'column', sm: 'row' }} gap="xs" pt={4}>
             <Button
               type="button"
               size="sm"
@@ -542,10 +543,10 @@ function CompanyField({
             >
               {tc('cancel')}
             </Button>
-          </div>
-        </div>
+          </Flex>
+        </MantineAddItemPanel>
       )}
-    </div>
+    </Stack>
   )
 }
 
@@ -648,19 +649,19 @@ function RegisterView({
 
   if (success) {
     return (
-      <div className="flex flex-col items-center gap-4 pb-6 pt-2 text-center">
-        <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
-        <h3 className="font-semibold text-lg">{t('register_success_title')}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{t('register_success_body')}</p>
-        <Button fullWidth className="mt-2" onClick={onClose}>
+      <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
+        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+        <Text component="h3" fw={600} size="lg" style={{ lineHeight: '1.75rem' }}>{t('register_success_title')}</Text>
+        <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('register_success_body')}</Text>
+        <Button fullWidth mt="xs" onClick={onClose}>
           {t('register_success_go_home')}
         </Button>
-      </div>
+      </Stack>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
       {errorKey && (
         <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>
       )}
@@ -669,7 +670,7 @@ function RegisterView({
         <button
           type="button"
           onClick={onBack}
-          className="text-sm text-muted-foreground hover:text-primary transition-colors -mt-1 text-left"
+          className={styles.agentBackLink}
         >
           ← {t('register_back_to_standard')}
         </button>
@@ -719,7 +720,7 @@ function RegisterView({
         />
       )}
 
-      <div className="flex flex-col gap-1.5">
+      <Stack gap={6}>
         <PasswordInput
           id="reg-password"
           label={t('password')}
@@ -732,40 +733,40 @@ function RegisterView({
           visibilityToggleButtonProps={{ 'aria-label': passwordVisible ? tc('hide_password') : tc('show_password') }}
         />
         <PasswordRequirementsHint value={password} />
-      </div>
+      </Stack>
 
-      <div className="my-3">
+      <Box my="sm">
         <CaptchaWidget
           ref={widgetRef}
           onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
           onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
           onExpire={() => setCaptchaToken(null)}
         />
-      </div>
+      </Box>
 
       <Button type="submit" fullWidth loading={loading} disabled={loading || !allPasswordMet || !captchaToken}>
         {t('register')}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <Text ta="center" size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>
         {t('have_account')}{' '}
         <button
           type="button"
           onClick={onLogin}
-          className="text-primary underline font-medium hover:text-primary/80 transition-colors"
+          className={styles.linkPrimarySm}
         >
           {t('login')}
         </button>
-      </p>
+      </Text>
 
       {!isAgent && onAgentRegister && (
-        <div className="border-t pt-4">
+        <Box pt="md" style={{ borderTop: '1px solid var(--border)' }}>
           <Button type="button" variant="default" fullWidth onClick={onAgentRegister}>
             {t('register_agent')}
           </Button>
-        </div>
+        </Box>
       )}
-    </form>
+    </Stack>
   )
 }
 

@@ -1,0 +1,951 @@
+[
+  {
+    "state": "login",
+    "locale": "sq",
+    "width": 320,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 288,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 288,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "sq",
+    "width": 320,
+    "alertBox": {
+      "x": -1,
+      "y": 1636,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "sq",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 497.75,
+      "width": 288,
+      "height": 386.25
+    }
+  },
+  {
+    "state": "register",
+    "locale": "sq",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 288,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "sq",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 288,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "sq",
+    "width": 320,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 262,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "sq",
+    "width": 1440,
+    "emailBox": {
+      "x": 1076,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 1076,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "sq",
+    "width": 1440,
+    "alertBox": {
+      "x": -1,
+      "y": 1235,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "sq",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "sq",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "sq",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "sq",
+    "width": 1440,
+    "panelBox": {
+      "x": 1089,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 320,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 288,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 288,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 320,
+    "alertBox": {
+      "x": -1,
+      "y": 1636,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 520.5,
+      "width": 288,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 288,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 288,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 320,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 262,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 1440,
+    "emailBox": {
+      "x": 1076,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 1076,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 1440,
+    "alertBox": {
+      "x": -1,
+      "y": 1235,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 1440,
+    "panelBox": {
+      "x": 1089,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "uk",
+    "width": 320,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 288,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 288,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "uk",
+    "width": 320,
+    "alertBox": {
+      "x": -1,
+      "y": 1666,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "uk",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 497.75,
+      "width": 288,
+      "height": 386.25
+    }
+  },
+  {
+    "state": "register",
+    "locale": "uk",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 288,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "uk",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 175.1875,
+      "width": 288,
+      "height": 973.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "uk",
+    "width": 320,
+    "panelBox": {
+      "x": 29,
+      "y": 687.640625,
+      "width": 262,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "uk",
+    "width": 1440,
+    "emailBox": {
+      "x": 1076,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 1076,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "uk",
+    "width": 1440,
+    "alertBox": {
+      "x": -1,
+      "y": 1265,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "uk",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "uk",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "uk",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "uk",
+    "width": 1440,
+    "panelBox": {
+      "x": 1089,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "it",
+    "width": 320,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 288,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 288,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "it",
+    "width": 320,
+    "alertBox": {
+      "x": -1,
+      "y": 1636,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "it",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 520.5,
+      "width": 288,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "it",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 288,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "it",
+    "width": 320,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 288,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "it",
+    "width": 320,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 262,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "it",
+    "width": 1440,
+    "emailBox": {
+      "x": 1076,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 1076,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "it",
+    "width": 1440,
+    "alertBox": {
+      "x": -1,
+      "y": 1235,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "it",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "it",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "it",
+    "width": 1440,
+    "formBox": {
+      "x": 1076,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "it",
+    "width": 1440,
+    "panelBox": {
+      "x": 1089,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 375,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 343,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 343,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 375,
+    "alertBox": {
+      "x": -1,
+      "y": 1636,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 375,
+    "formBox": {
+      "x": 16,
+      "y": 520.5,
+      "width": 343,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 375,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 343,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 375,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 343,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 375,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 317,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 390,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 358,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 358,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 390,
+    "alertBox": {
+      "x": -1,
+      "y": 1604,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 390,
+    "formBox": {
+      "x": 16,
+      "y": 520.5,
+      "width": 358,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 390,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 358,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 390,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 358,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 390,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 332,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 480,
+    "emailBox": {
+      "x": 16,
+      "y": 532.25,
+      "width": 448,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 16,
+      "y": 685.25,
+      "width": 448,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 480,
+    "alertBox": {
+      "x": -1,
+      "y": 1604,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 480,
+    "formBox": {
+      "x": 16,
+      "y": 520.5,
+      "width": 448,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 480,
+    "formBox": {
+      "x": 16,
+      "y": 176.609375,
+      "width": 448,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 480,
+    "formBox": {
+      "x": 16,
+      "y": 176.171875,
+      "width": 448,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 480,
+    "panelBox": {
+      "x": 29,
+      "y": 664.296875,
+      "width": 422,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 768,
+    "emailBox": {
+      "x": 404,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 404,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 768,
+    "alertBox": {
+      "x": -1,
+      "y": 1235,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 768,
+    "formBox": {
+      "x": 404,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 768,
+    "formBox": {
+      "x": 404,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 768,
+    "formBox": {
+      "x": 404,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 768,
+    "panelBox": {
+      "x": 417,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  },
+  {
+    "state": "login",
+    "locale": "en",
+    "width": 1024,
+    "emailBox": {
+      "x": 660,
+      "y": 105,
+      "width": 348,
+      "height": 44
+    },
+    "submitBox": {
+      "x": 660,
+      "y": 258,
+      "width": 348,
+      "height": 44
+    },
+    "orLabelStyle": null
+  },
+  {
+    "state": "login-error",
+    "locale": "en",
+    "width": 1024,
+    "alertBox": {
+      "x": -1,
+      "y": 1235,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "state": "forgot-password",
+    "locale": "en",
+    "width": 1024,
+    "formBox": {
+      "x": 660,
+      "y": 76,
+      "width": 348,
+      "height": 363.5
+    }
+  },
+  {
+    "state": "register",
+    "locale": "en",
+    "width": 1024,
+    "formBox": {
+      "x": 660,
+      "y": 76,
+      "width": 348,
+      "height": 754.75
+    }
+  },
+  {
+    "state": "register-agent",
+    "locale": "en",
+    "width": 1024,
+    "formBox": {
+      "x": 660,
+      "y": 87.078125,
+      "width": 348,
+      "height": 949.75
+    }
+  },
+  {
+    "state": "addcompany-panel",
+    "locale": "en",
+    "width": 1024,
+    "panelBox": {
+      "x": 673,
+      "y": 583.078125,
+      "width": 322,
+      "height": 44
+    }
+  }
+]

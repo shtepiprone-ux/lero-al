@@ -1,0 +1,1785 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 757 - AuthSheet de-Tailwind (Sprint 60, Q4 critical flow)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "a9952d0073189f15c0d8c646431414c5a245f3bb",
+    "reviewedRevision": "worktree at 2026-08-21, base a9952d0 plus the uncommitted Task 757 change set",
+    "reviewedPaths": [
+      "src/modules/auth/components/AuthSheet.tsx",
+      "src/modules/auth/components/AuthSheet.module.css",
+      "src/stories/patterns/mantine/AuthSheet.stories.tsx",
+      "scripts/mantine-migration-scope.json",
+      ".storybook/main.ts",
+      ".storybook/stubs/crypto.ts",
+      ".storybook/stubs/next-headers.ts",
+      "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+      "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+      "docs/backlog.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 14,
+      "verified": 14,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-21-task757-authsheet-detailwind.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "AuthSheet",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:99-763"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/tailwind-census"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "320"
+        ],
+        "states": [
+          "login"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+          "command": "git show a9952d0073189f15c0d8c646431414c5a245f3bb:src/modules/auth/components/AuthSheet.tsx | grep -oE 'className=\"[^\"]*\"'",
+          "observable": "Before: 46 className sites / 168 utility tokens. After: 0 Tailwind utility classNames; 13 className={styles.*} CSS Module references remain. The log's original count of 12 was independently re-grepped by the reviewer and corrected to 13.",
+          "freshness": "final worktree for the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/tailwind-census"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "320"
+            ],
+            "states": [
+              "login"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A Tailwind utility literal survives somewhere in the file.",
+          "kind": "EXECUTED",
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "result": "grep -n 'className' returns 13 lines, every one of the form className={styles.*}. Zero string-literal classNames remain."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A census count is not generated CSS; rows R3.1-R3.4 carry the generated-semantics proof."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "AuthSheet auth call sites",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:99-763"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "auth/critical-flow"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--forgot-password"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "320"
+        ],
+        "states": [
+          "login",
+          "register",
+          "forgot-password"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/critical-flow-registry.md",
+          "command": "npx vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts",
+          "observable": "Owner-run 2026-08-21: 2 files / 8 tests passed. These are the exact commands the registry names for the two rows where AuthSheet.tsx is the source (Login, Signup); npm run test:auth covers the registry's remaining auth rows (6 files / 28 tests).",
+          "freshness": "owner-run against the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "auth/critical-flow"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--forgot-password"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "320"
+            ],
+            "states": [
+              "login",
+              "register",
+              "forgot-password"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The diff could change an auth call site without failing these tests.",
+          "kind": "EXECUTED",
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "result": "git diff shows zero changes to signIn / signUpWithCaptcha / requestPasswordResetWithCaptcha call sites or arguments; the diff is JSX structure and className only."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Test execution is not generated CSS."
+      }
+    },
+    {
+      "id": "AC3 / R3.0",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "AuthSheet rendered matrix",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:99-763"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/rendered-matrix"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--login-validation-error",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--register-agent",
+          "patterns-mantine-authsheet--forgot-password",
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "login",
+          "login-error",
+          "forgot-password",
+          "register",
+          "register-agent",
+          "addcompany-panel"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac3-full-matrix-before.json",
+          "command": "diff ac3-full-matrix-before.json ac3-full-matrix-after.json",
+          "observable": "78 cells per phase (6 captured states x 13 locale/viewport cells). Reviewer re-ran the comparison: 13 of 78 cells differ, all of them the after-file's orLabelStyle:null; every other measured geometry value is identical. Reviewer additionally pixel-diffed all 78 PNG pairs - 60 differ at byte level, max per-channel delta 14-60/255, zero pixels above 128, no layout shift: rasterisation noise, not a visual delta.",
+          "freshness": "recaptured against the final code in rework round 3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/rendered-matrix"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--login-validation-error",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--register-agent",
+              "patterns-mantine-authsheet--forgot-password",
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "login",
+              "login-error",
+              "forgot-password",
+              "register",
+              "register-agent",
+              "addcompany-panel"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "orLabelStyle:null is a rendering regression, not a probe artifact.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task757/ac4-after-computed.json",
+          "result": "Refuted. The AC4 probe, which uses a different collision-free selector, finds the separator with matchCount 1 in the after build and reports sepBox and sepStyle identical to the before phase. The AC3 probe's selector div.relative span:not(.w-full) was written against the removed Tailwind class names."
+        },
+        {
+          "claim": "The two success states are simply missing evidence rather than an amended requirement.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "result": "Owner decision D757-3 amends AC3 so the success states are not required in the formal matrix: they are unreachable headlessly (real Turnstile key) and the owner verified them manually across all breakpoints. The reviewer separately traced every substitution in both success blocks against theme.ts and the built CSS; the only delta found is the one recorded in F1. The amended scope, not the original, is what this row is measured against."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Tuple coverage; the generated-semantics proof is carried by rows R3.1-R3.4."
+      }
+    },
+    {
+      "id": "AC3 / R3.1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "success-state h3 titles",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:225",
+          "src/modules/auth/components/AuthSheet.tsx:654"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/success-title"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--forgot-password"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "forgot-password-success",
+          "register-success"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "observable": "The compiled rule reads line-height from --tw-leading with a 1.75rem fallback. The base rule h1,h2,h3,h4,h5,h6 writes --tw-leading:var(--leading-tight) onto the element itself and --leading-tight is 1.25, so the pre-migration computed line-height was 18px x 1.25 = 22.5px, never the fallback.",
+          "freshness": "compiled from globals.css at the base revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/success-title"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--forgot-password"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "forgot-password-success",
+              "register-success"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "--tw-leading might not reach the h3, making 1.75rem the true before-value.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "result": "Refuted. @property --tw-leading{syntax:\"*\";inherits:false} makes inheritance irrelevant, but the h1..h6 base rule sets the property on the h3 element itself, so it applies. The session log's claim that the compiled rule is .text-lg{...line-height:1.75rem} elided the var() wrapper; corrected 2026-08-21."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A cascade migration of a generated utility whose emitted line-height is a custom-property read, not a literal."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "text-lg",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "a9952d0073189f15c0d8c646431414c5a245f3bb"
+          },
+          "candidate": "text-lg"
+        },
+        "before": {
+          "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "rawRule": ".text-lg {\n    font-size: 1.125rem;\n    line-height: var(--tw-leading, 1.75rem);\n  }",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "font-size:1.125rem",
+              "line-height:var(--tw-leading,1.75rem)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--tw-leading"
+              ],
+              "writes": [],
+              "fallbacks": [
+                "1.75rem"
+              ]
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/auth/components/AuthSheet.tsx",
+          "rawRule": "style={{ lineHeight: '1.75rem' }}",
+          "envelope": {
+            "selector": "An inline style attribute on the same element; no selector at all.",
+            "media": [],
+            "supports": [],
+            "layer": "inline style (outside every cascade layer)",
+            "specificity": "inline (1,0,0,0)",
+            "sourceOrder": "Inline style; wins over every author rule regardless of layer or order.",
+            "declarations": [
+              "line-height:1.75rem"
+            ],
+            "customProperties": {
+              "reads": [],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. The declaration moved from a class in @layer utilities to an inline style attribute."
+          },
+          {
+            "field": "layer",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. An inline style is not layered and can no longer be overridden by any author rule."
+          },
+          {
+            "field": "specificity",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. Inline styles outrank every author selector."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. Source order stops being the deciding factor once the declaration is inline."
+          },
+          {
+            "field": "declarations",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. "
+          },
+          {
+            "field": "customProperties",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. The custom-property indirection is removed, so the h1..h6 base rule can no longer influence this declaration."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "The h1..h6 base rule's other declarations, and the element's text metrics, must survive the element becoming a Mantine Text with component=\"h3\".",
+            "command": "diff docs/sessions/evidence/task757/ac3-full-matrix-before.json docs/sessions/evidence/task757/ac3-full-matrix-after.json",
+            "artifact": "docs/sessions/evidence/task757/ac3-full-matrix-after.json",
+            "beforeOutcome": "The element renders as an <h3> in both builds, so the layered h1,h2,h3,h4,h5,h6 rule keeps applying: letter-spacing -0.025em and font-weight 600 are unchanged, and fw={600} restates the same weight. Mantine's Text root sets neither property. Text metrics are unchanged as well: the 78-cell matrix, which contains many <p>-to-Mantine-Text conversions, reports byte-identical geometry in every captured cell, so the Text root introduces no font-family or metric change under this theme.",
+            "afterOutcome": "The element renders as an <h3> in both builds, so the layered h1,h2,h3,h4,h5,h6 rule keeps applying: letter-spacing -0.025em and font-weight 600 are unchanged, and fw={600} restates the same weight. Mantine's Text root sets neither property. Text metrics are unchanged as well: the 78-cell matrix, which contains many <p>-to-Mantine-Text conversions, reports byte-identical geometry in every captured cell, so the Text root introduces no font-family or metric change under this theme.",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC3 / R3.2",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.module.css",
+        "symbol": ".linkPrimarySm",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.module.css"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/text-sm"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--login-validation-error",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--register-agent",
+          "patterns-mantine-authsheet--forgot-password",
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "login",
+          "login-error",
+          "forgot-password",
+          "register",
+          "register-agent",
+          "addcompany-panel"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "observable": "The compiled rule reads line-height from --tw-leading with a 1.25rem fallback; the module reproduces the fallback as a literal. Sibling classes with the identical substitution: linkMutedSm, agentBackLink (text-sm) and linkMutedXs (text-xs).",
+          "freshness": "compiled from globals.css at the base revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/text-sm"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--login-validation-error",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--register-agent",
+              "patterns-mantine-authsheet--forgot-password",
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "login",
+              "login-error",
+              "forgot-password",
+              "register",
+              "register-agent",
+              "addcompany-panel"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Dropping the var(--tw-leading, ...) read changes the computed value on these elements.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "result": "Refuted for these elements. @property --tw-leading{inherits:false}, and none of the target elements carries a leading-* utility, so the before rule always resolved to its 1.25rem fallback - exactly the literal the module states. The AC3 matrix reports identical geometry for every captured cell."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A generated utility whose emitted line-height is a custom-property read; the module reproduces the fallback as a literal, which is an envelope change."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "text-sm",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "a9952d0073189f15c0d8c646431414c5a245f3bb"
+          },
+          "candidate": "text-sm"
+        },
+        "before": {
+          "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "rawRule": ".text-sm {\n    font-size: 0.875rem;\n    line-height: var(--tw-leading, 1.25rem);\n  }",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "font-size:.875rem",
+              "line-height:var(--tw-leading,1.25rem)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--tw-leading"
+              ],
+              "writes": [],
+              "fallbacks": [
+                "1.25rem"
+              ]
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/auth/components/AuthSheet.module.css",
+          "rawRule": ".linkPrimarySm {\n  font-size: var(--mantine-font-size-sm);\n  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem \u2014 Tailwind's text-sm paired line-height (20px), verbatim from the built CSS; set explicitly rather than relying on inheriting from the parent Text, since a bare <button> is not guaranteed to inherit it */\n  color: var(--primary);\n  text-decoration-line: underline;\n  font-weight: 500;\n  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;\n  transition-timing-function: var(--default-transition-timing-function);\n  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) \u2014 Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import \"tailwindcss\"` */\n}",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "font-size:var(--mantine-font-size-sm)",
+              "line-height:1.25rem"
+            ],
+            "customProperties": {
+              "reads": [
+                "--mantine-font-size-sm"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "declarations",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Same computed values (theme.ts fontSizes match the Tailwind sizes exactly), but the declarations are re-expressed."
+          },
+          {
+            "field": "customProperties",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Provably inert on these elements - inherits:false and no leading-* utility present - but it is an envelope change and needs explicit owner authorisation (proposed D757-7)."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "An ancestor or sibling sets --tw-leading",
+            "command": "grep -ho \"@property --tw-leading{[^}]*}\" .next/static/css/*.css",
+            "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+            "beforeOutcome": "@property --tw-leading{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its 1.25rem fallback in both builds.",
+            "afterOutcome": "@property --tw-leading{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its 1.25rem fallback in both builds.",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC3 / R3.3",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.module.css",
+        "symbol": ".orSeparatorLabelWrap",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.module.css"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/text-xs"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--login-validation-error",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--register-agent",
+          "patterns-mantine-authsheet--forgot-password",
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "login",
+          "login-error",
+          "forgot-password",
+          "register",
+          "register-agent",
+          "addcompany-panel"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "observable": "The compiled rule reads line-height from --tw-leading with a 1rem fallback; the module reproduces the fallback as a literal. Sibling classes with the identical substitution: linkMutedSm, agentBackLink (text-sm) and linkMutedXs (text-xs).",
+          "freshness": "compiled from globals.css at the base revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/text-xs"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--login-validation-error",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--register-agent",
+              "patterns-mantine-authsheet--forgot-password",
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "login",
+              "login-error",
+              "forgot-password",
+              "register",
+              "register-agent",
+              "addcompany-panel"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Dropping the var(--tw-leading, ...) read changes the computed value on these elements.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "result": "Refuted for these elements. @property --tw-leading{inherits:false}, and none of the target elements carries a leading-* utility, so the before rule always resolved to its 1rem fallback - exactly the literal the module states. The AC3 matrix reports identical geometry for every captured cell."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A generated utility whose emitted line-height is a custom-property read; the module reproduces the fallback as a literal, which is an envelope change."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "text-xs",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "a9952d0073189f15c0d8c646431414c5a245f3bb"
+          },
+          "candidate": "text-xs"
+        },
+        "before": {
+          "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "rawRule": ".text-xs {\n    font-size: 0.75rem;\n    line-height: var(--tw-leading, 1rem);\n  }",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "font-size:.75rem",
+              "line-height:var(--tw-leading,1rem)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--tw-leading"
+              ],
+              "writes": [],
+              "fallbacks": [
+                "1rem"
+              ]
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/auth/components/AuthSheet.module.css",
+          "rawRule": ".orSeparatorLabelWrap {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  font-size: var(--mantine-font-size-xs);\n  line-height: 1rem; /* design-tokens-allow: line-height: 1rem \u2014 Tailwind's text-xs paired line-height (16px), verbatim from the built CSS; no token equals this exact per-utility pairing */\n  text-transform: uppercase;\n}",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "font-size:var(--mantine-font-size-xs)",
+              "line-height:1rem"
+            ],
+            "customProperties": {
+              "reads": [
+                "--mantine-font-size-xs"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "declarations",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Same computed values (theme.ts fontSizes match the Tailwind sizes exactly), but the declarations are re-expressed."
+          },
+          {
+            "field": "customProperties",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Provably inert on these elements - inherits:false and no leading-* utility present - but it is an envelope change and needs explicit owner authorisation (proposed D757-7)."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "An ancestor or sibling sets --tw-leading",
+            "command": "grep -ho \"@property --tw-leading{[^}]*}\" .next/static/css/*.css",
+            "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+            "beforeOutcome": "@property --tw-leading{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its 1rem fallback in both builds.",
+            "afterOutcome": "@property --tw-leading{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its 1rem fallback in both builds.",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC3 / R3.4",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.module.css",
+        "symbol": ".linkMutedSm",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.module.css"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/transition-colors"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--login-validation-error",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--register-agent",
+          "patterns-mantine-authsheet--forgot-password",
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "login",
+          "login-error",
+          "forgot-password",
+          "register",
+          "register-agent",
+          "addcompany-panel"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "observable": "The compiled rule transitions ten properties including --tw-gradient-from/via/to and wraps both timing declarations in var(--tw-ease,...) / var(--tw-duration,...). The module reproduces seven properties and states both timing tokens directly. Applies identically to linkMutedXs, linkPrimarySm and agentBackLink.",
+          "freshness": "compiled from globals.css at the base revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/transition-colors"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--login-validation-error",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--register-agent",
+              "patterns-mantine-authsheet--forgot-password",
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "login",
+              "login-error",
+              "forgot-password",
+              "register",
+              "register-agent",
+              "addcompany-panel"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An ancestor or sibling utility could set --tw-ease / --tw-duration and make the dropped wrappers observable.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "result": "Refuted. @property --tw-duration{inherits:false} and @property --tw-ease{inherits:false}; grep of src/modules/auth/ finds no duration-* or ease-* utility on any element in this tree. Both wrappers therefore always resolved to their fallbacks, which the module states literally."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A generated utility whose emitted declarations carry custom-property guards."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "transition-colors",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "node docs/sessions/evidence/task757/dump-generated-rules.mjs",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "a9952d0073189f15c0d8c646431414c5a245f3bb"
+          },
+          "candidate": "transition-colors"
+        },
+        "before": {
+          "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+          "rawRule": ".transition-colors {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to",
+              "transition-timing-function:var(--tw-ease,var(--default-transition-timing-function))",
+              "transition-duration:var(--tw-duration,var(--default-transition-duration))"
+            ],
+            "customProperties": {
+              "reads": [
+                "--tw-ease",
+                "--tw-duration",
+                "--default-transition-timing-function",
+                "--default-transition-duration"
+              ],
+              "writes": [],
+              "fallbacks": [
+                "var(--default-transition-timing-function)",
+                "var(--default-transition-duration)"
+              ]
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/modules/auth/components/AuthSheet.module.css",
+          "rawRule": ".linkMutedSm {\n  font-size: var(--mantine-font-size-sm);\n  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem \u2014 Tailwind's text-sm paired line-height (20px), verbatim from the built CSS (.text-sm{font-size:.875rem;line-height:1.25rem}); no token equals this exact per-utility pairing */\n  color: var(--muted-foreground);\n  text-align: center;\n  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;\n  transition-timing-function: var(--default-transition-timing-function);\n  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) \u2014 Tailwind-internal token (tailwindcss@4.3.0's own theme default); the static scanner cannot see through the opaque `@import \"tailwindcss\"` */\n}",
+          "envelope": {
+            "selector": "A single class applied to the target element; no ancestor or sibling relation.",
+            "media": [],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted in @layer utilities, after @layer base; no competing declaration on the same element.",
+            "declarations": [
+              "transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke",
+              "transition-timing-function:var(--default-transition-timing-function)",
+              "transition-duration:var(--default-transition-duration)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--default-transition-timing-function",
+                "--default-transition-duration"
+              ],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "declarations",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. No element in this tree carries a gradient and neither timing token is ever set here, so the change is inert - but unapproved."
+          },
+          {
+            "field": "customProperties",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Both are @property inherits:false and unset on these elements; inert but an envelope change requiring owner authorisation (proposed D757-7)."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "An ancestor or sibling sets --tw-duration",
+            "command": "grep -ho \"@property --tw-duration{[^}]*}\" .next/static/css/*.css",
+            "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+            "beforeOutcome": "@property --tw-duration{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its var(--default-transition-duration) fallback in both builds.",
+            "afterOutcome": "@property --tw-duration{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its var(--default-transition-duration) fallback in both builds.",
+            "equivalent": true
+          },
+          {
+            "condition": "An ancestor or sibling sets --tw-ease",
+            "command": "grep -ho \"@property --tw-ease{[^}]*}\" .next/static/css/*.css",
+            "artifact": "docs/sessions/evidence/task757/ac3-generated-before-rules.css",
+            "beforeOutcome": "@property --tw-ease{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its var(--default-transition-timing-function) fallback in both builds.",
+            "afterOutcome": "@property --tw-ease{syntax:\"*\";inherits:false} - the property does not inherit and is set on no element in this tree, so the declaration resolves to its var(--default-transition-timing-function) fallback in both builds.",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC3 / R3.5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "ForgotPasswordView / RegisterView success states",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:222-236",
+          "src/modules/auth/components/AuthSheet.tsx:651-660"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/success-states"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--forgot-password"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "forgot-password-success",
+          "register-success"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "command": "owner-native manual verification of both success states at every breakpoint, on a local production build with real Supabase and real Turnstile",
+          "observable": "Owner reached both success states and stepped through every breakpoint: no layout shift, no overflow, no clipping, in all four locales. Recorded as owner decision D757-3a on 2026-08-21.",
+          "freshness": "owner-run on the final build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/success-states"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--forgot-password"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "forgot-password-success",
+              "register-success"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The owner's manual pass is equivalent to a captured before/after baseline.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "result": "It is not, and this row does not record it as one. No pre-migration capture of either state exists or can be produced - the project's Turnstile site key is a real production key a headless browser cannot solve - so requiredScope.phases is declared as after only. The single property whose pre-migration value was established analytically rather than captured is the h3 line-height, recorded in D757-2 and authorised in D757-8."
+        },
+        {
+          "claim": "Some other substitution in the success blocks could carry an unmeasured delta.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/theme.ts",
+          "result": "Reviewer traced each substitution against theme.ts and the built CSS: gap-4/pb-6/pt-2 to gap=md/pb=xl/pt=xs (16/24/8px, exact per theme.ts:190-195); h-12 w-12 to size={48}; mt-2 to mt=xs (8px); the linkPrimarySm button whose parent here is a Stack rather than a <p>, so --tw-leading is unset and the 1.25rem fallback is correct; body Text lineHeight 1.625 matching the original leading-relaxed class. Only the h3 line-height differs."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Rendered-state coverage for two states; the generated-semantics proof for the one changed declaration is carried by row AC3 / R3.1."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.module.css",
+        "symbol": "or separator",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:145-151"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/or-separator"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "1440"
+        ],
+        "states": [
+          "login"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task757/ac4-after-computed.json",
+          "command": "diff ac4-before-computed.json ac4-after-computed.json",
+          "observable": "matchCount 1 in every cell of both phases; sepBox and sepStyle identical (sq@320 x=140.703125 width=38.59375 height=16; paddingInline 8px/8px in both phases). Mantine Divider was evaluated and rejected in the module header with a stated structural reason.",
+          "freshness": "captured in rework round 1 against the separator implementation, unchanged since",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/or-separator"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "1440"
+            ],
+            "states": [
+              "login"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "px-2 became Mantine spacing xs and may not equal 8px.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/theme.ts",
+          "result": "theme.ts:191 sets spacing.xs = 0.5rem = 8px, and the captured sepStyle reports paddingInline 8px/8px in both phases."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Rendered-geometry equivalence; the generated-semantics rows carry the cascade proof."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "CompanyField add-company panel",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:447-548"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/add-company-panel"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "768",
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "addcompany-panel"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "command": "git diff src/design-system/mantine/patterns/MantineAddItemPanel.tsx",
+          "observable": "Empty diff - the shared component is unmodified. AuthSheet consumes <MantineAddItemPanel> from the patterns barrel with no props, replacing the literal fragment 'border rounded-xl p-3 flex flex-col gap-2 bg-muted/30'.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/add-company-panel"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "768",
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "addcompany-panel"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The panel was forked or locally restyled instead of consumed.",
+          "kind": "EXECUTED",
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "result": "Refuted. git status lists no modification under the patterns directory, and AuthSheet.module.css contains no panel chrome rule."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Component consumption, not generated CSS. The radius question is closed as not-a-defect by owner decision D757-1."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "auth flows end to end",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:99-763"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/e2e"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--forgot-password"
+        ],
+        "locales": [
+          "uk"
+        ],
+        "viewports": [
+          "1440"
+        ],
+        "states": [
+          "login",
+          "register",
+          "forgot-password"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "command": "owner-run manual end-to-end against a local production build with real Supabase and real Turnstile",
+          "observable": "Login: drawer closed, header authenticated. Forgot password: success state shown, email received, recovery link worked, password changed, new login succeeded. Register: success state shown, confirmation email received, email confirmed, user authenticated.",
+          "freshness": "owner-run on the final build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/e2e"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--forgot-password"
+            ],
+            "locales": [
+              "uk"
+            ],
+            "viewports": [
+              "1440"
+            ],
+            "states": [
+              "login",
+              "register",
+              "forgot-password"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The success states are technically unreachable, so AC6 cannot be satisfied.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "result": "Refuted. The owner reached all three success states manually. The blocker is specific to headless automation (a real Turnstile key), not to the states themselves."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Manual flow execution, not generated CSS."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "validation gates",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/gates"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "320"
+        ],
+        "states": [
+          "login"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+          "command": "npm run build",
+          "observable": "Owner-run 2026-08-21: Compiled successfully, 40/40 static pages, exit 0. tsc --noEmit exit 0; check:design-tokens --strict 0 violations exit 0; check:i18n 2218 keys x 4 locales parity PASSED exit 0; check:story-coverage 18/18 exit 0. check:locale-leak EXIT_CODE=1, 327 leaks / 46 story titles; --mantine-only EXIT_CODE=1, 22 / 4; exactly 6 attributable to AuthSheet, all the pre-existing hardcoded Google OAuth-button text, unchanged by this diff.",
+          "freshness": "owner-run against the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/gates"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "320"
+            ],
+            "states": [
+              "login"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 6 AuthSheet locale-leak findings were introduced by this diff.",
+          "kind": "EXECUTED",
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "result": "Refuted. git show of the base revision contains the identical literal Google text at the identical position; the diff touched only surrounding classNames. Owner context in D757-4: Google OAuth is not implemented, so the string is untranslated text on an unbuilt feature, routed to the follow-up in D757-6."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate execution, not generated CSS. AC7 was narrowed to a scoped criterion by owner decision D757-4."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "string content",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:99-763"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/strings"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--login",
+          "patterns-mantine-authsheet--login-validation-error",
+          "patterns-mantine-authsheet--register",
+          "patterns-mantine-authsheet--register-agent",
+          "patterns-mantine-authsheet--forgot-password",
+          "patterns-mantine-authsheet--register-agent-add-company"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320"
+        ],
+        "states": [
+          "login"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+          "command": "npm run check:i18n",
+          "observable": "2218 keys x 4 locales, parity PASSED, exit 0. The diff changes no t() key and no literal user-facing string.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/strings"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login",
+              "patterns-mantine-authsheet--login-validation-error",
+              "patterns-mantine-authsheet--register",
+              "patterns-mantine-authsheet--register-agent",
+              "patterns-mantine-authsheet--forgot-password",
+              "patterns-mantine-authsheet--register-agent-add-company"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320"
+            ],
+            "states": [
+              "login"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A string changed under cover of the markup migration.",
+          "kind": "EXECUTED",
+          "path": "src/modules/auth/components/AuthSheet.tsx",
+          "result": "Refuted by reading the diff: every removed line's text node reappears unchanged on the corresponding added line."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "String parity, not generated CSS."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/auth/components/AuthSheet.tsx",
+        "symbol": "live/inert census",
+        "diffHunks": [
+          "src/modules/auth/components/AuthSheet.tsx:655"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AuthSheet/live-inert-census"
+        ],
+        "stories": [
+          "patterns-mantine-authsheet--register"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "320"
+        ],
+        "states": [
+          "register"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+          "command": "read node_modules/@mantine/core/styles/Button.css",
+          "observable": "Exactly one utility sat on one of the six imported Mantine components: className=mt-2 on <Button>. Button.css .m_77c9d27d sets no margin property, so the utility was live; reproduced as mt=xs (theme.ts:191 spacing.xs = 0.5rem = 8px = mt-2). The other 45 sites sat on native elements or lucide icons.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AuthSheet/live-inert-census"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--register"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "320"
+            ],
+            "states": [
+              "register"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An inert utility was replaced by a working prop without classification.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
+          "result": "The census table gives all 46 sites an explicit disposition; the reviewer spot-checked mt-2 against Button.css and the spacing scale and found the classification correct."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Classification against component CSS; the cascade proof is in rows R3.1-R3.4."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC6 / R6",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "docs/sessions/evidence/task757/e2e-flow-transcript.json is a round-1 artifact retained unreconciled: it records errorCount 1 with a non-noise 404 plus four non-noise 'No available adapters.' warnings, and step 2 records the validation Alert as visible:false - all superseded by the round-3 rendered verification and the owner's manual run. It should be marked superseded or removed so it cannot be read as current AC6 evidence."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC3 / R3.5",
+    "reviewer": "Opus"
+  }
+}

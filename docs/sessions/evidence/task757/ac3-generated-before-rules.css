@@ -1,0 +1,29 @@
+/* Task 757 - exact generated before-rules, compiled from src/app/globals.css at base revision a9952d0073189f15c0d8c646431414c5a245f3bb.
+   Producer: docs/sessions/evidence/task757/dump-generated-rules.mjs
+   tailwindcss 4.3.0
+   These strings are what review-ledger's TAILWIND_V4 rows must carry as before.rawRule. */
+
+/* candidate: text-lg */
+.text-lg {
+    font-size: 1.125rem;
+    line-height: var(--tw-leading, 1.75rem);
+  }
+
+/* candidate: text-sm */
+.text-sm {
+    font-size: 0.875rem;
+    line-height: var(--tw-leading, 1.25rem);
+  }
+
+/* candidate: text-xs */
+.text-xs {
+    font-size: 0.75rem;
+    line-height: var(--tw-leading, 1rem);
+  }
+
+/* candidate: transition-colors */
+.transition-colors {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }

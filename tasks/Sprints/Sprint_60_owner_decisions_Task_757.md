@@ -145,3 +145,112 @@ The handoff must state: `pre-existing untracked src/hooks/useIsMobile.ts, exclud
    backlog.
 
 Current backlog length: 77 lines (limit 80).
+
+---
+
+## D757-7 — Envelope deltas of the inert reproductions (CONDITIONAL authorisation)
+
+**Recorded 2026-08-21.** Owner authorises **exactly two** envelope deltas, and no others:
+
+1. The loss of the `var(--tw-leading, …)` read in the five `AuthSheet.module.css` classes that reproduce
+   `text-sm` / `text-xs` line-height as a literal (`.linkPrimarySm`, `.linkMutedSm`, `.agentBackLink`,
+   `.linkMutedXs`, `.orSeparatorLabelWrap`).
+2. The `transition-colors` reproduction: `transition-property` shortened from ten entries to seven
+   (`--tw-gradient-from/via/to` dropped) and the `var(--tw-ease, …)` / `var(--tw-duration, …)` guards removed.
+
+**Condition attached by the owner:** the authorisation holds only if the native validator confirms, for each
+affected row, both the exact generated before-rule and an equivalent negative probe.
+
+**Confirmation status against the 2026-08-21 native runs:**
+
+| Row | Candidate | Exact generated rule | Equivalent negative probe |
+|---|---|---|---|
+| AC3 / R3.4 | `transition-colors` | Confirmed — no `rawRule` violation raised | Confirmed — no "outcomes differ" violation raised |
+| AC3 / R3.2 | `text-sm` | Pending — first run used the minified built-CSS form (`.875rem`); corrected to the compiler's `0.875rem` | Confirmed — no "outcomes differ" violation raised |
+| AC3 / R3.3 | `text-xs` | Pending — same leading-zero correction (`.75rem` → `0.75rem`) | Confirmed — no "outcomes differ" violation raised |
+
+The two pending cells are confirmed by the next native `check:review-ledger` run. If that run raises a `rawRule`
+violation on either row, this authorisation does not apply to it and the row reverts to `MISMATCH_RECORDED`.
+
+**Explicitly NOT covered by D757-7:**
+
+- The six envelope deltas of `AC3 / R3.1` (`text-lg` → inline style): selector, layer, specificity, sourceOrder,
+  declarations, customProperties. D757-2 authorised the **rendered value** (28px), not the envelope. Finding F1
+  therefore stays OPEN at P1 and the review decision cannot reach `APPROVED` or `APPROVED WITH NOTES`.
+- The AC3 success-state matrix amendment — that is D757-3 and stands separately.
+- The AC7 `check:locale-leak` narrowing — that is D757-4 and stands separately.
+- The Task 756 `MantineAddItemPanel` radius disposition — that is D757-1 and stands separately.
+
+**Owner instruction on record:** do not set `review.decision` to `APPROVED WITH NOTES`, `review.ledgerGate.status`
+to `PASSED`, or `handoff.commitPush` to `ALLOWED` ahead of the owner's own output of the dump producer and
+`check:review-ledger`.
+
+---
+
+## D757-4a — AC7 owner resolution, final wording (supersedes the summary in D757-4)
+
+**Recorded 2026-08-21, owner verbatim:**
+
+> The literal exit-0 requirement is amended for Task 757. `check:locale-leak` was executed; its non-zero result and
+> per-story attribution are retained. Task 757 does not modify unrelated stories, detector policy, or allowlists.
+> The six AuthSheet findings are pre-existing `Google` OAuth-button text, unchanged by this migration. Defer their
+> product/allowlist disposition to the separate Google Auth task. For Task 757, AC7 is satisfied by successful
+> execution and attribution of the gate; typecheck, design-token, i18n, story-coverage, Storybook build, app build,
+> and auth tests remain required green.
+
+**Required-green set under this wording, with the evidence actually held:**
+
+| Gate | Result | Source |
+|---|---|---|
+| `npx tsc --noEmit` | exit 0 | executor session log |
+| `npm run check:design-tokens -- --strict` | 0 violations, exit 0 | executor session log |
+| `npm run check:i18n` | 2218 keys x 4 locales, parity PASSED, exit 0 | executor session log |
+| `npm run check:story-coverage` | 18/18 covered, exit 0 | executor session log |
+| `npm run build` | 40/40 pages, exit 0 | **owner-run 2026-08-21** |
+| `npm run test:auth` (registry commands) | 8/8 passed | **owner-run 2026-08-21** |
+| `npm run check:stories` | 129 files, 0 violations, exit 0 | executor session log only — not owner-run |
+| `npm run build-storybook` | built, exit 0 | executor session log only — not owner-run |
+
+The last two rows are the only members of the owner's own required-green set that rest on the executor's report
+rather than on an owner-run or reviewer-reproduced result. They are named here so the gap is visible rather than
+assumed; the reviewer does not treat an executor-reported exit code as proof.
+
+**Ledger effect:** AC7 / R7 remains `VERIFIED` under the amended criterion. If either unrun gate comes back
+non-zero, that status is withdrawn and a new finding is opened.
+
+---
+
+## D757-8 — Envelope deltas of the success-title `h3` inline style (option A)
+
+**Recorded 2026-08-21.** Owner authorises the six envelope deltas of `AC3 / R3.1` — `selector`, `layer`,
+`specificity`, `sourceOrder`, `declarations`, `customProperties` — **scoped strictly to the two success-title
+`<h3>` sites** (`AuthSheet.tsx:225`, `:654`), as the technical consequence of the rendered `line-height: 1.75rem`
+already authorised in D757-2.
+
+**Explicit owner instruction:** do not change the code and do not move the `h3` line-height into a CSS Module
+class. Option B is declined.
+
+**Scope limit:** this authorisation covers these two sites only. It does not license inline styles as a general
+substitute for canonical sources anywhere else in the codebase, and it does not extend to any future task.
+
+**Ledger effect:** `AC3 / R3.1` moves from `MISMATCH_RECORDED` to `EQUIVALENT` with all six deltas listed in
+`allowedSemanticDeltas` against this record. Finding F1 is closed.
+
+---
+
+## D757-3a — AC3 scope narrowing withdrawn (supersedes D757-3)
+
+**Recorded 2026-08-21.** The owner withdraws the D757-3 narrowing. The two success states return to the review's
+required scope and are recorded as `VERIFIED` on **owner-native manual evidence**. The `F4` P3 coverage-gap note
+is removed.
+
+**How this is represented, stated plainly rather than absorbed:** the success states occupy their own requirement
+row, `AC3 / R3.5`, whose `requiredScope.phases` is `["after"]` — not `["before", "after"]`. No pre-migration
+capture of either state exists or can be produced (the project's Turnstile site key is a real production key that
+a headless browser cannot solve), so the owner's evidence is an after-state verification at every breakpoint
+against his own prior familiarity with the surface, not a captured baseline. That limit is recorded in the row's
+counter-checks; it is not claimed as a before/after proof.
+
+The one property in these states whose pre-migration value was established analytically rather than captured is
+the `h3` line-height, recorded in D757-2 and authorised in D757-8. Every other substitution in both success blocks
+was traced by the reviewer against `theme.ts` and the built CSS and matches exactly.

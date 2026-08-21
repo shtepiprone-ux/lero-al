@@ -15,5 +15,6 @@
   "src/modules/locations/components/PopularLocationsView.tsx",
   "src/components/layout/MobileBottomNavView.tsx",
   "src/design-system/mantine/patterns/MantineAddItemPanel.tsx",
-  "src/components/shared/LocationCombobox.tsx"
+  "src/components/shared/LocationCombobox.tsx",
+  "src/modules/auth/components/AuthSheet.tsx"
 ]

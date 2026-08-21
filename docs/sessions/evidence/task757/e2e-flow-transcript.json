@@ -1,0 +1,53 @@
+{
+  "transcript": [
+    "1. Login view mounted (default)",
+    "2. Submitted empty login form → client-side validation branch (Alert \"Please enter a valid email address.\" visible: false)",
+    "3. Clicked \"forgot password\" → ForgotPasswordView mounted",
+    "4. Clicked \"back to login\" → LoginView mounted",
+    "5. Clicked \"register\" link → RegisterView (isAgent=false) mounted",
+    "6. Clicked \"register as agent\" CTA → RegisterView (isAgent=true) mounted, AgentCityField + CompanyField visible",
+    "7. Clicked \"+ Add new company\" → MantineAddItemPanel opened",
+    "8. Register-agent submit button correctly disabled while required fields/captcha unmet (disabled: true)",
+    "9. Clicked \"back to standard registration\" → RegisterView (isAgent=false) mounted"
+  ],
+  "consoleEvents": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "isNoise": false
+    },
+    {
+      "type": "log",
+      "text": "[Vercel Speed Insights] Failed to load script from /_vercel/speed-insights/script.js. Please check if any content blockers are enabled and try again.",
+      "isNoise": true
+    },
+    {
+      "type": "warning",
+      "text": "No available adapters.",
+      "isNoise": false
+    },
+    {
+      "type": "warning",
+      "text": "No available adapters.",
+      "isNoise": false
+    },
+    {
+      "type": "warning",
+      "text": "No available adapters.",
+      "isNoise": false
+    },
+    {
+      "type": "warning",
+      "text": "No available adapters.",
+      "isNoise": false
+    }
+  ],
+  "errorCount": 1,
+  "errors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "isNoise": false
+    }
+  ]
+}

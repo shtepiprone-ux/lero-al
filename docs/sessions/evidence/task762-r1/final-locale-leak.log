@@ -1,0 +1,430 @@
+🔍  Locale leak detector — full mode
+    Stories: 281 scanned (37 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-08-21T17-28/
+
+.............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+❌  Locale leak detector: 328 leak(s) found:
+
+  Story: Admin/AdminCompaniesManager/Default
+    [sq] "Tirana Real Estate Group"
+    [sq] "Adriatik Properties"
+    [sq] "Blloku Premium Homes"
+    [uk] "Tirana Real Estate Group"
+    [uk] "Adriatik Properties"
+    [uk] "Blloku Premium Homes"
+    [it] "Tirana Real Estate Group"
+    [it] "Adriatik Properties"
+    [it] "Blloku Premium Homes"
+    [sq] "Logo"
+    [it] "Logo"
+
+  Story: Admin/AdminCurrenciesManager/Default
+    [sq] "EUR, ALL…"
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "EUR, ALL…"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "EUR, ALL…"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Admin/AdminExchangeProvidersManager/Default
+    [sq] "BankOfAlbania"
+    [sq] "ExchangeRatesAPI"
+    [sq] "ManualRates"
+    [sq] "Manual"
+    [uk] "BankOfAlbania"
+    [uk] "ExchangeRatesAPI"
+    [uk] "ManualRates"
+    [it] "BankOfAlbania"
+    [it] "ExchangeRatesAPI"
+    [it] "ManualRates"
+
+  Story: Admin/AdminExchangeProvidersManager/Form Dialog Mobile Bottom Sheet
+    [sq] "Manual"
+
+  Story: Admin/AdminPermissionsManager/Default
+    [sq] "Administrator"
+    [sq] "Admin User"
+    [uk] "Admin User"
+    [it] "Admin User"
+
+  Story: Admin/AdminPropertyTypesManager/Default
+    [sq] "Apartament"
+    [sq] "Lokal tregtar"
+    [uk] "Apartament"
+    [uk] "Lokal tregtar"
+    [it] "Apartament"
+    [it] "Lokal tregtar"
+    [sq] "EN / UK / IT"
+    [sq] "Apartment"
+    [sq] "Appartamento"
+    [sq] "House"
+    [sq] "Casa"
+    [sq] "Commercial"
+    [sq] "Commerciale"
+    [sq] "Land"
+    [sq] "Terreno"
+    [uk] "EN / UK / IT"
+    [uk] "Apartment"
+    [uk] "Appartamento"
+    [uk] "House"
+    [uk] "Casa"
+    [uk] "Commercial"
+    [uk] "Commerciale"
+    [uk] "Land"
+    [uk] "Terreno"
+    [it] "EN / UK / IT"
+    [it] "Apartment"
+    [it] "Appartamento"
+    [it] "House"
+    [it] "Casa"
+    [it] "Commercial"
+    [it] "Commerciale"
+    [it] "Land"
+    [it] "Terreno"
+
+  Story: Admin/AdminReportsManager/Default
+    [sq] "Blerina Hoxha"
+    [uk] "Blerina Hoxha"
+    [it] "Blerina Hoxha"
+
+  Story: Admin/AdminReportsManager/Dialog Owner Row
+    [sq] "Agim Krasniqi"
+    [sq] "Blerina Hoxha"
+    [uk] "Agim Krasniqi"
+    [uk] "Blerina Hoxha"
+    [it] "Agim Krasniqi"
+    [it] "Blerina Hoxha"
+
+  Story: Admin/AdminReportsManager/Full Management
+    [sq] "Agim Krasniqi"
+    [sq] "Blerina Hoxha"
+    [uk] "Agim Krasniqi"
+    [uk] "Blerina Hoxha"
+    [it] "Agim Krasniqi"
+    [it] "Blerina Hoxha"
+
+  Story: Admin/AdminReportsManager/Terminal Reopen
+    [sq] "Agim Krasniqi"
+    [sq] "Blerina Hoxha"
+    [uk] "Agim Krasniqi"
+    [uk] "Blerina Hoxha"
+    [it] "Agim Krasniqi"
+    [it] "Blerina Hoxha"
+
+  Story: Admin/AdminReportsManager/Delete Confirm
+    [sq] "Agim Krasniqi"
+    [sq] "Blerina Hoxha"
+    [uk] "Agim Krasniqi"
+    [uk] "Blerina Hoxha"
+    [it] "Agim Krasniqi"
+    [it] "Blerina Hoxha"
+
+  Story: Admin/AdminSettings/Default
+    [sq] "Footer"
+    [it] "Footer"
+
+  Story: Admin/AdminSidebar/Collapsed Rail
+    [sq] "Footer"
+    [uk] "Footer"
+    [it] "Footer"
+
+  Story: Admin/AdminSidebar/Mobile Drawer Open
+    [sq] "Footer"
+    [uk] "Footer"
+    [it] "Footer"
+
+  Story: Admin/AdminSupportManager/Default
+    [sq] "Gentiana Hoxha"
+    [uk] "Gentiana Hoxha"
+    [it] "Gentiana Hoxha"
+
+  Story: Admin/AdminSupportManager/User Card Status Badges
+    [sq] "Agim Krasniqi"
+    [sq] "Blerina Hoxha"
+    [sq] "Driton Berisha"
+    [sq] "Moderator"
+    [sq] "Berisha Real Estate"
+    [uk] "Agim Krasniqi"
+    [uk] "Blerina Hoxha"
+    [uk] "Driton Berisha"
+    [uk] "Berisha Real Estate"
+    [it] "Agim Krasniqi"
+    [it] "Blerina Hoxha"
+    [it] "Driton Berisha"
+    [it] "Berisha Real Estate"
+
+  Story: Admin/AdminUserProfile/Default
+    [sq] "Tirana Real Estate Group"
+    [uk] "Tirana Real Estate Group"
+    [it] "Tirana Real Estate Group"
+
+  Story: Admin/AdminUserProfile/Create Mode
+    [sq] "Email *"
+    [uk] "Email *"
+    [it] "Email *"
+
+  Story: Admin/AdminUsersTable/Default
+    [sq] "Moderator"
+    [sq] "Administrator"
+    [sq] "Tirana Real Estate Group"
+    [sq] "Online"
+    [sq] "Gentiana Hoxha"
+    [uk] "Tirana Real Estate Group"
+    [uk] "Gentiana Hoxha"
+    [it] "Tirana Real Estate Group"
+    [it] "Online"
+    [it] "Gentiana Hoxha"
+    [sq] "Tirana Real Estate Group · #101"
+    [uk] "Tirana Real Estate Group · #101"
+    [it] "Tirana Real Estate Group · #101"
+
+  Story: Primitives/NavigationMenu/Mobile Open
+    [it] "Home"
+
+  Story: Listings/ListingDetailView/Public Listing
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Listings/ListingDetailView/Staff Preview Unpublished
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Listings/ListingDetailView/Staff Preview Published
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Listings/ListingFormShellView/Owner
+    [sq] "ALL"
+    [sq] "Upload Widget"
+    [uk] "ALL"
+    [uk] "Upload Widget"
+    [it] "ALL"
+    [it] "Gas"
+    [it] "Upload Widget"
+
+  Story: Listings/ListingFormShellView/Staff
+    [sq] "ALL"
+    [sq] "Upload Widget"
+    [uk] "ALL"
+    [uk] "Upload Widget"
+    [it] "ALL"
+    [it] "Gas"
+    [it] "Upload Widget"
+
+  Story: Listings/ListingFormShellView/Staff Status Control Open
+    [sq] "ALL"
+    [sq] "Upload Widget"
+    [uk] "ALL"
+    [uk] "Upload Widget"
+    [it] "ALL"
+    [it] "Gas"
+    [it] "Upload Widget"
+
+  Story: Notifications/NotificationItem/All Cases
+    [sq] "Statusi i listimit u ndryshua"
+    [uk] "Statusi i listimit u ndryshua"
+    [it] "Statusi i listimit u ndryshua"
+
+  Story: Planted/VisualViolations/Clipped Button Text
+    [sq] "Btn-467: very long label that definitely gets clipped beyond container"
+    [uk] "Btn-467: very long label that definitely gets clipped beyond container"
+    [it] "Btn-467: very long label that definitely gets clipped beyond container"
+
+  Story: Planted/VisualViolations/Overlapping Actions
+    [sq] "Btn-A #467"
+    [sq] "Btn-B #467"
+    [uk] "Btn-A #467"
+    [uk] "Btn-B #467"
+    [it] "Btn-A #467"
+    [it] "Btn-B #467"
+
+  Story: Planted/VisualViolations/Off Viewport Control
+    [sq] "Visible content #467"
+    [uk] "Visible content #467"
+    [it] "Visible content #467"
+
+  Story: Planted/VisualViolations/Container Clipped
+    [sq] "Wide-btn #467 inside narrow container"
+    [uk] "Wide-btn #467 inside narrow container"
+    [it] "Wide-btn #467 inside narrow container"
+
+  Story: Planted/VisualViolations/Known Good Control
+    [sq] "Btn-good #467"
+    [uk] "Btn-good #467"
+    [it] "Btn-good #467"
+
+  Story: Planted/VisualViolations/Ambiguous Overlap
+    [sq] "Trigger #467"
+    [sq] "Popup #467"
+    [uk] "Trigger #467"
+    [uk] "Popup #467"
+    [it] "Trigger #467"
+    [it] "Popup #467"
+
+  Story: Planted/VisualViolations/Container Escape
+    [sq] "Container-escape proof: icon button extends past clip box."
+    [uk] "Container-escape proof: icon button extends past clip box."
+    [it] "Container-escape proof: icon button extends past clip box."
+
+  Story: Planted/VisualViolations/Unstyled Frame
+    [sq] "Planted unstyled frame for style-integrity proof R4."
+    [sq] "Unstyled #467"
+    [uk] "Planted unstyled frame for style-integrity proof R4."
+    [uk] "Unstyled #467"
+    [it] "Planted unstyled frame for style-integrity proof R4."
+    [it] "Unstyled #467"
+
+  Story: Planted/VisualViolations/Intentional Ellipsis
+    [sq] "Lnk-467-ellipsis-apartament-2+1-tirane-shume-i-mire-per-familje-te-vogel"
+    [uk] "Lnk-467-ellipsis-apartament-2+1-tirane-shume-i-mire-per-familje-te-vogel"
+    [it] "Lnk-467-ellipsis-apartament-2+1-tirane-shume-i-mire-per-familje-te-vogel"
+
+  Story: Planted/VisualViolations/Sr Only Icon Button
+    [sq] "Close dialog button with very long sr-only label that definitely exceeds the tiny 1px container width"
+    [uk] "Close dialog button with very long sr-only label that definitely exceeds the tiny 1px container width"
+    [it] "Close dialog button with very long sr-only label that definitely exceeds the tiny 1px container width"
+
+  Story: Planted/VisualViolations/Narrow Range Guard
+    [sq] "Narrow-range #467"
+    [uk] "Narrow-range #467"
+    [it] "Narrow-range #467"
+
+  Story: Planted/VisualViolations/Large Range Guard
+    [sq] "Large-range guard #467"
+    [sq] "Large-range-btn #467"
+    [uk] "Large-range guard #467"
+    [uk] "Large-range-btn #467"
+    [it] "Large-range guard #467"
+    [it] "Large-range-btn #467"
+
+  Story: Planted/VisualViolations/Scroll Clipped Overlap
+    [sq] "Row 1 #569"
+    [sq] "Row 2 #569"
+    [sq] "Row 3 #569"
+    [sq] "Row 4 #569"
+    [sq] "Footer #569"
+    [uk] "Row 1 #569"
+    [uk] "Row 2 #569"
+    [uk] "Row 3 #569"
+    [uk] "Row 4 #569"
+    [uk] "Footer #569"
+    [it] "Row 1 #569"
+    [it] "Row 2 #569"
+    [it] "Row 3 #569"
+    [it] "Row 4 #569"
+    [it] "Footer #569"
+
+  Story: Planted/VisualViolations/Scroll Visible Overlap
+    [sq] "Visible-A #569"
+    [sq] "Visible-B #569"
+    [uk] "Visible-A #569"
+    [uk] "Visible-B #569"
+    [it] "Visible-A #569"
+    [it] "Visible-B #569"
+
+  Story: Planted/VisualViolations/Overlay Backdrop Covered
+    [sq] "Sheet control #663"
+    [uk] "Sheet control #663"
+    [it] "Sheet control #663"
+
+  Story: Planted/VisualViolations/Overlay No Backdrop
+    [sq] "Sheet control #663 (no backdrop)"
+    [uk] "Sheet control #663 (no backdrop)"
+    [it] "Sheet control #663 (no backdrop)"
+
+  Story: Mantine/Primitives/FilterControls/Default
+    [sq] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+    [uk] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+    [it] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+
+  Story: Patterns/Mantine/AuthSheet/Login
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+  Story: Patterns/Mantine/AuthSheet/Login Validation Error
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+    Report: .screenshots/locale-leak/2026-08-21T17-28/report.json
+EXIT_CODE=1

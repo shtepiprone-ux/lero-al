@@ -142,7 +142,7 @@
 
 .listImage {
   position: relative;
-  width: calc(var(--spacing) * 32); /* w-32 */
+  width: 8rem; /* design-tokens-allow: width: 8rem — w-32, resolved from Tailwind's own --spacing multiplier (.25rem × 32); no --space-* token matches this exact step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
   flex-shrink: 0;
   align-self: stretch;
   min-height: var(--space-20);
@@ -151,7 +151,7 @@
 }
 @media (min-width: 40rem) {
   .listImage {
-    width: calc(var(--spacing) * 44); /* sm:w-44 */
+    width: 11rem; /* design-tokens-allow: width: 11rem — sm:w-44, resolved from Tailwind's own --spacing multiplier (.25rem × 44); no --space-* token matches this exact step (Task 762 Revision 1, D762-1) */
   }
 }
 
@@ -180,9 +180,9 @@
   background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
   color: var(--overlay-foreground);
   font-size: .75rem; /* text-xs */ /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it (MobileBottomNavView.module.css precedent) */
-  line-height: var(--tw-leading, 1rem); /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback */
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
   padding-inline: var(--space-2); /* px-2 */
-  padding-block: calc(var(--spacing) * .5); /* py-0.5 */
+  padding-block: .125rem; /* design-tokens-allow: padding-block: .125rem — py-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × .5); no --space-* token matches this exact half-step (Task 762 Revision 1, D762-1) */
   border-radius: 3.40282e+38px; /* rounded-full */ /* design-tokens-allow: border-radius: 38px — Tailwind's own compiled rounded-full value (scientific notation, detector matches its numeric tail) */
 }
 @supports (color: color-mix(in lab, red, red)) {
@@ -198,9 +198,9 @@
   background-color: #0009; /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
   color: var(--overlay-foreground);
   font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: var(--tw-leading, 1rem); /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback */
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
   padding-inline: var(--space-2);
-  padding-block: calc(var(--spacing) * .5);
+  padding-block: .125rem; /* design-tokens-allow: padding-block: .125rem — py-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × .5); no --space-* token matches this exact half-step (Task 762 Revision 1, D762-1) */
   border-radius: 3.40282e+38px; /* design-tokens-allow: border-radius: 38px — Tailwind's own compiled rounded-full value (scientific notation, detector matches its numeric tail) */
 }
 @supports (color: color-mix(in lab, red, red)) {
@@ -215,15 +215,17 @@
 }
 
 .cardTitle {
-  /* transition-colors */
-  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-  /* --default-transition-duration is Tailwind's own @theme token (.15s) — given a literal
-     fallback here so the detector's inner-var() scan can resolve it (Task 718 A5: a var()
-     WITH a fallback is treated as resolved regardless of whether the referenced property is
-     defined anywhere the detector can see); --default-transition-timing-function above needed
-     no such fallback per the strict run. */
-  transition-duration: var(--tw-duration, var(--default-transition-duration, .15s));
+  /* transition-colors — --tw-gradient-from/via/to removed (Task 762 Revision 1, R5/E-1): never
+     declared anywhere in this repo (grep-confirmed), so they never actually watch a real
+     transition; computed transition-property is shorter but functionally identical. --tw-ease/
+     --tw-duration hooks (kept by Task 762) are also removed here (Task 762 Revision 1, D762-1):
+     var() reads of an unregistered Tailwind bookkeeping var are safe only because a literal
+     fallback is present — the hook itself served no purpose once nothing outside this file ever
+     sets --tw-ease/--tw-duration (grep-confirmed repo-wide), so dropping it changes no cascade
+     contract, only removes dead indirection (measured, not assumed, per AC-R6). */
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35); an @theme inline name is emitted only inside Tailwind's own compiler-generated theme layer, and only when the compiled output actually references it — nothing does for --ease-standard (verified: no match in .next/static/css/*.css), so it cannot be referenced here (causal claim corrected, Task 762 Revision 1 R7) */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 /*
  * Reproduces `group-hover:[--text-color:var(--primary)]` — Mantine's own `Text` CSS reads
@@ -268,7 +270,7 @@
      the `--tw-leading` indirection since nothing else on this element needs that variable.
      --leading-tight is Tailwind's own @theme token (1.25); given a literal fallback so the
      detector's var() scan can resolve it (Task 718 A5). */
-  line-height: var(--leading-tight, 1.25);
+  line-height: 1.25; /* collapsed from var(--leading-tight, 1.25) — Tailwind's own @theme token, never emitted at :root (Task 762 Revision 1, D762-1) */
   color: var(--muted-foreground); /* text-muted-foreground/70 static fallback */
 }
 @supports (color: color-mix(in lab, red, red)) {
@@ -279,15 +281,15 @@
 
 .metaRow {
   font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: var(--tw-leading, 1rem); /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback */
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
   color: var(--muted-foreground); /* text-muted-foreground */
 }
 
 .metaRowBordered {
   font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: var(--tw-leading, 1rem); /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback */
+  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
   color: var(--muted-foreground);
-  border-top-style: var(--tw-border-style); /* border-t */
+  border-top-style: solid; /* border-t — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1) */
   border-top-width: 1px;
   padding-top: var(--space-2); /* pt-2 */
 }
@@ -304,7 +306,7 @@
 
 .priceMetaRow {
   font-size: .625rem; /* design-tokens-allow: font-size: .625rem — Tailwind's own compiled text-2xs value, no token represents it */
-  line-height: var(--tw-leading, .75rem); /* design-tokens-allow: line-height: .75rem — Tailwind's own compiled text-2xs line-height fallback */
+  line-height: .75rem; /* design-tokens-allow: line-height: .75rem — Tailwind's own compiled text-2xs line-height fallback, collapsed from var(--tw-leading, .75rem) (Task 762 Revision 1, D762-1) */
   color: var(--muted-foreground); /* text-muted-foreground/70 static fallback */
 }
 @supports (color: color-mix(in lab, red, red)) {
@@ -349,11 +351,11 @@
   color: var(--overlay-foreground); /* text-overlay-foreground */
   font-weight: 700; /* font-bold */
   font-size: .875rem; /* design-tokens-allow: font-size: .875rem — Tailwind's own compiled text-sm value, no token represents it */
-  line-height: var(--tw-leading, 1.25rem); /* design-tokens-allow: line-height: 1.25rem — Tailwind's own compiled text-sm line-height fallback */
+  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem — Tailwind's own compiled text-sm line-height fallback, collapsed from var(--tw-leading, 1.25rem) (Task 762 Revision 1, D762-1) */
   padding-inline: var(--space-3); /* px-3 */
-  padding-block: calc(var(--spacing) * 1.5); /* py-1.5 */
+  padding-block: .375rem; /* design-tokens-allow: padding-block: .375rem — py-1.5, resolved from Tailwind's own --spacing multiplier (.25rem × 1.5); no --space-* token matches this exact step (Task 762 Revision 1, D762-1) */
   border-radius: calc(var(--radius) * 1.5); /* rounded-xl */
   rotate: -8deg; /* rotate-[-8deg] */
-  border-style: var(--tw-border-style); /* border-2 */
+  border-style: solid; /* border-2 — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1) */
   border-width: 2px; /* design-tokens-allow: border-width: 2px — Tailwind's own compiled border-2 value, no token represents it */
 }

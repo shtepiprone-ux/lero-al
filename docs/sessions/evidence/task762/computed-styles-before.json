@@ -1,0 +1,60 @@
+{
+  "MobileBottomNavView.module.css": {
+    "note": ".fab span — timing-function only, no duration declaration",
+    "storyId": "mantine-primitives-mobilebottomnavview--guest",
+    "selector": "[class*=\"fab\"]:not([class*=\"fabLink\"]):not([class*=\"fabIcon\"]):not([class*=\"fabLabel\"])",
+    "computed": {
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transitionProperty": "transform, translate, scale, rotate"
+    }
+  },
+  "MobileNavDrawer.module.css": {
+    "note": ".navLink",
+    "storyId": "mantine-primitives-mobilenavdrawer--default",
+    "selector": "[class*=\"navLink\"]",
+    "computed": {
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+    }
+  },
+  "MantineCopyIdButton.module.css": {
+    "note": ".copyId",
+    "storyId": "mantine-primitives-copyidbutton--default",
+    "selector": "[data-copy-id]",
+    "computed": {
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+    }
+  },
+  "MantineListingCardPattern.module.css": {
+    "note": ".cardTitle",
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"cardTitle\"]",
+    "computed": {
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+    }
+  },
+  "NotificationItem.module.css": {
+    "note": ".root (first match, CSS-module hashed class, excludes Mantine Text/Anchor \"root\" false match)",
+    "storyId": "notifications-notificationitem--all-cases",
+    "selector": "div[class*=\"_root_\"]",
+    "computed": {
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+    }
+  },
+  "MantineListingCardPattern.hover": {
+    "before": "none",
+    "hovered": "rgba(16, 24, 40, 0.08) 0px 12px 16px -4px, rgba(16, 24, 40, 0.03) 0px 4px 6px -2px",
+    "changed": true
+  },
+  "MantineListingCardPattern.reducedMotion": {
+    "transition": "none"
+  }
+}

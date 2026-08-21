@@ -1,0 +1,11 @@
+🔍  check:tailwind-runtime-tokens — scanned 23 src/**/*.module.css file(s)
+    project-owned names (globals.css @theme/@theme inline/:root): 257
+    Tailwind-owned references found: 27 | baseline entries: 28
+
+❌  1 baseline entrie(s) whose reference no longer exists (stale baseline):
+    src/design-system/mantine/patterns/MantineListingCardPattern.module.css  var(--leading-tight)
+
+❌  check:tailwind-runtime-tokens — 0 new debt + 1 stale baseline entrie(s). Baseline must match the live scan exactly.
+    Fix: replace the Tailwind runtime-token reference with a literal (docs/design-system.md §23.7),
+    or add/remove the exact { file, property } row in scripts/tailwind-runtime-token-baseline.json.
+EXIT_CODE=1

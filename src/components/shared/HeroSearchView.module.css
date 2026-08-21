@@ -84,7 +84,7 @@
   @media (min-width: 40rem) {
     .typeControl {
       flex-basis: auto; /* sm:basis-auto — I1 */
-      width: calc(var(--spacing) * 48); /* sm:w-48 — I1, N1: token reference kept */
+      width: 12rem; /* design-tokens-allow: width: 12rem — sm:w-48, resolved from Tailwind's own --spacing multiplier (.25rem × 48); no --space-* token matches this exact step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
     }
   }
 
@@ -118,8 +118,7 @@
   /* Site #8 — Search Button (px-6 font-semibold basis-full sm:basis-full[dropped, see header] md:grow-0 md:basis-auto) */
   .searchControl {
     padding-inline: var(--space-6); /* px-6 — I1, N1: token reference kept */
-    --tw-font-weight: 600; /* font-semibold — I1, reproduced verbatim incl. the Tailwind bookkeeping var */
-    font-weight: 600; /* font-semibold — I1 */
+    font-weight: 600; /* font-semibold — I1; the --tw-font-weight bookkeeping var removed (Task 762 Revision 1, D762-1): nothing in this file ever read it via var(), font-weight is already set as a literal here (grep-confirmed repo-wide) */
     flex-basis: 100%; /* basis-full — I1 */
   }
   @media (min-width: 48rem) {

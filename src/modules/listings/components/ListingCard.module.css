@@ -21,15 +21,17 @@
  * FavoriteButton.module.css on any property (no shared background-color/color/opacity/cursor),
  * so layering this module does not reopen that fix.
  *
- * `.overlayFavorite`'s box-shadow reproduces Tailwind's own `--tw-inset-shadow,
+ * `.overlayFavorite`'s box-shadow used to reproduce Tailwind's own `--tw-inset-shadow,
  * --tw-inset-ring-shadow,--tw-ring-offset-shadow,--tw-ring-shadow,--tw-shadow` composition by
- * referencing the same custom properties `MobileBottomNavView.module.css` (713) does, rather
- * than hand-flattening to a literal box-shadow list — `--tw-inset-shadow`/`--tw-inset-ring-
- * shadow`/`--tw-ring-offset-shadow`/`--tw-ring-shadow` stay at Tailwind's own globally-registered
- * `@property` initial value (`0 0 #0000`) because nothing here sets them; only `--tw-shadow` is
- * set locally, to `.shadow-sm`'s own compiled value. Verified live via `getComputedStyle`, not
- * derived from the source text alone (Task 702 §3.5/§10 I2): byte-identical to the pre-edit
- * capture, `diffCount: 0`.
+ * referencing those custom properties directly. Task 762 Revision 1 (O-1, D762-1) measured that a
+ * `var()` read of a Tailwind-registered bookkeeping property with no local declaration and no
+ * fallback is invalid at computed-value time once Tailwind's compiler-generated `@property`
+ * registration is gone — the whole `box-shadow` declaration drops, not merely degrades (two
+ * Chromium documents differing only in the presence of those registrations, box-shadow: none vs.
+ * the value below). Flattened to the literal it resolves to today, captured live via
+ * `getComputedStyle`: the three registered-invisible (fully transparent) layers contribute nothing visible
+ * and are dropped; the two `shadow-sm` layers (from the locally-set `--tw-shadow`, now inlined)
+ * remain.
  */
 
 @layer utilities {
@@ -61,8 +63,8 @@
   /* Sites #3/#7 — ListingFeatureIcon svg sizing (`:173`, `:271`). Forwarded as the icon's ONLY
      className (ListingFeatureIcon.tsx has no default/merge), so this class alone must size it. */
   .featureIcon {
-    height: calc(var(--spacing) * 3.5); /* h-3.5 — I1, N1: fractional step keeps the calc() form */
-    width: calc(var(--spacing) * 3.5); /* w-3.5 — I1 */
+    height: .875rem; /* design-tokens-allow: height: .875rem — h-3.5, resolved from Tailwind's own --spacing multiplier (.25rem × 3.5); no --space-* token matches this fractional step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
+    width: .875rem; /* design-tokens-allow: width: .875rem — w-3.5, same resolution */
   }
 
   /* Site #2 — inline FavoriteButton self-position, horizontal/list card (`:166`). Merged with
@@ -71,7 +73,7 @@
      only). */
   .inlineFavorite {
     flex-shrink: 0; /* shrink-0 — I1 */
-    margin-top: calc(var(--spacing) * -0.5); /* -mt-0.5 — I1 */
+    margin-top: -.125rem; /* design-tokens-allow: margin-top: -.125rem — -mt-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × -0.5); no --space-* token expresses a negative half-step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
     margin-right: calc(var(--space-1) * -1); /* -mr-1 — I1 */
   }
 
@@ -79,8 +81,7 @@
      composition this reproduces — same `--tw-shadow`-plus-var()-composition technique as
      `MobileBottomNavView.module.css` (713) `.navBar`/`.fab`. */
   .overlayFavorite {
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a); /* design-tokens-allow: #0000001a — Tailwind's own compiled shadow-sm color fallback (MobileBottomNavView.module.css:87 precedent for the same raw value on shadow-lg); no §22 token represents this specific alpha-black */ /* design-tokens-allow: --tw-shadow: 1px — shadow-sm's own compiled offset-y/blur expansion, no §22.4 length token composes this box-shadow layer (Task 715 precedent, MobileBottomNavView.module.css:87) */ /* design-tokens-allow: --tw-shadow: 3px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: 2px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: -1px — same shadow-sm expansion */
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); /* shadow-sm */
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 2px -1px; /* design-tokens-allow: rgba( — shadow-sm, flattened from the Tailwind --tw-shadow/--tw-ring-* composition; captured live via getComputedStyle (Task 762 Revision 1), not hand-derived — the three registered-invisible (fully transparent) layers are dropped, confirmed absent from this capture */ /* design-tokens-allow: box-shadow: 1px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 3px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 2px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: -1px — same flattened shadow-sm layer */
   }
 
   /* Task 741 — CLOSED_OVERLAY_STYLE de-Tailwind (:58-61 -> :268). Reproduces the two retired

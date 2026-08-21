@@ -1,0 +1,279 @@
+{
+  "MobileBottomNavView.navBar": {
+    "storyId": "mantine-primitives-mobilebottomnavview--guest",
+    "selector": ".mobile-bottom-nav",
+    "computed": {
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.08) 0px -2px 16px 0px",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "1px"
+    }
+  },
+  "MobileBottomNavView.fab": {
+    "storyId": "mantine-primitives-mobilebottomnavview--guest",
+    "selector": "span[class*=\"_fab_\"]:not([class*=\"fabLink\"]):not([class*=\"fabIcon\"]):not([class*=\"fabLabel\"]):not([class*=\"fabActive\"])",
+    "computed": {
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklch(0.985 0 0) 0px 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "24px",
+      "transitionProperty": "transform, translate, scale, rotate",
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "width": "48px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "MobileBottomNavView.navItem": {
+    "storyId": "mantine-primitives-mobilebottomnavview--guest",
+    "selector": "a[class*=\"_navItem_\"], button[class*=\"_navItem_\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "24px",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "width": "256px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "MobileNavDrawer.navLink": {
+    "storyId": "mantine-primitives-mobilenavdrawer--default",
+    "selector": "[class*=\"navLink\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "20px",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "width": "288px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "MantineCopyIdButton.copyId": {
+    "storyId": "mantine-primitives-copyidbutton--default",
+    "selector": "[data-copy-id]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "none",
+      "borderTopWidth": "0px",
+      "borderStyle": "none",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "15px",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "width": "1182px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "NotificationItem.root": {
+    "storyId": "notifications-notificationitem--all-cases",
+    "selector": "div[class*=\"_root_\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "24px",
+      "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to",
+      "transitionDuration": "0.15s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "width": "318px",
+      "padding": "12px 16px",
+      "paddingBlock": "12px",
+      "paddingBlockStart": "12px"
+    }
+  },
+  "ListingCard.overlayFavorite": {
+    "storyId": "mantine-primitives-listingcard--default",
+    "selector": "[class*=\"overlayFavorite\"]",
+    "computed": {
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "1px",
+      "borderStyle": "solid",
+      "borderWidth": "1px",
+      "scale": "none",
+      "lineHeight": "16px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "32px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "ListingCard.featureIcon": {
+    "storyId": "mantine-primitives-listingcard--default",
+    "selector": "[class*=\"featureIcon\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "16px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "14px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "ListingCard.inlineFavorite": {
+    "storyId": "mantine-primitives-listingcard--default",
+    "selector": "[class*=\"inlineFavorite\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "1px",
+      "borderStyle": "solid",
+      "borderWidth": "1px",
+      "scale": "none",
+      "lineHeight": "16px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "32px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "HeroSearchView.el": {
+    "storyId": "mantine-primitives-herosearch--default",
+    "selector": "body",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "24px",
+      "transitionProperty": "background-color",
+      "transitionDuration": "0.3s",
+      "transitionTimingFunction": "ease",
+      "width": "1280px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "MantineListingCardPattern.photoCountGrid": {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"photoCountGrid\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "16px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "38.875px",
+      "padding": "2px 8px",
+      "paddingBlock": "2px",
+      "paddingBlockStart": "2px"
+    }
+  },
+  "MantineListingCardPattern.metaRowBordered": {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"metaRowBordered\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "1px",
+      "borderStyle": "solid",
+      "borderWidth": "1px 0px 0px",
+      "scale": "none",
+      "lineHeight": "16px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "379.328px",
+      "padding": "8px 0px 0px",
+      "paddingBlock": "8px 0px",
+      "paddingBlockStart": "8px"
+    }
+  },
+  "MantineListingCardPattern.overlayLabel": {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"overlayLabel\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "2px",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "scale": "none",
+      "lineHeight": "20px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "65.1406px",
+      "padding": "6px 12px",
+      "paddingBlock": "6px",
+      "paddingBlockStart": "6px"
+    }
+  },
+  "MantineListingCardPattern.listImage": {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"listImage\"]",
+    "computed": {
+      "boxShadow": "none",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "borderStyle": "solid",
+      "borderWidth": "0px",
+      "scale": "none",
+      "lineHeight": "24px",
+      "transitionProperty": "all",
+      "transitionDuration": "0s",
+      "transitionTimingFunction": "ease",
+      "width": "176px",
+      "padding": "0px",
+      "paddingBlock": "0px",
+      "paddingBlockStart": "0px"
+    }
+  },
+  "MantineListingCardPattern.originalPriceList": {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "selector": "[class*=\"originalPriceList\"]",
+    "computed": {
+      "error": "not found",
+      "matches": 0
+    }
+  }
+}

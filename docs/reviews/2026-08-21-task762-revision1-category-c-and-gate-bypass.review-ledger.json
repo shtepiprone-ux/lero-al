@@ -1,0 +1,1013 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-762 Revision 1 - Category C removed and both gate bypasses closed",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "b25d6fac8e2ca941727f4062657eb49e6a13a78b",
+    "reviewedRevision": "worktree on top of b25d6fac8e2ca941727f4062657eb49e6a13a78b, inspected after the final change",
+    "reviewedPaths": [
+      ".github/workflows/governance-pr.yml",
+      "docs/backlog.md",
+      "docs/design-system.md",
+      "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+      "package.json",
+      "scripts/check-tailwind-runtime-tokens.mjs",
+      "scripts/tailwind-runtime-token-baseline.json",
+      "src/components/layout/MobileBottomNavView.module.css",
+      "src/components/layout/MobileNavDrawer.module.css",
+      "src/components/shared/HeroSearchView.module.css",
+      "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "src/modules/listings/components/ListingCard.module.css",
+      "src/modules/notifications/components/NotificationItem.module.css",
+      "tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 12,
+      "verified": 12,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-21-task762-revision1-category-c-and-gate-bypass.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC-R1 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "classifyName",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs:249"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "globals.css @theme inline silencer plant"
+        ],
+        "states": [
+          "planted",
+          "reverted"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/acr1-new-gate.log",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "Executor run: gate exits 1 naming the planted file+property while --default-transition-duration is declared in globals.css @theme inline.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "globals.css @theme inline silencer plant"
+            ],
+            "states": [
+              "planted",
+              "reverted"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The exact plant the pre-revision gate passed (exit 0) now fails.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED, isolated copy at /tmp/r1: planted --default-transition-duration into globals.css @theme inline AND restored var(--default-transition-duration) in NotificationItem.module.css -> exit 1, '1 Tailwind-owned reference(s) NOT in the baseline'. Reverted -> exit 0. classifyName orders tailwindOwnedNames BEFORE ownedSet, so a globals.css declaration can no longer shadow a Tailwind-declared name."
+        },
+        {
+          "claim": "The pre-plant census proves no other gate would have caught it.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task762-r1/acr1-build.log",
+          "result": "tsc / check:design-tokens --strict / check:stories / build all exit 0 under the plant (acr1-tsc.log, acr1-design-tokens.log, acr1-stories.log, acr1-build.log)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R2 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "loadTailwindOwnedNames",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs:213"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "new var(--text-sm) in a CSS Module"
+        ],
+        "states": [
+          "planted",
+          "reverted"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/acr2-new-gate.log",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "Executor run: a brand-new var(--text-sm) in a CSS Module exits 1.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new var(--text-sm) in a CSS Module"
+            ],
+            "states": [
+              "planted",
+              "reverted"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The Category-B fail-open reproduced against the pre-revision gate is closed.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: var(--text-sm) planted into NotificationItem.module.css -> exit 1; reverted -> exit 0. Ownership now reads node_modules/tailwindcss/theme.css + index.css live, version-pinned against package-lock.json, fatal on mismatch."
+        },
+        {
+          "claim": "The Tailwind source read is deterministic and not author-reachable.",
+          "kind": "ANALYTICAL",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "loadTailwindOwnedNames returns {fatal} on a missing lockfile entry, a missing installed version, a pinned/installed mismatch, or a missing theme.css/index.css. node_modules is not committed, so no author edit in this repository can change the set."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R3 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "findDeclaredNames/findPropertyListNames",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs:278",
+          "scripts/check-tailwind-runtime-tokens.mjs:288"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "new --tw-shadow declaration",
+          "new --tw-gradient-from in transition-property"
+        ],
+        "states": [
+          "planted",
+          "reverted"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/acr3-new-gate.log",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "Executor run: both role plants exit 1.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new --tw-shadow declaration",
+              "new --tw-gradient-from in transition-property"
+            ],
+            "states": [
+              "planted",
+              "reverted"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A Tailwind-owned name is now caught in the declaration and property-list roles, not only as a var() read.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: '--tw-shadow: 0 0 red;' -> exit 1; '--tw-gradient-from' prepended to a transition-property list -> exit 1; each reverted -> exit 0."
+        },
+        {
+          "claim": "The pre-plant census proves no other gate would have caught either role.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task762-r1/acr3-build.log",
+          "result": "tsc / design-tokens --strict / stories / build all exit 0 under both plants (acr3-*.log)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R4 / R4",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task762-r1/emission-census.json",
+        "symbol": "checkpoint C-1",
+        "diffHunks": [
+          "docs/sessions/evidence/task762-r1/emission-census.json:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "257 globals.css custom-property names"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/emission-census.json",
+          "command": "checkpoint C-1 census",
+          "observable": "Emission and emitting layer recorded for all 257 globals.css @theme inline + :root names; 49 of 185 @theme inline names are emitted and all emit only via Tailwind's compiler-generated theme layer.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "257 globals.css custom-property names"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reviewer's flagged INFERENCE was measured rather than inherited.",
+          "kind": "ANALYTICAL",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "The revision brief labelled 'all 185 @theme inline names die with Tailwind' UNKNOWN and forbade carrying it forward. C-1 measured it and the executor turned the result into a bounded, documented design decision instead of silently over-scoping the gate."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/layout/MobileBottomNavView.module.css",
+        "symbol": ".navBar/.fab/.navItem",
+        "diffHunks": [
+          "src/components/layout/MobileBottomNavView.module.css:1",
+          "src/components/layout/MobileNavDrawer.module.css:1",
+          "src/components/shared/HeroSearchView.module.css:1",
+          "src/design-system/mantine/patterns/MantineCopyIdButton.module.css:1",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:1",
+          "src/modules/listings/components/ListingCard.module.css:1",
+          "src/modules/notifications/components/NotificationItem.module.css:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "src/components/layout/MobileBottomNavView.module.css",
+          "src/components/layout/MobileNavDrawer.module.css",
+          "src/components/shared/HeroSearchView.module.css",
+          "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "src/modules/listings/components/ListingCard.module.css",
+          "src/modules/notifications/components/NotificationItem.module.css"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-new-gate.log",
+          "command": "grep -rnE -- \"var\\(--tw-|--tw-[a-z-]+\\s*:|var\\(--spacing\\)|var\\(--leading-tight\\)\" src --include=\"*.module.css\"",
+          "observable": "No non-comment match remains in any src/**/*.module.css.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "src/components/layout/MobileBottomNavView.module.css",
+              "src/components/layout/MobileNavDrawer.module.css",
+              "src/components/shared/HeroSearchView.module.css",
+              "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+              "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+              "src/modules/listings/components/ListingCard.module.css",
+              "src/modules/notifications/components/NotificationItem.module.css"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The removal is substantive, not a rename that satisfies the grep while keeping the dependency.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED diff read: box-shadow compositions flattened to literals; border-top-style: var(--tw-border-style) -> solid; --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y, both declared AND read inside the same file (self-contained, no Tailwind dependency); --tw-scale-z and --tw-font-weight deleted as declared-but-never-read, with font-weight: 500 already present alongside."
+        },
+        {
+          "claim": "No external writer of the renamed hooks exists.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: grep across src for --tw-ring-color / --tw-scale-x returns only comment lines in the module itself; MobileBottomNavView.tsx carries only CSS-module classNames, no Tailwind utility class."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — no Tailwind utility class was removed and no selector, @media/@supports wrapper, cascade layer or specificity relation changed in this revision. Every before-state is a committed CSS Module declaration at review.baseRevision; equivalence was established by live computed-style capture on the real rendered element, before and after, not by recompiling Tailwind. Reviewer additionally verified that no file in src/ writes --tw-ring-color or --tw-scale-x any more and that MobileBottomNavView.tsx carries no Tailwind utility class, so the --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y renames break no external override hook."
+      }
+    },
+    {
+      "id": "AC-R6 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task762-r1/computed-after.json",
+        "symbol": "computed-style probe",
+        "diffHunks": [
+          "docs/sessions/evidence/task762-r1/computed-after.json:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "src/components/layout/MobileBottomNavView.module.css",
+          "src/components/layout/MobileNavDrawer.module.css",
+          "src/components/shared/HeroSearchView.module.css",
+          "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "src/modules/listings/components/ListingCard.module.css",
+          "src/modules/notifications/components/NotificationItem.module.css"
+        ],
+        "states": [
+          "rest",
+          "hover",
+          "reduced-motion"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/computed-before.json",
+          "command": "Storybook + Playwright computed-style capture",
+          "observable": "Whole computed strings captured per element before the change.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "src/components/layout/MobileBottomNavView.module.css",
+              "src/components/layout/MobileNavDrawer.module.css",
+              "src/components/shared/HeroSearchView.module.css",
+              "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+              "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+              "src/modules/listings/components/ListingCard.module.css",
+              "src/modules/notifications/components/NotificationItem.module.css"
+            ],
+            "states": [
+              "rest",
+              "hover",
+              "reduced-motion"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/computed-after.json",
+          "command": "Storybook + Playwright computed-style capture",
+          "observable": "Whole computed strings captured per element after the change; all rendered values equal except the seven cells enumerated in finding F2.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "src/components/layout/MobileBottomNavView.module.css",
+              "src/components/layout/MobileNavDrawer.module.css",
+              "src/components/shared/HeroSearchView.module.css",
+              "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+              "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+              "src/modules/listings/components/ListingCard.module.css",
+              "src/modules/notifications/components/NotificationItem.module.css"
+            ],
+            "states": [
+              "rest",
+              "hover",
+              "reduced-motion"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The dropped box-shadow layers cannot change interpolation, the one mechanism by which a fully transparent layer is not inert.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: no changed element transitions box-shadow. MobileBottomNavView:94 transitions transform/translate/scale/rotate and :138 transitions colors; MantineListingCardPattern's changed .cardTitle transitions colors only, and the .card hover elevation reads the project token --shadow-listing-card-elevation-lg, untouched by this diff; ListingCard .overlayFavorite declares no transition."
+        },
+        {
+          "claim": "The dropped --tw-gradient-* names were never set, so narrowing transition-property is inert.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "Executor grep-confirmed repo-wide; reviewer confirmed no src file writes them."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — no Tailwind utility class was removed and no selector, @media/@supports wrapper, cascade layer or specificity relation changed in this revision. Every before-state is a committed CSS Module declaration at review.baseRevision; equivalence was established by live computed-style capture on the real rendered element, before and after, not by recompiling Tailwind. Reviewer additionally verified that no file in src/ writes --tw-ring-color or --tw-scale-x any more and that MobileBottomNavView.tsx carries no Tailwind utility class, so the --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y renames break no external override hook."
+      }
+    },
+    {
+      "id": "AC-R7 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingCard.module.css",
+        "symbol": "critical-flow rows :57 and :70",
+        "diffHunks": [
+          "src/modules/listings/components/ListingCard.module.css:83"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "docs/critical-flow-registry.md:57",
+          "docs/critical-flow-registry.md:70",
+          "MantineListingCardPattern hover",
+          "MantineListingCardPattern prefers-reduced-motion"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-listingcard-smoke.log",
+          "command": "npx vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+          "observable": "Named critical-flow regression suite passes 13/13, exit 0, covering both registry rows at rest.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "docs/critical-flow-registry.md:57",
+              "docs/critical-flow-registry.md:70"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/computed-after.json",
+          "command": "Storybook + Playwright computed-style capture",
+          "observable": "Hover box-shadow still changes and the prefers-reduced-motion branch still resolves transition: none, captured live under the emulated media feature.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "MantineListingCardPattern hover",
+              "MantineListingCardPattern prefers-reduced-motion"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The prefers-reduced-motion branch still suppresses the hover transition.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task762-r1/computed-after.json",
+          "result": "Captured live in computed-before/after.json under the emulated media feature; the changed .cardTitle is not targeted by that media query at all (only .card and .imageSection img are), so the branch is unaffected by construction and was confirmed live."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — no Tailwind utility class was removed and no selector, @media/@supports wrapper, cascade layer or specificity relation changed in this revision. Every before-state is a committed CSS Module declaration at review.baseRevision; equivalence was established by live computed-style capture on the real rendered element, before and after, not by recompiling Tailwind. Reviewer additionally verified that no file in src/ writes --tw-ring-color or --tw-scale-x any more and that MobileBottomNavView.tsx carries no Tailwind utility class, so the --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y renames break no external override hook."
+      }
+    },
+    {
+      "id": "AC-R8 / R4+R6",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/tailwind-runtime-token-baseline.json",
+        "symbol": "baseline",
+        "diffHunks": [
+          "scripts/tailwind-runtime-token-baseline.json:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "baseline vs live scan"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-new-gate.log",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "14 found = 14 baseline entries, 0 new debt, 0 stale entries, exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "baseline vs live scan"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Every baseline row is explained by the widening, not by a newly introduced reference.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: the 14 rows are FooterView/HeaderView/MobileNavDrawer --text-* (Category B, newly VISIBLE because of R4 - the pre-revision gate could not see them), MantineCopyIdButton --font-mono and AuthSheet --radius-lg (both Tailwind-declared names that globals.css also declares, now correctly attributed to Tailwind). The 28-row pre-revision baseline is gone: every --tw-* and bare --spacing row was removed by fix, not by re-baselining."
+        },
+        {
+          "claim": "The deprecated-block carve-out in the Tailwind source read opens no fail-open.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: the carve-out drops exactly 6 names (--blur, --shadow, --shadow-inner, --drop-shadow, --radius, --max-width-prose). Planted var() for the 5 that globals.css does NOT declare -> all exit 1 via the bucket-3 default. var(--radius) -> exit 0, correct: globals.css:445 declares it inside the project's own :root block, which survives Tailwind removal. This plant set was not in the executor's arms and is the obvious place a new hole could have opened."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R9 / R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/design-system.md",
+        "symbol": "section 23.7",
+        "diffHunks": [
+          "docs/design-system.md:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "docs/design-system.md 23.7",
+          "the 5 Category-A files' comments"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/design-system.md",
+          "command": "read-after-write",
+          "observable": "23.7 carries the measured Category-C failure table and the corrected ownership description; the wrong causal claim about @theme inline is corrected in the five Category-A files.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "docs/design-system.md 23.7",
+              "the 5 Category-A files' comments"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The corrected causal claim is present where the next executor will read it, not only in the doc.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ListingCard.module.css",
+          "result": "REVIEWER-EXECUTED: ListingCard.module.css:24-30 now states the measured outcome ('the whole box-shadow declaration drops, not merely degrades') with the two-document Chromium probe named."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — no Tailwind utility class was removed and no selector, @media/@supports wrapper, cascade layer or specificity relation changed in this revision. Every before-state is a committed CSS Module declaration at review.baseRevision; equivalence was established by live computed-style capture on the real rendered element, before and after, not by recompiling Tailwind. Reviewer additionally verified that no file in src/ writes --tw-ring-color or --tw-scale-x any more and that MobileBottomNavView.tsx carries no Tailwind utility class, so the --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y renames break no external override hook."
+      }
+    },
+    {
+      "id": "AC-R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "package.json",
+        "symbol": "gate suite",
+        "diffHunks": [
+          "package.json:90"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "npm run build",
+          "tsc",
+          "check:design-tokens --strict",
+          "check:css-vars",
+          "check:i18n",
+          "check:story-coverage",
+          "check:stories",
+          "build-storybook",
+          "check:locale-leak"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-build.log",
+          "command": "npm run build",
+          "observable": "Production build exits 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "npm run build"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-tsc.log",
+          "command": "npx tsc --noEmit",
+          "observable": "exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "tsc"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-design-tokens.log",
+          "command": "npm run check:design-tokens -- --strict",
+          "observable": "0 violations, 0 stale markers, exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:design-tokens --strict"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-css-vars.log",
+          "command": "npm run check:css-vars",
+          "observable": "0 violations, exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:css-vars"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-i18n.log",
+          "command": "npm run check:i18n",
+          "observable": "2218 keys x 4 locales parity, exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:i18n"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-story-coverage.log",
+          "command": "npm run check:story-coverage",
+          "observable": "exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:story-coverage"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-stories.log",
+          "command": "npm run check:stories",
+          "observable": "129 files, 0 violations, exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:stories"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-build-storybook.log",
+          "command": "npm run build-storybook",
+          "observable": "exit 0.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "build-storybook"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-locale-leak.log",
+          "command": "node scripts/check-locale-leak.mjs",
+          "observable": "328/46, byte-identical to the Task 757R baseline; literal exit code 1 recorded and attributed per D757-4a.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:locale-leak"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The gate suite was re-run against the final state, not a pre-final one.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED on the live worktree: check:design-tokens --strict -> 0 violations / 0 stale markers / exit 0, matching the retained log."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    },
+    {
+      "id": "AC-R11",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task762-r1/final-screenshots-assert.log",
+        "symbol": "rendered matrix",
+        "diffHunks": [
+          "docs/sessions/evidence/task762-r1/final-screenshots-assert.log:15"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "mantine-primitives-copyidbutton--default",
+          "mantine-primitives-mobilebottomnavview--guest",
+          "mantine-primitives-mobilebottomnavview--authenticated",
+          "mantine-primitives-mobilenavdrawer--default",
+          "patterns-mantine-listingcardpattern--default"
+        ],
+        "stories": [
+          "mantine-primitives-copyidbutton--default",
+          "mantine-primitives-mobilebottomnavview--guest",
+          "mantine-primitives-mobilebottomnavview--authenticated",
+          "mantine-primitives-mobilenavdrawer--default",
+          "patterns-mantine-listingcardpattern--default"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "notApplicable": {
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task762-r1/final-screenshots-assert.log",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "1208/1316 PASS, 81 FAIL, 27 AMBIGUOUS; the five changed-file stories are 80/80 PASS.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "mantine-primitives-copyidbutton--default",
+              "mantine-primitives-mobilebottomnavview--guest",
+              "mantine-primitives-mobilebottomnavview--authenticated",
+              "mantine-primitives-mobilenavdrawer--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "stories": [
+              "mantine-primitives-copyidbutton--default",
+              "mantine-primitives-mobilebottomnavview--guest",
+              "mantine-primitives-mobilebottomnavview--authenticated",
+              "mantine-primitives-mobilenavdrawer--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 80->81 FAIL delta versus the Task 762 run is not attributable to this diff.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED, because the report asserted this without the counter-check §9a requires. The extra cell is Mantine/Primitives/PasswordInput/Default x en x mobile-390, failing 'render failure [blank-canvas]: near-uniform (bg=100.0%, var=0.0)' plus a spurious horizontal-overflow - a harness render flake, NOT the AuthSheet 'text button not full-width' class the report folded it into. Import trace: PasswordInput.stories.tsx imports only @mantine/core, lucide-react, @/lib/passwordRules, _storyI18n and _MantineStoryShell (which imports only Box) - no path to any of the nine changed files. No regression."
+        },
+        {
+          "claim": "None of the 81 FAIL or 27 AMBIGUOUS cells names a changed file's story.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: FAIL cells are 80 Patterns/Mantine/AuthSheet/* plus the one PasswordInput cell above; AMBIGUOUS cells are AdminUsersTable/Combobox/PopularLocationsView/Tabs. Note the report's phrase 'all pre-existing AuthSheet' is inaccurate for both sets - see F1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — no Tailwind utility class was removed and no selector, @media/@supports wrapper, cascade layer or specificity relation changed in this revision. Every before-state is a committed CSS Module declaration at review.baseRevision; equivalence was established by live computed-style capture on the real rendered element, before and after, not by recompiling Tailwind. Reviewer additionally verified that no file in src/ writes --tw-ring-color or --tw-scale-x any more and that MobileBottomNavView.tsx carries no Tailwind utility class, so the --tw-ring-color -> --fab-ring-color and --tw-scale-x/y -> --fab-scale-x/y renames break no external override hook."
+      }
+    },
+    {
+      "id": "AC-R12",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/backlog.md",
+        "symbol": "write set",
+        "diffHunks": [
+          "docs/backlog.md:6"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "git status --porcelain"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story is involved in this criterion.",
+          "locales": "No user-facing string or locale-dependent value is involved.",
+          "viewports": "The observable is viewport-independent.",
+          "states": "The observable has a single state.",
+          "phases": "The observable is a single final-state check, not a before/after comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "command": "git status --porcelain",
+          "observable": "Modified set is exactly the allowed write set; three pre-existing untracked paths carried forward.",
+          "freshness": "final state of the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "git status --porcelain"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Nothing outside the revision brief's allowed final write set was modified.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-21-task762-revision1-category-c-and-gate-bypass.md",
+          "result": "REVIEWER-EXECUTED: 12 M paths, all in the allowed set. scripts/check-design-tokens.mjs is NOT modified - the two 'marker bugs' the report mentions were marker corrections in the CSS files, not script edits. src/app/globals.css is unmodified. The pre-existing untracked paths (src/hooks/useIsMobile.ts, two 2026-05-31 session logs) are unchanged, mtime 2026-08-20 19:27, predating both sessions."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "NOT_APPLICABLE — this criterion governs a Node gate script's exit semantics, not generated CSS, a selector, or a cascade outcome. No Tailwind utility class is involved."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC-R11",
+      "requirementIds": [
+        "AC-R11"
+      ],
+      "evidence": "Report accuracy, second occurrence of the same habit. The completion summary states 'the 81 unrelated FAILs are all pre-existing AuthSheet issues'; 80 are, one is Mantine/Primitives/PasswordInput/Default x en x mobile-390 with a different failure signature. The session log does disclose the 80->81 delta but does not name the story and folds it into the AuthSheet class, and asserts 'not attributable to this diff' without the concrete counter-check docs/agent-contract.md requires for a causal claim. AC-R11 said pre-existing failures must be identified by story name, not aggregated. The reviewer ran the counter-check and found no regression, so the substance holds and no AC outcome changes; the reporting rigor does not. Same shape as the Task 762 submission's own 'all 80 FAIL + 27 AMBIGUOUS are AuthSheet' compression, where the 27 were four other stories."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC-R6",
+      "requirementIds": [
+        "AC-R6 / R5"
+      ],
+      "evidence": "Accepted variance, authorized here by the reviewer rather than passed silently. AC-R6 required zero delta on the whole computed string. Seven cells differ: three box-shadow values lost their leading fully-transparent 0 0 0 0 layers (MobileBottomNavView .navBar and .fab in two states, ListingCard .overlayFavorite) and four transitionProperty values lost --tw-gradient-from/via/to. Both classes are rendered-inert and the session log enumerates every cell in a per-element before/after table rather than narrating them away. The reviewer checked the one mechanism by which a dropped transparent layer would not be inert - box-shadow interpolation during a transition - and confirmed no changed element transitions box-shadow. Recorded so that 'zero delta' is not carried forward as the literal outcome of this revision."
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC-R5",
+      "requirementIds": [
+        "AC-R5 / R5"
+      ],
+      "evidence": "MantineHomeSection.module.css and PopularLocationsView.module.css are unmodified. The revision brief's R5 named them for a comment update where the text no longer describes what the file does. Their comments describe the Tailwind composition each file reproduces, which is still accurate, so no change was needed - but the report should have said so explicitly rather than leaving two named files silently absent from the diff."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC-R4 / R4",
+    "reviewer": "Opus"
+  }
+}

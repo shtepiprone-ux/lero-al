@@ -1,9 +1,9 @@
 /* Reproduces the pre-migration conditional className chain (no Mantine prop equivalent for
    opacity-modified backgrounds, hover state, or the Tailwind default transition shorthand). */
 .root {
-  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-  transition-timing-function: var(--default-transition-timing-function);
-  transition-duration: var(--default-transition-duration); /* design-tokens-allow: var(--default-transition-duration) — Tailwind-internal token (tailwindcss@4.3.0's own theme default), confirmed defined in the built CSS; the static scanner cannot see through the opaque `@import "tailwindcss"` */
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* --tw-gradient-from/via/to removed (Task 762 Revision 1, R5/E-1): never declared anywhere in this repo (grep-confirmed), so they never actually watch a real transition */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35); an @theme inline name is emitted only inside Tailwind's own compiler-generated theme layer, and only when the compiled output actually references it — nothing does for --ease-standard (verified: no match in .next/static/css/*.css), so it cannot be referenced here (Task 762; causal claim corrected, Task 762 Revision 1 R7) */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
 }
 
 .unread {

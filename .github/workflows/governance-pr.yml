@@ -121,6 +121,9 @@ jobs:
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 
+      - name: Tailwind runtime-token gate (blocking — CSS Module var() references owned by Tailwind, not this project)
+        run: npm run check:tailwind-runtime-tokens
+
       - name: Install Chromium for hydration self-test
         run: npx playwright install chromium --with-deps
 

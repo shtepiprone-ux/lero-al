@@ -1194,9 +1194,116 @@ arms captured unpiped, `git status` confirming the plant is gone. Detector unit 
 (§H) covering all seven branches above, `npx vitest run scripts/__tests__/check-design-tokens.test.ts`
 — 85/85 passing (69 pre-existing + 16 new).
 
----
+### §23.7 — Tailwind runtime tokens are not consumable from a CSS Module (Task 762)
 
-## §24 — Forbidden responsive hardcodes and pseudo-fixes (A2 mandate, 2026-06-08)
+**A Tailwind-owned custom property is not the same thing as an undefined one.** §23.6.c's
+`css-undefined-var` category asks "does this `var(--x)` resolve against something this build ships
+today" — and `var(--default-transition-duration)` passes that question, because
+`@import "tailwindcss"` ships `--default-transition-duration: .15s` today. The question this section
+answers is different: **who ships it, and does that source survive the de-Tailwind programme this
+project is executing?** `--default-transition-duration`/`--default-transition-timing-function` are
+Tailwind's own compiled theme defaults (`node_modules/tailwindcss/index.css:501-502`), not this
+project's. The day Tailwind is removed, `@import "tailwindcss"` disappears, the declaration
+disappears with it, and `transition-duration` silently falls back to its initial value (`0s`) —
+hover transitions stop, with no build error, no type error, and no rendered-comparator delta today
+(the value is identical right up until the moment the source is gone). Task 757R proved this
+empirically on `AuthSheet`; this section generalizes the fix and the same §22.3/§22.4 banner's
+governing point ("a documented token is not an implemented token", `docs/orchestrator-procedures.md`)
+extends one step further here: **a token that resolves TODAY is not a token this project can rely on
+tomorrow, if the thing making it resolve is Tailwind itself.**
+
+**What to write instead.** Reproduce the *resolved* value as a literal, verified against the built
+CSS (`.next/static/css/*.css`), never assumed from Tailwind's documented defaults:
+`--default-transition-duration` → `150ms`, `--default-transition-timing-function` →
+`cubic-bezier(0.4, 0, 0.2, 1)`. **Do not** substitute `var(--ease-standard)` or any
+`var(--duration-*)` token from §22.4 — both are declared inside this file's own `@theme inline`
+block (`globals.css:35`). An `@theme inline` name is emitted only inside Tailwind's own
+compiler-generated theme layer, and only when the compiled output actually references it (Task 762
+Revision 1 measured this directly, see below — an earlier version of this section wrongly stated
+that `@theme inline` itself is *why* a name goes unemitted; being inside that block is necessary but
+not sufficient). Nothing references `--ease-standard`/`--duration-*`, so both are absent from every
+built stylesheet (`grep -c "ease-standard" .next/static/css/*.css` — no match) and would resolve to
+nothing, the identical `--z-sticky` failure mode this file already documents in §22.3's banner. When
+the property already carries an outer Tailwind utility-internal override hook (`var(--tw-ease, …)`,
+`var(--tw-duration, …)`) that reads a value nothing else in the file ever sets, drop the hook too —
+Task 762 kept these on the theory that removing one changes a cascade contract; Task 762 Revision 1
+measured (repo-wide grep, zero declarations of `--tw-ease`/`--tw-duration` anywhere) that nothing
+ever sets them, so the hook was dead indirection, not a live contract.
+
+**Category C is worse than Category A, not merely a lower priority (Task 762 Revision 1, O-1).**
+Category A (`--default-transition-*`) *degrades* a value when Tailwind is removed —
+`transition-duration` falls back to its initial value, `0s`. Category C (`--tw-*` internals:
+`--tw-shadow`, `--tw-border-style`, `--tw-ring-*`, …) *drops the whole declaration* — a `var()` read
+of a Tailwind-registered bookkeeping property with no local declaration and no fallback becomes
+invalid at computed-value time once Tailwind's compiler-generated `@property` registration is gone,
+and CSS drops the entire declaration that reads it, not just that one value. Measured directly, two
+Chromium documents identical except for the presence of Tailwind's `@property` registrations for
+`--tw-*`:
+
+| Declaration | With `@property` registrations | Without them |
+|---|---|---|
+| `box-shadow: var(--tw-inset-shadow), …, var(--tw-shadow)` | the composed shadow renders | `none` — the declaration is dropped |
+| `border-top-style: var(--tw-border-style)` | `solid` | `none` |
+| `border-top-width` (paired, unitless without a style) | `1px` | `0px` — a `none` style forces the used width to `0` |
+
+Fix: flatten to the literal the declaration resolves to **today**, captured live via
+`getComputedStyle`, never hand-derived — Tailwind's registered-invisible (fully transparent) layers
+in a multi-layer `box-shadow` composite contribute nothing visible and are dropped from the literal;
+a real layer is kept. A `--tw-*` name that is a self-contained local variable (declared and read only
+within the same rule, e.g. a `:active` scale composed from two intermediate custom properties) is
+renamed off the `--tw-` prefix rather than flattened — the mechanism is safe, only the Tailwind
+namespace is not. A `--tw-*` declaration or `transition-property`/`will-change` list entry that
+nothing in the repository ever reads or sets (verified by a repo-wide grep, not a per-file guess) is
+deleted outright.
+
+**The gate.** `scripts/check-tailwind-runtime-tokens.mjs` (`npm run check:tailwind-runtime-tokens`,
+CI-wired in `.github/workflows/governance-pr.yml`) scans every `var(--…)` read, `--name: …`
+declaration, and bare name inside a `transition-property`/`will-change` value list in
+`src/**/*.module.css` (Task 762 Revision 1, R6 — the original gate matched `var()` reads only, so a
+`--tw-shadow: …` declaration or a bare `--tw-gradient-from` in a property list was invisible to both
+the scan and the baseline). Ownership is a three-bucket classifier, never a hardcoded name list:
+
+1. **Known-external, non-Tailwind** — the `--mantine-` prefix (mirrors `check-design-tokens.mjs`'s
+   own `EXTERNAL_VAR_PREFIXES`, a different unrelated runtime system).
+2. **Tailwind-owned** — the `--tw-` prefix (compiler-generated `@property` registrations; no
+   non-prefix source could ever name them — `grep -c "@property --tw-" node_modules/tailwindcss/*.css`
+   is 0 in every shipped Tailwind stylesheet), OR declared in Tailwind's own
+   `node_modules/tailwindcss/theme.css`/`index.css`, read live and version-pinned against
+   `package-lock.json` (the same pattern `check-review-ledger.mjs` uses for imported package
+   styles). **This is what closes the two bypasses Task 762's delivered gate had**: adding
+   `--default-transition-duration` to `globals.css`'s own `@theme inline` block used to silence the
+   gate (an author-writable source was the only ownership test); it no longer does, because
+   Tailwind's own source claims the name regardless of whether `globals.css` also redeclares it. A
+   brand-new `var(--text-sm)` used to pass silently; it no longer does, for the same reason.
+3. **Project-owned** — declared in `globals.css`'s `@theme`/`@theme inline`/`:root` blocks (and not
+   claimed by bucket 2), OR declared locally within the SAME `.module.css` file being scanned (a
+   component's own self-contained custom property, e.g. a renamed `--fab-ring-color`, is never a
+   Tailwind or `globals.css` concern).
+
+Everything not resolved by 1-3 is Tailwind-owned by elimination and checked against
+`scripts/tailwind-runtime-token-baseline.json` — an exact `{ file, property }` list, no globs, one
+row per name regardless of how many roles (read/declaration/property-list) surfaced it in that file
+— which fails in both directions: a Tailwind-owned reference outside the baseline is new debt; a
+baseline row whose reference no longer exists is a stale entry that must be removed. No inline
+suppression comment can exempt a reference — the baseline is the only exemption mechanism, and it is
+a condition this gate evaluates on every run, not one an author writes once and forgets
+(`docs/backlog.md` corollary 724 ②).
+
+**Known, named limitation (measured, not merely suspected, as of Task 762 Revision 1).** A
+checkpoint census of all 257 names in `globals.css`'s `@theme inline`/`:root` blocks — for each, is
+it emitted in the current build, and by which selector — found that **every** emitted `@theme
+inline` name (49 of 185) is emitted *exclusively* inside Tailwind's own compiler-generated
+`@layer theme{:host,:root{…}}`, with zero exceptions, including names with no Tailwind default at
+all (`--space-0`, `--radius-lg`). Every `:root`-declared name (72/72) is emitted via a plain,
+non-Tailwind-layer selector. This means the entire `@theme inline` emission mechanism — not only the
+names that happen to mirror a Tailwind default — is Tailwind-compiler-dependent. Bucket 2's
+name-collision test is a bounded, deterministic proxy for this that closes the two reproduced
+bypasses without flagging every `--space-N`/`--icon-*`/`--control-h-*` reference across the whole
+migrated design system (name collision only fires on names Tailwind's own source also declares); it
+does not close the broader fact. The `--text-*` typography family is now detected (bucket 2 catches
+it directly); a project-authored `@theme inline` name with no Tailwind-source collision (`--space-0`
+and its siblings) is still not flagged, and is real, latent, same-class debt — named here rather than
+silently shipped as full coverage. Sprint 62's Task 763 owns deciding how far to close it.
 
 > **This clause is BINDING and OVERRIDES any weaker local wording. Any pattern listed here
 > applied in a task without an approved exception entry is a FAIL — do not approve or commit.**

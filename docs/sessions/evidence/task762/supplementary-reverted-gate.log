@@ -1,0 +1,6 @@
+🔍  check:tailwind-runtime-tokens — scanned 23 src/**/*.module.css file(s)
+    project-owned names (globals.css @theme/@theme inline/:root): 257
+    Tailwind-owned references found: 28 | baseline entries: 28
+
+✅  check:tailwind-runtime-tokens — 0 new debt, 0 stale baseline entries.
+EXIT_CODE=0

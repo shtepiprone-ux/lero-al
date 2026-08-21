@@ -1,0 +1,11 @@
+🔍  check:tailwind-runtime-tokens — scanned 23 src/**/*.module.css file(s)
+    ownership source: globals.css @theme/@theme inline/:root (258 project-owned names) + tailwindcss@4.3.0 theme.css/index.css (412 Tailwind-declared names, version-pinned) + --mantine-/--tw- prefixes
+    Tailwind-owned references found: 15 | baseline entries: 14
+
+❌  1 Tailwind-owned reference(s) NOT in the baseline (new debt):
+    src/modules/notifications/components/NotificationItem.module.css  --default-transition-duration
+
+❌  check:tailwind-runtime-tokens — 1 new debt + 0 stale baseline entrie(s). Baseline must match the live scan exactly.
+    Fix: replace the Tailwind runtime-token reference with a literal (docs/design-system.md §23.7),
+    or add/remove the exact { file, property } row in scripts/tailwind-runtime-token-baseline.json.
+EXIT_CODE=1

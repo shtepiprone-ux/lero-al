@@ -87,6 +87,7 @@
     "check:click-shield:verify": "node scripts/check-click-shield.mjs --verify-gate",
     "check:css-vars": "node scripts/check-css-var-resolvability.mjs",
     "check:css-vars:verify": "node scripts/check-css-var-resolvability.mjs --verify-gate",
+    "check:tailwind-runtime-tokens": "node scripts/check-tailwind-runtime-tokens.mjs",
     "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },

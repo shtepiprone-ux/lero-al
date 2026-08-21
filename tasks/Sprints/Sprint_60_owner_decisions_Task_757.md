@@ -254,3 +254,29 @@ counter-checks; it is not claimed as a before/after proof.
 The one property in these states whose pre-migration value was established analytically rather than captured is
 the `h3` line-height, recorded in D757-2 and authorised in D757-8. Every other substitution in both success blocks
 was traced by the reviewer against `theme.ts` and the built CSS and matches exactly.
+
+---
+
+## D757-2b — D757-2 and D757-8 WITHDRAWN (supersedes both)
+
+**Recorded 2026-08-21.** The owner withdraws the authorisation of the `1.75rem` / 28px success-title line-height and
+the six envelope deltas that followed from it.
+
+**Owner reasoning, verbatim in substance:** Tailwind is the baseline only — it shows what the old screen actually
+rendered. The goal of the migration is to reproduce that result by Mantine's means, not to carry Tailwind internals
+across. `1.75rem` is taken from Tailwind's table, not from the render; it is a deliberate new visual change, which
+is permissible only as a separate product decision and contradicts D28's zero-visual-delta requirement. Option C is
+selected: restore the actual `22.5px`, expressed in Mantine.
+
+**Consequences:**
+
+- `AC3 / R3.1`'s `EQUIVALENT` assessment and its six `allowedSemanticDeltas` no longer have owner authorisation.
+- The Task 757 review decision `APPROVED WITH NOTES` is **withdrawn**. Commit `50d18411f` stands but is unpushed.
+- Correction task filed: `tasks/Sprints/Sprint_60_kickoff_prompt_Task_757R_authsheet_runtime_tokens.md`.
+- The ledger is renamed to `.review-ledger.SUPERSEDED.json` only atomically with a valid successor that names it in
+  `review.supersedes`.
+
+**Still standing, untouched by this withdrawal:** D757-1 (radius), D757-3a (AC3 success-state evidence),
+D757-4a (AC7 wording), D757-5 (excluded paths), D757-6 (Google Auth follow-up), and the `transition-property`
+half of D757-7. The `--tw-leading` half of D757-7 is superseded in effect by 757R, which removes the literals'
+counterpart dependency entirely.

@@ -37,7 +37,7 @@ gating only; it carries no state.
 
 | # | Title | Priority | State |
 |---|---|---|---|
-| **762** | Tailwind runtime tokens in CSS Modules: the detector first, then the five modules | P1 | KICKOFF FILED 2026-08-21 |
+| **762** | Tailwind runtime tokens in CSS Modules: the detector first, then the five modules | P1 | **`NEEDS REVISION`** 2026-08-21 — R2/Category A accepted; R1 bypassable and Category C unfixed. Revision 1: `Sprint_62_Task_762_revision_1_Category_C_And_Gate_Bypass.md` |
 | **763** | Categories B/C/D — `--text-*` theme typography, `--tw-*` utility internals, `--leading-`/`--ease-`/`--duration-` | P2 | NOT FILED — needs 762's gate and baseline to exist first |
 | **764** | The degraded-perf-tier escape: `[class*="transition-"]` matches no CSS Module | P2 | NOT FILED — needs per-file historical evidence |
 

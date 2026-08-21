@@ -1,0 +1,12 @@
+{
+  "WITH_TAILWIND_@property": {
+    "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.08) 0px -2px 16px 0px",
+    "borderTopStyle": "solid",
+    "borderTopWidth": "1px"
+  },
+  "WITHOUT_TAILWIND_@property": {
+    "boxShadow": "none",
+    "borderTopStyle": "none",
+    "borderTopWidth": "0px"
+  }
+}

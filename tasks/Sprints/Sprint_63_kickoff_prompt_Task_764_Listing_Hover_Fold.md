@@ -2,7 +2,8 @@
 
 **Sprint:** 63 — Homepage exits Tailwind · **Phase:** 2a · **Priority:** P1
 **Filed:** 2026-08-21 against `main` @ `e2dc52f16` + the Task 763 worktree
-**Status:** KICKOFF FILED — **blocked until Task 763 Revision 1 is `APPROVED`**
+**Status:** AMENDED 2026-08-22 (owner decision D63-G + §3.5 scope correction) — **ready to resume at §10.0.**
+Task 763 Revision 1 is `APPROVED WITH NOTES` and committed at `c896ebd0c`, so the original block condition is cleared.
 
 ---
 
@@ -23,6 +24,13 @@ coarse-pointer zoom і форму анімації як intentional behavior cha
 proposed**: this task records them and does not restore either. It is not authorization to accept any *other*
 delta the comparator finds.
 
+**Owner decision D63-G, 2026-08-22 — the A2 substitution is authorized, narrowly:** *"дозволити blink-settings
+override лише для Phase A. Внеси в kickoff: override дозволений тільки для створення exact `(hover:hover) &&
+(pointer:coarse)` probe-контексту; перед продовженням A2 мусить записати всі три matchMedia і підтвердити їхні
+значення. Природний `hasTouch:true` результат лишається збереженим як окреме доказове обмеження."* This
+supersedes the first filing's A2, which forbade any substitution. The authorization is for **measurement only** —
+it never touches product code, a gate, or an acceptance threshold.
+
 **Owner instruction, 2026-08-21, third half:** *"AC6/Phase C мають порівнювати ефективний масштаб або
 bounding-rect ratio; зміни окремих computed `transform` та `scale` є очікуваними."* The first filing of this
 kickoff had AC6 requiring the computed `transform` string to be byte-identical — **that criterion was wrong and
@@ -39,7 +47,7 @@ Delete the last Tailwind utility from the homepage's primary card by moving the 
 coarse-pointer devices, and the transition itself.
 
 On completion: `appImageConfig.ts` has zero Tailwind strings, `'group'` is gone from
-`MantineListingCardPattern.tsx:304`, and R1/R7 of Task 763 are closed.
+`MantineListingCardPattern.tsx` at both `:174` and `:303`, and R1/R7 of Task 763 are closed.
 
 ## 3. Verified context
 
@@ -55,7 +63,7 @@ as freshness validation before any write.
 
 `transform` and `scale` are separate CSS properties. Individual transform properties (`translate`, `rotate`,
 `scale`) apply before `transform`, so the two multiply: **1.05 × 1.05 = 1.1025**. Both halves fire from anywhere on
-the `Card`, because `'group'` sits on the `Card` (`MantineListingCardPattern.tsx:304`), which wraps the image **and**
+the `Card`, because `'group'` sits on the `Card` (`MantineListingCardPattern.tsx:303` for the grid layout; see §3.5 for the second site), which wraps the image **and**
 the title/price/badge area.
 
 Half B's compiled form and its `@media (hover:hover)` wrapper were verified by a brace-depth walk backwards from the
@@ -103,22 +111,54 @@ delta while the animation's shape changed. Phase C requires mid-transition sampl
 returns **nothing**. No existing proof path emulates `pointer: coarse`, so Phase A needs a purpose-built probe.
 `playwright@^1.60.0` is a devDependency and `scripts/` has precedent for unwired, task-numbered probes.
 
-**`HYPOTHESIS` — the probe exists to test this, and the task author did not measure it.** A Playwright context
-created with `hasTouch: true` at a desktop viewport is *expected* to report `(hover: hover)` and
-`(pointer: coarse)` together. That expectation comes from how Chromium is documented to map touch emulation onto
-the interaction media features; **it was not verified against this repository's installed Playwright and Chromium**,
-and it is the single assumption the whole coarse-pointer measurement rests on. Emulation of the interaction media
-features has changed across Chromium versions, and `hasTouch: true` alone may instead yield `(hover: none)`.
+**The first filing's `hasTouch: true` hypothesis is FALSIFIED — measured twice, on two Chromium builds.**
 
-Treat §3.4 as the reason the probe is built, never as evidence of what it will report. A2 in §5 is the gate: if the
-probe does not confirm both queries simultaneously, the task stops at `BLOCKED`. Do not adjust this section to match
-whatever the probe returns — record the measurement in the report and leave the hypothesis visible, so the next
-reader can see which of the two it was.
+| Context | `(hover: hover)` | `(pointer: coarse)` | `(pointer: fine)` | Measured on |
+|---|---|---|---|---|
+| default | true | false | true | reviewer, Chromium 141 |
+| `hasTouch: true` | **false** | true | false | executor, Chromium 148 **and** reviewer, Chromium 141 — identical |
+| `--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=2,availablePointerTypes=2` | **true** | **true** | false | reviewer, Chromium 141 |
+| the same `--blink-settings` **plus** `hasTouch: true` | **false** | true | false | reviewer, Chromium 141 |
+| CDP `Emulation.setEmulatedMedia` with `hover`/`pointer` features | true | false | true | reviewer, Chromium 141 |
+
+Three consequences, all load-bearing:
+
+1. **`hasTouch: true` alone can never produce the target state.** The executor's `BLOCKED` was correct, and it
+   reproduces across two Chromium majors, so it is not a version accident.
+2. **The override and `hasTouch` are mutually exclusive.** Row 4: adding `hasTouch: true` on top of the
+   blink-settings override drags `hover` back to `none`. The override context must be built **without**
+   `hasTouch`. An executor who "helpfully" sets both silently lands back in the wrong state — with the A2
+   assertion still passing on `pointer: coarse` alone if it were written loosely, which is why A2 asserts all three.
+3. **CDP `Emulation.setEmulatedMedia` fails open.** Row 5: it accepts `hover`/`pointer` features, returns no
+   error, and changes nothing. Do not reach for it; a silent no-op is worse than a refusal.
+
+**Freshness limit, stated rather than hidden:** rows 1, 3, 4 and 5 were measured on Chromium **141.0.7390.37** in
+the reviewer's container, not on this repository's **148.0.7778.96**. Row 2 agrees across both builds, which is why
+the mechanism is credible — but §10.1's A2 gate re-measures the override on the real installed browser before any
+value is trusted, and that re-measure is the authority.
 
 ### 3.5 Consumers
 
-`listing` is consumed by `ListingCard.tsx` only. `'group'` is supplied at exactly one site,
-`MantineListingCardPattern.tsx:304`. `.imageSection img` is a tag selector, so it targets the real `AppImage`'s
+**CORRECTED 2026-08-22 — the first filing's claim that `'group'` is supplied at exactly one site was FALSE, and it
+concealed a regression this task would otherwise have shipped.**
+
+`MantineListingCardPattern` renders **two** Card layouts, and **both** carry `'group'` with the identical 691R
+comment:
+
+| Layout | `'group'` at | Card classes | Image rendered by `ListingCard.tsx` | Half B applies? | Hover zoom **today** |
+|---|---|---|---|---|---|
+| `layout="list"` (horizontal row) | **:174** | `styles.card`, `styles.listRow` | `<AppImage variant="listing-thumb">` (:154) | **No** — `listing-thumb` has no `hoverClass` | **1.05×** (half A only) |
+| `layout="vertical"` (grid, the homepage card) | **:303** | `styles.card`, `styles.cardGrid` | `<AppImage variant="listing">` (:245) | Yes | **1.1025×** |
+
+Both layouts use `styles.imageSection`, so half A — `.card:hover .imageSection img { transform: scale(1.05) }` —
+**is shared by both**. Changing that rule's value to `scale(1.1025)`, as the first filing's §10.3 step 1 said,
+would silently raise the **list** card from 1.05× to 1.1025× on every surface that renders it (listings rows,
+cabinet). That is a regression on a card this fold was never about, and it is the same failure shape as the finding
+that stopped Task 763: a shared rule assumed to have one consumer.
+
+**The fold is therefore scoped to the grid layout only — see §10.3.**
+
+`listing` is consumed by `ListingCard.tsx` only. `.imageSection img` is a tag selector, so it targets the real `AppImage`'s
 `<img>` and the stories' `DemoImage` alike — `MantineListingCardPattern.module.css:16-20` says so explicitly, and
 Task 763's review confirmed `ListingCardPattern.stories.tsx` renders the `DemoImage` stand-in while
 `ListingCard.stories.tsx` renders the production component.
@@ -135,8 +175,9 @@ reduced-motion user currently still gets a 1.05× jump. The fold removes that to
 | ID | Source | Observable requirement | Priority | Verification | Status |
 |---|---|---|---|---|---|
 | R1 | Owner decision (route c) | `appImageConfig.ts`'s `listing` entry has no `hoverClass`, and the file contains zero Tailwind utility strings | P0 | AC1 | Confirmed |
-| R2 | Owner decision (route c) | `MantineListingCardPattern.module.css:68` reads `transform: scale(1.1025)` | P0 | AC2 | Confirmed |
-| R3 | Owner decision (route c) | `'group'` and its comment are removed from `MantineListingCardPattern.tsx:304` | P0 | AC3 | Confirmed |
+| R2 | Owner decision (route c), §3.5 | A new grid-scoped rule `.cardGrid:hover .imageSection img { transform: scale(1.1025) }` follows the untouched `.card` rule inside the same media block | P0 | AC2 | Confirmed |
+| R3 | Owner decision (route c), §3.5 | `'group'` and its comment are removed from **both** sites, `:174` and `:303`, after a census proves no reader remains | P0 | AC3 | Confirmed |
+| R12 | §3.5 | The **list** layout's hover zoom is unchanged at 1.05× — the fold is scoped to `.cardGrid`, and `.card:hover .imageSection img` keeps `scale(1.05)` | P0 | AC13 | Confirmed |
 | R4 | Owner decision (measure first) | The coarse-pointer delta is **measured before the edit**, with a persisted artifact, and its post-edit value is measured again | P0 | AC4 | Confirmed |
 | R5 | §3.3 | The hover transition is sampled **mid-flight**, not only at rest and settled, for both a `priority` and a non-`priority` image | P0 | AC5 | Confirmed |
 | R6 | §3.1, §10.4 | Settled hover on `(hover:hover) and (pointer:fine)` renders the identical **effective scale** before and after — `hoveredRect / restRect` from `getBoundingClientRect()`, width and height independently, agreeing to 4 decimals and rounding to 1.1025. The individual computed `transform` and `scale` values **are expected to change** and are diagnostics, never the pass input | P0 | AC6 | Confirmed |
@@ -153,13 +194,24 @@ reduced-motion user currently still gets a 1.05× jump. The fold removes that to
   intentional behaviour change** (§1). It is measured and recorded, never restored. Do **not** add a
   `(pointer: coarse)` rule. The corroborating authority is the file's own stated intent (§3.2: *"the effect only
   exists for a real mouse"*) plus §3.6 — half B also escapes the reduced-motion reset.
-- **A2 (`UNKNOWN` — and a hard stop, not a branch):** whether this Playwright version's `hasTouch: true` context
-  actually reports `(hover: hover)` **and** `(pointer: coarse)` together. **Owner instruction, 2026-08-21:**
-  *"Якщо probe не підтверджує саме `(hover:hover) and (pointer:coarse)`, задача має бути BLOCKED, а не
-  продовжуватись."* If `matchMedia` in the coarse context does not return `true` for both queries simultaneously,
-  **stop at Phase A and report `BLOCKED`** with the measured `matchMedia` values. Do not proceed to Phase B, do
-  not substitute `hover: none`, and do not reason about what the delta "would" be. Without that exact media state
-  the accepted change is unevidenced, and an unevidenced acceptance is what this whole sprint exists to prevent.
+- **A2 (SUPERSEDED by owner decision D63-G, 2026-08-22 — still a hard stop, now with one authorized mechanism):**
+  the probe builds its coarse context with
+  `--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=2,availablePointerTypes=2` and
+  **without `hasTouch`** (§3.4 row 4: the two cancel). The authorization is scoped to *"створення exact
+  `(hover:hover) && (pointer:coarse)` probe-контексту"* and to nothing else — no product code, no gate, no
+  threshold.
+
+  **The gate is unchanged in strength.** Before Phase A2 or Phase B, the probe must record **all three** of
+  `(hover: hover)`, `(pointer: coarse)` and `(pointer: fine)` in the artifact and confirm
+  `hover: hover === true && pointer: coarse === true && pointer: fine === false`. If any one of the three does not
+  hold, **stop and report `BLOCKED`** with the measured values. Do not reason about what the delta "would" be, do
+  not fall back to `hasTouch`, and do not reach for CDP `Emulation.setEmulatedMedia` — §3.4 row 5 measured it as a
+  silent no-op, which would pass a loosely-written assertion while changing nothing.
+
+  **The natural `hasTouch: true` result is retained as a separate evidentiary limitation** (owner instruction).
+  The probe records it as its own row, the report states it, and the session log carries it forward: the target
+  media state is reachable in this project **only** under an explicit Chromium override, never through Playwright's
+  own device emulation. That limitation travels with the accepted behaviour change.
 - **A3 (`UNKNOWN`):** whether `scale(1.1025)` reproduces the **effective rendered scale** exactly. Both are uniform
   scales about the same default origin on the same element, so the product is exact in principle; sub-pixel
   rounding in the reported box is the risk. The individual computed `transform` and `scale` values **are expected
@@ -188,8 +240,9 @@ reduced-motion user currently still gets a 1.05× jump. The fold removes that to
 
 1. `src/design-system/mantine/patterns/MantineListingCardPattern.module.css` — line 68's value, the header
    correction at 22-24, and a rationale comment on the changed rule. **Nothing else in the file.**
-2. `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` — removal of the `'group'` argument at line
-   304 and its comment. **Lines 305-306 are out of scope.**
+2. `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` — removal of the `'group'` argument and its
+   comment at **both** `:174` and `:303`. **The neighbouring utility strings at `:175-176` and `:304-305` are
+   out of scope.**
 3. `src/components/ui/appImageConfig.ts` — removal of the `listing` entry's `hoverClass` field and its
    BLOCKED comment; the header note about the exception.
 4. `src/components/ui/AppImage.module.css` — **only if** removing the last `hoverClass` consumer leaves a dead
@@ -200,7 +253,7 @@ reduced-motion user currently still gets a 1.05× jump. The fold removes that to
 
 ## 8. Out of scope
 
-- `MantineListingCardPattern.tsx:305-306` and `LocaleSwitcher.tsx:55` — Phase 2b.
+- `MantineListingCardPattern.tsx:175-176` and `:304-305` (`'overflow-hidden'`, `'flex flex-col'`, both `'grayscale opacity-60'`) and `LocaleSwitcher.tsx:55` — Phase 2b.
 - Any change to `AppImage.tsx`, to the other 8 variants, or to `.hoverBrightness`'s mechanism.
 - `hoverClass` as an API: the field stays on `VariantConfig` (`gallery-main`/`gallery-side` use it). Do not remove
   the type member.
@@ -219,7 +272,8 @@ reduced-motion user currently still gets a 1.05× jump. The fold removes that to
 | Transition, non-`priority` image | Two curves: `ease-out` (transform) + `cubic-bezier(.4,0,.2,1)` (scale) | **Single `ease-out` curve** — recorded intentional change |
 | `prefers-reduced-motion` | `transform` reset; the `scale` half still jumps | **Fully reset** — recorded intentional fix |
 | `hover:hover` + `pointer:coarse` | 1.05× (half B only) — pending A1 | **No zoom** — recorded intentional change, per §3.2's stated intent |
-| Tailwind dependency of the card | `group` + `group-hover:scale-105` | **None** |
+| **List card (`layout="list"`) hover zoom** | **1.05×** — half A only, `listing-thumb` has no `hoverClass` | **1.05×, unchanged.** This is an invariant, not a change. It is the reason the fold is grid-scoped |
+| Tailwind dependency of **both** cards | `'group'` at :174 and :303 + `group-hover:scale-105` | **None** |
 
 ## 10. Implementation requirements
 
@@ -235,8 +289,13 @@ Build the probe at `scripts/task764-pointer-probe.mjs`. It launches the story th
 `ListingCard` (`src/stories/mantine/primitives/ListingCard.stories.tsx` — not `ListingCardPattern.stories.tsx`,
 which renders `DemoImage`) in two Playwright contexts:
 
-- **fine:** default desktop context.
-- **coarse:** `hasTouch: true` at the same viewport.
+- **fine (control):** default desktop context. Expect `hover:hover` true, `pointer:fine` true.
+- **coarse-natural (retained limitation, not the measurement):** `hasTouch: true` at the same viewport. Expect
+  `hover:none`. This row exists to keep §3.4 row 2 reproducible in-repo; it is **not** the A2 subject and its
+  failure to reach the target state is not a `BLOCKED` condition.
+- **coarse-override (the A2 subject):** launched with
+  `--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=2,availablePointerTypes=2`,
+  **no `hasTouch`**, same viewport.
 
 In each, record **all three** of `matchMedia('(hover: hover)').matches`, `matchMedia('(pointer: coarse)').matches`
 and `matchMedia('(pointer: fine)').matches` into the artifact — the A2 gate is asserted on `(pointer: coarse)`, and
@@ -245,10 +304,14 @@ Then capture the
 `<img>`'s computed `transform` **and** `scale` at rest and with the pointer over (i) the image and (ii) the
 title/price area. Persist to `docs/sessions/evidence/task764/phase-a-pointer-matrix.json`.
 
-**Phase A gate (A2, owner instruction).** If the coarse context does not report `true` for **both**
-`(hover: hover)` and `(pointer: coarse)`, stop here: persist the measured `matchMedia` values and report
-`BLOCKED`. Do not proceed to Phase A2 or Phase B. A different emulation trick may be proposed in the report, but
-it is a new owner decision, not a substitution this task may make.
+**Phase A gate (A2, owner decision D63-G).** Assert on the **coarse-override** context only, and on all three
+values: `hover:hover === true && pointer:coarse === true && pointer:fine === false`. If any one fails, persist
+every measured `matchMedia` value from all three contexts and report `BLOCKED`. Do not proceed to Phase A2 or
+Phase B. Any further emulation mechanism is a new owner decision, not a substitution this task may make.
+
+**Owner-native precondition.** §3.4's override rows were measured on Chromium 141, not this repository's 148. The
+A2 gate above **is** the re-measure on the real browser — treat its output as the authority and record the browser
+version next to it in the artifact.
 
 Capture `getBoundingClientRect()` alongside the computed values at every sample — it is the comparator's actual
 input (§10.4), and a run that recorded only computed strings has to be redone.
@@ -262,14 +325,23 @@ this task makes.
 
 ### 10.3 — Phase B: the fold
 
-1. `MantineListingCardPattern.module.css:68` — `transform: scale(1.05)` → `transform: scale(1.1025)`, with an inline
-   comment naming Task 764, the two folded halves, and the measured product.
+1. `MantineListingCardPattern.module.css` — **do not change `:68`.** `.card:hover .imageSection img` is shared
+   with the list layout (§3.5) and must keep `transform: scale(1.05)`. Instead add, **after** it inside the same
+   `@media (hover: hover) and (pointer: fine)` block, a grid-scoped rule:
+   `.cardGrid:hover .imageSection img { transform: scale(1.1025); }` — equal specificity `(0,2,1)`, so source
+   order decides and it must come second. Comment it with Task 764, the two folded halves, the measured product,
+   and why it is scoped to `.cardGrid` rather than applied to `.card`.
 2. Correct lines 22-24: the guards were **not** the same. State that Tailwind's `group-hover:` carried
    `(hover: hover)` only, that this file's rules carry `(hover: hover) and (pointer: fine)`, and that the fold
    makes the pattern's stated intent actually true.
 3. `appImageConfig.ts` — delete the `listing` entry's `hoverClass` field and its BLOCKED comment; update the file
    header note that named it as the one exception.
-4. `MantineListingCardPattern.tsx:304` — delete `'group'` and its 691R comment. Leave 305-306 untouched.
+4. `MantineListingCardPattern.tsx` — delete `'group'` and its 691R comment at **both** sites, `:174` (list) and
+   `:303` (grid). Before deleting, run a census proving nothing still reads the marker: after step 3 removes
+   `listing`'s `hoverClass`, no `group-hover:` utility remains anywhere in `src/` (`brightness-95` became a
+   module class in Task 763). If the census finds a reader, stop and report `BLOCKED`. Leave the neighbouring
+   utility strings untouched — `'overflow-hidden'`/`'grayscale opacity-60'` at `:175-176` and
+   `'flex flex-col'`/`'grayscale opacity-60'` at `:304-305` are Phase 2b.
 
 ### 10.4 — Phase C: comparator
 
@@ -330,12 +402,18 @@ names, and the rendered matrix has no mid-transition or coarse-pointer cell at a
 
 - **AC1 [R1]** — Given `appImageConfig.ts`, when complete, then `VARIANTS.listing.hoverClass` is absent and a grep
   for Tailwind utility shapes across the file returns zero matches outside comments.
-- **AC2 [R2]** — `MantineListingCardPattern.module.css:68` reads `transform: scale(1.1025)` with the Task 764
-  rationale comment.
-- **AC3 [R3]** — `MantineListingCardPattern.tsx:304` no longer contains `'group'`; lines 305-306 are byte-identical
-  to their pre-task state.
-- **AC4 [R4]** — `phase-a-pointer-matrix.json` exists with pre- and post-edit values for all four
-  context × hover-target combinations, and the coarse rows are enumerated against §9.
+- **AC2 [R2]** — `.card:hover .imageSection img` still reads `transform: scale(1.05)`, and a later
+  `.cardGrid:hover .imageSection img { transform: scale(1.1025) }` exists in the same
+  `@media (hover: hover) and (pointer: fine)` block with the Task 764 rationale comment.
+- **AC3 [R3]** — neither `:174` nor `:303` contains `'group'`; the retained census output shows zero
+  `group-hover:` readers in `src/`; and the neighbouring utility strings at `:175-176` and `:304-305` are
+  byte-identical to their pre-task state.
+- **AC13 [R12]** — Given a `layout="list"` card in the fine-pointer context, when `effectiveScale` is measured
+  before and after the edit, then both round to **1.0500** and agree to 4 decimals.
+- **AC4 [R4]** — `phase-a-pointer-matrix.json` exists with, for **all three** contexts of §10.1, the three
+  `matchMedia` values plus the browser version; the coarse-override row satisfies the A2 triple; the
+  coarse-natural row is retained as the §3.4 limitation; and pre- and post-edit values are present for every
+  context × hover-target combination, enumerated against §9.
 - **AC5 [R5]** — `phase-a-transition-curve.json` exists with ≥5 samples per image type, pre and post, and the
   change from two curves to one is stated with its measured values.
 - **AC6 [R6]** — Given the settled hover state at `pointer: fine`, when `effectiveScale` is computed from
@@ -380,8 +458,10 @@ Read each story's enrolled viewport set from the manifest before claiming a tier
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED`. Never self-approve.
 
 1. Changed files vs §7. 2. Requirement IDs completed and not. 3. Every command with actual output and exit code.
-4. Evidence locations. 5. **The A1 answer**: what the coarse-pointer rows measured, pre and post, plus the raw `matchMedia` values that
-cleared the A2 gate. 6. **The A3 answer**: `effectiveScale` pre and post to 4 decimals for width and height, the
+4. Evidence locations. 5. **The A1 answer**: what the coarse-override rows measured, pre and post, the raw `matchMedia` triple that
+cleared the A2 gate, the browser version it cleared on, and the retained coarse-natural `hasTouch` row as the
+stated evidentiary limitation. Also: the `group-hover:` reader census output, and the list-card `effectiveScale`
+proving R12. 6. **The A3 answer**: `effectiveScale` pre and post to 4 decimals for width and height, the
 raw rectangles behind them, and the computed `transform`/`scale` strings as diagnostics.
 7. The enumerated intentional deltas from §9, each mapped to its measured value. 8. I0 drift. 9. Deviations and
 limitations. 10. `docs/backlog.md` updated concisely; narrative in the session log.
@@ -394,6 +474,7 @@ limitations. 10. `docs/backlog.md` updated concisely; narrative in the session l
 | Every requirement has a binary AC and a verification method | ✅ R1-R11 → AC1-AC11 |
 | Scope names what must not change | ✅ §8; §9 gives a before/after per behaviour |
 | Exactly one active route | ✅ route (c). A1's outcome is an **owner decision quoted in §1**, not a task-authored pre-declaration, so no measurement result can fork the plan; A2 and A3 both fail to `BLOCKED`, never to a second route |
+| Every shared rule's consumer set is enumerated before it is edited | ✅ added 2026-08-22 after the first filing claimed `'group'` had one site; it has two, on two layouts with different hover totals (1.05× list, 1.1025× grid), and the shared `.card` rule would have regressed the list card. Fourth recorded orchestrator fact defect in this sprint |
 | Comparator measures the invariant, not a proxy that the change is designed to move | ✅ corrected after the first filing on owner instruction: `effectiveScale` from `getBoundingClientRect()`. The original AC6 required a byte-identical computed `transform`, which a correct implementation must change — it would have failed the right answer and passed nothing |
 | Gates prove changed behaviour, not procedure | ✅ AC6 fixes the invariant, AC4/AC5 fix the *expected* deltas, and P1/P2 require observed failure first |
 | Negative flows by applicability | ✅ N8 marked `No` with its reason |

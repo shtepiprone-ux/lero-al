@@ -1,0 +1,4 @@
+chromium version: 148.0.7778.96
+fine (no touch): { hoverHover: true, pointerCoarse: false, pointerFine: true }
+coarse (hasTouch:true, no isMobile): { hoverHover: false, pointerCoarse: true, pointerFine: false }
+EXIT_CODE=0

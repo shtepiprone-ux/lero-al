@@ -1,0 +1,4 @@
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\phase-a-pointer-matrix.pre-edit.json
+A2 GATE VALUES — coarse context matchMedia: {"hoverHover":false,"pointerCoarse":true,"pointerFine":false}
+A2 GATE: FAIL — proceed to BLOCKED per kickoff §10.1/A2, do not run curve or Phase B
+EXIT_CODE=1

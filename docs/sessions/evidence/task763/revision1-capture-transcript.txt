@@ -1,0 +1,2 @@
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task763\i4\capture-post-edit.json
+EXIT_CODE=0

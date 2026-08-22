@@ -1,0 +1,942 @@
+{
+  "totalCells": 2896,
+  "deltaCount": 156,
+  "deltas": [
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[0].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[0].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[1].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[1].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[2].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/sq[2].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[0].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[0].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[1].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[1].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[2].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/en[2].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[0].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[0].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[1].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[1].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[2].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/uk[2].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[0].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[0].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[1].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[1].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[2].container",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@320/it[2].img",
+      "prop": "height",
+      "pre": "214.5px",
+      "post": "190.656px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[0].container",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[0].img",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[1].container",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[1].img",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[2].container",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@375/en[2].img",
+      "prop": "height",
+      "pre": "255.75px",
+      "post": "227.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[0].container",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[0].img",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[1].container",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[1].img",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[2].container",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@390/en[2].img",
+      "prop": "height",
+      "pre": "267px",
+      "post": "237.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[0].container",
+      "prop": "height",
+      "pre": "157.984px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[0].img",
+      "prop": "height",
+      "pre": "157.984px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[1].container",
+      "prop": "height",
+      "pre": "158px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[1].img",
+      "prop": "height",
+      "pre": "158px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[2].container",
+      "prop": "height",
+      "pre": "158px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@768/en[2].img",
+      "prop": "height",
+      "pre": "158px",
+      "post": "140.438px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[0].container",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[0].img",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[1].container",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[1].img",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[2].container",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1024/en[2].img",
+      "prop": "height",
+      "pre": "222px",
+      "post": "197.328px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[0].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[0].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[1].container",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[1].img",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[2].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/sq[2].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[0].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[0].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[1].container",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[1].img",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[2].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/en[2].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[0].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[0].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[1].container",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[1].img",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[2].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/uk[2].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[0].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[0].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[0].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[1].container",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[1].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[1].img",
+      "prop": "height",
+      "pre": "326px",
+      "post": "289.781px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[2].container",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[2].container",
+      "prop": "aspectRatio",
+      "pre": "4 / 3",
+      "post": "3 / 2"
+    },
+    {
+      "label": "mantine-primitives-listingcard--default@1440/it[2].img",
+      "prop": "height",
+      "pre": "325.984px",
+      "post": "289.766px"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/sq[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/sq[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/sq[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/sq[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/uk[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/uk[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/uk[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/uk[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/it[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/it[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/it[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@320/it[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@375/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@375/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@375/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@375/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@390/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@390/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@390/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@390/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@768/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@768/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@768/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@768/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1024/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1024/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1024/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1024/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/sq[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/sq[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/sq[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/sq[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/en[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/en[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/en[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/en[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/uk[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/uk[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/uk[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/uk[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/it[0].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/it[1].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/it[2].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    },
+    {
+      "label": "mantine-primitives-popularlocationsview--default@1440/it[3].state",
+      "prop": "transitionProperty",
+      "pre": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+      "post": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events"
+    }
+  ]
+}

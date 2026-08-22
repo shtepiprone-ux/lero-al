@@ -1,0 +1,601 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 763 Revision 1 - AppImage.module.css class names renamed from utility-shaped to role-shaped (Sprint 63 Phase 1, rename-only)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "0b907067142ae24813402b88afc44a9c4d3c58b1",
+    "reviewedRevision": "worktree on top of 0b9070671, inspected after the final change; AppImage.module.css is untracked so no git baseline exists for it and the rename-only comparator is the substitute baseline",
+    "reviewedPaths": [
+      "src/components/ui/AppImage.module.css",
+      "src/components/ui/AppImage.tsx",
+      "src/components/ui/appImageConfig.ts",
+      "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+      "docs/sessions/evidence/task763/compare-i4-rename-only.mjs",
+      "docs/sessions/evidence/task763/i4/diff-result-rename-only.json",
+      "docs/sessions/evidence/task763/i4/diff-result-PRE-RENAME.json",
+      "docs/sessions/evidence/task763/i4/diff-result.json",
+      "docs/sessions/2026-08-22-task763-revision1-class-naming.md",
+      "docs/backlog.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-22-task763-revision1-class-naming.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "RV1 / F-1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F-1"
+      ],
+      "finalSubject": {
+        "path": "src/components/ui/AppImage.module.css",
+        "symbol": "@layer utilities class set",
+        "diffHunks": [
+          "src/components/ui/AppImage.module.css:78-180"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AppImage.module.css/class-name-census"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A class-name census reads the source file; no story renders a class name.",
+          "locales": "Class names are not user-facing text.",
+          "viewports": "A name is viewport-independent.",
+          "states": "A name has no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/components/ui/AppImage.module.css",
+          "command": "grep -n \"^\\s*\\.\\|^\\s*@media\\|^@layer\" src/components/ui/AppImage.module.css",
+          "observable": "16 class selectors, all role-shaped: .frame .frameRatio4x3 .frameRatio16x9 .frameRatioSquare .frameWidth .frameFill .frameClip .framePlaceholder .frameCircle .fitCover .fitContain .imageLayer .fade .visible .hidden .hoverBrightness. None of the ten names kickoff §10.3.2 rejected survives as a selector.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage.module.css/class-name-census"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "src/components/ui/appImageConfig.ts",
+          "command": "grep -n \"\\.relative\\b|\\.aspect4x3|\\.widthFull|\\.fillParent|\\.overflowHidden|\\.bgMuted|\\.roundedFull|\\.absoluteFill|styles\\.relative|styles\\.aspect\" src/components/ui/AppImage.module.css src/components/ui/appImageConfig.ts src/components/ui/AppImage.tsx docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+          "observable": "Six hits, all inside the rename-mapping comments the brief §5.5 requires (AppImage.module.css:24,27,28,29,30 and appImageConfig.ts:17). Zero live references to any old name.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage.module.css/class-name-census"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility is being reproduced by this revision. The generated-semantics equivalence claim belongs to Task 763's original submission, which was accepted and is fenced off by brief section 1 as not-to-be-re-verified. Revision 1 changes only class-name tokens; RV3 proves the declaration set is byte-identical."
+      },
+      "counterChecks": [
+        {
+          "claim": "The rename is real and no old name survives as a live reference, only in the required mapping comments.",
+          "kind": "EXECUTED",
+          "path": "src/components/ui/AppImage.module.css",
+          "result": "REVIEWER-EXECUTED: grep for all ten old names across the module, appImageConfig.ts, AppImage.tsx and the test returned six hits, every one inside a rename-mapping comment (module :24,:27,:28,:29,:30 and appImageConfig.ts:17). A live styles.<oldName> reference would have shown outside a comment and did not."
+        },
+        {
+          "claim": "A missing module export would fail loudly rather than silently drop a class.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+          "result": "REVIEWER-EXECUTED: read lines 74-77. Each of the 16 keys is asserted toBeTruthy() and not.toBe(key). A renamed-but-not-updated key would be undefined and fail the first assertion; cn() would otherwise have dropped it with no error."
+        }
+      ]
+    },
+    {
+      "id": "RV2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/ui/AppImage.module.css",
+        "symbol": ".frame:hover .hoverBrightness",
+        "diffHunks": [
+          "src/components/ui/AppImage.module.css:175-178"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AppImage.module.css/hover-selector"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "The selector's text is read from source; its rendered effect is covered by RV4's comparator.",
+          "locales": "Selector text is not locale-dependent.",
+          "viewports": "The media guard is (hover: hover), not a width query.",
+          "states": "Covered by RV4."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/components/ui/AppImage.module.css",
+          "command": "sed -n '175,178p' src/components/ui/AppImage.module.css",
+          "observable": "@media (hover: hover) { .frame:hover .hoverBrightness { filter: brightness(95%); } } - re-rooted on the renamed container class, media query and declaration unchanged from the pre-revision file.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage.module.css/hover-selector"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The selector's Tailwind-equivalence argument was settled in Task 763 (I1 section 2, group-hover wrapped in @media (hover:hover), verified by the reviewer's brace-depth walk over both built stylesheets). Revision 1 changed only the class token in that selector."
+      },
+      "counterChecks": [
+        {
+          "claim": "The hover rule is rooted on AppImage own container class, not on an external marker, and its guard is unchanged.",
+          "kind": "EXECUTED",
+          "path": "src/components/ui/AppImage.module.css",
+          "result": "REVIEWER-EXECUTED: sed -n 175,178p returns @media (hover: hover) { .frame:hover .hoverBrightness { filter: brightness(95%); } }. .frame is the class every variant container carries (appImageConfig.ts diff, all nine entries). The pre-revision text was .relative:hover .hoverBrightness under the identical media query."
+        }
+      ]
+    },
+    {
+      "id": "RV3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/ui/AppImage.module.css",
+        "symbol": "declaration set",
+        "diffHunks": [
+          "src/components/ui/AppImage.module.css:78-180"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AppImage.module.css/declaration-set"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A declaration-set comparison reads source text.",
+          "locales": "Declarations are not locale-dependent.",
+          "viewports": "Declarations are compared as text, not as rendered output; rendering is RV4.",
+          "states": "No runtime state involved."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/components/ui/AppImage.module.css",
+          "command": "sed -n '78,180p' src/components/ui/AppImage.module.css",
+          "observable": "Every declaration matches the pre-revision file character for character, in the same order, under the same @layer utilities and the same @media (hover: hover): position:relative; aspect-ratio 4/3, 16/9, 1; width:100%; width+height:100%; overflow:hidden; background-color:var(--muted); border-radius:3.40282e38px; object-fit cover/contain; .imageLayer's four declarations including inset:var(--space-0); .fade's 20-property transition-property list plus cubic-bezier(0.4, 0, 0.2, 1) and 300ms; opacity 1/0; filter:brightness(95%). No property, value, selector structure, media query or layer changed.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage.module.css/declaration-set"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Text-level identity of the declaration set, not a compiler-equivalence claim. The pre-revision text is the version quoted in full in the 2026-08-21 review transcript; the file is untracked so git show cannot serve it, which is recorded in review.reviewedRevision."
+      },
+      "counterChecks": [
+        {
+          "claim": "A changed declaration would be visible, so an unchanged report is not vacuous.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/i4/diff-result.json",
+          "result": "REVIEWER-EXECUTED: the same 2896-cell comparator returns 48 deltas on the I2 pairing and 0 on the rename-only pairing, so the cell set is populated and demonstrably able to redden. A declaration change would therefore have surfaced as a rendered delta as well as a text delta."
+        }
+      ]
+    },
+    {
+      "id": "RV4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "N-1"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task763/i4/diff-result-rename-only.json",
+        "symbol": "rename-only comparator result",
+        "diffHunks": [
+          "docs/sessions/evidence/task763/compare-i4-rename-only.mjs:9-10"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AppImage/rendered-parity"
+        ],
+        "stories": [
+          "mantine-primitives-popularlocationsview--default"
+        ],
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "1024",
+          "1440"
+        ],
+        "states": [
+          "state"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task763/i4/diff-result-rename-only.json",
+          "command": "node -e \"const d=require('./docs/sessions/evidence/task763/i4/diff-result-rename-only.json'); console.log(d.totalCells, d.deltaCount)\"",
+          "observable": "2896 cells compared, 0 deltas. The comparator's two inputs are capture-post-edit-PRE-RENAME.json and capture-post-edit.json, confirmed distinct files by md5 (539dc853... vs 686e2107...), so the zero is not a file compared against itself.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage/rendered-parity"
+            ],
+            "stories": [
+              "mantine-primitives-popularlocationsview--default"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "state"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task763/i4/diff-result.json",
+          "command": "node -e \"const fs=require('fs'),p='docs/sessions/evidence/task763/i4/';const A=JSON.parse(fs.readFileSync(p+'diff-result-PRE-RENAME.json'));const B=JSON.parse(fs.readFileSync(p+'diff-result.json'));const k=d=>new Set(d.deltas.map(x=>JSON.stringify(x)));const ka=k(A),kb=k(B);console.log(A.deltaCount,B.deltaCount,[...ka].filter(x=>!kb.has(x)).length,[...kb].filter(x=>!ka.has(x)).length)\"",
+          "observable": "Both the pre-revision and post-revision runs against the retained I2 baseline return 48 deltas, and the two sets are element-for-element identical (0 only-in-A, 0 only-in-B). Every delta's property is transitionProperty - the accepted A3 --tw-gradient-from/via/to drops. Zero new deltas introduced by the rename. This pairing is also the positive control for the zero above: the same 2896-cell comparator returns 48 on one pairing and 0 on the other, so it demonstrably can redden on this exact cell set.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AppImage/rendered-parity"
+            ],
+            "stories": [
+              "mantine-primitives-popularlocationsview--default"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "1024",
+              "1440"
+            ],
+            "states": [
+              "state"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Rendered computed-style parity, not generated-CSS semantics. The generated-semantics claim was discharged by Task 763's I1 extraction and is fenced off by brief section 1."
+      },
+      "counterChecks": [
+        {
+          "claim": "The zero-delta result is not a file compared against itself.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/compare-i4-rename-only.mjs",
+          "result": "REVIEWER-EXECUTED: md5sum of the two inputs differ (539dc8535f6ab5ad2be02464c287ca7b vs 686e2107a2f90c0ffa18317f3ebf444d), and lines 9-10 read the two distinct paths."
+        },
+        {
+          "claim": "The 48 deltas against I2 are the already-accepted set, not a same-sized different set.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/i4/diff-result-PRE-RENAME.json",
+          "result": "REVIEWER-EXECUTED: set difference of the two delta arrays is empty in both directions (0 only-in-pre-rename, 0 only-in-post-rename), and every delta property is transitionProperty. A same-sized but different set would have produced a non-zero difference."
+        }
+      ]
+    },
+    {
+      "id": "RV5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+        "symbol": "module export key list",
+        "diffHunks": [
+          "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:53-78"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "class-assertion-test/key-list"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A unit test does not render a story.",
+          "locales": "No user-facing text.",
+          "viewports": "No layout involved.",
+          "states": "No runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+          "command": "grep -n \"for (const key of\" -A3 docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+          "observable": "Line 74 lists the 16 new role names; lines 76-77 retain both guards - expect(val).toBeTruthy() and expect(val).not.toBe(key) - so a stubbed empty CSS-module object still fails the first assertion. Line 55 also updated to [styles.frame, styles.frameFill, styles.frameClip].",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "class-assertion-test/key-list"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task763/revision1-class-assertions-transcript.txt",
+          "command": "tail -8 docs/sessions/evidence/task763/revision1-class-assertions-transcript.txt",
+          "observable": "Test Files 1 passed (1), Tests 9 passed (9), EXIT_CODE=0.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "class-assertion-test/key-list"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A unit assertion over module export identity; no CSS is generated or compared."
+      },
+      "counterChecks": [
+        {
+          "claim": "The test cannot pass with a stubbed empty CSS-module object.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts",
+          "result": "REVIEWER-EXECUTED: line 76 asserts toBeTruthy(); a stub yields undefined for every key and fails. Line 77 also rejects identity mapping, so a non-hashed passthrough fails too."
+        }
+      ]
+    },
+    {
+      "id": "RV6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "N-2"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-22-task763-revision1-class-naming.md",
+        "symbol": "gate transcripts",
+        "diffHunks": [
+          "docs/sessions/evidence/task763/revision1-build-transcript.txt:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "revision1/gate-set"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Gate exit codes are not story-scoped.",
+          "locales": "Gate exit codes are not locale-scoped.",
+          "viewports": "Gate exit codes are not viewport-scoped.",
+          "states": "Gate exit codes have no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task763/revision1-tailwind-runtime-tokens-transcript.txt",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "Re-run by the reviewer, not read from the transcript: scanned 24 src/**/*.module.css, Tailwind-owned references found 14, baseline entries 14, 0 new debt, 0 stale baseline entries. Matches the executor's transcript exactly.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "revision1/gate-set"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task763/revision1-design-tokens-transcript.txt",
+          "command": "node scripts/check-design-tokens.mjs --strict",
+          "observable": "Re-run by the reviewer: 453 files scanned, exactly 2 findings, both in src/components/ui/AppImage.module.css, Total 2 raw style-value violations, 0 stale markers. Same two D63-F conflicts at shifted line numbers; no design-tokens-allow marker and no allowlist entry was added, per Sprint 63 rule 2.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "revision1/gate-set"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task763/revision1-build-transcript.txt",
+          "command": "tail -12 docs/sessions/evidence/task763/revision1-build-transcript.txt",
+          "observable": "next build route table and shared-chunk summary present, EXIT_CODE=0. Non-Q0 hard gate satisfied against the reviewed diff.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "revision1/gate-set"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task763/revision1-test-listings-transcript.txt",
+          "command": "tail -8 docs/sessions/evidence/task763/revision1-typecheck-transcript.txt docs/sessions/evidence/task763/revision1-test-listings-transcript.txt",
+          "observable": "typecheck EXIT_CODE=0; test:listings 6 files / 45 tests passed, EXIT_CODE=0.",
+          "freshness": "final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "revision1/gate-set"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate exit codes, not CSS semantics."
+      },
+      "counterChecks": [
+        {
+          "claim": "The gate results are the reviewer own, not the executor transcripts restated.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/revision1-tailwind-runtime-tokens-transcript.txt",
+          "result": "REVIEWER-EXECUTED: node scripts/check-tailwind-runtime-tokens.mjs and node scripts/check-design-tokens.mjs --strict were re-run in this review session. Outputs matched the retained transcripts exactly: 24/14/14/0-new/0-stale, and 2 findings both in AppImage.module.css out of 453 files scanned."
+        },
+        {
+          "claim": "check:design-tokens red is pre-existing to this revision, not caused by it.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task763/revision1-design-tokens-transcript.txt",
+          "result": "REVIEWER-EXECUTED: the scan over 453 files reports zero findings outside AppImage.module.css, and the two inside it are the same two Task 763 already surfaced, at shifted line numbers. No design-tokens-allow marker and no allowlist entry was added."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "priority": "P1",
+      "status": "RESOLVED",
+      "requirements": "Kickoff section 10.3.2 - class names must be semantic, not utility-shaped; .relative named verbatim as a rejection.",
+      "requirementIds": [
+        "RV1 / F-1"
+      ],
+      "evidence": "All ten utility-shaped names renamed to role names; the hover selector re-rooted on .frame; zero live references to any old name outside the required rename-mapping comments; rendered parity proven at 0/2896 by the rename-only comparator."
+    },
+    {
+      "id": "N-1",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "Revision brief section 6 required the I2 comparator to return zero deltas.",
+      "requirementIds": [
+        "RV4"
+      ],
+      "evidence": "That criterion was wrong and is the orchestrator's defect, not the executor's. The retained I2 baseline predates Task 763's own accepted change, so comparing against it necessarily reproduces the 48 accepted A3 transition-property deltas and can never return zero. The executor ran the literal instruction, showed the result reproduces the identical 48-delta set, built the correct pre-rename versus post-rename comparator returning 0/2896, retained both transcripts, and flagged the discrepancy instead of substituting silently. Same class of orchestrator defect as Task 763 section 3.5 and Task 764 AC6: a criterion written against an assumed baseline rather than the state that exists."
+    },
+    {
+      "id": "N-2",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "D63-F remains open.",
+      "requirementIds": [
+        "RV6"
+      ],
+      "evidence": "check:design-tokens --strict stays at exit 1 with the same two AppImage.module.css literals (border-radius 3.40282e38px, transition-duration 300ms). Correct per the brief and Sprint 63 rule 2; it is an owner decision, not a defect, and it means the aggregate design-tokens gate is red for as long as D63-F is unresolved."
+    },
+    {
+      "id": "N-3",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "Kickoff section 10.3.2 - role-shaped naming.",
+      "requirementIds": [
+        "RV1 / F-1"
+      ],
+      "evidence": "Two of the ten new names, .frameWidth and .frameClip, still lean on the CSS effect rather than the role. Both were suggested verbatim by the orchestrator in the revision brief section 5, so they cannot be raised against the executor; recorded so a future naming pass has the observation."
+    },
+    {
+      "id": "N-4",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "Task 763 R1/R7 - the listing variant's hoverClass.",
+      "requirementIds": [
+        "RV1 / F-1"
+      ],
+      "evidence": "listing.hoverClass remains the literal 'group-hover:scale-105' and MantineListingCardPattern.tsx is untouched, correctly per brief section 7. Closure is Task 764 under owner decision D63-E route c. Task 763 is therefore approved with this scope carve-out explicitly open, not silently closed."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "RV3",
+    "reviewer": "Opus orchestrator, 2026-08-22. Every requirement row above was verified by the reviewer opening the file or re-running the command named in its evidence, not by reading the executor's completion report. The two gates that decide the verdict - check:tailwind-runtime-tokens and check:design-tokens --strict - were re-run independently and matched the executor's transcripts exactly. The rename-only comparator's zero was checked for vacuity two ways: its two inputs have different md5 sums, and the same 2896-cell comparator returns 48 deltas on the other pairing, so it demonstrably can redden."
+  }
+}

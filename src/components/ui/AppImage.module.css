@@ -1,0 +1,180 @@
+/*
+ * AppImage.module.css — Task 763 (Sprint 63 Phase 1, D28 mechanism-only de-Tailwind, the
+ * 673/706/707/709/709-R/757R pattern). Every declaration below reproduces the PRIOR Tailwind
+ * utility's OWN compiled declaration, extracted from the built CSS (production
+ * `.next/static/css/bc88661d53d0076e.css` and Storybook `storybook-static/assets/iframe-D4qckTjS.css`,
+ * both `tailwindcss@4.3.0`, byte-identical bodies across both sources) — not re-authored from
+ * intent. Full extraction table, selectors, and dispositions:
+ * `docs/sessions/evidence/task763/i1-utility-extraction.md`.
+ *
+ * N1 (Task 707 P3, carried forward): every declaration reproduces the compiled TOKEN REFERENCE,
+ * never a resolved value, EXCEPT where the referenced token is measured (I1) to be unresolvable
+ * in every built stylesheet — `--duration-slow` and `--ease-standard` are both `@theme inline`
+ * names that are NEVER emitted by this project's Tailwind build (confirmed absent from all 9
+ * `.next/static/css/*.css` files and all 21 `storybook-static/assets/*.css` files). Per the Task
+ * 757R precedent for the identical situation (`AuthSheet.module.css`), those two are reproduced
+ * as their measured LITERAL resolved values (`300ms`, `cubic-bezier(0.4, 0, 0.2, 1)`) instead of
+ * `var()` references that `check:css-vars` would correctly flag as unresolvable.
+ *
+ * D34 disposition: this is a D28 migration reproducing utilities' own losing cascade standing
+ * (Tailwind wraps every utility class in `@layer utilities`), so every rule below stays wrapped
+ * in `@layer utilities` — same reasoning and same shape as `HeroSearchView.module.css`'s header.
+ *
+ * Task 763 Revision 1 (Sprint 63): the ten utility-shaped class names below were renamed to
+ * role names per kickoff §10.3.2 ("a class named `.relative` or `.objectCover` re-creates the
+ * problem in a new file and is a rejection"). No declaration, value, property, selector
+ * structure, media query, or layer changed — rename only. Mapping:
+ * `.relative`→`.frame` · `.aspect4x3`→`.frameRatio4x3` · `.aspect16x9`→`.frameRatio16x9` ·
+ * `.aspectSquare`→`.frameRatioSquare` · `.widthFull`→`.frameWidth` · `.fillParent`→`.frameFill` ·
+ * `.overflowHidden`→`.frameClip` · `.bgMuted`→`.framePlaceholder` · `.roundedFull`→`.frameCircle` ·
+ * `.absoluteFill`→`.imageLayer`. `.fitCover`, `.fitContain`, `.fade`, `.visible`, `.hidden`,
+ * `.hoverBrightness` were already role-shaped and are unchanged.
+ *
+ * R8 Class-3 inventory (every `@theme inline` reference this module writes):
+ *   - `var(--space-0)` in `.imageLayer` (`inset`) — `globals.css:128`, `@theme inline`,
+ *     replaces `inset-0`. Confirmed emitted (resolvable) in both built stylesheets.
+ * `var(--muted)` in `.framePlaceholder` is NOT Class-3 — `--muted` is declared in plain `:root`
+ * (`globals.css:371`), outside `@theme inline` (safe, per Sprint 63 §"Measured state").
+ *
+ * A3 disposition (bare `transition`): the compiled `transition-property` list for bare
+ * `.transition` names three Tailwind bookkeeping properties (`--tw-gradient-from/via/to`)
+ * interleaved with real properties. Those three are dropped (AppImage's `<img>` never authors a
+ * gradient — dropping them changes no observable behaviour); the remaining 20 properties are
+ * reproduced in the same order, INCLUDING `transform`/`translate`/`scale`/`rotate`/`filter` — this
+ * is required, not incidental: a non-priority `<img>` can carry `.fade` and `.hoverBrightness`
+ * simultaneously, and narrowing the list to `opacity` only would make the hover filter change snap
+ * instead of transition smoothly, a real regression.
+ *
+ * `.hoverBrightness`'s ancestor scope: `.frame:hover .hoverBrightness`, gated by the SAME
+ * `@media (hover:hover)` feature query the compiled `group-hover:` variant itself carries (I1 §2).
+ * `.frame` is the class every variant's container carries (reproducing `position:relative`,
+ * itself a migrated utility — see below) — it is AppImage's OWN container, not an external
+ * Tailwind `group` marker, satisfying R7 for the two variants this mechanism is wired to
+ * (`gallery-main`, `gallery-side`, both via `hoverBrightness`). Verified (I2, both variants'
+ * production consumer `ListingGallery.tsx:95,105`): the external `.group` wrapper div contains
+ * ONLY the `<AppImage>` instance with no sibling content, so it occupies the identical screen area
+ * as `AppImage`'s own container — narrowing the hover trigger from the external `.group` div to
+ * `.frame` (AppImage's own container) changes no observable hover-trigger area for these two
+ * variants specifically.
+ *
+ * `listing`'s `hoverClass: 'group-hover:scale-105'` is UNCHANGED — see `appImageConfig.ts`'s
+ * `listing` entry and the completion report `BLOCKED` finding. Measured (I2, bounding-rect
+ * capture): `MantineListingCardPattern`'s `Card` (`'group'`, `MantineListingCardPattern.tsx:304`)
+ * wraps the image AND the title/price/badges area below it; hovering that title area (never over
+ * the image itself) still scales the image by the full measured 1.1025× (two independent unlayered
+ * effects compose: this pattern's own `.card:hover .imageSection img{transform:scale(1.05)}` in
+ * `MantineListingCardPattern.module.css:67-68`, PLUS Tailwind's `group-hover:scale-105`'s own
+ * `scale:105% 105%` — different CSS properties, so they multiply: 1.05×1.05=1.1025, reproduced
+ * exactly at `docs/sessions/evidence/task763/debug-hover-titlearea.mjs`'s output). Rooting the
+ * hover trigger on AppImage's own container (as this file does for `hoverBrightness`) would only
+ * fire while the pointer is directly over the image, silently shrinking the card's hover-zoom from
+ * 1.1025× to 1.05× whenever the pointer is over the title/price area instead — exactly the
+ * kickoff's own §10.3.5 stop condition ("If I2 shows any consumer relies on a hover originating
+ * outside AppImage's container, stop and report BLOCKED naming the consumer — do not widen the
+ * selector to :hover on an arbitrary ancestor"). No `.hoverScale` class is defined here because no
+ * variant safely wires it in.
+ */
+
+@layer utilities {
+  /* Base position/size trio shared by every variant's container: `relative` (I1 §1 row 1). */
+  .frame {
+    position: relative;
+  }
+
+  /* `aspect-[4/3]` (listing, upload) — I1 §1 row 6 */
+  .frameRatio4x3 {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* `aspect-[16/9]` (preview) — I1 §1 row 7 */
+  .frameRatio16x9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* `aspect-square` (avatar) — I1 §1 row 8 */
+  .frameRatioSquare {
+    aspect-ratio: 1;
+  }
+
+  /* `w-full` used alone (listing, preview, upload containers) — I1 §1 row 4 */
+  .frameWidth {
+    width: 100%;
+  }
+
+  /* `w-full h-full` together (listing-thumb, gallery-main/side/strip, lightbox containers, and
+     the <img> base in AppImage.tsx) — I1 §1 rows 4+5 */
+  .frameFill {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* `overflow-hidden` — I1 §1 row 9 */
+  .frameClip {
+    overflow: hidden;
+  }
+
+  /* `bg-muted` — I1 §1 row 10. `--muted` is :root-declared (globals.css:371), safe, not Class-3. */
+  .framePlaceholder {
+    background-color: var(--muted);
+  }
+
+  /* `rounded-full` (avatar) — I1 §1 row 11. Raw literal, not a token: Tailwind's own compiled
+     `calc(infinity * 1px)` collapse. A2/Sprint-63-rule-2: no `design-tokens-allow:` marker added;
+     `npm run check:design-tokens`'s actual result on this line is recorded, not silenced, in the
+     completion report. */
+  .frameCircle {
+    border-radius: 3.40282e38px;
+  }
+
+  /* `object-cover` — I1 §1 row 12 */
+  .fitCover {
+    object-fit: cover;
+  }
+
+  /* `object-contain` (lightbox) — I1 §1 row 13 */
+  .fitContain {
+    object-fit: contain;
+  }
+
+  /* `absolute inset-0 w-full h-full` — AppImage.tsx line 144, I1 §1 row 3 for `inset-0`.
+     `--space-0` is `@theme inline` (globals.css:128) but confirmed EMITTED (resolvable) in both
+     built stylesheets — Class-3 inventory row, see file header. */
+  .imageLayer {
+    position: absolute;
+    inset: var(--space-0);
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bare `transition` (AppImage.tsx line 148, `!priority`) — I1 §1 row 14 / file header "A3
+     disposition". 20 of the compiled utility's 23 properties; the 3 `--tw-gradient-*` bookkeeping
+     names are dropped (dead on this element, Category-C debt if kept). Duration/timing: literal
+     values per the file header's N1 exception (both source tokens unresolvable in every built
+     stylesheet — see i1-utility-extraction.md §6). */
+  .fade {
+    transition-property: color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale,
+      rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility,
+      overlay, pointer-events;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  /* `opacity-100` — I1 §1 row 16 */
+  .visible {
+    opacity: 1;
+  }
+
+  /* `opacity-0` — I1 §1 row 17 */
+  .hidden {
+    opacity: 0;
+  }
+
+  /* `group-hover:brightness-95` (gallery-main, gallery-side only — see file header) —
+     I1 §1 row 19. `--tw-brightness` bookkeeping property resolved to its literal effect. */
+  @media (hover: hover) {
+    .frame:hover .hoverBrightness {
+      filter: brightness(95%);
+    }
+  }
+}

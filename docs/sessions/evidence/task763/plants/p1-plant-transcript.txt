@@ -1,0 +1,21 @@
+aspect-ratio deltas found: 3
+[
+ {
+  "storyId": "mantine-primitives-listingcard--default",
+  "i": 0,
+  "pre": "4 / 3",
+  "post": "3 / 2"
+ },
+ {
+  "storyId": "mantine-primitives-listingcard--default",
+  "i": 1,
+  "pre": "4 / 3",
+  "post": "3 / 2"
+ },
+ {
+  "storyId": "mantine-primitives-listingcard--default",
+  "i": 2,
+  "pre": "4 / 3",
+  "post": "3 / 2"
+ }
+]

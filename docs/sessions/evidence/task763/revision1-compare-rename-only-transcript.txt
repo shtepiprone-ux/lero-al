@@ -1,0 +1,3 @@
+Total cells compared: 2896
+Deltas found: 0
+EXIT_CODE=0

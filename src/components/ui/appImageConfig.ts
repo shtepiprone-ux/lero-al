@@ -7,6 +7,18 @@
 //
 // To add a new image variant: add an entry to VARIANTS below.
 // To add a new grid layout context: see src/lib/imageDelivery.ts.
+//
+// Task 763 (Sprint 63 Phase 1): `containerClass`/`imageClass`/`hoverClass` are CSS Module class
+// names from AppImage.module.css, not Tailwind utility strings — see that file's header for the
+// I1-extracted source of every declaration. `listing`'s `hoverClass` is the one exception, still a
+// literal Tailwind string: see its own inline comment and the Task 763 completion report `BLOCKED`
+// finding (a genuine rendered regression, not an oversight).
+// Task 763 Revision 1: the CSS Module class names below are role names (`.frame`, `.frameRatio4x3`,
+// etc.), not the utility-shaped names (`.relative`, `.aspect4x3`, etc.) the original submission
+// used — see AppImage.module.css's header for the full rename mapping. No declaration changed.
+
+import { cn } from '@/lib/utils'
+import styles from './AppImage.module.css'
 
 export type ImageVariant =
   | 'listing'
@@ -61,8 +73,15 @@ export interface VariantConfig {
 
 export const VARIANTS: Record<ImageVariant, VariantConfig> = {
   listing: {
-    containerClass: 'relative aspect-[4/3] w-full overflow-hidden bg-muted',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameRatio4x3, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
+    imageClass: styles.fitCover,
+    // Task 763 BLOCKED finding: kept as a literal Tailwind string on purpose. Its sole consumer
+    // (`MantineListingCardPattern`'s `Card`, `'group'` at :304) wraps the image AND the title/price
+    // area below it; measured (docs/sessions/evidence/task763/debug-hover-titlearea.mjs), hovering
+    // that title area alone still scales the image the full 1.1025x. Rooting the hover trigger on
+    // AppImage's own container instead (AppImage.module.css's `.hoverBrightness` mechanism) would
+    // silently narrow that to the image area only — a real regression the kickoff's own §10.3.5
+    // explicitly requires stopping for. See the completion report for the owner decision needed.
     hoverClass: 'group-hover:scale-105',
     sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
     cloudinaryTransform: 'w_800,h_600,c_fill,g_auto,f_auto,q_auto,dpr_auto',
@@ -75,8 +94,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   preview: {
-    containerClass: 'relative aspect-[16/9] w-full overflow-hidden bg-muted',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameRatio16x9, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
+    imageClass: styles.fitCover,
     sizes: '(min-width: 768px) 50vw, 100vw',
     cloudinaryTransform: 'w_800,h_450,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
@@ -87,8 +106,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   upload: {
-    containerClass: 'relative aspect-[4/3] w-full overflow-hidden bg-muted',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameRatio4x3, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
+    imageClass: styles.fitCover,
     sizes: '(min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw',
     cloudinaryTransform: 'w_400,h_300,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
@@ -99,8 +118,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   avatar: {
-    containerClass: 'relative aspect-square overflow-hidden rounded-full bg-muted',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameRatioSquare, styles.frameClip, styles.frameCircle, styles.framePlaceholder),
+    imageClass: styles.fitCover,
     sizes: '96px',
     cloudinaryTransform: 'w_192,h_192,c_fill,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,f_auto,q_auto',
@@ -111,8 +130,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: false,
   },
   'listing-thumb': {
-    containerClass: 'relative w-full h-full overflow-hidden',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
+    imageClass: styles.fitCover,
     sizes: '(min-width: 640px) 176px, 128px',
     cloudinaryTransform: 'w_400,h_300,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
@@ -124,9 +143,9 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   'gallery-main': {
-    containerClass: 'relative w-full h-full overflow-hidden',
-    imageClass: 'object-cover',
-    hoverClass: 'group-hover:brightness-95',
+    containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
+    imageClass: styles.fitCover,
+    hoverClass: styles.hoverBrightness,
     sizes: '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw',
     cloudinaryTransform: 'w_1200,h_675,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
@@ -143,9 +162,9 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   'gallery-side': {
-    containerClass: 'relative w-full h-full overflow-hidden',
-    imageClass: 'object-cover',
-    hoverClass: 'group-hover:brightness-95',
+    containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
+    imageClass: styles.fitCover,
+    hoverClass: styles.hoverBrightness,
     sizes: '25vw',
     cloudinaryTransform: 'w_400,h_300,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
@@ -157,8 +176,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: true,
   },
   'gallery-strip': {
-    containerClass: 'relative w-full h-full overflow-hidden',
-    imageClass: 'object-cover',
+    containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
+    imageClass: styles.fitCover,
     sizes: '80px',
     cloudinaryTransform: 'w_160,h_112,c_fill,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,f_auto,q_auto',
@@ -169,8 +188,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     useLqip: false,
   },
   lightbox: {
-    containerClass: 'relative w-full h-full',
-    imageClass: 'object-contain',
+    containerClass: cn(styles.frame, styles.frameFill),
+    imageClass: styles.fitContain,
     sizes: '(max-width: 768px) 100vw, 90vw',
     cloudinaryTransform: 'w_1920,f_auto,q_auto,dpr_auto',
     srcsetBase: 'f_auto,q_auto',

@@ -8,6 +8,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { preload } from 'react-dom'
 import { cn } from '@/lib/utils'
+import styles from './AppImage.module.css'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { useAdaptiveImageConfig } from './useAdaptiveImageConfig'
 import { usePredictivePreload } from '@/lib/performance/predictive'
@@ -141,12 +142,12 @@ export function AppImage({
           decoding="async"
           onLoad={() => setLoaded(true)}
           className={cn(
-            'absolute inset-0 w-full h-full',
+            styles.imageLayer,
             // Priority images (LCP candidates) start opaque so Chrome can measure
             // them for LCP immediately from DOM render without waiting for JS state.
             // Non-priority images fade in from LQIP blur once loaded.
-            !priority && 'transition duration-300',
-            loaded || priority ? 'opacity-100' : 'opacity-0',
+            !priority && styles.fade,
+            loaded || priority ? styles.visible : styles.hidden,
             imageClass,
             hoverClass,
           )}

@@ -1,0 +1,32 @@
+gallery info: {
+ "imgCount": 5,
+ "imgs": [
+  {
+   "i": 0,
+   "className": "AppImage-module__1-zWeq__absoluteFill AppImage-module__1-zWeq__visible AppImage-module__1-zWeq__fitCover",
+   "parentClassName": "AppImage-module__1-zWeq__relative AppImage-module__1-zWeq__fillParent AppImage-module__1-zWeq__overflowHidden"
+  },
+  {
+   "i": 1,
+   "className": "AppImage-module__1-zWeq__absoluteFill AppImage-module__1-zWeq__fade AppImage-module__1-zWeq__visible AppImage-module__1-zWeq__fitCover",
+   "parentClassName": "AppImage-module__1-zWeq__relative AppImage-module__1-zWeq__fillParent AppImage-module__1-zWeq__overflowHidden"
+  },
+  {
+   "i": 2,
+   "className": "AppImage-module__1-zWeq__absoluteFill AppImage-module__1-zWeq__fade AppImage-module__1-zWeq__visible AppImage-module__1-zWeq__fitCover",
+   "parentClassName": "AppImage-module__1-zWeq__relative AppImage-module__1-zWeq__fillParent AppImage-module__1-zWeq__overflowHidden"
+  },
+  {
+   "i": 3,
+   "className": "AppImage-module__1-zWeq__absoluteFill AppImage-module__1-zWeq__fade AppImage-module__1-zWeq__visible AppImage-module__1-zWeq__fitCover",
+   "parentClassName": "AppImage-module__1-zWeq__relative AppImage-module__1-zWeq__fillParent AppImage-module__1-zWeq__overflowHidden"
+  },
+  {
+   "i": 4,
+   "className": "AppImage-module__1-zWeq__absoluteFill AppImage-module__1-zWeq__fade AppImage-module__1-zWeq__visible AppImage-module__1-zWeq__fitCover",
+   "parentClassName": "AppImage-module__1-zWeq__relative AppImage-module__1-zWeq__fillParent AppImage-module__1-zWeq__overflowHidden"
+  }
+ ]
+}
+rest filter: none
+hover filter: none

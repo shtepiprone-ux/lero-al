@@ -53,6 +53,7 @@
       "src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
       "src/stories/mantine/primitives/ListingCard.stories.tsx",
       "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+      "tasks/Sprints/Sprint_63_Homepage_Exits_Tailwind.md",
       "tasks/Sprints/Sprint_63_Task_764_revision_1_trigger_area_restoration.md"
     ],
     "supersedes": [],
@@ -2067,12 +2068,12 @@
     {
       "id": "F15",
       "priority": "NOTE",
-      "status": "NOTE",
+      "status": "RESOLVED",
       "requirements": "AC23 / R23",
       "requirementIds": [
         "AC23 / R23"
       ],
-      "evidence": "Bookkeeping only, no impact on any criterion. rev1b-assert-baseline-attestation.txt cites a decision id \"D63-K\" for the verified baseline population (1316/1209/80/27, which matches D63-I exactly). The task text defines D63-H and D63-I only, so D63-K is currently an orphaned identifier in retained evidence. Record it in the task or the backlog decision list, or renumber the citation, so the id resolves for a later reader. Separately worth noting as good conduct rather than a defect: the differential transcript discloses that check:file-integrity caught NUL-byte corruption in the new comparator script, which was fixed and the comparison re-run."
+      "evidence": "Bookkeeping only, no impact on any criterion. RESOLVED 2026-08-24, and the reviewer's first wording of this note was itself wrong: it called D63-K an orphaned identifier, but D63-J and D63-K are both defined verbatim in tasks/Sprints/Sprint_63_Task_764_revision_1_trigger_area_restoration.md section 1 (lines 67 and 78) and threaded through R22/R23/R25, section 10.6, section 10.7, AC22/AC23/AC25, section 13 and section 14. The real gap was wider and elsewhere: the sprint's canonical decision table in tasks/Sprints/Sprint_63_Homepage_Exits_Tailwind.md stopped at D63-G, so all four of D63-H, D63-I, D63-J and D63-K were unregistered there. All four are now recorded in that table with the owner quote verbatim and the reason each could not be defaulted, taking the sprint list to D63-A through D63-K. Separately worth noting as good conduct rather than a defect: the differential transcript discloses that check:file-integrity caught NUL-byte corruption in the new comparator script, which was fixed and the comparison re-run."
     }
   ],
   "handoff": {

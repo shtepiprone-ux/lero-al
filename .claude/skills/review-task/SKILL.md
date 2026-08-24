@@ -76,6 +76,12 @@ PowerShell command. Only Windows-native or CI output may support the final revie
    `orchestrator-execution-contract-template.md`. Rebuild one active route, its final write set, and every
    checkpoint from the final task text; a missing ledger/contract, multi-route executor plan, non-failing
    comparator, or unsupported alternative is blocking.
+9. Before creating a finding that a document lacks, contradicts, or fails to register a requirement or decision,
+   reread the exact current document in the same review turn. Record the file path and current line reference.
+   Earlier-turn reads are context only, not evidence for a current-state finding. If the document changed after an
+   earlier read, retract or update the finding before finalizing the ledger.
+10. When an evidence artifact is rerun or replaced, identify the final artifact and mark the prior artifact as
+   superseded in the session record or ledger. Only the final artifact may support a `VERIFIED` requirement.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.

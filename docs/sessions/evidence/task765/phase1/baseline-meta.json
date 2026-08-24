@@ -1,0 +1,15 @@
+{
+  "sourceRevision": "d2dd47ad751df7c9370ee747dcb2ff4c42feece0",
+  "note": "Owner committed docs-only Sprint64/Task765 filing artifacts (backlog.md, sprint plan, kickoff) mid-session as commit d2dd47ad7 on top of the I0-measured 5372e08a5. No src/ files touched by that commit; capture ran after it landed.",
+  "captureFile": "phase1/capture-baseline.json",
+  "captureCommand": "node.exe docs/sessions/evidence/task765/capture-appimage-styles.mjs baseline phase1",
+  "captureExitCode": 0,
+  "buildStorybookExitCode": 0,
+  "avatarVariantStoryId": "admin-admincompaniesmanager--default",
+  "avatarVariantFixtureProbe": "src/stories/fixtures/admin.fixtures.ts FIXTURE_COMPANIES[0].logo_url temporarily set to https://res.cloudinary.com/demo/image/upload/sample.jpg (was null); pre-edit git hash-object 03c4f43f2b7d8c42090d69362b9f305dc08162d7; reverted and hash-verified at task close.",
+  "targetValuesAtWidth1024En": {
+    "avatarContainerBorderRadius": "3.35544e+07px",
+    "fadeTransitionDuration": "0.3s",
+    "fadeTransitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+  }
+}

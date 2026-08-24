@@ -1,0 +1,20 @@
+{
+  "baselineFile": "phase1/capture-baseline.json",
+  "postFile": "phase3/capture-post.json",
+  "cellsCompared": 111,
+  "mismatches": 0,
+  "comparedProperties": ["containerComputed.borderRadius", "imgState.transitionDuration", "imgState.transitionTimingFunction"],
+  "avatarSampleAt1024En": {
+    "baseline": {
+      "containerBorderRadius": "3.35544e+07px",
+      "transitionDuration": "0.3s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+    },
+    "post": {
+      "containerBorderRadius": "3.35544e+07px",
+      "transitionDuration": "0.3s",
+      "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)"
+    }
+  },
+  "a1Answer": "The literal 3.40282e38px does NOT survive getComputedStyle unchanged in either state — Chromium clamps it internally (Blink LayoutUnit max, ~2^25) to 3.35544e+07px. This clamping is identical whether the value arrives as a raw literal (baseline) or through var(--radius-pill) (post), so the ROUND TRIP through the custom property is faithful: AC5's string-equality requirement (baseline == post) holds across all 111 captured image cells, 0 mismatches."
+}

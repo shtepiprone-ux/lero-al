@@ -1,0 +1,11 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=git diff src/app/globals.css src/components/ui/AppImage.module.css
+
+COMPARISON: git diff (post-revert) captured via raw byte redirection (cmd /c > file, avoids
+PowerShell console re-encoding of multi-byte UTF-8) vs
+docs/sessions/evidence/task765/phase4/clean-post-edit.diff
+byte length (post-revert)=4987  byte length (clean-post-edit.diff)=4987
+BYTE-IDENTICAL (raw byte-array comparison): True
+EXIT_CODE=0

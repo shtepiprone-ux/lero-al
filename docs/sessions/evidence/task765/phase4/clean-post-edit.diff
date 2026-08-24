@@ -1,0 +1,88 @@
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 3817947c2..632bbee9d 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -264,15 +264,15 @@
+   /* ── 5. Motion — durations + easing ─────────────────────────── */
+   /* Durations derived from actual usage: backdrop=100ms, hover=200ms, image=300ms.
+      Backs duration-{name} utilities. */
+-  --duration-fast: 100ms;  /* micro-interactions: dialog backdrop, chip state */
+-  --duration-base: 200ms;  /* standard: hover/active transitions */
+-  --duration-slow: 300ms;  /* deliberate: image fade-in, reveal animations */
++  --duration-fast: var(--motion-duration-fast);
++  --duration-base: var(--motion-duration-base);
++  --duration-slow: var(--motion-duration-slow);
+   /* Easing — backs ease-{name} utilities.
+      ease-in / ease-out mirror Tailwind v4 defaults (visually inert);
+      ease-standard is a new general-purpose alias for ease-in-out. */
+-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);  /* general-purpose (ease-in-out) */
+-  --ease-in:       cubic-bezier(0.4, 0, 1, 1);     /* accelerating/exiting */
+-  --ease-out:      cubic-bezier(0, 0, 0.2, 1);      /* decelerating/entering */
++  --ease-standard: var(--motion-ease-standard);
++  --ease-in:       var(--motion-ease-in);
++  --ease-out:      var(--motion-ease-out);
+ 
+   /* ── 6. Breakpoints — reference tokens (docs / JS use only) ─── */
+   /* Source of truth for Tailwind breakpoints is @import "tailwindcss".
+@@ -325,6 +325,19 @@
+    Muted fg on background: 5.2:1 (WCAG AA ✓)
+    ───────────────────────────────────────────── */
+ :root {
++  /* ── Runtime motion/radius tokens (Task 765 — D63-F) ──────────
++     Project-owned runtime tokens: @theme inline's --duration-* / --ease-* above alias these
++     instead of owning literals. Any stylesheet can `var(--motion-*)` / `var(--radius-pill)`
++     directly — the prior scale lived only inside @theme inline (brace-depth 1), unreadable
++     by any CSS-Module var() reference (measured zero readers in src/ before this task). */
++  --radius-pill: 3.40282e38px;
++  --motion-duration-fast: 100ms;
++  --motion-duration-base: 200ms;
++  --motion-duration-slow: 300ms;
++  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
++  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
++  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
++
+   /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
+   /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
+      Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this
+diff --git a/src/components/ui/AppImage.module.css b/src/components/ui/AppImage.module.css
+index a2907b0b6..6636b701f 100644
+--- a/src/components/ui/AppImage.module.css
++++ b/src/components/ui/AppImage.module.css
+@@ -118,12 +118,10 @@
+     background-color: var(--muted);
+   }
+ 
+-  /* `rounded-full` (avatar) — I1 §1 row 11. Raw literal, not a token: Tailwind's own compiled
+-     `calc(infinity * 1px)` collapse. A2/Sprint-63-rule-2: no `design-tokens-allow:` marker added;
+-     `npm run check:design-tokens`'s actual result on this line is recorded, not silenced, in the
+-     completion report. */
++  /* `rounded-full` (avatar) — I1 §1 row 11. Task 765 (D63-F): reads the runtime `--radius-pill`
++     token (globals.css `:root`) instead of the raw literal. */
+   .frameCircle {
+-    border-radius: 3.40282e38px;
++    border-radius: var(--radius-pill);
+   }
+ 
+   /* `object-cover` — I1 §1 row 12 */
+@@ -148,16 +146,16 @@
+ 
+   /* bare `transition` (AppImage.tsx line 148, `!priority`) — I1 §1 row 14 / file header "A3
+      disposition". 20 of the compiled utility's 23 properties; the 3 `--tw-gradient-*` bookkeeping
+-     names are dropped (dead on this element, Category-C debt if kept). Duration/timing: literal
+-     values per the file header's N1 exception (both source tokens unresolvable in every built
+-     stylesheet — see i1-utility-extraction.md §6). */
++     names are dropped (dead on this element, Category-C debt if kept). Duration/timing: Task 765
++     (D63-F) reads the runtime `--motion-duration-slow`/`--motion-ease-standard` tokens instead of
++     the prior literal values. */
+   .fade {
+     transition-property: color, background-color, border-color, outline-color,
+       text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale,
+       rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility,
+       overlay, pointer-events;
+-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+-    transition-duration: 300ms;
++    transition-timing-function: var(--motion-ease-standard);
++    transition-duration: var(--motion-duration-slow);
+   }
+ 
+   /* `opacity-100` — I1 §1 row 16 */

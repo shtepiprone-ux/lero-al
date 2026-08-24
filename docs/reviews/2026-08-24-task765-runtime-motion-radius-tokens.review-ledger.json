@@ -1,0 +1,778 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 765 - materialize D63-F's runtime motion/radius tokens in globals.css :root, alias the @theme inline --duration-*/--ease-* entries onto them, migrate AppImage.module.css's three literal declarations onto the runtime names, and prove the two gates involved can fail (Sprint 64 Phase 1, kickoff REVISION 1.2 - P3-double-prime)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "d2dd47ad751df7c9370ee747dcb2ff4c42feece0",
+    "reviewedRevision": "worktree on top of d2dd47ad751df7c9370ee747dcb2ff4c42feece0, final inspection 2026-08-24 after the Revision 1 (P3-prime) and Revision 1.2 (P3-double-prime) executor phases. Every figure in this ledger was read by the reviewer out of the retained Windows-native transcripts under docs/sessions/evidence/task765/, or re-derived by the reviewer directly from the raw capture JSON. No evidence-producing toolchain command was run by the reviewer (Windows-native rule); the ledger gate is the owner-native run recorded in review.ledgerGate. One retained summary figure did not survive re-derivation and is recorded as finding F3.",
+    "reviewedPaths": [
+      "src/app/globals.css",
+      "src/components/ui/AppImage.module.css",
+      "tasks/Sprints/Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md",
+      "docs/sessions/2026-08-24-task765-runtime-motion-radius-tokens-blocked.md",
+      "docs/sessions/2026-08-24-task765-revision-1-2-p3doubleprime.md",
+      "docs/sessions/evidence/task765/phase4/clean-post-edit.diff",
+      "docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs",
+      "docs/backlog.md",
+      "tasks/Sprints/Sprint_64_Runtime_Design_Tokens_That_Survive_Tailwind_Removal.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 10,
+      "verified": 10,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-24-task765-runtime-motion-radius-tokens.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": ":root runtime motion/radius tokens",
+        "diffHunks": ["src/app/globals.css:327-340"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "--radius-pill declaration",
+          "--motion-duration-{fast,base,slow} declarations",
+          "--motion-ease-{standard,in,out} declarations"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A :root custom-property block is not parameterised by any story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "The declarations carry no media guard; they are viewport-independent.",
+          "states": "Static stylesheet declarations with no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/globals.css",
+          "command": "grep -n -- \"--motion-\\|--radius-pill\" src/app/globals.css && grep -n \"^:root\\s*{\" src/app/globals.css",
+          "observable": "The seven names are declared at :333-339 inside the top-level :root block that opens at :327 - --radius-pill: 3.40282e38px; --motion-duration-fast: 100ms; --motion-duration-base: 200ms; --motion-duration-slow: 300ms; --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1); --motion-ease-in: cubic-bezier(0.4, 0, 1, 1); --motion-ease-out: cubic-bezier(0, 0, 0.2, 1). The only other block openers in the file are @theme inline at :35 and :root at :327, so none of the seven sits inside @theme inline.",
+          "freshness": "final worktree on top of d2dd47ad7, re-read by the reviewer 2026-08-24 after the Revision 1.2 documentation edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "--radius-pill declaration",
+              "--motion-duration-{fast,base,slow} declarations",
+              "--motion-ease-{standard,in,out} declarations"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The seven names were added to @theme inline rather than to the :root block, which would leave them unshipped and reproduce the very defect the task exists to remove.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css",
+          "result": "REFUTED. The built bundle carries exactly one declaration and one var() reference for each of --motion-duration-slow, --motion-ease-standard and --radius-pill, while the @theme inline names --duration-slow and --ease-standard have zero declarations and zero references. The seven names therefore ship as real custom properties."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A declaration-presence census over authored CSS. No Tailwind utility is generated from these names, so there is no compiled candidate to compare before and after."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F5"],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "@theme inline --duration-* / --ease-* alias entries",
+        "diffHunks": ["src/app/globals.css:267-275"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "--duration-{fast,base,slow} alias values",
+          "--ease-{standard,in,out} alias values"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "Theme entries are not rendered by a story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Theme entries carry no media guard.",
+          "states": "Static theme declarations with no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/globals.css",
+          "command": "grep -n -- \"--duration-\\|--ease-\" src/app/globals.css",
+          "observable": "All six entries keep their names and now hold var() references: --duration-fast/base/slow: var(--motion-duration-fast/base/slow) at :267-269 and --ease-standard/in/out: var(--motion-ease-standard/in/out) at :273-275. No literal remains on the theme side.",
+          "freshness": "final worktree on top of d2dd47ad7",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "--duration-{fast,base,slow} alias values",
+              "--ease-{standard,in,out} alias values"
+            ],
+            "phases": ["after"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-build.txt",
+          "command": "npm.cmd run build",
+          "observable": "EXIT_CODE=0 with the aliased entries in place - the alias form does not break Tailwind's theme resolution or the production build (kickoff assumption A2).",
+          "freshness": "phase7 final gate set, the newest retained build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "--duration-{fast,base,slow} alias values",
+              "--ease-{standard,in,out} alias values"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Aliasing broke utility generation, so some compiled utility that used to reference the theme values is now missing or malformed.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css",
+          "result": "NOT REFUTABLE BY DIFF, AND EMPTY IN PRACTICE. The reviewer measured zero declarations and zero var() references for --duration-slow and --ease-standard in the built bundle, so no emitted utility depends on the aliased names and the risk surface for a generation regression is empty. A before/after compiled-utility diff was still not performed - recorded as F5 (P3 note), not as a verified equivalence."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No compiled utility references the aliased theme names in either state, so there is no generated rule pair to compare. Recorded as F5 rather than claimed as an exact-generated equivalence."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/ui/AppImage.module.css",
+        "symbol": ".frameCircle border-radius and .fade transition-duration / transition-timing-function",
+        "diffHunks": [
+          "src/components/ui/AppImage.module.css:124",
+          "src/components/ui/AppImage.module.css:157-158"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          ".frameCircle border-radius",
+          ".fade transition-duration",
+          ".fade transition-timing-function"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "The declaration text is story-independent; its rendered effect is covered by AC5.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "None of the three declarations sits behind a media guard.",
+          "states": "The .fade/.visible state pair is exercised under AC5, not by this text census."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/components/ui/AppImage.module.css",
+          "command": "grep -n -- \"var(--motion\\|var(--radius-pill)\" src/components/ui/AppImage.module.css",
+          "observable": "Exactly three runtime-token references exist in the file: border-radius: var(--radius-pill) at :124, transition-timing-function: var(--motion-ease-standard) at :157, transition-duration: var(--motion-duration-slow) at :158. No fourth declaration was migrated.",
+          "freshness": "final worktree on top of d2dd47ad7",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              ".frameCircle border-radius",
+              ".fade transition-duration",
+              ".fade transition-timing-function"
+            ],
+            "phases": ["after"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase4/clean-post-edit.diff",
+          "command": "git diff src/app/globals.css src/components/ui/AppImage.module.css",
+          "observable": "The retained clean post-edit diff is 4987 bytes and is confined to the two in-scope files; the reviewer re-measured the live worktree diff at the same 4987 bytes after every plant and revert.",
+          "freshness": "captured immediately after Phase 3 and re-proved byte-identical in phase4/p3prime-revert-proof.txt and phase4/p3doubleprime-real-tree-proof.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              ".frameCircle border-radius",
+              ".fade transition-duration",
+              ".fade transition-timing-function"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Other declarations in AppImage.module.css were changed under cover of the three migrated ones.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase4/clean-post-edit.diff",
+          "result": "REFUTED for declarations. The diff touches the two in-scope files only, and the session log records that beyond the three declarations only explanatory comments were updated. No fourth declaration changed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A CSS Module authored-text census. The rendered consequence is measured separately and byte-compared under AC5."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/design-tokens-allowlist.json",
+        "symbol": "design-tokens allowlist and in-source design-tokens-allow markers",
+        "diffHunks": ["scripts/design-tokens-allowlist.json:unchanged"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "design-tokens-allow markers in the diff",
+          "scripts/design-tokens-allowlist.json contents"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "An allowlist file and marker census is not rendered.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "Static configuration."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase4/clean-post-edit.diff",
+          "command": "git diff src/app/globals.css src/components/ui/AppImage.module.css",
+          "observable": "The retained diff contains no added design-tokens-allow marker; the two markers that previously defended the migrated lines are removed rather than relocated.",
+          "freshness": "final worktree on top of d2dd47ad7; the live diff is byte-identical at 4987 bytes",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "design-tokens-allow markers in the diff",
+              "scripts/design-tokens-allowlist.json contents"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The allowlist file was edited to absorb the two findings instead of the literals being migrated.",
+          "kind": "EXECUTED",
+          "path": "scripts/design-tokens-allowlist.json",
+          "result": "REFUTED. scripts/design-tokens-allowlist.json does not appear in git status --short at any point in the session; the reviewer re-checked the current status and the file is unmodified."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A negative census over a config file and a diff. No CSS is generated by this criterion."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F3"],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase3/capture-post.json",
+        "symbol": "computed borderRadius / transitionDuration / transitionTimingFunction per captured image cell",
+        "diffHunks": ["docs/sessions/evidence/task765/phase3/capture-post.json:1"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "containerComputed.borderRadius",
+          "imgState.transitionDuration",
+          "imgState.transitionTimingFunction"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default",
+          "mantine-primitives-popularlocationsview--default",
+          "admin-admincompaniesmanager--default"
+        ],
+        "phases": ["baseline", "post"],
+        "notApplicable": {
+          "locales": "The harness's locale set is width-dependent - four locales at 320 and 1440, en only at 375/390/768/1024 - so locale does not form a full cross product with viewport and is enumerated inside the evidence rather than as a scope dimension.",
+          "viewports": "Same reason: the six widths are covered for every story, but with a width-dependent locale set, so the matrix is enumerated in the evidence observable instead of being expanded as scope tuples.",
+          "states": "The captured cells are all in the post-load .visible state; no second state is compared by this criterion."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase1/capture-baseline.json",
+          "command": "node.exe docs/sessions/evidence/task765/capture-appimage-styles.mjs baseline phase1",
+          "observable": "Pre-edit capture of all three stories at widths 320/375/390/768/1024/1440, with locales sq/en/uk/it at 320 and 1440 and en only at 375/390/768/1024 - 36 story-width-locale combinations holding 108 image cells (48 + 48 + 12). phase1-capture.txt records EXIT_CODE=0 and baseline-meta.json names sourceRevision d2dd47ad751df7c9370ee747dcb2ff4c42feece0.",
+          "freshness": "phase 1, before any source change",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "containerComputed.borderRadius",
+              "imgState.transitionDuration",
+              "imgState.transitionTimingFunction"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "mantine-primitives-popularlocationsview--default",
+              "admin-admincompaniesmanager--default"
+            ],
+            "phases": ["baseline"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase3/capture-post.json",
+          "command": "node.exe docs/sessions/evidence/task765/capture-appimage-styles.mjs post phase3",
+          "observable": "Post-edit capture over the identical matrix - the same 36 combinations and the same 108 image cells, story for story and cell for cell. phase3-capture.txt records EXIT_CODE=0.",
+          "freshness": "phase 3, after the section 9.2 edit and a successful rebuild",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "containerComputed.borderRadius",
+              "imgState.transitionDuration",
+              "imgState.transitionTimingFunction"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "mantine-primitives-popularlocationsview--default",
+              "admin-admincompaniesmanager--default"
+            ],
+            "phases": ["post"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase3/comparison-result.json",
+          "command": "reviewer re-derivation over the two raw capture files: for every story, width, locale and image index, compare containerComputed.borderRadius, imgState.transitionDuration and imgState.transitionTimingFunction as strings",
+          "observable": "108 image cells, 324 property comparisons, 0 mismatches, 0 cells missing from either side. The avatar variant at 1024/en reads 3.35544e+07px / 0.3s / cubic-bezier(0.4, 0, 0.2, 1) identically in both phases. The retained summary's own cellsCompared field says 111, which the reviewer could not reproduce from either capture - see F3; the raw captures, not that field, support this row.",
+          "freshness": "re-derived by the reviewer 2026-08-24 from the retained phase1/phase3 captures",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "containerComputed.borderRadius",
+              "imgState.transitionDuration",
+              "imgState.transitionTimingFunction"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "mantine-primitives-popularlocationsview--default",
+              "admin-admincompaniesmanager--default"
+            ],
+            "phases": ["baseline", "post"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The post capture silently covers fewer cells than the baseline, so equality is vacuous over the missing ones.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase3/capture-post.json",
+          "result": "REFUTED. The reviewer's re-derivation walks the baseline matrix and looks up each cell in the post capture: 0 cells missing, and the per-story totals match exactly (48 / 48 / 12 on both sides)."
+        },
+        {
+          "claim": "AC5 passed only because 3.40282e38px survives the round trip unchanged, so the comparison never exercised the clamp.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase3/comparison-result.json",
+          "result": "REFUTED, and the opposite is true. Blink clamps the literal to 3.35544e+07px in BOTH states. AC5's requirement is baseline == post as strings, not source-literal fidelity, and that equality holds; the kickoff's A1 is answered as a measured negative rather than a passed assumption."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The comparator measures computed styles from a real Storybook render on both sides, which is a stronger invariant than a generated-rule text comparison. No Tailwind candidate is involved in the three migrated declarations."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase7-final-check-design-tokens.txt",
+        "symbol": "npm run check:design-tokens exit status",
+        "diffHunks": ["docs/sessions/evidence/task765/phase7-final-check-design-tokens.txt:1"]
+      },
+      "requiredScope": {
+        "subjects": ["check:design-tokens exit code on the final clean tree"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A repository gate, not a rendered story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "A single gate invocation with no state matrix."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-check-design-tokens.txt",
+          "command": "npm.cmd run check:design-tokens",
+          "observable": "EXIT_CODE=0 on the final clean post-edit tree, with the five-line native header (EXECUTION_PLATFORM=win32, NODE_VERSION=v22.22.3).",
+          "freshness": "phase7, the newest retained gate run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["check:design-tokens exit code on the final clean tree"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "check:design-tokens exits 0 because it no longer looks at the migrated lines, not because the findings are gone.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase4-p1-plant.txt",
+          "result": "REFUTED by the P1 and P2 plants. Restoring either literal makes the same gate exit 1 and name [css-duration] and [css-length] on those exact lines, so the gate still reads them."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A gate exit-code criterion. No generated CSS candidate is compared."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase7-final-check-css-vars.txt",
+        "symbol": "npm run check:css-vars exit status after a build",
+        "diffHunks": ["docs/sessions/evidence/task765/phase7-final-check-css-vars.txt:1"]
+      },
+      "requiredScope": {
+        "subjects": ["check:css-vars exit code and violation count after a build"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A repository gate, not a rendered story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "A single gate invocation with no state matrix."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-check-css-vars.txt",
+          "command": "npm.cmd run check:css-vars",
+          "observable": "owned custom properties 264, Arm A 84, Arm B 67, 8 raw dynamic sites and 0 in-class, 0 violations, EXIT_CODE=0 - run after the phase7 build, so the freshness arm did not short-circuit it.",
+          "freshness": "phase7, run after phase7-final-build.txt (EXIT_CODE=0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["check:css-vars exit code and violation count after a build"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 0-violation result is a stale-build artefact rather than a real clean scan.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase7-final-build.txt",
+          "result": "REFUTED. The gate's own freshness arm fails closed when the bundle is older than any scanned input, and phase7-final-build.txt (EXIT_CODE=0) precedes the gate run in the same phase; the gate printed a full census rather than a staleness fatal."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A gate exit-code criterion. No generated CSS candidate is compared."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase7-final-build.txt",
+        "symbol": "typecheck / build / build-storybook / check:stories exit statuses",
+        "diffHunks": ["docs/sessions/evidence/task765/phase7-final-build.txt:1"]
+      },
+      "requiredScope": {
+        "subjects": ["typecheck", "build", "build-storybook", "check:stories"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "check:stories covers the story corpus internally; this row asserts its exit code, not a per-story matrix.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "Single invocations with no state matrix."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-typecheck.txt",
+          "command": "npm.cmd run typecheck",
+          "observable": "EXIT_CODE=0 with the five-line native header.",
+          "freshness": "phase7 final set",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["typecheck"],
+            "phases": ["after"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-build.txt",
+          "command": "npm.cmd run build",
+          "observable": "Next.js 15.5.18 production build, 40/40 static pages generated, EXIT_CODE=0.",
+          "freshness": "phase7 final set - the newest build against the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["build"],
+            "phases": ["after"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-build-storybook.txt",
+          "command": "npm.cmd run build-storybook",
+          "observable": "EXIT_CODE=0.",
+          "freshness": "phase7 final set",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["build-storybook"],
+            "phases": ["after"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase7-final-check-stories.txt",
+          "command": "npm.cmd run check:stories",
+          "observable": "EXIT_CODE=0.",
+          "freshness": "phase7 final set",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["check:stories"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The retained build transcript predates the final source state, so it certifies a tree that no longer exists.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase4/p3doubleprime-real-tree-proof.txt",
+          "result": "REFUTED. The phase7 set was run after the last revert, and the real source diff at that point is byte-identical (4987 bytes) to the clean post-edit diff the reviewer re-measured on the live worktree."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Toolchain exit-code criteria. No generated CSS candidate is compared."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F1", "F2", "F4"],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs",
+        "symbol": "P1, P2 and P3-double-prime planted-violation controls",
+        "diffHunks": ["docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs:1-208"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "P1 - restored css-duration literal",
+          "P2 - restored css-length literal",
+          "P3-double-prime - owned, referenced, unshipped custom property"
+        ],
+        "phases": ["plant", "revert"],
+        "notApplicable": {
+          "stories": "Gate plants are not rendered by a story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "Each plant is a single mutation with a single observation."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase4-p1-plant.txt",
+          "command": "npm.cmd run check:design-tokens",
+          "observable": "AC9.1 - EXIT_CODE=1 naming [css-duration] on the restored transition-duration: 300ms literal, then reverted.",
+          "freshness": "phase 4, from the clean post-edit state",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["P1 - restored css-duration literal"],
+            "phases": ["plant", "revert"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase4-p2-plant.txt",
+          "command": "npm.cmd run check:design-tokens",
+          "observable": "AC9.2 - EXIT_CODE=1 naming [css-length] on the restored border-radius: 3.40282e38px literal, then reverted.",
+          "freshness": "phase 4, from the clean post-edit state",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["P2 - restored css-length literal"],
+            "phases": ["plant", "revert"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase4/p3prime-check-css-vars.txt",
+          "command": "npm.cmd run check:css-vars",
+          "observable": "AC9.3 - P3-prime executed and MEASURED FALSE: owned=264, 0 violations, EXIT_CODE=0. Moving the declaration into @theme inline preserved ownership but the declaration still shipped, so nothing dangled. Retained as a failed author premise, never as a passing control.",
+          "freshness": "phase 6, after phase4/p3prime-build.txt (EXIT_CODE=0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["P3-double-prime - owned, referenced, unshipped custom property"],
+            "phases": ["plant"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase4/p3doubleprime-plant.txt",
+          "command": "node.exe docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs",
+          "observable": "AC9.4 - census passes closed (ownsTarget true, exactly 1 bundled declaration, bundled reference present, real AppImage consumer present), the copied bundle then loses that one declaration (0 declarations, 1 reference retained), and the nested gate returns exit code 1 at owned=264 with Arm A on the copied bundle and Arm B on src/components/ui/AppImage.module.css:158, each naming var(--motion-duration-slow) - no shipped declaration, no @property registration. Gate stderr: 2 blocking finding(s). Baseline is 0. TEMP_DIR_REMOVED=true; the helper's own EXIT_CODE=0 is its assertion of that required exit 1.",
+          "freshness": "phase 7, over a copy of the phase7 clean build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["P3-double-prime - owned, referenced, unshipped custom property"],
+            "phases": ["plant", "revert"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task765/phase4/p3doubleprime-real-tree-proof.txt",
+          "command": "git diff src/app/globals.css src/components/ui/AppImage.module.css",
+          "observable": "AC9.5 - the real tree was never mutated by the control: the diff is 4987 bytes on both sides against clean-post-edit.diff, BYTE-IDENTICAL True, EXIT_CODE=0.",
+          "freshness": "phase 7, immediately after the control ran",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P1 - restored css-duration literal",
+              "P2 - restored css-length literal",
+              "P3-double-prime - owned, referenced, unshipped custom property"
+            ],
+            "phases": ["revert"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The P3-double-prime helper fakes the result - it reimplements the gate's logic, or mutates the real repository, or exits 0 without ever seeing a failure.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs",
+          "result": "REFUTED on all three, by reading the helper source directly. The helper spawns the real scripts/check-css-var-resolvability.mjs as a subprocess over its documented --css-dir/--globals-path/--src-dir inputs - the same seam the script's own --verify-gate self-test uses via mkdtempSync - so the parser under test is the production one. Its only writeFileSync targets a file inside its own mkdtemp directory; REAL_GLOBALS_PATH, REAL_SRC_DIR and REAL_APPIMAGE_CSS are read-only, and the temp tree is removed in a finally block. It sets exitCode 0 only after asserting the subprocess returned 1 with the required header and both arms, and exitCode 1 otherwise."
+        },
+        {
+          "claim": "P3-double-prime would have passed even without the mutation, so it does not discriminate.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase7-final-check-css-vars.txt",
+          "result": "REFUTED. The same gate over the same unmutated inputs reports 0 violations and EXIT_CODE=0 in the phase7 clean run; only the removal of that single bundled declaration produces the 2 blocking findings."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate-failure controls. No generated CSS candidate is compared before and after."
+      }
+    },
+    {
+      "id": "AC10 / R10",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task765/phase7-platform-attestation.txt",
+        "symbol": "five-line native transcript header and real exit codes",
+        "diffHunks": ["docs/sessions/evidence/task765/phase7-platform-attestation.txt:1"]
+      },
+      "requiredScope": {
+        "subjects": ["retained transcript headers and exit codes"],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "Transcript provenance is not rendered.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Not a rendered artifact.",
+          "states": "Static transcripts."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task765/phase7-platform-attestation.txt",
+          "command": "node.exe -p process.platform ; node.exe -v ; $PWD.Path",
+          "observable": "EXECUTION_PLATFORM=win32, NODE_VERSION=v22.22.3, CWD=C:\\Claude_Code_Projects\\lero-al, EXIT_CODE=0. The reviewer spot-checked the same five-line header and a real EXIT_CODE on the phase4 plant transcripts and every phase6 and phase7 gate transcript.",
+          "freshness": "phase7 attestation, opening the newest evidence terminal",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["retained transcript headers and exit codes"],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Some retained transcript reports a synthesised exit code rather than the real one.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task765/phase4/p3prime-check-css-vars.txt",
+          "result": "REFUTED by counterexample. The transcripts record inconvenient results as readily as convenient ones - p3prime-check-css-vars.txt preserves EXIT_CODE=0 for a plant that was required to fail, which is the outcome that blocked the task rather than closing it."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Transcript provenance. No generated CSS candidate is compared."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC9 / R9 - draft 1's P3 was unsatisfiable as specified",
+      "requirementIds": ["AC9 / R9"],
+      "evidence": "Draft 1 section 3.3 claimed a prefix arm that reports an unowned static reference when a sibling name stays owned. No such code path exists: classifyReferences:468 skips unowned references on both arms, and the prefix test at :530 runs only inside scanArmB:528's !isCss branch over findDynamicVarSites template sites. Measured twice natively - phase4-p3-plant.txt, exit 0, 0 violations, owned=263. The defect is the kickoff author's; the executor measured it and correctly reported BLOCKED rather than substituting a mutation. RESOLVED by kickoff Revision 1.2, which withdraws P3, retains the measurement, and closes R9 on P3-double-prime."
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC9 / R9 - Revision 1's P3-prime premise was also false",
+      "requirementIds": ["AC9 / R9"],
+      "evidence": "Revision 1 asserted that @theme inline emits no custom property, so moving --motion-duration-slow there would leave the reference dangling. Measured false in phase4/p3prime-check-css-vars.txt: ownership held at owned=264 but the declaration still shipped, giving 0 violations and EXIT_CODE=0. The premise generalised two measured rows (--duration-slow and --ease-standard, 0 declarations each) into a rule; those two ship nothing because nothing references them - Tailwind tree-shakes unused theme values. This is the orchestrator's own instance of the recorded derived-claim failure mode. RESOLVED by the section 3.3R correction block, section 9.4R's superseded banner, and P3-double-prime."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC5 / R5 - the retained comparison summary's cell count is not reproducible",
+      "requirementIds": ["AC5 / R5"],
+      "evidence": "phase3/comparison-result.json records cellsCompared: 111, and that figure propagated into the executor session log, docs/backlog.md and the kickoff. The reviewer re-derived the comparison directly from phase1/capture-baseline.json and phase3/capture-post.json: both hold 108 image cells (48 + 48 + 12) over 36 story-width-locale combinations, giving 324 property comparisons, 0 mismatches and 0 missing cells. No transcript of the original comparator invocation was retained, so the 111 cannot be traced. The substantive claim - post equals baseline string-for-string on all three properties for every captured cell - is verified on the raw captures, which are the final evidence for AC5; comparison-result.json's cellsCompared field is superseded by that re-derivation. RESOLVED by correcting every document that repeated the figure in this closure step; the evidence artifact itself is left untouched and flagged here."
+    },
+    {
+      "id": "F4",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC9 / R9 - what the control does not prove",
+      "requirementIds": ["AC9 / R9"],
+      "evidence": "P3-double-prime proves the gate reddens on owned + referenced + no shipped declaration, which is Task 690's regression shape and the condition AC7 rests on. It does not prove the gate detects a deletion from :root - that mutation un-owns its own reference before either arm sees it. The blind spot is unfixed and remains Task 743's, now with two reproductions recorded there. Task 765 is not blocked on it and must not be widened to fix it: the naive fix reopens 743's 112 Mantine false positives."
+    },
+    {
+      "id": "F5",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC2 / R2 - A2 was answered without a compiled-utility diff",
+      "requirementIds": ["AC2 / R2"],
+      "evidence": "The kickoff's A2 asked for evidence that the aliased @theme inline entries still produce the same compiled utilities. The retained answer is a successful build plus a byte-identical rendered capture, not a before/after diff of generated utilities. The reviewer measured the risk surface as empty - --duration-slow and --ease-standard have 0 declarations and 0 var() references in the built bundle, so no emitted utility depends on them - but a future task that starts using a duration-* or ease-* utility should re-establish this rather than inherit it."
+    },
+    {
+      "id": "F6",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "Closure hygiene outside this task's scope",
+      "requirementIds": ["AC10 / R10"],
+      "evidence": "Task 764 was approved on 2026-08-24 and its implementation commits are in origin/main, but docs/backlog-archive.md contains no row for it. This is the recorded approve-archive-backlog-in-one-step failure mode. Not fixed here because this closure is scoped to Task 765; filed as an owner follow-up."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC2 / R2",
+    "reviewer": "Opus"
+  }
+}

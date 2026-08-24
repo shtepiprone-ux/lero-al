@@ -1,0 +1,9 @@
+﻿EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npm.cmd run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+EXIT_CODE=0

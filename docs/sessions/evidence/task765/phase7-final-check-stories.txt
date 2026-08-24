@@ -1,0 +1,33 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npm.cmd run check:stories
+
+> lero-al@0.1.0 check:stories
+> node scripts/check-stories.mjs
+
+── Check 1: Banned layout values ──────────────────────────────────
+── Check 2: Raw HTML controls ──────────────────────────────────────
+── Check 3: Locale-NAME export families ─────────────────────────────
+── Check 4: Hardcoded locale pins (globals + args + props) ─────────
+── Check 5: Hardcoded title literals in fixtures ───────────────────
+── Check 6: storybook.* namespace key parity ───────────────────────
+  ✅ storybook.* sq — 639 keys (matches en)
+  ✅ storybook.* uk — 639 keys (matches en)
+  ✅ storybook.* it — 639 keys (matches en)
+  ✅ storybook.* en  — 639 keys (reference)
+── Check 7: Inline locale maps (uk:/sq:/it: in stories) ───────────────
+── Check 8: uk.json Latin-only values (non-Cyrillic check) ────────────
+  ✅ uk.json Cyrillic check complete
+── Check 9: Runtime component hardcoded literals ────────────────────
+── Check 10: English JSX string-prop literals in stories ───────────
+── Check 11: sm:flex-row sm:flex-wrap (toolbar 640px overflow) ────────
+── Check 12: Viewport/width-named exports ────────────────────────────
+── Check 13: Duplicate-family export names ─────────────────────────────
+── Check 14: Mantine Button size="lg"|"xl" (off-scale, Task 520) ──────
+── Check 15: Unregistered Mantine colour prop (Task 685/686) ────────
+── Check 16: Wall-clock fixture values (Task 697/698, §14.10) ─────────
+── Stale allowlist entry check ──────────────────────────────────────
+
+✅ check:stories PASSED — 129 files checked, 0 violations.
+EXIT_CODE=0

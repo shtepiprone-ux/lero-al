@@ -1,0 +1,6 @@
+﻿EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe -p process.platform
+OUTPUT=win32
+EXIT_CODE=0

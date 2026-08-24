@@ -1,0 +1,42 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task765/phase4/verify-p3doubleprime.mjs
+=== P3″ census (pre-mutation) ===
+census.ownsTarget(real globals.css) = true
+tempCssDir = C:\Users\Nox\AppData\Local\Temp\task765-p3doubleprime-jR68lX\css
+census.declarationSites(copied bundle, pre-mutation) = 1 — ..\..\Users\Nox\AppData\Local\Temp\task765-p3doubleprime-jR68lX\css\3c13108dfae01b46.css
+census.bundleVarReferences(copied bundle, pre-mutation) = 1
+census.appImageConsumerRefs(real AppImage.module.css) = 1
+=== census PASSED — proceeding to mutation ===
+mutation: removed declaration text "--motion-duration-slow:.3s;" from ..\..\Users\Nox\AppData\Local\Temp\task765-p3doubleprime-jR68lX\css\3c13108dfae01b46.css
+census.declarationSites(copied bundle, post-mutation) = 0
+census.bundleVarReferences(copied bundle, post-mutation) = 1
+freshened 13 temp CSS file mtimes to 2026-08-24T17:54:41.667Z
+=== gate invocation ===
+COMMAND=node C:\Claude_Code_Projects\lero-al\scripts\check-css-var-resolvability.mjs --css-dir C:\Users\Nox\AppData\Local\Temp\task765-p3doubleprime-jR68lX\css --globals-path C:\Claude_Code_Projects\lero-al\src\app\globals.css --src-dir C:\Claude_Code_Projects\lero-al\src
+--- gate stdout ---
+🔍  check:css-vars — owned custom properties (globals.css @theme/@theme inline/:root): 264
+    Arm A (shipped CSS) — owned names referenced: 84
+    Arm B (src/**/*.{css,tsx,ts}, excl. globals.css) — owned names referenced: 67
+    Dynamic var() construction sites: 8 raw, 0 in-class (prefix could name an owned token)
+
+❌  2 unresolved owned var() reference(s):
+    Arm A  ../../Users/Nox/AppData/Local/Temp/task765-p3doubleprime-jR68lX/css/687fc97a2b233821.css:1  var(--motion-duration-slow) — no shipped declaration, no @property registration
+    Arm B  src/components/ui/AppImage.module.css:158  var(--motion-duration-slow) — no shipped declaration, no @property registration
+
+ℹ️   0 fallback-bearing owned reference(s) — non-blocking (R10):
+
+
+--- gate stderr ---
+❌  check:css-vars — 2 blocking finding(s). Baseline is 0.
+
+--- gate exit code: 1 ---
+=== assertions ===
+PASS: exit code === 1
+PASS: owned-property header === 264 (found 264)
+PASS: Arm B violation names AppImage.module.css + var(--motion-duration-slow)
+PASS: at least one Arm A violation for var(--motion-duration-slow)
+=== P3″ PLANT CONFIRMED: all required assertions passed ===
+TEMP_DIR_REMOVED=true (C:\Users\Nox\AppData\Local\Temp\task765-p3doubleprime-jR68lX)
+EXIT_CODE=0

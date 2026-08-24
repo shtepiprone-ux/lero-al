@@ -1,0 +1,6 @@
+﻿EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task765/capture-appimage-styles.mjs baseline phase1
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task765\phase1\capture-baseline.json
+EXIT_CODE=0

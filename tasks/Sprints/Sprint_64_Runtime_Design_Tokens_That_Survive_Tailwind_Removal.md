@@ -62,7 +62,7 @@ Neither decision is reopened by this sprint's tasks. An executor that believes o
 
 | # | State | What |
 |---|---|---|
-| **765** | 🟠 OPEN | Materialize the D63-F runtime motion/radius tokens and migrate `AppImage.module.css` onto them. Kickoff: `Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md` |
+| **765** | ✅ APPROVED WITH NOTES (2026-08-24, commit pending) | Materialize the D63-F runtime motion/radius tokens and migrate `AppImage.module.css` onto them. Kickoff: `Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md` (`REVISION 1.2 — P3″`). R1-R8 + P1/P2 + P3″ + revert proof + `phase7-final-*` evidenced; P3 and P3′ retained as measured-false author premises; the static-deletion blind spot stays routed to 743. **Review verdict: §3.3S's documented input-seam control satisfies rule 1** — ledger `docs/reviews/2026-08-24-task765-runtime-motion-radius-tokens.review-ledger.json`, 10/10 primary `VERIFIED`, 0 open P0/P1/P2, 3 notes (F4/F5/F6). Sessions: `docs/sessions/2026-08-24-task765-runtime-motion-radius-tokens-blocked.md`, `docs/sessions/2026-08-24-task765-revision-1-2-p3doubleprime.md` |
 
 Later candidates, **not** filed and **not** authorized by this sprint: migrating the remaining
 `design-tokens-allow` markers elsewhere in `src/`, and retiring `@theme inline` entries that no compiled utility

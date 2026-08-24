@@ -118,12 +118,10 @@
     background-color: var(--muted);
   }
 
-  /* `rounded-full` (avatar) — I1 §1 row 11. Raw literal, not a token: Tailwind's own compiled
-     `calc(infinity * 1px)` collapse. A2/Sprint-63-rule-2: no `design-tokens-allow:` marker added;
-     `npm run check:design-tokens`'s actual result on this line is recorded, not silenced, in the
-     completion report. */
+  /* `rounded-full` (avatar) — I1 §1 row 11. Task 765 (D63-F): reads the runtime `--radius-pill`
+     token (globals.css `:root`) instead of the raw literal. */
   .frameCircle {
-    border-radius: 3.40282e38px;
+    border-radius: var(--radius-pill);
   }
 
   /* `object-cover` — I1 §1 row 12 */
@@ -148,16 +146,16 @@
 
   /* bare `transition` (AppImage.tsx line 148, `!priority`) — I1 §1 row 14 / file header "A3
      disposition". 20 of the compiled utility's 23 properties; the 3 `--tw-gradient-*` bookkeeping
-     names are dropped (dead on this element, Category-C debt if kept). Duration/timing: literal
-     values per the file header's N1 exception (both source tokens unresolvable in every built
-     stylesheet — see i1-utility-extraction.md §6). */
+     names are dropped (dead on this element, Category-C debt if kept). Duration/timing: Task 765
+     (D63-F) reads the runtime `--motion-duration-slow`/`--motion-ease-standard` tokens instead of
+     the prior literal values. */
   .fade {
     transition-property: color, background-color, border-color, outline-color,
       text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale,
       rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility,
       overlay, pointer-events;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    transition-timing-function: var(--motion-ease-standard);
+    transition-duration: var(--motion-duration-slow);
   }
 
   /* `opacity-100` — I1 §1 row 16 */

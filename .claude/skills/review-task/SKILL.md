@@ -41,6 +41,22 @@ or executor's desired conclusion. If the evidence contradicts a claim, state tha
 
 For any token-existence claim, follow [“A documented token is not an implemented token — grep the definition, never the table”](../../../docs/orchestrator-procedures.md).
 
+## Windows-native evidence gate
+
+This repository is a Windows checkout. Run every evidence-producing `node`, `npm`, `npx`, Playwright, Next,
+Tailwind, Vite, Storybook, or native-addon command in native Windows PowerShell, never in WSL, a Linux VM, or a
+mounted Linux view. Use `node.exe` for direct Node commands and `npm.cmd` / `npx.cmd` for package commands unless the
+project defines another native invocation.
+
+At the start of each evidence-producing terminal session, execute and retain `node.exe -p process.platform`; only
+`win32` is valid. Retained transcripts must also record the Node version, working directory, exact command, and
+actual exit code.
+
+If the platform is not `win32`, or a native module cannot load for that platform, stop interpreting that output. It
+is an environment screen, not repository evidence: do not issue a finding, verdict, or follow-up task from it.
+Re-run in native Windows PowerShell, or mark the validation `MISSING EVIDENCE` and provide the exact owner-native
+PowerShell command. Only Windows-native or CI output may support the final review decision.
+
 ## Establish the review baseline
 
 1. Read the complete implementation task and rebuild its requirement ledger.

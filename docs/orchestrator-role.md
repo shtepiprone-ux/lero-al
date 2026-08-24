@@ -90,6 +90,23 @@ review, or chat response.
 
 If a sandbox or mounted filesystem view reports suspicious corruption, stale files, impossible dirty state, NUL bytes, truncation, or phantom git objects, treat it as a screen only. Ask for owner-native/CI verification before issuing a verdict.
 
+## Windows-native validation rule
+
+**P0 — applies to every evidence-producing project command.** On this Windows checkout, Opus must run every
+`node`, `npm`, `npx`, Playwright, Next, Tailwind, Vite, Storybook, or native-addon command in native Windows
+PowerShell — never in WSL, a Linux VM, or a Linux-mounted view of the repository. Use `node.exe` for direct Node
+commands and `npm.cmd` / `npx.cmd` for package commands unless the project defines another native invocation.
+
+At the start of each evidence-producing terminal session, Opus records `node.exe -p process.platform`; only
+`win32` is an admissible platform result. Every retained command transcript records the platform, Node version,
+working directory, exact command, and actual exit code.
+
+A result from another platform, including a missing native module such as `*.linux-x64-gnu.node`, is an
+**environment screen, not repository evidence**. Do not create a finding, assess a gate, claim a project state, or
+propose follow-up work from it. Re-run in Windows PowerShell; if that is unavailable, record `MISSING EVIDENCE` and
+give the owner the exact native PowerShell command. Only the Windows-native or CI result may support a review
+verdict.
+
 ## Task design
 
 Use `docs/orchestrator-procedures.md` for the full task design protocol.

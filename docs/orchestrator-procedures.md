@@ -360,6 +360,18 @@ task or repository; on Windows PowerShell prefer `npm.cmd` / `npx.cmd` for Node 
 result, report, screenshot, or output to return. Missing validation is not a "low risk" result and cannot support an
 approval decision.
 
+### Windows-native execution gate
+
+For this Windows repository, every evidence-producing `node`, `npm`, `npx`, Playwright, Next, Tailwind, Vite,
+Storybook, or native-addon command must run in native Windows PowerShell, not WSL, a Linux VM, or a mounted Linux
+view. At the start of the command session, record `node.exe -p process.platform`; it must return `win32`. Retained
+transcripts also record the Node version, working directory, exact command, and actual exit code.
+
+An output from a different platform — including a native-binary load failure — is an environment screen only. It
+cannot establish a repository finding, gate failure, clean state, or follow-up task. Re-run the exact command in
+native Windows PowerShell; if that cannot happen, classify the result as `MISSING EVIDENCE` and issue the
+owner-native handoff. Only Windows-native or CI output can support the task or review verdict.
+
 ## Finding format
 
 Confirmed findings must be specific and actionable:

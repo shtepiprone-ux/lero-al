@@ -1,0 +1,12 @@
+
+> lero-al@0.1.0 check:homepage-grid
+> node scripts/check-homepage-grid.mjs
+
+check-homepage-grid.mjs — asserting the real tree
+
+  I-A/supporting (step matrix, task420 source): 88/88 PASS, 0 FAIL
+  I-A/I-B/I-D (gap matrix, task668-grid-1440 source): 160/160 PASS, 0 FAIL
+  I-C (header matrix, task668-header-geometry source): 12/12 PASS, 0 FAIL
+
+TOTAL: 260/260 PASS, 0 FAIL
+EXIT_CODE=0

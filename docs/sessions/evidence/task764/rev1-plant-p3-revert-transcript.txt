@@ -1,0 +1,14 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  12:09:09
+   Duration  4.52s (transform 654ms, setup 83ms, import 2.65s, tests 971ms, environment 685ms)
+
+EXIT_CODE=0

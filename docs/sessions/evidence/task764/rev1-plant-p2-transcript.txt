@@ -1,0 +1,11 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/compare-phase-c-plant-p2.mjs
+post-edit (correct) t=0ms transform: matrix(1, 0, 0, 1, 0, 0) (expect identity, matrix(1,0,0,1,0,0))
+post-edit (correct) t=75ms transform: matrix(1.03481, 0, 0, 1.03481, 0, 0) (expect mid-ease, NOT settled matrix(1.1025, 0, 0, 1.1025, 0, 0) )
+plant-p2 t=0ms transform: matrix(1.1025, 0, 0, 1.1025, 0, 0)
+plant-p2 t=75ms transform: matrix(1.1025, 0, 0, 1.1025, 0, 0) (plant expectation: ALREADY settled matrix(1.1025, 0, 0, 1.1025, 0, 0) — transform snapped instantly)
+post-edit correctly shows mid-flight easing
+EXPECTED FAIL: plant-p2 shows the settled value already at the first sample(s) — transform is no longer transitioned, run fails as required
+EXIT_CODE=1

@@ -1,0 +1,308 @@
+{
+  "checks": [
+    {
+      "name": "grid rest rectangles byte-identical (pre vs post, fine)",
+      "pass": true,
+      "detail": {
+        "preRest": {
+          "x": 50,
+          "y": 93.90625,
+          "width": 296,
+          "height": 222
+        },
+        "postRest": {
+          "x": 50,
+          "y": 93.90625,
+          "width": 296,
+          "height": 222
+        }
+      }
+    },
+    {
+      "name": "grid hoverOnImage effectiveScale.w rounds to 1.1025 pre and post, agree to 4dp",
+      "pass": true,
+      "detail": {
+        "pre": 1.1025,
+        "post": 1.1025
+      }
+    },
+    {
+      "name": "grid hoverOnImage effectiveScale.h rounds to 1.1025 pre and post, agree to 4dp",
+      "pass": true,
+      "detail": {
+        "pre": 1.1025,
+        "post": 1.1025
+      }
+    },
+    {
+      "name": "grid hoverOnImage width/height ratio agree with each other (pre)",
+      "pass": true,
+      "detail": {
+        "w": 1.1025,
+        "h": 1.1025
+      }
+    },
+    {
+      "name": "grid hoverOnImage width/height ratio agree with each other (post)",
+      "pass": true,
+      "detail": {
+        "w": 1.1025,
+        "h": 1.1025
+      }
+    },
+    {
+      "name": "AC7: grid hoverOnTitle effectiveScale equals hoverOnImage (pre)",
+      "pass": true,
+      "detail": {
+        "title": 1.1025,
+        "image": 1.1025
+      }
+    },
+    {
+      "name": "AC7: grid hoverOnTitle effectiveScale equals hoverOnImage (post)",
+      "pass": true,
+      "detail": {
+        "title": 1.1025,
+        "image": 1.1025
+      }
+    },
+    {
+      "name": "diagnostic: computed transform/scale strings DID change (expected)",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "1.05"
+        },
+        "post": {
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "list rest rectangles byte-identical (pre vs post, fine)",
+      "pass": true,
+      "detail": {
+        "preRest": {
+          "x": 50,
+          "y": 572.828125,
+          "width": 176,
+          "height": 154.015625
+        },
+        "postRest": {
+          "x": 50,
+          "y": 572.828125,
+          "width": 176,
+          "height": 154.015625
+        }
+      }
+    },
+    {
+      "name": "AC13: list hoverOnImage effectiveScale.w rounds to 1.0500 pre and post, agree to 4dp",
+      "pass": true,
+      "detail": {
+        "pre": 1.05,
+        "post": 1.05
+      }
+    },
+    {
+      "name": "AC13: list hoverOnImage effectiveScale.h rounds to 1.0500 pre and post, agree to 4dp",
+      "pass": true,
+      "detail": {
+        "pre": 1.05,
+        "post": 1.05
+      }
+    },
+    {
+      "name": "rest state identical: fine.grid",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "rest state identical: fine.list",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "rest state identical: coarseNatural.grid",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "rest state identical: coarseNatural.list",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "rest state identical: coarseOverride.grid",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "rest state identical: coarseOverride.list",
+      "pass": true,
+      "detail": {
+        "pre": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        },
+        "post": {
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "transform": "none",
+          "scale": "none"
+        }
+      }
+    },
+    {
+      "name": "EXPECTED DELTA (§9, owner-accepted A1): grid coarse-override zoom pre=1.05x -> post=1.0x (no zoom)",
+      "pass": true,
+      "detail": {
+        "pre": 1.05,
+        "post": 1
+      }
+    },
+    {
+      "name": "EXPECTED DELTA (§9): settled scale pre=\"1.05\" -> post=\"none\" (scale property no longer set at all)",
+      "pass": true,
+      "detail": {
+        "pre": "1.05",
+        "post": "none"
+      }
+    },
+    {
+      "name": "MEASURED FACT (contradicts kickoff §3.3 for non-priority): scale snaps instantly pre-fold too (t=0ms already 1.05, not eased)",
+      "pass": true,
+      "detail": {
+        "preT0Transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "preT0Scale": "1.05"
+      }
+    },
+    {
+      "name": "diagnostic: transform still eases smoothly mid-flight post-fold (single curve mechanism unchanged)",
+      "pass": true,
+      "detail": {
+        "preMidTransform": "matrix(1.01698, 0, 0, 1.01698, 0, 0)",
+        "postMidTransform": "matrix(1.03481, 0, 0, 1.03481, 0, 0)",
+        "postSettledTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)"
+      }
+    }
+  ],
+  "failCount": 0
+}

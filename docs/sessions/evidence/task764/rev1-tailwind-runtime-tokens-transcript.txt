@@ -1,0 +1,14 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npm.cmd run check:tailwind-runtime-tokens
+
+> lero-al@0.1.0 check:tailwind-runtime-tokens
+> node scripts/check-tailwind-runtime-tokens.mjs
+
+🔍  check:tailwind-runtime-tokens — scanned 24 src/**/*.module.css file(s)
+    ownership source: globals.css @theme/@theme inline/:root (257 project-owned names) + tailwindcss@4.3.0 theme.css/index.css (412 Tailwind-declared names, version-pinned) + --mantine-/--tw- prefixes
+    Tailwind-owned references found: 14 | baseline entries: 14
+
+✅  check:tailwind-runtime-tokens — 0 new debt, 0 stale baseline entries.
+EXIT_CODE=0

@@ -1,0 +1,28 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/compare-phase-c.mjs
+Total checks: 21
+FAILures: 0
+  [PASS] grid rest rectangles byte-identical (pre vs post, fine) {"preRest":{"x":50,"y":93.90625,"width":296,"height":222},"postRest":{"x":50,"y":93.90625,"width":296,"height":222}}
+  [PASS] grid hoverOnImage effectiveScale.w rounds to 1.1025 pre and post, agree to 4dp {"pre":1.1025,"post":1.1025}
+  [PASS] grid hoverOnImage effectiveScale.h rounds to 1.1025 pre and post, agree to 4dp {"pre":1.1025,"post":1.1025}
+  [PASS] grid hoverOnImage width/height ratio agree with each other (pre) {"w":1.1025,"h":1.1025}
+  [PASS] grid hoverOnImage width/height ratio agree with each other (post) {"w":1.1025,"h":1.1025}
+  [PASS] AC7: grid hoverOnTitle effectiveScale equals hoverOnImage (pre) {"title":1.1025,"image":1.1025}
+  [PASS] AC7: grid hoverOnTitle effectiveScale equals hoverOnImage (post) {"title":1.1025,"image":1.1025}
+  [PASS] diagnostic: computed transform/scale strings DID change (expected) {"pre":{"transform":"matrix(1.05, 0, 0, 1.05, 0, 0)","scale":"1.05"},"post":{"transform":"matrix(1.1025, 0, 0, 1.1025, 0, 0)","scale":"none"}}
+  [PASS] list rest rectangles byte-identical (pre vs post, fine) {"preRest":{"x":50,"y":572.828125,"width":176,"height":154.015625},"postRest":{"x":50,"y":572.828125,"width":176,"height":154.015625}}
+  [PASS] AC13: list hoverOnImage effectiveScale.w rounds to 1.0500 pre and post, agree to 4dp {"pre":1.05,"post":1.05}
+  [PASS] AC13: list hoverOnImage effectiveScale.h rounds to 1.0500 pre and post, agree to 4dp {"pre":1.05,"post":1.05}
+  [PASS] rest state identical: fine.grid {"pre":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"}}
+  [PASS] rest state identical: fine.list {"pre":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"}}
+  [PASS] rest state identical: coarseNatural.grid {"pre":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"}}
+  [PASS] rest state identical: coarseNatural.list {"pre":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"}}
+  [PASS] rest state identical: coarseOverride.grid {"pre":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":93.90625,"width":296,"height":222},"transform":"none","scale":"none"}}
+  [PASS] rest state identical: coarseOverride.list {"pre":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"},"post":{"rect":{"x":50,"y":572.828125,"width":176,"height":154.015625},"transform":"none","scale":"none"}}
+  [PASS] EXPECTED DELTA (§9, owner-accepted A1): grid coarse-override zoom pre=1.05x -> post=1.0x (no zoom) {"pre":1.05,"post":1}
+  [PASS] EXPECTED DELTA (§9): settled scale pre="1.05" -> post="none" (scale property no longer set at all) {"pre":"1.05","post":"none"}
+  [PASS] MEASURED FACT (contradicts kickoff §3.3 for non-priority): scale snaps instantly pre-fold too (t=0ms already 1.05, not eased) {"preT0Transform":"matrix(1, 0, 0, 1, 0, 0)","preT0Scale":"1.05"}
+  [PASS] diagnostic: transform still eases smoothly mid-flight post-fold (single curve mechanism unchanged) {"preMidTransform":"matrix(1.01698, 0, 0, 1.01698, 0, 0)","postMidTransform":"matrix(1.03481, 0, 0, 1.03481, 0, 0)","postSettledTransform":"matrix(1.1025, 0, 0, 1.1025, 0, 0)"}
+EXIT_CODE=0

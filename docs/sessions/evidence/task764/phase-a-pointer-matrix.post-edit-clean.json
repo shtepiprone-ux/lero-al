@@ -1,0 +1,521 @@
+{
+  "label": "post-edit-clean",
+  "browserVersion": "148.0.7778.96",
+  "fine": {
+    "label": "fine",
+    "matchMedia": {
+      "hoverHover": true,
+      "pointerCoarse": false,
+      "pointerFine": true
+    },
+    "grid": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      },
+      "syntheticPriority": {
+        "removedClass": "_fade_ictd3_30",
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    },
+    "list": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 45.600006103515625,
+            "y": 566.9777221679688,
+            "width": 184.79998779296875,
+            "height": 161.7164306640625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 45.600006103515625,
+            "y": 566.9777221679688,
+            "width": 184.79998779296875,
+            "height": 161.7164306640625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    }
+  },
+  "coarseNatural": {
+    "label": "coarse-natural",
+    "matchMedia": {
+      "hoverHover": false,
+      "pointerCoarse": true,
+      "pointerFine": false
+    },
+    "grid": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      },
+      "syntheticPriority": {
+        "removedClass": "_fade_ictd3_30",
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    },
+    "list": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    }
+  },
+  "coarseOverride": {
+    "label": "coarse-override",
+    "matchMedia": {
+      "hoverHover": true,
+      "pointerCoarse": true,
+      "pointerFine": false
+    },
+    "grid": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      },
+      "syntheticPriority": {
+        "removedClass": "_fade_ictd3_30",
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 93.90625,
+            "width": 296,
+            "height": 222
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    },
+    "list": {
+      "asRendered": {
+        "removedClass": null,
+        "rest": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnImage": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        "hoverOnTitle": {
+          "transform": "none",
+          "scale": "none",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 50,
+            "y": 572.828125,
+            "width": 176,
+            "height": 154.015625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      }
+    }
+  },
+  "a2Gate": {
+    "pass": true,
+    "assertedOn": "coarseOverride.matchMedia"
+  }
+}

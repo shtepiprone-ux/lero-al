@@ -1,0 +1,14 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  12:15:29
+   Duration  4.42s (transform 714ms, setup 171ms, import 3.57s, tests 1.06s, environment 1.46s)
+
+EXIT_CODE=0

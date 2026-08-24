@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:listings
+> vitest run src/modules/listings/actions/__tests__/reportListing.smoke.test.ts src/modules/listings/actions/__tests__/createListing.smoke.test.ts src/modules/listings/actions/__tests__/updateListing.smoke.test.ts src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  6 passed (6)
+      Tests  45 passed (45)
+   Start at  11:06:45
+   Duration  22.97s (transform 1.65s, setup 13.93s, import 4.15s, tests 766ms, environment 107.43s)
+
+EXIT_CODE=0

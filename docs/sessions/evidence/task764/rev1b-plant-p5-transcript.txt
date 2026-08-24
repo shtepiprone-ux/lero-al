@@ -1,0 +1,313 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs --baseline docs/sessions/evidence/task764/rev1b-assert-baseline-2026-08-21T15-06.manifest.json --current docs/sessions/evidence/task764/rev1b-assert-p5.manifest.json --out docs/sessions/evidence/task764/rev1b-plant-p5.json
+
+Re-run after fixing NUL-byte corruption in the comparator script.
+
+Baseline: docs/sessions/evidence/task764/rev1b-assert-baseline-2026-08-21T15-06.manifest.json (1316 cells, 107 non-pass)
+Current:  docs/sessions/evidence/task764/rev1b-assert-p5.manifest.json (1332 cells, 108 non-pass)
+added: 1
+removed: 0
+listingcard cells: 48 - all pass: false
+ADDED cells: [
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "verdict": "fail"
+  }
+]
+listingcard cells (not all pass): [
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "verdict": "fail"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "mantine-primitives-listingcard--favorites-composition",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "verdict": "pass"
+  },
+  {
+    "storyId": "patterns-mantine-listingcardpattern--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "verdict": "pass"
+  }
+]
+FAIL — see above
+WROTE docs/sessions/evidence/task764/rev1b-plant-p5.json
+EXIT_CODE=1

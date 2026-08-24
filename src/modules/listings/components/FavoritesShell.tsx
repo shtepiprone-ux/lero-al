@@ -201,22 +201,21 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
             {displayedListings.map((listing) => (
-              <div key={listing.id} className="relative group">
-                <ListingCard
-                  listing={listing}
-                  isFavorited={true}
-                  onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
-                  layoutContext="3-col-xl"
-                  displayCurrency={displayCurrency}
-                  rates={rates}
-                />
-                <div className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+              <ListingCard
+                key={listing.id}
+                listing={listing}
+                isFavorited={true}
+                onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
+                layoutContext="3-col-xl"
+                displayCurrency={displayCurrency}
+                rates={rates}
+                imageActions={
                   <SaveToCollectionButton
                     listingId={listing.id}
                     className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
                   />
-                </div>
-              </div>
+                }
+              />
             ))}
           </div>
           <ListingsPagination

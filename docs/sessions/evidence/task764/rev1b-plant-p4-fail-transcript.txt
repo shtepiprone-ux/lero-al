@@ -1,0 +1,9 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/rev1-plant-p4-compare.mjs rev1b-plant-p4
+artifact: docs/sessions/evidence/task764/rev1-favorites-composition.rev1b-plant-p4.json
+coarse-override matchMedia: {"hoverHover":true,"pointerCoarse":true,"pointerFine":false}
+coarse-override reveal: {"actionOpacityAtRest":"0","actionOpacityOnCardHover":"0"}
+FAIL — action did NOT reveal under the coarse-override context (reveal guard over-narrowed to require pointer:fine)
+EXIT_CODE=1

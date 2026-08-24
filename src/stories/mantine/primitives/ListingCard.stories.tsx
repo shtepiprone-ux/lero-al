@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
+import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import type { User } from '@/types/database'
@@ -128,6 +129,55 @@ export const Default: Story = {
               <ListingCard listing={listing} variant="horizontal" rates={FIXTURE_RATES} />
             </Stack>
           </Stack>
+        </MantineStoryShell>
+      </AuthContext.Provider>
+    )
+  },
+}
+
+/**
+ * Task 764 Revision 1 — reproduces the `/[locale]/favorites` composition (`FavoritesShell.tsx`)
+ * for the R-A/R-D pointer probes (`scripts/task764-pointer-probe.mjs favorites`, kickoff
+ * §10.1/§10.4) and for R23/AC23 (the canonical Story must render the new `imageActions` slot
+ * with the same composition production uses). Registered as its own export — the kickoff's own
+ * §10.1 step 1 directs adding this story ("Add a story export ... reproducing the Favorites
+ * composition ... Register it so the probe can address it by story id"), authorizing this
+ * departure from the file's otherwise single-export convention.
+ *
+ * Real `SaveToCollectionButton` (not a demo stand-in, per agent-contract 16c) — needs the same
+ * `AuthContext.Provider` signed-in fixture the `Default` export already uses (§3.6: the button
+ * returns `null` for a guest).
+ *
+ * FINAL FORM (Phase R-D, kickoff §10.4/R23/AC23): renders the real `ListingCard` with the real
+ * `SaveToCollectionButton` passed through its `imageActions` prop — byte-identical composition
+ * to `FavoritesShell.tsx` (no `.group` wrapper, no sibling overlay div; the action lives inside
+ * the Card's own hover chain). Used by both the R-A pre-fold measurement (§10.1, temporarily
+ * mutated to the retired sibling-overlay wrapper and reverted — see the session log and
+ * `rev1-baseline-revert-proof.txt`) and the R-D post-implementation probe.
+ */
+export const FavoritesComposition: Story = {
+  render: (_args, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const listing = makeFixtureListing(l)
+
+    return (
+      <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+        <MantineStoryShell>
+          <div style={{ maxWidth: 360 }}>
+            <ListingCard
+              listing={listing}
+              variant="vertical"
+              isFavorited
+              layoutContext="3-col-xl"
+              rates={FIXTURE_RATES}
+              imageActions={
+                <SaveToCollectionButton
+                  listingId={listing.id}
+                  className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
+                />
+              }
+            />
+          </div>
         </MantineStoryShell>
       </AuthContext.Provider>
     )

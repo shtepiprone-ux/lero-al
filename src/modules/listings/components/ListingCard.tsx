@@ -1,5 +1,6 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { Center, Group, Text } from '@mantine/core'
@@ -50,6 +51,12 @@ interface ListingCardProps {
   priority?: boolean
   /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
   layoutContext?: ListingLayoutContext
+  /**
+   * Task 764 Revision 1 — pass-through to `MantineListingCardPattern`'s `imageActions` slot
+   * (F3 fix). `variant='vertical'` only — forwarded unchanged, this container adds no behavior
+   * of its own for it (same pass-through contract as `favorite`/`footerActions`).
+   */
+  imageActions?: ReactNode
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
@@ -110,7 +117,7 @@ function getBadges(listing: CardListingData) {
   return badges
 }
 
-export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext, imageActions }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
@@ -313,6 +320,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         }}
         image={image}
         favorite={favorite}
+        imageActions={imageActions}
         typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
         badges={patternBadges}
         overlay={overlay}

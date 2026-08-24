@@ -1,0 +1,13 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=Copy-Item .screenshots\rendered-assert\2026-08-21T15-06\manifest.json -> docs\sessions\evidence\task764\rev1b-assert-baseline-2026-08-21T15-06.manifest.json; Get-FileHash -Algorithm SHA256 (both)
+
+Source: .screenshots\rendered-assert\2026-08-21T15-06\manifest.json
+Destination: docs\sessions\evidence\task764\rev1b-assert-baseline-2026-08-21T15-06.manifest.json
+Source SHA-256:      6F56002A1AA8F8F86F263854DC06BD65737508901ED292788CDC84EFDC8E9229
+Destination SHA-256:  6F56002A1AA8F8F86F263854DC06BD65737508901ED292788CDC84EFDC8E9229
+Hashes equal: True
+
+Verified population (D63-K): total=1316, passed=1209, failed=80, ambiguousOnly=27 (matches manifest.summary exactly)
+EXIT_CODE=0

@@ -1,0 +1,16 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs --baseline docs/sessions/evidence/task764/rev1b-assert-baseline-2026-08-21T15-06.manifest.json --current .screenshots/rendered-assert/2026-08-24T10-16/manifest.json --out docs/sessions/evidence/task764/rev1b-assert-differential.json
+
+Current manifest SHA-256: 51D622D26C8DBBA574FC96E33F208A5A6E4E1DA713BA001A738BE5145737E0C4
+Re-run after fixing NUL-byte corruption in the comparator script (check:file-integrity caught it).
+
+Baseline: docs/sessions/evidence/task764/rev1b-assert-baseline-2026-08-21T15-06.manifest.json (1316 cells, 107 non-pass)
+Current:  .screenshots/rendered-assert/2026-08-24T10-16/manifest.json (1332 cells, 107 non-pass)
+added: 0
+removed: 0
+listingcard cells: 48 - all pass: true
+PASS — 0 added, 0 removed, all listingcard cells pass
+WROTE docs/sessions/evidence/task764/rev1b-assert-differential.json
+EXIT_CODE=0

@@ -5,6 +5,9 @@ import { expect } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
+import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton';
+import { AuthContext } from '@/modules/auth/context/AuthContext';
+import type { User } from '@/types/database';
 
 const meta: Meta<typeof MantineListingCardPattern> = {
   title: 'Patterns/Mantine/ListingCardPattern',
@@ -19,6 +22,50 @@ export default meta;
 type Story = StoryObj<typeof MantineListingCardPattern>;
 
 const DEMO_IMAGE_URL = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop';
+
+// Task 764 Revision 1 (R23/AC23) — the real `SaveToCollectionButton` needs an authenticated
+// `useAuth()` (§3.6: it returns `null` for a guest). Mirrors `ListingCard.stories.tsx`'s own
+// `AuthContext.Provider` fixture technique — bypasses `AuthProvider`'s live Supabase mount
+// (forbidden in stories) while still exercising the real button in its signed-in state.
+const FIXTURE_USER: User = {
+  id: 'story-user-001',
+  public_id: 1,
+  name: 'Story User',
+  last_name: null,
+  phone: null,
+  whatsapp: null,
+  avatar_url: null,
+  role: 'user',
+  user_type: 'private',
+  status: 'active',
+  block_reason: null,
+  suspended_until: null,
+  company_name: null,
+  company_logo_url: null,
+  company_id: null,
+  website: null,
+  is_verified: true,
+  social_provider: null,
+  location_id: null,
+  position: null,
+  year_started: null,
+  deleted_at: null,
+  location_request: null,
+  preferred_currency: 'EUR',
+  pending_email: null,
+  last_seen_at: null,
+  inactivity_warning_sent_at: null,
+  preferred_locale: 'en',
+  created_at: '2026-01-01T00:00:00.000Z',
+};
+
+const MOCK_SIGNED_IN_AUTH = {
+  user: FIXTURE_USER,
+  status: 'authenticated' as const,
+  loading: false,
+  signOut: () => {},
+  refreshUser: () => {},
+};
 
 // Demo photo element — a plain Mantine `Image`, standing in for the real app's `AppImage`.
 // The pattern's `.imageSection img` tag-selector hover-zoom targets this the same way it
@@ -94,9 +141,11 @@ interface DemoCardOpts {
   noImage?: boolean
   favorited?: boolean
   photoCount?: number
+  /** Task 764 Revision 1 — renders the real `SaveToCollectionButton` in the new `imageActions` slot (R23). `layout='grid'` only (Q2). */
+  withImageActions?: boolean
 }
 
-function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
+function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5, withImageActions = false }: DemoCardOpts) {
   // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
   // new=green, reduced=sale (Task 619 — dedicated owner-provided crimson #dd0939, replacing
   // brand; matches the detail pattern's reduced badge so the signal reads the same color across
@@ -144,6 +193,11 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
           className={layout === 'list' ? 'shrink-0 -mt-0.5 -mr-1' : 'shadow-sm'}
         />
       }
+      imageActions={
+        withImageActions
+          ? <SaveToCollectionButton listingId={id} className="bg-card/80 hover:bg-card shadow-sm rounded-lg" />
+          : undefined
+      }
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
       badges={badges}
       overlay={overlay}
@@ -161,45 +215,47 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Stack gap="xl" p="md">
-        <Stack gap="sm">
-          <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
-          <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-            {/* Regular listing — favorite (unfavorited), new badge, photo counter */}
-            <DemoCard l={l} id="1" photoCount={5} />
-            {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
-            <DemoCard l={l} id="2" premium favorited photoCount={8} />
-            {/* Reduced-price — old price struck through + new price, reduced badge */}
-            <DemoCard l={l} id="3" reduced photoCount={3} />
-            {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
-            <DemoCard l={l} id="4" sold photoCount={4} />
-            {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
-            <DemoCard l={l} id="5" noImage />
-            {/* Archived — grayscale/dimmed whole card + archived badge */}
-            <DemoCard l={l} id="6" archived photoCount={2} />
-          </SimpleGrid>
-        </Stack>
-
-        <Divider />
-
-        <Stack gap="sm">
-          <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+      <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+        <Stack gap="xl" p="md">
           <Stack gap="sm">
-            {/* Regular — favorite inline (unfavorited), new badge, photo counter bottom-left (Task 656); no overlay (never had one — the badge already conveys sold/rented) */}
-            <DemoCard l={l} id="7" layout="list" photoCount={5} />
-            {/* Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
-            <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />
-            {/* Reduced-price — old price struck through + new price, reduced badge */}
-            <DemoCard l={l} id="9" layout="list" reduced photoCount={3} />
-            {/* Sold — badge conveys status (no centered overlay in list mode) */}
-            <DemoCard l={l} id="10" layout="list" sold photoCount={4} />
-            {/* No-image fallback */}
-            <DemoCard l={l} id="11" layout="list" noImage />
-            {/* Archived — grayscale/dimmed whole row + archived badge */}
-            <DemoCard l={l} id="12" layout="list" archived photoCount={2} />
+            <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
+              {/* Regular listing — favorite (unfavorited), new badge, photo counter, real SaveToCollectionButton in imageActions (Task 764 Revision 1, R23) */}
+              <DemoCard l={l} id="1" photoCount={5} withImageActions />
+              {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
+              <DemoCard l={l} id="2" premium favorited photoCount={8} />
+              {/* Reduced-price — old price struck through + new price, reduced badge */}
+              <DemoCard l={l} id="3" reduced photoCount={3} />
+              {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
+              <DemoCard l={l} id="4" sold photoCount={4} />
+              {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
+              <DemoCard l={l} id="5" noImage />
+              {/* Archived — grayscale/dimmed whole card + archived badge */}
+              <DemoCard l={l} id="6" archived photoCount={2} />
+            </SimpleGrid>
+          </Stack>
+
+          <Divider />
+
+          <Stack gap="sm">
+            <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+            <Stack gap="sm">
+              {/* Regular — favorite inline (unfavorited), new badge, photo counter bottom-left (Task 656); no overlay (never had one — the badge already conveys sold/rented) */}
+              <DemoCard l={l} id="7" layout="list" photoCount={5} />
+              {/* Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
+              <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />
+              {/* Reduced-price — old price struck through + new price, reduced badge */}
+              <DemoCard l={l} id="9" layout="list" reduced photoCount={3} />
+              {/* Sold — badge conveys status (no centered overlay in list mode) */}
+              <DemoCard l={l} id="10" layout="list" sold photoCount={4} />
+              {/* No-image fallback */}
+              <DemoCard l={l} id="11" layout="list" noImage />
+              {/* Archived — grayscale/dimmed whole row + archived badge */}
+              <DemoCard l={l} id="12" layout="list" archived photoCount={2} />
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
+      </AuthContext.Provider>
     );
   },
   parameters: { throwPlayFunctionExceptions: true },

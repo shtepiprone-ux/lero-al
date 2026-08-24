@@ -10,12 +10,16 @@
 //
 // Task 763 (Sprint 63 Phase 1): `containerClass`/`imageClass`/`hoverClass` are CSS Module class
 // names from AppImage.module.css, not Tailwind utility strings — see that file's header for the
-// I1-extracted source of every declaration. `listing`'s `hoverClass` is the one exception, still a
-// literal Tailwind string: see its own inline comment and the Task 763 completion report `BLOCKED`
-// finding (a genuine rendered regression, not an oversight).
+// I1-extracted source of every declaration.
 // Task 763 Revision 1: the CSS Module class names below are role names (`.frame`, `.frameRatio4x3`,
 // etc.), not the utility-shaped names (`.relative`, `.aspect4x3`, etc.) the original submission
 // used — see AppImage.module.css's header for the full rename mapping. No declaration changed.
+// Task 764: `listing`'s `hoverClass` (formerly the one exception, a literal Tailwind
+// `'group-hover:scale-105'` string) is REMOVED, not migrated. Its effect is folded into
+// `MantineListingCardPattern.module.css`'s `.cardGrid:hover .imageSection img` rule instead —
+// see that file's header for the fold rationale and the measured 1.1025 product. `hoverClass`
+// stays on `VariantConfig` as an API (`gallery-main`/`gallery-side` still use it via
+// `styles.hoverBrightness`); `listing` simply no longer sets it.
 
 import { cn } from '@/lib/utils'
 import styles from './AppImage.module.css'
@@ -75,14 +79,6 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
   listing: {
     containerClass: cn(styles.frame, styles.frameRatio4x3, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
     imageClass: styles.fitCover,
-    // Task 763 BLOCKED finding: kept as a literal Tailwind string on purpose. Its sole consumer
-    // (`MantineListingCardPattern`'s `Card`, `'group'` at :304) wraps the image AND the title/price
-    // area below it; measured (docs/sessions/evidence/task763/debug-hover-titlearea.mjs), hovering
-    // that title area alone still scales the image the full 1.1025x. Rooting the hover trigger on
-    // AppImage's own container instead (AppImage.module.css's `.hoverBrightness` mechanism) would
-    // silently narrow that to the image area only — a real regression the kickoff's own §10.3.5
-    // explicitly requires stopping for. See the completion report for the owner decision needed.
-    hoverClass: 'group-hover:scale-105',
     sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
     cloudinaryTransform: 'w_800,h_600,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',

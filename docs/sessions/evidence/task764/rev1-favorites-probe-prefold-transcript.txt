@@ -1,0 +1,8 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe scripts/task764-pointer-probe.mjs favorites pre-fold
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\rev1-favorites-composition.pre-fold.json
+fine matchMedia: {"hoverHover":true,"pointerCoarse":false,"pointerFine":true}
+elementAtActionCentre: {"tag":"svg","className":"[object SVGAnimatedString]","ariaLabel":null,"closestButtonAriaLabel":"Save to collection"}
+EXIT_CODE=0

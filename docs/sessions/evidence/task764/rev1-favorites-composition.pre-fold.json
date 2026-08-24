@@ -1,0 +1,90 @@
+{
+  "label": "pre-fold",
+  "browserVersion": "148.0.7778.96",
+  "fine": {
+    "label": "fine",
+    "matchMedia": {
+      "hoverHover": true,
+      "pointerCoarse": false,
+      "pointerFine": true
+    },
+    "rest": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30",
+        "group-hover:scale-105"
+      ]
+    },
+    "hoverOnImage": {
+      "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+      "scale": "1.05",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 21.785125732421875,
+        "y": 26.838851928710938,
+        "width": 414.42974853515625,
+        "height": 310.822265625
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30",
+        "group-hover:scale-105"
+      ]
+    },
+    "hoverOnTitle": {
+      "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+      "scale": "1.05",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 21.785125732421875,
+        "y": 26.838851928710938,
+        "width": 414.42974853515625,
+        "height": 310.822265625
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30",
+        "group-hover:scale-105"
+      ]
+    },
+    "hoverOnAction": {
+      "transform": "none",
+      "scale": "1.05",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 41.05000305175781,
+        "y": 43.287506103515625,
+        "width": 375.9000244140625,
+        "height": 281.92498779296875
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30",
+        "group-hover:scale-105"
+      ]
+    },
+    "elementAtActionCentre": {
+      "tag": "svg",
+      "className": "[object SVGAnimatedString]",
+      "ariaLabel": null,
+      "closestButtonAriaLabel": "Save to collection"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs
+post-edit (correct) effectiveScale.w: 1.1025
+plant-p1 (mutated) effectiveScale.w: 1.05
+delta from 1.1025 baseline: 0.0525
+EXPECTED FAIL: plant-p1 (1.05) != baseline (1.1025), non-zero delta (0.0525) — comparator correctly detects the P1 mutation, run exits non-zero
+EXIT_CODE=1

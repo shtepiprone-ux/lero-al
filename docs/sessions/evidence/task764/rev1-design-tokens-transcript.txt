@@ -1,0 +1,37 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npm.cmd run check:design-tokens
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 453 src/**/*.{tsx,ts,css} files
+    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)
+
+  ── UI  (2 findings) ──
+  src/components/ui/AppImage.module.css  (2)
+    :126  [css-length:raw CSS length declaration]  "border-radius: 3.40282e38px"
+    :160  [css-duration:raw CSS duration declaration]  "transition-duration: 300ms"
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 2 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    css-length           1
+    css-duration         1
+
+npm.cmd : ❌  check:design-tokens STRICT — 2 raw style-value violation(s) + 0 stale-marker(s) found.
+At line:6 char:1
++ npm.cmd run check:design-tokens *>> $out
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:design...arker(s) found.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT_CODE=1

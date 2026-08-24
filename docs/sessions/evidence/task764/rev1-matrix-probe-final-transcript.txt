@@ -1,0 +1,12 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe scripts/task764-pointer-probe.mjs matrix rev1-final
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\phase-a-pointer-matrix.rev1-final.json
+Browser version: 148.0.7778.96
+fine matchMedia: {"hoverHover":true,"pointerCoarse":false,"pointerFine":true}
+coarse-natural matchMedia (retained limitation, not gating): {"hoverHover":false,"pointerCoarse":true,"pointerFine":false}
+coarse-override matchMedia (A2 subject): {"hoverHover":true,"pointerCoarse":true,"pointerFine":false}
+reduced-motion grid image-hover effectiveScale.w: 1
+A2 GATE: PASS — (hover:hover) && (pointer:coarse) && !(pointer:fine) on coarse-override
+EXIT_CODE=0

@@ -12,6 +12,7 @@
  *   3. `layout='list'` still renders favorite/photoCount(N/A by design)/features/price/footer.
  */
 
+import type { ReactNode } from 'react'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
@@ -47,6 +48,7 @@ function baseProps(layout?: 'grid' | 'list') {
     photoCount: 5,
     features: [{ icon: <span data-testid="feature-icon" />, value: '3 rooms' }],
     footerActions: <span>#1234</span>,
+    imageActions: undefined as ReactNode | undefined,
   }
 }
 
@@ -112,5 +114,38 @@ describe('MantineListingCardPattern — overlay.className pass-through contract 
     renderPattern({ ...baseProps(), overlay: { label: 'SOLD', className: 'consumer-overlay-hook' } })
     const overlayEl = screen.getByText('SOLD')
     expect(overlayEl).toHaveClass('consumer-overlay-hook')
+  })
+})
+
+describe('MantineListingCardPattern — imageActions slot (Task 764 Revision 1, R13/AC14)', () => {
+  it('renders the imageActions node inside the grid Card.Section, after the badges', () => {
+    const { container } = renderPattern({
+      ...baseProps(),
+      badges: [{ label: 'New', color: 'green' }],
+      imageActions: <button aria-label="Save to collection">save</button>,
+    })
+
+    const sectionEl = container.querySelector('.mantine-Card-section')
+    expect(sectionEl).toBeInTheDocument()
+
+    const actionButton = screen.getByLabelText('Save to collection')
+    expect(sectionEl).toContainElement(actionButton)
+
+    // Paint-order proof (R16): imageActions must appear AFTER badges in DOM order (both are
+    // `position: absolute` at the same top/left offset — later DOM order wins the default
+    // stacking order, and the CSS also carries an explicit z-index, §3.4/AC16).
+    const badgeEl = screen.getByText('New')
+    // eslint-disable-next-line no-bitwise -- DOM position bitmask comparison, not a numeric flag
+    expect(badgeEl.compareDocumentPosition(actionButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('does NOT render imageActions in layout="list" (Q2 — list layout has no consumer for this slot)', () => {
+    renderPattern({ ...baseProps('list'), imageActions: <button aria-label="Save to collection">save</button> })
+    expect(screen.queryByLabelText('Save to collection')).not.toBeInTheDocument()
+  })
+
+  it('renders nothing extra when imageActions is omitted (grid, default)', () => {
+    renderPattern(baseProps())
+    expect(screen.queryByLabelText('Save to collection')).not.toBeInTheDocument()
   })
 })

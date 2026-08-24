@@ -1,0 +1,10 @@
+/* Task 764 review artifact — half B, the removed candidate `group-hover:scale-105`, retained
+   verbatim with every enclosing wrapper.
+
+   Provenance: transcribed from Task 763's retained I1 extraction
+   (docs/sessions/evidence/task763/i1-utility-extraction.md — table row 18 and section 2), which
+   was produced by a brace-depth walk backwards from the selector in the built stylesheets
+   .next/static/css/6fa64bb43d7d13c4.css and storybook-static/assets/iframe-ByNNtsru.css; both
+   returned ["@media (hover:hover)", "@layer utilities"]. Task 764's kickoff section 8 puts a
+   re-extraction out of scope, so this file retains that result rather than recomputing it. */
+@media (hover:hover) { @layer utilities { .group-hover\:scale-105:is(:where(.group):hover *) { --tw-scale-x: 105%; --tw-scale-y: 105%; --tw-scale-z: 105%; scale: var(--tw-scale-x) var(--tw-scale-y); } } }

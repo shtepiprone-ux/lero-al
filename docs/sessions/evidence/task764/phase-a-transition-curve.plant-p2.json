@@ -1,0 +1,192 @@
+{
+  "label": "plant-p2",
+  "browserVersion": "148.0.7778.96",
+  "fine": {
+    "label": "fine",
+    "nonPriority": {
+      "removedClass": null,
+      "samples": [
+        {
+          "tMs": 0,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 82.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 75,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 81.69718170166016,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 150,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 81.04444885253906,
+            "width": 326.3399658203125,
+            "height": 244.75498962402344
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 300,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 600,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      ]
+    },
+    "syntheticPriority": {
+      "removedClass": "_fade_ictd3_30",
+      "samples": [
+        {
+          "tMs": 0,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 82.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 75,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 81.69791412353516,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 150,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 81.04432678222656,
+            "width": 326.3399658203125,
+            "height": 244.75498962402344
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 300,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        },
+        {
+          "tMs": 600,
+          "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "scale": "none",
+          "transitionProperty": "opacity",
+          "rect": {
+            "x": 34.83000183105469,
+            "y": 80.52875518798828,
+            "width": 326.3399658203125,
+            "height": 244.7550048828125
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30"
+          ]
+        }
+      ]
+    }
+  }
+}

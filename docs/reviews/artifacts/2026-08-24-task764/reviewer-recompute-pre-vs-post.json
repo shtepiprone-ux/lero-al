@@ -1,0 +1,987 @@
+{
+  "producedBy": "Opus orchestrator review of Task 764, 2026-08-24. Independent recomputation from the executor s retained Phase A/A2 artifacts; does NOT re-run the browser probe.",
+  "inputs": [
+    "docs/sessions/evidence/task764/phase-a-pointer-matrix.pre-edit.json",
+    "docs/sessions/evidence/task764/phase-a-pointer-matrix.post-edit.json",
+    "docs/sessions/evidence/task764/phase-a-pointer-matrix.post-edit-clean.json",
+    "docs/sessions/evidence/task764/phase-a-transition-curve.pre-edit.json",
+    "docs/sessions/evidence/task764/phase-a-transition-curve.post-edit.json"
+  ],
+  "browserVersion": {
+    "pre": "148.0.7778.96",
+    "post": "148.0.7778.96",
+    "clean": "148.0.7778.96"
+  },
+  "a2Gate": {
+    "pre": {
+      "pass": true,
+      "assertedOn": "coarseOverride.matchMedia"
+    },
+    "post": {
+      "pass": true,
+      "assertedOn": "coarseOverride.matchMedia"
+    },
+    "matchMedia": {
+      "fine": {
+        "hoverHover": true,
+        "pointerCoarse": false,
+        "pointerFine": true
+      },
+      "coarseNatural": {
+        "hoverHover": false,
+        "pointerCoarse": true,
+        "pointerFine": false
+      },
+      "coarseOverride": {
+        "hoverHover": true,
+        "pointerCoarse": true,
+        "pointerFine": false
+      }
+    }
+  },
+  "postEditCleanEqualsPostEdit": true,
+  "rows": [
+    {
+      "context": "fine",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 34.83001708984375,
+        "y": 80.52877044677734,
+        "width": 326.3399658203125,
+        "height": 244.75494384765625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 34.83000183105469,
+        "y": 80.52875518798828,
+        "width": 326.3399658203125,
+        "height": 244.7550048828125
+      },
+      "preEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "postEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "1.05",
+        "postTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "fine",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 34.83001708984375,
+        "y": 80.52877044677734,
+        "width": 326.3399658203125,
+        "height": 244.75494384765625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 34.83000183105469,
+        "y": 80.52875518798828,
+        "width": 326.3399658203125,
+        "height": 244.7550048828125
+      },
+      "preEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "postEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "1.05",
+        "postTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "fine",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 34.83001708984375,
+        "y": 80.52877044677734,
+        "width": 326.3399658203125,
+        "height": 244.75494384765625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 34.83000183105469,
+        "y": 80.52875518798828,
+        "width": 326.3399658203125,
+        "height": 244.7550048828125
+      },
+      "preEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "postEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "1.05",
+        "postTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "fine",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 34.83001708984375,
+        "y": 80.52877044677734,
+        "width": 326.3399658203125,
+        "height": 244.75494384765625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 34.83000183105469,
+        "y": 80.52875518798828,
+        "width": 326.3399658203125,
+        "height": 244.7550048828125
+      },
+      "preEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "postEffectiveScale": {
+        "w": 1.1025,
+        "h": 1.1025
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "1.05",
+        "postTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "fine",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 45.600006103515625,
+        "y": 566.9777221679688,
+        "width": 184.79998779296875,
+        "height": 161.7164306640625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 45.600006103515625,
+        "y": 566.9777221679688,
+        "width": 184.79998779296875,
+        "height": 161.7164306640625
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "none",
+        "postTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "fine",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 45.600006103515625,
+        "y": 566.9777221679688,
+        "width": 184.79998779296875,
+        "height": 161.7164306640625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 45.600006103515625,
+        "y": 566.9777221679688,
+        "width": 184.79998779296875,
+        "height": 161.7164306640625
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "diagnostics": {
+        "preTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "preScale": "none",
+        "postTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseNatural",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 42.600006103515625,
+        "y": 88.35625457763672,
+        "width": 310.79998779296875,
+        "height": 233.0999755859375
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "1.05",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "grid",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 42.600006103515625,
+        "y": 88.35625457763672,
+        "width": 310.79998779296875,
+        "height": 233.0999755859375
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "1.05",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 42.600006103515625,
+        "y": 88.35625457763672,
+        "width": 310.79998779296875,
+        "height": 233.0999755859375
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "1.05",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "grid",
+      "sampleSet": "syntheticPriority",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": false,
+      "preRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preHoverRect": {
+        "x": 42.600006103515625,
+        "y": 88.35625457763672,
+        "width": 310.79998779296875,
+        "height": 233.0999755859375
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 93.90625,
+        "width": 296,
+        "height": 222
+      },
+      "preEffectiveScale": {
+        "w": 1.05,
+        "h": 1.05
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "1.05",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnImage",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    },
+    {
+      "context": "coarseOverride",
+      "card": "list",
+      "sampleSet": "asRendered",
+      "target": "hoverOnTitle",
+      "restRectIdentical": true,
+      "hoverRectIdentical": true,
+      "preRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postRestRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "postHoverRect": {
+        "x": 50,
+        "y": 572.828125,
+        "width": 176,
+        "height": 154.015625
+      },
+      "preEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "postEffectiveScale": {
+        "w": 1,
+        "h": 1
+      },
+      "diagnostics": {
+        "preTransform": "none",
+        "preScale": "none",
+        "postTransform": "none",
+        "postScale": "none"
+      }
+    }
+  ],
+  "curve": {
+    "nonPriority": {
+      "pre": [
+        [
+          0,
+          "matrix(1, 0, 0, 1, 0, 0)",
+          "1.05"
+        ],
+        [
+          75,
+          "matrix(1.01698, 0, 0, 1.01698, 0, 0)",
+          "1.05"
+        ],
+        [
+          150,
+          "matrix(1.03423, 0, 0, 1.03423, 0, 0)",
+          "1.05"
+        ],
+        [
+          300,
+          "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "1.05"
+        ],
+        [
+          600,
+          "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "1.05"
+        ]
+      ],
+      "post": [
+        [
+          0,
+          "matrix(1, 0, 0, 1, 0, 0)",
+          "none"
+        ],
+        [
+          75,
+          "matrix(1.03481, 0, 0, 1.03481, 0, 0)",
+          "none"
+        ],
+        [
+          150,
+          "matrix(1.07607, 0, 0, 1.07607, 0, 0)",
+          "none"
+        ],
+        [
+          300,
+          "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "none"
+        ],
+        [
+          600,
+          "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "none"
+        ]
+      ]
+    },
+    "syntheticPriority": {
+      "pre": [
+        [
+          0,
+          "matrix(1, 0, 0, 1, 0, 0)",
+          "1.05"
+        ],
+        [
+          75,
+          "matrix(1.02078, 0, 0, 1.02078, 0, 0)",
+          "1.05"
+        ],
+        [
+          150,
+          "matrix(1.03977, 0, 0, 1.03977, 0, 0)",
+          "1.05"
+        ],
+        [
+          300,
+          "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "1.05"
+        ],
+        [
+          600,
+          "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "1.05"
+        ]
+      ],
+      "post": [
+        [
+          0,
+          "matrix(1, 0, 0, 1, 0, 0)",
+          "none"
+        ],
+        [
+          75,
+          "matrix(1.03486, 0, 0, 1.03486, 0, 0)",
+          "none"
+        ],
+        [
+          150,
+          "matrix(1.07607, 0, 0, 1.07607, 0, 0)",
+          "none"
+        ],
+        [
+          300,
+          "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "none"
+        ],
+        [
+          600,
+          "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+          "none"
+        ]
+      ]
+    }
+  }
+}

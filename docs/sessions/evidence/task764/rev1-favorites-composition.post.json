@@ -1,0 +1,176 @@
+{
+  "label": "post",
+  "browserVersion": "148.0.7778.96",
+  "fine": {
+    "label": "fine",
+    "matchMedia": {
+      "hoverHover": true,
+      "pointerCoarse": false,
+      "pointerFine": true
+    },
+    "rest": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnImage": {
+      "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 31.652511596679688,
+        "y": 34.2393798828125,
+        "width": 394.6949462890625,
+        "height": 296.021240234375
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnTitle": {
+      "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 31.652511596679688,
+        "y": 34.2393798828125,
+        "width": 394.6949462890625,
+        "height": 296.021240234375
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnAction": {
+      "transform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 31.652511596679688,
+        "y": 34.2393798828125,
+        "width": 394.6949462890625,
+        "height": 296.021240234375
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "elementAtActionCentre": {
+      "tag": "svg",
+      "className": "[object SVGAnimatedString]",
+      "ariaLabel": null,
+      "closestButtonAriaLabel": "Save to collection"
+    },
+    "reveal": {
+      "actionOpacityAtRest": "0",
+      "actionOpacityOnCardHover": "1"
+    }
+  },
+  "coarseOverride": {
+    "label": "coarse-override",
+    "matchMedia": {
+      "hoverHover": true,
+      "pointerCoarse": true,
+      "pointerFine": false
+    },
+    "rest": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnImage": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnTitle": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "hoverOnAction": {
+      "transform": "none",
+      "scale": "none",
+      "transitionProperty": "transform, opacity",
+      "rect": {
+        "x": 50,
+        "y": 50,
+        "width": 358,
+        "height": 268.5
+      },
+      "classList": [
+        "_imageLayer_ictd3_30",
+        "_fade_ictd3_30",
+        "_visible_ictd3_30",
+        "_fitCover_ictd3_30"
+      ]
+    },
+    "elementAtActionCentre": {
+      "tag": "svg",
+      "className": "[object SVGAnimatedString]",
+      "ariaLabel": null,
+      "closestButtonAriaLabel": "Save to collection"
+    },
+    "reveal": {
+      "actionOpacityAtRest": "0",
+      "actionOpacityOnCardHover": "1"
+    }
+  }
+}

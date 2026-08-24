@@ -1,0 +1,19 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npm.cmd run screenshots:responsive -- --mantine-only
+
+> lero-al@0.1.0 screenshots:responsive
+> node scripts/responsive-screenshots.mjs --mantine-only
+
+📸  Starting responsive screenshot capture
+    Output: .screenshots/responsive/2026-08-24/
+    Viewports: 6 (fast-check matrix)
+    Locales: en, sq, uk, it
+    Stories: 28 targets
+
+........................................................................................................................................................................................................................................................................................................
+
+✅ Captured 296 screenshots (0 failed)
+   Output: .screenshots/responsive/2026-08-24/
+EXIT_CODE=0

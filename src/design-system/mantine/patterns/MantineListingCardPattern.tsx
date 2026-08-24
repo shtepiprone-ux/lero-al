@@ -81,6 +81,17 @@ export interface MantineListingCardPatternProps {
    * name, not the literal `"shrink-0 -mt-0.5 -mr-1"` string.
    */
   favorite?: ReactNode
+  /**
+   * Task 764 Revision 1 — a second, independent image-section overlay slot for a behaviour-
+   * bearing action that must stay inside the Card's own hover chain (F3: `FavoritesShell.tsx`'s
+   * `SaveToCollectionButton` used to render as a `.group` sibling of `<ListingCard>`, outside
+   * `.cardGrid`, so hovering it never triggered the card's hover zoom). `layout='grid'` only —
+   * the list layout has no consumer for this slot (Q2, kickoff §5) and is byte-identical.
+   * Positioned at the same `top`/`left` offsets as `.badgesGrid` (§3.4) and painted above it
+   * (rendered after `{badges}` below); revealed on `.cardGrid:hover`/`:focus-within`, never via
+   * a Tailwind `group`/`group-hover:` mechanism (owner-forbidden, §1).
+   */
+  imageActions?: ReactNode
   typeLabel?: string
   /** Top-left status/promo badges (new/price_reduced/sold/rented/archived/expired etc.). Renders in both layouts. */
   badges?: MantineListingCardBadge[]
@@ -142,6 +153,7 @@ export function MantineListingCardPattern({
   layout = 'grid',
   image,
   favorite,
+  imageActions,
   typeLabel,
   badges,
   overlay,
@@ -171,7 +183,6 @@ export function MantineListingCardPattern({
           styles.card,
           styles.listRow,
           isPremium && styles.premium,
-          'group', // 691R — restores the group-hover:scale-105 ancestor consumed via AppImage's `hoverClass` (F-A)
           'overflow-hidden', // Task 691 — D34-loses to Card's own unlayered overflow:hidden, see module header
           isArchived && 'grayscale opacity-60',
         )}
@@ -300,7 +311,6 @@ export function MantineListingCardPattern({
         styles.card,
         styles.cardGrid,
         isPremium && styles.premium,
-        'group', // 691R — restores the group-hover:scale-105 ancestor consumed via AppImage's `hoverClass` (F-A)
         'flex flex-col', // Task 691 — D34-loses to Card's own unlayered display:flex/flex-direction:column, see module header
         isArchived && 'grayscale opacity-60',
       )}
@@ -316,6 +326,12 @@ export function MantineListingCardPattern({
                 {b.label}
               </Badge>
             ))}
+          </Box>
+        )}
+
+        {imageActions && (
+          <Box className={styles.imageActions}>
+            {imageActions}
           </Box>
         )}
 

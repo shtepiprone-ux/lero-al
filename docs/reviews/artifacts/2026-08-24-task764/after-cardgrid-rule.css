@@ -1,0 +1,6 @@
+/* Task 764 review artifact — the replacement rule, retained verbatim with its enclosing wrapper.
+   Source of truth: src/design-system/mantine/patterns/MantineListingCardPattern.module.css:94-96,
+   inside the @media (hover: hover) and (pointer: fine) block that opens at :65, immediately after
+   the untouched `.card:hover .imageSection img { transform: scale(1.05); }` at :76-78. The
+   surrounding rules in that block are omitted here; the rule and its wrapper are verbatim. */
+@media (hover: hover) and (pointer: fine) { .cardGrid:hover .imageSection img { transform: scale(1.1025); } }

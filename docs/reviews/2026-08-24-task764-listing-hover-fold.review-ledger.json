@@ -1,0 +1,2085 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 764 - fold the `listing` variant's Tailwind group-hover:scale-105 into MantineListingCardPattern.module.css as a grid-scoped .cardGrid:hover rule, and measure the two dimensions where the two composed halves were never equivalent (Sprint 63 Phase 2a)",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "1d9fa77cf8b18a75560b661a3281351d45bc46c1",
+    "reviewedRevision": "worktree on top of 1d9fa77cf8b18a75560b661a3281351d45bc46c1, final inspection 2026-08-24 after the Task 764 Revision 1 re-run under owner decisions D63-H and D63-I. The reviewer's earlier APPROVED WITH NOTES was retracted by the owner for accepting two criteria in substance rather than as written; both were then formally amended in the task and re-executed against the amended text. Every number in this ledger was re-derived by the reviewer from the retained artifacts, including an independent sha256 comparison of the pinned baseline manifest. No evidence-producing command was run by the reviewer (Windows-native rule); the ledger gate is the owner-native run.",
+    "reviewedPaths": [
+      "docs/backlog.md",
+      "docs/sessions/2026-08-22-task764-phase-b-implemented.md",
+      "docs/sessions/2026-08-24-task764-revision-1-trigger-area-restoration.md",
+      "docs/sessions/evidence/task764/build-transcript.txt",
+      "docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs",
+      "docs/sessions/evidence/task764/compare-phase-c-plant-p2.mjs",
+      "docs/sessions/evidence/task764/compare-phase-c.mjs",
+      "docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs",
+      "docs/sessions/evidence/task764/phase-a-pointer-matrix.plant-p1.json",
+      "docs/sessions/evidence/task764/phase-a-pointer-matrix.post-edit-clean.json",
+      "docs/sessions/evidence/task764/phase-a-pointer-matrix.post-edit.json",
+      "docs/sessions/evidence/task764/phase-a-pointer-matrix.pre-edit.json",
+      "docs/sessions/evidence/task764/phase-a-pointer-matrix.rev1-final.json",
+      "docs/sessions/evidence/task764/phase-a-transition-curve.plant-p2.json",
+      "docs/sessions/evidence/task764/phase-a-transition-curve.post-edit.json",
+      "docs/sessions/evidence/task764/phase-a-transition-curve.pre-edit.json",
+      "docs/sessions/evidence/task764/phase-c-comparator-result.json",
+      "docs/sessions/evidence/task764/rev1-favorites-composition.post.json",
+      "docs/sessions/evidence/task764/rev1-favorites-composition.pre-fold.json",
+      "docs/sessions/evidence/task764/rev1-favorites-composition.rev1b-clean.json",
+      "docs/sessions/evidence/task764/rev1-favorites-composition.rev1b-plant-p3-v2.json",
+      "docs/sessions/evidence/task764/rev1-plant-p1-transcript.txt",
+      "docs/sessions/evidence/task764/rev1-plant-p2-transcript.txt",
+      "docs/sessions/evidence/task764/rev1-plant-p3-rtl-transcript.txt",
+      "docs/sessions/evidence/task764/rev1-plant-p4-fail-transcript.txt",
+      "docs/sessions/evidence/task764/rev1-platform-attestation.txt",
+      "docs/sessions/evidence/task764/rev1-screenshots-assert-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-assert-baseline-attestation.txt",
+      "docs/sessions/evidence/task764/rev1b-assert-differential-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-assert-differential.json",
+      "docs/sessions/evidence/task764/rev1b-card-suites-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-check-stories-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-plant-p3-probe-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-plant-p3-rtl-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-plant-p5-transcript.txt",
+      "docs/sessions/evidence/task764/rev1b-plant-revert-proof.txt",
+      "docs/sessions/evidence/task764/rev1b-typecheck-transcript.txt",
+      "scripts/task764-pointer-probe.mjs",
+      "src/components/ui/appImageConfig.ts",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx",
+      "src/modules/listings/components/FavoritesShell.tsx",
+      "src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+      "src/stories/mantine/primitives/ListingCard.stories.tsx",
+      "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+      "tasks/Sprints/Sprint_63_Task_764_revision_1_trigger_area_restoration.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 25,
+      "verified": 25,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-24-task764-listing-hover-fold.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/ui/appImageConfig.ts",
+        "symbol": "VARIANTS.listing",
+        "diffHunks": [
+          "src/components/ui/appImageConfig.ts:79-84"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "VARIANTS.listing.hoverClass absence",
+          "appImageConfig.ts Tailwind-utility-string census"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A config object's field set is not rendered by any story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "A TypeScript object literal is viewport-independent.",
+          "states": "No runtime state; this is a static export."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/components/ui/appImageConfig.ts",
+          "command": "git diff src/components/ui/appImageConfig.ts && grep -n \"hoverClass\" src/components/ui/appImageConfig.ts",
+          "observable": "The diff deletes `hoverClass: 'group-hover:scale-105'` and its BLOCKED comment from the `listing` entry. Remaining `hoverClass` occurrences are the type member at :48 and `styles.hoverBrightness` at :144 (gallery-main) and :163 (gallery-side). A grep for quoted class-shaped literals across the file returns zero matches outside comments.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "VARIANTS.listing.hoverClass absence",
+              "appImageConfig.ts Tailwind-utility-string census"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The `hoverClass` API member was not removed along with the `listing` usage, so gallery-main/gallery-side still resolve their brightness hover.",
+          "kind": "EXECUTED",
+          "path": "src/components/ui/appImageConfig.ts",
+          "result": "`hoverClass?: string` survives at :48 and both gallery variants still assign `styles.hoverBrightness` (:144, :163) - kickoff section 8's explicit prohibition on removing the type member is honoured."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A field-deletion census over a TypeScript object literal. No CSS is generated or reproduced by this criterion; the generated-CSS envelope for the removed `group-hover:scale-105` candidate is carried by the AC7 / R7 row."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F7"
+      ],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".cardGrid:hover .imageSection img",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:80-96"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          ".card:hover .imageSection img retains scale(1.05)",
+          ".cardGrid:hover .imageSection img added later in the same media block with a Task 764 rationale comment"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "The criterion asserts source text and rule order, not a rendered story.",
+          "locales": "No user-facing string.",
+          "viewports": "The enclosing media query is a pointer/hover feature query, not a width breakpoint.",
+          "states": "Rule presence and ordering are state-independent; the rendered state outcome is AC6's row."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "grep -n \"@media (hover: hover) and (pointer: fine)\\|.card:hover .imageSection img\\|.cardGrid:hover .imageSection img\\|transform: scale\" src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "observable": "The media block opens at :65. `.card:hover .imageSection img { transform: scale(1.05); }` is unchanged at :76-78. `.cardGrid:hover .imageSection img { transform: scale(1.1025); }` is at :94-96, inside the same block and after half A, preceded by a 14-line Task 764 comment at :80-93 naming both folded halves, the measured 1.1025 product and the reason the rule is scoped to .cardGrid rather than .card.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              ".card:hover .imageSection img retains scale(1.05)",
+              ".cardGrid:hover .imageSection img added later in the same media block with a Task 764 rationale comment"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new rule was placed after the `@media (prefers-reduced-motion: reduce)` reset, which would let the grid zoom escape that reset.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "Refuted. The reduced-motion block opens at :99, after the fine-pointer block closes; its `.card:hover .imageSection img { transform: none; }` at :107-108 carries the same specificity as the new rule and comes later in source order, so the reset still wins. Note that both the CSS comment and kickoff section 10.3 record that specificity as (0,2,1); the correct value is (0,3,1) because `:hover` counts in the class column - see F7. The equality the ordering argument depends on holds either way."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This criterion asserts the presence, placement, ordering and comment text of a hand-authored module rule. The exact-generated envelope comparison against the removed Tailwind candidate is recorded once, on the AC7 / R7 row, and is not duplicated here."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "MantineListingCardPattern Card className lists (list :174, grid :303 pre-edit)",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:171-177",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:299-305"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "'group' removed at the list-layout Card",
+          "'group' removed at the grid-layout Card",
+          "neighbouring utility strings byte-identical",
+          "group-hover: reader census across src/"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A className census reads source; no story renders a class token.",
+          "locales": "No user-facing string.",
+          "viewports": "Class presence is viewport-independent.",
+          "states": "The marker is unconditional, not state-bound."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "command": "git diff src/design-system/mantine/patterns/MantineListingCardPattern.tsx && grep -n \"'group'\" src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "observable": "The diff removes exactly two lines - `'group'` plus its 691R comment - one at the list Card and one at the grid Card. The grep returns zero matches. The neighbouring `'overflow-hidden'`, `'flex flex-col'` and `isArchived && 'grayscale opacity-60'` lines appear as unchanged context in both hunks.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "'group' removed at the list-layout Card",
+              "'group' removed at the grid-layout Card",
+              "neighbouring utility strings byte-identical"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "src/components/ui/AppImage.module.css",
+          "command": "grep -rn \"group-hover:\" src/",
+          "observable": "Reviewer re-ran the census independently. Three live readers remain - FavoritesShell.tsx:213, ImageUpload.tsx:118, ListingsFilters.tsx:36 - each with its own `.group` ancestor (FavoritesShell.tsx:204 outer wrapper div; ImageUpload.tsx:105 passes 'group' as AppImage's own className; ListingsFilters.tsx:34 puts it on a filter Button). All other hits are inside comments. Independently stronger than the executor's argument: `.hoverBrightness`, the surviving hoverClass consumer, is implemented as `.frame:hover .hoverBrightness` at AppImage.module.css:173-178 and does not read `.group` at all, so removing the Card marker cannot reach the gallery variants.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "group-hover: reader census across src/"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A surviving `group-hover:` reader depended on the Card's own `'group'` marker, so one of the two deletions breaks it.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ImageUpload.tsx",
+          "result": "Refuted for the reader direction. ImageUpload.tsx:105 supplies its own 'group' on an `AppImage variant=\"upload\"` container and :118's overlay reads that, not the listing Card. The same holds for ListingsFilters and FavoritesShell. The census is sound as a reader census; what it does not cover is the trigger direction, which is finding F3 on the AC7 / R7 row."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A class-token census over TSX source and a repository-wide grep. No CSS is generated or reproduced by this criterion."
+      }
+    },
+    {
+      "id": "AC13 / R12",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F9"
+      ],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".card:hover .imageSection img (shared with layout=\"list\")",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:76-78"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "list card effectiveScale at fine pointer",
+          "list card rest and hover rectangles in every probed context"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Both phases were sampled on the same production ListingCard story; the story identity is fixed, not a scope dimension here.",
+          "locales": "The hover zoom carries no copy; the probe pins globals=locale:en.",
+          "viewports": "The probe pins a single 1024x900 viewport; the rule's guard is a pointer feature query, not a width breakpoint.",
+          "states": "rest and hover are both captured within each phase and reported as the ratio between them, so they are not an independent dimension."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-24-task764/reviewer-recompute-pre-vs-post.json",
+          "command": "node -e \"<reviewer recomputation of effectiveScale for all 18 context x card x sampleSet x target cells from the retained pre-edit and post-edit matrices>\"",
+          "observable": "Reviewer-derived, not read from the executor's comparator. list/fine/asRendered: effectiveScale.w and .h are 1.05 pre-edit and 1.05 post-edit, on both hoverOnImage and hoverOnTitle. In coarseNatural and coarseOverride the list card reads 1.0 on both sides. Rest AND hover rectangles are byte-identical pre vs post in all six list cells - a stronger result than the comparator's own list checks, which only assert the rest rectangles outside the fine context.",
+          "freshness": "recomputed 2026-08-24 from the final retained pre-edit/post-edit artifacts",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "list card effectiveScale at fine pointer",
+              "list card rest and hover rectangles in every probed context"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/phase-c-comparator-result.json",
+          "command": "node docs/sessions/evidence/task764/compare-phase-c.mjs",
+          "observable": "Checks 9-11 of 21: list rest rectangles byte-identical pre vs post at fine pointer (176 x 154.015625), AC13 effectiveScale.w and .h both 1.05 pre and post, agreeing to 4dp.",
+          "freshness": "produced at the post-edit state, before the plant/revert cycle; the post-edit-clean matrix is byte-identical to post-edit apart from its label, which the reviewer verified, so the result still describes the final tree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "list card effectiveScale at fine pointer"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The fold raised the list card from 1.05x to 1.1025x, the regression the amended kickoff section 3.5 exists to prevent.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-24-task764/reviewer-recompute-pre-vs-post.json",
+          "result": "Refuted. `:68`'s value is untouched in the diff and the list card measures 1.0500 on both sides in every sampled cell. The scoping decision is load-bearing and it worked."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A rendered-geometry invariant measured from getBoundingClientRect(), not a generated-CSS equivalence claim. The list layout never carried the Tailwind half at all."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task764-pointer-probe.mjs",
+        "symbol": "matrix mode + a2Gate",
+        "diffHunks": [
+          "scripts/task764-pointer-probe.mjs:270-293"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "fine context matchMedia triple",
+          "coarse-natural context matchMedia triple",
+          "coarse-override context matchMedia triple and the A2 gate",
+          "browser version recorded beside the gate"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "One production ListingCard story serves every context; not an independent dimension.",
+          "locales": "matchMedia values carry no copy.",
+          "viewports": "All three contexts are pinned to the same 1024x900 viewport by design, so the pointer feature is the only variable.",
+          "states": "The gate asserts media-feature values, which are state-independent."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.pre-edit.json",
+          "command": "node scripts/task764-pointer-probe.mjs matrix pre-edit",
+          "observable": "browserVersion 148.0.7778.96. fine {hoverHover:true, pointerCoarse:false, pointerFine:true}; coarseNatural {false, true, false}; coarseOverride {true, true, false}; a2Gate {pass:true, assertedOn:'coarseOverride.matchMedia'}. Every context carries grid.asRendered, grid.syntheticPriority and list.asRendered, each with rest, hoverOnImage and hoverOnTitle.",
+          "freshness": "re-captured after the findFadeClass fix and before any Phase B edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "fine context matchMedia triple",
+              "coarse-natural context matchMedia triple",
+              "coarse-override context matchMedia triple and the A2 gate",
+              "browser version recorded beside the gate"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.post-edit.json",
+          "command": "node scripts/task764-pointer-probe.mjs matrix post-edit",
+          "observable": "Identical matchMedia triples and identical browserVersion post-edit; a2Gate pass true. The coarse-override grid row moves from effectiveScale 1.05 to 1.0000, which is A1's predicted and owner-accepted outcome; the coarse-natural row remains hover:none and is retained as the stated evidentiary limitation.",
+          "freshness": "final post-edit capture; byte-identical to the post-revert post-edit-clean capture apart from its label",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "fine context matchMedia triple",
+              "coarse-natural context matchMedia triple",
+              "coarse-override context matchMedia triple and the A2 gate",
+              "browser version recorded beside the gate"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The A2 gate is decorative - it would pass a context that did not actually reach the hybrid state, as CDP setEmulatedMedia silently does.",
+          "kind": "EXECUTED",
+          "path": "scripts/task764-pointer-probe.mjs",
+          "result": "Refuted. :280-282 conjoins all three values and :293 sets process.exitCode to 1 when any one fails, so the gate is fail-closed; the override context is built without hasTouch (:278), which section 3.4 row 4 measured as the cancelling combination."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Media-feature measurement of a browser context. No CSS is generated or reproduced by this criterion."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F6"
+      ],
+      "finalSubject": {
+        "path": "scripts/task764-pointer-probe.mjs",
+        "symbol": "curve mode / runCurveForContext",
+        "diffHunks": [
+          "scripts/task764-pointer-probe.mjs:215-265"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "non-priority image mid-flight curve (>=5 samples)",
+          "priority image mid-flight curve (>=5 samples)"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "One production ListingCard story serves both image types.",
+          "locales": "Transition timing carries no copy.",
+          "viewports": "Pinned to 1024x900 by design.",
+          "states": "The sample series across 0/75/150/300/600 ms is the measurement itself, not a separate dimension."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-transition-curve.pre-edit.json",
+          "command": "node scripts/task764-pointer-probe.mjs curve pre-edit",
+          "observable": "5 samples (0/75/150/300/600 ms) for fine.nonPriority and 5 for fine.syntheticPriority. In BOTH series the computed `scale` is already \"1.05\" at t=0 ms and never eases, while `transform` climbs 1 -> 1.01698 -> 1.03423 -> 1.05. This is the measurement that falsifies kickoff section 3.3's two-curve claim, and the reviewer re-read the raw sample arrays rather than the executor's summary of them.",
+          "freshness": "captured after the findFadeClass fix and before any Phase B edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "non-priority image mid-flight curve (>=5 samples)",
+              "priority image mid-flight curve (>=5 samples)"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-transition-curve.post-edit.json",
+          "command": "node scripts/task764-pointer-probe.mjs curve post-edit",
+          "observable": "5 samples per image type. `scale` is \"none\" at every sample in both series; `transform` eases 1 -> 1.03481 -> 1.07607 -> 1.1025 (nonPriority) and 1 -> 1.03486 -> 1.07607 -> 1.1025 (syntheticPriority). One property, one curve, both priority states.",
+          "freshness": "final post-edit capture",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "non-priority image mid-flight curve (>=5 samples)",
+              "priority image mid-flight curve (>=5 samples)"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The executor's cascade-layer explanation for the missing scale easing is a plausible story rather than a checked mechanism.",
+          "kind": "EXECUTED",
+          "path": "src/components/ui/AppImage.module.css",
+          "result": "Independently confirmed structurally. `.fade` is declared inside `@layer utilities` (block opens AppImage.module.css:78, `.fade` at :154) while MantineListingCardPattern.module.css carries no `@layer` wrapper around `.imageSection img`'s transition at :62. An unlayered author rule beats a layered one for the contested transition-property longhand regardless of specificity, so `.fade`'s inclusion of `scale` never took effect on this element. The measured t=0 snap in both priority states is what that predicts."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A rendered timing measurement over five sample points per series. The cascade-layer mechanism behind it is recorded as a counter-check, not as a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F5"
+      ],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".cardGrid:hover .imageSection img",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:94-96"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grid card settled-hover effectiveScale width",
+          "grid card settled-hover effectiveScale height",
+          "grid card rest rectangle identity"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "One production ListingCard story; not an independent dimension here.",
+          "locales": "The zoom carries no copy.",
+          "viewports": "Pinned to 1024x900; the guard is a pointer feature query.",
+          "states": "rest and hover are both inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-24-task764/reviewer-recompute-pre-vs-post.json",
+          "command": "node -e \"<reviewer recomputation of hoveredRect/restRect for the grid card in the fine context, both sample sets>\"",
+          "observable": "Reviewer-derived. Rest rectangle {x:50, y:93.90625, w:296, h:222} identical pre and post. effectiveScale.w = 1.1025 and .h = 1.1025 on both sides, agreeing with each other and rounding to 1.1025, in both asRendered and syntheticPriority. Diagnostics change as predicted: transform matrix(1.05) -> matrix(1.1025), scale \"1.05\" -> \"none\". The raw post-edit hover height is 244.75500488281250 against pre-edit 244.75494384765625 - a sub-pixel difference the session log's section 6 table prints as \"(identical)\", which is F5; it does not disturb the 4dp criterion the AC actually sets.",
+          "freshness": "recomputed 2026-08-24 from the final retained pre-edit/post-edit artifacts",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid card settled-hover effectiveScale width",
+              "grid card settled-hover effectiveScale height",
+              "grid card rest rectangle identity"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The comparator agreed with itself about an unresolved or zero-width value, Task 748's failure shape.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/compare-phase-c.mjs",
+          "result": "Refuted. effScale returns null on a zero-width rest rectangle (:20) and the recomputation reads concrete numeric rectangles - 296 x 222 at rest, 326.3399658203125 x 244.755 hovered - with fully resolved computed strings on both sides. No custom property is involved in the after rule at all."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The criterion is deliberately an effective-rendered-scale invariant, not a computed-property or generated-CSS identity - the amended kickoff rewrote it that way on owner instruction precisely because the individual property values must change."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".cardGrid:hover .imageSection img (trigger ancestor relation)",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:94-96"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grid card trigger area on the Storybook ListingCard surface (no outer .group)",
+          "grid card trigger area on the FavoritesShell surface (outer .group wrapper at FavoritesShell.tsx:204)"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "The surface distinction is carried by `subjects`; splitting it again by story would double-count the same tuples.",
+          "locales": "The trigger area carries no copy.",
+          "viewports": "Pinned to 1024x900; the ancestor relation is width-independent.",
+          "states": "hover is the state under test and rest is its baseline; both are inside each phase."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-24-task764/reviewer-recompute-pre-vs-post.json",
+          "command": "node -e \"<reviewer recomputation of hoverOnTitle vs hoverOnImage effectiveScale for the grid card>\"",
+          "observable": "On the story surface the title/price hover yields effectiveScale 1.1025 exactly as the image hover does, before and after, in both sample sets - the trigger area is unchanged there.",
+          "freshness": "recomputed 2026-08-24 from the final retained artifacts",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid card trigger area on the Storybook ListingCard surface (no outer .group)"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/FavoritesShell.tsx",
+          "command": "sed -n '200,216p' src/modules/listings/components/FavoritesShell.tsx && grep -rn \"<ListingCard\" src/ --include=*.tsx",
+          "observable": "GAP_WITNESS. FavoritesShell.tsx:204 wraps `<ListingCard>` in `<div className=\"relative group\">` and places `SaveToCollectionButton` at :213 as a sibling overlay, not a descendant of the Card. The removed half B matched `:is(:where(.group):hover *)`, so that outer wrapper was a second trigger ancestor for the listing image; the replacement matches only `.cardGrid:hover`. Of the six `<ListingCard>` consumers, FavoritesShell is the only one with an outer `.group`. No probe was run on this surface in either phase, so the before/after outcome there is reasoned, not measured.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "GAP_WITNESS",
+          "scope": {
+            "subjects": [
+              "grid card trigger area on the FavoritesShell surface (outer .group wrapper at FavoritesShell.tsx:204)"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1-favorites-composition.post.json",
+          "command": "node.exe scripts/task764-pointer-probe.mjs favorites post",
+          "observable": "Reviewer-recomputed from the raw rectangles. Rest 358x268.5; hoverOnAction, hoverOnImage and hoverOnTitle all give the identical hovered rectangle 394.6949462890625 x 296.021240234375, i.e. effectiveScale 1.1025 on width (394.6949.../358) and 1.1025 on height (296.0212.../268.5), equal across all three targets. The pre-fold companion artifact records hoverOnAction transform:none + scale:1.05 = 1.0500, the value F3 predicted for the old sibling-overlay composition. FavoritesShell.tsx no longer carries a .group wrapper or a sibling overlay; the action reaches the Card through ListingCard's imageActions prop and renders inside Card.Section. The trigger area is restored, not accepted as a delta.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid card trigger area on the Storybook ListingCard surface (no outer .group)",
+              "grid card trigger area on the FavoritesShell surface (outer .group wrapper at FavoritesShell.tsx:204)"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The Card still receives :hover when the pointer is over the sibling overlay, so the trigger area did not actually change on /favorites.",
+          "kind": "REASONED",
+          "path": "src/modules/listings/components/FavoritesShell.tsx",
+          "result": "Not refuted, and not confirmed - this is exactly why the row is UNVERIFIED. The overlay at :213 is a sibling of `<ListingCard>`, so it is not in the Card's hover chain, which predicts the zoom is lost there; but no probe sampled that surface in either phase, so the prediction stands as an inference and F3 stays open until it is measured."
+        },
+        {
+          "claim": "The action only appears to be inside the card; it is still outside the hover chain and the equal effectiveScale is a coincidence.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1-plant-p3-rtl-transcript.txt",
+          "result": "Refuted by a planted violation. Rendering imageActions as a sibling of Card.Section makes the RTL containment assertion genuinely fail (\"Card.Section does not contain: <button aria-label='Save to collection'>\", EXIT_CODE=1); reverting returns 14/14 pass. The containment the criterion depends on is therefore falsifiable and currently holds."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "This row carries the whole-emitted-rule comparison for the candidate the task removes. The trigger area IS the selector's ancestor relation, so agent-contract 9a's envelope requirement lands here rather than on AC2's placement assertion."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "group-hover:scale-105",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "ARTIFACT_ONLY",
+          "command": "brace-depth walk backwards from the selector in .next/static/css/6fa64bb43d7d13c4.css and storybook-static/assets/iframe-ByNNtsru.css, performed in Task 763 and retained in docs/sessions/evidence/task763/i1-utility-extraction.md; Task 764 kickoff section 8 puts a re-extraction out of scope",
+          "version": "tailwindcss 4.3.0",
+          "candidate": "group-hover:scale-105"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-24-task764/before-generated-half-b.css",
+          "rawRule": "@media (hover:hover) { @layer utilities { .group-hover\\:scale-105:is(:where(.group):hover *) { --tw-scale-x: 105%; --tw-scale-y: 105%; --tw-scale-z: 105%; scale: var(--tw-scale-x) var(--tw-scale-y); } } }",
+          "envelope": {
+            "selector": "Any descendant of ANY hovered ancestor carrying .group - the universal descendant combinator inside :is(:where(.group):hover *). More than one .group ancestor may exist for the same image, and each one is an independent trigger.",
+            "media": [
+              "(hover:hover)"
+            ],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Emitted inside Tailwind's compiled utilities layer in both built stylesheets; being layered, it loses to any unlayered author rule for the same property regardless of order.",
+            "declarations": [
+              "--tw-scale-x: 105%",
+              "--tw-scale-y: 105%",
+              "--tw-scale-z: 105%",
+              "scale: var(--tw-scale-x) var(--tw-scale-y)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--tw-scale-x",
+                "--tw-scale-y"
+              ],
+              "writes": [
+                "--tw-scale-x",
+                "--tw-scale-y",
+                "--tw-scale-z"
+              ],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "docs/reviews/artifacts/2026-08-24-task764/after-cardgrid-rule.css",
+          "rawRule": "@media (hover: hover) and (pointer: fine) { .cardGrid:hover .imageSection img { transform: scale(1.1025); } }",
+          "envelope": {
+            "selector": "An img inside .imageSection inside the hovered element that carries .cardGrid - exactly one trigger ancestor, the grid Card itself, and nothing outside it.",
+            "media": [
+              "(hover: hover) and (pointer: fine)"
+            ],
+            "supports": [],
+            "layer": "unlayered",
+            "specificity": "(0,3,1)",
+            "sourceOrder": "Second inside the @media (hover: hover) and (pointer: fine) block that opens at MantineListingCardPattern.module.css:65, immediately after the untouched .card:hover rule at :76-78, and before the @media (prefers-reduced-motion: reduce) reset at :99.",
+            "declarations": [
+              "transform: scale(1.1025)"
+            ],
+            "customProperties": {
+              "reads": [],
+              "writes": [],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "media",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "Section 1 quotes the owner accepting the coarse-pointer zoom loss as an intentional behaviour change. Narrowing (hover:hover) to (hover: hover) and (pointer: fine) is that change, and it was measured: the coarse-override grid row moves 1.05 -> 1.0000."
+          },
+          {
+            "field": "layer",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "Route (c), the owner's decided route quoted in section 1, folds the effect into MantineListingCardPattern.module.css, whose D34 disposition is unlayered (section 6). The layer change is inherent to the chosen route and is what makes this file's guard the only guard."
+          },
+          {
+            "field": "specificity",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "Section 10.3 step 1 prescribes the replacement selector and its equal-specificity/source-order relation to half A. The specificity change is a consequence of that prescribed selector."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "Section 10.3 step 1 requires the new rule to come second inside the same media block so that source order decides between it and the untouched half A."
+          },
+          {
+            "field": "declarations",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "Section 1 quotes the owner's instruction that the individual computed transform and scale values are expected to change, and section 9 states the required after form: one property carrying the whole 1.1025 product."
+          },
+          {
+            "field": "customProperties",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_kickoff_prompt_Task_764_Listing_Hover_Fold.md",
+            "reason": "The --tw-scale-* bookkeeping properties exist only inside the removed utility and are consumed within that same rule. Deleting the utility, which route (c) requires, necessarily removes them; no other rule reads them."
+          },
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "tasks/Sprints/Sprint_63_Task_764_revision_1_trigger_area_restoration.md",
+            "reason": "Route (c) narrows the trigger from \"any hovered .group ancestor\" to \".cardGrid only\". Revision 1 makes that narrowing safe rather than lossy: the owner decision quoted in its section 1 restructures the one consumer that relied on an outer .group (FavoritesShell) so the action now renders inside the Card, and the measured effectiveScale on the action is 1.1025, equal to the image and title hovers. The behavioural loss this field previously recorded is remediated, not accepted."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "hover: none (the coarse-natural context, hasTouch:true, the touch-tap case section 3.2's guard was written for)",
+            "command": "node scripts/task764-pointer-probe.mjs matrix pre-edit && node scripts/task764-pointer-probe.mjs matrix post-edit",
+            "artifact": "docs/reviews/artifacts/2026-08-24-task764/reviewer-recompute-pre-vs-post.json",
+            "beforeOutcome": "grid card effectiveScale 1.0 on both hoverOnImage and hoverOnTitle - no zoom",
+            "afterOutcome": "grid card effectiveScale 1.0 on both hoverOnImage and hoverOnTitle - no zoom",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "module header, guard paragraph",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:22-33"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the false parenthetical is gone",
+          "the actual compiled Tailwind guard is named"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A source comment is not rendered.",
+          "locales": "Developer documentation, not user-facing copy.",
+          "viewports": "Comment text is viewport-independent.",
+          "states": "No runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "git diff src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "observable": "The claim `(same guard Tailwind's own hover: variant applies by default)` is deleted. The replacement states that the compiled group-hover: variant carried `(hover: hover)` only with no pointer: fine condition, names that as the cause of the coarse-pointer drift, cites the probe evidence directory, and says the file's own guard is now the only guard.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the false parenthetical is gone",
+              "the actual compiled Tailwind guard is named"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The rewritten header replaces one false statement with another - for instance about which guard the compiled utility carried.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-24-task764/before-generated-half-b.css",
+          "result": "Refuted. The retained compiled rule carries exactly `@media (hover:hover)` and no pointer condition, which is what the new header text asserts."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A documentation-text criterion. The generated rule it describes is recorded once, on the AC7 / R7 row's envelope."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs",
+        "symbol": "Phase D two-armed plant (P1 and P2)",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs:1-29",
+          "docs/sessions/evidence/task764/compare-phase-c-plant-p2.mjs:1-31"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "P1 arm observed failing with a retained transcript",
+          "P2 arm observed failing with a retained transcript",
+          "both arms clean after revert"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "The plant arms mutate CSS and re-probe; the story is the fixed carrier, not a scope dimension.",
+          "locales": "No copy involved.",
+          "viewports": "Pinned to 1024x900.",
+          "states": "The planted mutation is the variable, not a UI state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-plant-p1-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs",
+          "observable": "Both plant arms now carry retained execution transcripts with the native five-line header and a real non-zero exit. P1: \"plant-p1 (1.05) != baseline (1.1025), non-zero delta (0.0525)\", EXIT_CODE=1. P2: settled transform already at t=0ms and t=75ms, \"transform is no longer transitioned, run fails as required\", EXIT_CODE=1 (rev1-plant-p2-transcript.txt). compare-phase-c.mjs and both plant scripts are unchanged, and a re-run of the unmodified comparator on the final tree returns 21/21 with EXIT_CODE=0 (rev1-compare-phase-c-rerun-transcript.txt).",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P1 arm observed failing with a retained transcript",
+              "P2 arm observed failing with a retained transcript",
+              "both arms clean after revert"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The planted artifacts are fabricated rather than produced by a real planted run.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.plant-p1.json",
+          "result": "Not supported - the plant artifact carries internally consistent sub-pixel geometry (310.79998779296875 = 296 x 1.05) and the correct computed diagnostics for the mutated state, which a hand-written file would be unlikely to reproduce. The gap is the missing run record, not a suspicion of fabrication."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A gate-strength criterion about observed failure and retained run records, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "AC10 / R10",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F8"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/tailwind-runtime-tokens-transcript.txt",
+        "symbol": "check:tailwind-runtime-tokens",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/tailwind-runtime-tokens-transcript.txt:1-6"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no new Tailwind-owned runtime-token debt",
+          "no stale baseline entries"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A repository-wide source scan, not a rendered story.",
+          "locales": "Token names are not user-facing copy.",
+          "viewports": "A static scan.",
+          "states": "No runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/tailwind-runtime-tokens-transcript.txt",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "24 module.css files scanned, 14 Tailwind-owned references against 14 baseline entries, 0 new debt, 0 stale baseline entries, EXIT_CODE=0.",
+          "freshness": "final worktree on top of 1d9fa77cf",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no new Tailwind-owned runtime-token debt",
+              "no stale baseline entries"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new module rule introduced a Tailwind-owned or @theme inline reference that the gate would have to absorb into the baseline.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "Refuted. The added declaration is `transform: scale(1.1025)` - a literal with no custom property at all - and the gate reports 0 new debt against an unchanged baseline of 14. The comparison basis is the gate's own committed baseline rather than a retained I0 reading, which is F8."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A name-level ownership scan with exit code, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "AC11 / R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-22-task764-phase-b-implemented.md",
+        "symbol": "section 11, final npm run build row",
+        "diffHunks": [
+          "docs/sessions/2026-08-22-task764-phase-b-implemented.md:234"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "npm run build exit 0 with a retained transcript for the final reviewed diff"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A build gate, not a rendered story.",
+          "locales": "The build is locale-independent at this level.",
+          "viewports": "Not a rendered check.",
+          "states": "No runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/build-transcript.txt",
+          "command": "npm.cmd run build",
+          "observable": "Retained in the repository with EXECUTION_PLATFORM=win32, NODE_VERSION=v22.22.3, CWD, the exact command and EXIT_CODE=0. Freshness checked against the diff rather than asserted: the transcript mtime (11:15:01) is later than every changed file under src/ and scripts/ (latest 10:12:58), and `find src scripts -newer build-transcript.txt` returns nothing, so the build covers the final reviewed state.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "npm run build exit 0 with a retained transcript for the final reviewed diff"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A green typecheck plus a green Storybook build stands in for the missing production build transcript.",
+          "kind": "REASONED",
+          "path": "docs/sessions/evidence/task764/typecheck-transcript.txt",
+          "result": "Rejected by agent-contract clause 9, which states in terms that tsc=0 alone is not proof of build integrity. build-storybook exercises a different compiler entry point and does not substitute either."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A build gate and its retained transcript, not a generated-CSS equivalence claim."
+      }
+    },
+    {
+      "id": "N1 / section 9 prefers-reduced-motion",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F4"
+      ],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "@media (prefers-reduced-motion: reduce) reset",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:99-110"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grid card under prefers-reduced-motion: reduce shows no zoom at all"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "One production ListingCard story would carry both phases.",
+          "locales": "The reset carries no copy.",
+          "viewports": "Pinned to 1024x900; the reset is a motion feature query.",
+          "states": "rest and hover both sit inside each phase."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.rev1-final.json",
+          "command": "node.exe scripts/task764-pointer-probe.mjs matrix rev1-final",
+          "observable": "Measured, not reasoned. The artifact carries a reducedMotion context (matchMedia hover:hover true, pointer:fine true). Grid card asRendered: rest, hoverOnImage and hoverOnTitle all report rect 296 x 222 with transform \"none\" and scale \"none\" — effectiveScale 1.0000 on both hover targets. The review's earlier cascade reading is superseded by this capture and is no longer the evidence for the row.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid card under prefers-reduced-motion: reduce shows no zoom at all"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new .cardGrid rule escapes the reduced-motion reset the way the removed Tailwind half did.",
+          "kind": "REASONED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "The source predicts it does not: the reset's `.card:hover .imageSection img { transform: none; }` at :107-108 carries the same specificity as the new rule and comes later in source order, so it wins, and the effect now lives entirely on transform which the reset targets. That is a reading of the cascade, not a measurement, so it cannot close the row - it is the reason F4 is P2 rather than P1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A negative-flow rendering branch that was never captured. The envelope comparison for the removed candidate is recorded on the AC7 / R7 row."
+      }
+    },
+    {
+      "id": "AC14 / R13",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "imageActions slot",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:84-92",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:332-336"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "imageActions declared and rendered inside the grid Card.Section after {badges}",
+          "list branch unchanged"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "command": "git diff src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "observable": "imageActions?: ReactNode declared at :84-92 and rendered at :332-336 as <Box className={styles.imageActions}> inside the grid Card.Section, after {badges}. The list branch hunk shows only the deleted group marker; no slot was added there.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "imageActions declared and rendered inside the grid Card.Section after {badges}",
+              "list branch unchanged"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The slot leaked into the list branch, beyond scope.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "Refuted - imageActions appears once, in the grid Card.Section."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Slot declaration and render position in TSX; no CSS generated."
+      }
+    },
+    {
+      "id": "AC15 / R14",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/FavoritesShell.tsx",
+        "symbol": "Favorites grid item",
+        "diffHunks": [
+          "src/modules/listings/components/FavoritesShell.tsx:201-219"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "FavoritesShell carries no .group wrapper and no group-hover: utility",
+          "the button reaches the Card through ListingCard imageActions",
+          "RTL proves descendant containment in the Card subtree"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/FavoritesShell.tsx",
+          "command": "git diff src/modules/listings/components/FavoritesShell.tsx",
+          "observable": "Wrapper div and sibling overlay div both deleted; the button is passed as the imageActions prop. No live group token or group-hover: utility remains in the touched sources. The containment test passes 14/14 on the clean tree and fails under the P3 mutation.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "FavoritesShell carries no .group wrapper and no group-hover: utility",
+              "the button reaches the Card through ListingCard imageActions",
+              "RTL proves descendant containment in the Card subtree"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reveal was re-implemented with an ancestor-hover mechanism under another name.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "Refuted - both reveal selectors are rooted on .cardGrid; the diff has no :has() and no cross-module selector."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Consumer restructuring and a class census."
+      }
+    },
+    {
+      "id": "AC16 / R15+R16",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".imageActions",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:203-238"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "hover on the save action gives effectiveScale 1.1025, equal to image and title",
+          "the action occupies its own centre above .badgesGrid"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-favorites-composition.post.json",
+          "command": "node.exe scripts/task764-pointer-probe.mjs favorites post",
+          "observable": "Reviewer-recomputed from raw rectangles. Rest 358 x 268.5; hoverOnAction, hoverOnImage and hoverOnTitle all report the identical hovered rect 394.6949462890625 x 296.021240234375 -> 1.1025 width and 1.1025 height, equal across all three. The pre-fold companion records hoverOnAction transform:none + scale:1.05 = 1.0500. elementAtActionCentre resolves to the svg whose closest button is aria-label \"Save to collection\".",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hover on the save action gives effectiveScale 1.1025, equal to image and title",
+              "the action occupies its own centre above .badgesGrid"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The equal value is coincidence rather than containment.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1-plant-p3-rtl-transcript.txt",
+          "result": "The containment is falsifiable - the P3 mutation makes the assertion fail at EXIT_CODE=1. Note this is the strengthened assertion, not the one AC22 specified; see F13."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Rendered geometry; the envelope claim lives on the AC7 / R7 row."
+      }
+    },
+    {
+      "id": "AC17 / R17",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".imageActions reveal rules",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:230-238"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "hover arm guarded by (hover: hover) only",
+          "focus-within arm carries no media guard",
+          "reveal fires under a coarse-pointer context"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-favorites-composition.post.json",
+          "command": "node.exe scripts/task764-pointer-probe.mjs favorites post",
+          "observable": "Source: the hover arm is @media (hover: hover) { .cardGrid:hover .imageActions { opacity: 1 } } with no pointer condition; .cardGrid:focus-within .imageActions carries no media guard. Measured: in the coarse-override context the action opacity goes 0 at rest -> 1 on card hover. Under the P4 mutation adding and (pointer: fine) the same context reads 0 -> 0 at EXIT_CODE=1; reverting restores 0 -> 1 at exit 0.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hover arm guarded by (hover: hover) only",
+              "focus-within arm carries no media guard",
+              "reveal fires under a coarse-pointer context"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The zoom rule guard was copied onto the reveal, narrowing it on coarse pointers.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1-plant-p4-fail-transcript.txt",
+          "result": "Refuted and proven falsifiable - that exact mutation is P4 and it was observed failing."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Media-guard shape plus a rendered opacity measurement."
+      }
+    },
+    {
+      "id": "AC18 / R18",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "forbidden-mechanism census",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:203-238"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no group token, no group-hover: utility, no :has(), no cross-module selector"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "grep -rn \"group-hover:\" src/",
+          "observable": "No live group class token and no group-hover: utility in the touched sources; surviving hits are prose comments naming the retired mechanism. The diff contains no :has() and no selector reaching into another module.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no group token, no group-hover: utility, no :has(), no cross-module selector"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A generic ancestor-hover selector was reintroduced under a different name.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "Refuted - both reveal selectors are rooted on .cardGrid, the grid Card class itself."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A source census over selectors and class tokens."
+      }
+    },
+    {
+      "id": "AC19 / R19",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task764-pointer-probe.mjs",
+        "symbol": "reducedMotion context",
+        "diffHunks": [
+          "scripts/task764-pointer-probe.mjs"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grid card under prefers-reduced-motion shows no zoom on image hover and on title hover"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.rev1-final.json",
+          "command": "node.exe scripts/task764-pointer-probe.mjs matrix rev1-final",
+          "observable": "Measured, not reasoned. The artifact carries a reducedMotion context; grid asRendered rest, hoverOnImage and hoverOnTitle all report rect 296 x 222 with transform \"none\" and scale \"none\" - effectiveScale 1.0000 on both hover targets.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid card under prefers-reduced-motion shows no zoom on image hover and on title hover"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The reduced-motion result was reasoned from the cascade rather than captured.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/phase-a-pointer-matrix.rev1-final.json",
+          "result": "Refuted - a reducedMotion context exists with its own matchMedia block and captured rectangles."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A rendered capture under a motion feature query."
+      }
+    },
+    {
+      "id": "AC20 / R20",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs",
+        "symbol": "Phase D plant transcripts",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/rev1-plant-p1-transcript.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "P1 arm observed failing with a retained transcript",
+          "P2 arm observed failing with a retained transcript",
+          "comparator and plant scripts unchanged"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-plant-p1-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/compare-phase-c-plant-p1.mjs",
+          "observable": "Both arms carry retained transcripts with the five-line header and a real non-zero exit: P1 reports delta 0.0525 against the 1.1025 baseline at EXIT_CODE=1; P2 reports the settled transform already at t=0/75ms at EXIT_CODE=1. compare-phase-c.mjs and both plant scripts are unchanged and the unmodified comparator returns 21/21 at EXIT_CODE=0.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P1 arm observed failing with a retained transcript",
+              "P2 arm observed failing with a retained transcript",
+              "comparator and plant scripts unchanged"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The comparator was parameterised to make the plants fail.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/compare-phase-c.mjs",
+          "result": "Refuted - compare-phase-c.mjs is byte-identical to its pre-revision state."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate-strength observation and retained run records."
+      }
+    },
+    {
+      "id": "AC21 / R21",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/build-transcript.txt",
+        "symbol": "production build",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/build-transcript.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "npm run build exit 0 with a retained transcript covering the final diff"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/build-transcript.txt",
+          "command": "npm.cmd run build",
+          "observable": "Retained in-repository with EXECUTION_PLATFORM=win32, NODE_VERSION=v22.22.3, CWD, the exact command and EXIT_CODE=0. Freshness checked rather than asserted: transcript mtime 11:15:01 is later than every changed file under src/ and scripts/ (latest 10:12:58) and find -newer returns nothing.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "npm run build exit 0 with a retained transcript covering the final diff"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The build predates the final source edits.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/build-transcript.txt",
+          "result": "Refuted by mtime comparison across the whole changed set."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A build gate and its retained transcript."
+      }
+    },
+    {
+      "id": "AC24 / R24",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/rev1-platform-attestation.txt",
+        "symbol": "native transcript discipline",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/rev1-platform-attestation.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every retained Revision 1 transcript carries the five-line native header and a real exit code"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-platform-attestation.txt",
+          "command": "node.exe -p process.platform",
+          "observable": "Reviewer swept all 40 rev1-*.txt transcripts plus build-transcript.txt for the five required lines; none is missing any. Platform win32, Node v22.22.3 throughout.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every retained Revision 1 transcript carries the five-line native header and a real exit code"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Some transcript came from a non-Windows run.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1-platform-attestation.txt",
+          "result": "Refuted - every retained transcript records EXECUTION_PLATFORM=win32."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Transcript provenance discipline."
+      }
+    },
+    {
+      "id": "AC22 / R22",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F13"
+      ],
+      "finalSubject": {
+        "path": "src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+        "symbol": "Q4 planted-violation proof",
+        "diffHunks": [
+          "src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "both card suites cover the new slot and pass",
+          "P3 arm observed failing under the mutation the task specifies, on the assertion the task specifies, with the probe reading effectiveScale 1.0000",
+          "P4 arm observed failing then clean"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-card-suites-transcript.txt",
+          "command": "npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+          "observable": "Both registered card suites pass on the final tree, 22/22, EXIT_CODE=0, with new imageActions coverage in each.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "both card suites cover the new slot and pass"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1-plant-p4-fail-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/rev1-plant-p4-compare.mjs plant-p4",
+          "observable": "P4 observed failing exactly as specified: the coarse-override reveal reads 0 -> 0 under the narrowed guard at EXIT_CODE=1; the clean re-run reads 0 -> 1 at EXIT_CODE=0.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P4 arm observed failing then clean"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p3-rtl-transcript.txt",
+          "command": "npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx -t imageActions",
+          "observable": "P3 as rewritten by D63-H fires on BOTH halves, reviewer-verified from the artifacts. RTL: the run fails at ListingCard.smoke.test.tsx:311 on expect(imageSectionEl).toContainElement(saveButton), with the rendered Card.Section and the real Save button printed in the failure, EXIT_CODE=1. Probe: rev1-favorites-composition.rev1b-plant-p3-v2.json reports hoverOnAction transform \"none\" and rect ratio 1.0000 against the same rest rect, while hoverOnImage still reads 1.1025 - so the mutation removed the action from the hover chain and nothing else. Clean re-runs: 14/14 pass at EXIT_CODE=0 (rev1b-plant-p3-clean-transcript.txt) and the clean probe restores hoverOnAction to 1.1025 (rev1-favorites-composition.rev1b-clean.json).",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P3 arm observed failing under the mutation the task specifies, on the assertion the task specifies, with the probe reading effectiveScale 1.0000"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-card-suites-transcript.txt",
+          "command": "npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx",
+          "observable": "Both registered card suites pass on the final tree at EXIT_CODE=0, with the imageActions containment coverage retained. The final test asserts .imageSection containment first and .cardGrid containment second - both retained - so a P3 regression stack points unambiguously at the stronger assertion.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "both card suites cover the new slot and pass"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p4-fail-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/rev1b-plant-p4-compare.mjs",
+          "observable": "P4 observed failing then clean, EXIT_CODE=1 then 0.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P4 arm observed failing then clean"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The P3 arm was again satisfied by an assertion the task does not specify.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p3-rtl-transcript.txt",
+          "result": "Refuted. D63-H names the .imageSection containment assertion and the 1.0000 probe reading as the required observations, and both are exactly what the retained artifacts show. The criterion is now met as written, not in substance."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A gate-strength criterion, not a generated-CSS claim."
+      }
+    },
+    {
+      "id": "AC23 / R23",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F14"
+      ],
+      "finalSubject": {
+        "path": "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+        "symbol": "canonical Story coverage",
+        "diffHunks": [
+          "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+          "src/stories/mantine/primitives/ListingCard.stories.tsx"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "check:stories passes",
+          "the rendered gate shows 0 added and 0 removed non-pass cells against the pinned baseline with every listingcard cell passing",
+          "both canonical Stories render the new slot with the production composition"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on source, transcripts or one fixed story; not a per-story dimension.",
+          "locales": "No user-facing copy in scope for this criterion.",
+          "viewports": "Pinned to one viewport; the guards are pointer/motion feature queries, not width breakpoints.",
+          "states": "rest and hover are captured inside each phase and reported as their ratio."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1-check-stories-transcript.txt",
+          "command": "npm.cmd run check:stories",
+          "observable": "check:stories PASSED - 129 files checked, 0 violations, EXIT_CODE=0.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:stories passes"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": ".screenshots/rendered-assert/2026-08-24T10-16/manifest.json",
+          "command": "npm.cmd run screenshots:assert -- --mantine-only",
+          "observable": "All three listingcard story ids pass 16/16 in the run manifest: mantine-primitives-listingcard--default, mantine-primitives-listingcard--favorites-composition and patterns-mantine-listingcardpattern--default. The canonical Stories do render the new slot and every one of their cells passes.",
+          "freshness": "Task 764 Revision 1 final worktree, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "both canonical Stories render the new slot with the production composition"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-check-stories-transcript.txt",
+          "command": "npm.cmd run check:stories",
+          "observable": "check:stories exits 0.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:stories passes"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-assert-differential-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs --baseline ... --current ...",
+          "observable": "The D63-I differential reports added: 0, removed: 0, 48 listingcard cells all pass, EXIT_CODE=0. Reviewer verified the pin itself rather than trusting the copy: sha256 of the retained baseline equals sha256 of .screenshots/rendered-assert/2026-08-21T15-06/manifest.json (6f56002a1aa8f8f86f263854dc06bd65737508901ed292788cdc84efdc8e9229), and the retained attestation records both hashes and the verified population 1316/1209/80/27. The comparator also records the current manifest SHA-256. The raw screenshots:assert exit code stays a diagnostic, per D63-I.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the rendered gate shows 0 added and 0 removed non-pass cells against the pinned baseline with every listingcard cell passing"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": ".screenshots/rendered-assert/2026-08-24T10-16/manifest.json",
+          "command": "npm.cmd run screenshots:assert -- --mantine-only",
+          "observable": "All three listingcard story ids pass 16/16: mantine-primitives-listingcard--default, mantine-primitives-listingcard--favorites-composition and patterns-mantine-listingcardpattern--default.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "both canonical Stories render the new slot with the production composition"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The differential is a softer criterion that hides a regression.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p5-transcript.txt",
+          "result": "Refuted on two independent grounds: the pinned baseline is hash-verified against the immutable original, and P5 proves the comparator exits non-zero on a single injected non-pass cell."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate exit codes and rendered-cell coverage, not generated-CSS semantics."
+      }
+    },
+    {
+      "id": "AC25 / R25",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs",
+        "symbol": "AC23 differential comparator",
+        "diffHunks": [
+          "docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "a planted extra non-pass cell makes the differential comparator exit non-zero"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Asserted on transcripts and manifests; not a per-story dimension.",
+          "locales": "No user-facing copy in scope.",
+          "viewports": "Not a width-dependent criterion.",
+          "states": "rest and hover are captured inside each phase."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p5-transcript.txt",
+          "command": "node.exe docs/sessions/evidence/task764/compare-rev1b-rendered-assert.mjs (P5 manifest)",
+          "observable": "P5 feeds a copy of the current manifest with one cell flipped to non-pass. rev1b-plant-p5.json reports added: 1, removed: 0, listingcardAllPass false, pass false, and the run exits 1. The criterion AC23 now depends on is therefore falsifiable, not a comparator that agrees with itself.",
+          "freshness": "Task 764 Revision 1 re-run, 2026-08-24",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "a planted extra non-pass cell makes the differential comparator exit non-zero"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The comparator would pass anything, so AC23 is vacuous.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task764/rev1b-plant-p5.json",
+          "result": "Refuted - one injected non-pass cell yields added: 1 and a non-zero exit."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Comparator falsifiability, not generated CSS."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P1",
+      "status": "RESOLVED",
+      "requirements": "AC11 / R11",
+      "requirementIds": [
+        "AC11 / R11"
+      ],
+      "evidence": "docs/sessions/evidence/task764/ contains no npm run build transcript; the session log's section 11 places it at /tmp/task764-build.log, outside the repository. AC11 requires a retained transcript and the review protocol treats a missing final build transcript as a blocking evidence gap. Correction: re-run npm run build, tee to docs/sessions/evidence/task764/build-transcript.txt with the exit code appended, and re-report. | RESOLVED by Task 764 Revision 1, 2026-08-24 — see this ledger's corresponding requirement row for the closing artifact."
+    },
+    {
+      "id": "F2",
+      "priority": "P1",
+      "status": "RESOLVED",
+      "requirements": "AC9 / R9",
+      "requirementIds": [
+        "AC9 / R9"
+      ],
+      "evidence": "AC9 requires each plant arm to be observed failing with a retained transcript. docs/sessions/evidence/task764/ holds phase-a-pointer-matrix.plant-p1.json, phase-a-transition-curve.plant-p2.json and the two check scripts, but no captured execution output or exit code for either arm - a .mjs file is the check, not the record of running it. The planted artifacts themselves are internally consistent and the reviewer confirmed the mutated geometry in both, so the defect is the missing run record, not the plant design: kickoff section 10.5 specifies separate P1 and P2 observations and does not require parameterising or re-running compare-phase-c.mjs. Correction: re-run each arm with its output and exit code teed to a retained transcript. | RESOLVED by Task 764 Revision 1, 2026-08-24 — see this ledger's corresponding requirement row for the closing artifact."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC7 / R7",
+      "requirementIds": [
+        "AC7 / R7"
+      ],
+      "evidence": "FavoritesShell.tsx:204-218 wraps <ListingCard> in an outer `.group` div and places SaveToCollectionButton at :213 as a sibling overlay rather than a Card descendant. The removed half B matched :is(:where(.group):hover *), so hovering that overlay activated group-hover:scale-105 through the outer wrapper; the replacement fires only from .cardGrid:hover, and the Card is not in the hover chain when the pointer is over a sibling overlay, so the zoom is lost there. This is not one of the two owner-accepted deltas in kickoff section 1, and section 9 requires the trigger area to be unchanged. The executor's census evaluated this `.group` only as a reader of group-hover: utilities, not as a second trigger ancestor. FavoritesShell is the only one of six <ListingCard> consumers with an outer `.group`. Correction: probe a surface carrying an outer `.group` in both phases, then either record the delta for owner acceptance or restore the trigger area. | RESOLVED by Task 764 Revision 1, 2026-08-24 — see this ledger's corresponding requirement row for the closing artifact."
+    },
+    {
+      "id": "F4",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "N1 / section 9 prefers-reduced-motion",
+      "requirementIds": [
+        "N1 / section 9 prefers-reduced-motion"
+      ],
+      "evidence": "Kickoff section 11 marks N1 applicable and section 9 records a fully reset zoom as an intentional fix, but the session log's deviation 2 states the branch was reasoned from source rather than captured, and no probe context under prefers-reduced-motion exists in either phase. Agent-contract clause 6a requires every applicable branch to be verified. The structural cascade argument is sound as far as it goes and is not verification. Correction: add a reducedMotion: 'reduce' context to the existing probe and capture both phases. | RESOLVED by Task 764 Revision 1, 2026-08-24 — see this ledger's corresponding requirement row for the closing artifact."
+    },
+    {
+      "id": "F5",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC6 / R6",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "Session log section 6 prints the post-edit hover rectangle as 326.33997 x 244.75494 and labels it \"(identical)\" to the pre-edit one. The retained artifacts give pre-edit height 244.75494384765625 and post-edit height 244.75500488281250, with x and y also differing in the eighth decimal. AC6's actual criterion - the ratio agreeing to 4dp with identical rest rectangles - is met, so this does not affect the verdict; the table should print the measurement rather than a restatement of it."
+    },
+    {
+      "id": "F6",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC5 / R5",
+      "requirementIds": [
+        "AC5 / R5"
+      ],
+      "evidence": "The priority arm of the curve is a syntheticPriority sample produced by removing the resolved .fade class at runtime (task764-pointer-probe.mjs:171-180), not a real priority render. The reviewer checked what else priority changes: AppImage.tsx:140 sets loading=\"eager\" and :148-150 swap .fade for .visible, none of which affects transform, scale or the rectangle once the image has loaded, so the stand-in is sound and the artifact names it honestly. Recorded so a later task does not read syntheticPriority as a real priority tuple."
+    },
+    {
+      "id": "F7",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC2 / R2",
+      "requirementIds": [
+        "AC2 / R2"
+      ],
+      "evidence": "The Task 764 comment at MantineListingCardPattern.module.css:90 and kickoff section 10.3 step 1 both state the specificity of .card:hover .imageSection img and .cardGrid:hover .imageSection img as (0,2,1). The correct value is (0,3,1): :hover is a pseudo-class and counts in the class column. The conclusion both documents draw - equal specificity, so source order decides - is unaffected, but this file is governance-facing text."
+    },
+    {
+      "id": "F8",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC10 / R10",
+      "requirementIds": [
+        "AC10 / R10"
+      ],
+      "evidence": "AC10 asks for the same file count, reference count, 0 new debt and 0 stale entries as the I0 reading, but no I0 reading of check:tailwind-runtime-tokens is retained in this session or in docs/sessions/2026-08-22-task764-phase-a-blocked.md. The row is closed on the gate's own committed-baseline mechanism, which is the stronger check; the phrase \"identical to I0\" in the session log and backlog is unsupported as written."
+    },
+    {
+      "id": "F9",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC13 / R12",
+      "requirementIds": [
+        "AC13 / R12"
+      ],
+      "evidence": "mantine-primitives-listingcard--default is not enrolled in the 28-target --mantine-only matrix (pre-existing, backlog item 746). The grid card is covered indirectly through system-featuredlistings--default, which renders real ListingCard grid cards and passed 296/296 with zero failures; matrix-level coverage of layout=\"list\" is not confirmed. Not blocking: the change has no rest-state visual effect, which the reviewer confirmed byte-identical in all six context x card cells."
+    },
+    {
+      "id": "F10",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC13 / R12",
+      "requirementIds": [
+        "AC13 / R12"
+      ],
+      "evidence": "`npm.cmd run screenshots:assert -- --mantine-only` exits 1 (1225/1332 PASS, 80 FAIL, 27 AMBIGUOUS). The reviewer did not accept the executor's \"pre-existing\" reading on assertion: the pre-task standing run is on disk at .screenshots/rendered-assert/2026-08-21T15-06/ (1316 cells, 80 failed, 27 ambiguous) and a cell-level set diff against this run gives 0 added and 0 removed non-pass cells. The 16 new cells are exactly mantine-primitives-listingcard--favorites-composition and all 16 pass. All three listingcard story ids pass 16/16 (listingcard--default, listingcard--favorites-composition, listingcardpattern--default). The non-zero exit is a standing repository condition in AuthSheet / PopularLocationsView / Combobox / Tabs / AdminUsersTable cells, unchanged by this task and outside its scope. Recorded so it is not mistaken for a Task 764 regression, and so the standing condition keeps a named owner. | The blocking form of this item is F14: a standing condition does not license treating the stated criterion as met."
+    },
+    {
+      "id": "F11",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC7 / R7",
+      "requirementIds": [
+        "AC7 / R7"
+      ],
+      "evidence": "Reviewer-authored kickoff defect, recorded against the reviewer. Revision 1 section 10.6's P3 arm required both an RTL failure and a probe reading of 1.0000. Rendering imageActions as a sibling of Card.Section leaves it inside the element carrying .cardGrid, so the hover chain is intact and the probe measured 1.1025 under the plant — the probe half could not discriminate, and the .cardGrid-scoped assertion the kickoff specified could not either. The executor found this, strengthened the test to assert .imageSection containment, disclosed it in the completion report and in session log section 5, and did not quietly absorb it. The strengthened assertion is strictly stronger than the specified one, since .imageSection is inside .cardGrid. | Superseded as a NOTE by F13: this kickoff defect is the origin of the P3 problem, but the open blocker is that the criterion was never formally amended."
+    },
+    {
+      "id": "F12",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC7 / R7",
+      "requirementIds": [
+        "AC7 / R7"
+      ],
+      "evidence": "Reviewer-authored kickoff defect, recorded against the reviewer. Revision 1 section 10.1 step 2 told the executor to restore half B for the A4 baseline but never said to remove the already-landed .cardGrid:hover rule, so the pre-fold artifact is a hybrid state: its hoverOnImage and hoverOnTitle rows read 1.157625 (1.1025 x 1.05), which was never a shipped value. The gated row is unaffected — hoverOnAction reads transform:none + scale:1.05 = 1.0500, the true pre-fold value for the action, because neither .card:hover nor .cardGrid:hover fired on a sibling overlay. The executor recorded the contamination and its arithmetic explicitly in session log section 5 rather than presenting the artifact as a clean pre-fold capture."
+    },
+    {
+      "id": "F13",
+      "priority": "P0",
+      "status": "RESOLVED",
+      "requirements": "AC22 / R22",
+      "requirementIds": [
+        "AC22 / R22"
+      ],
+      "evidence": "Revision 1 section 10.6 specifies the P3 arm as: mutate imageActions to a sibling of Card.Section and observe BOTH the RTL containment test failing AND the Favorites probe reading effectiveScale 1.0000. Neither occurred as written - the mutated element remains inside .cardGrid so the hover chain is intact, the probe measured 1.1025 (rev1-favorites-composition.plant-p3.json, identical to the clean post artifact), and the specified .cardGrid-scoped assertion passed. The executor substituted a stronger .imageSection containment assertion, disclosed it in the completion report and session log section 5, and re-observed a genuine failure with it. The substitution is sound and honestly reported, but an acceptance criterion may be amended only by an owner decision; neither executor nor reviewer may adopt a replacement after the fact. This reviewer first recorded it as a NOTE and let it close a P0 row - that was an invented owner exception and is corrected here. Required: the owner amends section 10.6 P3 and AC22 to the exact new condition, then the arm is re-run against the amended text with a retained transcript. | RESOLVED 2026-08-24. Owner decision D63-H rewrote the P3 arm to replant the real F3 regression (the action returns outside the Card in FavoritesShell). Re-executed: the .imageSection containment assertion fails at ListingCard.smoke.test.tsx:311 with EXIT_CODE=1, and the probe reads hoverOnAction 1.0000 with transform \"none\" while hoverOnImage stays 1.1025; clean re-runs restore 14/14 and 1.1025. Met as written."
+    },
+    {
+      "id": "F14",
+      "priority": "P0",
+      "status": "RESOLVED",
+      "requirements": "AC23 / R23",
+      "requirementIds": [
+        "AC23 / R23"
+      ],
+      "evidence": "AC23 requires npm.cmd run screenshots:assert -- --mantine-only to pass. The retained transcript ends EXIT_CODE=1 (1225/1332 PASS, 80 FAIL, 27 AMBIGUOUS). The reviewer established as FACT that Task 764 added no non-pass cell - a cell-level diff against .screenshots/rendered-assert/2026-08-21T15-06/ gives 0 added and 0 removed, and the 16 new cells all pass - and that all three listingcard story ids pass 16/16. That proves no regression; it does not make the command pass. Substituting a differential criterion for the stated one is an owner decision. The D37 / Task 742 precedent the reviewer cited closed on an OWNER-AUTHORISED re-run, so citing it without that authorisation repeated the substitution it exists to record. Required, owner choice of route: (a) make the gate exit 0, or (b) formally rewrite AC23 as a differential baseline criterion naming the exact allowed pre-existing failure set and pinning it to a retained baseline manifest, then re-evaluate against it. | RESOLVED 2026-08-24. Owner decision D63-I replaced the absolute gate criterion with a differential pinned to an immutable baseline. Re-executed: added 0, removed 0, 48/48 listingcard cells pass, EXIT_CODE=0, with the pin hash-verified by the reviewer and P5 proving the comparator can fail."
+    },
+    {
+      "id": "F15",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC23 / R23",
+      "requirementIds": [
+        "AC23 / R23"
+      ],
+      "evidence": "Bookkeeping only, no impact on any criterion. rev1b-assert-baseline-attestation.txt cites a decision id \"D63-K\" for the verified baseline population (1316/1209/80/27, which matches D63-I exactly). The task text defines D63-H and D63-I only, so D63-K is currently an orphaned identifier in retained evidence. Record it in the task or the backlog decision list, or renumber the citation, so the id resolves for a later reader. Separately worth noting as good conduct rather than a defect: the differential transcript discloses that check:file-integrity caught NUL-byte corruption in the new comparator script, which was fixed and the comparison re-run."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC23 / R23",
+    "reviewer": "Opus"
+  }
+}

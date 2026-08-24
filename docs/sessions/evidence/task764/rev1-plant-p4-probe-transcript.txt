@@ -1,0 +1,11 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=node.exe scripts/task764-pointer-probe.mjs favorites plant-p4
+WROTE C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\rev1-favorites-composition.plant-p4.json
+fine matchMedia: {"hoverHover":true,"pointerCoarse":false,"pointerFine":true}
+elementAtActionCentre: {"tag":"svg","className":"[object SVGAnimatedString]","ariaLabel":null,"closestButtonAriaLabel":"Save to collection"}
+fine reveal: {"actionOpacityAtRest":"0","actionOpacityOnCardHover":"1"}
+coarse-override matchMedia: {"hoverHover":true,"pointerCoarse":true,"pointerFine":false}
+coarse-override reveal: {"actionOpacityAtRest":"0","actionOpacityOnCardHover":"0"}
+EXIT_CODE=0

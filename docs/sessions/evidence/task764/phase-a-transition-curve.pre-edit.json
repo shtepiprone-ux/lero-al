@@ -1,0 +1,202 @@
+{
+  "label": "pre-edit",
+  "browserVersion": "148.0.7778.96",
+  "fine": {
+    "label": "fine",
+    "nonPriority": {
+      "removedClass": null,
+      "samples": [
+        {
+          "tMs": 0,
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 42.600006103515625,
+            "y": 88.35625457763672,
+            "width": 310.79998779296875,
+            "height": 233.0999755859375
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 75,
+          "transform": "matrix(1.01698, 0, 0, 1.01698, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 39.96058654785156,
+            "y": 85.69729614257812,
+            "width": 316.078857421875,
+            "height": 237.05914306640625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 150,
+          "transform": "matrix(1.03423, 0, 0, 1.03423, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 37.28135681152344,
+            "y": 82.99824523925781,
+            "width": 321.437255859375,
+            "height": 241.07798767089844
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 300,
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83001708984375,
+            "y": 80.52877044677734,
+            "width": 326.3399658203125,
+            "height": 244.75494384765625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 600,
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83001708984375,
+            "y": 80.52877044677734,
+            "width": 326.3399658203125,
+            "height": 244.75494384765625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_fade_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        }
+      ]
+    },
+    "syntheticPriority": {
+      "removedClass": "_fade_ictd3_30",
+      "samples": [
+        {
+          "tMs": 0,
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 42.600006103515625,
+            "y": 88.35625457763672,
+            "width": 310.79998779296875,
+            "height": 233.0999755859375
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 75,
+          "transform": "matrix(1.02078, 0, 0, 1.02078, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 39.37052917480469,
+            "y": 85.1028823852539,
+            "width": 317.2589111328125,
+            "height": 237.9442138671875
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 150,
+          "transform": "matrix(1.03977, 0, 0, 1.03977, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 36.42015075683594,
+            "y": 82.13066864013672,
+            "width": 323.15966796875,
+            "height": 242.3697509765625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 300,
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83001708984375,
+            "y": 80.52877044677734,
+            "width": 326.3399658203125,
+            "height": 244.75494384765625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        },
+        {
+          "tMs": 600,
+          "transform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+          "scale": "1.05",
+          "transitionProperty": "transform, opacity",
+          "rect": {
+            "x": 34.83001708984375,
+            "y": 80.52877044677734,
+            "width": 326.3399658203125,
+            "height": 244.75494384765625
+          },
+          "classList": [
+            "_imageLayer_ictd3_30",
+            "_visible_ictd3_30",
+            "_fitCover_ictd3_30",
+            "group-hover:scale-105"
+          ]
+        }
+      ]
+    }
+  }
+}

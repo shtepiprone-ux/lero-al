@@ -1,0 +1,15 @@
+
+> lero-al@0.1.0 screenshots:responsive
+> node scripts/responsive-screenshots.mjs --mantine-only
+
+📸  Starting responsive screenshot capture
+    Output: .screenshots/responsive/2026-08-22/
+    Viewports: 6 (fast-check matrix)
+    Locales: en, sq, uk, it
+    Stories: 28 targets
+
+........................................................................................................................................................................................................................................................................................................
+
+✅ Captured 296 screenshots (0 failed)
+   Output: .screenshots/responsive/2026-08-22/
+EXIT_CODE=0

@@ -19,9 +19,18 @@
  * AppImage's own opacity-fade transition (kept explicit alongside transform below, not
  * clobbered by the shorthand).
  *
- * `:hover` rules are scoped to `(hover: hover) and (pointer: fine)` (same guard Tailwind's
- * own `hover:` variant applies by default) so a tap on a touch device never leaves the
- * card "stuck" in its hovered/zoomed state — the effect only exists for a real mouse.
+ * `:hover` rules are scoped to `(hover: hover) and (pointer: fine)`. Task 764 correction
+ * (the pre-Task-764 text here claimed this matched Tailwind's own `hover:` variant by
+ * default — that was FALSE and measured wrong: the compiled `group-hover:` variant Task
+ * 763's `listing.hoverClass` used carried `(hover: hover)` only, with no `pointer: fine`
+ * condition at all, which is the entire reason half B (Tailwind) and half A (this file)
+ * drifted apart on a device reporting `hover:hover` + `pointer:coarse` — measured via a
+ * Playwright probe forcing that exact hybrid state (`docs/sessions/evidence/task764/`):
+ * half A did not fire there, half B did, so the card zoomed 1.05x. Task 764 removes half B
+ * entirely (see `.cardGrid:hover` below), so this file's own `(hover: hover) and
+ * (pointer: fine)` guard is now the ONLY guard governing the effect, and its stated intent
+ * — "a tap on a touch device never leaves the card stuck in its hovered/zoomed state" — is
+ * now actually true for the whole zoom, not just this file's own translateY/box-shadow.
  */
 
 .card {
@@ -66,6 +75,24 @@
 
   .card:hover .imageSection img {
     transform: scale(1.05);
+  }
+
+  /* Task 764 — folds the `listing` variant's Tailwind `group-hover:scale-105` (half B, formerly
+   * `appImageConfig.ts`'s `listing.hoverClass`, applied via the now-removed `'group'` marker on
+   * this file's `Card`) into this module. Half A above (`.card:hover .imageSection img`,
+   * `scale(1.05)`) is shared with the `layout="list"` row, which never carried half B (its image
+   * is the `listing-thumb` variant, no `hoverClass`) — so `:68` itself must stay `scale(1.05)`, or
+   * the list card's hover zoom silently jumps from 1.05x to 1.1025x on every surface that renders
+   * it (listings rows, cabinet). This rule is scoped to `.cardGrid` (only the vertical/grid
+   * layout, the homepage card) instead, and its `transform` REPLACES `.card`'s value for grid
+   * cards via source order (both selectors are specificity (0,2,1); this rule comes second and
+   * wins). The value `1.1025` is the measured product of the two former halves: half A's own
+   * `scale(1.05)` and half B's compiled `scale: 105% 105%` composed multiplicatively (two
+   * different CSS properties, `transform` and `scale`, both apply): 1.05 x 1.05 = 1.1025 —
+   * verified via `getBoundingClientRect()` effective-scale capture,
+   * `docs/sessions/evidence/task764/phase-a-pointer-matrix.pre-edit.json`. */
+  .cardGrid:hover .imageSection img {
+    transform: scale(1.1025);
   }
 }
 
@@ -171,6 +198,45 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
+}
+
+/*
+ * Task 764 Revision 1 — the `imageActions` slot wrapper (F3 fix). Reproduces the retired
+ * `FavoritesShell.tsx` sibling-overlay div's own declarations exactly: `absolute top-2 left-2`
+ * (same offsets as `.badgesGrid` above, §3.4 — grid occupancy: top-left badges, top-right
+ * favorite overlay, bottom-right photo count), `opacity-0`/`transition-opacity` (Tailwind's own
+ * compiled `.15s`/`cubic-bezier(0.4,0,0.2,1)`, same values `.cardTitle` above already
+ * reproduces at :253-255). `z-index` is explicit (not DOM-order-dependent) so paint order over
+ * `.badgesGrid` holds regardless of future render-order changes.
+ *
+ * Reveal rules reproduce the retired `opacity-0 group-hover:opacity-100 focus-within:opacity-100`
+ * utilities' OWN compiled guards, not a copy of this file's `:hover` zoom guard: the hover arm
+ * carries `(hover: hover)` ONLY — never `and (pointer: fine)` — because that is the exact guard
+ * Tailwind's compiled `group-hover:` variant carried (§3.3, the same measured fact Task 763's I1
+ * extraction and this file's own header correction record); adding `pointer: fine` here would
+ * narrow the reveal on coarse-pointer devices, a behaviour change nobody authorized. The
+ * `focus-within` arm carries NO media guard at all, matching `focus-within:opacity-100`'s own
+ * compiled form exactly (keyboard focus must reveal the action on every device).
+ */
+.imageActions {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1; /* design-tokens-allow: z-index: 1 — sibling paint-order guarantee over .badgesGrid, not a stacking-context escalation; no --z-* token exists at this low a value */
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); same precedent as .cardTitle above (:254) */
+  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269), same precedent as .cardTitle above (:255) */
+}
+
+@media (hover: hover) {
+  .cardGrid:hover .imageActions {
+    opacity: 1;
+  }
+}
+
+.cardGrid:focus-within .imageActions {
+  opacity: 1;
 }
 
 .photoCountList {

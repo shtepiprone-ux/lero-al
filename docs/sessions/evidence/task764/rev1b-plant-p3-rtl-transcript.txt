@@ -1,0 +1,53 @@
+EXECUTION_PLATFORM=win32
+NODE_VERSION=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+COMMAND=npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx -t imageActions
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 1 failed | 13 skipped) 243ms
+     × renders the real SaveToCollectionButton as a descendant of the .cardGrid element, not a sibling 239ms
+npx.cmd : 
+At line:3 char:14
++ ... cmdOutput = npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — imageActions slot containment (Task 764 Revision 1, F3/R14) > renders the real SaveToCollectionButton as a descendant of the .cardGrid 
+element, not a sibling
+Error: expect(element).toContainElement(element)
+
+<div
+  class="m_599a2148 mantine-Card-section _imageSection_c737cc"
+  data-first-section="true"
+  style="position: relative; overflow: hidden;"
+/> does not contain: <button
+  aria-label="Save to collection"
+  class="mantine-focus-auto mantine-active _control_11fda0 bg-card/80 hover:bg-card shadow-sm rounded-lg m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"
+  data-shape="icon"
+  data-variant="subtle"
+  style="--ai-size: calc(1.75rem * var(--mantine-scale)); --ai-radius: 0.75rem; --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: var(--mantine-color-brand-light-color); --ai-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+  type="button"
+/>
+        
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:311:28
+    309|     const imageSectionEl = container.querySelector('[class*="imageSect…
+    310|     expect(imageSectionEl).toBeInTheDocument()
+    311|     expect(imageSectionEl).toContainElement(saveButton)
+       |                            ^
+    312|
+    313|     // Weaker containment invariant (R14/AC15's own wording: "descenda…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  15:32:36
+   Duration  4.56s (transform 691ms, setup 103ms, import 3.08s, tests 243ms, environment 861ms)
+
+EXIT_CODE=1

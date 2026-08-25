@@ -4,6 +4,7 @@ import { ChevronDown, Loader2 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Button } from '@mantine/core'
 import { MantineDropdownMenu, type DropdownMenuItemDef } from '@/design-system/mantine/patterns'
+import styles from './LocaleSwitcher.module.css'
 
 export const LOCALES = [
   { code: 'sq', abbr: 'SQ' },
@@ -52,7 +53,7 @@ export function LocaleSwitcher({
           variant="default"
           className={className}
           disabled={isPending}
-          rightSection={isPending ? <Loader2 size={12} className="animate-spin" /> : <ChevronDown size={12} />}
+          rightSection={isPending ? <Loader2 size={12} className={styles.pendingIcon} /> : <ChevronDown size={12} />}
         >
           {current?.abbr}
           {showLabel && ` ${langLabels[currentLocale as LocaleCode]}`}

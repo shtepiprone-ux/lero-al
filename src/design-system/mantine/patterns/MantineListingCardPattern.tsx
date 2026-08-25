@@ -183,8 +183,7 @@ export function MantineListingCardPattern({
           styles.card,
           styles.listRow,
           isPremium && styles.premium,
-          'overflow-hidden', // Task 691 — D34-loses to Card's own unlayered overflow:hidden, see module header
-          isArchived && 'grayscale opacity-60',
+          isArchived && styles.archived,
         )}
         style={{ cursor: onClick ? 'pointer' : undefined }}
       >
@@ -311,8 +310,7 @@ export function MantineListingCardPattern({
         styles.card,
         styles.cardGrid,
         isPremium && styles.premium,
-        'flex flex-col', // Task 691 — D34-loses to Card's own unlayered display:flex/flex-direction:column, see module header
-        isArchived && 'grayscale opacity-60',
+        isArchived && styles.archived,
       )}
       style={{ cursor: onClick ? 'pointer' : undefined }}
     >

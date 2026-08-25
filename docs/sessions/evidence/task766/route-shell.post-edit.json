@@ -1,0 +1,48 @@
+{
+  "label": "post-edit",
+  "baseUrl": "http://127.0.0.1:3000",
+  "route": "/en",
+  "capturedAt": "2026-08-24T20:57:54.068Z",
+  "cells": [
+    {
+      "viewport": "320x812",
+      "width": 320,
+      "height": 812,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "mainCount": 1,
+      "className": "__m__-_R_2ivbdb_",
+      "minHeight": "748px",
+      "paddingBottom": "56px",
+      "display": "block",
+      "rect": {
+        "width": 320,
+        "height": 3246.59375,
+        "top": 97,
+        "left": 0
+      },
+      "resolvedFrom": "inline style: min-height: calc(-4rem + 100vh)"
+    },
+    {
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "mainCount": 1,
+      "className": "__m__-_R_2ivbdb_",
+      "minHeight": "836px",
+      "paddingBottom": "0px",
+      "display": "block",
+      "rect": {
+        "width": 1440,
+        "height": 2712.5625,
+        "top": 65,
+        "left": 0
+      },
+      "resolvedFrom": "inline style: min-height: calc(-4rem + 100vh)"
+    }
+  ]
+}

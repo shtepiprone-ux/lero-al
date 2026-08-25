@@ -1,0 +1,23 @@
+/*
+ * Task 766 (Sprint 65 level 1) — replaces the Tailwind `animate-spin` literal on the pending
+ * `Loader2` icon (was `LocaleSwitcher.tsx:55`). `Loader2` keeps its `size={12}` prop unchanged, so
+ * the SVG geometry does not change (R5); only the className that drives the spin animation moves
+ * from a Tailwind utility to this local keyframe.
+ *
+ * `animate-spin`'s own compiled form is `animation: spin 1s linear infinite;` with `@keyframes
+ * spin { to { transform: rotate(360deg); } }` (Tailwind's own default theme, measured via computed
+ * `animationName`/`-Duration`/`-TimingFunction`/`-IterationCount` before removal — Task 766
+ * §5.1.1 baseline: name=spin, duration=1s, timing=linear, iteration=infinite). Reproduced here
+ * with a local keyframe (not dependent on Tailwind's compiled keyframes, which this task is
+ * removing consumers of) and `var(--motion-duration-spinner)` — the single new `:root` token this
+ * file consumes (globals.css, Task 765's runtime motion block) — in place of a literal `1s`.
+ */
+@keyframes localeSwitcherSpin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.pendingIcon {
+  animation: localeSwitcherSpin var(--motion-duration-spinner) linear infinite;
+}

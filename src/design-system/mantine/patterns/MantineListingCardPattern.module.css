@@ -58,6 +58,25 @@
   border-color: var(--color-badge-premium);
 }
 
+/*
+ * Task 766 (Sprint 65 level 1) — replaces the two `isArchived && 'grayscale opacity-60'` Tailwind
+ * literals (list Card `:187`, grid Card `:315`), one role-named rule shared by both branches
+ * (R4). Card sets no `filter`/`opacity` of its own, so this was never a cascade-winner fight —
+ * per D34 a plain de-Tailwind migration reproduces the utility's OWN cascade layer, so this rule
+ * is wrapped in `@layer utilities` to match Tailwind's `grayscale`/`opacity-60` layer exactly
+ * (unlike `.card`/`.listRow`/`.cardGrid` above, which stay unlayered because THEIR declarations
+ * were measured cascade winners needing to beat Mantine's own unlayered Card CSS).
+ * Values measured via computed-style capture (Task 766 §5.1.1, `Patterns/Mantine/ListingCardPattern`
+ * -> `Default`, id=6 grid archived / id=12 list archived, before removal): `filter: grayscale(1)`,
+ * `opacity: 0.6` — reproduced here exactly, byte-for-byte identical computed result.
+ */
+@layer utilities {
+  .archived {
+    filter: grayscale(1);
+    opacity: 0.6;
+  }
+}
+
 .imageSection img {
   transition: transform 300ms ease-out, opacity 300ms ease-out; /* design-tokens-allow: transition: 300ms — genuine N1, reserved Task 734, not remediated here per Task 717 R7; matches the existing --duration-slow token exactly */
 }
@@ -124,16 +143,19 @@
  * via className). Reproducing a winning declaration unlayered changes nothing (D34: "if it was
  * winning, reproducing it in an unlayered rule changes nothing").
  *
- * THREE declarations are the opposite case and were left OUT of this migration on purpose —
- * D34-losing, reported per AC5, left as literal untouched Tailwind in the .tsx:
- *   - `overflow-hidden` on the list Card (was `:162`) — Card's own unlayered CSS already sets
+ * TWO of the three declarations documented D34-losing here were REMOVED outright by Task 766
+ * (Sprint 65 level 1), not migrated to a module rule — reproducing a losing declaration would be
+ * a no-op new rule for no reason. Measured before removal (Task 766 §5.1.1, computed-style
+ * capture on `Patterns/Mantine/ListingCardPattern` -> `Default`, both `layout` branches):
+ *   - `overflow-hidden` on the list Card (was `:186`) — Card's own unlayered CSS already sets
  *     `overflow: hidden` unconditionally (Card.css, @mantine/core 8.3.18); Tailwind's `@layer
- *     utilities` copy has never won. Same computed value either way (both `hidden`), so this is
- *     a dead-but-harmless utility, not a visible defect — left in place rather than assumed safe
- *     to move, per the letter of D34/AC5.
- *   - `flex`/`flex-col` on the grid Card (was `:290`) — Card's own unlayered CSS already sets
+ *     utilities` copy never won. Measured computed `overflow: hidden` identical with the utility
+ *     present (id=7/12) and, by the same Card mechanism, unaffected by its removal.
+ *   - `flex`/`flex-col` on the grid Card (was `:314`) — Card's own unlayered CSS already sets
  *     `display: flex; flex-direction: column` unconditionally, identical values to the Tailwind
- *     utilities they'd replace. Same reasoning as above.
+ *     utility it replaced. Measured computed `display: flex` / `flexDirection: column` (id=1/6).
+ *
+ * ONE declaration remains the still-untouched, out-of-Task-766-scope case:
  *   - `leading-snug` on both title `Text` elements (was `:205`/`:338`) — Mantine's `Text` sets
  *     `line-height: var(--text-lh, ...)` unconditionally, unlayered; `leading-snug` (`@layer
  *     utilities`) has never won regardless of `size` prop. UNLIKE the two rows above, this one

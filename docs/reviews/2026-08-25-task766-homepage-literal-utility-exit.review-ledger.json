@@ -1,0 +1,571 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 766 - remove the last production Tailwind utility strings from the /[locale] render graph (6 -> 0 across three files) and ship check:homepage-literal-utilities as the control against their return. Reviewed at Revision 5.1.",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "846113faa9251cf3e8ccdfcad0c94286e06cde96",
+    "reviewedRevision": "worktree on top of 846113faa, final inspection 2026-08-25 after Revision 5.1",
+    "reviewedPaths": [
+      "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "src/components/shared/LocaleSwitcher.tsx",
+      "src/components/shared/LocaleSwitcher.module.css",
+      "src/app/globals.css",
+      "src/app/[locale]/layout.tsx",
+      "scripts/check-homepage-literal-utilities.mjs",
+      "scripts/task766-route-shell-probe.mjs",
+      "package.json",
+      "docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md",
+      "docs/backlog.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 8,
+      "verified": 8,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-25-task766-homepage-literal-utility-exit.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "the six live Tailwind utility literals across the three named files",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:183-186",
+          "src/design-system/mantine/patterns/MantineListingCardPattern.tsx:310-313",
+          "src/components/shared/LocaleSwitcher.tsx:56",
+          "src/app/[locale]/layout.tsx:50"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "MantineListingCardPattern.tsx literals (overflow-hidden, flex flex-col, two grayscale opacity-60)",
+          "LocaleSwitcher.tsx animate-spin literal",
+          "src/app/[locale]/layout.tsx min-h-[calc(100vh-4rem)] literal and its design-tokens-allow marker"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A source-text census over three files is not parameterised by any story.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "Source text carries no media guard.",
+          "states": "Static source text with no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "command": "grep -n \"className=\\\"\\|'flex\\|'grayscale\\|overflow-hidden\\|animate-spin\\|min-h-\\|design-tokens-allow\" src/design-system/mantine/patterns/MantineListingCardPattern.tsx src/components/shared/LocaleSwitcher.tsx \"src/app/[locale]/layout.tsx\"",
+          "observable": "Zero matches across all three files - no output, exit 1 from grep. The reviewer ran this independently of the executor's census. The layout.tsx site now reads mih=\"calc(100vh - 4rem)\" with the trailing design-tokens-allow marker deleted, not relocated; grep for design-tokens-allow in scripts/design-tokens-allowlist.json also returns no entry for it.",
+          "freshness": "final worktree on top of 846113faa, re-run by the reviewer 2026-08-25 after Revision 5.1",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "MantineListingCardPattern.tsx literals (overflow-hidden, flex flex-col, two grayscale opacity-60)",
+              "LocaleSwitcher.tsx animate-spin literal",
+              "src/app/[locale]/layout.tsx min-h-[calc(100vh-4rem)] literal and its design-tokens-allow marker"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The literals were moved into a comment, a sibling file, or a variable rather than removed, so the census passes while the utility still ships.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css",
+          "result": "REFUTED. The built CSS carries .MantineListingCardPattern_archived__CQB1x{filter:grayscale(1);opacity:.6} inside @layer utilities and a local localeSwitcherSpin keyframe - project-owned rules, not Tailwind's compiled grayscale/opacity-60/spin utilities. The three source files contain no commented-out literal and no local class-string constant; the gate's own identifier resolver (verified in AC14) would report one if it existed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A source-text census. The generated-semantics question is carried by AC2-AC4, which compares rendered output rather than authored text."
+      }
+    },
+    {
+      "id": "AC2-AC4 / R2-R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F3"],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".archived rule and LocaleSwitcher .pendingIcon keyframe - the replacements for the removed utilities",
+        "diffHunks": [
+          "src/design-system/mantine/patterns/MantineListingCardPattern.module.css:61-79",
+          "src/components/shared/LocaleSwitcher.module.css:15-23",
+          "src/app/globals.css:337"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "listing card grid branch, normal and archived",
+          "listing card list branch, normal and archived",
+          "LocaleSwitcher pending spinner"
+        ],
+        "stories": [
+          "Patterns/Mantine/ListingCardPattern/Default",
+          "Mantine/Primitives/LocaleSwitcher/Default"
+        ],
+        "phases": ["before", "after"],
+        "notApplicable": {
+          "locales": "The rendered-assert matrix already expands locales inside the 16 cells per story that this row compares in full; no locale is compared separately here.",
+          "viewports": "Same - the 16 cells per story are the viewport expansion, compared in full.",
+          "states": "Normal and archived are carried as subjects, and the spinner's pending state is the third subject."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".screenshots/rendered-assert",
+          "command": "for base in <the 32 PNGs of both target stories>; do md5sum \"2026-08-24T10-16/$base\" \"2026-08-24T21-08/$base\"; done",
+          "observable": "32 MATCH, 0 DIFFER - every PNG of both stories is byte-identical between the pre-change capture 2026-08-24T10-16 and the post-change run 2026-08-24T21-08. Byte-identical pixels are a stronger parity statement than the computed-style tables in the session log's sections 3 and 8, and are what this row rests on.",
+          "freshness": "captures dated 2026-08-24, compared 2026-08-25; the post-change capture is on the final product diff, which has not changed since (see AC18)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "listing card grid branch, normal and archived",
+              "listing card list branch, normal and archived",
+              "LocaleSwitcher pending spinner"
+            ],
+            "stories": [
+              "Patterns/Mantine/ListingCardPattern/Default",
+              "Mantine/Primitives/LocaleSwitcher/Default"
+            ],
+            "phases": ["before", "after"]
+          }
+        },
+        {
+          "path": ".screenshots/rendered-assert/2026-08-24T21-08/manifest.json",
+          "command": "node -e \"const m=require('./.screenshots/rendered-assert/2026-08-24T21-08/manifest.json'); ...group m.matrix by story, count verdicts...\"",
+          "observable": "8108 cells total. ListingCardPattern: 16 cells, all verdict=pass. LocaleSwitcher: 96 cells, all verdict=pass - every LocaleSwitcher story, not only Default. Queried by the reviewer directly against the manifest, not read from the executor's report.",
+          "freshness": "final post-change run 2026-08-24T21-08, queried by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "listing card grid branch, normal and archived",
+              "listing card list branch, normal and archived",
+              "LocaleSwitcher pending spinner"
+            ],
+            "stories": [
+              "Patterns/Mantine/ListingCardPattern/Default",
+              "Mantine/Primitives/LocaleSwitcher/Default"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The .archived rule sits in @layer utilities and therefore loses to some unlayered rule that the removed Tailwind utility used to beat, so the archived cards silently lost their grayscale.",
+          "kind": "EXECUTED",
+          "path": ".next/static/css",
+          "result": "REFUTED twice. Mechanically: Mantine's Card sets neither filter nor opacity, so nothing contests the rule, and the removed utility was itself in @layer utilities - the layer choice reproduces the original cascade position rather than changing it. Empirically: the archived cells' PNGs are byte-identical pre/post, which a lost grayscale could not be. Module-scoped @layer utilities is also a pre-existing repo pattern - three other CSS-module chunks in .next/static/css ship one - and the Tailwind chunk declares properties, theme, base, components, utilities in that order."
+        },
+        {
+          "claim": "overflow-hidden and flex flex-col were removed outright rather than reproduced, so the grid and list cards lost display:flex, flex-direction:column or overflow:hidden.",
+          "kind": "EXECUTED",
+          "path": ".screenshots/rendered-assert",
+          "result": "REFUTED for the shipped state, with a recorded dependency. Mantine's own unlayered Card.css sets all three unconditionally at the installed 8.3.18, and the byte-identical PNGs confirm no rendered change. The dependency on a third-party stylesheet is real and is recorded as F3, not asserted away."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility is generated from the replacement rules - they are project-authored CSS-module declarations and a local @keyframes. The before/after comparison is made on rendered pixels, which is a stricter test than compiled-rule equivalence."
+      }
+    },
+    {
+      "id": "AC5 / R6, R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/layout.tsx",
+        "symbol": "Box component=\"main\" min-height source",
+        "diffHunks": ["src/app/[locale]/layout.tsx:50"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "main computed minHeight",
+          "main computed paddingBottom",
+          "the rule that supplies min-height (resolvedFrom)"
+        ],
+        "viewports": ["320x812", "1440x900"],
+        "phases": ["before", "after"],
+        "notApplicable": {
+          "stories": "No Storybook story renders a route layout; the kickoff forbids offering a Storybook command as evidence for this criterion.",
+          "locales": "The probe pins /en; the shell height is locale-independent.",
+          "states": "The route shell has no runtime state relevant to min-height."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task766/route-shell.pre-edit.json",
+          "command": "node -e \"require('./docs/sessions/evidence/task766/route-shell.pre-edit.json')\" and the same for route-shell.post-edit.json",
+          "observable": "Read directly by the reviewer, not from the log's transcript. 320x812: minHeight 748px and paddingBottom 56px in both files; 1440x900: 836px and 0px in both. main rect height is also identical (3246.59375 and 2712.5625). className loses the min-h-[calc(100vh-4rem)] literal, keeping only the Mantine hash. resolvedFrom flips from \".min-h-\\\\[calc\\\\(100vh-4rem\\\\)\\\\] { min-height: calc(-4rem + 100vh) }\" to \"inline style: min-height: calc(-4rem + 100vh)\". httpStatus 200, devServerDetected false, mainCount 1 in all four cells.",
+          "freshness": "retained artifacts from the pre- and post-edit probe runs against next start; re-read by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "main computed minHeight",
+              "main computed paddingBottom",
+              "the rule that supplies min-height (resolvedFrom)"
+            ],
+            "viewports": ["320x812", "1440x900"],
+            "phases": ["before", "after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "resolvedFrom is a cascade resolution, so a flip in its value proves the winning rule changed; if the probe is wrong, AC5's central claim is unfounded.",
+          "kind": "EXECUTED",
+          "path": "scripts/task766-route-shell-probe.mjs",
+          "result": "PARTIALLY UPHELD, and correctly downgraded. The walker returns matches[matches.length - 1] - the last matching rule in document order, not a cascade resolver: no specificity, no layer order, no !important. The result is nonetheless correct for this diff, because pre-edit exactly one rule set min-height and post-edit the inline-style short-circuit is definitive. The executor downgraded the wording in the session log and in the probe header rather than defending the stronger claim. The CSS-Nesting defect the executor found in their own walker (leaf check made unconditional, recursion only when cssRules.length > 0) was re-read in source and is correct."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The Tailwind utility is removed, not replaced by another compiled utility - the value moves to a Mantine inline style. Equivalence is established on the computed value at both viewports, which the retained artifacts carry."
+      }
+    },
+    {
+      "id": "AC14, AC15 / R16",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F2"],
+      "finalSubject": {
+        "path": "scripts/check-homepage-literal-utilities.mjs",
+        "symbol": "foldClassExpression - the class-expression evaluator that replaced collectLiterals",
+        "diffHunks": ["scripts/check-homepage-literal-utilities.mjs:505-680"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Rule 1 value-preserving wrappers",
+          "Rule 2 branching union",
+          "Rule 3 composition preserves literal chunks",
+          "Rule 4 aggregation sites",
+          "Rule 5 const-only binding folding and the mutability boundary",
+          "Revision 1-4 forms, unchanged"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A source-control gate renders nothing.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "No layout is involved.",
+          "states": "The gate is a pure function of source text."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "command": "the shipped script, unmodified, copied to an isolated scratch root with node_modules symlinked to the repo's; each form planted alone into a target path and run: node scripts/check-homepage-literal-utilities.mjs",
+          "observable": "About 60 forms run by the reviewer. Rule 1: as const, satisfies, non-null all exit 1. Rule 2: ||, ??, comma, nested ternary, void 0 ||, !0 && all exit 1; a ternary yields two findings. Rule 3: 'flex ' + 'flex-col', 'flex ' + dynamic, dynamic + ' flex' all exit 1. Rule 4: array, nested array, object key, computed key, spread of an array literal, spread through a const alias chain, spread of a parenthesised as-const array, Mantine classNames value all exit 1. Rule 5: const chain A->B, const array, const object, const in a template substitution all exit 1; let and module-scope var exit 0 as declared. Composition of rules on forms no brief named - template as const, computed key built by concatenation, classNames with +, template in a ternary branch - all exit 1. Genuinely dynamic forms stay quiet: String('flex'), 'flex'.concat, String.raw tag, const object property access, const array index. All ten Revision 1-4 positive forms and all nine negative controls keep their prior results, including the Revision 4 nested-var shadow repro.",
+          "freshness": "shipped Revision 5.1 script (787 lines), run by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Rule 1 value-preserving wrappers",
+              "Rule 2 branching union",
+              "Rule 3 composition preserves literal chunks",
+              "Rule 4 aggregation sites",
+              "Rule 5 const-only binding folding and the mutability boundary",
+              "Revision 1-4 forms, unchanged"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The evaluator is the shape list renamed - it closes exactly the five forms Revision 5's brief listed and nothing else, so a sixth adversarial pass will find a seventh round of holes.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "result": "REFUTED. The decisive test is forms the brief never named. Twelve such compositions - const alias chains, spread through an alias, a computed key built by concatenation, a template carrying as const, classNames with +, a template inside a ternary branch, nested spreads - all exit 1 without being enumerated anywhere. The reviewer found no form that is statically derivable through immutable bindings and still passes, which was the brief's own approval question. The one residual, cn(x = 'flex'), routes through an assignment to a mutable binding and is recorded as F2."
+        },
+        {
+          "claim": "Widening the traversal traded false negatives for false positives on legal code.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "result": "REFUTED. Every permitted form stays at exit 0: styles.card, className={className}, overlay.className, empty and whitespace-only templates, the empty string, classNames with a module identifier, template substitutions holding a member expression, a ternary of members, a parameter or a let. The parameter, destructured, catch and nested-var shadow controls from Revisions 2-4 are all still quiet, and the real tree exits 0. The one false positive that did appear during this cycle - cn(...'overflow-hidden') spreading a string's characters - was found on review and fixed in Revision 5.1 with a dedicated spread-operand proof; re-verified: spread of a string exits 0, spread of a const string exits 0, spread of an array literal or alias exits 1, and a const cycle terminates."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The gate reads authored source and emits exit codes; it generates no CSS, so there is no compiled rule to compare."
+      }
+    },
+    {
+      "id": "AC16 / R17",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-homepage-literal-utilities.mjs",
+        "symbol": "header contract, single fail-open default, and --explain mode",
+        "diffHunks": [
+          "scripts/check-homepage-literal-utilities.mjs:1-170",
+          "scripts/check-homepage-literal-utilities.mjs:726-770"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "single explicit default returning DYNAMIC",
+          "header states the five rules, the fail-open direction and the mutability boundary verbatim",
+          "--explain classifies every inspected site and exits 0"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A CLI mode renders nothing.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "No layout is involved.",
+          "states": "Deterministic CLI output."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "command": "sed -n '505,680p' scripts/check-homepage-literal-utilities.mjs | grep -n 'return \\|default' ; grep -c 'opaque by design' scripts/check-homepage-literal-utilities.mjs docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md ; node scripts/check-homepage-literal-utilities.mjs --explain src/components/shared/LocaleSwitcher.tsx",
+          "observable": "foldClassExpression is one switch ending in exactly one default: return DYNAMIC. The only other bare DYNAMIC return inside the switch is the BinaryExpression case's rule for operators that cannot yield a class string, not a fall-through. The mutability-boundary paragraph appears twice in the script header and three times in the session log. --explain prints both inspected sites in LocaleSwitcher.tsx with source text and classification (both dynamic) and exits 0.",
+          "freshness": "shipped Revision 5.1 script, inspected and run by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "single explicit default returning DYNAMIC",
+              "header states the five rules, the fail-open direction and the mutability boundary verbatim",
+              "--explain classifies every inspected site and exits 0"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The header still claims coverage the evaluator does not have, repeating the Revision 1 defect where template-literal support was overstated.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "result": "REFUTED. The header describes five rules over runtime semantics rather than a node-kind list, states the fail-open direction explicitly (an unrecognised form is classified dynamic and permitted, deliberately, so a TypeScript version bump cannot break the gate), and reproduces the mutability boundary verbatim. Every claim the header makes was exercised in AC14's battery; none was found to overstate. The one form the Revision 5 brief listed that cannot exist - an angle-bracket type assertion - was flagged by the executor with a reproduction showing TSX parsing yields a malformed JsxElement, not a TypeAssertionExpression, rather than being reported as executed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation and CLI behaviour of a source-control script; no CSS is generated."
+      }
+    },
+    {
+      "id": "AC6, AC9, AC10 / R18",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md",
+        "symbol": "section 5 - the failure proof for the control",
+        "diffHunks": ["docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md:170-330"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "positive corpus rows fire with file, line and literal",
+          "negative-control rows stay at exit 0",
+          "declared-opaque rows are recorded as intended, not as silent passes"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A corpus of source forms renders nothing.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "No layout is involved.",
+          "states": "Deterministic gate runs."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md",
+          "command": "grep -c 'EXIT_CODE=' docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md ; grep -c '^| [0-9]' <same file>",
+          "observable": "89 unpiped EXIT_CODE captures and about 50 numbered corpus rows in section 5, replacing the Revision 1-4 plant tables. The corpus re-runs every Revision 1-4 form and records let and module-scope var as intended exit 0 with the mutability boundary cited inline rather than as unexplained passes. The reviewer reproduced the corpus's positive, negative and declared-opaque classes independently (see AC14) and found no row whose recorded result differs from the shipped script's behaviour.",
+          "freshness": "final session log after Revision 5.1, read and cross-run by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "positive corpus rows fire with file, line and literal",
+              "negative-control rows stay at exit 0",
+              "declared-opaque rows are recorded as intended, not as silent passes"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The corpus is the plant model renamed - rows that replay forms the brief named, proving reproduction rather than boundary-holding, exactly as the Revision 1 and Revision 4 plants did.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-literal-utilities.mjs",
+          "result": "REFUTED on the decisive point. The corpus's value is not self-certifying, so the reviewer did not accept it as one: the same classes were re-derived independently against the shipped script, including twelve compositions absent from both the corpus and the brief. The executor also added rows for holes found by their own adversarial probing rather than the brief's - a class string composed inside a template substitution - and fixed it in the same revision instead of deferring it."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "An evidence corpus over gate exit codes; nothing is compiled."
+      }
+    },
+    {
+      "id": "AC7, AC8, AC18 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "the diff's outer boundary - one added :root line, no new exemption, no out-of-scope file",
+        "diffHunks": ["src/app/globals.css:337"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "globals.css shows exactly one added line",
+          "AppImage, Task 764 hover/trigger and Task 765 files absent from the diff",
+          "no new design-tokens-allow marker, allowlist row, @apply or @theme inline consumer"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "A diff boundary renders nothing.",
+          "locales": "No user-facing string is involved.",
+          "viewports": "No layout is involved.",
+          "states": "Static diff inspection."
+        }
+      },
+      "evidence": [
+        {
+          "path": "package.json",
+          "command": "git --no-pager diff --stat HEAD -- src package.json docs/backlog.md ; git --no-pager log --oneline -1",
+          "observable": "Seven tracked files, +40/-17: docs/backlog.md, package.json (+1, the npm script entry), layout.tsx (+1/-1), globals.css (+1/-0), LocaleSwitcher.tsx (+2/-1), MantineListingCardPattern.module.css (+30/-8), MantineListingCardPattern.tsx (+3/-3). AppImage.tsx, appImageConfig.ts and AppImage.module.css are absent. Identical to the original submission's product diff and unchanged across all five revisions, which is what makes the Revision 1-4 rendered evidence still current. HEAD is still 846113faa - nothing was committed or pushed, and no self-approval was recorded.",
+          "freshness": "final worktree, re-run by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "globals.css shows exactly one added line",
+              "AppImage, Task 764 hover/trigger and Task 765 files absent from the diff",
+              "no new design-tokens-allow marker, allowlist row, @apply or @theme inline consumer"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Five revisions of gate work silently touched product code, so the rendered evidence captured at Revision 1 no longer describes the shipped tree.",
+          "kind": "EXECUTED",
+          "path": "src",
+          "result": "REFUTED. The product diffstat is byte-for-byte the same +40/-17 across seven files at Revision 5.1 as at the original submission. Only scripts/check-homepage-literal-utilities.mjs, the session log, the probe header and docs/backlog.md changed after Revision 1, which is why the 2026-08-24T21-08 pixel capture is still the shipped state."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A diff-boundary census over authored files; nothing is compiled from it."
+      }
+    },
+    {
+      "id": "AC12, AC17 / R14, R19",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": ["F1"],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md",
+        "symbol": "the four evidence gaps closed at Revision 1 and the revision history",
+        "diffHunks": ["docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md:1-80"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "section 10 carries the 32/32 MD5 result and a restated conclusion",
+          "section 9 annotates screenshots:responsive:storybook as non-coverage",
+          "section 6 and the probe header carry the document-order caveat",
+          "the Mantine 8.3.18 dependency is recorded as a future-risk note"
+        ],
+        "phases": ["after"],
+        "notApplicable": {
+          "stories": "Documentation renders nothing.",
+          "locales": "The log is not localised.",
+          "viewports": "No layout is involved.",
+          "states": "Static document."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md",
+          "command": "grep -n -i 'md5\\|32/32\\|responsive:storybook\\|document.order\\|8.3.18' docs/sessions/2026-08-25-task766-homepage-literal-utility-exit.md scripts/task766-route-shell-probe.mjs",
+          "observable": "Section 10 carries the md5sum loop, the result 32 MATCH, 0 DIFFER, the manifest counts, and a conclusion restated so the closure rests on byte-identical pixels rather than on the two names being absent from the failure list; the 847-failure disclosure is kept as originally written. Section 9's responsive row is annotated as covering neither touched story, with the grep result, and as not being evidence for AC2-AC4. The document-order caveat appears in section 6 and in the probe's own header. The Mantine note records ^8.3.18 as a caret range pinned only by the lockfile, which is more precise than the revision brief asked for. Five revision notes head the log with their own evidence.",
+          "freshness": "final session log after Revision 5.1, read by the reviewer 2026-08-25",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "section 10 carries the 32/32 MD5 result and a restated conclusion",
+              "section 9 annotates screenshots:responsive:storybook as non-coverage",
+              "section 6 and the probe header carry the document-order caveat",
+              "the Mantine 8.3.18 dependency is recorded as a future-risk note"
+            ],
+            "phases": ["after"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "screenshots:assert exited 1, so the task ships over an unresolved gate failure that the log talks its way past.",
+          "kind": "EXECUTED",
+          "path": ".screenshots/rendered-assert",
+          "result": "REFUTED as an attribution, and the reasoning was corrected rather than defended. The exit code is genuinely 1 on 847 pre-existing failures dated to a 2026-06-19 inventory, and the executor rejected the background notification's masked exit 0 to report it. No full pre-edit baseline of that command exists, so absence-from-the-failure-list was never sufficient; the 32 byte-identical PNGs are, and that is what section 10 now rests on."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation completeness; nothing is compiled."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "NOTE",
+      "requirements": "AC12, AC17 / R14, R19 - the control is registered but nothing runs it automatically",
+      "requirementIds": ["AC12, AC17 / R14, R19"],
+      "evidence": "check:homepage-literal-utilities appears nowhere in .github/workflows/governance-pr.yml or governance-scheduled.yml, while its sibling gates do - check:design-tokens:strict at governance-pr.yml:122 and check:tailwind-runtime-tokens at :125 - and several gates additionally ship a retained self-test step (check:hydration:verify, check:listing-visibility:verify). The new gate has neither. This is deliberately out of Task 766's scope: kickoff section 7 authorises an npm script entry and nothing under .github/, and Sprint 65 specifies executed reversible plants as the failure proof, not CI wiring. It is recorded here because the corpus and the plants are ephemeral by design, so once they are reverted nothing in the tree re-proves detection, and Tasks 767-769 sequence on this gate's claim staying true. --explain makes the boundary auditable but is not a self-test and does not close this. OWNER: file CI wiring and a --verify-gate self-test together as one numbered follow-up - they answer the same question - or record why the gate stays manual-only."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC14, AC15 / R16 - one residual form the evaluator classifies dynamic",
+      "requirementIds": ["AC14, AC15 / R16"],
+      "evidence": "cn(x = 'flex') exits 0, reproduced by the reviewer against the shipped Revision 5.1 script. The value of an assignment expression is its right operand, so the expression is statically a class string. It is recorded rather than fixed for two reasons: the value reaches the site through an assignment to a mutable binding, which section 4's boundary places outside the evaluator's proof model, and the form is not reachable in practice. If the owner wants it closed it is a rule inside the existing BinaryExpression case (EqualsToken folds its right operand), not a new rule and not a further revision round - the alternative, opening Revision 6 for one absurd form, is the enumeration pattern this task deliberately stopped. No other form derivable through immutable bindings was found to pass in about 60 probes."
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC2-AC4 / R2-R5 - an undefended dependency on a third-party stylesheet",
+      "requirementIds": ["AC2-AC4 / R2-R5"],
+      "evidence": "overflow-hidden and flex flex-col were removed outright rather than reproduced, on the measured ground that Mantine's own unlayered Card.css sets display:flex, flex-direction:column and overflow:hidden unconditionally. The measurement is real and the pixels confirm it, but package.json:98 declares \"@mantine/core\": \"^8.3.18\" - a caret range pinned only by the lockfile, not a hard pin - and after this diff no gate, story assertion or in-code comment guards the dependency; only the module header's prose records it. A Mantine minor that changes Card's own CSS would regress the grid and list cards silently, and screenshots:assert's 847-failure noise floor is not a reliable detector. Recorded as a version-upgrade risk, not a defect of this task, and not something Task 766 is asked to fix."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC2-AC4 / R2-R5",
+    "reviewer": "Opus"
+  }
+}

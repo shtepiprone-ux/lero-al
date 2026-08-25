@@ -334,6 +334,7 @@
   --motion-duration-fast: 100ms;
   --motion-duration-base: 200ms;
   --motion-duration-slow: 300ms;
+  --motion-duration-spinner: 1s; /* Task 766 — LocaleSwitcher pending icon's local @keyframes duration, measured from Tailwind's removed `animate-spin` (1s linear infinite) before removal */
   --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);

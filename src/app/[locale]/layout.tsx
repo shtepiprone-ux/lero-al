@@ -47,7 +47,7 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={initialUser}>
         <>
           <Header />
-          <Box component="main" className="min-h-[calc(100vh-4rem)]" pb={{ base: 'var(--space-14)', md: 0 }}> {/* design-tokens-allow: min-h-[calc(100vh-4rem)] — viewport-minus-header height, no scale token */}
+          <Box component="main" mih="calc(100vh - 4rem)" pb={{ base: 'var(--space-14)', md: 0 }}>
             {children}
           </Box>
           <Footer />

@@ -1,16 +1,1 @@
-[
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-sm" },
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-sm--line-height" },
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-xl" },
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-xl--line-height" },
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-xs" },
-  { "file": "src/components/layout/FooterView.module.css", "property": "--text-xs--line-height" },
-  { "file": "src/components/layout/HeaderView.module.css", "property": "--text-sm" },
-  { "file": "src/components/layout/HeaderView.module.css", "property": "--text-sm--line-height" },
-  { "file": "src/components/layout/HeaderView.module.css", "property": "--text-xl" },
-  { "file": "src/components/layout/HeaderView.module.css", "property": "--text-xl--line-height" },
-  { "file": "src/components/layout/MobileNavDrawer.module.css", "property": "--text-sm" },
-  { "file": "src/components/layout/MobileNavDrawer.module.css", "property": "--text-sm--line-height" },
-  { "file": "src/design-system/mantine/patterns/MantineCopyIdButton.module.css", "property": "--font-mono" },
-  { "file": "src/modules/auth/components/AuthSheet.module.css", "property": "--radius-lg" }
-]
+[]

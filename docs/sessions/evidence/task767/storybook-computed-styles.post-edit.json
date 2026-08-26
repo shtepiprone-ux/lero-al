@@ -1,0 +1,100 @@
+﻿[
+  {
+    "story": "FooterView",
+    "selector": "a[class*=\"brandLink\"]",
+    "computed": {
+      "fontSize": "20px",
+      "lineHeight": "28px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "p[class*=\"tagline\"]",
+    "computed": {
+      "fontSize": "14px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "p[class*=\"sectionHeading\"]",
+    "computed": {
+      "fontSize": "12px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "a[class*=\"footerLink\"]",
+    "computed": {
+      "fontSize": "14px",
+      "lineHeight": "20px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "p[class*=\"copyright\"]",
+    "computed": {
+      "fontSize": "12px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "span[class*=\"socialLabel\"]",
+    "computed": {
+      "fontSize": "12px",
+      "lineHeight": "16px"
+    }
+  },
+  {
+    "story": "FooterView",
+    "selector": "a[class*=\"socialLink\"]",
+    "computed": {
+      "fontSize": "12px",
+      "lineHeight": "16px"
+    }
+  },
+  {
+    "story": "HeaderView",
+    "selector": "a[class*=\"logo\"]",
+    "computed": {
+      "fontSize": "20px",
+      "lineHeight": "28px"
+    }
+  },
+  {
+    "story": "HeaderView",
+    "selector": "a[class*=\"navLink\"]",
+    "computed": {
+      "fontSize": "14px",
+      "lineHeight": "20px"
+    }
+  },
+  {
+    "story": "MobileNavDrawer",
+    "selector": "a[class*=\"navLink\"]",
+    "computed": {
+      "fontSize": "14px",
+      "lineHeight": "20px"
+    }
+  },
+  {
+    "story": "CopyIdButton",
+    "selector": "button[data-copy-id]",
+    "computed": {
+      "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+    }
+  },
+  {
+    "story": "HeroSearch",
+    "selector": ".hero-search",
+    "computed": {
+      "maxWidth": "768px"
+    }
+  },
+  {
+    "story": "AuthSheet/Login",
+    "selector": "._logoImg_n4gop_131 (injected probe)",
+    "computed": {
+      "borderRadius": "12px"
+    }
+  }
+]

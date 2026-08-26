@@ -28,10 +28,10 @@ export default async function HomePage() {
       <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
         <Box className="container-wide">
           <Box maw={768} mx="auto" ta="center" mb={40}>
-            <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--text-3xl)', sm: 'var(--text-4xl)', md: 'var(--text-5xl)' }} mb="md">
+            <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--homepage-runtime-font-size-3xl)', sm: 'var(--homepage-runtime-font-size-4xl)', md: 'var(--homepage-runtime-font-size-5xl)' }} mb="md">
               {t('hero_title')}
             </Title>
-            <Text c="white" fw={700} fz={{ base: 'var(--text-xl)', sm: 'var(--text-2xl)' }} maw={576} mx="auto">
+            <Text c="white" fw={700} fz={{ base: 'var(--homepage-runtime-font-size-xl)', sm: 'var(--homepage-runtime-font-size-2xl)' }} maw={576} mx="auto">
               {t('hero_subtitle')}
             </Text>
           </Box>

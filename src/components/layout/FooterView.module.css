@@ -48,9 +48,9 @@
 
 /* Site #5 — brand <Anchor unstyled component={Link}> */
 .brandLink {
-  font-size: var(--text-xl); /* text-xl — --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
+  font-size: var(--homepage-runtime-font-size-xl); /* Task 767 — was Tailwind-owned --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
   font-weight: 700; /* font-bold */
-  line-height: var(--text-xl--line-height); /* measured 28px @20px font, I2; --text-xl--line-height = 1.75rem (§22.2) */
+  line-height: var(--homepage-runtime-line-height-xl); /* measured 28px @20px font, I2; Task 767 — was --text-xl--line-height = 1.75rem (§22.2) */
   width: fit-content; /* w-fit */
 }
 
@@ -67,7 +67,7 @@
 /* Site #8 — tagline <Text unstyled> (renders <p>, ambient p{} rule already supplies 1.625,
    restated here to match the source's explicit `leading-relaxed`) */
 .tagline {
-  font-size: var(--text-sm); /* text-sm — --text-sm = 0.875rem (§22.2); line-height stays 1.625 (leading-relaxed, NOT --text-sm--line-height — A2: this rule's line-height was never the paired token, no change) */
+  font-size: var(--homepage-runtime-font-size-sm); /* Task 767 — was Tailwind-owned --text-sm = 0.875rem (§22.2); line-height stays 1.625 (leading-relaxed, NOT the paired line-height token — A2: this rule's line-height was never the paired token, no change) */
   line-height: 1.625; /* leading-relaxed */
   color: var(--muted-foreground);
   max-width: 13.75rem; /* max-w-55 — measured 220px, I2 */ /* design-tokens-allow: max-width: 13.75rem — Tailwind max-w-55 compiled value, no §22.1 spacing token names 13.75rem (Task 715) */
@@ -75,7 +75,7 @@
 
 /* Sites #9 / #11 — nav/info section heading <Text unstyled> (shared, renders <p>) */
 .sectionHeading {
-  font-size: var(--text-xs); /* text-xs — --text-xs = 0.75rem (§22.2); no line-height on this rule, none to pair */
+  font-size: var(--homepage-runtime-font-size-xs); /* Task 767 — was Tailwind-owned --text-xs = 0.75rem (§22.2); no line-height on this rule, none to pair */
   font-weight: 600; /* font-semibold */
   text-transform: uppercase;
   letter-spacing: 0.1em; /* tracking-widest — measured 1.2px @12px font, I2 */ /* design-tokens-allow: letter-spacing: 0.1em — tracking-widest compiled value, no §22.2 tracking token names 0.1em (tight/normal/wide only, Task 715) */
@@ -91,8 +91,8 @@
 
 /* Site #1 — FooterLink_ <Anchor unstyled component={Link}> */
 .footerLink {
-  font-size: var(--text-sm); /* text-sm — --text-sm = 0.875rem (§22.2), paired with line-height below (A2) */
-  line-height: var(--text-sm--line-height); /* measured 20px @14px font, I2; --text-sm--line-height = 1.25rem (§22.2) */
+  font-size: var(--homepage-runtime-font-size-sm); /* Task 767 — was Tailwind-owned --text-sm = 0.875rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--homepage-runtime-line-height-sm); /* measured 20px @14px font, I2; Task 767 — was --text-sm--line-height = 1.25rem (§22.2) */
   color: var(--muted-foreground);
   width: fit-content; /* w-fit */
   transition-property: color, background-color, border-color, outline-color,
@@ -111,22 +111,22 @@
 
 /* Site #14 — copyright <Text unstyled> (renders <p>) */
 .copyright {
-  font-size: var(--text-xs); /* text-xs — --text-xs = 0.75rem (§22.2); no line-height on this rule, none to pair */
+  font-size: var(--homepage-runtime-font-size-xs); /* Task 767 — was Tailwind-owned --text-xs = 0.75rem (§22.2); no line-height on this rule, none to pair */
   color: var(--muted-foreground);
 }
 
 /* Site #15 — social label <Text unstyled component="span"> (visibleFrom="sm" replaces
    `hidden sm:block`) */
 .socialLabel {
-  font-size: var(--text-xs); /* text-xs — --text-xs = 0.75rem (§22.2), paired with line-height below (A2) */
-  line-height: var(--text-xs--line-height); /* measured 16px @12px font, I2; --text-xs--line-height = 1rem (§22.2) */
+  font-size: var(--homepage-runtime-font-size-xs); /* Task 767 — was Tailwind-owned --text-xs = 0.75rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--homepage-runtime-line-height-xs); /* measured 16px @12px font, I2; Task 767 — was --text-xs--line-height = 1rem (§22.2) */
   color: var(--muted-foreground);
 }
 
 /* Site #16 — social <Anchor unstyled> */
 .socialLink {
-  font-size: var(--text-xs); /* text-xs — --text-xs = 0.75rem (§22.2), paired with line-height below (A2) */
-  line-height: var(--text-xs--line-height); /* measured 16px @12px font, I2; --text-xs--line-height = 1rem (§22.2) */
+  font-size: var(--homepage-runtime-font-size-xs); /* Task 767 — was Tailwind-owned --text-xs = 0.75rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--homepage-runtime-line-height-xs); /* measured 16px @12px font, I2; Task 767 — was --text-xs--line-height = 1rem (§22.2) */
   color: var(--muted-foreground);
   transition-property: color, background-color, border-color, outline-color,
     text-decoration-color, fill, stroke; /* transition-colors — measured, I2 */

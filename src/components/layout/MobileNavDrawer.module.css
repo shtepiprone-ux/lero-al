@@ -1,8 +1,8 @@
 /* navLinkClass reproduction (D28 mechanism-only): text-foreground/80 is an opacity-modified
    token (D35 family) — reproduced as the color-mix() expression, not aliased to a bare var(). */
 .navLink {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
+  font-size: var(--homepage-runtime-font-size-sm); /* Task 767 — was Tailwind-owned --text-sm */
+  line-height: var(--homepage-runtime-line-height-sm); /* Task 767 — was --text-sm--line-height */
   font-weight: 500;
   color: color-mix(in oklab, var(--foreground) 80%, transparent);
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* --tw-gradient-from/via/to removed (Task 762 Revision 1, R5/E-1): never declared anywhere in this repo (grep-confirmed), so they never actually watch a real transition */

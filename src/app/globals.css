@@ -339,6 +339,28 @@
   --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
 
+  /* ── Homepage runtime typography/geometry tokens (Task 767 — Sprint 65 level 2) ──────
+     Project-owned runtime tokens that survive Tailwind's removal. Every value below is
+     copied verbatim from its prior Tailwind-owned source (kickoff §3.2/§5.1) — none is a
+     restyle. @theme inline keeps its own --text-N and --font-mono declarations untouched: it
+     remains the alias layer for legacy Tailwind utilities still compiled on other routes;
+     the Homepage consumers below no longer read from it. */
+  --homepage-runtime-font-size-xs: 0.75rem;
+  --homepage-runtime-line-height-xs: 1rem;
+  --homepage-runtime-font-size-sm: 0.875rem;
+  --homepage-runtime-line-height-sm: 1.25rem;
+  --homepage-runtime-font-size-xl: 1.25rem;
+  --homepage-runtime-line-height-xl: 1.75rem;
+  --homepage-runtime-font-size-2xl: 1.5rem;
+  --homepage-runtime-font-size-3xl: 1.875rem;
+  --homepage-runtime-font-size-4xl: 2.25rem;
+  --homepage-runtime-font-size-5xl: 3rem;
+  --homepage-runtime-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* --container-3xl had NO declaration anywhere in this repository — it resolved only
+     through Tailwind's shipped theme.css (node_modules/tailwindcss/theme.css:341, 48rem).
+     This is the exact condition Homepage level 2 exists to remove. */
+  --homepage-runtime-search-max-width: 48rem;
+
   /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
   /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
      Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this

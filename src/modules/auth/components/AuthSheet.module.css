@@ -131,7 +131,7 @@
 .logoImg {
   height: 2.25rem; /* design-tokens-allow: height: 2.25rem — Tailwind's compiled h-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
   width: 2.25rem; /* design-tokens-allow: width: 2.25rem — Tailwind's compiled w-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius); /* Task 767 — was Tailwind-owned --radius-lg; --radius-lg: var(--radius) already (globals.css), so this is a rename with no value change (§3.3) */
   object-fit: contain;
   border: 1px solid var(--border); /* design-tokens-allow: border: 1px — Tailwind's bare `border` default hairline width; no spacing or radius token models a border width */
   background-color: var(--card);
@@ -143,7 +143,7 @@
 .logoPlaceholder {
   height: 2.25rem; /* design-tokens-allow: height: 2.25rem — Tailwind's compiled h-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
   width: 2.25rem; /* design-tokens-allow: width: 2.25rem — Tailwind's compiled w-9 (36px) verbatim; no --spacing-* token models this component-specific tile size */
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius); /* Task 767 — was Tailwind-owned --radius-lg; --radius-lg: var(--radius) already (globals.css), so this is a rename with no value change (§3.3) */
   border: 1px solid var(--border); /* design-tokens-allow: border: 1px — Tailwind's bare `border` default hairline width; no spacing or radius token models a border width */
   background-color: var(--card);
   display: flex;

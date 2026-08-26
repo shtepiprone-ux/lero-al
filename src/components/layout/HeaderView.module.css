@@ -69,8 +69,8 @@
   align-items: center;
   gap: var(--space-1); /* gap-1 — measured 4px, I2; --space-1 = 0.25rem (§22.1) */
   font-weight: 700; /* font-bold */
-  font-size: var(--text-xl); /* text-xl — measured 20px, I2; --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
-  line-height: var(--text-xl--line-height); /* text-xl's own line-height (compiled Tailwind output), I2; --text-xl--line-height = 1.75rem (§22.2) */
+  font-size: var(--homepage-runtime-font-size-xl); /* Task 767 — was Tailwind-owned --text-xl, measured 20px, I2; --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--homepage-runtime-line-height-xl); /* Task 767 — was --text-xl--line-height (compiled Tailwind output), I2; = 1.75rem (§22.2) */
 }
 
 /* Site #6 — brand <Text unstyled component="span"> */
@@ -92,8 +92,8 @@
 
 /* Sites #1 / #2 — NavLinks <Anchor unstyled component={Link}> (shared) */
 .navLink {
-  font-size: var(--text-sm); /* text-sm — measured 14px, I2; --text-sm = 0.875rem (§22.2), paired with line-height below (A2) */
-  line-height: var(--text-sm--line-height); /* text-sm's own line-height (compiled Tailwind output), I2; --text-sm--line-height = 1.25rem (§22.2) */
+  font-size: var(--homepage-runtime-font-size-sm); /* Task 767 — was Tailwind-owned --text-sm, measured 14px, I2; --text-sm = 0.875rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--homepage-runtime-line-height-sm); /* Task 767 — was --text-sm--line-height (compiled Tailwind output), I2; = 1.25rem (§22.2) */
   font-weight: 500; /* font-medium */
   color: color-mix(in oklab, var(--foreground) 80%, transparent); /* text-foreground/80 */
   transition-property: color, background-color, border-color, outline-color, text-decoration-color,

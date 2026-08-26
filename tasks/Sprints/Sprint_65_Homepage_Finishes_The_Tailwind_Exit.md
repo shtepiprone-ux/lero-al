@@ -66,7 +66,7 @@ to Tailwind — and end with an honest decision about the global compiler rather
 | Work | Actual state | Boundary this sprint enforces |
 |---|---|---|
 | 757 / 757R — `AuthSheet` | ✅ `APPROVED WITH NOTES` 2026-08-21 | Not touched, except for an explicitly new defect. |
-| 763 — `AppImage` | ✅ `APPROVED WITH NOTES` 2026-08-22 | `AppImage.tsx`, `appImageConfig.ts` and `AppImage.module.css` stay byte-unmodified in 766-768 — **subject to D65-D**, which must decide before 768 whether that file's one `var(--space-0)` reference is carved out or excluded from the level-3 claim. Task 766 is unaffected. |
+| 763 — `AppImage` | ✅ `APPROVED WITH NOTES` 2026-08-22 | `AppImage.tsx` and `appImageConfig.ts` stay byte-unmodified. D65-D permits Task 768's sole `AppImage.module.css` exception — `.imageLayer` `inset: var(--space-0)` → `inset: 0` — then the freeze resumes; no other AppImage declaration is in scope. |
 | 764 — listing hover / trigger area | ✅ `APPROVED` 2026-08-24, in `main` (`3bf769858`, `d652faad9`) | `listing` hover, `.cardGrid` scale and the `imageActions` slot are not re-derived. |
 | 765 — motion/radius runtime tokens | ✅ `APPROVED WITH NOTES` 2026-08-24, in `main` (`7b9a13c37`) | Its `:root` tokens are consumed, never rewritten; its P3″ control is not re-litigated. |
 
@@ -81,24 +81,27 @@ decided, no task in this sprint may quietly add it to scope.
 | **D65-A** | ⚠️ **PENDING** | Does `PerfDevOverlay.tsx` (dev-only, returns `null` in production) belong to the Homepage production exit criterion? Until decided, it is out of scope for every task here. |
 | **D65-B** | ✅ **DECIDED 2026-08-24** | The 766-769 package is filed as Sprint 65, not as an extension of Sprint 63. Sprint 63's goal (`763`/`764`) is closed; a task is assigned by goal fit, not by adjacent number. Supersedes the draft header of the Task 766 kickoff, which read "Sprint 63". |
 | **D65-C** | ✅ **DECIDED 2026-08-24** | Task 667 is not duplicated by a file in this sprint. Either the owner re-scopes/unblocks 667, or Sprint 59 closes with it. Route-level certification stays with 667. |
-| **D65-D** | ⚠️ **PENDING — must be resolved before Task 768 is filed** | §4 freezes `AppImage.module.css` for 766-768, but that file **is** a level-3 consumer: `src/components/ui/AppImage.module.css:142` declares `inset: var(--space-0)`, and its own header at `:34` documents `--space-0` as living in `@theme inline` at `globals.css:128`. The freeze and the level-3 exit claim cannot both stand. Resolve one way or the other: either grant Task 768 a **narrow** carve-out for exactly that one spacing reference (Task 763's motion/radius work stays untouched), or exclude `AppImage.module.css` from the level-3 exit claim and say so in level 3's definition. Does **not** affect Task 766, whose §8 excludes the file outright. |
+| **D65-D** | ✅ **CLOSED 2026-08-26** | Permit Task 768's one narrow AppImage change: replace `.imageLayer` `inset: var(--space-0)` with `inset: 0`. The computed 0px value is preserved; motion, radius, variants, loading, markup and every other declaration remain frozen. No later task may cite this decision to touch a second AppImage line. |
+| **D65-E** | ✅ **DECIDED 2026-08-26** | One-task exception to rule 1 for Task 768 only: it adds no permanent detector. It must retain fail-closed pre/post comparator evidence; durable expected-zero AppImage control transfers to Task 770's fixed-manifest ownership gate. |
 
 ## 6. Tasks
 
 | # | State | What |
 |---|---|---|
-| **766** | 📝 **FILED 2026-08-24 — ready for executor** | **Level 1 — remove the last production Tailwind utility strings.** Six live occurrences in three files → zero, no visual change, plus a narrow AST-based `check:homepage-literal-utilities` guard over exactly those three files. Kickoff: `Sprint_65_kickoff_prompt_Task_766_Homepage_Literal_Utility_Exit.md` |
-| 767 | candidate — **not filed** | **Level 2 — runtime-token exit.** `check:tailwind-runtime-tokens` must see TS/TSX and hold an empty baseline; the Class-2 references inside route scope must be gone. Re-measure the Sprint 63 count of 20 before filing. |
-| 768 | candidate — **not filed**, blocked on **D65-D** | **Level 3 — `@theme inline` runtime exit.** Each Class-3 `(file, token)` pair inside route scope gets an exact `:root` replacement, proven by a new gate. Re-measure the Sprint 63 counts (43 unique pairs / 80 occurrences) before filing, and resolve D65-D first — one of those pairs lives in the `AppImage.module.css` this sprint otherwise freezes. |
-| 769 | candidate — **not filed** | **Level 4 — global Tailwind retirement readiness.** Produces a decision, not a deletion. |
+| **766** | ✅ **APPROVED WITH NOTES 2026-08-25**, merged to `main` @ `792588a3f` | **Level 1 — last production Tailwind utility strings.** Six live occurrences in three files → zero with no visual change; the bounded AST control is `check:homepage-literal-utilities`. |
+| 767 | ✅ **APPROVED WITH NOTES 2026-08-26**, merged to `main` @ `39dafa795` | **Level 2 — runtime-token exit.** 20 pairs/26 refs → 0/0; the scanner now sees its TSX inputs and holds an empty baseline. |
+| 768 | 📝 **FILED 2026-08-26 — ready for executor** | **D65-D AppImage spacing closure.** The one permitted `AppImage.module.css` read moves from `var(--space-0)` to native `0`; Level-3 census becomes 42 pairs / 79 uses. |
+| 769 | candidate — **not filed** | **Task-767 scanner hardening.** Make missing configured TSX inputs fatal and prevent Mantine theme variables being classified as Tailwind runtime reads. |
+| 770 | candidate — **not filed** | **Level 3 — `@theme inline` runtime exit.** Migrate the fixed 42-pair/79-use manifest and ship its ownership gate, including D65-E's AppImage expected-zero negative plant. |
+| 771 | candidate — **not filed** | **Global Tailwind retirement readiness.** Produce the honest decision, not a deletion. |
 | 667 | reserved / BLOCKED in **Sprint 59** | Route-level inventory and certification. Referenced here, owned there. See D65-C. |
 
-**Numbers 767-769 are not reserved by this sprint.** Before each is filed, its owner re-reads the registry in
-`docs/backlog.md` and takes the then-next free number. Only 766 is registered.
+**Numbers 769-771 are not reserved by this sprint.** Before each is filed, its owner re-reads the registry in
+`docs/backlog.md` and takes the then-next free number. Tasks 766-768 are registered.
 
-**Sequencing.** 766 → 767 → 768 → 769, strictly. Each step's output is the next step's precondition, and running two
-of them concurrently would put both inside `globals.css` and the same three source files at once — the collision
-rule 5 exists to prevent.
+**Sequencing.** 766 → 767 → 768 → 769 → 770 → 771, strictly. Each step's output is the next step's precondition;
+Task 768 is the isolated AppImage exception, Task 769 hardens the scanner before Task 770 widens Level-3 scope, and
+Task 771 is read-only decision work after the migration evidence is complete.
 
 ## 7. Preconditions verified at sprint open
 

@@ -1,0 +1,10 @@
+expected target cells: 44
+expected keys missing from PRE manifest: 0 []
+expected keys missing from POST manifest: 0 []
+PRE target-cell count: 44
+POST target-cell count: 44
+target-scope verdict/failReason deltas: 0
+non-target-scope deltas (reported as evidence only, not evaluated against AC4): 2
+  mantine-primitives-popover--default|sq|mobile-390 fail/blank-canvas -> pass/
+  mantine-primitives-tabs--default|sq|mobile-390 fail/blank-canvas -> pass/
+AC4_APPIMAGE_EXIT=0

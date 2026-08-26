@@ -1,0 +1,5 @@
+pre cells 1332 post cells 1332
+verdict/failReason deltas: 2
+  mantine-primitives-popover--default|sq|mobile-390 fail/blank-canvas -> pass/
+  mantine-primitives-tabs--default|sq|mobile-390 fail/blank-canvas -> pass/
+AC4_EXIT=1

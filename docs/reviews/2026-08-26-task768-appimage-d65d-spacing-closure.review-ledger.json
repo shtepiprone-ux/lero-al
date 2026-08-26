@@ -1,0 +1,602 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task 768 - AppImage D65-D spacing closure: replace .imageLayer's inset: var(--space-0) with the native zero literal inset: 0 in src/components/ui/AppImage.module.css, closing that file's only Class-3 (@theme inline) dependency, with no globals.css change, no new token, and no new detector, marker or baseline - plus Task 768R, the owner clarification restricting AC4's pass/fail criterion to the fixed 44-cell AppImage-bearing target set",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "b5ac6903b26ff2b4f8e8f64f6e1d88ffec893d60",
+  "reviewedRevision": "uncommitted worktree on top of b5ac6903b26ff2b4f8e8f64f6e1d88ffec893d60 ('docs(Task768): file the AppImage D65-D spacing closure kickoff'), which was HEAD throughout the review. src/ is unchanged since Task 767 (git diff --quiet 31544b316..HEAD -- src exits 0), so the only src/ delta under review is this task's. The worktree carries four paths: one modified file under src/, docs/backlog.md, this task's session log and its evidence directory. Nothing is committed; committing and pushing are owner-only.",
+  "reviewedPaths": [
+   "src/components/ui/AppImage.module.css",
+   "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+   "docs/sessions/evidence/task768/",
+   "docs/backlog.md"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 6,
+   "verified": 6,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm run check:review-ledger",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1, R2",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F8"
+   ],
+   "finalSubject": {
+    "path": "src/components/ui/AppImage.module.css",
+    "symbol": "the single .imageLayer inset declaration plus the two inventory comments",
+    "diffHunks": [
+     "src/components/ui/AppImage.module.css @@ -31,8 +31,9 @@ (header Class-3 inventory row rewritten to record closure)",
+     "src/components/ui/AppImage.module.css @@ -135,11 +136,11 @@ (rule comment rewritten; inset: var(--space-0) -> inset: 0)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "the whole worktree under src/"
+    ],
+    "phases": [
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "src/components/ui/AppImage.module.css",
+     "command": "git status --porcelain ; git diff --name-only -- src ; git diff --stat -- src ; git diff -- src",
+     "observable": "git status --porcelain returns exactly four rows (' M docs/backlog.md', ' M src/components/ui/AppImage.module.css', '?? docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md', '?? docs/sessions/evidence/task768/'). git diff --name-only -- src returns exactly one path, src/components/ui/AppImage.module.css. git diff --stat -- src: 1 file changed, 6 insertions(+), 5 deletions(-). The full diff is the two hunks named above and nothing else: one changed declaration (inset: var(--space-0) -> inset: 0) and two comment edits. No second declaration, no second file under src/, no globals.css.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "the whole worktree under src/"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "src/components/ui/AppImage.module.css",
+     "command": "git diff --check -- src/components/ui/AppImage.module.css ; echo EXIT=$? ; file src/components/ui/AppImage.module.css",
+     "observable": "git diff --check exit 0 - no whitespace error, no conflict marker, no trailing-whitespace introduction. file reports 'Unicode text, UTF-8 text'; no line-ending or encoding damage was introduced by the edit.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "the whole worktree under src/"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The one-file diff is an artefact of reading git diff -- src rather than the whole tree; a second source file could have been changed outside src/ and hidden by the path filter.",
+     "kind": "EXECUTED",
+     "path": "src/components/ui/AppImage.module.css",
+     "result": "REFUTED. Unfiltered git status --porcelain was run and returns four rows total. The only non-docs row is AppImage.module.css. The other three are docs/backlog.md, this task's session log and its evidence directory, all three declared in the session log's Files Changed table. No script, gate, baseline, marker, config or Storybook source appears."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "AC1 is a diff-shape criterion over source text; there is no computed or compiled artefact for it to compare."
+   }
+  },
+  {
+   "id": "AC2 / R1",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/components/ui/AppImage.module.css",
+    "symbol": "every remaining --space-0 occurrence in AppImage.module.css",
+    "diffHunks": [
+     "src/components/ui/AppImage.module.css @@ -31,8 +31,9 @@ (header Class-3 inventory row rewritten to record closure)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "src/components/ui/AppImage.module.css",
+     "every other --space-0 site under src/"
+    ],
+    "phases": [
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "src/components/ui/AppImage.module.css",
+     "command": "grep -rn -- '--space-0' src/ ; grep -rno -- 'var(--space-0)' src/ | wc -l",
+     "observable": "AppImage.module.css retains --space-0 on exactly two lines, :34 and :140, both inside comments; zero declarations in the file read the name. Across src/ there are 12 var(--space-0) occurrences in total, of which those two are comments, leaving 10 live reads - matching the session log's 11 -> 10 claim. The 10 are globals.css:151 (--spacing-0 alias), MobileBottomNavView.module.css:58,59,60,152, HeroSearchView.module.css:95,99 and MantineListingCardPattern.module.css:302,386,392.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "src/components/ui/AppImage.module.css",
+       "every other --space-0 site under src/"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "src/app/globals.css",
+     "command": "node - <<'EOF' (brace-matching block scan of globals.css resolving the enclosing at-rule/selector of each declaration) EOF",
+     "observable": "--space-0 is declared exactly once in the tree, at globals.css:128, and the enclosing block resolves to '@theme inline' - confirming the dependency this task closed was genuinely Class-3. Its value is 0px, so inset: 0 is value-identical on all four sides. The reviewer additionally resolved every other var() this file still reads: --muted (globals.css:407, ':root'), --radius-pill (:333, ':root'), --motion-ease-standard (:338, ':root'), --motion-duration-slow (:336, ':root'). None is inside @theme inline, so the header's claim that the file now carries no Class-3 dependency is factually correct and not merely asserted.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "src/components/ui/AppImage.module.css",
+       "every other --space-0 site under src/"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The file's new header claim - that AppImage.module.css no longer has any Class-3 dependency - is asserted from the removed line alone and never checked against the file's four remaining var() reads, one of which could also be @theme inline-declared.",
+     "kind": "EXECUTED",
+     "path": "src/app/globals.css",
+     "result": "REFUTED. All four remaining reads were resolved to their declaration sites by a brace-matching scan of globals.css, not by grep: --muted :407, --radius-pill :333, --motion-ease-standard :338, --motion-duration-slow :336, each inside a plain ':root' block. Only --space-0 (:128) sits inside @theme inline. The header claim holds."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "A name-level census over source text; no compiled utility is added or removed, so there is no generated-CSS candidate to compare."
+   }
+  },
+  {
+   "id": "AC3 / R3",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F4"
+   ],
+   "finalSubject": {
+    "path": "src/components/ui/AppImage.module.css",
+    "symbol": "imgComputed.inset and the byte-equality of containerComputed / imgComputed / imgState / hover1024en across the pre and post captures",
+    "diffHunks": [
+     "src/components/ui/AppImage.module.css @@ -135,11 +136,11 @@ (rule comment rewritten; inset: var(--space-0) -> inset: 0)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "mantine-primitives-listingcard--default",
+     "mantine-primitives-popularlocationsview--default",
+     "admin-admincompaniesmanager--default"
+    ],
+    "phases": [
+     "pre-edit",
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task768/capture-pre.json",
+     "command": "node - (reviewer's own comparator, written from scratch against the two retained captures, walking story -> widths[width][locale] -> [index] and hover1024en, comparing containerComputed / imgComputed / imgState and separately src / imgClass / containerClass)",
+     "observable": "104 image records compared across the three stories. geometry/state/hover diffs: 0. POST imgComputed.inset != 0px: 0. The reviewer did NOT read the author's ac3-comparator-output.txt to reach this - the numbers were re-derived from capture-pre.json and capture-post.json directly and then found to agree with it.",
+     "freshness": "reviewer run 2026-08-26 against the retained captures",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "mantine-primitives-listingcard--default",
+       "mantine-primitives-popularlocationsview--default",
+       "admin-admincompaniesmanager--default"
+      ],
+      "phases": [
+       "pre-edit",
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task768/capture-post.json",
+     "command": "node - (same comparator, class strings compared raw and then under the kickoff's mandated _<name>_<moduleHash>_<line> normalisation)",
+     "observable": "Raw class strings differ on all 208 class fields; under the normalisation AC3 itself mandates ('both suffixes are expected to change in this task while the symbolic class list must not') the diff is 0. The reviewer confirmed the change is confined to one module: the only hash that moved is AppImage.module.css's own, 1gyx9 -> k8tmc; the second module hash present in the captures, 4igyr, is byte-identical across both phases. Symbolic class list, class count and class order are unchanged everywhere.",
+     "freshness": "reviewer run 2026-08-26 against the retained captures",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "mantine-primitives-listingcard--default",
+       "mantine-primitives-popularlocationsview--default",
+       "admin-admincompaniesmanager--default"
+      ],
+      "phases": [
+       "pre-edit",
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "'fixture/markup diffs: 0' hides a real markup change behind an undisclosed normalisation step, so a class could have been added, removed or renamed without the arm firing.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task768/capture-post.json",
+     "result": "REFUTED, with a documentation note (F4). The normalisation is not undisclosed at the source: kickoff AC3 specifies the exact normaliser verbatim and states that both suffixes are expected to change in this task. The reviewer ran the comparison BOTH ways: raw (208 differing class fields, every one confined to the hash segment) and normalised (0). Because only AppImage's own module hash moved while 4igyr held, the raw delta is provably the expected content-hash rotation of the one edited module and not a markup change. The note is only that the retained ac3-comparator-output.txt line, read on its own in the session log, does not restate the normalisation."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "The computed-value question IS this criterion: imgComputed.inset was read from the live rendered DOM in both phases and is 0px in both. No separate compiled-utility comparison applies, since no Tailwind utility is added or removed."
+   }
+  },
+  {
+   "id": "AC4 / R3",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F3",
+    "F5"
+   ],
+   "finalSubject": {
+    "path": "src/components/ui/AppImage.module.css",
+    "symbol": "the keyed screenshots:assert manifest verdict/failReason state of the 44 AppImage-bearing cells",
+    "diffHunks": [
+     "src/components/ui/AppImage.module.css @@ -135,11 +136,11 @@ (rule comment rewritten; inset: var(--space-0) -> inset: 0)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "mantine-primitives-listingcard--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024}",
+     "mantine-primitives-popularlocationsview--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024,wide-1200,wide-1440,wide-1536}"
+    ],
+    "phases": [
+     "pre-edit",
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task768/pre/manifest.json",
+     "command": "node - (reviewer's own keyed comparator over pre/manifest.json and post/manifest.json, keying on storyId|locale|viewport)",
+     "observable": "1332 cells in each manifest; 1332 distinct keys in each; 0 duplicate keys and 0 keys present in one manifest only. The 44 AppImage-bearing target cells derived independently by filtering on storyId (not by reading the author's list) are present in both phases, and 0 of them are non-pass in either phase. Target-scope verdict/failReason deltas: 0.",
+     "freshness": "reviewer run 2026-08-26 against the retained manifests; independently re-run by the owner on win32 the same day, same output",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "mantine-primitives-listingcard--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024}",
+       "mantine-primitives-popularlocationsview--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024,wide-1200,wide-1440,wide-1536}"
+      ],
+      "phases": [
+       "pre-edit",
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task768/post/manifest.json",
+     "command": "node - (same comparator, full-matrix arm plus absolute non-pass census)",
+     "observable": "Across the whole 1332-cell matrix there are exactly 2 verdict deltas, both mantine-primitives-popover--default|sq|mobile-390 and mantine-primitives-tabs--default|sq|mobile-390, and both move fail -> pass. Zero cells regressed in any direction: no pass -> fail, no pass -> ambiguous, no new failReason in POST. Absolute census - PRE 1223 pass / 82 fail / 27 ambiguous, POST 1225 pass / 80 fail / 27 ambiguous; summary.blankCanvas 2 -> 0 and blankScreenshot 2 -> 0. The two source-run-dir.txt values differ (2026-08-26T11-32 vs 2026-08-26T12-30), so the POST run did not overwrite the PRE run's directory.",
+     "freshness": "reviewer run 2026-08-26 against the retained manifests",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "mantine-primitives-listingcard--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024}",
+       "mantine-primitives-popularlocationsview--default x {sq,en,uk,it} x {mobile-320,mobile-375,mobile-390,desktop-1024,wide-1200,wide-1440,wide-1536}"
+      ],
+      "phases": [
+       "pre-edit",
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The 44-cell target scope was chosen after seeing the results, so a failing AppImage cell could have been excluded from the target set to manufacture a clean pass.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task768/post/manifest.json",
+     "result": "REFUTED. The reviewer re-derived the target set from the manifests by filtering on storyId for the two AppImage-bearing stories rather than reading ac4-appimage-cells.txt, and got exactly the same 44 keys. Independently, the full 1332-cell matrix was compared with no scope restriction at all: it yields only 2 deltas and both are improvements, so no AppImage cell - and in fact no cell anywhere - was excluded to hide a regression."
+    },
+    {
+     "claim": "The two named deltas require a third confirmatory screenshots:assert run before AC4 can be accepted, per AC4's literal 'named cell by cell' language.",
+     "kind": "REASONED",
+     "path": "tasks/Sprints/Sprint_65_kickoff_prompt_Task_768_AppImage_D65D_Spacing_Closure.md",
+     "result": "REFUTED. Stop condition 14.3 fires only when a delta CANNOT be named cell by cell; section 13's 'or the run is repeated until it is' offers repetition as the alternative to naming, not in addition to it. Both deltas are named by storyId|locale|viewport. A rerun is separately prohibited by the owner's Task 768R instruction against chasing a favourable full-matrix result. The open item the executor raised in its handoff is answered and closed."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "The rendered-output question IS this criterion; the manifests are the rendered evidence and were compared cell by cell. No compiled-utility candidate exists."
+   }
+  },
+  {
+   "id": "AC5 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F7"
+   ],
+   "finalSubject": {
+    "path": "src/components/ui/AppImage.module.css",
+    "symbol": "the absence of any marker, allowlist row, baseline row, new custom property or @apply in the diff, and the two gate exits",
+    "diffHunks": [
+     "src/components/ui/AppImage.module.css @@ -31,8 +31,9 @@ (header Class-3 inventory row rewritten to record closure)",
+     "src/components/ui/AppImage.module.css @@ -135,11 +136,11 @@ (rule comment rewritten; inset: var(--space-0) -> inset: 0)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "the Task 768 diff",
+     "check:design-tokens",
+     "check:css-vars"
+    ],
+    "phases": [
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "src/components/ui/AppImage.module.css",
+     "command": "git diff -- src ; npm run check:design-tokens ; echo EXIT=$? ; npm run build ; npm run check:css-vars ; echo EXIT=$?",
+     "observable": "The diff introduces no design-tokens-allow: marker, no allowlist row, no baseline row, no new custom property and no @apply - the added text is one declaration value and two comment bodies. check:design-tokens re-run by the reviewer on the submitted worktree: exit 0, 'Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s)'. check:css-vars after a fresh npm run build: exit 0, '0 violations, 0 in-class dynamic sites'. Both were also re-run by the owner on win32 the same day with identical output.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree; owner re-run on win32 2026-08-26",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "the Task 768 diff",
+       "check:design-tokens",
+       "check:css-vars"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "scripts/check-tailwind-runtime-tokens.mjs",
+     "command": "npm run check:tailwind-runtime-tokens ; echo EXIT=$? ; npm run typecheck ; echo EXIT=$? ; npm run build ; echo EXIT=$?",
+     "observable": "check:tailwind-runtime-tokens exit 0, 'Tailwind-owned references found: 0 | baseline entries: 0', '0 new debt, 0 stale baseline entries, 0 dynamic-name violations'. typecheck exit 0. build exit 0, 40/40 static pages. Section 14.2's stop condition - check:design-tokens reporting the new inset: 0 line - did not trigger; the gate treats bare 0 as exempt at check-design-tokens.mjs:220,333.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree; owner re-run on win32 2026-08-26",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "the Task 768 diff",
+       "check:design-tokens",
+       "check:css-vars"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "check:design-tokens passes only because a marker or allowlist entry was quietly added to silence the new inset: 0 line, which section 14.2 forbids.",
+     "kind": "EXECUTED",
+     "path": "src/components/ui/AppImage.module.css",
+     "result": "REFUTED. The whole diff is 6 added and 5 removed lines and is reproduced in full in the ledger's hunks; it contains no marker, allowlist or baseline text of any kind, and git status shows no change to any file under scripts/. The gate's own source exempts bare 0/0px/0rem/0em at check-design-tokens.mjs:220,333, which is why the line is not reported."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Gate-exit and diff-content criterion; no rendered or compiled artefact is at issue."
+   }
+  },
+  {
+   "id": "AC6 / R5, R6, R7",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F1",
+    "F2",
+    "F6"
+   ],
+   "finalSubject": {
+    "path": "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+    "symbol": "the session log's Files Changed table, the verbatim D65-D quote, the section 3.6 asymmetry record and the section 6 no-control statement",
+    "diffHunks": [
+     "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md (new: orchestrator review correction note, section 0 D65-D verbatim, section 6 D65-E verbatim, AC4 absolute census, corrected git status --porcelain block)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+     "docs/backlog.md"
+    ],
+    "phases": [
+     "post-edit"
+    ],
+    "notApplicable": {
+     "stories": "A source-text and CLI-level check, not parameterised by any Storybook story.",
+     "locales": "No user-facing string is read or emitted by this criterion.",
+     "viewports": "Source text carries no media guard or width dependency here.",
+     "states": "Static source text and a deterministic single-pass read; no runtime state."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+     "command": "grep -n 'D65-D' <log> ; grep -n '^> ' <log> ; git status --porcelain",
+     "observable": "As submitted, the session log referenced D65-D six times and quoted it verbatim zero times - AC6 explicitly requires a verbatim quote, and the requirement table nevertheless reported R5/R6/R7 as MET without flagging the gap (F1). D65-E was likewise paraphrased, not quoted. Separately the block labelled 'git status --porcelain' listed only two of the four real rows (F2). Both were corrected by the orchestrator during this review, documentation only, and are recorded in a dated correction note at the top of the log. The Files Changed table matches the real four-path diff, section 3.6 records the asymmetry and the resumption of the AppImage freeze, and section 6 states the no-control decision.",
+     "freshness": "reviewer read 2026-08-26; corrections applied by the orchestrator the same day",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+       "docs/backlog.md"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    },
+    {
+     "path": "docs/backlog.md",
+     "command": "wc -l docs/backlog.md ; git show HEAD:docs/backlog.md | wc -l ; grep -n 'D65-D' docs/backlog.md tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md",
+     "observable": "docs/backlog.md is 81 physical lines, byte-for-byte the same count as at HEAD - the state edit is three in-place line rewrites, adding and removing nothing. D65-D reads CLOSED 2026-08-26 in both the backlog Sprint 65 line and the sprint plan at :84, and a registry row for 768 exists, so stop condition 14.6 does not trigger. Task 766's registry row was already moved to docs/backlog-archive.md by the filing commit, satisfying section 16 item 4; the 81-line overrun is the pre-existing F8 carried from Task 767, not created here.",
+     "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md",
+       "docs/backlog.md"
+      ],
+      "phases": [
+       "post-edit"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The backlog state edit silently pushed the file further past its ~80-line budget, or dropped active state to pay for the 768 row.",
+     "kind": "EXECUTED",
+     "path": "docs/backlog.md",
+     "result": "REFUTED. git show HEAD:docs/backlog.md | wc -l and wc -l on the worktree copy both return 81. The diff is 3 insertions and 3 deletions on 3 lines - in-place rewrites of the Last Session line, the Sprint 65 line and the 768 registry row. No row was removed and none was added."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "A documentation-content criterion; nothing is rendered or compiled."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "AC6 / R5, R6, R7 - the session log did not quote D65-D verbatim, and reported the requirement as met anyway",
+   "requirementIds": [
+    "AC6 / R5, R6, R7"
+   ],
+   "evidence": "AC6 requires that the session log 'quotes D65-D verbatim'. As submitted, docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md mentioned D65-D on lines 1, 19, 55, 123, 134 and 233 and contained no blockquote of it; the only '> ' block in the file was the Task 768R correction note. D65-E was paraphrased in section 6 rather than quoted. The log's own requirement table marked R5, R6 and R7 MET without recording the gap. This is the kind of self-reported-MET-but-unmet row the orchestrator review exists to catch. RESOLVED by the orchestrator during this review: a new section 0 carries D65-D verbatim from kickoff section 0, and section 6 now carries D65-E verbatim from kickoff section 6, both under a dated correction note. Documentation only; no src/, script, gate, manifest, capture or comparator-output file was touched."
+  },
+  {
+   "id": "F2",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "Section 15 completion-report contract - the git status --porcelain block was a partial paste, not the command's output",
+   "requirementIds": [
+    "AC6 / R5, R6, R7"
+   ],
+   "evidence": "The block at line 267 of the session log was labelled 'git status --porcelain' but listed only ' M src/components/ui/AppImage.module.css' and '?? docs/sessions/evidence/task768/'. The real output has four rows; the two omitted are ' M docs/backlog.md' and '?? docs/sessions/2026-08-26-task768-appimage-d65d-spacing-closure.md'. A parenthetical below the block did disclose that both files were edited, so this is an evidence-fidelity defect rather than concealment - but section 15 asks for the command's output as proof of no stray artefact, and a hand-trimmed paste cannot serve that purpose. Originally identified by the owner's second read-only review. RESOLVED by the orchestrator: the block now carries the real, complete four-row output with a note explaining what the earlier revision omitted."
+  },
+  {
+   "id": "F3",
+   "priority": "P2",
+   "status": "RESOLVED",
+   "requirements": "AC4 / R3 - neither the session log nor any retained comparator output disclosed the absolute non-pass census of the manifests",
+   "requirementIds": [
+    "AC4 / R3"
+   ],
+   "evidence": "The validation table characterised screenshots:assert exit 1 as 'controlled - defects are standing debt' without a single number, and no retained artefact gave one. The measured census is PRE 1223 pass / 82 fail / 27 ambiguous and POST 1225 pass / 80 fail / 27 ambiguous of 1332; the harness is not green in either phase. The strongest de-risking fact was also unstated: both deltas move fail -> pass and zero cells regressed in any direction across the full matrix, with summary.blankCanvas 2 -> 0 and blankScreenshot 2 -> 0. RESOLVED by the orchestrator: the AC4 section now states the census, the direction of the deltas and the section 14.3 reasoning that closes the executor's open question, all as measured properties of the two retained manifests with no cause asserted for the two cells."
+  },
+  {
+   "id": "F4",
+   "priority": "P3",
+   "status": "NOTE",
+   "requirements": "AC3 / R3 - the retained comparator line does not restate the normalisation it depends on",
+   "requirementIds": [
+    "AC3 / R3"
+   ],
+   "evidence": "'fixture/markup diffs: 0' in ac3-comparator-output.txt and in the session log is a hash-normalised result. Raw, the two captures differ on all 208 class fields. The normaliser is specified verbatim in kickoff AC3 and the kickoff states that both suffixes are expected to change, so the evidence is sound and reproducible - the reviewer confirmed the raw delta is confined to AppImage's own module hash (1gyx9 -> k8tmc) while the other module hash (4igyr) is unchanged. The note is that a reader of the session log alone sees only the '0' and would have to open the kickoff to learn what was normalised away. OWNER: consider having future evidence blocks of this kind restate the normalisation in one line beside the result. Not blocking."
+  },
+  {
+   "id": "F5",
+   "priority": "P3",
+   "status": "NOTE",
+   "requirements": "AC4 / R3 - the retained comparator output mislabels the failReason of the two non-target deltas",
+   "requirementIds": [
+    "AC4 / R3"
+   ],
+   "evidence": "ac4-comparator-output.txt and the session log print the deltas as 'fail/blank-canvas -> pass/'. The manifest cell's own failReason field is undefined for both cells; the real signal is assertions-side visualContentCheck.failReason = 'blank-screenshot' ('near-uniform (bg=100.0%, var=0.0)'), corroborated by the summary counters blankCanvas 2 -> 0 and blankScreenshot 2 -> 0. The substance is right and the cells are correctly named, but the string presented as a failReason is not the failReason the manifest carries. Not blocking."
+  },
+  {
+   "id": "F6",
+   "priority": "P3",
+   "status": "NOTE",
+   "requirements": "AC6 / R5 - two small documentation inaccuracies in the session log and one undocumented deviation from section 5.2",
+   "requirementIds": [
+    "AC6 / R5, R6, R7"
+   ],
+   "evidence": "(a) The Visual source trace cites .imageLayer at AppImage.module.css:140-145; the rule actually spans :141-146 in the final tree. (b) Section 5.2 instructed that the rule comment 'stays; append the D65-D reference to it'. The executor kept the first line - the inset-0 Tailwind-source citation, which is what section 5.2 identifies - and replaced the two-line tail rather than appending to it. The replaced text ('--space-0 is @theme inline ... confirmed EMITTED ... Class-3 inventory row') would have become false after the edit, so the substance is right, but it is a replace and the deviation is not recorded in the Assumptions section. Neither affects any rendered or gate claim. Not blocking."
+  },
+  {
+   "id": "F7",
+   "priority": "P3",
+   "status": "NOTE",
+   "requirements": "Section 13 - no per-gate log was retained for three of the seven named gates",
+   "requirementIds": [
+    "AC5 / R4"
+   ],
+   "evidence": "docs/sessions/evidence/task768/post/ retains build.log, build-storybook.log, check-css-vars.log and typecheck.log; pre/ retains only build-storybook.log. No log is retained for check:design-tokens, check:tailwind-runtime-tokens or check:stories in either phase, although the session log's validation table states exit 0 for all three. Task 765's evidence directory retained one file per gate (phase3-check-design-tokens.txt, phase3-check-stories.txt and so on), so this is thinner than the project's own precedent. Section 13 names the gates without mandating a log per gate, and section 15 asks only for the exit codes, which are stated - so this is not an AC miss. The reviewer re-ran check:design-tokens and check:tailwind-runtime-tokens on the submitted worktree and both exit 0, and the owner re-ran both plus typecheck, build and check:css-vars on win32 with the same result, so the claims stand on live evidence rather than on the missing logs. Not blocking."
+  },
+  {
+   "id": "F8",
+   "priority": "P3",
+   "status": "NOTE",
+   "requirements": "Pre-existing citation defects in the touched file, and one stale register - all outside Task 768's authorised scope",
+   "requirementIds": [
+    "AC1 / R1, R2"
+   ],
+   "evidence": "Present at HEAD and therefore NOT introduced by this task; section 5 forbids touching them here. (a) AppImage.module.css:37 and :116 both cite globals.css:371 as the declaration site of --muted; the real sites are :407 (':root') and :524 ('.dark'). (b) AppImage.module.css:138 cites 'AppImage.tsx line 144' for the inset-0 utility; styles.imageLayer is at AppImage.tsx:145. (c) tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md:93 still describes 768 as 'FILED 2026-08-26 - ready for executor', now stale. OWNER: (a) and (b) are one-line comment corrections that belong to whichever task next opens AppImage.module.css legitimately - Task 770 is the natural carrier, since D65-D is spent and the AppImage freeze resumes on acceptance of this task. (c) is a register update for the sprint-close commit. Not blocking."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC6 / R5, R6, R7",
+  "reviewer": "Opus",
+  "reviewerEnvironment": "The orchestrator reviewed from a Linux session with the owner's Windows working tree mounted read-write, so every gate re-run here executed against the same files the owner sees. Every numeric claim in this ledger was re-derived by the reviewer from the retained captures and manifests with comparators written from scratch, not read out of the author's ac3-/ac4- output files; those files were only consulted afterwards to confirm agreement. The owner independently re-ran the AC4 keyed comparator, check:design-tokens, check:tailwind-runtime-tokens, typecheck, build and check:css-vars natively on win32 on 2026-08-26 and reproduced every figure, so no result in this ledger rests on a single environment. Three P2 findings (F1, F2, F3) were documentation defects in the session log and were corrected by the orchestrator during the review under a dated correction note; no src/, kickoff, script, gate, baseline, marker, config, Storybook source, manifest, capture or existing comparator-output file was touched by those corrections."
+ }
+}

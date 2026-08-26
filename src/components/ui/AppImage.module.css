@@ -31,8 +31,9 @@
  * `.hoverBrightness` were already role-shaped and are unchanged.
  *
  * R8 Class-3 inventory (every `@theme inline` reference this module writes):
- *   - `var(--space-0)` in `.imageLayer` (`inset`) — `globals.css:128`, `@theme inline`,
- *     replaces `inset-0`. Confirmed emitted (resolvable) in both built stylesheets.
+ *   - (empty) — the sole entry, `var(--space-0)` in `.imageLayer` (`inset`), was closed by Task 768
+ *     under D65-D (2026-08-26): `inset` now reads the native zero literal `0` instead of the
+ *     `@theme inline`-only token, so this file no longer has a Class-3 dependency.
  * `var(--muted)` in `.framePlaceholder` is NOT Class-3 — `--muted` is declared in plain `:root`
  * (`globals.css:371`), outside `@theme inline` (safe, per Sprint 63 §"Measured state").
  *
@@ -135,11 +136,11 @@
   }
 
   /* `absolute inset-0 w-full h-full` — AppImage.tsx line 144, I1 §1 row 3 for `inset-0`.
-     `--space-0` is `@theme inline` (globals.css:128) but confirmed EMITTED (resolvable) in both
-     built stylesheets — Class-3 inventory row, see file header. */
+     Task 768 (D65-D, 2026-08-26): `inset` now reads the native zero literal `0`, value-identical to
+     the prior `var(--space-0)` (`--space-0` is `0px`), closing this file's only Class-3 dependency. */
   .imageLayer {
     position: absolute;
-    inset: var(--space-0);
+    inset: 0;
     width: 100%;
     height: 100%;
   }

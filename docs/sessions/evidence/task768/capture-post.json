@@ -1,0 +1,4315 @@
+{
+  "mantine-primitives-listingcard--default": {
+    "widths": {
+      "320": {
+        "sq": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "uk": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "it": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "286px",
+              "height": "214.5px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "220.031px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "375": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "341px",
+              "height": "255.75px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "174.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "174.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "390": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "356px",
+              "height": "267px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "174.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "128px",
+              "height": "174.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "768": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.656px",
+              "height": "157.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.656px",
+              "height": "157.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.672px",
+              "height": "158px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.672px",
+              "height": "158px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.672px",
+              "height": "158px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "210.672px",
+              "height": "158px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "1024": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "296px",
+              "height": "222px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "1440": {
+        "sq": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "uk": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ],
+        "it": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.672px",
+              "height": "326px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "4 / 3",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "oklch(0.961 0 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "434.656px",
+              "height": "325.984px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "relative",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "176px",
+              "height": "154.016px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "transform, opacity",
+              "transitionDuration": "0.3s, 0.3s",
+              "transitionTimingFunction": "ease-out, ease-out",
+              "opacity": "1"
+            }
+          }
+        ]
+      }
+    },
+    "hover1024en": [
+      {
+        "index": 0,
+        "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 1,
+        "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 2,
+        "containerClass": "_frame_k8tmc_27 _frameRatio4x3_k8tmc_27 _frameWidth_k8tmc_28 _frameClip_k8tmc_29 _framePlaceholder_k8tmc_29",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "matrix(1.1025, 0, 0, 1.1025, 0, 0)",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 3,
+        "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+        "hoverFilter": "none"
+      }
+    ]
+  },
+  "mantine-primitives-popularlocationsview--default": {
+    "widths": {
+      "320": {
+        "sq": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "uk": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "it": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "138px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "375": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "165.5px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "390": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "173px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "768": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "171px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "1024": {
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "231px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      },
+      "1440": {
+        "sq": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "en": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "uk": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ],
+        "it": [
+          {
+            "index": 0,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 1,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 2,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          },
+          {
+            "index": 3,
+            "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
+            "priority": false,
+            "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+            "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+            "containerComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "hidden",
+              "objectFit": "fill",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgComputed": {
+              "position": "absolute",
+              "inset": "0px",
+              "top": "0px",
+              "right": "0px",
+              "bottom": "0px",
+              "left": "0px",
+              "width": "327px",
+              "height": "112px",
+              "aspectRatio": "auto",
+              "overflow": "clip",
+              "objectFit": "cover",
+              "borderRadius": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            "imgState": {
+              "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events",
+              "transitionDuration": "0.3s",
+              "transitionTimingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "opacity": "1"
+            }
+          }
+        ]
+      }
+    },
+    "hover1024en": [
+      {
+        "index": 0,
+        "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "none",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 1,
+        "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "none",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 2,
+        "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "none",
+        "hoverFilter": "none"
+      },
+      {
+        "index": 3,
+        "containerClass": "_frame_k8tmc_27 _frameFill_k8tmc_28 _frameClip_k8tmc_29 _absoluteFill_4igyr_41",
+        "imgClass": "_imageLayer_k8tmc_30 _fade_k8tmc_30 _visible_k8tmc_30 _fitCover_k8tmc_30",
+        "restTransform": "none",
+        "restFilter": "none",
+        "hoverTransform": "none",
+        "hoverFilter": "none"
+      }
+    ]
+  },
+  "admin-admincompaniesmanager--default": {
+    "widths": {
+      "320": {
+        "sq": [],
+        "en": [],
+        "uk": [],
+        "it": []
+      },
+      "375": {
+        "en": []
+      },
+      "390": {
+        "en": []
+      },
+      "768": {
+        "en": []
+      },
+      "1024": {
+        "en": []
+      },
+      "1440": {
+        "sq": [],
+        "en": [],
+        "uk": [],
+        "it": []
+      }
+    },
+    "hover1024en": []
+  }
+}

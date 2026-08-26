@@ -1,0 +1,2 @@
+build-storybook exit=0
+screenshots:assert exit=1

@@ -612,7 +612,28 @@ H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃ�
 15. **Unregistered Mantine colour prop** (Task 685/686) — `color`/`c`/`bg` literal (Form A), `var(--mantine-color-*)` (Form B), and `*COLOR*`-named object-literal map (Form C) values must resolve to `theme.ts`'s registered colour set or a documented passthrough (CSS-wide keyword, CSS function call, `#hex`, Mantine keyword)
 16. **Wall-clock fixture value** (Task 697/698, §14.10) — `Date.now()` used anywhere as a value, or bare zero-argument `new Date()` used as a value, outside comments and outside string/template literals. Does NOT flag `new Date(<non-empty argument>)`
 
-**check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} (canonical 14 from `docs/responsive-screenshot-matrix.md §1`) × {sq,en,uk,it}. `--fast` runs only {320,375,390} for quick local loops. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`. **`npm run screenshots:assert` (non-fast) is the canonical full-matrix acceptance command** — its transcript must show `Viewports: 14` for rendered-proof approval (Task 411).
+**check-stories-rendered.mjs**
+
+- **Default — `npm run screenshots:assert`:** canonical Mantine stories only (Phase 0), at
+  {320,375,390,1024} × {sq,en,uk,it} plus each story's declared extra viewport cells. It skips
+  Phase 1 (`ASSERT_STORIES`) and Phase 2 (geometry-only). The equivalent explicit invocation is
+  `npm run screenshots:assert -- --mantine-only`; task transcripts may retain that flag to make
+  scope unambiguous.
+- **Default fast alias — `npm run screenshots:assert:fast`:** passes `--mantine-only --fast`.
+  Phase 0 remains mandatory, so its manifest must state the actual scope rather than claiming a
+  smaller matrix.
+- **Full legacy sweep — opt-in only:** `npm run screenshots:assert:full` restores the historical
+  non-Mantine phases: Phase 1 at the canonical 14 widths
+  {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} × {sq,en,uk,it}, plus Phase 2
+  geometry-only coverage; Mantine Phase 0 keeps its own declared matrix.
+  `npm run screenshots:assert:full:fast` runs that profile's fast mode (Phase 1
+  {320,375,390}; Phase 2 skipped; Phase 0 still mandatory). Full sweeps are local/owner evidence
+  only, never the default CI or Homepage-migration acceptance path.
+
+Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls
+`offsetWidth >= container content width - 8px` at <640. Every run emits a JSON manifest and PNG
+per cell to `.screenshots/rendered-assert/<timestamp>/`. Cite the manifest's `runMode` and
+`phasesSkipped`, not a script name, for any claim about cells rendered.
 
 ### 14.6 Inline locale map prohibition (Task 389, 2026-06-04)
 
@@ -806,7 +827,8 @@ chromium` — no new job, no duplicate build):
 3. npm run check:locale-leak
 ```
 
-**Deliberately scoped to `--mantine-only`, not the full `screenshots:assert`/`:fast`.** Running the full gate
+**Deliberately scoped to `--mantine-only`, not the full
+`screenshots:assert:full`/`screenshots:assert:full:fast`.** Running the full gate
 (Phase 0 + pre-existing Phase 1 `ASSERT_STORIES`) on this tree surfaces **149 pre-existing Phase-1 failures**
 across unrelated, non-Mantine admin stories (`AdminSidebar/MobileDrawerOpen`, `AdminSupportManager/Default`,
 `NotificationCenter/*`, `AdminReportsManager/*`, plus 6 `Planted/*` stories that are DESIGNED to fail as
@@ -1458,7 +1480,7 @@ itself is unaffected and independently confirmed via the scoped probe above.) Se
 **Owner directive.** The only mandatory CI scope is canonical Mantine stories. Legacy stories are deprecated code
 awaiting migration/replacement — they no longer run `check:locale-leak` or `screenshots:assert` and can never
 block a PR. This is a scope change (what blocks CI), never a deletion — `ASSERT_STORIES`/geometry-only membership
-and the full (non-`--mantine-only`) run remain available for local/owner-native full sweeps.
+and the explicit `screenshots:assert:full` profile remains available for local/owner-native full sweeps.
 
 **Shared criterion module.** `MANTINE_STORY_TITLE_PREFIXES`/`isCanonicalMantineTitle()` moved out of
 `check-stories-rendered.mjs` into `scripts/lib/mantine-story-scope.mjs` — the ONE place all three gates

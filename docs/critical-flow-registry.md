@@ -10,6 +10,11 @@
 > your change, the same test (updated if behavior legitimately changed) must pass → flip / keep the coverage
 > status and paste the command in your session log. If the flow is missing, ADD a row in the same task.
 >
+> **Current screenshot policy (2026-08-26):** bare `npm run screenshots:assert` and
+> `npm run governance:screenshots:assert` are Mantine-only. The only full legacy profiles are the
+> explicit `screenshots:assert:full` and `screenshots:assert:full:fast` commands. Any older
+> full-run wording in this registry's task evidence describes the historical run, not a current default.
+>
 > **Coverage status legend:** ✅ covered by an automated regression test · 🟡 partial (gate exists but not
 > the full happy+failure assertion) · ❌ no automated coverage yet (manual only) · ⏳ scheduled in a named slice.
 >

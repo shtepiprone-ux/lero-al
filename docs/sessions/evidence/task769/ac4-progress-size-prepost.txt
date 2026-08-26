@@ -1,0 +1,19 @@
+AC4 — pre-edit vs post-edit `var(--progress-size)` module-CSS plant, same mechanism as --verify-gate
+case 7. Both phases run the identical plant (append `.plant { width: var(--progress-size); }` to a
+copied FooterView.module.css) against a temp copy of src/, never touching the real worktree.
+
+PRE-EDIT (actual runScan from the real pre-Task-769 script at 6b43b9676, extracted via
+`git show 6b43b9676:scripts/check-tailwind-runtime-tokens.mjs`, executed directly — not inferred):
+
+  found --progress-size on PRE-EDIT script: {"file":"src/components/layout/FooterView.module.css","property":"--progress-size","origin":"module-css","line":140,"uses":1}
+  classification (pre-edit, no Mantine-theme authority): baseline is empty, so any found entry is new debt => exit 1
+
+POST-EDIT (this session, --verify-gate case 7 — see verify-gate.txt in this directory):
+
+  Case 7 (module-css Mantine-theme name is external, D65-F) — expected exit 0, got exit 0 — zero
+  findings for --progress-size (classified external)
+
+Conclusion: the identical plant flips from exit 1 (pre-Task-769 classifier — bucket-3-by-elimination
+misclassifies --progress-size as `tailwind`) to exit 0 (post-Task-769 classifier — bucket 3 now
+classifies it Mantine-theme-owned `external` before the elimination fallback is reached),
+demonstrating the D65-F behavioral change with a real measured run on each side, not an assertion.

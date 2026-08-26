@@ -1,0 +1,67 @@
+
+> lero-al@0.1.0 check:tailwind-runtime-tokens
+> node scripts/check-tailwind-runtime-tokens.mjs
+
+🔍  check:tailwind-runtime-tokens — scanned 25 src/**/*.module.css file(s) + 2 runtime TSX file(s)
+    ownership source: globals.css @theme/@theme inline/:root (277 project-owned names) + tailwindcss@4.3.0 theme.css/index.css (412 Tailwind-declared names, version-pinned) + --mantine-/--tw- prefixes
+    Tailwind-owned references found: 0 | baseline entries: 0
+
+✅  check:tailwind-runtime-tokens — 0 new debt, 0 stale baseline entries, 0 dynamic-name violations.
+exit=0
+🔍  check:tailwind-runtime-tokens --report — scanned 25 src/**/*.module.css file(s) + 2 runtime TSX file(s)
+
+module-css: 0 pair(s) / 0 use(s)
+
+runtime-tsx: 0 pair(s) / 0 use(s)
+
+TOTAL: 0 pair(s) / 0 use(s)
+exit=0
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 454 src/**/*.{tsx,ts,css} files
+    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+
+✅  check:design-tokens — 0 violations found.
+exit=0
+
+> lero-al@0.1.0 check:stories
+> node scripts/check-stories.mjs
+
+── Check 1: Banned layout values ──────────────────────────────────
+── Check 2: Raw HTML controls ──────────────────────────────────────
+── Check 3: Locale-NAME export families ─────────────────────────────
+── Check 4: Hardcoded locale pins (globals + args + props) ─────────
+── Check 5: Hardcoded title literals in fixtures ───────────────────
+── Check 6: storybook.* namespace key parity ───────────────────────
+  ✅ storybook.* sq — 639 keys (matches en)
+  ✅ storybook.* uk — 639 keys (matches en)
+  ✅ storybook.* it — 639 keys (matches en)
+  ✅ storybook.* en  — 639 keys (reference)
+── Check 7: Inline locale maps (uk:/sq:/it: in stories) ───────────────
+── Check 8: uk.json Latin-only values (non-Cyrillic check) ────────────
+  ✅ uk.json Cyrillic check complete
+── Check 9: Runtime component hardcoded literals ────────────────────
+── Check 10: English JSX string-prop literals in stories ───────────
+── Check 11: sm:flex-row sm:flex-wrap (toolbar 640px overflow) ────────
+── Check 12: Viewport/width-named exports ────────────────────────────
+── Check 13: Duplicate-family export names ─────────────────────────────
+── Check 14: Mantine Button size="lg"|"xl" (off-scale, Task 520) ──────
+── Check 15: Unregistered Mantine colour prop (Task 685/686) ────────
+── Check 16: Wall-clock fixture values (Task 697/698, §14.10) ─────────
+── Stale allowlist entry check ──────────────────────────────────────
+
+✅ check:stories PASSED — 129 files checked, 0 violations.
+exit=0
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+exit=0

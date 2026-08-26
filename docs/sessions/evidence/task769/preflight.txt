@@ -1,0 +1,8 @@
+win32
+exit=0
+## main...origin/main
+ M docs/design-system.md
+ M scripts/check-tailwind-runtime-tokens.mjs
+?? docs/sessions/evidence/task769/
+7bde7242e docs(Task769): file the runtime-token scanner hardening kickoff under D65-F
+scanner unchanged since 769 filing (pre-edit): exit=0

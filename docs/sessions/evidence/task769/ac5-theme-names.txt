@@ -1,0 +1,4 @@
+9 ["--button-bd","--button-bg","--button-color","--button-hover","--button-padding-x","--progress-size","--sc-label-color","--slider-track-bg","--table-border-color"]
+has --button-padding-x: true
+has --mantine-color-default-border: false
+exit=0

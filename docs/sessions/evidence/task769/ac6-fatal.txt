@@ -1,0 +1,3 @@
+AC6 case A (missing theme.ts): {"fatal":"Mantine theme source not found at C:/Claude_Code_Projects/lero-al/src/design-system/mantine/does-not-exist.ts"}
+AC6 case B (set without proof key): {"fatal":"Mantine theme source at C:\\Users\\Nox\\AppData\\Local\\Temp\\ac6-probe-RvAOFs\\theme.ts produced 1 name(s) without the proof key --button-padding-x — extraction failure, not a vacuous pass"}
+exit=0

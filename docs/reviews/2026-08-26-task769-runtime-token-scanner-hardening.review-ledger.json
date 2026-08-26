@@ -1,0 +1,958 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-769 — Runtime-token scanner hardening: fail-closed TSX inputs and Mantine theme ownership (Sprint 65, D65-F)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "7bde7242ed349a29e33dbe8c484307a29d80d0d8",
+    "reviewedRevision": "uncommitted worktree on top of 7bde7242ed349a29e33dbe8c484307a29d80d0d8 (main). The submitted diff is exactly three modified tracked files (scripts/check-tailwind-runtime-tokens.mjs, docs/design-system.md, docs/backlog.md) plus two untracked records (docs/sessions/2026-08-26-task769-runtime-token-scanner-hardening.md, docs/sessions/evidence/task769/). No src/ file, token, baseline row or package.json line is touched, confirmed by git diff --stat and git status --porcelain both before and after every reviewer-executed run.",
+    "reviewedPaths": [
+      "scripts/check-tailwind-runtime-tokens.mjs",
+      "docs/design-system.md",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-26-task769-runtime-token-scanner-hardening.md",
+      "docs/sessions/evidence/task769"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 11,
+      "verified": 11,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-26-task769-runtime-token-scanner-hardening.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1-R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "the whole submitted diff — exactly two non-record files",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -305,7 +344,73 @@ (extractMantineThemeNames, collectCustomPropertyKeys, walkForVarsAndStyles)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -316,13 +421,14 @@ (classifyName fourth bucket)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -521,6 +632,21 @@ (runScan themePath + fail-closed TSX inputs)",
+          "docs/design-system.md @@ -1261,7 +1261,8 @@ and @@ -1275,12 +1276,24 @@ and @@ -1289,6 +1302,23 @@ (§23.7)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the complete git diff of the submitted worktree"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI gate script and a documentation section are not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read, emitted or changed.",
+          "viewports": "No rendered output, media guard or width dependency exists in this diff.",
+          "states": "Static source text plus a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "git diff --stat ; git status --porcelain",
+          "observable": "Reviewer-executed: docs/backlog.md 6 +-, docs/design-system.md 38 +-, scripts/check-tailwind-runtime-tokens.mjs 375 +-, plus untracked docs/sessions/2026-08-26-task769-...md and docs/sessions/evidence/task769/. Exactly two non-record files: the script and docs/design-system.md. No src/**, no scripts/tailwind-runtime-token-baseline.json, no package.json, no .github/workflows/** entry appears.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the complete git diff of the submitted worktree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A required-but-forbidden file (theme.ts, AgentCtaButton.tsx, globals.css, the baseline JSON, package.json) was quietly edited to make the new classification pass.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. git status --porcelain lists three modified tracked files, none of them under src/ or scripts/*.json; the baseline file still reads [] and src/design-system/mantine/theme.ts and src/components/shared/AgentCtaButton.tsx are unmodified. The behavioural flip was independently reproduced by the reviewer against an untouched src/ (see AC4)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This diff adds, removes and recompiles no Tailwind utility and emits no CSS; there is no generated-CSS candidate to compile and compare."
+      }
+    },
+    {
+      "id": "AC2 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "TSX_FILES_REL",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs:225-228 (unchanged by this diff)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "TSX_FILES_REL's two entries"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A hardcoded module-level array is not story-parameterised.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Static constant."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "grep -n 'TSX_FILES_REL' -A4 scripts/check-tailwind-runtime-tokens.mjs",
+          "observable": "Reviewer-executed: :225-228 still reads exactly ['src/app/[locale]/page.tsx', 'src/components/shared/HeroSearchView.tsx']. The list is neither widened nor globbed; runScan's default (:633) and setupTempTree (:824) both derive from it unchanged.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "TSX_FILES_REL's two entries"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The input list was widened (or a glob added) so that the F2 proof site AgentCtaButton.tsx is now scanned by default, changing the shipped scan's meaning.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. The default scan reports '+ 2 runtime TSX file(s)' and the array holds two literal entries. AgentCtaButton.tsx is supplied only as an explicit tsxFiles override inside --verify-gate case 6's temp copy (evaluateTree(tree, [agentCtaPath])), never in the shipped list."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A source-text constant; no generated CSS is involved."
+      }
+    },
+    {
+      "id": "AC3 / R1, R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "runScan's pre-scan TSX input resolution (missingTsxFiles) and the removal of `if (!existsSync(absPath)) continue;`",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -534,6 +646,21 @@ (missingTsxFiles fatal)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -553,15 +680,16 @@ (silent skip deleted)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "missing configured TSX input handling across default, --report and --verify-gate modes, and the fatal naming every missing path"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI gate behaviour, not story-parameterised.",
+          "locales": "Developer-facing English console output only, as the whole scripts/ tree already is.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic single-pass scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "mv src/components/shared/HeroSearchView.tsx{,.reviewbak} ; node scripts/check-tailwind-runtime-tokens.mjs ; echo $? ; node scripts/check-tailwind-runtime-tokens.mjs --report ; echo $? ; node scripts/check-tailwind-runtime-tokens.mjs --verify-gate ; echo $? ; mv src/components/shared/HeroSearchView.tsx{.reviewbak,}",
+          "observable": "REVIEWER-EXECUTED, closing the AC3 evidence gap the executor left (finding F3). All three modes printed '❌ ... configured TSX input(s) not found: src/components/shared/HeroSearchView.tsx' and exited 1 — DEFAULT exit=1, REPORT exit=1, VERIFYGATE exit=1. No mode printed the fatal and exited 0. git status --porcelain after restoration is identical to before (three modified files, two untracked records): the real worktree is unchanged.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing configured TSX input handling across default, --report and --verify-gate modes, and the fatal naming every missing path"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node -e \"runScan({tsxFiles:['<root>/src/nope-a.tsx','<root>/src/nope-b.tsx']})\"",
+          "observable": "REVIEWER-EXECUTED: fatal === 'configured TSX input(s) not found: src/nope-a.tsx, src/nope-b.tsx'. R1's 'names EVERY missing path, repository-relative' is satisfied for a multi-miss, not only the first-miss case that --verify-gate case 5 exercises.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing configured TSX input handling across default, --report and --verify-gate modes, and the fatal naming every missing path"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task769/preflight.txt",
+          "command": "npm run check:tailwind-runtime-tokens:verify-gate (pre-edit, §10.0)",
+          "observable": "Pre-edit baseline retained by the executor: '4/4 verify-gate assertions behaved as expected (3 plants exited 1, 1 control exited 0)', and the pre-edit source still carried `if (!existsSync(absPath)) continue;`. The reviewer confirmed the skip is absent from the post-edit source: the only two remaining occurrences of that string are inside header-comment prose describing the removed defect.",
+          "freshness": "executor run 2026-08-26 on base 6b43b9676, re-read by the reviewer",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing configured TSX input handling across default, --report and --verify-gate modes, and the fatal naming every missing path"
+            ],
+            "phases": [
+              "pre-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The fatal is produced but swallowed somewhere — e.g. --report reaches its terminal process.exit(0) anyway, so the gate still passes green on a missing input.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED twice. By execution: --report exited 1 with the fatal string on a genuinely missing input (above). By inspection: runReport() now tests `if (result.fatal) { console.error(...); process.exit(1); }` before any reporting line, so the trailing process.exit(0) is unreachable on a fatal; run() has the same shape and evaluateTree returns { exitCode: 1, fatal } for the --verify-gate arm."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Process exit codes and console output; no generated CSS."
+      }
+    },
+    {
+      "id": "AC4 / R3, R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "classifyName's fourth bucket — `if (mantineThemeNames.has(name)) return 'external';` placed after both Tailwind authorities and before the elimination fallback, applied in both scanModuleCss and scanTsxFile",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -316,13 +421,14 @@ (classifyName)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -388,8 +494,11 @@ (scanModuleCss)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -457,8 +566,10 @@ (scanTsxFile)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "TSX arm — AgentCtaButton.tsx var(--button-padding-x)",
+          "module-CSS arm — planted var(--progress-size)"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Classifier behaviour over source text; no story.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic classification."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "git archive 6b43b9676 | tar -x -C /tmp/pre769 ; git show 6b43b9676:scripts/check-tailwind-runtime-tokens.mjs > /tmp/pre769/scripts/... ; append '.reviewPlant { width: var(--progress-size); }' to /tmp/pre769/src/components/layout/FooterView.module.css ; node -e \"PRE-EDIT runScan({srcDir:'/tmp/pre769/src', ...})\"",
+          "observable": "REVIEWER-EXECUTED, independent of the executor's ac4-progress-size-prepost.txt. The PRE-edit script run against a clean git archive of 6b43b9676 reports PRE-EDIT --progress-size findings: [{\"file\":\"src/components/layout/FooterView.module.css\",\"property\":\"--progress-size\",\"origin\":\"module-css\",\"line\":140,\"uses\":1}], total found 1 — with an empty baseline that is exit 1. The behavioural flip is measured on the pre-edit side by the reviewer, not asserted.",
+          "freshness": "reviewer run 2026-08-26 against a fresh git archive of 6b43b9676",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "module-CSS arm — planted var(--progress-size)"
+            ],
+            "phases": [
+              "pre-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node -e \"PRE-EDIT runScan({srcDir:'/tmp/pre769/src', tsxFiles:['/tmp/pre769/src/components/shared/AgentCtaButton.tsx'], ...})\" against the git-archived 6b43b9676 tree and the git-shown pre-edit script",
+          "observable": "REVIEWER-EXECUTED pre-edit measurement of the TSX arm: PRE-EDIT runtime-tsx findings: [{\"file\":\"src/components/shared/AgentCtaButton.tsx\",\"property\":\"--button-padding-x\",\"origin\":\"runtime-tsx\",\"line\":24,\"uses\":1}]. The F2 proof site is genuinely misclassified as Tailwind debt by the pre-edit classifier, so --verify-gate case 6's exit 0 is a measured flip, not a tautology.",
+          "freshness": "reviewer run 2026-08-26 against a fresh git archive of 6b43b9676",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "TSX arm — AgentCtaButton.tsx var(--button-padding-x)"
+            ],
+            "phases": [
+              "pre-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate",
+          "observable": "REVIEWER-EXECUTED: 'Case 7 (module-css Mantine-theme name is external, D65-F) — expected exit 0, got exit 0 — zero findings for --progress-size (classified external)' and 'Case 6 (AgentCtaButton as sole TSX input, D65-F TSX arm) — expected exit 0, got exit 0 — zero runtime-tsx findings; --button-padding-x absent from found'. The identical plant that exits 1 pre-edit exits 0 post-edit.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "TSX arm — AgentCtaButton.tsx var(--button-padding-x)",
+              "module-CSS arm — planted var(--progress-size)"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new bucket is an unconditional exemption: a name that Tailwind genuinely owns can now be laundered into 'external' merely by also appearing in theme.ts, which is exactly the author-applied exemption Sprint 65 §3 rule 2 forbids.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED by reviewer execution. A stub theme.ts declaring BOTH '--button-padding-x' and the genuinely Tailwind-owned '--text-sm' inside a Button vars callback was passed as themePath, with 'var(--text-sm)' planted in a copied HeaderView.module.css. Result: [{--progress-size, FooterView...}, {--text-sm, HeaderView.module.css:130, module-css}] — --text-sm is STILL reported as Tailwind debt. The `tailwindOwnedNames.has(name)` branch runs before the Mantine branch exactly as §10.3 mandates, so theme.ts cannot exempt a real Tailwind name."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Ownership classification of custom-property names in source text; the gate emits no CSS and this task changes no computed value."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F6"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "extractMantineThemeNames + collectCustomPropertyKeys + walkForVarsAndStyles",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -305,7 +344,73 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the extracted set against the real theme.ts",
+          "key shapes that must NOT be members"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "AST extraction over one TS source file.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic parse."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/theme.ts",
+          "command": "node -e \"import('./scripts/check-tailwind-runtime-tokens.mjs').then(m=>{const r=m.extractMantineThemeNames();console.log([...r.names].sort())})\"",
+          "observable": "REVIEWER-EXECUTED: 9 [\"--button-bd\",\"--button-bg\",\"--button-color\",\"--button-hover\",\"--button-padding-x\",\"--progress-size\",\"--sc-label-color\",\"--slider-track-bg\",\"--table-border-color\"] — exactly the nine names of kickoff §3.2, containing the proof key --button-padding-x and NOT containing --mantine-color-default-border (dropped by the existing --mantine- prefix rule, R5).",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the extracted set against the real theme.ts"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node -e \"extractMantineThemeNames('/tmp/probe769/theme-shapes.ts')\" against a stub containing a line comment key, a block comment key, a computed key, a template-literal key, an identifier key whose VALUE is a '--' string, a '--' key under a non-vars/styles property, plus one real vars key and one real styles key",
+          "observable": "REVIEWER-EXECUTED: the extractor returned exactly [\"--button-padding-x\",\"--table-border-color\"] — the vars literal key and the styles literal key. Every excluded shape R4 names (comment text, computed key, template-literal key, identifier key, a '--' string that is a value not a key, and a '--' key not reached through vars/styles) was correctly rejected. The set is AST-derived, not text-matched.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "key shapes that must NOT be members"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 'AST extraction' is cosmetic — a regex or a hand-written nine-name array would produce the same answer, so the set is an allowlist wearing a compiler API.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. The stub probe above shows the extractor rejecting six shapes that a naive regex over `'(--[a-z0-9-]+)'\\s*:` would have accepted (comment keys, computed keys, template keys, keys outside vars/styles) — the kickoff §10.0 probe command itself is such a regex and would have returned members the AST walk drops. No nine-name array appears anywhere in the diff (grep for allowlist/design-tokens-allow/startsWith('--button returns nothing)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript AST extraction; no generated CSS."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "extractMantineThemeNames's fail-closed arms and MANTINE_THEME_PROOF_KEY",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -305,7 +344,73 @@ (fatal arms)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -534,6 +646,21 @@ (runScan returns the theme fatal)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "missing theme.ts",
+          "extracted set without the proof key"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI fatal paths.",
+          "locales": "Developer-facing English console output.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate (case 10)",
+          "observable": "REVIEWER-EXECUTED: 'Case 10 (missing theme.ts is fatal) — expected exit 1, got exit 1 — fatal names the theme source: Mantine theme source not found at <tmp>/src/design-system/mantine/theme.ts'. The delete happens in the mkdtemp copy; git status after the run shows no worktree change.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing theme.ts"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task769/ac6-fatal.txt",
+          "command": "node docs/sessions/evidence/task769/ac6-fatal.probe.mjs",
+          "observable": "Retained transcript, probe source re-read by the reviewer: case A returns {\"fatal\":\"Mantine theme source not found at ...does-not-exist.ts\"}; case B builds a stub theme.ts whose only vars key is '--progress-size' and returns {\"fatal\":\"... produced 1 name(s) without the proof key --button-padding-x — extraction failure, not a vacuous pass\"}. The reviewer re-derived case B's shape independently while probing R4 (a stub yielding a proof-key-less set is refused).",
+          "freshness": "executor run 2026-08-26 on the final source; probe script re-read by the reviewer",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "extracted set without the proof key"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The ownership source can degrade silently: a theme.ts that is present but broken yields an empty or partial set and the gate still runs green, which is the fail-open shape R6 exists to prevent.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "PARTIALLY REFUTED — recorded as finding F1. The vacuous case is genuinely closed: an empty or proof-key-less set is fatal (case B above). The reviewer additionally fed the extractor a TRUNCATED theme.ts (unterminated object literal); ts.createSourceFile does not throw on syntax errors, so the 'failed to parse' catch is unreachable and the call returned three names including the proof key rather than a fatal. That path is not a weakening of the gate — a narrower Mantine set means MORE names fall through to the Tailwind fallback, so the failure direction is loud, not silent — but R6's 'unparsable is fatal' is satisfied only via the proof-key backstop, not via a parse check. Filed P3, non-blocking; see F1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Fatal-path behaviour of a CLI gate; no generated CSS."
+      }
+    },
+    {
+      "id": "AC7 / R7, R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F5"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "runVerifyGate's ten cases, setupTempTree's themePath, and evaluateTree's tsxFilesOverride",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -676,21 +805,24 @@ (banner and case headers)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -698,13 +830,16 @@ (evaluateTree tsxFilesOverride + themePath)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -770,31 +908,150 @@ (cases 4-10)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "all ten §10.4 outcomes",
+          "no plant left in the real worktree",
+          "no temp case reads the real theme.ts"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Self-test of a CLI gate.",
+          "locales": "Developer-facing English console output.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic; each case runs in its own mkdtemp copy torn down in finally."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate ; echo $? ; git status --porcelain",
+          "observable": "REVIEWER-EXECUTED, exit 0, '10/10 verify-gate assertions behaved as expected'. Every case printed its actual exit code and a decisive detail: 1 (page.tsx:25 --container-3xl), 2 (FooterView.module.css:140 --text-sm), 3 (src/does-not-exist.module.css --this-is-fake), 4 (dynamic-name violation page.tsx:25), 5 (fatal names src/components/shared/HeroSearchView.tsx), 6 (zero runtime-tsx findings, --button-padding-x absent), 7 (zero findings for --progress-size), 8 (FooterView.module.css:140 --button-padding-y reported as new debt), 9 (newDebt=0 staleEntries=0 dynamicCount=0 tsxFilesScanned=2), 10 (fatal names the theme source). git status --porcelain after the run is unchanged — no plant left behind.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "all ten §10.4 outcomes",
+              "no plant left in the real worktree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "source inspection of setupTempTree / evaluateTree / cases 6, 7, 8, 10",
+          "observable": "R11 confirmed by reviewer inspection: setupTempTree now returns themePath = join(srcDir,'design-system','mantine','theme.ts'), evaluateTree passes tree.themePath into runScan on EVERY case, and runScan's themePath parameter defaults to the real MANTINE_THEME_PATH only for non-temp callers. No --verify-gate case reads the real theme.ts; case 10 deletes only the copy. Case 9 additionally asserts tsxFilesScanned=2, making the F3 invariant observable rather than decorative.",
+          "freshness": "reviewer read 2026-08-26 of the submitted source",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no temp case reads the real theme.ts"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new cases are tautological — they assert the post-edit behaviour of the code that produced them, so they would pass no matter what the classifier did.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. Case 7 was measured exiting 1 on the genuine pre-edit script by the reviewer (AC4), so it is a before/after control. Case 8 is its negative control and still exits 1 post-edit. Cases 5 and 10 assert fatals that did not exist pre-edit at all — case 5's operation exited 0 on the pre-edit script by construction (that is defect F3)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Self-test exit codes; no generated CSS."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "the absence of any allowlist, marker, baseline row, hand-enumerated list or prefix shortcut in the diff",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -305,7 +344,73 @@ (the only new ownership authority)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the complete diff text",
+          "--verify-gate case 8"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Diff-text property.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Static."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "git diff | grep -n \"design-tokens-allow\\|allowlist\\|startsWith('--button\"",
+          "observable": "REVIEWER-EXECUTED: zero matches. The diff introduces no design-tokens-allow: marker, no allowlist row, no baseline row (scripts/tailwind-runtime-token-baseline.json is not in the diff and still reads []), no hand-enumerated name array, and no --button- prefix rule. The single hardcoded name is MANTINE_THEME_PROOF_KEY = '--button-padding-x', which the kickoff mandates as a fail-closed extraction probe, not as an exemption — it grants nothing and only causes fatals.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the complete diff text"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate (case 8)",
+          "observable": "REVIEWER-EXECUTED: 'Case 8 (module-css negative control, not in theme.ts) — expected exit 1, got exit 1 — reported as module-css new debt: src/components/layout/FooterView.module.css:140 --button-padding-y'. A --button- prefix shortcut would have passed case 7 and failed here; the pair 7+8 is what proves the set is evidence-derived.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "--verify-gate case 8"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The exemption set is author-writable in effect: an author who wants to silence the gate can just add the name to theme.ts, which is the same thing as an allowlist.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/theme.ts",
+          "result": "PARTIALLY TRUE BY OWNER DESIGN, and bounded. Adding a name to theme.ts's vars/styles does make it external — that is exactly what D65-F decided, on the ground that theme.ts declaring a custom property at runtime IS the ownership fact. The bound the reviewer verified by execution (AC4 counter-check) is that a name Tailwind genuinely owns cannot be laundered this way: tailwindOwnedNames wins over the Mantine bucket. theme.ts is also a rendered-runtime source, not a comment or a marker — writing a fake declaration there changes the running app, unlike a suppression comment."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Diff-text and exit-code property; no generated CSS."
+      }
+    },
+    {
+      "id": "AC9 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "the shipped scan's observable output on the current tree",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -541,7 +668,7 @@ (scanModuleCss call site — the only shipped-path behaviour change)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "default mode banner and verdict",
+          "--report totals"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI output.",
+          "locales": "Developer-facing English console output.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs ; echo $? ; node scripts/check-tailwind-runtime-tokens.mjs --report ; echo $?",
+          "observable": "REVIEWER-EXECUTED on the submitted worktree: 'scanned 25 src/**/*.module.css file(s) + 2 runtime TSX file(s)', 'ownership source: globals.css ... (277 project-owned names) + tailwindcss@4.3.0 ... (412 Tailwind-declared names ...) + --mantine-/--tw- prefixes', 'Tailwind-owned references found: 0 | baseline entries: 0', '0 new debt, 0 stale baseline entries, 0 dynamic-name violations', exit 0. --report: 'module-css: 0 pair(s) / 0 use(s)', 'runtime-tsx: 0 pair(s) / 0 use(s)', 'TOTAL: 0 pair(s) / 0 use(s)', exit 0. Every field is identical to the §10.0 pre-edit expectation and to the executor's retained pre-edit transcript.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "default mode banner and verdict",
+              "--report totals"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task769/preflight.txt",
+          "command": "npm run check:tailwind-runtime-tokens ; node scripts/check-tailwind-runtime-tokens.mjs --report (pre-edit, §10.0)",
+          "observable": "Retained pre-edit transcript: same 25 + 2 files, same 277/412 ownership counts, same 0 found / 0 baseline / 0 stale / 0 dynamic, exit 0 in both modes. Side-by-side identity with the reviewer's post-edit run above; no field moved.",
+          "freshness": "executor run 2026-08-26 on base 6b43b9676, re-read by the reviewer",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "default mode banner and verdict",
+              "--report totals"
+            ],
+            "phases": [
+              "pre-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The output is unchanged only because the hardening is a no-op on this tree — nothing was actually fixed.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. Inertness on the current tree is required by R9 and is not evidence of a no-op: the reviewer measured the same classifier flipping a planted --progress-size read from exit 1 (pre-edit) to exit 0 (post-edit) (AC4), and measured a missing configured input flipping from a silent skip to a fatal in all three modes (AC3). The change is inert here precisely because none of the nine Mantine names is currently read by any scanned file — which is also why the shipped 0/0 result carries no new suppression."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "CLI output identity; no generated CSS and no token value changed."
+      }
+    },
+    {
+      "id": "AC10 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F4",
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "docs/design-system.md",
+        "symbol": "§23.7 — the four-bucket ownership model, the closed/fatal TSX input rule, the theme.ts ownership source with its nine names, and the §3.5 comment-stripping boundary",
+        "diffHunks": [
+          "docs/design-system.md @@ -1261,7 +1261,8 @@",
+          "docs/design-system.md @@ -1275,12 +1276,24 @@",
+          "docs/design-system.md @@ -1289,6 +1302,23 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "§10.5 item 1 closed list",
+          "§10.5 item 2 fatal input",
+          "§10.5 item 3 theme.ts ownership + nine names + D65-F date",
+          "§10.5 item 4 comment-stripping boundary",
+          "the script's own header comment"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Documentation prose.",
+          "locales": "docs/ is English-only by convention.",
+          "viewports": "No rendered output.",
+          "states": "Static text."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/design-system.md",
+          "command": "git diff docs/design-system.md",
+          "observable": "Reviewer-read. §23.7 is amended in place — same heading, no renumbering, no new section. Item 1: 'The runtime TSX input list is closed and fixed (Task 767, hardened Task 769)' names both files and states it is 'never a route-graph inventory'. Item 2: a renamed/deleted entry is 'fatal in every mode (default, --report, --verify-gate) ... The fatal message names every missing path, repository-relative.' Item 3: bucket 3 'Mantine-theme-owned (Task 769, owner decision D65-F, 2026-08-26)' lists all nine names verbatim, states the AST/compiler-API derivation, states the exception is applied globally, and excludes --mantine-color-default-border with its reason. Item 4: 'The §3.5 comment-stripping boundary (Task 769)' names HeroSearchView.module.css:33 explicitly. The three-bucket count was updated to four in both the doc and the script header.",
+          "freshness": "reviewer read 2026-08-26 of the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "§10.5 item 1 closed list",
+              "§10.5 item 2 fatal input",
+              "§10.5 item 3 theme.ts ownership + nine names + D65-F date",
+              "§10.5 item 4 comment-stripping boundary"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "read of the header comment block and the classifyName comment block",
+          "observable": "The three-bucket description at the old :44-64 is rewritten to four buckets with the new authority described; the Task 769 section documents F2/F3 and the ten verify-gate outcomes. §10.5 also named the classifyName comment's 'a TSX file declares no CSS custom property of its own' justification as a line that now misstates behaviour; it is unchanged. The sentence remains literally true of a scanned TSX file's own localDeclaredNames, so no reader is misled about the code path — recorded as documentation finding F4, non-blocking.",
+          "freshness": "reviewer read 2026-08-26 of the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the script's own header comment"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "§23.7 documents the exception as task history rather than a durable rule, so a future reader cannot tell what the gate guarantees today.",
+          "kind": "EXECUTED",
+          "path": "docs/design-system.md",
+          "result": "REFUTED for the four required items — each is written as a standing rule ('is closed and fixed', 'is fatal in every mode', 'the exception is applied globally in the classifier', 'can no longer be caught by this name at this site'), with the task/decision citation carried as a parenthetical rather than as the sentence's subject. One durable claim is however slightly stronger than the code (unparsable theme.ts is fatal) — see F1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation prose; no generated CSS."
+      }
+    },
+    {
+      "id": "AC11 / R12",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-26-task769-runtime-token-scanner-hardening.md",
+        "symbol": "the session log's Files Changed table, measurements, gate exit codes, not-folded-in list and status line",
+        "diffHunks": [
+          "docs/sessions/2026-08-26-task769-runtime-token-scanner-hardening.md (new file, 184 lines)",
+          "docs/backlog.md @@ -3,7 +3,7 @@ and @@ -41,12 +41,12 @@ (Last Session line, Sprint 65 line, registry row 769)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Files Changed table vs the real diff",
+          "gate exit codes",
+          "not-folded-in list",
+          "status line",
+          "backlog state at or under 80 lines"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Records.",
+          "locales": "docs/ is English-only by convention.",
+          "viewports": "No rendered output.",
+          "states": "Static text."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-26-task769-runtime-token-scanner-hardening.md",
+          "command": "read of the session log against git diff --stat and git status --porcelain ; wc -l docs/backlog.md",
+          "observable": "Reviewer-verified: the Files Changed table lists the script, docs/design-system.md, docs/backlog.md, the session log and docs/sessions/evidence/task769/** — matching the real diff exactly, with no file claimed that is not changed and none changed that is not claimed. Status is 'IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW' with an explicit no-self-approval and no-mutating-git statement. §8 restates Task 767 F5/F6/F7 and Task 766 F1 as still open and untouched, as kickoff §5 requires. docs/backlog.md is 80 lines (no growth) and its registry row and Sprint 65 line both carry the new state. The log also volunteers a pre-existing out-of-scope BOM observation and the §10.4 case-4 kickoff mislabel rather than hiding either.",
+          "freshness": "reviewer read 2026-08-26 of the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Files Changed table vs the real diff",
+              "not-folded-in list",
+              "status line",
+              "backlog state at or under 80 lines"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task769/final-gates.txt",
+          "command": "npm run check:tailwind-runtime-tokens ; --report ; npm run check:design-tokens ; npm run check:stories ; npm run typecheck ; npm run build",
+          "observable": "Retained transcripts, all exit 0: check:tailwind-runtime-tokens (25+2, 0/0), --report (0/0/0), check:design-tokens --strict (454 files, 0 violations), check:stories (129 files, 0 violations), typecheck (tsc --noEmit, clean), build.log (Next.js 15.5.18, full route table, exit 0). The reviewer independently re-ran the two runtime-token modes and the verify-gate on Linux and reproduced them exactly; typecheck, check:stories, check:design-tokens and build were accepted from the retained transcripts (see attestation.reviewerEnvironment).",
+          "freshness": "executor run 2026-08-26 on the final source; the two runtime-token modes re-run by the reviewer 2026-08-26",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "gate exit codes"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The session log's AC table asserts coverage the evidence directory does not actually contain.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task769",
+          "result": "MOSTLY REFUTED, one gap found and closed. Every cited evidence file exists and says what the AC row claims, and the AC4 pre/post comparison is a real executed run against the extracted pre-edit script (the reviewer reproduced it independently). The one exception is AC3, which the kickoff required to carry a pasted DIRECT invocation in addition to --verify-gate case 5; the log cites only case 5. The reviewer executed the missing direct invocation in all three modes and it passed — finding F3, evidence gap closed in review, not a defect in the implementation."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Records; no generated CSS."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC6 / R6 — 'an unparsable theme.ts is fatal' is achieved only via the proof-key backstop; the parse-failure arm is unreachable",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "scripts/check-tailwind-runtime-tokens.mjs extractMantineThemeNames wraps ts.createSourceFile in try/catch and returns {fatal: '... failed to parse: ...'}. ts.createSourceFile does not throw on syntax errors — it returns a SourceFile carrying parseDiagnostics — so that catch is dead code. REVIEWER-EXECUTED: a truncated theme.ts (unterminated object literal, cut mid-Progress-vars) returned NAMES ['--button-bg','--button-padding-x','--progress-size'] rather than a fatal, i.e. a corrupt ownership source silently narrowed the set from nine to three. This is NOT a weakening of the gate — a narrower Mantine set pushes more names into the Tailwind-by-elimination fallback, so the failure direction is a loud exit 1, and the genuinely vacuous case (empty set / no proof key) IS fatal. But R6's letter is unmet and docs/design-system.md §23.7 now states 'A missing, unreadable, or unparsable theme.ts ... is fatal' as a durable rule that the code does not strictly implement. Cheap fix for a follow-up: check sourceFile.parseDiagnostics.length (or ts.getPreEmitDiagnostics) and return {fatal} when non-empty. OWNER/770: fold into the next scanner touch; do not reopen 769 for it.",
+      "requirementIdsNote": ""
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC9 / R9 and AC10 / R10 — the run banner's 'ownership source:' line does not disclose the fourth authority",
+      "requirementIds": [
+        "AC9 / R9",
+        "AC10 / R10"
+      ],
+      "evidence": "Every successful run prints 'ownership source: globals.css @theme/@theme inline/:root (277 project-owned names) + tailwindcss@4.3.0 theme.css/index.css (412 Tailwind-declared names, version-pinned) + --mantine-/--tw- prefixes'. After this task a fourth authority — nine names AST-extracted from src/design-system/mantine/theme.ts — silently exempts names on every run and is absent from that line. The executor was correct not to change it: R9 requires the shipped output to be byte-identical, so adding it here would have failed AC9, and §23.7 does document the authority. The residual is that the gate's printed provenance is now incomplete for anyone reading CI output rather than the design-system doc. OWNER decision for Task 770: either accept the banner as-is permanently, or authorise a one-line banner extension in the next task that is allowed to move the output.",
+      "requirementIdsNote": ""
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC3 / R1, R2 and AC11 / R12 — the AC3 direct-invocation evidence the kickoff required was not retained",
+      "requirementIds": [
+        "AC3 / R1, R2",
+        "AC11 / R12"
+      ],
+      "evidence": "Kickoff AC3 required '--verify-gate case 5 output PLUS a pasted direct invocation showing the fatal string and $LASTEXITCODE'. The session log's AC3 row cites only evidence/verify-gate.txt case 5, and docs/sessions/evidence/task769/ contains no direct-invocation transcript. The requirement itself is met — the reviewer executed the missing arm (rename src/components/shared/HeroSearchView.tsx aside, run all three modes, restore): default exit=1, --report exit=1, --verify-gate exit=1, each printing 'configured TSX input(s) not found: src/components/shared/HeroSearchView.tsx', with git status --porcelain identical before and after. Recorded so the ledger, not the session log, carries that proof. Executor practice note: when an AC names two independent artefacts, retain both.",
+      "requirementIdsNote": ""
+    },
+    {
+      "id": "F4",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC10 / R10 — one header-comment line §10.5 explicitly named was left unchanged",
+      "requirementIds": [
+        "AC10 / R10"
+      ],
+      "evidence": "Kickoff §10.5 directed: 'Update the script's own header comment where it now misstates behaviour — specifically the \"a TSX file declares no CSS custom property of its own\" justification at :317 and the three-bucket description at :44-64.' The three-bucket description was rewritten to four buckets; the classifyName comment still ends with the quoted sentence. The sentence remains true in its own context (a scanned .tsx file contributes nothing to localDeclaredNames), so nothing in it is now false, but the kickoff asked for it and it is the one §10.5 instruction not carried out. Cosmetic; fix opportunistically in the next touch of this file.",
+      "requirementIdsNote": ""
+    },
+    {
+      "id": "F5",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC7 / R7, R11 — the kickoff's §10.4 case-4 'retained from Task 767' label is a kickoff defect, correctly handled",
+      "requirementIds": [
+        "AC7 / R7, R11"
+      ],
+      "evidence": "Kickoff §10.4 labels case 4 (dynamic template-expression construction) 'retained from Task 767', but the shipped pre-edit gate had only three plants plus one control — confirmed by the pre-edit banner in evidence/preflight.txt ('4/4 ... (3 plants exited 1, 1 control exited 0)') and by the removed banner string in the diff. The executor flagged this in its completion report and built case 4 as a new plant, which is the correct resolution: the required observable behaviour (exit 1, dynamic-name violation, never baseline-suppressible) was unambiguous either way and is verified. Recorded against the KICKOFF, not the implementation. ORCHESTRATOR: correct the label if this kickoff is ever reused as a template.",
+      "requirementIdsNote": ""
+    },
+    {
+      "id": "F6",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC5 / R5 — the extractor matches any property literally named vars/styles anywhere in theme.ts, not only Mantine component entries",
+      "requirementIds": [
+        "AC5 / R5"
+      ],
+      "evidence": "walkForVarsAndStyles descends on any PropertyAssignment whose key text is 'vars' or 'styles', wherever it occurs in the file, and then collects every literal '--' key at any depth beneath it. The kickoff's wording ('whose enclosing Mantine component entry reaches them through a vars or a styles member') is slightly narrower. On the current tree the two coincide exactly — the extracted set is the nine names of §3.2, reviewer-verified — and the blast radius of the looser rule is bounded: any name that Tailwind owns is still classified 'tailwind' first (reviewer-executed counter-check on AC4), and theme.ts is a single small file under design-system ownership. Recorded as a boundary so a future reader does not mistake the implementation for the narrower spec text. No action required at this size.",
+      "requirementIdsNote": ""
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC10 / R10",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "The reviewer ran on Linux against a node_modules installed for win32. Every requirement row above rests on JS-only paths — the TypeScript compiler API, node:fs, git extraction — which are platform-independent, and the reviewer independently re-executed check:tailwind-runtime-tokens, --report, --verify-gate (10/10), the extractor probes, the missing-input probes and a from-scratch pre-edit reproduction of the --progress-size flip at base 6b43b9676. npm run build, npm run typecheck, npm run check:stories and npm run check:design-tokens were NOT re-run by the reviewer (win32-only SWC/lightningcss binaries) and are accepted from the executor's retained transcripts in docs/sessions/evidence/task769/, each showing exit 0 with full output; build.log carries a complete Next.js 15.5.18 route table, so it is a real build, not a truncated or stale artefact. No requirement row's verdict depends on those four commands: this diff changes one CLI gate script and one documentation section, and touches no compiled source."
+  }
+}

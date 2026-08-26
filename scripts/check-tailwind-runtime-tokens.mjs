@@ -3,6 +3,7 @@
  * check-tailwind-runtime-tokens.mjs — Task 762 (Sprint 62) Tailwind runtime-token gate.
  * Revised by Task 762 Revision 1 (2026-08-21) — see "Revision 1" below for what changed and why.
  * Extended by Task 767 (Sprint 65, level 2, 2026-08-25) — see "Task 767" below.
+ * Hardened by Task 769 (Sprint 65, D65-F, 2026-08-26) — see "Task 769" below.
  *
  * Detects any Tailwind-owned custom property REFERENCED (`var(...)`), DECLARED (`--name: …`), or
  * named inside a `transition-property`/`will-change` value list in `src/**\/*.module.css`, PLUS
@@ -36,9 +37,9 @@
  *        `border-top-style` -> `none`/`0px`) — worse, not merely equally bad, and the original
  *        kickoff never measured it before ranking it as lower priority.
  *
- * ── Ownership (R4) ──────────────────────────────────────────────────────────────────────────────
+ * ── Ownership (R4, extended by Task 769/D65-F) ─────────────────────────────────────────────────
  *
- * A name is classified into exactly one of three buckets — there is no "cannot classify" state,
+ * A name is classified into exactly one of four buckets — there is no "cannot classify" state,
  * which is what makes this fail closed rather than fail open:
  *
  *   1. KNOWN-EXTERNAL, NON-TAILWIND — starts with `--mantine-`. Mantine injects ~112 of its own
@@ -57,11 +58,17 @@
  *      Tailwind-owned regardless of whether `globals.css` additionally redeclares it — redeclaring
  *      `--default-transition-duration` inside `@theme inline` no longer silences the gate, because
  *      ownership no longer stops at "declared in globals.css."
- *   3. PROJECT-OWNED — declared in `globals.css`'s `@theme`/`@theme inline`/`:root` blocks (same
+ *   3. MANTINE-THEME-OWNED (Task 769, D65-F) — a literal custom-property key declared inside a
+ *      `vars` or `styles` object/callback in `src/design-system/mantine/theme.ts`, AST-extracted
+ *      (never a hand-enumerated list, never a `--button-`-style prefix). `theme.ts` is the source
+ *      of the key's ownership, not a peculiarity of TSX syntax — the same name is `external`
+ *      whether read from a CSS Module or a runtime TSX prop. Not flagged.
+ *   4. PROJECT-OWNED — declared in `globals.css`'s `@theme`/`@theme inline`/`:root` blocks (same
  *      block-scoped extraction `check-css-var-resolvability.mjs`'s `extractOwnedNames` uses,
- *      `.dark` excluded for the same reason) AND NOT claimed by bucket 2. Not flagged.
- *   Everything not resolved by 1-3 is Tailwind-owned by elimination (never declared anywhere this
- *   gate can attribute to the project or to Mantine) — checked against the baseline.
+ *      `.dark` excluded for the same reason) AND NOT claimed by bucket 2 or 3. Not flagged.
+ *   Everything not resolved by 1-4 is Tailwind-owned by elimination (never declared anywhere this
+ *   gate can attribute to the project, to Mantine's runtime injection, or to this project's own
+ *   Mantine theme) — checked against the baseline.
  *
  * Checkpoint C-1 (`docs/sessions/evidence/task762-r1/emission-census.json`) measured, for all 257
  * names in `globals.css`'s `@theme inline`/`:root` blocks, whether each is emitted in the current
@@ -138,27 +145,54 @@
  * where a name appears on several lines in one file, the baseline row still stays single (R6
  * unchanged).
  *
+ * ── Task 769 (Sprint 65, level 2 hardening, D65-F) — fail-closed TSX inputs, theme.ts ownership ──
+ *
+ * Closes two P2 defects the Task 767 review recorded against this gate:
+ *
+ *   F3: a missing configured `TSX_FILES_REL` entry was silently skipped
+ *       (`if (!existsSync(absPath)) continue;`), halving the scan denominator and still exiting 0.
+ *       `runScan` now resolves every configured TSX input BEFORE the scan loop and returns
+ *       `{ fatal }` naming every missing path, repository-relative, if any are absent — in every
+ *       mode (default, `--report`, `--verify-gate`). `tsxFilesScanned` is now an invariant equal to
+ *       `tsxFiles.length` on any successful run, not informational decoration.
+ *   F2: a Mantine-theme-declared custom property (e.g. `--button-padding-x`, `--progress-size`)
+ *       reached bucket 4's Tailwind-by-elimination fallback and was misclassified `tailwind`, even
+ *       though `src/design-system/mantine/theme.ts` declares it at runtime. `extractMantineThemeNames`
+ *       reads `theme.ts` through the TypeScript compiler API (never a regex) and returns the set of
+ *       literal custom-property keys declared inside a `vars` or `styles` member — nine names on the
+ *       current tree, applied GLOBALLY in `classifyName` (bucket 3, above), not only to the TSX arm:
+ *       `scanModuleCss` and `scanTsxFile` both receive it. A missing/unreadable/unparsable `theme.ts`,
+ *       or an extracted set missing the `--button-padding-x` proof key, is fatal — the same
+ *       fail-closed shape `globals.css` already has.
+ *
+ * `--verify-gate` grew from 4 asserted outcomes (3 plants + 1 control) to 10 (Task 769 §10.4):
+ * cases 1-3 and 9 are the original plants/control, unchanged; case 4 plants a dynamic
+ * template-expression construction; case 5 deletes a configured TSX input (the F3 fix); case 6
+ * supplies the non-configured `AgentCtaButton.tsx` as the sole TSX input to prove the TSX arm of the
+ * F2 fix; case 7 plants `var(--progress-size)` in a `.module.css` (D65-F's module-css proof — this
+ * plant exited 1 on the pre-Task-769 script); case 8 is case 7's negative control,
+ * `var(--button-padding-y)`, a name declared nowhere, which would pass case 7 under a
+ * `--button-`-prefix shortcut and must still fail here; case 10 deletes the copied `theme.ts` (the
+ * R6 fail-closed ownership-source requirement).
+ *
  * MODES:
  *   node scripts/check-tailwind-runtime-tokens.mjs                 Default — today's both-directions
  *                                                                   baseline gate, over both origins.
  *   node scripts/check-tailwind-runtime-tokens.mjs --report         Prints every finding grouped by
  *                                                                   origin with a pair count and a
  *                                                                   use count; exits 0 regardless.
- *   node scripts/check-tailwind-runtime-tokens.mjs --verify-gate    Self-test: plants three failures
- *                                                                   (a new TSX reference, a new
- *                                                                   module-CSS reference, a stale
- *                                                                   baseline row) into independent
- *                                                                   `mkdtempSync` copies of `src/`,
- *                                                                   proves each exits 1 with the
- *                                                                   right classification, then proves
- *                                                                   an unmodified copy exits 0. No
+ *   node scripts/check-tailwind-runtime-tokens.mjs --verify-gate    Self-test: 10 asserted outcomes
+ *                                                                   (Task 769 §10.4) inside independent
+ *                                                                   `mkdtempSync` copies of `src/`;
+ *                                                                   each case prints its actual exit
+ *                                                                   code and decisive detail. No
  *                                                                   plant ever touches the real tree.
  *
  * npm scripts: `npm run check:tailwind-runtime-tokens`,
  *              `npm run check:tailwind-runtime-tokens:verify-gate`.
  *
  * Added by Task 762 (Sprint 62, 2026-08-21). Revised by Task 762 Revision 1 (2026-08-21).
- * Extended by Task 767 (Sprint 65, 2026-08-25).
+ * Extended by Task 767 (Sprint 65, 2026-08-25). Hardened by Task 769 (Sprint 65, 2026-08-26, D65-F).
  * Docs: docs/design-system.md §23.7.
  */
 
@@ -181,6 +215,11 @@ const PACKAGE_LOCK_PATH = resolve(ROOT, 'package-lock.json');
 const TAILWIND_THEME_PATH = resolve(ROOT, 'node_modules/tailwindcss/theme.css');
 const TAILWIND_INDEX_PATH = resolve(ROOT, 'node_modules/tailwindcss/index.css');
 const TAILWIND_PKG_PATH = resolve(ROOT, 'node_modules/tailwindcss/package.json');
+// Task 769 (D65-F) — the Mantine-theme ownership source. Its literal `vars`/`styles`
+// custom-property keys are external, applied globally in `classifyName`, not only to the TSX arm.
+const MANTINE_THEME_PATH = resolve(ROOT, 'src/design-system/mantine/theme.ts');
+// D65-F's proof key — the extracted set is fatal if it does not contain this name (R6).
+const MANTINE_THEME_PROOF_KEY = '--button-padding-x';
 
 // Task 767 §6 — the closed, hardcoded two-file TSX input list. Never widened by a glob.
 const TSX_FILES_REL = [
@@ -305,7 +344,73 @@ function isTailwindPrefixed(name) {
   return TAILWIND_PREFIXES.some((p) => name.startsWith(p));
 }
 
-// ── The three-bucket classifier (R4) — UNCHANGED by Task 767. ──
+// ── Task 769 (D65-F) — the Mantine-theme ownership source. ──────────────────────────────────────
+// `theme.ts` is the source of a custom property's ownership, not a peculiarity of TSX syntax — the
+// same name must not be `external` when read from a TSX prop and Tailwind debt when read from a
+// CSS Module. Reads `src/design-system/mantine/theme.ts` through the TypeScript compiler API (the
+// same `typescript` import `scanTsxFile` already uses — never a regex over the source) and collects
+// every object-literal property whose KEY is a string literal beginning with `--`, reached through a
+// property literally named `vars` or `styles` (both an object literal and an arrow-function return
+// body count — `vars` is written as a callback in this file, `styles` as a plain object for some
+// components and a callback for others). A computed key (`[`--mantine-color-${color}-5`]`), a
+// template-literal key, an identifier key, or a `--` string that is not itself a property key (e.g.
+// inside a comment or a value) is never collected — `ts.isPropertyAssignment` + `ts.isStringLiteral`
+// on the property NAME is the only match. Names already covered by `EXTERNAL_PREFIXES` (`--mantine-`)
+// are dropped — the prefix rule already owns them (`--mantine-color-default-border`, R5).
+function collectCustomPropertyKeys(node, names) {
+  if (ts.isPropertyAssignment(node) && ts.isStringLiteral(node.name) && node.name.text.startsWith('--')) {
+    names.add(node.name.text);
+  }
+  ts.forEachChild(node, (child) => collectCustomPropertyKeys(child, names));
+}
+
+function walkForVarsAndStyles(node, names) {
+  if (ts.isPropertyAssignment(node)) {
+    const key = node.name;
+    const keyText = ts.isIdentifier(key) ? key.text : (ts.isStringLiteral(key) ? key.text : null);
+    if (keyText === 'vars' || keyText === 'styles') {
+      collectCustomPropertyKeys(node.initializer, names);
+      return;
+    }
+  }
+  ts.forEachChild(node, (child) => walkForVarsAndStyles(child, names));
+}
+
+// Fail-closed, the same shape `globals.css` already has (:525-531): a missing, unreadable, or
+// unparsable theme file returns `{ fatal }`, never an empty set and a green run (R6). A set that
+// does not contain the proof key is treated identically — a real AST walk over the current
+// `theme.ts` always finds it, so its absence means the extraction itself broke, not that the theme
+// changed.
+export function extractMantineThemeNames(themePath = MANTINE_THEME_PATH) {
+  if (!existsSync(themePath)) {
+    return { fatal: `Mantine theme source not found at ${themePath}` };
+  }
+  let text;
+  try {
+    text = readFileSync(themePath, 'utf8');
+  } catch (e) {
+    return { fatal: `Mantine theme source at ${themePath} could not be read: ${e.message}` };
+  }
+  let sourceFile;
+  try {
+    sourceFile = ts.createSourceFile(themePath, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  } catch (e) {
+    return { fatal: `Mantine theme source at ${themePath} failed to parse: ${e.message}` };
+  }
+  const names = new Set();
+  walkForVarsAndStyles(sourceFile, names);
+  for (const name of [...names]) {
+    if (isKnownExternal(name)) names.delete(name);
+  }
+  if (!names.has(MANTINE_THEME_PROOF_KEY)) {
+    return {
+      fatal: `Mantine theme source at ${themePath} produced ${names.size} name(s) without the proof key ${MANTINE_THEME_PROOF_KEY} — extraction failure, not a vacuous pass`,
+    };
+  }
+  return { names };
+}
+
+// ── The classifier (R4) — extended by Task 769 (D65-F) with a fourth ownership authority. ──
 // `localDeclaredNames` (R4 fix, found during Revision 1 verification): a name declared WITHIN the
 // SAME .module.css file being scanned — e.g. MobileBottomNavView.module.css's own
 // `--fab-ring-color`/`--fab-scale-x/y`, MantineListingCardPattern.module.css's own `--text-color`
@@ -316,13 +421,14 @@ function isTailwindPrefixed(name) {
 // scan would flood false positives on every component-local CSS custom property in the whole
 // migrated design system, none of which globals.css has any reason to also declare. TSX findings
 // always pass an empty `localDeclaredNames` — a TSX file declares no CSS custom property of its own.
-export function classifyName(name, ownedSet, tailwindOwnedNames, localDeclaredNames = new Set()) {
+export function classifyName(name, ownedSet, tailwindOwnedNames, mantineThemeNames = new Set(), localDeclaredNames = new Set()) {
   if (isKnownExternal(name)) return 'external';
   if (isTailwindPrefixed(name)) return 'tailwind';
   if (tailwindOwnedNames.has(name)) return 'tailwind'; // B-1/B-2 fix: wins even if globals.css also declares it
+  if (mantineThemeNames.has(name)) return 'external'; // D65-F — theme.ts vars/styles key, global exception
   if (ownedSet.has(name)) return 'project';
   if (localDeclaredNames.has(name)) return 'project';
-  return 'tailwind'; // bucket 3 by elimination — never declared anywhere attributable to project/Mantine
+  return 'tailwind'; // bucket 4 by elimination — never declared anywhere attributable to project/Mantine/theme.ts
 }
 
 // ── var() reference NAME extraction — whole-file, paren-depth-aware, nested-call-aware. ──
@@ -388,8 +494,11 @@ function collectModuleCssFiles(dir) {
 }
 
 // ── Core scan — returns Set<string> of Tailwind-owned property names found in one file,
-// across all three roles (var() read, declaration, property-name list). UNCHANGED by Task 767. ──
-export function scanModuleCss(rawContent, ownedSet, tailwindOwnedNames) {
+// across all three roles (var() read, declaration, property-name list). UNCHANGED by Task 767;
+// extended by Task 769 (D65-F) to also pass the Mantine-theme name set — this is what makes the
+// exception global rather than TSX-only: the same name is `external` whether read from a CSS
+// Module or a TSX prop. ──
+export function scanModuleCss(rawContent, ownedSet, tailwindOwnedNames, mantineThemeNames) {
   const stripped = stripCssComments(rawContent);
   const declared = findDeclaredNames(stripped);
   const localDeclaredNames = new Set(declared);
@@ -400,7 +509,7 @@ export function scanModuleCss(rawContent, ownedSet, tailwindOwnedNames) {
   ];
   const flagged = new Set();
   for (const name of names) {
-    if (classifyName(name, ownedSet, tailwindOwnedNames, localDeclaredNames) === 'tailwind') flagged.add(name);
+    if (classifyName(name, ownedSet, tailwindOwnedNames, mantineThemeNames, localDeclaredNames) === 'tailwind') flagged.add(name);
   }
   return flagged;
 }
@@ -457,8 +566,10 @@ function collectLiteralsAndDynamics(node, sourceFile, literals, dynamics) {
 }
 
 // Returns { findings: [{property, line}], dynamicViolations: [{line}] } for one TSX file — raw
-// (non-deduped) occurrence events; the caller groups them into pairs + use counts.
-function scanTsxFile(absPath, ownedSet, tailwindOwnedNames) {
+// (non-deduped) occurrence events; the caller groups them into pairs + use counts. Extended by
+// Task 769 (D65-F) to also pass the Mantine-theme name set — `emptyLocal` (a TSX file declares no
+// CSS custom property of its own) is unrelated and unchanged.
+function scanTsxFile(absPath, ownedSet, tailwindOwnedNames, mantineThemeNames) {
   const text = readFileSync(absPath, 'utf8');
   const sourceFile = ts.createSourceFile(absPath, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const findings = [];
@@ -477,7 +588,7 @@ function scanTsxFile(absPath, ownedSet, tailwindOwnedNames) {
         collectLiteralsAndDynamics(node.initializer, sourceFile, literals, dynamics);
         for (const lit of literals) {
           for (const name of findVarReferenceNames(lit.text)) {
-            if (classifyName(name, ownedSet, tailwindOwnedNames, emptyLocal) === 'tailwind') {
+            if (classifyName(name, ownedSet, tailwindOwnedNames, mantineThemeNames, emptyLocal) === 'tailwind') {
               findings.push({ property: name, line: lit.line });
             }
           }
@@ -521,6 +632,7 @@ export function runScan({
   srcDir = SRC_DIR,
   tsxFiles = TSX_FILES_REL.map((p) => resolve(ROOT, p)),
   pathRoot = ROOT,
+  themePath = MANTINE_THEME_PATH,
 } = {}) {
   if (!existsSync(globalsPath)) {
     return { fatal: `globals.css not found at ${globalsPath}` };
@@ -534,6 +646,21 @@ export function runScan({
   const tw = loadTailwindOwnedNames();
   if (tw.fatal) return { fatal: tw.fatal };
 
+  // Task 769 (R6) — the Mantine-theme source is mandatory, not best-effort. A missing, unreadable,
+  // unparsable theme.ts, or an extracted set missing the proof key is fatal in every mode.
+  const mantine = extractMantineThemeNames(themePath);
+  if (mantine.fatal) return { fatal: mantine.fatal };
+
+  // Task 769 (R1, R2) — every configured TSX input is resolved and asserted to exist BEFORE any
+  // TSX file is scanned. A renamed or deleted entry no longer silently halves the scan denominator
+  // (the prior `if (!existsSync(absPath)) continue;` skip is removed) — it is fatal, naming every
+  // missing path, repository-relative, in every mode.
+  const missingTsxFiles = tsxFiles.filter((p) => !existsSync(p));
+  if (missingTsxFiles.length > 0) {
+    const missingRel = missingTsxFiles.map((p) => relative(pathRoot, p).replace(/\\/g, '/'));
+    return { fatal: `configured TSX input(s) not found: ${missingRel.join(', ')}` };
+  }
+
   // ── module-css origin (unchanged scan, now also carries origin/line/uses) ──
   const files = collectModuleCssFiles(srcDir);
   const moduleCssFound = [];
@@ -541,7 +668,7 @@ export function runScan({
     const rel = relative(pathRoot, f).replace(/\\/g, '/');
     const raw = readFileSync(f, 'utf8');
     const stripped = stripCssComments(raw);
-    const flagged = scanModuleCss(raw, ownedSet, tw.names);
+    const flagged = scanModuleCss(raw, ownedSet, tw.names, mantine.names);
     for (const property of [...flagged].sort()) {
       moduleCssFound.push({
         file: rel,
@@ -553,15 +680,16 @@ export function runScan({
     }
   }
 
-  // ── runtime-tsx origin (Task 767, closed two-file list) ──
+  // ── runtime-tsx origin (Task 767, closed two-file list) ── every entry is already confirmed to
+  // exist above, so tsxFilesScanned is now an invariant equal to tsxFiles.length on any successful
+  // (non-fatal) run, not informational decoration.
   let tsxFilesScanned = 0;
   const tsxRaw = []; // one entry per raw occurrence, pre-dedup
   const dynamicViolations = [];
   for (const absPath of tsxFiles) {
-    if (!existsSync(absPath)) continue;
     tsxFilesScanned++;
     const rel = relative(pathRoot, absPath).replace(/\\/g, '/');
-    const { findings, dynamicViolations: dyn } = scanTsxFile(absPath, ownedSet, tw.names);
+    const { findings, dynamicViolations: dyn } = scanTsxFile(absPath, ownedSet, tw.names, mantine.names);
     for (const f of findings) tsxRaw.push({ file: rel, property: f.property, line: f.line });
     for (const d of dyn) dynamicViolations.push({ file: rel, line: d.line });
   }
@@ -585,6 +713,7 @@ export function runScan({
     ownedSet,
     tailwindOwnedNames: tw.names,
     tailwindVersion: tw.version,
+    mantineThemeNames: mantine.names,
     filesScanned: files.length,
     tsxFilesScanned,
     found,
@@ -676,21 +805,24 @@ function runReport() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// § --verify-gate (Task 767 §6/R8) — 3 plants shown FAILING (one per required
-// failure direction), 1 unmodified control shown PASSING. Every plant is
-// written into its own fresh `mkdtempSync` copy of `src/`; none ever touches
-// the real worktree. Precedent: check-css-var-resolvability.mjs's own
-// `--verify-gate` (kickoff §3.3/§3.4 cite this detector's own prior art).
+// § --verify-gate (Task 767 §6/R8, widened by Task 769 §10.4/R7 to ten outcomes)
+// — cases 1-3 and 9 are the original three plants shown FAILING plus one
+// unmodified control shown PASSING; cases 4-8 and 10 are Task 769's fail-closed
+// TSX-input and Mantine-theme-ownership additions. Every plant is written into
+// its own fresh `mkdtempSync` copy of `src/`; none ever touches the real
+// worktree. Precedent: check-css-var-resolvability.mjs's own `--verify-gate`
+// (kickoff §3.3/§3.4 cite this detector's own prior art).
 // ═══════════════════════════════════════════════════════════════════════════
 function setupTempTree() {
   const base = mkdtempSync(join(tmpdir(), 'tailwind-runtime-tokens-verify-'));
   const srcDir = join(base, 'src');
   cpSync(resolve(ROOT, 'src'), srcDir, { recursive: true });
   const globalsPath = join(srcDir, 'app', 'globals.css');
+  const themePath = join(srcDir, 'design-system', 'mantine', 'theme.ts');
   const baselinePath = join(base, 'tailwind-runtime-token-baseline.json');
   cpSync(BASELINE_PATH, baselinePath);
   const tsxFiles = TSX_FILES_REL.map((p) => join(base, p));
-  return { base, srcDir, globalsPath, baselinePath, tsxFiles };
+  return { base, srcDir, globalsPath, themePath, baselinePath, tsxFiles };
 }
 
 function teardownTempTree(base) {
@@ -698,13 +830,16 @@ function teardownTempTree(base) {
 }
 
 // Evaluates one tree exactly the way `run()` would, returning the exit code it would produce
-// (without actually calling process.exit), plus the underlying result for reporting.
-function evaluateTree(tree) {
+// (without actually calling process.exit), plus the underlying result for reporting. `tsxFiles`
+// may be overridden per-call (case 6 supplies a single non-configured file) without touching the
+// tree object's own copy.
+function evaluateTree(tree, tsxFilesOverride) {
   const result = runScan({
     globalsPath: tree.globalsPath,
     srcDir: tree.srcDir,
-    tsxFiles: tree.tsxFiles,
+    tsxFiles: tsxFilesOverride ?? tree.tsxFiles,
     pathRoot: tree.base,
+    themePath: tree.themePath,
   });
   if (result.fatal) return { exitCode: 1, fatal: result.fatal };
   const baseline = loadBaseline(tree.baselinePath);
@@ -725,44 +860,47 @@ function record(id, expectedExitCode, actualExitCode, detail) {
   console.log(`${icon}  ${id} — expected exit ${expectedExitCode}, got exit ${actualExitCode} — ${detail}`);
 }
 
-// Plant 1 — a static `maw="var(--container-3xl)"` JSX prop added to the copied page.tsx.
-function runPlant1() {
+// Case 1 (retained from Task 767) — a static `maw="var(--container-3xl)"` JSX prop added to the
+// copied page.tsx.
+function runCase1() {
   const tree = setupTempTree();
   try {
     const target = tree.tsxFiles[0]; // page.tsx
     const raw = readFileSync(target, 'utf8');
     const anchor = '<Stack gap={0}>';
-    if (!raw.includes(anchor)) throw new Error(`plant 1 anchor not found in copied page.tsx`);
+    if (!raw.includes(anchor)) throw new Error(`case 1 anchor not found in copied page.tsx`);
     const mutated = raw.replace(anchor, '<Stack gap={0} maw="var(--container-3xl)">');
     writeFileSync(target, mutated, 'utf8');
     const { exitCode, newDebt } = evaluateTree(tree);
     const hit = (newDebt ?? []).find((d) => d.property === '--container-3xl' && d.origin === 'runtime-tsx');
-    record('Plant 1 (new runtime-tsx reference)', 1, exitCode,
+    record('Case 1 (new runtime-tsx reference)', 1, exitCode,
       hit ? `reported as runtime-tsx new debt: ${hit.file}:${hit.line} ${hit.property}` : `newDebt=${JSON.stringify(newDebt)}`);
   } finally {
     teardownTempTree(tree.base);
   }
 }
 
-// Plant 2 — a `font-size: var(--text-sm)` declaration added to the copied FooterView.module.css.
-function runPlant2() {
+// Case 2 (retained from Task 767) — a `font-size: var(--text-sm)` declaration added to the copied
+// FooterView.module.css.
+function runCase2() {
   const tree = setupTempTree();
   try {
     const target = join(tree.srcDir, 'components', 'layout', 'FooterView.module.css');
     const raw = readFileSync(target, 'utf8');
-    const mutated = `${raw}\n.verifyGatePlant2 { font-size: var(--text-sm); }\n`;
+    const mutated = `${raw}\n.verifyGateCase2 { font-size: var(--text-sm); }\n`;
     writeFileSync(target, mutated, 'utf8');
     const { exitCode, newDebt } = evaluateTree(tree);
     const hit = (newDebt ?? []).find((d) => d.property === '--text-sm' && d.origin === 'module-css' && d.file.endsWith('FooterView.module.css'));
-    record('Plant 2 (new module-css reference)', 1, exitCode,
+    record('Case 2 (new module-css reference)', 1, exitCode,
       hit ? `reported as module-css new debt: ${hit.file}:${hit.line} ${hit.property}` : `newDebt=${JSON.stringify(newDebt)}`);
   } finally {
     teardownTempTree(tree.base);
   }
 }
 
-// Plant 3 — a synthetic baseline row whose (file, property) exists nowhere in the copied tree.
-function runPlant3() {
+// Case 3 (retained from Task 767) — a synthetic baseline row whose (file, property) exists nowhere
+// in the copied tree.
+function runCase3() {
   const tree = setupTempTree();
   try {
     const baseline = loadBaseline(tree.baselinePath);
@@ -770,31 +908,150 @@ function runPlant3() {
     writeFileSync(tree.baselinePath, JSON.stringify(baseline, null, 2), 'utf8');
     const { exitCode, staleEntries } = evaluateTree(tree);
     const hit = (staleEntries ?? []).find((s) => s.file === 'src/does-not-exist.module.css' && s.property === '--this-is-fake');
-    record('Plant 3 (stale baseline row)', 1, exitCode,
+    record('Case 3 (stale baseline row)', 1, exitCode,
       hit ? `reported as stale: ${hit.file} ${hit.property}` : `staleEntries=${JSON.stringify(staleEntries)}`);
   } finally {
     teardownTempTree(tree.base);
   }
 }
 
-// Control — the unmodified copy, with the shipped baseline, must exit 0.
-function runControl() {
+// Case 4 — a template-expression-WITH-substitution custom-property construction added to the
+// copied page.tsx, in a non-`className` attribute. Never baseline-suppressible: the whole node is
+// reported as a dynamic-name violation regardless of any baseline content.
+function runCase4() {
   const tree = setupTempTree();
   try {
-    const { exitCode, newDebt, staleEntries, dynamicCount } = evaluateTree(tree);
-    record('Control (unmodified copy)', 0, exitCode,
-      `newDebt=${newDebt?.length ?? 'fatal'} staleEntries=${staleEntries?.length ?? 'fatal'} dynamicCount=${dynamicCount ?? 'fatal'}`);
+    const target = tree.tsxFiles[0]; // page.tsx
+    const raw = readFileSync(target, 'utf8');
+    const anchor = '<Stack gap={0}>';
+    if (!raw.includes(anchor)) throw new Error(`case 4 anchor not found in copied page.tsx`);
+    const mutated = raw.replace(anchor, '<Stack gap={0} mah={`var(--${verifyGateCase4})`}>');
+    writeFileSync(target, mutated, 'utf8');
+    const outcome = evaluateTree(tree);
+    const targetRel = relative(tree.base, target).replace(/\\/g, '/');
+    const hit = (outcome.result?.dynamicViolations ?? []).find((d) => d.file === targetRel);
+    record('Case 4 (dynamic custom-property construction, never baseline-suppressible)', 1, outcome.exitCode,
+      hit ? `reported as dynamic-name violation: ${hit.file}:${hit.line}` : `dynamicViolations=${JSON.stringify(outcome.result?.dynamicViolations)}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 5 (R1/R2, the F3 defect) — delete one copied configured TSX input; `TSX_FILES_REL` itself is
+// untouched. Must be fatal, naming the missing repo-relative path, in every mode.
+function runCase5() {
+  const tree = setupTempTree();
+  try {
+    const target = tree.tsxFiles[1]; // HeroSearchView.tsx
+    const targetRel = relative(tree.base, target).replace(/\\/g, '/');
+    rmSync(target);
+    const outcome = evaluateTree(tree);
+    const namesMissing = typeof outcome.fatal === 'string' && outcome.fatal.includes(targetRel);
+    record('Case 5 (missing configured TSX input is fatal)', 1, outcome.exitCode,
+      namesMissing ? `fatal names the missing path: ${outcome.fatal}` : `fatal=${outcome.fatal}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 6 (R3, the F2 defect, TSX arm) — the copied AgentCtaButton.tsx (not a TSX_FILES_REL member)
+// supplied as the ONLY TSX input, against the copied theme.ts. `--button-padding-x` must be
+// classified `external`, not `tailwind` — zero runtime-tsx findings.
+function runCase6() {
+  const tree = setupTempTree();
+  try {
+    const agentCtaPath = join(tree.srcDir, 'components', 'shared', 'AgentCtaButton.tsx');
+    const outcome = evaluateTree(tree, [agentCtaPath]);
+    const runtimeTsxFindings = (outcome.result?.found ?? []).filter((f) => f.origin === 'runtime-tsx');
+    const hasPaddingX = runtimeTsxFindings.some((f) => f.property === '--button-padding-x');
+    record('Case 6 (AgentCtaButton as sole TSX input, D65-F TSX arm)', 0, outcome.exitCode,
+      !hasPaddingX && runtimeTsxFindings.length === 0
+        ? `zero runtime-tsx findings; --button-padding-x absent from found`
+        : `runtimeTsxFindings=${JSON.stringify(runtimeTsxFindings)}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 7 (D65-F proof) — a `var(--progress-size)` read planted into a copied .module.css. §3.3
+// measured this plant exits 1 on the pre-edit script; it must exit 0 after this task, proving the
+// exception is global (module-css arm), not TSX-only.
+function runCase7() {
+  const tree = setupTempTree();
+  try {
+    const target = join(tree.srcDir, 'components', 'layout', 'FooterView.module.css');
+    const raw = readFileSync(target, 'utf8');
+    const mutated = `${raw}\n.verifyGateCase7 { width: var(--progress-size); }\n`;
+    writeFileSync(target, mutated, 'utf8');
+    const outcome = evaluateTree(tree);
+    const hit = (outcome.newDebt ?? []).find((d) => d.property === '--progress-size');
+    record('Case 7 (module-css Mantine-theme name is external, D65-F)', 0, outcome.exitCode,
+      !hit ? `zero findings for --progress-size (classified external)` : `unexpected new debt: ${JSON.stringify(hit)}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 8 (negative control, Sprint 65 §3 rule 2) — a `var(--button-padding-y)` read planted into a
+// copied .module.css. This name is declared NOWHERE (§3.3) — a `--button-`-prefix shortcut would
+// pass case 7 and fail this one; only an AST-derived exact-name set passes both.
+function runCase8() {
+  const tree = setupTempTree();
+  try {
+    const target = join(tree.srcDir, 'components', 'layout', 'FooterView.module.css');
+    const raw = readFileSync(target, 'utf8');
+    const mutated = `${raw}\n.verifyGateCase8 { width: var(--button-padding-y); }\n`;
+    writeFileSync(target, mutated, 'utf8');
+    const outcome = evaluateTree(tree);
+    const hit = (outcome.newDebt ?? []).find((d) => d.property === '--button-padding-y');
+    record('Case 8 (module-css negative control, not in theme.ts)', 1, outcome.exitCode,
+      hit ? `reported as module-css new debt: ${hit.file}:${hit.line} ${hit.property}` : `newDebt=${JSON.stringify(outcome.newDebt)}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 9 (retained control) — the unmodified copy, with the shipped baseline, must exit 0 and
+// scan exactly two TSX inputs.
+function runCase9() {
+  const tree = setupTempTree();
+  try {
+    const outcome = evaluateTree(tree);
+    const tsxFilesScanned = outcome.result?.tsxFilesScanned;
+    record('Case 9 (unmodified copy, shipped baseline)', 0, outcome.exitCode,
+      `newDebt=${outcome.newDebt?.length ?? 'fatal'} staleEntries=${outcome.staleEntries?.length ?? 'fatal'} dynamicCount=${outcome.dynamicCount ?? 'fatal'} tsxFilesScanned=${tsxFilesScanned ?? 'fatal'}`);
+  } finally {
+    teardownTempTree(tree.base);
+  }
+}
+
+// Case 10 (R6, ownership source is mandatory) — the copied theme.ts is deleted. Must be fatal,
+// naming the theme source, in every mode — never an empty set and a green run.
+function runCase10() {
+  const tree = setupTempTree();
+  try {
+    rmSync(tree.themePath);
+    const outcome = evaluateTree(tree);
+    const namesTheme = typeof outcome.fatal === 'string' && outcome.fatal.toLowerCase().includes('theme');
+    record('Case 10 (missing theme.ts is fatal)', 1, outcome.exitCode,
+      namesTheme ? `fatal names the theme source: ${outcome.fatal}` : `fatal=${outcome.fatal}`);
   } finally {
     teardownTempTree(tree.base);
   }
 }
 
 function runVerifyGate() {
-  console.log('🔬  check:tailwind-runtime-tokens self-test (--verify-gate) — 3 plants exit 1, 1 control exits 0\n');
-  runPlant1();
-  runPlant2();
-  runPlant3();
-  runControl();
+  console.log('🔬  check:tailwind-runtime-tokens self-test (--verify-gate) — 10 outcomes asserted (Task 769 §10.4)\n');
+  runCase1();
+  runCase2();
+  runCase3();
+  runCase4();
+  runCase5();
+  runCase6();
+  runCase7();
+  runCase8();
+  runCase9();
+  runCase10();
 
   console.log('');
   const failed = gateResults.filter((r) => !r.ok);
@@ -802,7 +1059,7 @@ function runVerifyGate() {
     console.error(`❌  ${failed.length}/${gateResults.length} verify-gate assertion(s) did not behave as expected.`);
     process.exit(1);
   }
-  console.log(`✅  ${gateResults.length}/${gateResults.length} verify-gate assertions behaved as expected (3 plants exited 1, 1 control exited 0).`);
+  console.log(`✅  ${gateResults.length}/${gateResults.length} verify-gate assertions behaved as expected.`);
   process.exit(0);
 }
 

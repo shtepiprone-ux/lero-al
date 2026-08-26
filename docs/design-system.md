@@ -1261,7 +1261,8 @@ CI-wired in `.github/workflows/governance-pr.yml`) scans every `var(--…)` read
 declaration, and bare name inside a `transition-property`/`will-change` value list in
 `src/**/*.module.css` (Task 762 Revision 1, R6 — the original gate matched `var()` reads only, so a
 `--tw-shadow: …` declaration or a bare `--tw-gradient-from` in a property list was invisible to both
-the scan and the baseline). Ownership is a three-bucket classifier, never a hardcoded name list:
+the scan and the baseline), **plus** (Task 767) every non-`className` JSX attribute of exactly two
+runtime TSX files. Ownership is a four-bucket classifier, never a hardcoded name list:
 
 1. **Known-external, non-Tailwind** — the `--mantine-` prefix (mirrors `check-design-tokens.mjs`'s
    own `EXTERNAL_VAR_PREFIXES`, a different unrelated runtime system).
@@ -1275,12 +1276,24 @@ the scan and the baseline). Ownership is a three-bucket classifier, never a hard
    gate (an author-writable source was the only ownership test); it no longer does, because
    Tailwind's own source claims the name regardless of whether `globals.css` also redeclares it. A
    brand-new `var(--text-sm)` used to pass silently; it no longer does, for the same reason.
-3. **Project-owned** — declared in `globals.css`'s `@theme`/`@theme inline`/`:root` blocks (and not
-   claimed by bucket 2), OR declared locally within the SAME `.module.css` file being scanned (a
+3. **Mantine-theme-owned** (Task 769, owner decision **D65-F**, 2026-08-26) — a literal
+   custom-property key declared inside a `vars` or `styles` object/callback in
+   `src/design-system/mantine/theme.ts`, AST-extracted through the TypeScript compiler API (never a
+   hand-enumerated list, never matched by a `--button-`-style prefix). `theme.ts` is the source of
+   the key's ownership, not a peculiarity of TSX syntax — the exception is applied **globally** in
+   the classifier, so the same name is `external` whether it is read from a `.module.css` file or a
+   runtime TSX prop. The current set is exactly these nine names: `--button-bd`, `--button-bg`,
+   `--button-color`, `--button-hover`, `--button-padding-x`, `--progress-size`, `--sc-label-color`,
+   `--slider-track-bg`, `--table-border-color`. `--mantine-color-default-border` is excluded — bucket
+   1's `--mantine-` prefix already owns it. A missing, unreadable, or unparsable `theme.ts`, or an
+   extracted set missing the `--button-padding-x` proof key, is fatal — the gate never degrades to an
+   empty set and a green run.
+4. **Project-owned** — declared in `globals.css`'s `@theme`/`@theme inline`/`:root` blocks (and not
+   claimed by bucket 2 or 3), OR declared locally within the SAME `.module.css` file being scanned (a
    component's own self-contained custom property, e.g. a renamed `--fab-ring-color`, is never a
    Tailwind or `globals.css` concern).
 
-Everything not resolved by 1-3 is Tailwind-owned by elimination and checked against
+Everything not resolved by 1-4 is Tailwind-owned by elimination and checked against
 `scripts/tailwind-runtime-token-baseline.json` — an exact `{ file, property }` list, no globs, one
 row per name regardless of how many roles (read/declaration/property-list) surfaced it in that file
 — which fails in both directions: a Tailwind-owned reference outside the baseline is new debt; a
@@ -1288,6 +1301,23 @@ baseline row whose reference no longer exists is a stale entry that must be remo
 suppression comment can exempt a reference — the baseline is the only exemption mechanism, and it is
 a condition this gate evaluates on every run, not one an author writes once and forgets
 (`docs/backlog.md` corollary 724 ②).
+
+**The runtime TSX input list is closed and fixed (Task 767, hardened Task 769).** The two files
+`src/app/[locale]/page.tsx` and `src/components/shared/HeroSearchView.tsx` are a hardcoded,
+closed list — never a route-graph inventory and never widened by a glob. A clean run makes no claim
+about any other TSX file in the repository; only Task 667's route-level inventory can certify a
+route. A configured entry that is renamed or deleted is **fatal** in every mode (default, `--report`,
+`--verify-gate`) — it is not silently skipped and does not halve the scan denominator behind a still-0
+exit code (Task 767 review finding F3). The fatal message names every missing path,
+repository-relative.
+
+**The §3.5 comment-stripping boundary (Task 769).** The scanner strips CSS comments before scanning,
+so a name appearing only inside a `/* … */` documentation block is invisible to it —
+`HeroSearchView.module.css:33`'s `var(--button-padding-x)` inside a comment is one such site. Once
+`--button-padding-x` became bucket-3 `external` (D65-F), a future regression in comment stripping can
+no longer be caught by *this* name at *this* site — the loss is real but small, since comment
+stripping is independently exercised by every other name in the corpus, and is recorded here rather
+than left undocumented.
 
 **Known, named limitation (measured, not merely suspected, as of Task 762 Revision 1).** A
 checkpoint census of all 257 names in `globals.css`'s `@theme inline`/`:root` blocks — for each, is

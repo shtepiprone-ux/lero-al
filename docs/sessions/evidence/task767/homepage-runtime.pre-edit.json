@@ -1,0 +1,180 @@
+{
+  "label": "pre-edit",
+  "baseUrl": "http://127.0.0.1:3000",
+  "route": "/en",
+  "capturedAt": "2026-08-25T19:02:40.708Z",
+  "cells": [
+    {
+      "viewport": "320x812",
+      "width": 320,
+      "height": 812,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "heroTitleCount": 1,
+      "heroSearchCount": 1,
+      "title": {
+        "tagName": "H1",
+        "text": "Find your dream property",
+        "fontSize": "30px",
+        "lineHeight": "37.5px",
+        "fontWeight": "700",
+        "inlineStyle": "--title-fw:var(--mantine-h1-font-weight);--title-lh:var(--mantine-h1-line-height);--title-fz:var(--mantine-h1-font-size);margin-bottom:var(--mantine-spacing-md);color:var(--mantine-color-white);font-weight:700;line-height:1.25"
+      },
+      "subtitle": {
+        "tagName": "P",
+        "text": "Thousands of properties across Albania — apartments, houses, land and more",
+        "fontSize": "20px",
+        "lineHeight": "30px",
+        "fontWeight": "700",
+        "inlineStyle": "margin-inline:auto;color:var(--mantine-color-white);font-weight:700;max-width:calc(36rem * var(--mantine-scale))"
+      },
+      "heroSearch": {
+        "maxWidth": "768px",
+        "width": "288px",
+        "rect": {
+          "width": 288,
+          "height": 279
+        },
+        "inlineStyle": "margin-inline: auto; width: 100%; max-width: var(--container-3xl);"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-font-size-xl": "",
+        "--homepage-runtime-font-size-2xl": "",
+        "--homepage-runtime-font-size-3xl": "",
+        "--homepage-runtime-font-size-4xl": "",
+        "--homepage-runtime-font-size-5xl": "",
+        "--homepage-runtime-search-max-width": ""
+      }
+    },
+    {
+      "viewport": "640x900",
+      "width": 640,
+      "height": 900,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "heroTitleCount": 1,
+      "heroSearchCount": 1,
+      "title": {
+        "tagName": "H1",
+        "text": "Find your dream property",
+        "fontSize": "36px",
+        "lineHeight": "45px",
+        "fontWeight": "700",
+        "inlineStyle": "--title-fw:var(--mantine-h1-font-weight);--title-lh:var(--mantine-h1-line-height);--title-fz:var(--mantine-h1-font-size);margin-bottom:var(--mantine-spacing-md);color:var(--mantine-color-white);font-weight:700;line-height:1.25"
+      },
+      "subtitle": {
+        "tagName": "P",
+        "text": "Thousands of properties across Albania — apartments, houses, land and more",
+        "fontSize": "24px",
+        "lineHeight": "36px",
+        "fontWeight": "700",
+        "inlineStyle": "margin-inline:auto;color:var(--mantine-color-white);font-weight:700;max-width:calc(36rem * var(--mantine-scale))"
+      },
+      "heroSearch": {
+        "maxWidth": "768px",
+        "width": "592px",
+        "rect": {
+          "width": 592,
+          "height": 175
+        },
+        "inlineStyle": "margin-inline: auto; width: 100%; max-width: var(--container-3xl);"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-font-size-xl": "",
+        "--homepage-runtime-font-size-2xl": "",
+        "--homepage-runtime-font-size-3xl": "",
+        "--homepage-runtime-font-size-4xl": "",
+        "--homepage-runtime-font-size-5xl": "",
+        "--homepage-runtime-search-max-width": ""
+      }
+    },
+    {
+      "viewport": "768x1024",
+      "width": 768,
+      "height": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "heroTitleCount": 1,
+      "heroSearchCount": 1,
+      "title": {
+        "tagName": "H1",
+        "text": "Find your dream property",
+        "fontSize": "48px",
+        "lineHeight": "60px",
+        "fontWeight": "700",
+        "inlineStyle": "--title-fw:var(--mantine-h1-font-weight);--title-lh:var(--mantine-h1-line-height);--title-fz:var(--mantine-h1-font-size);margin-bottom:var(--mantine-spacing-md);color:var(--mantine-color-white);font-weight:700;line-height:1.25"
+      },
+      "subtitle": {
+        "tagName": "P",
+        "text": "Thousands of properties across Albania — apartments, houses, land and more",
+        "fontSize": "24px",
+        "lineHeight": "36px",
+        "fontWeight": "700",
+        "inlineStyle": "margin-inline:auto;color:var(--mantine-color-white);font-weight:700;max-width:calc(36rem * var(--mantine-scale))"
+      },
+      "heroSearch": {
+        "maxWidth": "768px",
+        "width": "720px",
+        "rect": {
+          "width": 720,
+          "height": 123
+        },
+        "inlineStyle": "margin-inline: auto; width: 100%; max-width: var(--container-3xl);"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-font-size-xl": "",
+        "--homepage-runtime-font-size-2xl": "",
+        "--homepage-runtime-font-size-3xl": "",
+        "--homepage-runtime-font-size-4xl": "",
+        "--homepage-runtime-font-size-5xl": "",
+        "--homepage-runtime-search-max-width": ""
+      }
+    },
+    {
+      "viewport": "1024x900",
+      "width": 1024,
+      "height": 900,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "heroTitleCount": 1,
+      "heroSearchCount": 1,
+      "title": {
+        "tagName": "H1",
+        "text": "Find your dream property",
+        "fontSize": "48px",
+        "lineHeight": "60px",
+        "fontWeight": "700",
+        "inlineStyle": "--title-fw:var(--mantine-h1-font-weight);--title-lh:var(--mantine-h1-line-height);--title-fz:var(--mantine-h1-font-size);margin-bottom:var(--mantine-spacing-md);color:var(--mantine-color-white);font-weight:700;line-height:1.25"
+      },
+      "subtitle": {
+        "tagName": "P",
+        "text": "Thousands of properties across Albania — apartments, houses, land and more",
+        "fontSize": "24px",
+        "lineHeight": "36px",
+        "fontWeight": "700",
+        "inlineStyle": "margin-inline:auto;color:var(--mantine-color-white);font-weight:700;max-width:calc(36rem * var(--mantine-scale))"
+      },
+      "heroSearch": {
+        "maxWidth": "768px",
+        "width": "768px",
+        "rect": {
+          "width": 768,
+          "height": 123
+        },
+        "inlineStyle": "margin-inline: auto; width: 100%; max-width: var(--container-3xl);"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-font-size-xl": "",
+        "--homepage-runtime-font-size-2xl": "",
+        "--homepage-runtime-font-size-3xl": "",
+        "--homepage-runtime-font-size-4xl": "",
+        "--homepage-runtime-font-size-5xl": "",
+        "--homepage-runtime-search-max-width": ""
+      }
+    }
+  ]
+}

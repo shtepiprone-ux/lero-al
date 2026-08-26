@@ -19,7 +19,7 @@
 .copyId[data-copy-id] {
   font-size: var(--text-2xs);
   color: color-mix(in oklab, var(--color-muted-foreground) 70%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--homepage-runtime-font-family-mono); /* Task 767 — was Tailwind-owned --font-mono */
   display: inline-flex;
   align-items: center;
   gap: 0.125rem; /* design-tokens-allow: gap: 0.125rem — Tailwind's compiled gap-0.5 (2px) verbatim; no --spacing-* token matches this exact icon-to-label gap */

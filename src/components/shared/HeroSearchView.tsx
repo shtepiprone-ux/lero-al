@@ -47,7 +47,7 @@ export function HeroSearchView({
 
   return (
     <>
-      <Box className="hero-search" w="100%" maw="var(--container-3xl)" mx="auto">
+      <Box className="hero-search" w="100%" maw="var(--homepage-runtime-search-max-width)" mx="auto">
         {/* Task 652: §6c gray SegmentedControl, flush (0px) on top of the bar. Mobile = full-width
             50/50 (fullWidth inside a 100%-wide wrapper); desktop = content-width (fullWidth inside
             a fit-content wrapper) — CSS-based (`w` responsive prop), no hook, keeps the Task-568

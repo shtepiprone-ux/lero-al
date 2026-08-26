@@ -1,0 +1,991 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 767 - Homepage level 2, runtime-token exit: remove every Tailwind-owned runtime custom property from the seven Homepage consumers (20 pairs / 26 references -> 0 / 0), move the values to twelve project-owned :root tokens, and extend the runtime-token gate to two TSX inputs with origin/line reporting, fail-closed dynamic-name detection, --report and --verify-gate",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "a7dbd4c1289fcb68e97de9bde00eb7ae6a52d129",
+    "reviewedRevision": "uncommitted worktree on top of a7dbd4c1289fcb68e97de9bde00eb7ae6a52d129. The review was performed against Task 766's merge commit 792588a3f51067e463f4ea057bce22956bba1927, which was HEAD at the time; a7dbd4c12 ('chore(storybook): make Mantine screenshots the default') landed on main during the review and the worktree was rebased onto it. That commit touches only docs/critical-flow-registry.md, docs/storybook-governance.md and package.json's screenshots:* script names - no file in this ledger's reviewedPaths except package.json, whose Task 767 diff was re-read afterwards and is still the single added check:tailwind-runtime-tokens:verify-gate line with a7dbd4c12's own edits intact. check:tailwind-runtime-tokens was re-run on the new base: 0 references, 0 new debt, 0 stale, 0 dynamic-name violations. Every VERIFIED row below therefore holds unchanged on a7dbd4c12.",
+    "reviewedPaths": [
+      "src/app/globals.css",
+      "src/app/[locale]/page.tsx",
+      "src/components/shared/HeroSearchView.tsx",
+      "src/components/layout/FooterView.module.css",
+      "src/components/layout/HeaderView.module.css",
+      "src/components/layout/MobileNavDrawer.module.css",
+      "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+      "src/modules/auth/components/AuthSheet.module.css",
+      "scripts/check-tailwind-runtime-tokens.mjs",
+      "scripts/tailwind-runtime-token-baseline.json",
+      "scripts/task767-homepage-runtime-probe.mjs",
+      "package.json",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md",
+      "docs/sessions/evidence/task767"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 10,
+      "verified": 10,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-08-26-task767-homepage-runtime-token-exit.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/tailwind-runtime-token-baseline.json",
+        "symbol": "the 20 (file, property) pairs / 26 raw uses of Tailwind-owned runtime custom properties across the seven named consumers",
+        "diffHunks": [
+          "scripts/tailwind-runtime-token-baseline.json @@ -1,16 +1 @@ (14 module-css rows -> [])",
+          "src/app/[locale]/page.tsx @@ -28,10 +28,10 @@ (5 fz values renamed)",
+          "src/components/shared/HeroSearchView.tsx @@ -47,7 +47,7 @@ (maw value renamed)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the seven Task 767 consumers"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "git archive 792588a3f src | tar -x -C /tmp/pre  &&  node -e \"runScan({srcDir:'/tmp/pre/src', globalsPath:'/tmp/pre/src/app/globals.css', tsxFiles:[page.tsx, HeroSearchView.tsx], pathRoot:'/tmp/pre'})\"",
+          "observable": "PRE-EDIT: 20 pair(s) / 26 use(s). The reviewer re-derived the pre-edit census from scratch by running the SHIPPED (post-edit) detector against a clean extraction of base commit 792588a3f, rather than reading the author's pasted --report output. Every one of the 20 rows matched the author's list line for line, including the per-file use counts (FooterView --text-xs x4, --text-sm x2, --text-xs--line-height x2; AuthSheet --radius-lg x2; the five page.tsx fz pairs; HeroSearchView --container-3xl).",
+          "freshness": "reviewer run 2026-08-26 against a fresh `git archive` of 792588a3f",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the seven Task 767 consumers"
+            ],
+            "phases": [
+              "pre-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --report ; node scripts/check-tailwind-runtime-tokens.mjs ; echo EXIT=$?",
+          "observable": "module-css: 0 pair(s) / 0 use(s); runtime-tsx: 0 pair(s) / 0 use(s); TOTAL: 0 pair(s) / 0 use(s). Default mode: 'Tailwind-owned references found: 0 | baseline entries: 0' and '0 new debt, 0 stale baseline entries, 0 dynamic-name violations', EXIT=0. Run by the reviewer on the live worktree.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the seven Task 767 consumers"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 20->0 result is an artefact of the detector being narrowed, not of the references being removed - e.g. the TSX input list was trimmed, or the classifier was loosened, so the same code now reads clean.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED. The pre-edit count of 20/26 was produced by the POST-edit detector binary against pre-edit sources: the same code that reports 0 today reports 20 against 792588a3f. A narrowing of the detector would have suppressed both runs equally. Separately, the six scan/classify functions (classifyName, findVarReferenceNames, findDeclaredNames, findPropertyListNames, scanModuleCss, stripCssComments) were extracted from both revisions and hashed comment-stripped: all six IDENTICAL."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A name-level census over source text and CLI output. Task 767 changes no Tailwind utility class and adds no new compiled utility, so there is no generated-CSS candidate to compile and compare; the computed-value question is carried by AC4 and AC7."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/tailwind-runtime-token-baseline.json",
+        "symbol": "the exemption baseline, required by Sprint 65 rule 2 to be empty after level 2",
+        "diffHunks": [
+          "scripts/tailwind-runtime-token-baseline.json @@ -1,16 +1 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "scripts/tailwind-runtime-token-baseline.json"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/tailwind-runtime-token-baseline.json",
+          "command": "git diff -- scripts/tailwind-runtime-token-baseline.json ; git status --porcelain",
+          "observable": "The file's entire content is `[]`. The diff is a single hunk removing all 14 rows and adding the empty array; no row is added anywhere in the diff. The change is uncommitted worktree state on top of 792588a3f, so there is no intermediate commit in which a row could have been added and removed - the file has exactly one prior state (base) and one current state.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "scripts/tailwind-runtime-token-baseline.json"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The baseline is empty because the exemption moved somewhere else - an inline suppression comment, an allowlist row, or a design-tokens-allow marker.",
+          "kind": "EXECUTED",
+          "path": "scripts/design-tokens-allowlist.json",
+          "result": "REFUTED. `git diff` on scripts/design-tokens-allowlist.json is empty (0 lines). No added line anywhere in the diff contains `design-tokens-allow:`. The gate's own source states the baseline is the only exemption mechanism and that no inline comment can exempt a reference; the gate reports 0 findings with an empty baseline, so nothing is being suppressed by any route."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A JSON file's literal content. No CSS is generated from it and no utility class is involved."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F9"
+      ],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "the twelve --homepage-runtime-* declarations in the plain :root block",
+        "diffHunks": [
+          "src/app/globals.css @@ -339,6 +339,28 @@ (single pure insertion at :342-363)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the twelve --homepage-runtime-* token declarations"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/globals.css",
+          "command": "python3 walk over src/**/*.{css,tsx,ts} counting, per token, total occurrences vs declaration-anchored (^\\s*NAME:) occurrences",
+          "observable": "Exactly one declaration per token for all twelve; consumer occurrences 1-4 each (font-size-sm 4, font-size-xs 4, font-size-xl 3, line-height-sm 3, line-height-xl 2, line-height-xs 2, remaining six 1 each). No token is declared twice and no token is dead. Block boundaries read from the file: @theme inline is :35-316, :root is :327-498, and every inserted line falls at :342-363, inside :root.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the twelve --homepage-runtime-* token declarations"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-css-var-resolvability.mjs",
+          "command": "node scripts/check-css-var-resolvability.mjs ; echo EXIT=$?",
+          "observable": "'check:css-vars - 0 violations, 0 in-class dynamic sites', EXIT=0. Arm B reports 68 owned names referenced; the new tokens resolve.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the twelve --homepage-runtime-* token declarations"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A token is declared once in :root but shadowed or redeclared elsewhere - in .dark, in a media query, or in another stylesheet - so the single-declaration claim is true only of one block.",
+          "kind": "EXECUTED",
+          "path": "src/app/globals.css",
+          "result": "REFUTED, and extended to the replaced names as well. Scanning everything after :499 (the .dark block at :504-579, @layer base, @layer utilities and every media query) returns zero occurrences of --text-*, --font-mono, --radius* or --container-*. No src/**/*.css file other than globals.css declares --text-xs/-sm/-xl, --font-mono or --radius-lg. Both the new tokens and the names they replaced therefore have exactly one declaration site each, so the value equality holds in dark mode and at every width, not only in the default :root."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Declaration placement and count in a hand-authored :root block. No Tailwind utility is generated from these names - that is precisely the point of moving them out of @theme inline."
+      }
+    },
+    {
+      "id": "AC4 / R4, R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F11"
+      ],
+      "finalSubject": {
+        "path": "src/components/layout/FooterView.module.css",
+        "symbol": "the fourteen renamed module-CSS declarations across the five .module.css consumers, including AuthSheet's --radius-lg -> --radius",
+        "diffHunks": [
+          "src/components/layout/FooterView.module.css @@ -48,9 +48,9 @@ / @@ -67,7 +67,7 @@ / @@ -75,7 +75,7 @@ / @@ -91,8 +91,8 @@ / @@ -111,22 +111,22 @@",
+          "src/components/layout/HeaderView.module.css @@ -69,8 +69,8 @@ / @@ -92,8 +92,8 @@",
+          "src/components/layout/MobileNavDrawer.module.css @@ -1,8 +1,8 @@",
+          "src/design-system/mantine/patterns/MantineCopyIdButton.module.css @@ -19,7 +19,7 @@",
+          "src/modules/auth/components/AuthSheet.module.css @@ -131,7 +131,7 @@ / @@ -143,7 +143,7 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the rendered output of the fourteen renamed module-CSS declarations"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "stories": [
+          "mantine-primitives-footerview--default",
+          "mantine-primitives-headerview--default",
+          "mantine-primitives-mobilenavdrawer--default",
+          "mantine-primitives-copyidbutton--default",
+          "mantine-primitives-herosearch--default",
+          "patterns-mantine-authsheet--login"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "mobile-320",
+          "mobile-375",
+          "mobile-390",
+          "desktop-1024"
+        ],
+        "notApplicable": {
+          "states": "The six canonical stories render their default state; no overlay, hover or focus state is parameterised by any renamed declaration."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task767/rendered-assert-pre-edit",
+          "command": "cd rendered-assert-pre-edit && md5sum * | sort -k2  vs  cd rendered-assert-post-edit && md5sum * | sort -k2 ; diff",
+          "observable": "ALL 100 PNGs IDENTICAL. The reviewer computed both digest sets independently rather than reading the author's 100/100 claim; the two sorted digest lists are equal, so every retained cell is byte-identical pre->post. Parsed filenames confirm the matrix: 6 stories x 4 locales (sq/en/uk/it) x 4 shared viewports, plus band-700 for herosearch = 100 cells per phase.",
+          "freshness": "reviewer-computed digests 2026-08-26 over the retained evidence directories",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the rendered output of the fourteen renamed module-CSS declarations"
+            ],
+            "phases": [
+              "pre-edit",
+              "post-edit"
+            ],
+            "stories": [
+              "mantine-primitives-footerview--default",
+              "mantine-primitives-headerview--default",
+              "mantine-primitives-mobilenavdrawer--default",
+              "mantine-primitives-copyidbutton--default",
+              "mantine-primitives-herosearch--default",
+              "patterns-mantine-authsheet--login"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task767/rendered-assert-post-edit",
+          "command": "ls rendered-assert-*/ | grep band-700",
+          "observable": "herosearch--default additionally carries the band-700 viewport in all four locales in both phases (8 further cells), all included in the byte-identical result above.",
+          "freshness": "reviewer-computed digests 2026-08-26 over the retained evidence directories",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the rendered output of the fourteen renamed module-CSS declarations"
+            ],
+            "phases": [
+              "pre-edit",
+              "post-edit"
+            ],
+            "stories": [
+              "mantine-primitives-herosearch--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "band-700"
+            ]
+          }
+        },
+        {
+          "path": "src/app/globals.css",
+          "command": "read globals.css:99 (--radius-lg: var(--radius)) and :481 (--radius: 0.75rem); grep for any other declaration of either name",
+          "observable": "AuthSheet's rename is a literal identity, not an approximation: --radius-lg is declared in @theme inline as exactly `var(--radius)`, and --radius is declared once, in :root, as 0.75rem. Substituting var(--radius) for var(--radius-lg) cannot change the computed value under any cascade. The author's injected-probe reading of borderRadius: 12px is consistent with 0.75rem at a 16px root.",
+          "freshness": "reviewer read 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the rendered output of the fourteen renamed module-CSS declarations"
+            ],
+            "phases": [
+              "pre-edit",
+              "post-edit"
+            ],
+            "stories": [
+              "patterns-mantine-authsheet--login"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "mobile-320",
+              "mobile-375",
+              "mobile-390",
+              "desktop-1024"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The PNGs are byte-identical because the new tokens do not resolve at all and both phases fell back to the same inherited or initial value - identical, but for the wrong reason.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task767/homepage-runtime.post-edit.json",
+          "result": "REFUTED. The retained route probe reads the twelve token values off the live document: pre-edit the six probed --homepage-runtime-* names read \"\" (undeclared), post-edit they read 1.25rem / 1.5rem / 1.875rem / 2.25rem / 3rem / 48rem. The tokens demonstrably resolve, and the rendered output is unchanged anyway - which is the claim. Independently, each new value was compared against its prior source: the ten --text-* values against globals.css @theme inline, --font-mono byte-for-byte against globals.css:110, and --container-3xl against node_modules/tailwindcss/theme.css:341 (48rem, tailwindcss@4.3.0). All twelve equal."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No utility class is added, removed or recompiled by this task; the five renamed declarations are hand-authored CSS-Module properties. The generated-semantics question that EXACT_GENERATED exists to answer does not arise, and the computed-value question it would proxy is answered directly by the byte-identical rasterised output above."
+      }
+    },
+    {
+      "id": "AC5 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2",
+        "F3",
+        "F5"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "scanTsxFile / collectLiteralsAndDynamics / runScan reporting - the Task 767 TSX extension",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -332,17 +405,105 @@ (scanTsxFile, collectLiteralsAndDynamics, lineOf, firstLineForNameInContent, countModuleCssUses)",
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -365,17 +534,62 @@ (runScan origin/line/uses reporting, TSX_FILES_REL wiring)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the extended detector's TSX scan and reporting"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --report ; --verify-gate",
+          "observable": "Every finding line carries [origin] file:line property - proven live by the --verify-gate plants, which print '[runtime-tsx] src/app/[locale]/page.tsx:25 --container-3xl' and '[module-css] src/components/layout/FooterView.module.css:140 --text-sm'. TSX_FILES_REL is a two-entry literal array, never widened by a glob.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the extended detector's TSX scan and reporting"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "reviewer probe: copy src/ to a temp tree, plant maw={`var(--container-${size})`} into page.tsx, call runScan against the copy",
+          "observable": "dynamic template -> [{\"file\":\"src/app/[locale]/page.tsx\",\"line\":25}]. The reviewer reproduced the fail-closed behaviour independently, in a temp tree, and got exactly the file:line the author's ad-hoc transcript reports. The same probe confirmed a className nested inside a JSX-element-valued prop is still excluded at depth (nested className -> []).",
+          "freshness": "reviewer probe 2026-08-26 in an isolated mkdtemp copy; no plant reached the worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the extended detector's TSX scan and reporting"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "extract each of classifyName, findVarReferenceNames, findDeclaredNames, findPropertyListNames, scanModuleCss, stripCssComments from 792588a3f and from the worktree; strip comments; md5sum each pair",
+          "observable": "All six IDENTICAL. The ownership classifier and every module-CSS role are unchanged in substance, not merely 'unchanged' by author assertion - the only edits to those regions are comment lines.",
+          "freshness": "reviewer run 2026-08-26 against 792588a3f and the worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the extended detector's TSX scan and reporting"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The closed two-file list is complete for the Homepage runtime graph, so nothing reachable from page.tsx reads a runtime custom property outside the two scanned files.",
+          "kind": "EXECUTED",
+          "path": "src/components/shared/AgentCtaButton.tsx",
+          "result": "PARTIALLY REFUTED - recorded as F2, non-blocking. The reviewer ran the SHIPPED scanner over all 393 .tsx files in src/. Exactly one Tailwind-classified finding falls outside the two inputs: AgentCtaButton.tsx:24, `paddingInlineStart: 'var(--button-padding-x)'` inside a styles={{root:{...}}} prop. AgentCtaButton is imported at page.tsx:10 and rendered at page.tsx:82, so it is in the Homepage graph. The name is set by Mantine at runtime (src/design-system/mantine/theme.ts:295), so the hit is a FALSE POSITIVE of classifyName's bucket-3-by-elimination fallback, not undiscovered debt - AC1's 20->0 census is unaffected and no real Tailwind-owned reference was missed. What is refuted is the framing, not the count: the two-file list is the subset of the graph that yields only Tailwind-owned names, not the graph's full set of runtime var() reads."
+        },
+        {
+          "claim": "Every way a scanned prop can carry a var() string is either collected or explicitly documented as a boundary.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "PARTIALLY REFUTED - recorded as F5, non-blocking. In an isolated temp copy, `<Stack {...{ maw: \"var(--container-3xl)\" }}>` produced zero runtime-tsx findings: visit() collects only at ts.isJsxAttribute nodes, so a JsxSpreadAttribute's object literal is never read. Unlike the TemplateExpression and identifier-reference boundaries, this one is not stated in the module header. Neither input file uses the shape today."
+        },
+        {
+          "claim": "A missing or renamed TSX input cannot silently reduce coverage, because the gate fails closed on bad input the way it does for a missing globals.css.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED - recorded as F3, non-blocking for this diff. In a temp copy the reviewer renamed HeroSearchView.tsx and left the input list untouched: tsxFilesScanned=1, fatal=none, findings=0, dynamic=0, gate verdict exit 0. `if (!existsSync(absPath)) continue;` at :561 drops half the new scope silently. The asymmetry is inside one function: a missing globals.css returns {fatal}, and .module.css files are collected by directory walk so a rename there never loses coverage - only the hardcoded TSX list fails open."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A Node CLI's AST traversal and console output. No CSS is generated by the detector and no utility class participates."
+      }
+    },
+    {
+      "id": "AC6 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F6",
+        "F7"
+      ],
+      "finalSubject": {
+        "path": "scripts/check-tailwind-runtime-tokens.mjs",
+        "symbol": "runVerifyGate / runPlant1-3 / runControl / evaluateTree / setupTempTree",
+        "diffHunks": [
+          "scripts/check-tailwind-runtime-tokens.mjs @@ -412,19 +631,188 @@ (--verify-gate block)",
+          "package.json @@ -88,6 +88,7 @@ (check:tailwind-runtime-tokens:verify-gate)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the --verify-gate self-test"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "command": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate ; echo EXIT=$? ; git status --porcelain",
+          "observable": "Plant 1 (new runtime-tsx reference) expected 1 got 1, reported as runtime-tsx new debt src/app/[locale]/page.tsx:25 --container-3xl. Plant 2 (new module-css reference) expected 1 got 1, FooterView.module.css:140 --text-sm. Plant 3 (stale baseline row) expected 1 got 1, src/does-not-exist.module.css --this-is-fake. Control (unmodified copy) expected 0 got 0. 4/4, process EXIT=0. git status --porcelain afterwards lists exactly the 12 modified + 3 untracked Task 767 paths and no plant file, no temp artefact.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the --verify-gate self-test"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The four exit codes are the gate's real process exit statuses, so the self-test necessarily tracks the gate's own pass/fail rule.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-tailwind-runtime-tokens.mjs",
+          "result": "REFUTED as to mechanism, sustained as to result - recorded as F6, non-blocking. evaluateTree() does not spawn the gate; it recomputes newDebt / staleEntries / dynamicCount and the exit condition in a second, parallel implementation of run()'s rule. The four numbers are computed verdicts, not process statuses (the enclosing --verify-gate process does exit 0/1 for the aggregate). The sibling precedent the module cites, check-css-var-resolvability.mjs, is likewise in-process, so this follows house style; the residual risk is drift between the two copies of the predicate. The reviewer separately confirmed the real default-mode process exit is 0 on the clean tree, and 1 on a planted tree."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A CLI self-test over temporary file trees. No CSS generation is involved."
+      }
+    },
+    {
+      "id": "AC7 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/page.tsx",
+        "symbol": "the hero <Title> fz, its sibling <Text> fz, and the hero search container's maw on the real /en route",
+        "diffHunks": [
+          "src/app/[locale]/page.tsx @@ -28,10 +28,10 @@",
+          "src/components/shared/HeroSearchView.tsx @@ -47,7 +47,7 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "hero h1 computed fontSize",
+          "hero subtitle computed fontSize",
+          "hero search container computed maxWidth"
+        ],
+        "phases": [
+          "pre-edit",
+          "post-edit"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "320x812",
+          "640x900",
+          "768x1024",
+          "1024x900"
+        ],
+        "notApplicable": {
+          "stories": "The kickoff forbids Storybook evidence for this criterion: page.tsx is a route, has no story, and none may be created. Evidence is a real `next start` route capture.",
+          "states": "A first-paint route capture in its default state; no interaction is performed."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task767/homepage-runtime.pre-edit.json",
+          "command": "python3 - compare cells[] of homepage-runtime.pre-edit.json and .post-edit.json, and normalised full-object diff",
+          "observable": "Absolute readings match the kickoff's stated expectation exactly, in BOTH phases: h1 fontSize 30/36/48/48 px, subtitle fontSize 20/24/24/24 px, heroSearch maxWidth 768px at all four cells. The equality assertion holds too - a sorted, indented full-object diff of the two JSON files yields ONLY label, capturedAt, the two inlineStyle strings whose var() name changed, and the six --homepage-runtime-* readings flipping from \"\" to their values. Not one computed value differs, lineHeight and fontWeight included. The four retained PNG pairs are MD5-identical at every viewport.",
+          "freshness": "reviewer-computed comparison 2026-08-26 over the retained evidence JSON and PNGs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hero h1 computed fontSize",
+              "hero subtitle computed fontSize",
+              "hero search container computed maxWidth"
+            ],
+            "phases": [
+              "pre-edit",
+              "post-edit"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "320x812",
+              "640x900",
+              "768x1024",
+              "1024x900"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The capture was taken against a dev server, or the mandatory 640 cell was dropped, so the sm breakpoint - the only tier where the responsive fz object can be observed - was never sampled.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task767/homepage-runtime.post-edit.json",
+          "result": "REFUTED. Every cell carries devServerDetected: false and httpStatus 200, and the four viewports include 640x900. The 640 cell is also the one that discriminates: it reads 36px/24px where 320 reads 30px/20px, so the sm tier is demonstrably exercised rather than merely listed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Computed styles read from a real browser on a real route. This is a stronger observation than compiled-CSS comparison, and no utility class changed for EXACT_GENERATED to compare."
+      }
+    },
+    {
+      "id": "AC8 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "the whole Task 767 diff, checked for any newly introduced exemption or Tailwind coupling",
+        "diffHunks": [
+          "git diff -U0 across all 12 modified files"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the whole Task 767 diff"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/design-tokens-allowlist.json",
+          "command": "git diff -U0 | grep '^+' | grep -c 'design-tokens-allow:' ; git diff -- scripts/design-tokens-allowlist.json | wc -l ; git diff -U0 | grep '^+' | grep '@apply'",
+          "observable": "0 added design-tokens-allow: markers. 0 lines of diff in the allowlist. The single added line matching '@apply' is prose in docs/backlog.md quoting the sprint's own prohibition, not a CSS directive - the reviewer read the matched line in full to confirm. The baseline gained no row (AC2). All twelve new tokens live in plain :root and every changed consumer now points at --homepage-runtime-*, so the diff adds no @theme inline consumer; it only removes five.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the whole Task 767 diff"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An exemption was added in a form the grep does not match - a differently spelled marker, or a rule silenced by moving it out of a scanned file.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-design-tokens.mjs",
+          "result": "REFUTED by the gates themselves rather than by grep alone: check:design-tokens exits 0 with '0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s)'. A stale or malformed marker, or a rule relocated out from under the scanner, is exactly what its stale-marker arm reports. No file was moved or deleted in this diff - all twelve changes are in-place edits."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A negative census over diff text and gate output. No generated CSS is at issue."
+      }
+    },
+    {
+      "id": "AC9 / R6, R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/globals.css",
+        "symbol": "the @theme inline block (:35-316) and the diff's containment inside the plain :root block",
+        "diffHunks": [
+          "src/app/globals.css @@ -339,6 +339,28 @@ - one hunk, pure insertion, zero deletions"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "src/app/globals.css @theme inline block",
+          "the Task 767 file set"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/globals.css",
+          "command": "grep -n '^@theme\\|^:root\\|^}\\|^.dark\\|^@layer' src/app/globals.css ; git diff -- src/app/globals.css",
+          "observable": "Block boundaries: @theme inline :35-316, :root :327-498, .dark :504-579. The globals.css diff is a single hunk, @@ -339,6 +339,28 @@, adding 22 lines and deleting none - a pure insertion landing at :342-363, entirely inside :root. No line inside :35-316 is touched, so @theme inline is byte-identical by construction, not by assertion.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "src/app/globals.css @theme inline block"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "src/app/globals.css",
+          "command": "git diff --stat",
+          "observable": "12 files changed. The stat contains no AppImage file (AppImage.tsx / appImageConfig.ts / AppImage.module.css), no Task 764 hover, cardGrid or imageActions file, no Task 765 token line (the :root motion/radius block is untouched - the insertion sits after it), and no Task 766 file (MantineListingCardPattern.tsx, LocaleSwitcher.tsx, src/app/[locale]/layout.tsx, check-homepage-literal-utilities.mjs all absent).",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the Task 767 file set"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The @theme inline block is textually untouched but semantically re-pointed - e.g. a name it references was redefined in the new :root subsection, changing what @theme inline resolves to.",
+          "kind": "EXECUTED",
+          "path": "src/app/globals.css",
+          "result": "REFUTED. All twelve inserted names carry the --homepage-runtime-* prefix, which appears nowhere in :35-316 and collides with no existing name in the file. The insertion is additive: no name @theme inline reads or declares is redefined, shadowed or removed, and --text-*, --font-mono and --radius-lg all keep their original declarations and values for the legacy Tailwind utilities still compiled on other routes."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Diff containment and block boundaries in one hand-authored stylesheet. The task deliberately generates no new utility."
+      }
+    },
+    {
+      "id": "AC10 / R12",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F8",
+        "F9",
+        "F10"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md",
+        "symbol": "the session log's Files changed table and docs/backlog.md's state line",
+        "diffHunks": [
+          "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md (new, 469 lines)",
+          "docs/backlog.md @@ -3,7 +3,7 @@ / @@ -41,11 +41,12 @@"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the session log",
+          "docs/backlog.md"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A source/CLI-level census over named files is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read or emitted by this criterion.",
+          "viewports": "Source text and CLI output carry no media guard or width dependency.",
+          "states": "Static source text and a deterministic single-pass scan; no runtime state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md",
+          "command": "read section 7 'Files changed' and compare row by row with git status --porcelain and git diff --stat",
+          "observable": "The table's 15 rows account for every path in the real change set - 12 modified plus 3 untracked (session log, evidence dir, probe script) - with no row naming a file that was not touched. The pasted git diff --stat is the real one. One cell is wrong (HeaderView 'as 2 properties' where the census shows 4) - recorded as F10, not a coverage failure of the table itself.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the session log"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/backlog.md",
+          "command": "git diff -- docs/backlog.md ; wc -l docs/backlog.md",
+          "observable": "The Last Session line is replaced rather than appended (state, not history); the Sprint 65 line records 766 as merged at 792588a3f and 767 as IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW; the registry pointer moves to last-used 767 / next-free 768 and one registry row is added. The file is 81 lines against a stated '~80 lines' target - the author declared this as a BACKLOG LIMIT BREACH in the handoff rather than exceeding it silently or cutting another entry's content. Recorded as F8.",
+          "freshness": "reviewer run 2026-08-26 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "docs/backlog.md"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Every evidence block in the session log is reproducible as written by running the command it names.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md",
+          "result": "REFUTED for one block - recorded as F9, non-blocking. Section 4's `grep -c` census prints 1 for each of the twelve tokens; a bare grep for the token name also matches every `var(--NAME)` call, so the true counts are 2-5. The log's parenthetical compounds it by asserting that a var() reference 'does not match the grep -c <name> count used above', which is false about grep. The reviewer re-derived the underlying claim with a declaration-anchored scan and confirms the CONCLUSION is correct - exactly one declaration per token, all twelve consumed - so AC3 stands on re-derived evidence, not on this block."
+        },
+        {
+          "claim": "The task's rendered-suite result is fully reconciled against its pre-edit baseline.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md",
+          "result": "REFUTED - recorded as F1, non-blocking. Section 9 reports screenshots:assert at 6942/8108 pre-edit and 6941/8108 post-edit; the first post-edit run's -1 is attributed to a HeaderView page.goto timeout, yet the final run is still 6941 while stating that the timeout resolved. Either a different cell newly failed or the run-1 attribution is wrong; the delta is never named. This task's own claim does not rest on the aggregate - the six target stories are 100/100 MD5-identical, independently recomputed under AC4 - so it is a note, not a blocker."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation state. No CSS or utility class is involved."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "NOTE",
+      "requirements": "AC10 / R12 - the rendered-suite aggregate is left with an unexplained one-cell regression",
+      "requirementIds": [
+        "AC10 / R12"
+      ],
+      "evidence": "docs/sessions/2026-08-26-task767-homepage-runtime-token-exit.md section 9: screenshots:assert reads 6942/8108 pre-edit, 6941/8108 on the first post-edit run, and 6941/8108 on the final run. The first run's -1 is attributed to `HeaderView/Default x en x mobile-375, page.goto: Timeout 20000ms exceeded`; the final row states that timeout resolved but reports the same 6941. The one-cell delta is therefore unaccounted for: either a different cell newly failed in the final run, or the run-1 attribution was wrong. No failing-cell diff between the pre-edit and final runs is retained. OWNER: ask for that diff so the cell is named. Not blocking - the six target stories are 100/100 byte-identical (AC4, recomputed by the reviewer), so this diff's own visual claim does not depend on the aggregate."
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "status": "NOTE",
+      "requirements": "AC5 / R7 - the closed two-file TSX list is not the Homepage graph, and the TSX branch of the classifier is unsound by its own stated premise",
+      "requirementIds": [
+        "AC5 / R7"
+      ],
+      "evidence": "Running the shipped scanner over all 393 src/**/*.tsx files yields exactly one Tailwind-classified finding outside the two inputs: src/components/shared/AgentCtaButton.tsx:24, `paddingInlineStart: 'var(--button-padding-x)'` inside styles={{root:{...}}}. AgentCtaButton is imported at src/app/[locale]/page.tsx:10 and rendered at :82. The name is declared by Mantine at runtime (src/design-system/mantine/theme.ts:295 sets '--button-padding-x': '1rem' through the theme's vars), so it survives Tailwind's removal and the hit is a FALSE POSITIVE produced by classifyName's `return 'tailwind'` bucket-3-by-elimination fallback (:325) combined with Task 767 passing an empty localDeclaredNames for TSX (:411). The module header justifies that empty set with 'a TSX file declares no CSS custom property of its own', which this repository disproves - TSX declares custom properties through style/styles props and through the Mantine theme object. Consequences: (a) the two-file list is the subset of the graph that happens to yield only Tailwind-owned names, not an inventory of the Homepage's runtime var() reads, so AC5's completeness framing overstates what was measured (the 20->0 count is unaffected - no real Tailwind-owned reference was missed); (b) level 3 (768/769) will widen the list and hit this immediately, and Sprint 65 rule 2 forbids the baseline row that would silence it. OWNER: either teach the classifier a JS-declared-name source (theme vars + style/styles literals), or state the boundary in the module header the way Task 766's F2 mutability boundary is stated, before the TSX scope is widened. F2 and F3 are one defect surface - the TSX arm's input handling and its classification fallback - and the orchestrator's verdict is that they be filed as ONE narrow scanner-hardening task rather than two, sequenced before the level-3 TSX scope widens. Neither disturbs the correctness of this task's 20->0 migration."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "status": "NOTE",
+      "requirements": "AC5 / R7 - a missing TSX input silently halves the new scope and the gate stays green",
+      "requirementIds": [
+        "AC5 / R7"
+      ],
+      "evidence": "scripts/check-tailwind-runtime-tokens.mjs:561, `if (!existsSync(absPath)) continue;`. Reproduced by the reviewer in an isolated mkdtemp copy: renaming HeroSearchView.tsx while leaving TSX_FILES_REL untouched yields tsxFilesScanned=1, fatal=none, findings=0, dynamicViolations=0, gate verdict exit 0. The loss is visible only in the informational banner ('+ 1 runtime TSX file(s)'), which blocks nothing, and cannot be caught by the baseline because the baseline is now empty. The asymmetry sits inside one function: a missing globals.css returns {fatal} (:537), and .module.css inputs are gathered by directory walk so a rename there never loses coverage - only the hardcoded TSX list fails open. This is the same class of silent-green hole that Task 762 built this gate to close. OWNER: assert that every TSX_FILES_REL entry exists before the loop and return {fatal} otherwise (a three-line change), and cover it with a fourth --verify-gate plant. To be filed together with F2 as one narrow scanner-hardening task. Standing consequence until then, agreed by reviewer and orchestrator: the gate is fail-closed on the module-CSS arm and on dynamic custom-property names, but it may NOT be described as fully fail-closed - a configured TSX input that disappears is not an error."
+    },
+    {
+      "id": "F4",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC3 / R3 - the token namespace attaches a route name to project-wide chrome",
+      "requirementIds": [
+        "AC3 / R3"
+      ],
+      "evidence": "Five of the seven consumers - FooterView, HeaderView, MobileNavDrawer, MantineCopyIdButton and AuthSheet - render on every route, not only the Homepage, yet their declarations now read var(--homepage-runtime-font-size-sm) and similar. The prefix encodes the task that happened to reach these files first rather than the scope the tokens actually serve. Level 3 (768/769) will arrive at the same declarations from other routes and either inherit the misnomer or pay a second rename. OWNER: decide the permanent namespace now (for example --app-runtime-* or a plain type scale) while twelve names and twenty-six call sites are the whole cost."
+    },
+    {
+      "id": "F5",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC5 / R7 - JSX spread attributes are an undocumented blind spot",
+      "requirementIds": [
+        "AC5 / R7"
+      ],
+      "evidence": "In an isolated temp copy, planting `<Stack gap={0} {...{ maw: \"var(--container-3xl)\" }}>` into page.tsx produced zero runtime-tsx findings. scanTsxFile's visit() collects literals only when it reaches a ts.isJsxAttribute node and generic-walks everything else, so a JsxSpreadAttribute's object literal is never inspected. The module header documents two other boundaries in detail (TemplateExpression fail-closed; an identifier reference such as fz={SECTION_HEADING_FZ} being silent by design) but not this one. Neither input file uses the shape today, so nothing is missed in the shipped scan. OWNER: either collect from JsxSpreadAttribute object literals or name the boundary in the header alongside the other two."
+    },
+    {
+      "id": "F6",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC6 / R8 - the self-test reimplements the rule it is meant to guard",
+      "requirementIds": [
+        "AC6 / R8"
+      ],
+      "evidence": "evaluateTree() (scripts/check-tailwind-runtime-tokens.mjs, --verify-gate section) recomputes newDebt, staleEntries, dynamicCount and the pass/fail condition independently of run(); nothing forces the two to stay in agreement, so a future change to run()'s condition would leave --verify-gate green. The sibling gate the module cites as precedent, scripts/check-css-var-resolvability.mjs, is also in-process, so this follows house style rather than departing from it. Note also that the four numbers reported as exit codes are computed verdicts, not process statuses - the completion summary's phrase 'all 4 real exit codes captured' is stronger than what the code does, though the session log itself says 'sub-exit-codes'. OWNER: extract one decide(result, baseline) helper called by both run() and evaluateTree()."
+    },
+    {
+      "id": "F7",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC6 / R8 - the new self-test is registered but nothing runs it",
+      "requirementIds": [
+        "AC6 / R8"
+      ],
+      "evidence": "check:tailwind-runtime-tokens:verify-gate exists in package.json but appears nowhere in .github/workflows/. Five sibling self-tests do run there (governance-pr.yml lines 57, 131, 143, 207, 245: check:review-ledger:verify, check:hydration:verify, check:listing-visibility:verify, check:assertion-liveness:verify, check:homepage-grid:verify). The gate itself IS wired (governance-pr.yml:125). This is the same shape as Task 766's F1 note, now reproduced on this gate; the Task 767 kickoff scoped only npm registration and explicitly declined to fold F1 in, so it is not a breach of this task's brief. OWNER: fold into whatever follow-up number F1 receives, rather than filing a third one."
+    },
+    {
+      "id": "F8",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC10 / R12 - docs/backlog.md is one line over its stated target",
+      "requirementIds": [
+        "AC10 / R12"
+      ],
+      "evidence": "docs/backlog.md is 81 lines against the '~80 lines' banner at its head. The author declared this as a BACKLOG LIMIT BREACH in the session log's handoff rather than exceeding it silently or trimming another entry's active state, and recommended the orchestrator consolidate an existing entry. A cheaper option exists: Task 766 is now merged to main at 792588a3f, so its registry row is archivable under the file's own one-ledger-row rule, which returns the file to 80 lines without touching anyone else's active state."
+    },
+    {
+      "id": "F9",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC3 / R3, AC10 / R12 - one evidence block is not reproducible by the command it names, and states a false fact about that command",
+      "requirementIds": [
+        "AC3 / R3",
+        "AC10 / R12"
+      ],
+      "evidence": "The session log's section 4 presents a `grep -c` per name census reading 1 for all twelve tokens, and explains it with 'every consumer reference is a var(--name) call, which does not match the grep -c <name> count used above'. That explanation is false: the token name is a substring of the var() call, so a bare grep matches both. Re-derived real counts: font-size-sm 5, font-size-xs 5, font-size-xl 4, line-height-sm 4, line-height-xl 3, line-height-xs 3, and 2 each for the remaining six - never 1. The underlying claim is nevertheless TRUE and was re-derived by the reviewer with a declaration-anchored scan: exactly one declaration per token, and every token consumed. OWNER: replace the block with a declaration-anchored pattern (^\\s*--name:) and delete the parenthetical."
+    },
+    {
+      "id": "F10",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC10 / R12 - one Files-changed cell undercounts",
+      "requirementIds": [
+        "AC10 / R12"
+      ],
+      "evidence": "The session log's section 7 table records HeaderView.module.css as '2 properties / 4 uses'. The census shows four distinct property names in that file (--text-xl, --text-xl--line-height, --text-sm, --text-sm--line-height), one use each, so it is 4 properties / 4 uses. The per-file rows as written sum to 12 module-CSS pairs, whereas the baseline that was emptied held 14 - FooterView 6 and MobileNavDrawer 2 are correct, so HeaderView is the sole discrepancy. Cosmetic: the authoritative census in section 3 and the emptied baseline are both right."
+    },
+    {
+      "id": "F11",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC4 / R4, R5 - one evidence arm is post-edit only, and one changed declaration has no rasterised coverage",
+      "requirementIds": [
+        "AC4 / R4, R5"
+      ],
+      "evidence": "No pre-edit Storybook computed-style JSON was retained; only storybook-computed-styles.post-edit.json exists. The session log's section 6.3 discloses this openly and rests the pre/post half of the claim on the 100/100 MD5 result instead, which is sound - the completion summary's looser phrasing ('both showed byte/value-identical results pre-post') is what overstates it, not the log. Separately, AuthSheet's .logoImg/.logoPlaceholder render only inside the RegisterAgent view's nested panel and appear in none of the 100 PNGs, so the --radius-lg -> --radius change is covered by an injected computed-style probe rather than by pixels. The reviewer accepts both: --radius-lg is declared as exactly var(--radius) at globals.css:99 and --radius is declared once at :481, making that substitution a literal identity no capture could disturb."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC10 / R12",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Reviewer ran on Linux against a node_modules installed for win32 (only lightningcss-win32-x64-msvc is present), so any gate arm reaching @tailwindcss/node's CSS compiler fails locally with 'Cannot find module ../lightningcss.linux-x64-gnu.node'. No requirement row above depends on that path: every semanticCheck here is NOT_APPLICABLE on the merits (Task 767 adds, removes and recompiles no Tailwind utility), and every observation cited is a JS-only gate run, a file digest, a git extraction or a retained capture. An earlier reviewer remark that bare check:review-ledger and check:review-ledger:verify were red on main was this artefact and is WITHDRAWN - the orchestrator re-ran both natively: 21/21 self-test arms pass and all 14 retained ledgers validate."
+  }
+}

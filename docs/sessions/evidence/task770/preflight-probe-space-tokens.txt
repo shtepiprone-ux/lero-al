@@ -1,0 +1,17 @@
+
+src\app\globals.css:128:  --space-0:   0px;
+src\app\globals.css:129:  --space-1:   0.25rem;    /*  4px */
+src\app\globals.css:130:  --space-2:   0.5rem;     /*  8px */
+src\app\globals.css:131:  --space-3:   0.75rem;    /* 12px */
+src\app\globals.css:133:  --space-5:   1.25rem;    /* 20px */
+src\app\globals.css:134:  --space-6:   1.5rem;     /* 24px */
+src\app\globals.css:136:  --space-8:   2rem;       /* 32px */
+src\app\globals.css:139:  --space-11:  2.75rem;    /* 44px — touch-target floor (§12a) */
+src\app\globals.css:140:  --space-12:  3rem;       /* 48px */
+src\app\globals.css:141:  --space-14:  3.5rem;     /* 56px — bottom-nav height */
+src\app\globals.css:142:  --space-16:  4rem;       /* 64px */
+src\app\globals.css:143:  --space-20:  5rem;       /* 80px */
+src\app\globals.css:144:  --space-24:  6rem;       /* 96px */
+src\app\globals.css:148:  --space-2-5: 0.625rem;   /* 10px */
+
+

@@ -1,0 +1,5 @@
+
+src\components\ui\AppImage.module.css:34: *   - (empty) — the sole entry, `var(--space-0)` in `.imageLayer` (`inset`), was closed by Task 768
+src\components\ui\AppImage.module.css:140:     the prior `var(--space-0)` (`--space-0` is `0px`), closing this file's only Class-3 dependency. */
+
+

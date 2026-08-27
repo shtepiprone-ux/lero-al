@@ -48,15 +48,15 @@
 
   /* Site #1 — no-cover-image fallback icon, horizontal card (`:153`). */
   .placeholderIcon {
-    height: var(--space-6); /* h-6 — I1, N1: integer step resolves to the named token */
-    width: var(--space-6); /* w-6 — I1 */
+    height: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); h-6 — I1, N1: integer step resolves to the named token */
+    width: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); w-6 — I1 */
     color: var(--muted-foreground); /* text-muted-foreground — I1 */
   }
 
   /* Site #5 — no-cover-image fallback icon, vertical card (`:244`). */
   .placeholderIconLarge {
-    height: var(--space-8); /* h-8 — I1 */
-    width: var(--space-8); /* w-8 — I1 */
+    height: var(--homepage-runtime-space-8); /* Task 770 — was @theme inline --space-8 (§22.1); h-8 — I1 */
+    width: var(--homepage-runtime-space-8); /* Task 770 — was @theme inline --space-8 (§22.1); w-8 — I1 */
     color: var(--muted-foreground); /* text-muted-foreground — I1 */
   }
 
@@ -74,7 +74,7 @@
   .inlineFavorite {
     flex-shrink: 0; /* shrink-0 — I1 */
     margin-top: -.125rem; /* design-tokens-allow: margin-top: -.125rem — -mt-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × -0.5); no --space-* token expresses a negative half-step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
-    margin-right: calc(var(--space-1) * -1); /* -mr-1 — I1 */
+    margin-right: calc(var(--homepage-runtime-space-1) * -1); /* Task 770 — was @theme inline --space-1 (§22.1); -mr-1 — I1 */
   }
 
   /* Site #6 — overlay FavoriteButton shadow, vertical card (`:259`). See header comment for the

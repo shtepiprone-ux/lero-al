@@ -92,6 +92,8 @@
     "check:tailwind-runtime-tokens": "node scripts/check-tailwind-runtime-tokens.mjs",
     "check:tailwind-runtime-tokens:verify-gate": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate",
     "check:homepage-literal-utilities": "node scripts/check-homepage-literal-utilities.mjs",
+    "check:homepage-theme-runtime-deps": "node scripts/check-homepage-theme-runtime-deps.mjs",
+    "check:homepage-theme-runtime-deps:verify-gate": "node scripts/check-homepage-theme-runtime-deps.mjs --verify-gate",
     "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },

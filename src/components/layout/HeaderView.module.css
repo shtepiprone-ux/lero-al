@@ -52,13 +52,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
-  padding-block: var(--space-2); /* py-2 — measured 8px @<390, I2; --space-2 = 0.5rem (§22.1) */
+  gap: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
+  padding-block: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); py-2 — measured 8px @<390, I2; --space-2 = 0.5rem (§22.1) */
 }
 @media (min-width: 390px) {
   .bar {
     flex-wrap: nowrap;
-    height: var(--space-16); /* h-16 — measured 64px @>=390, I2; --space-16 = 4rem (§22.1) */
+    height: var(--homepage-runtime-space-16); /* Task 770 — was @theme inline --space-16 (§22.1); h-16 — measured 64px @>=390, I2; --space-16 = 4rem (§22.1) */
     padding-block: 0;
   }
 }
@@ -67,7 +67,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-1); /* gap-1 — measured 4px, I2; --space-1 = 0.25rem (§22.1) */
+  gap: var(--homepage-runtime-space-1); /* Task 770 — was @theme inline --space-1 (§22.1); gap-1 — measured 4px, I2; --space-1 = 0.25rem (§22.1) */
   font-weight: 700; /* font-bold */
   font-size: var(--homepage-runtime-font-size-xl); /* Task 767 — was Tailwind-owned --text-xl, measured 20px, I2; --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
   line-height: var(--homepage-runtime-line-height-xl); /* Task 767 — was --text-xl--line-height (compiled Tailwind output), I2; = 1.75rem (§22.2) */
@@ -87,7 +87,7 @@
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: var(--space-6); /* gap-6 — measured 24px, I2; --space-6 = 1.5rem (§22.1) */
+  gap: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); gap-6 — measured 24px, I2; --space-6 = 1.5rem (§22.1) */
 }
 
 /* Sites #1 / #2 — NavLinks <Anchor unstyled component={Link}> (shared) */
@@ -111,7 +111,7 @@
   align-items: center;
   width: 100%; /* w-full — measured, I2 */
   justify-content: space-between;
-  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
+  gap: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
 }
 @media (min-width: 390px) {
   .rightCluster {
@@ -124,5 +124,5 @@
 .userMenuSlot {
   display: flex;
   align-items: center;
-  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
+  gap: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
 }

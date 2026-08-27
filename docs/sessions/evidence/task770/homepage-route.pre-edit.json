@@ -1,0 +1,83 @@
+{
+  "label": "pre-edit",
+  "baseUrl": "http://127.0.0.1:3001",
+  "route": "/en",
+  "capturedAt": "2026-08-26T19:22:08.277Z",
+  "cells": [
+    {
+      "viewport": "320x812",
+      "width": 320,
+      "height": 812,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "mainCount": 1,
+      "firstSectionCount": 5,
+      "main": {
+        "paddingBottom": "56px"
+      },
+      "firstSection": {
+        "paddingTop": "64px",
+        "paddingBottom": "64px"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-space-14": "",
+        "--homepage-runtime-space-16": "",
+        "--homepage-runtime-space-24": "",
+        "--homepage-runtime-section-py-base": "",
+        "--homepage-runtime-section-py-md": "",
+        "--homepage-runtime-section-py-lg": ""
+      }
+    },
+    {
+      "viewport": "768x1024",
+      "width": 768,
+      "height": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "mainCount": 1,
+      "firstSectionCount": 5,
+      "main": {
+        "paddingBottom": "0px"
+      },
+      "firstSection": {
+        "paddingTop": "96px",
+        "paddingBottom": "96px"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-space-14": "",
+        "--homepage-runtime-space-16": "",
+        "--homepage-runtime-space-24": "",
+        "--homepage-runtime-section-py-base": "",
+        "--homepage-runtime-section-py-md": "",
+        "--homepage-runtime-section-py-lg": ""
+      }
+    },
+    {
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "mainCount": 1,
+      "firstSectionCount": 5,
+      "main": {
+        "paddingBottom": "0px"
+      },
+      "firstSection": {
+        "paddingTop": "96px",
+        "paddingBottom": "96px"
+      },
+      "runtimeTokens": {
+        "--homepage-runtime-space-14": "",
+        "--homepage-runtime-space-16": "",
+        "--homepage-runtime-space-24": "",
+        "--homepage-runtime-section-py-base": "",
+        "--homepage-runtime-section-py-md": "",
+        "--homepage-runtime-section-py-lg": ""
+      }
+    }
+  ]
+}

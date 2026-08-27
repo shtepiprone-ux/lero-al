@@ -1,0 +1,44 @@
+check:design-tokens --strict run against the post-migration tree, BEFORE the header-comment fix
+(the my own new globals.css subsection's header comment contained the literal substring
+"--space-*/--text-2xs" and "--home-section-py-*/--shadow-*", each an accidental "*/" sequence that
+prematurely closed the CSS block comment for check-design-tokens.mjs's own stripCssComments/
+extractCssCustomPropertyDefinitions anchor-tracking walk (a global, non-nesting regex-based
+stripper). This desynchronized the declaration-anchor scan enough that --homepage-runtime-space-0's
+own declaration was skipped from globalsDefinedProps, even though the declaration text itself was
+never mangled. check-homepage-theme-runtime-deps.mjs's own extractor was unaffected because it
+uses a per-line-anchored regex (`(^|\n)\s*(--[\w-]+)\s*:`), not an inter-`;`/`{` state machine.
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+  SHARED  (2 findings)
+  src/components/shared/HeroSearchView.module.css  (2)
+    :95  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :99  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+
+  LAYOUT  (4 findings)
+  src/components/layout/MobileBottomNavView.module.css  (4)
+    :58  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :59  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :60  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :152  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+
+  OTHER  (3 findings)
+  src/design-system/mantine/patterns/MantineListingCardPattern.module.css  (3)
+    :302  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :386  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+    :392  [css-undefined-var:var() reference with no resolvable definition]  "var(--homepage-runtime-space-0)"
+
+  Total: 9 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    css-undefined-var    9
+
+check:design-tokens STRICT — 9 raw style-value violation(s) + 0 stale-marker(s) found.
+exit=1
+
+FIX: rewrote globals.css's Task 770 header comment to remove the two literal "*/" substrings
+(replaced "--space-*/--text-2xs/--home-section-py-*/--shadow-*" prose with
+"--space-N, --text-2xs, --home-section-py-N and --shadow-N"). No token name, value, or declaration
+changed. Re-ran node -e reproduction confirming extractCssCustomPropertyDefinitions now returns
+--homepage-runtime-space-0 (296 total defs, up from 295). Re-ran check:design-tokens --strict on
+the corrected tree: 0 violations, exit 0 (see final-check-design-tokens.txt).

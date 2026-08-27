@@ -29,8 +29,8 @@
    MARGIN, not a gap (confirmed against storybook-static/assets/iframe-*.css and the I2 capture:
    every body child gets margin-bottom:8px except the last, which gets 0). */
 .skeletonBody {
-  padding: var(--space-3); /* p-3 — measured 12px, I2; --space-3 = 0.75rem (§22.1). No rendered story covers this file — numeric equality proven in the session log, not pixels (§3.5) */
+  padding: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1); p-3 — measured 12px, I2; --space-3 = 0.75rem (§22.1). No rendered story covers this file — numeric equality proven in the session log, not pixels (§3.5) */
 }
 .skeletonBody > :not(:last-child) {
-  margin-bottom: var(--space-2); /* space-y-2's own compiled sibling-margin rule — measured 8px, I2; not a gap. --space-2 = 0.5rem (§22.1). No rendered story covers this file (§3.5) */
+  margin-bottom: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); space-y-2's own compiled sibling-margin rule — measured 8px, I2; not a gap. --space-2 = 0.5rem (§22.1). No rendered story covers this file (§3.5) */
 }

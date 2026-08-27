@@ -1,0 +1,61 @@
+{
+  "task": "Task 770 — retained 244-cell visual manifest comparison",
+  "reviewedAt": "2026-08-27",
+  "scope": {
+    "storyIdVariants": 14,
+    "canonicalTitles": 10,
+    "cells": 244,
+    "locales": ["sq", "en", "uk", "it"],
+    "baseViewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024"],
+    "extraViewports": {
+      "mantine-primitives-herosearch--default": ["band-700"],
+      "mantine-primitives-herosearch--fallback": ["band-700"],
+      "patterns-mantine-homesection--default": ["wide-1200", "wide-1440", "wide-1536"]
+    }
+  },
+  "runs": {
+    "pre": {
+      "manifest": ".screenshots/rendered-assert/2026-08-26T12-30/manifest.json",
+      "timestamp": "2026-08-26T12-30",
+      "provenance": "Timestamp precedes the Task 770 kickoff/base commit b73860fc57dec825386f270ad181b15ec5d71626 at 2026-08-26T20:50:04+02:00."
+    },
+    "post": {
+      "manifest": ".screenshots/rendered-assert/2026-08-26T20-12/manifest.json",
+      "timestamp": "2026-08-26T20-12"
+    },
+    "sameTreeControl": {
+      "manifest": ".screenshots/rendered-assert/2026-08-27T07-55/manifest.json",
+      "timestamp": "2026-08-27T07-55"
+    }
+  },
+  "prePost": {
+    "cellsInEachManifest": 244,
+    "missing": [],
+    "extra": [],
+    "verdictDifferences": [],
+    "byteIdentical": 240,
+    "byteDifferent": 4,
+    "deltas": [
+      {"cell": "mantine-primitives-listingcard--favorites-composition|it|mobile-390", "width": 390, "height": 844, "changedPixels": 19, "percent": 0.00577, "maxChannelDelta": 2},
+      {"cell": "mantine-primitives-mobilebottomnavview--guest|uk|mobile-375", "width": 375, "height": 812, "changedPixels": 16, "percent": 0.00525, "maxChannelDelta": 20},
+      {"cell": "mantine-primitives-mobilebottomnavview--authenticated|uk|mobile-320", "width": 320, "height": 812, "changedPixels": 16, "percent": 0.00616, "maxChannelDelta": 20},
+      {"cell": "mantine-primitives-mobilebottomnavview--authenticated|uk|mobile-390", "width": 390, "height": 844, "changedPixels": 16, "percent": 0.00486, "maxChannelDelta": 20}
+    ]
+  },
+  "sameTreeControl": {
+    "cellsInEachManifest": 244,
+    "missing": [],
+    "extra": [],
+    "verdictDifferences": [],
+    "byteIdentical": 240,
+    "byteDifferent": 4,
+    "deltas": [
+      {"cell": "mantine-primitives-listingcard--default|en|mobile-320", "width": 320, "height": 812, "changedPixels": 42, "percent": 0.01616, "maxChannelDelta": 2},
+      {"cell": "mantine-primitives-listingcard--favorites-composition|it|mobile-390", "width": 390, "height": 844, "changedPixels": 19, "percent": 0.00577, "maxChannelDelta": 2},
+      {"cell": "mantine-primitives-mobilebottomnavview--guest|uk|mobile-320", "width": 320, "height": 812, "changedPixels": 16, "percent": 0.00616, "maxChannelDelta": 20},
+      {"cell": "mantine-primitives-mobilebottomnavview--authenticated|uk|mobile-375", "width": 375, "height": 812, "changedPixels": 16, "percent": 0.00525, "maxChannelDelta": 20}
+    ]
+  },
+  "verdict": "PASS",
+  "method": "Filtered each manifest to the fourteen Task 770 story-ID variants. Matched cells by storyId|locale|viewport; compared harness verdicts, SHA-256 bytes and, for differing PNGs, raw RGBA pixel counts and maximum RGB channel deltas."
+}

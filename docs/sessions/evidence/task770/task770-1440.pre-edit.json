@@ -1,0 +1,56 @@
+{
+  "label": "pre-edit",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al-preedit-temp\\storybook-static",
+  "capturedAt": "2026-08-26T19:17:19.362Z",
+  "viewport": "1440x900",
+  "cells": [
+    {
+      "name": "FooterView",
+      "storyId": "mantine-primitives-footerview--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.FooterView.png"
+    },
+    {
+      "name": "HeaderView",
+      "storyId": "mantine-primitives-headerview--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.HeaderView.png"
+    },
+    {
+      "name": "HeroSearch",
+      "storyId": "mantine-primitives-herosearch--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.HeroSearch.png"
+    },
+    {
+      "name": "HomeSection",
+      "storyId": "patterns-mantine-homesection--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.HomeSection.png"
+    },
+    {
+      "name": "HomepageListingGrids",
+      "storyId": "patterns-mantine-homepagelistinggrids--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.HomepageListingGrids.png"
+    },
+    {
+      "name": "ListingCard",
+      "storyId": "mantine-primitives-listingcard--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootExists": true,
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.pre-edit.ListingCard.png"
+    }
+  ]
+}

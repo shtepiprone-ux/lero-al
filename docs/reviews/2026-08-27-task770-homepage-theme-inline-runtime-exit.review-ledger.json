@@ -1,0 +1,92 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 770 — Homepage theme-inline runtime exit",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "b73860fc57dec825386f270ad181b15ec5d71626",
+    "reviewedRevision": "Uncommitted Task 770 candidate on base b73860fc57dec825386f270ad181b15ec5d71626; AC3 post sourceTreeSha f12c4880a0e7479f5b2630ea6a2e81ddb04d38def1fb6315990beaca5b44a6f6.",
+    "reviewedPaths": [
+      "src/app/globals.css",
+      "src/app/[locale]/layout.tsx",
+      "src/app/[locale]/page.tsx",
+      "src/components/layout/FooterView.module.css",
+      "src/components/layout/HeaderView.module.css",
+      "src/components/layout/MobileBottomNavView.module.css",
+      "src/components/shared/HeroSearchView.module.css",
+      "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+      "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "src/modules/listings/components/FeaturedListingsView.module.css",
+      "src/modules/listings/components/LatestListingsView.module.css",
+      "src/modules/listings/components/ListingCard.module.css",
+      "scripts/check-homepage-theme-runtime-deps.mjs",
+      "scripts/task770-storybook-capture.mjs",
+      "scripts/task770-copyid-computed.mjs",
+      "scripts/task770-homepage-route-probe.mjs",
+      "package.json",
+      "docs/design-system.md",
+      "docs/backlog.md",
+      "docs/sessions/2026-08-26-task770-homepage-theme-inline-runtime-exit.md",
+      "docs/reviews/artifacts/2026-08-27-task770/final-validation.txt",
+      "docs/reviews/artifacts/2026-08-27-task770/visual-manifest-comparison.json",
+      "docs/reviews/2026-08-27-task770-homepage-theme-inline-runtime-exit.review-ledger.json"
+    ],
+    "supersedes": [],
+    "coverage": {"total": 6, "verified": 6, "unverified": 0, "openP0": 0, "openP1": 0, "openP2": 0},
+    "ledgerGate": {"command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-27-task770-homepage-theme-inline-runtime-exit.review-ledger.json", "status": "PASSED", "exitCode": 0}
+  },
+  "requirements": [
+    {
+      "id": "R1-R4 / AC1-AC4", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "src/app/globals.css", "symbol": "Homepage runtime tokens and twelve fixed-manifest migrations", "diffHunks": ["runtime-token insertion", "42 approved consumer reference migrations"]},
+      "requiredScope": {"subjects": ["19 runtime tokens", "42 property/token tuples", "12 manifest files"], "notApplicable": {"stories": "Source token mapping is verified separately from rendered stories.", "locales": "Token mapping is locale-independent.", "viewports": "Token mapping is viewport-independent.", "states": "No independent runtime state applies to static ownership.", "phases": "Final candidate source is the sole static phase."}},
+      "evidence": [{"path": "docs/sessions/2026-08-26-task770-homepage-theme-inline-runtime-exit.md", "command": "Task 770 §15.3 comment-stripped mechanical source comparison", "observable": "All 42 mappings preserve declaration context and use the approved root/runtime destination.", "freshness": "final candidate reviewed 2026-08-27", "coverageRole": "COVERS", "scope": {"subjects": ["19 runtime tokens", "42 property/token tuples", "12 manifest files"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "A wrong valid root token could preserve aggregate counts.", "kind": "EXECUTED", "path": "docs/reviews/artifacts/2026-08-27-task770/final-validation.txt", "result": "Case 6 substitutes --foreground and fails only on the exact migration signature."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "The check is an explicit source mapping, not generated Tailwind output."}
+    },
+    {
+      "id": "R5-R8 / AC5-AC6", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "scripts/check-homepage-theme-runtime-deps.mjs", "symbol": "fixed-manifest ownership gate", "diffHunks": ["MIGRATION_TARGETS", "Case 5 three invariants", "Case 6 semantic mutation"]},
+      "requiredScope": {"subjects": ["12 manifest inputs", "AppImage expected-zero arm", "five-category classifier", "migration signature"], "notApplicable": {"stories": "Static scanner.", "locales": "Locale-independent declarations.", "viewports": "No viewport dimension.", "states": "Six asserted arms enumerate scanner states.", "phases": "Each arm uses an isolated temporary source tree."}},
+      "evidence": [{"path": "docs/reviews/artifacts/2026-08-27-task770/final-validation.txt", "command": "node.exe scripts/check-homepage-theme-runtime-deps.mjs --verify-gate", "observable": "All six asserted arms pass; Case 5 asserts 94/170, 42/79, signature, 0/0 blocking and expected-zero 0.", "freshness": "independent native reviewer run, 2026-08-27", "coverageRole": "COVERS", "scope": {"subjects": ["12 manifest inputs", "AppImage expected-zero arm", "five-category classifier", "migration signature"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "Only invalid token plants are rejected.", "kind": "EXECUTED", "path": "docs/reviews/artifacts/2026-08-27-task770/final-validation.txt", "result": "Case 6 keeps blocking 0/0 while the wrong root-owned token fails on signature."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "Ownership scanner and self-test, not generated CSS semantics."}
+    },
+    {
+      "id": "R3-R4 / AC3", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "scripts/task770-copyid-computed.mjs", "symbol": "built Storybook computed-style capture", "diffHunks": ["unique resting-fixture selector", "identical-source fail-closed comparator"]},
+      "requiredScope": {"subjects": ["MantineCopyIdButton .copyId", "color", "focus-visible boxShadow", "copied iconColor"], "stories": ["mantine-primitives-copyidbutton--default"], "locales": ["default fixture"], "viewports": ["1440x900"], "states": ["light resting/focus-visible/copied", "dark resting/focus-visible/copied"], "phases": ["b73860fc5 pre worktree", "current Task 770 tree"]},
+      "evidence": [{"path": "docs/sessions/evidence/task770/ac3-final/task770-copyid-comparison.json", "command": "task770-copyid-computed pre; post; --compare", "observable": "Both phase artifacts have strict root readiness and distinct sourceTreeSha values; all six computed values are string-equal.", "freshness": "owner-native 2026-08-27T10:16Z", "coverageRole": "COVERS", "scope": {"subjects": ["MantineCopyIdButton .copyId", "color", "focus-visible boxShadow", "copied iconColor"], "stories": ["mantine-primitives-copyidbutton--default"], "locales": ["default fixture"], "viewports": ["1440x900"], "states": ["light resting/focus-visible/copied", "dark resting/focus-visible/copied"], "phases": ["b73860fc5 pre worktree", "current Task 770 tree"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "An equal result could measure identical content twice.", "kind": "EXECUTED", "path": "scripts/task770-copyid-computed.mjs", "result": "The comparator rejects equal sourceTreeSha; retained trees are different."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "Direct browser computed-style evidence."}
+    },
+    {
+      "id": "R4 / AC7", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "docs/reviews/artifacts/2026-08-27-task770/visual-manifest-comparison.json", "symbol": "244-cell Task 770 manifest comparison", "diffHunks": ["retained pre/post/control comparison"]},
+      "requiredScope": {"subjects": ["14 affected story-ID variants", "244 visual cells"], "stories": ["10 canonical Task 770 titles"], "locales": ["sq", "en", "uk", "it"], "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024", "band-700", "wide-1200", "wide-1440", "wide-1536"], "states": ["default", "fallback", "guest", "authenticated", "favorites-composition", "loading"], "phases": ["historical pre 2026-08-26T12-30", "post 2026-08-26T20-12", "same-tree control 2026-08-27T07-55"]},
+      "evidence": [{"path": "docs/reviews/artifacts/2026-08-27-task770/visual-manifest-comparison.json", "command": "native manifest filter and SHA-256/raw-RGBA comparison over storyId|locale|viewport", "observable": "244 cells exist in both phases; zero missing, zero extra and zero verdict changes. 240 are byte-identical. The four tiny raster deltas are measured and correspond to the independently measured same-tree noise family.", "freshness": "independent reviewer analysis, 2026-08-27", "coverageRole": "COVERS", "scope": {"subjects": ["14 affected story-ID variants", "244 visual cells"], "stories": ["10 canonical Task 770 titles"], "locales": ["sq", "en", "uk", "it"], "viewports": ["mobile-320", "mobile-375", "mobile-390", "desktop-1024", "band-700", "wide-1200", "wide-1440", "wide-1536"], "states": ["default", "fallback", "guest", "authenticated", "favorites-composition", "loading"], "phases": ["historical pre 2026-08-26T12-30", "post 2026-08-26T20-12", "same-tree control 2026-08-27T07-55"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "A changed screenshot could be a migration regression rather than harness raster noise.", "kind": "EXECUTED", "path": "docs/reviews/artifacts/2026-08-27-task770/visual-manifest-comparison.json", "result": "Same-tree control has the same 240/4 byte pattern, zero verdict drift and overlapping ListingCard/MobileBottomNavView noise families."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "Direct rendered visual comparison."}
+    },
+    {
+      "id": "R11 / AC8", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "scripts/task770-storybook-capture.mjs", "symbol": "six-story strict 1440 capture", "diffHunks": ["strict root readiness", "no-clobber guards"]},
+      "requiredScope": {"subjects": ["FooterView", "HeaderView", "HeroSearch", "HomeSection", "HomepageListingGrids", "ListingCard"], "stories": ["six canonical focused stories"], "locales": ["default fixture"], "viewports": ["1440x900"], "states": ["rendered default"], "phases": ["post-remediation"]},
+      "evidence": [{"path": "docs/sessions/evidence/task770/task770-1440.post-remediation.json", "command": "node.exe scripts/task770-storybook-capture.mjs post-remediation", "observable": "All six cells have HTTP 200 and strict #storybook-root readiness; post-remediation PNGs are byte-identical to post-edit PNGs.", "freshness": "owner-native 2026-08-27T10:06Z", "coverageRole": "COVERS", "scope": {"subjects": ["FooterView", "HeaderView", "HeroSearch", "HomeSection", "HomepageListingGrids", "ListingCard"], "stories": ["six canonical focused stories"], "locales": ["default fixture"], "viewports": ["1440x900"], "states": ["rendered default"], "phases": ["post-remediation"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "An error shell or existing label could silently produce evidence.", "kind": "EXECUTED", "path": "scripts/task770-storybook-capture.mjs", "result": "Strict root readiness and pre-capture no-clobber guards fail closed."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "Runtime capture integrity."}
+    },
+    {
+      "id": "R12 / AC9", "priority": "P1", "status": "VERIFIED", "findingIds": [],
+      "finalSubject": {"path": "scripts/task770-homepage-route-probe.mjs", "symbol": "three-viewport real-route probe", "diffHunks": ["Task 770 route probe"]},
+      "requiredScope": {"subjects": ["Homepage route computed padding"], "stories": ["real application route"], "locales": ["en"], "viewports": ["320x812", "768x1024", "1440x900"], "states": ["route render"], "phases": ["pre-edit", "post-edit"]},
+      "evidence": [{"path": "docs/sessions/evidence/task770/homepage-route.post-edit.json", "command": "Task 770 production route probe", "observable": "Retained pre/post route outputs show string-equal required computed styles at all three viewports.", "freshness": "Task 770 native evidence", "coverageRole": "COVERS", "scope": {"subjects": ["Homepage route computed padding"], "stories": ["real application route"], "locales": ["en"], "viewports": ["320x812", "768x1024", "1440x900"], "states": ["route render"], "phases": ["pre-edit", "post-edit"]}}],
+      "coverageGaps": [], "counterChecks": [{"claim": "Storybook evidence could miss route integration.", "kind": "EXECUTED", "path": "docs/sessions/evidence/task770/homepage-route.pre-edit.json", "result": "The production route was separately measured at all required widths."}],
+      "semanticCheck": {"mode": "NOT_APPLICABLE", "reason": "Direct production-route evidence."}
+    }
+  ],
+  "findings": [],
+  "handoff": {"commitPush": "ALLOWED"},
+  "attestation": {"lowestEvidenceRequirement": "R4 / AC7", "reviewer": "Codex"}
+}

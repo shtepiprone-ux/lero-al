@@ -1,0 +1,37 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 38 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+npm.cmd : ❌  check:file-integrity FAILED — 7 corrupt / invalid file(s):
+At line:6 char:1
++ npm.cmd run check:file-integrity 2>&1 | Out-File -FilePath docs\sessi ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:file-i...nvalid file(s)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  docs/sessions/evidence/task770/final-check-css-vars.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/final-check-design-tokens.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/final-check-file-integrity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/final-check-homepage-literal-utilities.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/final-check-tailwind-runtime-tokens-verify-gate.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/final-check-tailwind-runtime-tokens.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task770/typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+exit=1

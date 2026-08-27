@@ -1,0 +1,40 @@
+Task 770 final independent validation — 2026-08-27
+
+Environment: Windows native; node.exe -p process.platform returned win32.
+
+1. git diff --check
+   exit=0; no whitespace errors reported.
+
+2. node.exe scripts/check-homepage-theme-runtime-deps.mjs --verify-gate
+   exit=0; six asserted outcomes passed.
+   Case 5: FULL_CENSUS=94/170; MIGRATED_TARGETS=42/79;
+   BLOCKING=0/0; expected-zero=0; signature=
+   cc84b1dc078b3dffd8bd2d6f07aa1fc02ff4cbe67b17892dc8216d057208613e.
+   Case 6: a wrong but root-owned replacement exited 1 because the
+   migration signature mismatched while blocking remained 0/0.
+
+3. AC3 retained evidence
+   docs/sessions/evidence/task770/ac3-final/task770-copyid-computed-pre.json
+   and task770-copyid-computed-post.json each recorded light and dark modes
+   with ok=true, strict Storybook root readiness, focus-visible box shadow,
+   and copied-icon colour.
+   task770-copyid-comparison.json reports distinct pre/post sourceTreeSha
+   values and EQUAL for all six measured values.
+
+4. Focused capture integrity
+   task770-1440.post-remediation.json records strict #storybook-root
+   readiness for all six required stories. SHA-256 comparison of the six
+   post-remediation PNGs against the corresponding post-edit PNGs was
+   byte-identical.
+
+5. Build
+   docs/sessions/evidence/task770/build-storybook-postedit.log records
+   native npm.cmd run build-storybook exit=0 after the Task 770 source change.
+
+6. AC7 retained visual manifests
+   The historical pre run 2026-08-26T12-30 precedes Task 770's 20:50 base
+   commit; 2026-08-26T20-12 is the post run and 2026-08-27T07-55 is a
+   same-tree control. The retained 244-cell comparison is recorded in
+   visual-manifest-comparison.json: all cells are present, verdicts are
+   unchanged, 240 are byte-identical, and the four small raster deltas are
+   measured alongside the independent same-tree noise control.

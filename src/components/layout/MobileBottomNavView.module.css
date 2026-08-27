@@ -55,9 +55,9 @@
   /* Site :36 — nav Box (mobile-bottom-nav marker class preserved verbatim outside this module) */
   .navBar {
     position: fixed; /* fixed */
-    bottom: var(--space-0); /* bottom-0 */
-    left: var(--space-0); /* left-0 */
-    right: var(--space-0); /* right-0 */
+    bottom: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); bottom-0 */
+    left: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); left-0 */
+    right: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); right-0 */
     z-index: 30; /* z-30 — no --z-* named token exists (globals.css:269-272, HeaderView.module.css:35 precedent) */ /* design-tokens-allow: z-index: 30 — chrome stacking level; docs/design-system.md §22.3 tables a --z-sticky at 30 but globals.css defines no --z-* custom property, so consuming it would be invalid-at-computed-value and fall back to z-index:auto (Task 718) */
     background-color: var(--card); /* bg-card */
     border-top-style: solid; /* border-t — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1); was var(--tw-border-style), invalid-at-computed-value without Tailwind's @property registration */
@@ -66,7 +66,7 @@
     box-shadow: rgba(0, 0, 0, 0.08) 0 -2px 16px 0; /* design-tokens-allow: rgba( — bespoke upward nav shadow, flattened from the Tailwind --tw-shadow/--tw-ring-* composition; captured live via getComputedStyle (Task 762 Revision 1), not hand-derived — the four other composited layers are Tailwind's own registered-invisible (fully transparent) initial values and contribute nothing visible, confirmed absent from this capture */ /* design-tokens-allow: box-shadow: -2px — same flattened shadow, Y-offset component */ /* design-tokens-allow: box-shadow: 16px — same flattened shadow, blur-radius component */
     display: flex; /* flex */
     align-items: stretch; /* items-stretch */
-    height: var(--space-14); /* h-14 */
+    height: var(--homepage-runtime-space-14); /* Task 770 — was @theme inline --space-14 (§22.1); h-14 */
   }
 
   /* Site :46 — FAB Link (group marker, no compiled rule of its own) */
@@ -77,14 +77,14 @@
     align-items: center; /* items-center */
     justify-content: center; /* justify-center */
     gap: .125rem; /* design-tokens-allow: gap: .125rem — gap-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × .5); no --space-* token matches this exact half-step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
-    margin-top: calc(var(--space-3) * -1); /* -mt-3 */
+    margin-top: calc(var(--homepage-runtime-space-3) * -1); /* Task 770 — was @theme inline --space-3 (§22.1); -mt-3 */
   }
 
   /* Sites :50/:51 — FAB span (group-active:scale-95 under :active; bg-primary default,
      .fabActive variant when active.add) */
   .fab {
-    height: var(--space-12); /* h-12 */
-    width: var(--space-12); /* w-12 */
+    height: var(--homepage-runtime-space-12); /* Task 770 — was @theme inline --space-12 (§22.1); h-12 */
+    width: var(--homepage-runtime-space-12); /* Task 770 — was @theme inline --space-12 (§22.1); w-12 */
     border-radius: 3.40282e38px; /* rounded-full */ /* design-tokens-allow: border-radius: 3.40282e38px — rounded-full's own compiled magic number; Tailwind's infinity-approximation constant for a full pill radius, no §22 token represents an unbounded circle (Task 715) */
     display: flex; /* flex */
     align-items: center; /* items-center */
@@ -114,8 +114,8 @@
 
   /* Site :53 — Plus icon */
   .fabIcon {
-    height: var(--space-6); /* h-6 */
-    width: var(--space-6); /* w-6 */
+    height: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); h-6 */
+    width: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); w-6 */
     color: var(--primary-foreground); /* text-primary-foreground */
   }
 
@@ -149,13 +149,13 @@
   .navItemButton {
     height: 100%; /* h-full */
     border-radius: 0; /* rounded-none */
-    padding: var(--space-0); /* p-0 */
+    padding: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); p-0 */
   }
 
   /* Sites :90/:99 — nav item icon */
   .navItemIcon {
-    height: var(--space-5); /* h-5 */
-    width: var(--space-5); /* w-5 */
+    height: var(--homepage-runtime-space-5); /* Task 770 — was @theme inline --space-5 (§22.1); h-5 */
+    width: var(--homepage-runtime-space-5); /* Task 770 — was @theme inline --space-5 (§22.1); w-5 */
   }
 
   /* Sites :92/:101 — nav item label (shared — see header comment) */

@@ -1,0 +1,8 @@
+
+src\app\globals.css:173:  --text-2xs:              0.625rem;  /* 10px — micro-label: badge/counter/helper (§22.2) */
+src\app\globals.css:237:  --shadow-listing-card-elevation-lg: 0 8px 24px oklch(0.700 0.162 65 / 0.2);
+src\app\globals.css:306:  --home-section-py-base: 3rem;   /* 48px — base */
+src\app\globals.css:307:  --home-section-py-md:   4rem;   /* 64px — ≥768px */
+src\app\globals.css:308:  --home-section-py-lg:   5rem;   /* 80px — ≥1440px (xxl) */
+
+

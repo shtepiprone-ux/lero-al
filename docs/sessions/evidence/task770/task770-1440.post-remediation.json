@@ -1,0 +1,98 @@
+{
+  "label": "post-remediation",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al\\storybook-static",
+  "capturedAt": "2026-08-27T10:06:20.057Z",
+  "viewport": "1440x900",
+  "cells": [
+    {
+      "name": "FooterView",
+      "storyId": "mantine-primitives-footerview--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 32,
+        "visibleDescendants": 28
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.FooterView.png"
+    },
+    {
+      "name": "HeaderView",
+      "storyId": "mantine-primitives-headerview--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 90,
+        "visibleDescendants": 73
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.HeaderView.png"
+    },
+    {
+      "name": "HeroSearch",
+      "storyId": "mantine-primitives-herosearch--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 77,
+        "visibleDescendants": 57
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.HeroSearch.png"
+    },
+    {
+      "name": "HomeSection",
+      "storyId": "patterns-mantine-homesection--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 28,
+        "visibleDescendants": 23
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.HomeSection.png"
+    },
+    {
+      "name": "HomepageListingGrids",
+      "storyId": "patterns-mantine-homepagelistinggrids--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 2634,
+        "descendants": 772,
+        "visibleDescendants": 702
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.HomepageListingGrids.png"
+    },
+    {
+      "name": "ListingCard",
+      "storyId": "mantine-primitives-listingcard--default",
+      "httpStatus": 200,
+      "ok": true,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 216,
+        "visibleDescendants": 195
+      },
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\task770-1440.post-remediation.ListingCard.png"
+    }
+  ]
+}

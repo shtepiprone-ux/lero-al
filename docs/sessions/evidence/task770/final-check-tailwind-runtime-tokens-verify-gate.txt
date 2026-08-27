@@ -1,0 +1,19 @@
+
+> lero-al@0.1.0 check:tailwind-runtime-tokens:verify-gate
+> node scripts/check-tailwind-runtime-tokens.mjs --verify-gate
+
+🔬  check:tailwind-runtime-tokens self-test (--verify-gate) — 10 outcomes asserted (Task 769 §10.4)
+
+✅  Case 1 (new runtime-tsx reference) — expected exit 1, got exit 1 — reported as runtime-tsx new debt: src/app/[locale]/page.tsx:25 --container-3xl
+✅  Case 2 (new module-css reference) — expected exit 1, got exit 1 — reported as module-css new debt: src/components/layout/FooterView.module.css:140 --text-sm
+✅  Case 3 (stale baseline row) — expected exit 1, got exit 1 — reported as stale: src/does-not-exist.module.css --this-is-fake
+✅  Case 4 (dynamic custom-property construction, never baseline-suppressible) — expected exit 1, got exit 1 — reported as dynamic-name violation: src/app/[locale]/page.tsx:25
+✅  Case 5 (missing configured TSX input is fatal) — expected exit 1, got exit 1 — fatal names the missing path: configured TSX input(s) not found: src/components/shared/HeroSearchView.tsx
+✅  Case 6 (AgentCtaButton as sole TSX input, D65-F TSX arm) — expected exit 0, got exit 0 — zero runtime-tsx findings; --button-padding-x absent from found
+✅  Case 7 (module-css Mantine-theme name is external, D65-F) — expected exit 0, got exit 0 — zero findings for --progress-size (classified external)
+✅  Case 8 (module-css negative control, not in theme.ts) — expected exit 1, got exit 1 — reported as module-css new debt: src/components/layout/FooterView.module.css:140 --button-padding-y
+✅  Case 9 (unmodified copy, shipped baseline) — expected exit 0, got exit 0 — newDebt=0 staleEntries=0 dynamicCount=0 tsxFilesScanned=2
+✅  Case 10 (missing theme.ts is fatal) — expected exit 1, got exit 1 — fatal names the theme source: Mantine theme source not found at C:\Users\Nox\AppData\Local\Temp\tailwind-runtime-tokens-verify-G5RyZG\src\design-system\mantine\theme.ts
+
+✅  10/10 verify-gate assertions behaved as expected.
+exit=0

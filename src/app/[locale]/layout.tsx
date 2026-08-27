@@ -47,7 +47,8 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={initialUser}>
         <>
           <Header />
-          <Box component="main" mih="calc(100vh - 4rem)" pb={{ base: 'var(--space-14)', md: 0 }}>
+          {/* Task 770 — pb base was @theme inline --space-14 (§22.1) */}
+          <Box component="main" mih="calc(100vh - 4rem)" pb={{ base: 'var(--homepage-runtime-space-14)', md: 0 }}>
             {children}
           </Box>
           <Footer />

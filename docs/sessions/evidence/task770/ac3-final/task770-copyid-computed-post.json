@@ -1,0 +1,122 @@
+{
+  "label": "post",
+  "storyId": "mantine-primitives-copyidbutton--default",
+  "selector": "button[data-copy-id][title=\"story-listing-001\"]",
+  "timestamp": "2026-08-27T10:16:46.231Z",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al\\storybook-static",
+  "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+  "sourceGitDirty": true,
+  "sourceTreeSha": "f12c4880a0e7479f5b2630ea6a2e81ddb04d38def1fb6315990beaca5b44a6f6",
+  "sourceIdentity": {
+    "repoRoot": "C:\\Claude_Code_Projects\\lero-al",
+    "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+    "sourceGitDirty": true,
+    "sourceTreeSha": "f12c4880a0e7479f5b2630ea6a2e81ddb04d38def1fb6315990beaca5b44a6f6",
+    "identityFiles": [
+      {
+        "file": "src/app/globals.css",
+        "sha256": "1f9041dd792555aafa99ff8567abb61d74546713225865dc78a1b8229f8e23ac"
+      },
+      {
+        "file": "src/app/[locale]/layout.tsx",
+        "sha256": "8a22d6ee21ea16920094376a5a7638abbac6a92193c2dfa30c6abe705bf7de28"
+      },
+      {
+        "file": "src/app/[locale]/page.tsx",
+        "sha256": "574c43504464afa90d5aaceca13dfd2ba0199ef913efce3ce463435537934f80"
+      },
+      {
+        "file": "src/components/layout/FooterView.module.css",
+        "sha256": "de27f99be17cb4024be97dc489818992e77be02725a8765f0364c5a3708c067d"
+      },
+      {
+        "file": "src/components/layout/HeaderView.module.css",
+        "sha256": "25a1184cb4e59b4e38a0d63450f0a337e17ebd14ffa0dc35a25105756ce7efdd"
+      },
+      {
+        "file": "src/components/layout/MobileBottomNavView.module.css",
+        "sha256": "87a8886cd9f34dcab3ce44d92935066ac9786b6568bb7658db359f24ef2817f0"
+      },
+      {
+        "file": "src/components/shared/HeroSearchView.module.css",
+        "sha256": "61b6ebdcae42278b62d1e2c85cfed5a16c7a45e3c340d46bb3ee0e3ccd4d88af"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+        "sha256": "1a3107f53f0e1c6bd91a061e818d69349f62841444b3bce6db1cc5162d447ea8"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+        "sha256": "83a22ccc5e742c367c8120df4302031a00b7ac9a4f54b7015582c8241f651677"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "sha256": "1f768f70f21660b44465b674f3a882e78781f58e82e0bb427639d02a71b17d34"
+      },
+      {
+        "file": "src/modules/listings/components/FeaturedListingsView.module.css",
+        "sha256": "ab0178a3cbbcf265b5e6316d4288ef13e293081a35107205df05f5ad44358d9b"
+      },
+      {
+        "file": "src/modules/listings/components/LatestListingsView.module.css",
+        "sha256": "884782bdfa8fe39672966ffe2bf2f7af89545b344350cff37dafe43592932cfc"
+      },
+      {
+        "file": "src/modules/listings/components/ListingCard.module.css",
+        "sha256": "bd7597310b3aee14730ca34947c38d6cb3372bc53138342f87f8a97bbc8c437c"
+      }
+    ]
+  },
+  "modes": [
+    {
+      "mode": "light",
+      "storyId": "mantine-primitives-copyidbutton--default",
+      "selector": "button[data-copy-id][title=\"story-listing-001\"]",
+      "url": "http://127.0.0.1:59004/iframe.html?id=mantine-primitives-copyidbutton--default&viewMode=story&globals=theme:light",
+      "httpStatus": 200,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 21,
+        "visibleDescendants": 16
+      },
+      "documentElementClass": "",
+      "darkClassApplied": false,
+      "matchCount": 1,
+      "color": "oklab(0.556 0 0 / 0.7)",
+      "focusVisibleReached": true,
+      "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px",
+      "copiedStateAttempts": 1,
+      "iconOpacity": "1",
+      "iconColor": "oklch(0.527 0.173 150)",
+      "ok": true
+    },
+    {
+      "mode": "dark",
+      "storyId": "mantine-primitives-copyidbutton--default",
+      "selector": "button[data-copy-id][title=\"story-listing-001\"]",
+      "url": "http://127.0.0.1:59004/iframe.html?id=mantine-primitives-copyidbutton--default&viewMode=story&globals=theme:dark",
+      "httpStatus": 200,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 21,
+        "visibleDescendants": 16
+      },
+      "documentElementClass": "dark",
+      "darkClassApplied": true,
+      "matchCount": 1,
+      "color": "oklab(0.64 0 0 / 0.7)",
+      "focusVisibleReached": true,
+      "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px",
+      "copiedStateAttempts": 1,
+      "iconOpacity": "1",
+      "iconColor": "oklch(0.527 0.173 150)",
+      "ok": true
+    }
+  ]
+}

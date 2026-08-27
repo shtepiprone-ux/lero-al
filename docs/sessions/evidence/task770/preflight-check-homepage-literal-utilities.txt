@@ -1,0 +1,6 @@
+
+> lero-al@0.1.0 check:homepage-literal-utilities
+> node scripts/check-homepage-literal-utilities.mjs
+
+✅ check:homepage-literal-utilities — 0 static class literals across 3 guarded files.
+exit=0

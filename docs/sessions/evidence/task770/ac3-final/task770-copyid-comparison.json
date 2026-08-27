@@ -1,0 +1,24 @@
+{
+  "task": "Task 770 — AC3 computed-style equivalence",
+  "timestamp": "2026-08-27T10:16:47.852Z",
+  "assertion": "string equality of all six measured values (color, boxShadow, iconColor × light, dark)",
+  "pre": {
+    "path": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\ac3-final\\task770-copyid-computed-pre.json",
+    "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+    "sourceGitDirty": false,
+    "sourceTreeSha": "e88c41b700d69faedee1c403b969558c97760430167a59c30109f96c8ddfc673",
+    "timestamp": "2026-08-27T10:16:43.759Z"
+  },
+  "post": {
+    "path": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task770\\ac3-final\\task770-copyid-computed-post.json",
+    "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+    "sourceGitDirty": true,
+    "sourceTreeSha": "f12c4880a0e7479f5b2630ea6a2e81ddb04d38def1fb6315990beaca5b44a6f6",
+    "timestamp": "2026-08-27T10:16:46.231Z"
+  },
+  "comparedValues": 6,
+  "equalValues": 6,
+  "mismatches": [],
+  "identicalSource": false,
+  "verdict": "EQUAL"
+}

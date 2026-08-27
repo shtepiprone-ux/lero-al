@@ -1,0 +1,10 @@
+
+src\app\globals.css:408:  --muted-foreground:    var(--neutral-500);         /* 5.2:1 on white ✓ WCAG AA */
+src\app\globals.css:441:  --ring:                var(--brand-700);
+src\app\globals.css:448:  --badge-premium:       oklch(0.700 0.162 65);      /* Gold ≈ #D97706 */
+src\app\globals.css:453:  --status-success: oklch(0.527 0.173 150);          /* green — active, confirmed */
+src\app\globals.css:525:  --muted-foreground:    var(--neutral-500);         /* 4.9:1 on dark ✓ */
+src\app\globals.css:551:  --ring:                var(--brand-700);
+src\app\globals.css:557:  --badge-premium:       oklch(0.770 0.150 65);
+
+

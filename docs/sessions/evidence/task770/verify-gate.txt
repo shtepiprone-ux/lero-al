@@ -1,0 +1,10 @@
+🔬  check:homepage-theme-runtime-deps self-test (--verify-gate) — 5 outcomes asserted (kickoff §10.4)
+
+✅  Case 1 (CSS theme-inline-only plant) — expected exit 1, got exit 1 — reported src/components/shared/HeroSearchView.module.css:132 --space-2 [theme-inline-only]
+✅  Case 2 (TSX theme-inline-only plant) — expected exit 1, got exit 1 — reported src/design-system/mantine/patterns/MantineHomeSection.tsx:45 --home-section-py-base [theme-inline-only]
+✅  Case 3 (missing configured migration input is fatal) — expected exit 1, got exit 1 — fatal names the missing path: missing configured input(s): src/components/layout/HeaderView.module.css
+✅  Case 4 (expected-zero reintroduced, D65-E) — expected exit 1, got exit 1 — reported src/components/ui/AppImage.module.css:143 --space-0
+✅  Case 5 (unmodified copy — passing control) — expected exit 0, got exit 0 — blocking=0/0, expected-zero=0; TOTAL CLASSIFIED=94 pair(s)/170 use(s)
+
+✅  5/5 verify-gate assertions behaved as expected.
+exit=0

@@ -1,0 +1,112 @@
+{
+  "label": "pre",
+  "storyId": "mantine-primitives-copyidbutton--default",
+  "selector": "[data-copy-id]",
+  "timestamp": "2026-08-27T10:06:33.217Z",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al-task770-pre\\storybook-static",
+  "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+  "sourceGitDirty": false,
+  "sourceTreeSha": "e88c41b700d69faedee1c403b969558c97760430167a59c30109f96c8ddfc673",
+  "sourceIdentity": {
+    "repoRoot": "C:\\Claude_Code_Projects\\lero-al-task770-pre",
+    "sourceGitSha": "b73860fc57dec825386f270ad181b15ec5d71626",
+    "sourceGitDirty": false,
+    "sourceTreeSha": "e88c41b700d69faedee1c403b969558c97760430167a59c30109f96c8ddfc673",
+    "identityFiles": [
+      {
+        "file": "src/app/globals.css",
+        "sha256": "17cb03e2390cfe6e5f506c93ce8ce23b378dd571aa2414f74fbd20168ec644ec"
+      },
+      {
+        "file": "src/app/[locale]/layout.tsx",
+        "sha256": "1dcda23fa714deb3641f944f736533104cf2d1e3e964698bcc929860b50aeb88"
+      },
+      {
+        "file": "src/app/[locale]/page.tsx",
+        "sha256": "a1353b657fb16a14c9db68a4af8627f8c8f6834b8492f77201b01eefe897b276"
+      },
+      {
+        "file": "src/components/layout/FooterView.module.css",
+        "sha256": "efcda44d67a746991cedd71143d43c0d6d69e5a87c4270d9fccffe4e4e8b2102"
+      },
+      {
+        "file": "src/components/layout/HeaderView.module.css",
+        "sha256": "90cf519e44bdceeda5b1aa79715bf5bc10b24ce4ca8ddcba4f85444325e45a5c"
+      },
+      {
+        "file": "src/components/layout/MobileBottomNavView.module.css",
+        "sha256": "032e9d787cc183b6c24f7ae8292295c81a26be4e59369f4d9f2f0686b314d37c"
+      },
+      {
+        "file": "src/components/shared/HeroSearchView.module.css",
+        "sha256": "da568664a3d6f8f963d330028d9efce00de78c724efd57c6b2d446352defcb0f"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+        "sha256": "cb7a8cd87a738c42cdd0fb142d0be50db182668589c5addf523fa0f9ab3e6264"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+        "sha256": "a9bf100a8f3dfae3877e2413009610242762a2b456e1b5bbc9a34f5dcd3126f6"
+      },
+      {
+        "file": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "sha256": "07e795d2bd2dea67b05d921a71c57b3d663bc1e614deac6236d0147ed1710c7e"
+      },
+      {
+        "file": "src/modules/listings/components/FeaturedListingsView.module.css",
+        "sha256": "265f38ae51045e347e97e7da4287c36b414af5cbbaa04d5e2e898143bfa95fe1"
+      },
+      {
+        "file": "src/modules/listings/components/LatestListingsView.module.css",
+        "sha256": "e464d0fd22ac653764d22cf7b928ad0f619fd599a6c56470fd4aef1d3ba69ddb"
+      },
+      {
+        "file": "src/modules/listings/components/ListingCard.module.css",
+        "sha256": "ef45e5009db4e00562aae170f6546ca599d9dc97dbd54038919c5b1d176ab7fb"
+      }
+    ]
+  },
+  "modes": [
+    {
+      "mode": "light",
+      "storyId": "mantine-primitives-copyidbutton--default",
+      "selector": "[data-copy-id]",
+      "url": "http://127.0.0.1:62034/iframe.html?id=mantine-primitives-copyidbutton--default&viewMode=story&globals=theme:light",
+      "httpStatus": 200,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 21,
+        "visibleDescendants": 16
+      },
+      "documentElementClass": "",
+      "darkClassApplied": false,
+      "matchCount": 2,
+      "ok": false,
+      "failReason": "expected exactly 1 [data-copy-id], found 2"
+    },
+    {
+      "mode": "dark",
+      "storyId": "mantine-primitives-copyidbutton--default",
+      "selector": "[data-copy-id]",
+      "url": "http://127.0.0.1:62034/iframe.html?id=mantine-primitives-copyidbutton--default&viewMode=story&globals=theme:dark",
+      "httpStatus": 200,
+      "rootReadiness": {
+        "ok": true,
+        "rootId": "storybook-root",
+        "rootWidth": 1440,
+        "rootHeight": 900,
+        "descendants": 21,
+        "visibleDescendants": 16
+      },
+      "documentElementClass": "dark",
+      "darkClassApplied": true,
+      "matchCount": 2,
+      "ok": false,
+      "failReason": "expected exactly 1 [data-copy-id], found 2"
+    }
+  ]
+}

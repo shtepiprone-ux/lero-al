@@ -40,10 +40,11 @@ export function MantineHomeSection({
     <Box
       component="section"
       className={cn(styles.band, VARIANT_CLASS[variant], className)}
+      // Task 770 — base/md/xxl were @theme inline --home-section-py-base/md/lg
       py={{
-        base: 'var(--home-section-py-base)',
-        md: 'var(--home-section-py-md)',
-        xxl: 'var(--home-section-py-lg)',
+        base: 'var(--homepage-runtime-section-py-base)',
+        md: 'var(--homepage-runtime-section-py-md)',
+        xxl: 'var(--homepage-runtime-section-py-lg)',
       }}
       style={containIntrinsicSize ? { containIntrinsicSize } : undefined}
     >

@@ -757,6 +757,65 @@ Narrowly-scoped semantic layout tokens for the listing detail gallery frame only
 | `--listing-gallery-h-tablet` | `420px` | `sm:` (640px+) | `sm:h-[var(--listing-gallery-h-tablet)]` |
 | `--listing-gallery-h-desktop` | `500px` | `md:` (768px+) | `md:h-[var(--listing-gallery-h-desktop)]` |
 
+### §22.6 — Homepage runtime tokens (Task 767 level 2, Task 770 level 3)
+
+Project-owned `:root` runtime tokens that survive Tailwind's removal. Each value is copied verbatim
+from the Tailwind-owned or `@theme inline` name it replaces — none is a restyle (Sprint 65 §3 rule
+3, D28). `@theme inline`'s own `--space-*`/`--text-*`/`--home-section-py-*`/`--shadow-*`
+declarations remain untouched: they stay the alias layer for legacy Tailwind utilities still
+compiled on other routes and for the non-manifest references Task 770's kickoff §3.6 measured (18
+pairs / 27 uses, incl. `PerfDevOverlay.tsx`, D65-A pending). Do not read a §22.1/§22.2/§22.3 token
+directly from a Homepage-graph consumer already migrated to this family — consume the
+`--homepage-runtime-*` name instead, so the consumer never re-acquires a Tailwind or `@theme
+inline` dependency.
+
+**Task 767 (Sprint 65 level 2) — typography/geometry, `globals.css:348-362`**
+
+| Token | Value | `globals.css` line |
+|---|---|---:|
+| `--homepage-runtime-font-size-xs` | `0.75rem` | 348 |
+| `--homepage-runtime-line-height-xs` | `1rem` | 349 |
+| `--homepage-runtime-font-size-sm` | `0.875rem` | 350 |
+| `--homepage-runtime-line-height-sm` | `1.25rem` | 351 |
+| `--homepage-runtime-font-size-xl` | `1.25rem` | 352 |
+| `--homepage-runtime-line-height-xl` | `1.75rem` | 353 |
+| `--homepage-runtime-font-size-2xl` | `1.5rem` | 354 |
+| `--homepage-runtime-font-size-3xl` | `1.875rem` | 355 |
+| `--homepage-runtime-font-size-4xl` | `2.25rem` | 356 |
+| `--homepage-runtime-font-size-5xl` | `3rem` | 357 |
+| `--homepage-runtime-font-family-mono` | `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace` | 358 |
+| `--homepage-runtime-search-max-width` | `48rem` | 362 |
+
+**Task 770 (Sprint 65 level 3) — spacing/rhythm/elevation, `globals.css:370-388`**
+
+Cross-reference §22.1's px column for the spacing scale — these are the SAME values, copied
+verbatim, not a second source of truth for the scale itself.
+
+| Token | Value | px (§22.1) | `globals.css` line |
+|---|---|---:|---:|
+| `--homepage-runtime-space-0` | `0px` | 0 | 370 |
+| `--homepage-runtime-space-1` | `0.25rem` | 4 | 371 |
+| `--homepage-runtime-space-2` | `0.5rem` | 8 | 372 |
+| `--homepage-runtime-space-2-5` | `0.625rem` | 10 | 373 |
+| `--homepage-runtime-space-3` | `0.75rem` | 12 | 374 |
+| `--homepage-runtime-space-5` | `1.25rem` | 20 | 375 |
+| `--homepage-runtime-space-6` | `1.5rem` | 24 | 376 |
+| `--homepage-runtime-space-8` | `2rem` | 32 | 377 |
+| `--homepage-runtime-space-11` | `2.75rem` | 44 — touch-target floor (§12a) | 378 |
+| `--homepage-runtime-space-12` | `3rem` | 48 | 379 |
+| `--homepage-runtime-space-14` | `3.5rem` | 56 — bottom-nav height | 380 |
+| `--homepage-runtime-space-16` | `4rem` | 64 | 381 |
+| `--homepage-runtime-space-20` | `5rem` | 80 | 382 |
+| `--homepage-runtime-space-24` | `6rem` | 96 | 383 |
+| `--homepage-runtime-font-size-2xs` | `0.625rem` | 10 (§22.2 `--text-2xs`) | 384 |
+| `--homepage-runtime-section-py-base` | `3rem` | 48 | 385 |
+| `--homepage-runtime-section-py-md` | `4rem` | 64 | 386 |
+| `--homepage-runtime-section-py-lg` | `5rem` | 80 | 387 |
+| `--homepage-runtime-listing-card-shadow` | `0 8px 24px oklch(0.700 0.162 65 / 0.2)` | — | 388 |
+
+Thirty-one tokens total (twelve + nineteen). Each name is declared exactly once, in this one `:root`
+subsection family — never inside `@theme inline`.
+
 ---
 
 ## §23 — `check:design-tokens` gate — BLOCKING (Task 407, Epic JJ final) — Task 402, Epic JJ Phase 2
@@ -1334,6 +1393,104 @@ does not close the broader fact. The `--text-*` typography family is now detecte
 it directly); a project-authored `@theme inline` name with no Tailwind-source collision (`--space-0`
 and its siblings) is still not flagged, and is real, latent, same-class debt — named here rather than
 silently shipped as full coverage. Sprint 62's Task 763 owns deciding how far to close it.
+
+### §23.8 — Homepage fixed-manifest ownership gate: `@theme inline`-only debt (Task 770, Sprint 65 level 3, D65-E)
+
+Sprint 65's level 3 (`tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md` §2) requires
+that no file in a fixed twelve-path Homepage manifest reads a custom property whose runtime
+declaration exists **only** through `@theme inline` — narrower than §23.7's Tailwind-ownership
+question, and orthogonal to it: a name can be project-declared in `@theme inline` (never Tailwind's,
+never Mantine's) and still be exactly the debt this section closes, because `@theme inline`'s own
+emission mechanism is Tailwind-compiler-dependent (§23.7's "Known, named limitation" above).
+
+**`scripts/check-homepage-theme-runtime-deps.mjs`** (`npm run check:homepage-theme-runtime-deps`)
+is a fixed-manifest ownership check — not a route-graph parser, not a directory walk. **Thirteen
+hardcoded repository-relative paths**, resolved before any scanning; a missing one is fatal in every
+mode, naming every missing path:
+
+- Twelve migration inputs: `src/app/[locale]/layout.tsx`, `src/app/[locale]/page.tsx`,
+  `src/components/layout/{FooterView,HeaderView,MobileBottomNavView}.module.css`,
+  `src/components/shared/HeroSearchView.module.css`,
+  `src/design-system/mantine/patterns/{MantineCopyIdButton.module.css,MantineHomeSection.tsx,MantineListingCardPattern.module.css}`,
+  `src/modules/listings/components/{FeaturedListingsView,LatestListingsView}.module.css`,
+  `src/modules/listings/components/ListingCard.module.css`.
+- One expected-zero input (D65-E, below): `src/components/ui/AppImage.module.css`.
+
+**Five categories, in this classification order, decided for every literal `var()` reference in the
+twelve migration inputs** (comments and string/template text never counted):
+
+1. `mantine-external` — `--mantine-` prefix.
+2. `module-local` — declared inside the same `.css` file being scanned; never applies to a `.tsx`
+   input.
+3. `root-owned` — declared in a top-level `:root` block of `globals.css`.
+4. `theme-inline-only` — declared in `@theme inline` and NOT in `:root`. **Blocking.**
+5. `unknown` — none of the above. **Blocking.**
+
+There is no baseline, marker, allowlist or exemption of any kind — none may be added to reach green
+(Sprint 65 §3 rule 2). A `design-tokens-allow:` marker or an entry in
+`scripts/design-tokens-allowlist.json` does not apply to this gate and cannot suppress a finding.
+
+**Two distinct printed numbers — never conflated.** `TOTAL CLASSIFIED` is every literal `var()`
+reference found across the twelve inputs, in any of the five categories — 94 pairs / 170 uses on the
+tree this gate shipped against, including long-standing project tokens (`--border`, `--foreground`,
+`--primary`, `--muted-foreground`, the Task 767 `--homepage-runtime-font-size-*` family) that were
+never theme-inline debt and are not part of this task's migration. This total is an invariant across
+a value-preserving rename: it does not change when a `theme-inline-only` reference becomes
+`root-owned`. `BLOCKING` is the `theme-inline-only` + `unknown` subset specifically — **42 pairs / 79
+uses** before Task 770's migration (matching the census this task's own kickoff §3.1 re-derived,
+file by file), **0 / 0** after. The gate's exit code depends only on `BLOCKING`; `TOTAL CLASSIFIED`
+is diagnostic context, printed so a reviewer can see the full population a clean run scanned.
+
+**The D65-E expected-zero arm.** `AppImage.module.css` is scanned with the same extractor but is
+never a migration pair or use and can never change either total above. Its required result is
+**zero** live `var(--space-0)` references — Task 768 (D65-D, 2026-08-26) closed its one permitted
+`.imageLayer` `inset` read to a native `0`; this gate is the durable control D65-E (2026-08-26)
+transferred here so that debt cannot silently return. Any live `var(--space-0)` reference in that
+file is a blocking `expected-zero reintroduced` finding naming the exact path, property and line,
+non-zero in both default and `--verify-gate` modes.
+
+**`--verify-gate` — six asserted outcomes**, each inside its own fresh `mkdtempSync` copy of `src/`,
+torn down in `finally`; no plant ever touches the real worktree (verified: `git status --porcelain`
+byte-identical immediately before and after a real run).
+
+1. A `var(--space-2)` reference planted into a copied `.module.css` → exit 1, one `theme-inline-only`
+   row naming that file/line/property (the CSS failure arm).
+2. A migrated TSX token reverted to its pre-migration name (`--home-section-py-base`) → exit 1, one
+   `theme-inline-only` row (the TSX failure arm — a different extractor path from case 1).
+3. One configured migration input deleted from the copy, the hardcoded list itself untouched → exit
+   1, fatal naming the missing repository-relative path.
+4. The copied `AppImage.module.css`'s `.imageLayer` `inset: 0` changed to `inset: var(--space-0)` →
+   exit 1, `expected-zero reintroduced` naming path/property/line (D65-E).
+5. An unmodified copy of the (migrated) tree → exit 0, and **three independent invariants asserted
+   separately**, each able to fail on its own: `FULL_CENSUS` = 94 pairs / 170 uses, `MIGRATED_TARGETS`
+   = 42 pairs / 79 uses with an exact `MIGRATION_SIGNATURE` match, and `BLOCKING` = 0/0 with
+   expected-zero = 0. This is the passing control and the standing assertion that zero blocking is a
+   real passing state, not a parse failure masquerading as one.
+6. One migrated token in a copied `.module.css` replaced by a **different but still valid root-owned**
+   token (`--foreground`) → exit 1, `migration signature mismatch` naming the file, the approved
+   token, the expected use count and the observed one. `BLOCKING` stays 0/0 and the full census is
+   unchanged — the substitute is legitimately root-owned — so **only** the signature can catch this.
+
+**The approved-target signature (owner decision, 2026-08-27).** The owner's recorded decision is that
+`42/79` is the exact migration subset and `94/170` is the full census of the twelve manifest files;
+they measure different populations and neither replaces the other. The gate encodes this as a
+hardcoded `MIGRATION_TARGETS` table of the 42 approved `(file, legacyProperty, expectedToken, uses)`
+tuples plus `MIGRATION_SIGNATURE`, a deterministic sha256 over their sorted canonical form.
+
+The signature deliberately contains **no line numbers**: re-indentation or an unrelated added
+declaration must never invalidate it — only a changed target, token or use count may. Signature
+verification is blocking in **default** mode, not only inside the self-test, because a count alone
+cannot distinguish a correct migration from a wrong-but-syntactically-valid one: two compensating
+substitutions preserve every count and every category. The table is embedded in the script rather
+than shipped as a JSON manifest, because a runtime-read external manifest would have exactly the
+shape of the baseline/allowlist file this task's R9 forbids.
+
+**Manifest-scoped boundary.** A clean run certifies exactly these thirteen files — it makes no claim
+about any other file in the repository, and it is **not** a route certification: the repository has
+no global route-composition CI certification. Per `docs/maintenance-playbook.md` §14.3, route-critical
+changes retain task-scoped real-route evidence. A fourteenth file that starts reading `@theme inline`
+tomorrow is invisible to this gate by design; that is the deliberate cost of a fixed manifest, which
+is why the missing-input arm is fatal rather than silently skipped.
 
 > **This clause is BINDING and OVERRIDES any weaker local wording. Any pattern listed here
 > applied in a task without an approved exception entry is a FAIL — do not approve or commit.**

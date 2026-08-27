@@ -17,8 +17,8 @@
  */
 
 .copyId[data-copy-id] {
-  font-size: var(--text-2xs);
-  color: color-mix(in oklab, var(--color-muted-foreground) 70%, transparent);
+  font-size: var(--homepage-runtime-font-size-2xs); /* Task 770 — was @theme inline --text-2xs (§22.2) */
+  color: color-mix(in oklab, var(--muted-foreground) 70%, transparent); /* Task 770 — was @theme inline --color-muted-foreground alias hop; now points directly at :root --muted-foreground */
   font-family: var(--homepage-runtime-font-family-mono); /* Task 767 — was Tailwind-owned --font-mono */
   display: inline-flex;
   align-items: center;
@@ -31,7 +31,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .copyId[data-copy-id]:hover {
-    color: var(--color-muted-foreground);
+    color: var(--muted-foreground); /* Task 770 — was @theme inline --color-muted-foreground alias hop; now points directly at :root --muted-foreground */
   }
 }
 
@@ -40,12 +40,12 @@
   /* Reproduces Tailwind's focus-visible:ring-1 focus-visible:ring-ring: the full
      --tw-ring-* composition collapses to this single effective box-shadow since no
      ring-offset/inset utility was ever applied (verified in the built CSS). */
-  box-shadow: 0 0 0 1px var(--color-ring); /* design-tokens-allow: box-shadow: 1px — reproduces Tailwind's focus-visible:ring-1 (1px solid ring); no radius or spacing scale token models a ring width */
+  box-shadow: 0 0 0 1px var(--ring); /* Task 770 — was @theme inline --color-ring alias hop; now points directly at :root --ring */ /* design-tokens-allow: box-shadow: 1px — reproduces Tailwind's focus-visible:ring-1 (1px solid ring); no radius or spacing scale token models a ring width */
 }
 
 .copiedIcon {
   flex-shrink: 0;
-  color: var(--color-status-success);
+  color: var(--status-success); /* Task 770 — was @theme inline --color-status-success alias hop; now points directly at :root --status-success */
 }
 
 .notCopiedIcon {

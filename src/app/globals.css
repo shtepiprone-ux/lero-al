@@ -361,6 +361,32 @@
      This is the exact condition Homepage level 2 exists to remove. */
   --homepage-runtime-search-max-width: 48rem;
 
+  /* ── Homepage runtime spacing/rhythm/elevation tokens (Task 770 — Sprint 65 level 3) ──────
+     Project-owned runtime tokens that survive Tailwind's removal. Every value is copied verbatim
+     from the @theme inline declaration named beside it (kickoff §3.2) — none is a restyle.
+     @theme inline keeps its own --space-N, --text-2xs, --home-section-py-N and --shadow-N
+     declarations untouched: it remains the alias layer for legacy Tailwind utilities and for the
+     eighteen non-manifest references measured in kickoff §3.6. */
+  --homepage-runtime-space-0: 0px; /* was @theme inline --space-0 (§22.1) */
+  --homepage-runtime-space-1: 0.25rem; /* was @theme inline --space-1 (§22.1) */
+  --homepage-runtime-space-2: 0.5rem; /* was @theme inline --space-2 (§22.1) */
+  --homepage-runtime-space-2-5: 0.625rem; /* was @theme inline --space-2-5 (§22.1) */
+  --homepage-runtime-space-3: 0.75rem; /* was @theme inline --space-3 (§22.1) */
+  --homepage-runtime-space-5: 1.25rem; /* was @theme inline --space-5 (§22.1) */
+  --homepage-runtime-space-6: 1.5rem; /* was @theme inline --space-6 (§22.1) */
+  --homepage-runtime-space-8: 2rem; /* was @theme inline --space-8 (§22.1) */
+  --homepage-runtime-space-11: 2.75rem; /* was @theme inline --space-11 — 44px touch-target floor (§12a/§22.1) */
+  --homepage-runtime-space-12: 3rem; /* was @theme inline --space-12 (§22.1) */
+  --homepage-runtime-space-14: 3.5rem; /* was @theme inline --space-14 — bottom-nav height (§22.1) */
+  --homepage-runtime-space-16: 4rem; /* was @theme inline --space-16 (§22.1) */
+  --homepage-runtime-space-20: 5rem; /* was @theme inline --space-20 (§22.1) */
+  --homepage-runtime-space-24: 6rem; /* was @theme inline --space-24 (§22.1) */
+  --homepage-runtime-font-size-2xs: 0.625rem; /* was @theme inline --text-2xs (§22.2) */
+  --homepage-runtime-section-py-base: 3rem; /* was @theme inline --home-section-py-base */
+  --homepage-runtime-section-py-md: 4rem; /* was @theme inline --home-section-py-md */
+  --homepage-runtime-section-py-lg: 5rem; /* was @theme inline --home-section-py-lg */
+  --homepage-runtime-listing-card-shadow: 0 8px 24px oklch(0.700 0.162 65 / 0.2); /* was @theme inline --shadow-listing-card-elevation-lg */
+
   /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
   /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
      Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this

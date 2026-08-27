@@ -1,0 +1,5 @@
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 69 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 69 file(s) clean
+exit=0

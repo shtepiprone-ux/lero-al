@@ -1,0 +1,16 @@
+🔬  check:homepage-theme-runtime-deps self-test (--verify-gate) — 5 outcomes asserted (kickoff §10.4)
+
+✅  Case 1 (CSS theme-inline-only plant) — expected exit 1, got exit 1 — reported src/components/shared/HeroSearchView.module.css:71 --space-2 [theme-inline-only]
+❌  Case 2 (TSX theme-inline-only plant) — expected exit 1, got exit 2 — pre-plant census failed — --homepage-runtime-section-py-base not found; migration not applied yet
+✅  Case 3 (missing configured migration input is fatal) — expected exit 1, got exit 1 — fatal names the missing path: missing configured input(s): src/components/layout/HeaderView.module.css
+✅  Case 4 (expected-zero reintroduced, D65-E) — expected exit 1, got exit 1 — reported src/components/ui/AppImage.module.css:143 --space-0
+❌  Case 5 (unmodified copy — passing control) — expected exit 0, got exit 1 — blocking=42/79, expected-zero=0
+
+node.exe : ❌  2/5 verify-gate assertion(s) did not behave as expected.
+At line:2 char:1
++ node.exe scripts/check-homepage-theme-runtime-deps.mjs --verify-gate  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  2/5 verify-g...ve as expected.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+exit=1

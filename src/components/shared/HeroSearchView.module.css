@@ -56,7 +56,7 @@
   .searchCard {
     border-bottom-right-radius: var(--mantine-radius-lg); /* rounded-b-[...] — I1 */
     border-bottom-left-radius: var(--mantine-radius-lg); /* rounded-b-[...] — I1 */
-    padding: var(--space-3); /* p-3 — I1, N1: token reference kept */
+    padding: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1); p-3 — I1, N1: token reference kept */
   }
   @media (min-width: 40rem) {
     .searchCard {
@@ -68,7 +68,7 @@
   .controls {
     display: flex; /* flex — I1 */
     flex-wrap: wrap; /* flex-wrap — I1 */
-    gap: var(--space-2); /* gap-2 — I1, N1: token reference kept */
+    gap: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); gap-2 — I1, N1: token reference kept */
   }
   @media (min-width: 48rem) {
     .controls {
@@ -92,11 +92,11 @@
   .locationControl {
     flex-basis: 100%; /* basis-full — I1 */
     flex-grow: 1; /* grow — I1 */
-    min-width: var(--space-0); /* min-w-0 — I1, N1: token reference kept */
+    min-width: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); min-w-0 — I1, N1: token reference kept */
   }
   @media (min-width: 40rem) {
     .locationControl {
-      flex-basis: var(--space-0); /* sm:basis-0 — I1, N1: token reference kept */
+      flex-basis: var(--homepage-runtime-space-0); /* Task 770 — was @theme inline --space-0 (§22.1); sm:basis-0 — I1, N1: token reference kept */
     }
   }
 
@@ -106,7 +106,7 @@
   .filtersControl {
     flex-shrink: 0; /* shrink-0 — I1 */
     flex-basis: 100%;
-    min-height: var(--space-11);
+    min-height: var(--homepage-runtime-space-11); /* Task 770 — was @theme inline --space-11, 44px touch-target floor (§12a/§22.1) */
   }
   @media (min-width: 40rem) {
     .filtersControl {
@@ -117,7 +117,7 @@
 
   /* Site #8 — Search Button (px-6 font-semibold basis-full sm:basis-full[dropped, see header] md:grow-0 md:basis-auto) */
   .searchControl {
-    padding-inline: var(--space-6); /* px-6 — I1, N1: token reference kept */
+    padding-inline: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); px-6 — I1, N1: token reference kept */
     font-weight: 600; /* font-semibold — I1; the --tw-font-weight bookkeeping var removed (Task 762 Revision 1, D762-1): nothing in this file ever read it via var(), font-weight is already set as a literal here (grep-confirmed repo-wide) */
     flex-basis: 100%; /* basis-full — I1 */
   }

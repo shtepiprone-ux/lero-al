@@ -1,7 +1,7 @@
 # Task 774 — in-calendar month/year option labels wrap mid-token
 
 **Sprint:** 67 · **Priority:** P1 (owner-reported, visible) · **QA profile:** **Q2 Standard UI**
-**State:** `IMPLEMENTED — OWNER NATIVE GATE GREEN, AWAITING OWNER VERDICT` · **Implemented by:** Opus, under the same explicit owner
+**State:** ✅ **APPROVED (owner, 2026-08-27) — CLOSED AND ARCHIVED** · **Implemented by:** Opus, under the same explicit owner
 authorization recorded in the Sprint 67 plan. Opus does not approve its own implementation.
 
 **Depends on:** Task 773. This defect was always present; 773 is what made it *visible*, because before 773 the

@@ -7,12 +7,11 @@
 
 ## Last Session (2026-08-27)
 
-Tasks 773 + 774 (date-range calendar closed on month/year pick; those same labels then wrapped mid-token) are
-implemented under the explicit owner authorization for Opus to write the code, and the **owner native gate is
-green — `build` exit 0, `lint` 0 errors, i18n 2218×4, mojibake 0/3409** — plus a route-level visual pass in the
-real drawer. **Verdict is the owner's; Opus does not approve its own implementation.** The durable finding:
-neither defect was assertable in RTL (`env="test"` inlines portals; jsdom has no layout engine), so a Vite +
-Playwright harness was built — it caught 774 and produced 773's real-browser proof.
+Tasks 773 + 774 are ✅ APPROVED by the owner, committed and archived; **Sprint 67 is closed as delivered**, all
+four exit criteria met the day it opened. The durable output is not the 5 changed lines but
+`mantine-responsive-design-system.md` **§18.10**: a floating layer nested inside a `Popover`/`Menu` must pass
+`withinPortal={false}`, drawers are NOT affected (overlay-click dismiss), and **neither defect is assertable in
+RTL** — `env="test"` inlines portals, and jsdom has no layout engine at all.
 
 ## Open — needs action
 
@@ -27,7 +26,6 @@ Playwright harness was built — it caught 774 and produced 773's real-browser p
 |---|---|
 | 👁️ **Notification localization — one production QA pass.** ① Confirm `template_id` and `template_params` exist in Supabase. ② Open one template-driven notification under `/sq`, then the same notification under `/uk`. ③ Confirm the **same** notification localizes in **both** locales. | **PASS → archive this item.** **FAIL → file one P1 bug**, nothing else; no speculative task before a measured FAIL. Supersedes the old open-ended "eyeball `/sq`" item (owner decision 2026-08-27). |
 | 🐞 **`/listings` mobile overflow — P1, filed as Task 772** (`tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`). Scope is **`ListingsSortBar` mobile layout only**; no unrelated de-Tailwind or component migration. | Owner action: dispatch 772 to an executor. Proof it must return: real `/listings` at **320 · 375 · 390 × sq/en/uk/it**, `documentElement.scrollWidth <= clientWidth + 2`, filters and sort still usable, controls ≥ **44px** touch targets. |
-| ✅ **Tasks 773 + 774 — evidence complete, verdict outstanding.** Native gate green (`build` exit 0, `lint` 0 errors, i18n 2218×4, mojibake 0/3409) + route-level visual pass in the real drawer. | Owner action: **record APPROVED / APPROVED WITH NOTES and archive both**, or reject. Opus cannot approve code it wrote. Note: 774 is committed separately from 773 — see the handoff. Noted in passing, unrelated: `npm ci` fails on pre-existing lockfile drift (`Missing: webpack@5.110.0`). |
 | 🖋️ **Task 313 (Verified Agents) — sign the schema contract to authorize execution.** The contract is recorded verbatim at `tasks/Epics/Epic_HH_Admin_UX_System.md` → "Task 313 — owner schema contract": `verification_state`; immutable `user_verification_events`; a DB transaction that validates allowed state transitions **and** writes the audit event; public output exposes **only** `is_verified`; admin-only by default, moderator explicitly denied until separately granted. | Owner signs the contract → 313 becomes executable. Until signed, no kickoff and no implementation. |
 
 ## Sprints
@@ -41,7 +39,6 @@ Playwright harness was built — it caught 774 and produced 773's real-browser p
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
-**Sprint 67 — Nested floating layers, and the gate that cannot see them** (`tasks/Sprints/Sprint_67_Nested_Floating_Layers.md`): **773** + **774**, both P1, both `GATE GREEN — AWAITING OWNER VERDICT`. Opened 2026-08-27 — no open sprint fits (goal-fit table in the plan file); 55 is closest in spirit but its subject is ARIA. Its transferable output is the finding, not the 3-line fix: **under `MantineProvider env="test"` Mantine inlines every portal, so the entire RTL layer is structurally blind to portal-nesting defects in ALL Mantine overlays** — and without `env="test"` jsdom’s 0×0 rects disable click-outside instead. 774 is the same surface one layer along — labels wrapped mid-token because jsdom has **no layout engine**, so that defect is unassertable in RTL too. **All four exit criteria are MET.** 1 = real-browser proof (12/12) + route pass. 2 = the blind spot is recorded as `mantine-responsive-design-system.md` **§18.10**. 3 = a Vite+Playwright harness, built and used. 4 = all 10 nesting sites swept — and it **corrected its own premise**: drawers are NOT vulnerable (`Drawer`/`Modal` dismiss on an overlay click, not a document mousedown), only `Popover`/`Menu` are, so `RangeDatePicker` was the sole affected site. Audit: `docs/sessions/evidence/task774/nested-overlay-audit.md`. Sprint closes on the owner verdict for 773/774.
 
 ## Task registry — single source for every open number. Last used **774**, NEXT FREE **775**.
 

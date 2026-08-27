@@ -1,7 +1,7 @@
 # Task 773 — `RangeDatePicker`'s in-calendar month/year selectors dismiss the calendar
 
 **Sprint:** 67 · **Priority:** P1 (owner-reported user-facing defect) · **QA profile:** **Q4 Release/Critical Flow**
-**State:** `IMPLEMENTED — OWNER NATIVE GATE GREEN, AWAITING OWNER VERDICT` · **Implemented by:** Opus, under the explicit owner
+**State:** ✅ **APPROVED (owner, 2026-08-27) — CLOSED AND ARCHIVED** · **Implemented by:** Opus, under the explicit owner
 authorization recorded in the Sprint 67 plan (`docs/orchestrator-role.md` → Role exception). Opus holds no approval
 authority over its own implementation; the verdict is the owner's.
 

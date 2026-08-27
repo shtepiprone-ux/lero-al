@@ -1,6 +1,8 @@
 # Sprint 67 — Nested floating layers, and the gate that cannot see them
 
-**Opened:** 2026-08-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (**773** · **774**)
+**Opened:** 2026-08-27 · **Closed:** 2026-08-27 · **Status:** ✅ **CLOSED — DELIVERED** · **Landed tasks:** 2 (**773** · **774**, both owner-APPROVED)
+
+> Archived in `docs/backlog-archive.md`. All four exit criteria met. Opened and closed the same day — the > scope was two small fixes; the sprint existed to make sure the *reason no gate saw them* was written down, > and it is: `docs/mantine-responsive-design-system.md` §18.10.
 
 > **Opened by owner instruction, 2026-08-27** — *"Якщо ця задача потребує мінімального коду - зроби це сам."*
 > That instruction is the explicit owner authorization required by `docs/orchestrator-role.md` → Role
@@ -46,8 +48,8 @@ claim jsdom can make. Naming the detector that would catch the *behavior* is thi
 
 | # | Title | State |
 |---|---|---|
-| **773** | `RangeDatePicker` in-calendar month/year selectors dismiss the calendar | **GATE GREEN — AWAITING OWNER VERDICT** |
-| **774** | Those same selectors render their labels wrapped mid-token (`202`/`6`) — pre-existing, surfaced by 773 | **GATE GREEN — AWAITING OWNER VERDICT** |
+| **773** | `RangeDatePicker` in-calendar month/year selectors dismiss the calendar | ✅ **APPROVED** (owner, 2026-08-27) · `bd5181919` |
+| **774** | Those same selectors render their labels wrapped mid-token (`202`/`6`) — pre-existing, surfaced by 773 | ✅ **APPROVED** (owner, 2026-08-27) · `36bee3bd2` |
 
 ## Exit criteria
 

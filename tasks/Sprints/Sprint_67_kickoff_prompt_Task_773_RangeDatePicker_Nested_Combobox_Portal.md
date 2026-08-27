@@ -108,7 +108,7 @@ Component-level Chromium proof (12/12 cells, real mouse press, 4 locales × 3 wi
 Every acceptance criterion now has evidence. **Opus does not convert that into an approval — the verdict is the
 owner's** (`docs/orchestrator-role.md`: no self-approval of an implementation Opus wrote).
 
-<details><summary>Original residual list, kept for the record</summary>
+<details><summary>Pre-gate residual list — and the jsdom-limitation reasoning, which still stands and is the reason §18.10 exists</summary>
 
 ```
 npm run typecheck

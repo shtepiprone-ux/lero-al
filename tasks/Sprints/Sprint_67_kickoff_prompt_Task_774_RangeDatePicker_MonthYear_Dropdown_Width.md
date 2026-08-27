@@ -103,7 +103,7 @@ each on **one line**, check mark on the selected 2026, no mid-token break. **AC2
 
 All four acceptance criteria now carry evidence; the verdict is the owner's, not Opus's.
 
-<details><summary>Original residual list, kept for the record</summary>
+<details><summary>Pre-gate residual list, kept for the record</summary>
 
 ```
 npm run typecheck ; npm run lint ; npm run check:i18n ; npm run check:mojibake ; npm run build

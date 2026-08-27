@@ -52,8 +52,11 @@ claim jsdom can make. Naming the detector that would catch the *behavior* is thi
 ## Exit criteria
 
 1. ~~773's fix is verified in a **real browser**, not only by DOM containment.~~ **MET (774's session, 2026-08-27):** Playwright/Chromium against the real component, real mouse press — **12/12 cells, 0 failures** across `sq/en/uk/it` × `641/1024/1440`, month and year. Transcript: `docs/sessions/evidence/task774/browser-proof-773-calendar-stays-open.txt`. **The route pass is now done too** — owner screenshot, uk, inside the real Advanced-filters drawer: the year list opens over the calendar and the calendar is not dismissed. Criterion fully met, component AND route.
-2. The blind spot above is recorded where the next person writing a Mantine overlay test will read it —
-   `docs/mantine-responsive-design-system.md`, alongside the Task 553/554 "a green matrix is NOT proof" entry.
+2. ~~The blind spot above is recorded where the next person writing a Mantine overlay test will read it.~~
+   **MET (2026-08-27):** `docs/mantine-responsive-design-system.md` **§18.10**, immediately after the Task 553/554
+   §18.9 entry. It carries the source-level mechanism table, the vulnerable-vs-safe outer-layer split, the
+   `widest label + 93` width budget, the two *different* reasons RTL cannot assert either defect, and the
+   real-browser verification duty including the Windows-scrollbar fidelity note.
 3. Either name the detector that would have caught the user-visible behavior, or record in writing why none is worth
    building. **The candidate is now a working artifact, not a proposal:** 774's session built a Vite + Playwright
    harness that mounts the real `RangeDatePicker` under the real theme and CSS and measures it in Chromium — it
@@ -61,6 +64,14 @@ claim jsdom can make. Naming the detector that would catch the *behavior* is thi
    pattern) is an owner call, because it adds a Vite entry point the repo does not otherwise have. **It answers
    BOTH failure modes this sprint found:** portal nesting (invisible to jsdom because `env="test"` inlines
    portals) and layout wrapping (invisible to jsdom because there is no layout engine at all).
-4. Audit the other `MantineCombobox` / `MantineSelect` / `MantineDropdownMenu` render sites for the same nesting —
-   any combobox inside a popover, drawer or menu has the same latent defect. **Not yet done; 773 was bounded to the
-   owner-reported surface and deliberately did not sweep.**
+4. ~~Audit the other render sites for the same nesting.~~ **MET (2026-08-27) — and it corrected this criterion's
+   own premise.** The criterion assumed "a combobox inside a popover, drawer or menu has the same latent defect."
+   **Drawers do not**: `Drawer`/`Modal` dismiss on a click on the **overlay element itself**
+   (`ModalBaseOverlay.mjs:27-29`), so a portalled child — never being the overlay — cannot dismiss them. Only
+   `Popover`- and `Menu`-based layers are vulnerable, and `Menu` only because it wraps `Popover`. With that split,
+   the sweep is decisive: **`RangeDatePicker` was the only affected site in the repo.** All 10 nesting sites
+   enumerated and judged in `docs/sessions/evidence/task774/nested-overlay-audit.md`.
+
+**Sprint 67 exit criteria are all met.** Remaining is the owner's verdict on 773/774 and, if wanted, the one
+follow-up the audit names: a static "nested floating layer without `withinPortal={false}`" governance detector,
+which would turn this point-in-time sweep into a gate. Not filed as a task — owner's call.

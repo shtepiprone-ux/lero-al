@@ -899,6 +899,43 @@ See `docs/sessions/2026-07-02-task522-bottom-sheet-content-height-fix.md` for th
 
 Ideally the gate gains a mechanical icon-overlap/placeholder assertion (candidate follow-up), but until it does, **rule 3 + rule 4 (human visual verification) are mandatory and are the verdict** — the geometry gate is not.
 
+### §18.10 — 🔴 IRON RULE: a floating layer nested inside another floating layer MUST NOT portal — and no RTL test can see it (Sprint 67 / Tasks 773 + 774, owner-reported 2026-08-27)
+
+**What happened.** The date-range calendar (`MantinePopover`) hosts month/year `MantineCombobox` selectors. Picking a month **closed the entire calendar**. Then, once the list stayed on screen, every year option rendered broken across two lines — `202` / `6`. **20 passing tests across three suites saw neither defect**, and not because they forgot to click the dropdown. They *cannot* see it. That is the part worth remembering.
+
+**Mechanism — read out of the Mantine source, not inferred:**
+
+| # | Fact | Where |
+|---|---|---|
+| 1 | `Popover` dismisses via `useClickOutside(cb, ['mousedown','touchstart'], [targetNode, dropdownNode])` | `Popover.mjs:159` |
+| 2 | That hook fires when `event.composedPath()` contains **neither** node | `use-click-outside.mjs` |
+| 3 | `Combobox` defaults `withinPortal: true` | `Combobox.mjs:41` |
+| 4 | A portalled list mounts in the shared `[data-mantine-shared-portal-node]` as a **sibling** of the outer dropdown — never a descendant | measured |
+| 5 | `ComboboxOption` calls `preventDefault()` on `mousedown` but **never** `stopPropagation()`, so the press does reach the document listener | `ComboboxOption.mjs:61-63` |
+
+Pressing an option therefore satisfies (2) exactly, and the outer layer tears itself down **before** the option is submitted.
+
+**Which outer layers are affected — the distinction that decides everything:**
+
+| Outer layer | Dismiss mechanism | Vulnerable? |
+|---|---|---|
+| `Popover` / `MantinePopover` | document `mousedown` + `composedPath` containment | **YES** |
+| `Menu` / `MantineDropdownMenu` | built on `Popover` — same hook | **YES** |
+| `Combobox` dropdown | `Popover.Dropdown` — same hook | **YES** |
+| `Drawer` / `Modal` / `ResponsiveBottomSheet` | `onClick` **on the overlay element itself** (`ModalBaseOverlay.mjs:27-29`) | **No** — a portalled child is never the overlay, so pressing it cannot dismiss the drawer |
+
+**The rule (non-negotiable):**
+
+1. **Any floating child rendered inside a `Popover`- or `Menu`-based layer MUST pass `withinPortal={false}`.** `MantineCombobox` exposes it (Task 773); Mantine's own `Select`/`Menu`/`Combobox` take it directly. Portalling stays the right default *everywhere else* — it is what stops clipping inside `overflow:hidden` scroll containers — so this is an opt-**out** at the nesting site, never a change of default.
+2. **Then check the width.** `withinPortal={false}` fixes dismissal and changes nothing about size: a nested list still inherits its **trigger's** width (`Combobox` default `width: "target"`), and **93px** of that is fixed chrome before a glyph is drawn — 24 dropdown padding + 24 option padding + 2 border + 12 `Group gap="sm"` + 14 CheckIcon *on the selected row* + ~17 classic scrollbar once `Combobox.Options mah={220}` overflows. **Budget: `min width = widest label + 93`**, and if the trigger is narrower, pass `dropdownMinWidth` (Task 556's prop). Under budget the label wraps mid-token. Measure the widest label in **all four locales** — `uk` is usually widest.
+3. **Do NOT write an RTL test for either and call it covered.** Both defects are unassertable in vitest, for two *different* reasons:
+   - **Dismissal:** every suite renders under `MantineProvider env="test"`, and `OptionalPortal` short-circuits on exactly that value (`env === "test" || !withinPortal` → children inline). Under `env="test"` **`withinPortal` is a no-op** and the defect cannot be represented. Drop `env="test"` and the portals become real, but jsdom's `0×0` rects make the popover's `hideDetached` mark the reference hidden and click-outside stops firing at all. Unobservable from both directions. *A regression test written for this passed on the broken tree — that is how the blind spot was found.*
+   - **Width:** jsdom has **no layout engine**; `getBoundingClientRect` returns zeroes. Nothing can distinguish a wrapped label from a fitting one.
+   The most an RTL test can honestly assert here is **DOM containment** — that the option node is a descendant of the outer dropdown, i.e. the exact predicate `composedPath().includes(dropdownNode)` evaluates. That test exists (`filtersRangeDatePicker.smoke.test.tsx`) and it *does* discriminate. It is not a behavior test and must not be described as one.
+4. **Verification is a real browser or it did not happen.** Both fixes were proven with a Vite + Playwright harness that mounts the real component under the real theme and CSS and measures it in Chromium: 12/12 cells for dismissal, 24/24 for width, across `sq/en/uk/it` × `641/1024/1440`. Transcripts: `docs/sessions/evidence/task774/`. **Windows fidelity matters** — headless Linux paints 0-width overlay scrollbars, Windows Chrome a classic ~17px one, and that 17px was exactly what tipped every row over. Emulate it or you will measure a defect that is not there and miss one that is.
+
+**Audit already performed — do not redo it, extend it.** Every nesting site in the repo was enumerated on 2026-08-27 (Sprint 67 exit criterion 4). `RangeDatePicker` was the **only** instance. `NotificationBellView`'s popover hosts `NotificationCenter`, which renders no floating child; `UserMenu`/`LocaleSwitcher` pass plain `items` defs; every other combobox (`AuthSheet`, `FiltersPanel`, `MobileNavDrawer`, `PhoneField`, `LocationCombobox`, `YearCombobox`, `PropertyTypeCombobox`) sits inside a **Drawer**, which the table above shows is safe; and the legacy Radix dialogs in `ProfileTab`/`ListingFormShellView`/`AdminUserProfile` are *siblings* of their comboboxes, not ancestors. Full record: `docs/sessions/evidence/task774/nested-overlay-audit.md`. **The next composition that nests a floating layer inside a `Popover` or `Menu` is the one this rule exists for — apply points 1 + 2 at the point of writing it, not after a bug report.**
+
 ---
 
 ## §19 — Canonical responsive Select: `MantineSelect` (Tasks 509 + 510)

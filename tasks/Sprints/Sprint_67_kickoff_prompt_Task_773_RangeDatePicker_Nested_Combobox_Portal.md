@@ -1,7 +1,7 @@
 # Task 773 — `RangeDatePicker`'s in-calendar month/year selectors dismiss the calendar
 
 **Sprint:** 67 · **Priority:** P1 (owner-reported user-facing defect) · **QA profile:** **Q4 Release/Critical Flow**
-**State:** `IMPLEMENTED — AWAITING OWNER NATIVE GATE` · **Implemented by:** Opus, under the explicit owner
+**State:** `IMPLEMENTED — OWNER NATIVE GATE GREEN, AWAITING OWNER VERDICT` · **Implemented by:** Opus, under the explicit owner
 authorization recorded in the Sprint 67 plan (`docs/orchestrator-role.md` → Role exception). Opus holds no approval
 authority over its own implementation; the verdict is the owner's.
 
@@ -94,7 +94,21 @@ environment limitation, not a skipped gate).
 | `RangeDatePicker.smoke` · `RangeDatePickerLocalization` · `MantineCombobox.smoke` · `MantinePopover.smoke` · `filtersRangeDatePicker.smoke` · `filtersPanelShell.smoke` · `heroSearch.smoke` | **7 files / 64 tests passed** |
 | **Before/after proof** on the new test | **unfixed sources → FAIL** (`expected false to be true` at the containment assertion) → **fixed sources → PASS**. This is the planted-violation transcript Q4 requires: the violation is the absent `withinPortal={false}`, and it was run in that exact order. |
 
-### Residual evidence the owner must produce natively
+### Residual evidence — PRODUCED by the owner, 2026-08-27, all green
+
+`typecheck` 0 · `lint` **0 errors** (69 pre-existing warnings, none from this diff) · `check:i18n` PASS 2218×4 ·
+`check:mojibake` 0/3409 · **`npm run build` EXIT 0**, 40/40 static pages — clause 9 satisfied.
+
+**AC1/AC2 met on the ROUTE**, owner screenshot (uk, real Advanced-filters drawer): the year list opens over the
+calendar and the calendar is **not** dismissed. **AC3 met** — list not clipped, not mispositioned.
+Component-level Chromium proof (12/12 cells, real mouse press, 4 locales × 3 widths):
+`docs/sessions/evidence/task774/browser-proof-773-calendar-stays-open.txt`. Gate transcript:
+`docs/sessions/evidence/task774/owner-native-gates.txt`.
+
+Every acceptance criterion now has evidence. **Opus does not convert that into an approval — the verdict is the
+owner's** (`docs/orchestrator-role.md`: no self-approval of an implementation Opus wrote).
+
+<details><summary>Original residual list, kept for the record</summary>
 
 ```
 npm run typecheck
@@ -115,3 +129,5 @@ every jsdom rect is `0×0`, `hideDetached` marks the reference hidden, and click
 symptom is unobservable in jsdom from **both** directions. The new test therefore asserts the exact predicate
 `composedPath().includes(dropdownNode)` evaluates — DOM containment — which is the strongest available claim, and it
 does discriminate (it fails on the unfixed tree). Full reasoning is in the test's own header comment.
+
+</details>

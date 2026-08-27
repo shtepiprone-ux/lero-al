@@ -1,7 +1,7 @@
 # Task 774 — in-calendar month/year option labels wrap mid-token
 
 **Sprint:** 67 · **Priority:** P1 (owner-reported, visible) · **QA profile:** **Q2 Standard UI**
-**State:** `IMPLEMENTED — AWAITING OWNER NATIVE GATE` · **Implemented by:** Opus, under the same explicit owner
+**State:** `IMPLEMENTED — OWNER NATIVE GATE GREEN, AWAITING OWNER VERDICT` · **Implemented by:** Opus, under the same explicit owner
 authorization recorded in the Sprint 67 plan. Opus does not approve its own implementation.
 
 **Depends on:** Task 773. This defect was always present; 773 is what made it *visible*, because before 773 the
@@ -93,7 +93,17 @@ Transcripts: `docs/sessions/evidence/task774/`.
 zeroes — so no vitest assertion can distinguish a wrapped label from a fitting one. Writing one would be theatre.
 The detector for this class is a real-browser probe; see Sprint 67 exit criterion 3.
 
-### Residual evidence the owner must produce natively
+### Residual evidence — PRODUCED by the owner, 2026-08-27, all green
+
+`typecheck` 0 · `lint` **0 errors** · `check:i18n` PASS 2218×4 · `check:mojibake` 0/3409 ·
+**`npm run build` EXIT 0**. Transcript + lint attribution: `docs/sessions/evidence/task774/owner-native-gates.txt`.
+
+**AC1 met on the ROUTE**, owner screenshot (uk — the widest-label locale, real drawer): 2022/2023/2024/2025/2026
+each on **one line**, check mark on the selected 2026, no mid-token break. **AC2 met** — list fully on screen.
+
+All four acceptance criteria now carry evidence; the verdict is the owner's, not Opus's.
+
+<details><summary>Original residual list, kept for the record</summary>
 
 ```
 npm run typecheck ; npm run lint ; npm run check:i18n ; npm run check:mojibake ; npm run build
@@ -101,3 +111,5 @@ npm run typecheck ; npm run lint ; npm run check:i18n ; npm run check:mojibake ;
 
 Plus the visual pass in a real browser at `uk` (widest labels) and one desktop width: open the calendar, open
 **Month**, then **Year** — no label broken across two lines, list not clipped.
+
+</details>

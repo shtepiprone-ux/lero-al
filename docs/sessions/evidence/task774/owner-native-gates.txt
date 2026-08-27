@@ -1,0 +1,33 @@
+OWNER-NATIVE GATE — Tasks 773 + 774 together
+Run by the owner on Windows, 2026-08-27, PowerShell, against the real dependency tree.
+This is the run that agent-contract clause 9 requires and that could NOT be reproduced
+off-device (the repo's node_modules is a Windows install; the lockfile is also drifted).
+
+npm run typecheck   -> tsc --noEmit, NO OUTPUT = 0 errors
+npm run lint        -> 69 problems, 0 ERRORS, 69 warnings
+npm run check:i18n  -> PASS. sq/en/uk/it all 2218 keys, identical key sets.
+                       Raw-enum leak scan: no suspicious patterns in .tsx.
+npm run check:mojibake -> 0 artifacts in 3409 files
+npm run build       -> next build 15.5.18
+                       Compiled successfully in 57s
+                       Checking validity of types  OK
+                       Generating static pages (40/40)
+                       EXIT 0
+
+LINT ATTRIBUTION — all 69 warnings are pre-existing; 773/774 introduced none.
+The only warning in a file these tasks touched is:
+  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+    31:47  'beforeEach' is defined but never used
+It sits on the `vitest` import (line 31). Task 773's diff touched line 32 (the
+`@testing-library/react` import, to add `waitFor`) and appended a block at EOF; it never
+touched line 31. `beforeEach` occurs exactly once in the file — in that import — so it was
+unused before these tasks and remains so. Left alone deliberately: removing it is an
+unrelated cleanup and P0 invariant 1 forbids drive-by edits. Trivially fixable whenever the
+owner wants it gone.
+
+ROUTE-LEVEL VISUAL PASS — owner screenshot, 2026-08-27, uk locale, real Advanced-filters drawer:
+  * calendar open inside the drawer, anchored January 2026 / right pane «Лютий 2026 р.»
+  * year list open ON TOP of the calendar, calendar NOT dismissed  -> Task 773 confirmed on the route
+  * options 2022 / 2023 / 2024 / 2025 / 2026 each on ONE line, check mark on the selected 2026,
+    no mid-token break  -> Task 774 confirmed on the route
+This is the piece the component-level Chromium harness could not supply.

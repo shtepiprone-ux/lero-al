@@ -46,12 +46,12 @@ claim jsdom can make. Naming the detector that would catch the *behavior* is thi
 
 | # | Title | State |
 |---|---|---|
-| **773** | `RangeDatePicker` in-calendar month/year selectors dismiss the calendar | **IMPLEMENTED — AWAITING OWNER NATIVE GATE** |
-| **774** | Those same selectors render their labels wrapped mid-token (`202`/`6`) — pre-existing, surfaced by 773 | **IMPLEMENTED — AWAITING OWNER NATIVE GATE** |
+| **773** | `RangeDatePicker` in-calendar month/year selectors dismiss the calendar | **GATE GREEN — AWAITING OWNER VERDICT** |
+| **774** | Those same selectors render their labels wrapped mid-token (`202`/`6`) — pre-existing, surfaced by 773 | **GATE GREEN — AWAITING OWNER VERDICT** |
 
 ## Exit criteria
 
-1. ~~773's fix is verified in a **real browser**, not only by DOM containment.~~ **MET (774's session, 2026-08-27):** Playwright/Chromium against the real component, real mouse press — **12/12 cells, 0 failures** across `sq/en/uk/it` × `641/1024/1440`, month and year. Transcript: `docs/sessions/evidence/task774/browser-proof-773-calendar-stays-open.txt`. Residual: the harness renders the COMPONENT, not the route inside the drawer — one owner route pass still outstanding.
+1. ~~773's fix is verified in a **real browser**, not only by DOM containment.~~ **MET (774's session, 2026-08-27):** Playwright/Chromium against the real component, real mouse press — **12/12 cells, 0 failures** across `sq/en/uk/it` × `641/1024/1440`, month and year. Transcript: `docs/sessions/evidence/task774/browser-proof-773-calendar-stays-open.txt`. **The route pass is now done too** — owner screenshot, uk, inside the real Advanced-filters drawer: the year list opens over the calendar and the calendar is not dismissed. Criterion fully met, component AND route.
 2. The blind spot above is recorded where the next person writing a Mantine overlay test will read it —
    `docs/mantine-responsive-design-system.md`, alongside the Task 553/554 "a green matrix is NOT proof" entry.
 3. Either name the detector that would have caught the user-visible behavior, or record in writing why none is worth

@@ -50,8 +50,8 @@ detector question must be answered explicitly rather than left implied.
 
 | # | Scope |
 |---|---|
-| **730** | `aria-pressed` on both chip-row leaves, threaded from the same `selected` state that already drives `variant`; correct `storybook-governance.md` §14.9.28's "announce as named groups", which overstates what 726 shipped |
-| **731** | The 5 admin sites above; a repo-wide census of `aria-label` on role-less elements, so the count is measured rather than assumed |
+| **730** (folds **731**) | `aria-pressed` on both chip-row leaves, threaded from the same `selected` state that already drives `variant`; correct `storybook-governance.md` §14.9.28's "announce as named groups", which overstates what 726 shipped |
+| ~~**731**~~ | 🔒 **FOLDED INTO 730 on 2026-08-08** — see "Execution order" below: one kickoff, not two. **Never issue this number to an executor**; `docs/backlog.md` and `docs/backlog-reserved.md` both record it as folded. Its scope is 730's second half and is delivered there: the 5 admin sites above; a repo-wide census of `aria-label` on role-less elements, so the count is measured rather than assumed. *(Table reconciled 2026-08-27 by the backlog row-by-row audit — this table is the single state source, and it disagreed with both the fold decision recorded below it and the backlog registry.)* |
 
 ## Exit criteria
 

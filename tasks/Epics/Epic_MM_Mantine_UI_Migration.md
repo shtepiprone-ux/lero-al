@@ -1,5 +1,10 @@
 # Epic MM — Mantine UI Migration (execute Task 482 roadmap Phases 2–6)
 
+> 🗄️ **HISTORICAL as of 2026-08-27 (owner decision). DO NOT REFRESH.**
+> Untouched since 2026-06-25; its highest task number is 484 while the registry has since issued far beyond it.
+> **Live work → `docs/backlog.md`. File-level migration reference → `docs/mantine-responsive-design-system.md`.**
+> Retained as the record of the phased migration decision, not as a plan anyone should execute from.
+
 > **Owner decision 2026-06-24:** migrate the ENTIRE project from the legacy Tailwind/Base-UI UI layer to
 > Mantine, **phased, surface-by-surface** (owner chose phased over big-bang). Remove legacy Tailwind stories
 > **as each surface is migrated** — not before. Foundation = Task 482 (✅ committed). This Epic executes

@@ -1,6 +1,14 @@
 # Sprint 59 — Route-level inventory before any migration claim
 
-**Opened:** 2026-08-16 · **Revision 6** · **Status:** 🟠 **OPEN** · **Landed tasks:** 0
+**Opened:** 2026-08-16 · **Revision 6** · **Status:** 🗄️ **CLOSED — MECHANISM REJECTED** (owner, 2026-08-27) · **Landed tasks:** 0
+
+> 🗄️ **CLOSED 2026-08-27 (owner). Task 667 is RETIRED — never assign it to an executor, never reuse the number.**
+> 751 measured the DOM→component mapping mechanism as FAIL and the owner rejected the direction, so 667 depended on
+> evidence that will never be produced. It is retired rather than re-scoped.
+> **Accepted as a known limitation (owner):** no CI gate asserts the Mantine composition of a route, and **none will be
+> built on an unsupported React DOM→component mapping** — `docs/maintenance-playbook.md` §14.3.
+> **Replacement control:** route-critical changes carry **task-scoped route evidence**, never a permanent global CI claim.
+> Everything below is retained as the decision and measurement record. Ledger row: `docs/backlog-archive.md`, 2026-08-27.
 
 > **Opened by owner decision D-J, 2026-08-16** — *"open Sprint 59 and file separate Task 751 for F1; Task 667
 > remains `BLOCKED/reserved` until F1."* This file and `docs/backlog.md`'s Sprints section were changed in the

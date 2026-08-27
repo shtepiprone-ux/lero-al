@@ -273,7 +273,25 @@ Approved direction:
 - `users.verification_state` enum: `not_verified` / `pending_review` / `verified` / `rejected` / `revoked`
 - `user_verification_events` audit table: `id, user_id, prior_state, new_state, reason, actor_id, created_at`
 
-**Task 313 implementation kickoff is NOT yet written.** Reason: schema spec belongs to a dedicated Phase 1 / Phase 6 design document that owner must separately approve. This file records the approved DIRECTION only — the schema migration, RLS policies, and action-flow specifics are designed in a future Phase 6 spec task, then implemented in Task 313+.
+### Task 313 — owner schema contract (recorded 2026-08-27)
+
+> **Owner decision 2026-08-27: Task 313 is approved to START, but ONLY under this schema contract.** The contract is
+> recorded here verbatim so a kickoff can be written against it. **It is not yet signed** — until the owner signs it,
+> no kickoff and no implementation. The backlog carries the signature as a Pending Action Item.
+
+| # | Contract clause | Non-negotiable meaning |
+|---|---|---|
+| C1 | `verification_state` | The single state field. No parallel boolean, no derived duplicate column. |
+| C2 | Immutable `user_verification_events` | Append-only audit table. No update path, no delete path — a correction is a new event. |
+| C3 | DB transaction validates transitions **and** writes the audit event | One transaction does both. A state change that did not write its event must not commit; validation lives in the database, not only in application code. |
+| C4 | Public output exposes **only** `is_verified` | No state value, no reason, no actor, no timestamps reach a public consumer. The public surface is one boolean. |
+| C5 | Admin-only by default; moderator **explicitly denied** | Moderator access is denied until separately granted by the owner. Default-deny, not default-allow. |
+
+**Kickoff preconditions, once signed:** the kickoff must name the RLS policies that enforce C4 and C5, require a
+planted illegal-transition proof for C3 (the transaction rejects it and no event row is written), and treat this as a
+`Q4` write-path/RLS task under `docs/qa-profiles.md`.
+
+**Task 313 implementation kickoff is NOT yet written.** Reason: the schema contract above must be signed by the owner first (recorded 2026-08-27, unsigned as of that date). This file records the approved DIRECTION only — the schema migration, RLS policies, and action-flow specifics are designed in a future Phase 6 spec task, then implemented in Task 313+.
 
 ### Decision 7 — Verified Agents public badge
 

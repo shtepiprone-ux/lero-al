@@ -305,7 +305,7 @@ of the codebase. The agent CANNOT modify these; the owner is the source of truth
 | Secure email change | ON | Confirmation required on both old and new addresses — blocks "session hijack → email change → account takeover" path. |
 | Secure password change | OFF (interim) | Frontend does NOT yet have a re-auth field on the cabinet password-change form. Risk: stolen session can change password without proof of identity. **Re-enable AFTER reauth-form task lands.** |
 | Require current password when updating | OFF (interim) | Same as above — frontend has no "current password" field. Enable together with "Secure password change". |
-| Prevent use of leaked passwords (HIBP) | OFF | Owner-flagged as Pro-only on current Free account. Re-verify in dashboard at next visit: if a Free-tier toggle is available, enable now; otherwise enable at Pro upgrade. |
+| Prevent use of leaked passwords (HIBP) | OFF — **DEFERRED (owner, 2026-08-27)** | **Closed until the Supabase organization moves to Pro.** Pro-only on the current Free account. **No code work and no custom HIBP workaround** — the advisor `auth_leaked_password_protection` WARN is accepted for the duration. Re-open only at the Pro upgrade, then flip the dashboard toggle and update this row. |
 | Minimum password length | 8 | Bare minimum. NIST 800-63B recommends ≥12 as modern best practice; 8 is acceptable for mainstream-marketplace UX. |
 | Password requirements | **Lowercase + uppercase + digits + symbols (Supabase "recommended")** | Strongest character-class option. UX implication: signup / password-reset / cabinet password-change forms MUST show an inline hint listing the rules — otherwise users hit an opaque server-side reject. Implemented by Task 271 (see below). |
 | Email OTP expiration | 3600 s (1 h) | Upper edge of the safe range Supabase Security Advisor accepts. Combined with 8-digit OTP (10⁸ search space) brute force is impractical. Consider tightening to 600 s if UX allows. |
@@ -319,7 +319,7 @@ of the codebase. The agent CANNOT modify these; the owner is the source of truth
 | **Task 271 — Password requirements hint UI** (Sprint 16) | Filed | none — purely UI |
 | **Cabinet reauth form for password change** (Sprint 16 candidate, not yet filed) | Pending | "Secure password change" + "Require current password when updating" |
 | **Task 274 — Captcha protection on signup + password-reset endpoints** (Sprint 16) | ✅ Shipped 2026-05-28; dashboard toggle flipped ON 2026-05-29 — `@marsidev/react-turnstile` widget + `verifyTurnstile` server-side + `signUpWithCaptcha` + `requestPasswordResetWithCaptcha`; env vars: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` (see `docs/env.md`) | ~~"Captcha protection"~~ — **resolved** |
-| **Re-verify HIBP availability on Free tier** | Owner action (Pending Action Items in backlog) | "Prevent use of leaked passwords" |
+| **Re-verify HIBP availability on Free tier** | 🗄️ **CLOSED / DEFERRED (owner, 2026-08-27)** — removed from the backlog's Pending Action Items; re-opens only on the Free → Pro upgrade | "Prevent use of leaked passwords" |
 
 #### Maintenance rules
 

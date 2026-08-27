@@ -1,6 +1,12 @@
 # Sprint 63 — Homepage exits Tailwind
 
-**Opened:** 2026-08-21 · **Status:** 🟠 OPEN · **Measured against:** `main` @ `201683f9d`, worktree clean
+**Opened:** 2026-08-21 · **Status:** 🗄️ **CLOSED AS SUPERSEDED / REPLANNED** (owner, 2026-08-27) · **Measured against:** `main` @ `201683f9d`, worktree clean
+
+> 🗄️ **CLOSED 2026-08-27 — SUPERSEDED / REPLANNED. This is not a "fully delivered" sprint.**
+> **Delivered here:** Tasks **763** and **764**, both archived.
+> **Not delivered here:** global Tailwind removal and route certification — the goal stated below was not reached by this
+> sprint; the remaining work was replanned into Sprints 64 and 65. Everything below is retained as the measurement record.
+> Ledger row: `docs/backlog-archive.md`, 2026-08-27. **Do not reopen this sprint; file new work with its own number.**
 
 ## Goal
 

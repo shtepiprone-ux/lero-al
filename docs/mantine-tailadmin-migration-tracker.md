@@ -1,5 +1,14 @@
 # Mantine + TailAdmin Migration Tracker — whole-project UI restyle (owner P0, 2026-06-25)
 
+> 🗄️ **HISTORICAL as of 2026-08-27 (owner decision). DO NOT REFRESH THIS FILE AND DO NOT USE IT AS A POINTER.**
+> It was last touched 2026-07-09 (Task 556) and its "Current pointer" and every "next" slice have since been delivered.
+> The owner chose to **demote rather than refresh** it.
+>
+> - **Live work → `docs/backlog.md`** (the task registry there is the only authority on what is next).
+> - **File-level migration reference → `docs/mantine-responsive-design-system.md`.**
+>
+> Read what follows as a record of how the restyle was sequenced in mid-2026, never as current state.
+
 > **Goal (owner directive 2026-06-25):** EVERY component and element across the WHOLE project styled to the
 > TailAdmin reference — not one Story. Done **step by step, component by component**, structured and balanced.
 > **Ground truth:** `demo_tailadmin_com.zip` (repo root, gitignored) + `docs/tailadmin-style-reference.md`

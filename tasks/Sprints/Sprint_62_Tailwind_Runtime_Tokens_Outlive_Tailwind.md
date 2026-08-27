@@ -38,10 +38,10 @@ gating only; it carries no state.
 | # | Title | Priority | State |
 |---|---|---|---|
 | **762** | Tailwind runtime tokens in CSS Modules: the detector first, then the five/nine modules | P1 | ✅ `APPROVED WITH NOTES` 2026-08-21 (Revision 1) — both gate bypasses closed, Category C+D removed (not baselined). `Sprint_62_Task_762_revision_1_Category_C_And_Gate_Bypass.md` |
-| **763** | Categories B/C/D — `--text-*` theme typography, `--tw-*` utility internals, `--leading-`/`--ease-`/`--duration-` | P2 | NOT FILED — needs 762's gate and baseline to exist first |
-| **764** | The degraded-perf-tier escape: `[class*="transition-"]` matches no CSS Module | P2 | NOT FILED — needs per-file historical evidence |
+| *(placeholder, formerly "763")* | Categories B/C/D — `--text-*` theme typography, `--tw-*` utility internals, `--leading-`/`--ease-`/`--duration-` | P2 | **NOT FILED — and 763 is NOT this task.** ⚠️ The numbers 763 and 764 were indicative only and have since been **issued to unrelated, now-archived tasks** (763 = AppImage variant class naming, 764 = the listing hover-class fold). Take the next free number from `docs/backlog.md`'s registry heading at filing time. Owner decision **D762-3** — whether `--text-*` joins a newly filed task or stays separately scoped — is still open. *(Corrected 2026-08-27 by the backlog row-by-row audit.)* |
+| *(placeholder, formerly "764")* | The degraded-perf-tier escape: `[class*="transition-"]` matches no CSS Module | P2 | **NOT FILED — and 764 is NOT this task**; see the row above. Needs per-file historical evidence. |
 
-Numbers 763 and 764 are indicative, not reserved. Take the next free number from `docs/backlog.md`'s registry line
+Numbers 763 and 764 are indicative, not reserved — **and both have since been issued to unrelated tasks**. Take the next free number from `docs/backlog.md`'s registry line
 at filing time; it is the only authority.
 
 ## Execution order
@@ -50,9 +50,9 @@ Order and gating only — read state from the Tasks table above.
 
 1. **762** first and alone. It creates `check:tailwind-runtime-tokens` and the baseline artifact that the other two
    are measured against, and it fixes the one category whose failure mode is outright (`transition-duration → 0s`).
-2. **763** after 762. Its 58 references are exactly the contents of 762's baseline; the task is finished when the
+2. **The Category B/C/D task** (placeholder "763") after 762. Its 58 references are exactly the contents of 762's baseline; the task is finished when the
    baseline file is empty and the gate still exits 0. That is a checkable end condition only because 762 built it.
-3. **764** independent of both, but after 762 so its fix is measured by the same gate. It needs evidence 762 does
+3. **The perf-tier-escape task** (placeholder "764") independent of both, but after 762 so its fix is measured by the same gate. It needs evidence 762 does
    not produce: whether each surface's pre-migration markup actually carried a `transition-*` class, because
    restoring a guard where none applied would be a new behaviour, not a restoration.
 

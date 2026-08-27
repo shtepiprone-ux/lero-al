@@ -1,6 +1,9 @@
 # Mantine Responsive UI Design System — Lero.al
 
 **Status:** ACTIVE CANONICAL SOURCE OF TRUTH — all new UI/layout/component work.  
+**Migration reference (owner, 2026-08-27):** this file is the **file-level migration reference**. `docs/mantine-tailadmin-migration-tracker.md`
+and `tasks/Epics/Epic_MM_Mantine_UI_Migration.md` were demoted to HISTORICAL and must not be used as a "what's next" pointer;
+live work comes from `docs/backlog.md`.
 **Established:** 2026-06-24 — Task 482 (Sonnet 4.6 executor, Opus 4.8 orchestrator).  
 **Supersedes:** `docs/design-system.md` for future UI work. Legacy Tailwind/Base UI/shadcn rules in
 `docs/design-system.md` remain valid ONLY for existing surfaces not yet migrated.

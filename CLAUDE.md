@@ -138,6 +138,7 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 - `docs/ai-behavior.md` - long-form Sonnet executor behavior rules and task template.
 - `docs/backlog.md` - active state only.
 - `docs/backlog-archive.md` - historical ledger.
+- `docs/binding-decisions.md` - closed, binding owner/orchestrator decisions (D19-D37). Open decisions stay in `docs/backlog.md`.
 - `docs/mantine-responsive-design-system.md` - current UI/responsive source of truth.
 - `docs/tailadmin-style-reference.md` - visual source of truth.
 - `docs/ui-rules.md` - UI routing plus legacy rules.

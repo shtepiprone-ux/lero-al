@@ -1,6 +1,10 @@
 # Sprint 64 — Runtime design tokens that survive Tailwind removal
 
-**Opened:** 2026-08-24 · **Status:** 🟠 OPEN · **Filed from:** Sprint 63's **D63-D** and **D63-F**
+**Opened:** 2026-08-24 · **Status:** ✅ **CLOSED AS DELIVERED** (owner, 2026-08-27) · **Filed from:** Sprint 63's **D63-D** and **D63-F**
+
+> ✅ **CLOSED 2026-08-27 — DELIVERED.** Task **765** is closed and archived; the goal below was met.
+> **Its residual notes are not Sprint 64 work:** F4 (the `:root`-deletion blind spot) belongs to **Task 743**; the rest is
+> historical closure hygiene. Ledger row: `docs/backlog-archive.md`, 2026-08-27.
 
 ---
 

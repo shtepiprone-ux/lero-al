@@ -4,6 +4,16 @@
 Predecessors: 766 (L1) · 767 (L2) · 768 (D65-D) · 769 (scanner) · 770 (L3) — all approved.
 Kickoff path: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`
 
+> ⚠️ **AMENDMENT 1 — 2026-08-27, owner decision pass.** This kickoff was filed hours before the owner **retired
+> Task 667**, closed **Sprint 59** as *mechanism rejected*, and **accepted the absence of route-composition
+> certification as a known limitation** (`docs/maintenance-playbook.md` §14.3). This file has been amended in place:
+> **B5 is no longer a blocker class.** It is recorded as an accepted limitation. Task 667 has been removed from the
+> blocker classes, the acceptance criteria, the checkpoint matrix, the facts/unknowns and the verdict formula.
+> **The verdict `NOT_READY` now rests on B1–B4 alone**, which §3.3 already showed to be each independently
+> sufficient. Nothing else about the task changed: still read-only, still `Q0`, still no removal authority.
+>
+> **This task is dispatchable as amended.**
+
 > **This task deletes nothing.** No `@import`, no `@apply`, no `@source`, no `@custom-variant`, no dependency,
 > no PostCSS plugin, no token, no component. It has no `READY` verdict available to it. Its single product is a
 > written, re-measured decision record at one citable SHA.
@@ -32,12 +42,15 @@ Produce, at one clean citable SHA, the Level-4 readiness decision for retiring t
 new **§17** in `docs/tailwind-governance.md`, containing:
 
 1. the verdict — **`NOT_READY`**;
-2. the residual global dependency surface, enumerated as **five named blocker classes (B1–B5)**, each with its own
+2. the residual global dependency surface, enumerated as **four named blocker classes (B1–B4)**, each with its own
    re-measured number and the exact command that produced it;
 3. the **bound of every gate cited** — what each existing check can and cannot prove;
 4. the conditions a future `READY` audit would have to satisfy, named as conditions and explicitly **not**
    authorized, scheduled, or numbered by this task;
-5. the explicit statement that no removal occurred and that this record grants no removal authority.
+5. the explicit statement that no removal occurred and that this record grants no removal authority;
+6. the **accepted limitation** (§3.2, Amendment 1): no global route-composition CI certification exists and none
+   will be built. It is recorded as a standing property of this repository, **not** as a blocker class and not as
+   an input to the verdict. Route-critical changes carry **task-scoped real-route evidence** instead.
 
 ## 3. Verified context
 
@@ -63,9 +76,9 @@ the audited SHA, not this document.
 | `node scripts/check-homepage-theme-runtime-deps.mjs` | 0 | `0 blocking pairs, 0 expected-zero findings, migration signature OK`; 12 migration inputs + 1 expected-zero input; TOTAL CLASSIFIED 94 pairs / 170 uses; MIGRATED_TARGETS 42 / 79 |
 
 `INFERENCE`: Levels 1–3 hold at the audited tree. That is the **precondition** of this task, not its subject. A
-green Homepage does not bear on any of B1–B5 below.
+green Homepage does not bear on any of B1–B4 below.
 
-### 3.2 The five blocker classes — measured
+### 3.2 The four blocker classes — measured, plus one accepted limitation
 
 #### B1 — Build wiring (Tailwind is compiled into the app)
 
@@ -151,22 +164,30 @@ Note the honest asymmetry: `app/[locale]` still shows **11** files with literal 
 `check:homepage-literal-utilities` reports `0` — because that gate guards **3 files**, not the route. The two
 numbers do not conflict; they measure different things. Say so in the record.
 
-#### B5 — Nobody may certify a route
+#### Accepted limitation — no route-composition certification (**not** a blocker class)
 
-`FACT`, `docs/backlog.md` registry and `tasks/Sprints/Sprint_59_Route_Level_Inventory_Before_Any_Migration_Claim.md`:
-Task **667** is `reserved` / **`BLOCKED — OWNER DECISION REQUIRED`**, explicitly *"Not executable; must not be
-handed to an executor."* Task **751** (the F1 feasibility measurement) is `CLOSED AS HISTORY` (2026-08-17): F1
-measured **FAIL** and the owner then rejected the direction. Phase-3 decisions D-B/D-D/D-E/D-F/D-G/D-I remain
-unapproved. Sprint 65's **D65-C** binds this: route-level certification stays with 667 and is not duplicated here.
+> **Amended 2026-08-27.** This subsection was `B5` when the kickoff was filed. It is no longer a blocker class, it
+> is not measured, and it does not enter the verdict.
 
-`FACT`, `docs/backlog.md` → Pending Action Items: *"No CI gate asserts the Mantine composition of a route"* —
-`--mantine-only` scopes by Storybook title prefix, and `check:story-coverage` treats anything absent from
-`mantine-migration-scope.json` as out of scope.
+`FACT`, owner decision 2026-08-27 (`docs/backlog-archive.md`, that date; `docs/maintenance-playbook.md` §14.3):
+**no CI gate asserts the Mantine composition of a route, and none will be built** on an unsupported React
+DOM→component mapping. Task 751 measured every candidate mechanism as FAIL, the owner rejected the direction,
+Sprint 59 is closed as *mechanism rejected* and its route-inventory task is retired. This is a **deliberate,
+accepted limitation of the repository**, not an outstanding item and not something a future task will close.
+
+`FACT`, `docs/backlog.md`: `--mantine-only` scopes by Storybook title prefix, and `check:story-coverage` treats
+anything absent from `mantine-migration-scope.json` as out of scope. A `15/15` figure proves coverage of fifteen
+enrolled components, never a route.
+
+**The replacement control, which §17.7 must state:** a route-critical change carries **task-scoped real-route
+evidence** — the kickoff names the route, locales, viewports and the measured property, and the executor produces
+that evidence for that change. **Never cite a permanent global CI claim for route composition**, and never present
+a component-scoped gate result as route certification.
 
 ### 3.3 The correction this kickoff makes to the candidate brief
 
 The candidate brief (`Codex-tasks/Task_771_Tailwind_Global_Retirement_Decision.md`, local-only, gitignored) made
-the verdict a **function of Task 667's disposition alone**: `NOT_READY` if 667 is blocked, `BLOCKED FOR REDESIGN`
+the verdict a **function of the route-inventory task's disposition alone** (Task 667 — *retired by the owner on 2026-08-27; the sentences below are the historical record of a rejected rule, not live state*): `NOT_READY` if 667 is blocked, `BLOCKED FOR REDESIGN`
 if 667 is closed. That decision rule is rejected, on measured grounds:
 
 1. `CONFLICT` — B1, B2, B3 and B4 are each independently sufficient to make global removal unsafe **today**, and
@@ -175,9 +196,12 @@ if 667 is closed. That decision rule is rejected, on measured grounds:
 2. `INFERENCE` — under the brief's rule, both arms end without a verdict (`NOT_READY … and stop`, or
    `BLOCKED FOR REDESIGN`). A task whose every branch declines to decide cannot satisfy Sprint 65 exit
    criterion 3, which requires a written decision.
-3. The corrected rule (§9): the verdict is `NOT_READY` **on the measured surface**; Task 667 is recorded as the
-   **certification** blocker — the reason no future audit can upgrade to `READY` on inventory evidence alone —
-   not as the hinge the verdict swings on. The `BLOCKED FOR REDESIGN` arm is deleted.
+3. The corrected rule (§9): the verdict is `NOT_READY` **on the measured surface** — B1–B4 — and nothing else.
+   The `BLOCKED FOR REDESIGN` arm is deleted. **Amended 2026-08-27:** the earlier phrasing kept a route-inventory
+   task as the standing "certification blocker". The owner has since retired that task and accepted the absence of
+   route certification as a permanent limitation, so it is recorded as a limitation (§3.2) and is **absent from the
+   verdict formula entirely**. This strengthens rather than weakens the correction: the verdict was already
+   independent of it.
 
 The brief is otherwise adopted: read-only, no deletion, no generic detector, Q0, no screenshot command, stop at
 the known blocker rather than inventing a compiler-removal project.
@@ -221,13 +245,13 @@ The record is appended as a new **§17**. No existing section is edited.
 | ID | Source | Observable requirement | Priority | Verification | Status |
 |---|---|---|---|---|---|
 | R1 | Sprint 65 §2 exit criterion 3 | A written Level-4 decision exists at `docs/tailwind-governance.md` §17 with the verdict `NOT_READY` stated in those exact characters. | P0 | AC1 | Confirmed |
-| R2 | §3.2 | §17 enumerates blocker classes **B1–B5**, each with its re-measured value and the exact command that produced it. | P0 | AC2 | Confirmed |
+| R2 | §3.2 | §17 enumerates blocker classes **B1–B4**, each with its re-measured value and the exact command that produced it. | P0 | AC2 | Confirmed |
 | R3 | §10.0 | Every Homepage predecessor gate is re-run natively at the audited SHA and its **actual** exit code is recorded. | P0 | AC3 | Confirmed |
 | R4 | §3.4 | §17 states the scope bound of every gate it cites, and names `governance:tailwind` as not-citable with the comment-site reason. | P0 | AC4 | Confirmed |
 | R5 | §3.5, `CLAUDE.md` Git policy | Execution begins only from an empty `git status --porcelain`; the audited SHA contains Task 770's implementation. | P0 | AC5 | Confirmed |
 | R6 | Sprint 65 §8, brief | **No removal, no deletion, no dependency/config/source/token/story change.** The final `git status --porcelain` contains only this task's own documentation paths. | P0 | AC6 | Confirmed |
 | R7 | Brief, README | **No new detector, script, gate, npm script, baseline, allowlist or marker** is committed. The §10.3 probe lives outside the repository and leaves no tracked path. | P0 | AC7 | Confirmed |
-| R8 | §3.2 B5, D65-C | §17 records Task 667's official state verbatim from its two sources and states that route certification stays with 667. | P0 | AC8 | Confirmed |
+| R8 | §3.2 (accepted limitation), owner decision 2026-08-27 | §17.7 records the accepted limitation — no route-composition CI certification exists or will be built — cites `docs/maintenance-playbook.md` §14.3, and states the replacement control: task-scoped real-route evidence. It records **no** blocker and **no** task state. | P0 | AC8 | Confirmed |
 | R9 | §3.3 | §17 states the conditions a future `READY` audit must satisfy, marked explicitly as **not authorized and not scheduled**, with no task number reserved. | P1 | AC9 | Confirmed |
 | R10 | `CLAUDE.md` operating model | Session log written; `docs/backlog.md` carries concise state only; status is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. | P0 | AC10 | Confirmed |
 | R11 | `docs/qa-profiles.md` Q0 | Read-after-write verification, markdown/reference validation, contradiction scan; `check:mojibake` and `check:file-integrity` exit 0. | P1 | AC11 | Confirmed |
@@ -273,8 +297,9 @@ Read exactly these, in this order. Do not read all docs.
 4. `docs/backlog.md` — Open rows, the **Sprints** section (Sprint 59 and Sprint 65 lines), the task registry.
 5. `tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md` — §2 goal and exit criteria, §3 binding rules,
    §5 decisions D65-A…D65-F, §6 tasks, §8 what the sprint does not authorize.
-6. `tasks/Sprints/Sprint_59_Route_Level_Inventory_Before_Any_Migration_Claim.md` — the Tasks table row for 667 and
-   the open-decisions table.
+6. `docs/maintenance-playbook.md` §14.3 — the accepted limitation on route-composition certification and the
+   task-scoped route-evidence rule that replaces it. (Amendment 1: this replaces the former pre-read of Sprint 59's
+   Tasks table, which is closed history and is **not** required reading for this task.)
 7. `docs/tailwind-governance.md` — headings only, plus §16 in full (the section §17 will follow).
 8. `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 9. `tasks/Sprints/Sprint_65_kickoff_prompt_Task_770_Homepage_Theme_Inline_Runtime_Exit.md` §3.6 — the eight-file
@@ -314,8 +339,9 @@ into `BLOCKED`, not a wider task.
 6. Committing the §10.3 probe, or any file, into the repository. The probe is written **outside** the repo tree.
 7. Running any screenshot profile — `screenshots:assert`, `--mantine-only`, `:full`, `:full:fast` — or a Storybook
    capture. This task changes no rendered code; a screenshot here is manufactured evidence.
-8. Certifying a route, claiming Homepage or app-wide Mantine composition, or deciding Task 667, D65-A, D762-3 or
-   D63-B.
+8. Certifying a route, claiming Homepage or app-wide Mantine composition, or deciding D65-A or D762-3. Also out of
+   scope: reopening Sprint 59, reviving its retired route-inventory task, or proposing a route-composition gate —
+   the limitation is accepted (§3.2) and this task records it without arguing with it.
 9. Closing Sprint 65, Sprint 59, or any archive/ledger consolidation. Recording exit status is not closing.
 10. Any mutating Git command (`add`, `commit`, `push`, `reset`, `restore`, `checkout`, `stash`, `merge`, `rebase`,
     `rm`, `apply`, `clean`, `config`) or any suggestion of one. Read-only Git only.
@@ -337,8 +363,8 @@ into `BLOCKED`, not a wider task.
   the evidence directory and the concise backlog state.
 - **The decision rule, in full** (this replaces the candidate brief's rule — see §3.3):
 
-  > The verdict is `NOT_READY` if **any** of B1–B5 is non-empty at the audited SHA.
-  > B1–B4 are measured; B5 is read from Task 667's official state.
+  > The verdict is `NOT_READY` if **any** of B1–B4 is non-empty at the audited SHA.
+  > All four are measured. **No task state and no route-certification question enters this formula** (Amendment 1).
   > `READY` is **not available to this task under any measurement**, and no removal is authorized by it.
   > If a measured class comes back **empty** — no `@import`, zero `@apply`, zero theme-inline-only names, or a
   > zero `className` census — that contradicts §3.2 and is a **stop condition** (`BLOCKED — BASELINE MOVED`), not
@@ -493,16 +519,16 @@ first two path segments as §3.2 B4 does.
 per-string Tailwind classification, not a live/dead-code split, not a route certification. And it must state the
 `app/[locale]` 11-vs-0 asymmetry against `check:homepage-literal-utilities`' three guarded files, with the reason.
 
-### 10.5 B5 — Task 667's official state
+### 10.5 The accepted limitation — recorded, not measured
 
-```powershell
-npx.cmd rg -n -C 2 '667' docs/backlog.md
-npx.cmd rg -n -C 3 '667|751' tasks/Sprints/Sprint_59_Route_Level_Inventory_Before_Any_Migration_Claim.md
-npx.cmd rg -n 'D65-C' tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md
-```
+**Amended 2026-08-27. There is nothing to measure here and no command to run.** This subsection previously
+collected a task's state string from two sources; that task is retired and the question it tracked is now an
+accepted limitation of the repository.
 
-Evidence: `b5-task667-state.txt`. Quote 667's state string **verbatim** from both sources. If they disagree, that
-is a `CONFLICT` to record — not to resolve, and not to fix by editing either file.
+Write §17.7 from `docs/maintenance-playbook.md` §14.3 and the 2026-08-27 owner row in `docs/backlog-archive.md`:
+state that no route-composition CI certification exists or will be built, that this is accepted rather than
+outstanding, and that the replacement control is **task-scoped real-route evidence**. Cite both paths. Produce **no**
+evidence file for this subsection — an absent measurement is correct here, not a gap.
 
 ### 10.6 The record — `docs/tailwind-governance.md` §17
 
@@ -510,13 +536,13 @@ Append one section, `## §17 — GLOBAL RETIREMENT READINESS (Task 771)`, with e
 
 | § | Content |
 |---|---|
-| 17.1 Verdict | `NOT_READY`, in those characters, with the audited SHA, the execution date, and the one-line reason (B1–B4 measured non-empty; B5 unavailable). |
+| 17.1 Verdict | `NOT_READY`, in those characters, with the audited SHA, the execution date, and the one-line reason (**B1–B4 measured non-empty**). No other input to the verdict. |
 | 17.2 Predecessor baseline | The five §10.0 gate commands with their actual exit codes. |
 | 17.3 B1 build wiring | The §10.1 table: seven `globals.css` directive lines, the PostCSS plugin, the seven package entries. |
 | 17.4 B2 `@apply` | The ten live line numbers; the six comment-only hits named as such. |
 | 17.5 B3 alias layer | 185 / 111 / zero overlap; the eight-row reader table; the D65-A and `HeroSearch.stories.tsx` standing items, each labelled as already-owned, not new debt. |
 | 17.6 B4 consumer surface | The five counts, the per-area distribution, **and the bound paragraph verbatim** (§10.4). |
-| 17.7 B5 certification | Task 667's verbatim state from both sources, 751's `CLOSED AS HISTORY` outcome, D65-C, and the "no CI gate asserts route composition" backlog item. |
+| 17.7 Accepted limitation | No route-composition CI certification exists or will be built (owner, 2026-08-27; `docs/maintenance-playbook.md` §14.3). Stated as an accepted limitation, **not** a blocker and **not** a task state. Names the replacement control: task-scoped real-route evidence for route-critical changes. |
 | 17.8 Gate bounds | The §3.4 table, plus the `governance:tailwind` non-citability paragraph with the ten comment sites named. |
 | 17.9 Conditions for a future READY audit | Named conditions only — see below. |
 | 17.10 What this record does not authorize | Verbatim: no `@import`, `@apply`, `@source`, `@custom-variant`, dependency, PostCSS-plugin, token or story change is authorized by this record; nothing here certifies a route; a future audit is re-designed against its own baseline, not against these numbers. |
@@ -524,8 +550,8 @@ Append one section, `## §17 — GLOBAL RETIREMENT READINESS (Task 771)`, with e
 **§17.9 is conditions, not a plan.** Each condition is one sentence naming a state that must hold, with no steps,
 no owner, no sequence, no estimate and **no task number**. At minimum it names: a disposition for all 185
 theme-inline-only names; the removal or re-homing of the ten `@apply` rules; a decided answer for the 18 residual
-reads including D65-A; an evidenced classification of the B4 surface; and a live route-certification authority
-(667). End it with: *"None of these is authorized, scheduled or numbered by Task 771."*
+reads including D65-A; and an evidenced classification of the B4 surface. It does **not** name route certification
+as a condition — that is an accepted limitation, not a gap awaiting an owner. End it with: *"None of these is authorized, scheduled or numbered by Task 771."*
 
 ### 10.7 Session log and backlog
 
@@ -540,9 +566,9 @@ decision, or move an archive row.
 
 ## 11. Positive and negative flows
 
-**Positive flow.** Clean tree at the landed Task-770 SHA → §10.0 preflight, five gates exit 0 → B1–B5 measured,
-every transcript retained → §17 appended to `docs/tailwind-governance.md` with the `NOT_READY` verdict and the
-five blocker classes → session log + concise backlog state → final `git status --porcelain` shows only this task's
+**Positive flow.** Clean tree at the landed Task-770 SHA → §10.0 preflight, five gates exit 0 → B1–B4 measured,
+every transcript retained → §17 appended to `docs/tailwind-governance.md` with the `NOT_READY` verdict, the four
+blocker classes and the accepted limitation → session log + concise backlog state → final `git status --porcelain` shows only this task's
 four documentation paths → `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 **Negative-flow applicability.** Selected by relevance; irrelevant branches are marked `No` with the reason.
@@ -558,15 +584,14 @@ four documentation paths → `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 | **Predecessor gate red** | **Yes** | §10.0 step 4 | `BLOCKED — PREDECESSOR RED`, naming the gate and its output | `preflight-gates.txt` |
 | **Measured baseline moved** | **Yes** | §9 drift rule | Non-empty drift: record beside the kickoff number and continue. Empty class: `BLOCKED — BASELINE MOVED` | the class's own evidence file |
 | **Probe leaves a repo path** | **Yes** | R7 | `BLOCKED`; the probe is written outside the repo and the post-probe porcelain must still be empty | `b3-theme-inline-census.txt` |
-| **667's two sources disagree** | **Yes** | §10.5 | Record as `CONFLICT` in §17.7 and the session log; do not resolve, do not edit either file | `b5-task667-state.txt` |
 
 ## 12. Acceptance criteria
 
 - **AC1 [R1]** — Given the completed task, when `docs/tailwind-governance.md` is read, then a section
   `## §17 — GLOBAL RETIREMENT READINESS (Task 771)` exists, its §17.1 contains the literal string `NOT_READY`, the
   audited SHA and the execution date, and §1–§16 are byte-identical to their pre-task content.
-- **AC2 [R2]** — Given §17, when subsections 17.3–17.7 are read, then each of B1, B2, B3, B4 and B5 carries its
-  own measured value **and** the exact command that produced it, and every number is traceable to a named file in
+- **AC2 [R2]** — Given §17, when subsections 17.3–17.6 are read, then each of B1, B2, B3 and B4 carries its own
+  measured value **and** the exact command that produced it, and every number is traceable to a named file in
   `docs/sessions/evidence/task771/`.
 - **AC3 [R3]** — Given §17.2, when it is compared with `preflight-gates.txt`, then all five predecessor commands
   appear with their actual exit codes and all five are `0`.
@@ -584,9 +609,10 @@ four documentation paths → `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
   baseline, allowlist or marker exists; the §10.3 probe is present only as
   `docs/sessions/evidence/task771/b3-probe-source.mjs.txt` (a transcript, not an executable repo path); and
   `git status --porcelain` taken immediately after the probe run was empty.
-- **AC8 [R8]** — Given §17.7, when it is compared with `docs/backlog.md` and the Sprint 59 file, then Task 667's
-  state string is quoted verbatim from both, 751's `CLOSED AS HISTORY` outcome is named, and the section states
-  that route certification stays with 667 per D65-C.
+- **AC8 [R8]** — Given §17.7, when it is read, then it states that no route-composition CI certification exists or
+  will be built, cites `docs/maintenance-playbook.md` §14.3 and the 2026-08-27 owner decision, names the
+  replacement control (task-scoped real-route evidence), and contains **no** task number presented as an
+  outstanding blocker. Given §17.1, when it is read, then its stated reason names **only** B1–B4.
 - **AC9 [R9]** — Given §17.9, when it is read, then every condition is one sentence naming a required state, no
   condition contains a step list, owner, sequence or task number, and the section ends with the literal sentence
   *"None of these is authorized, scheduled or numbered by Task 771."*
@@ -633,7 +659,8 @@ Plus, as `Q0` requires:
 - **Read-after-write** — re-read §17 from disk after writing and confirm the rendered structure (17.1–17.10 all
   present, tables well-formed, no truncated row).
 - **Reference validation** — every path, section number and decision ID cited in §17 exists: `D65-A`, `D65-C`,
-  Sprint 59's 667 row, `docs/backlog.md`'s registry, the eight B3 files.
+  `docs/maintenance-playbook.md` §14.3, the 2026-08-27 row in `docs/backlog-archive.md`, `docs/backlog.md`'s
+  registry, the eight B3 files.
 - **Contradiction scan** — §17 against `docs/tailwind-governance.md` §1–§16, Sprint 65 §2/§8, and `docs/backlog.md`.
   §17 must not claim the sprint is closed, that a route is certified, that D65-A is decided, or that any removal is
   approved. Record the scan and its result in the session log.
@@ -670,7 +697,7 @@ The final report must contain, in this order:
 9. **Assumptions, deviations, limitations** — including the `Q0` no-build/no-screenshot decision and the B4 bound.
 10. **Explicit confirmation that no removal occurred**: no `@import`, `@apply`, `@source`, `@custom-variant`,
     dependency, PostCSS plugin, token, component, story or script was deleted or modified.
-11. **Unresolved issues** — D65-A, the `HeroSearch.stories.tsx` divergence, Task 667, and any `CONFLICT` found.
+11. **Unresolved issues** — D65-A, the `HeroSearch.stories.tsx` divergence, and any `CONFLICT` found. The route-certification limitation is **not** an unresolved issue; it is accepted (§3.2).
 
 ## Task quality gate — checked before publication
 
@@ -706,8 +733,9 @@ The final report must contain, in this order:
    `@/components/ui/` (102 excluding stories); `src/components/ui/` holds 49 files.
 8. `governance:tailwind` exits 0 and all ten of its HIGH findings are comment sites (nine in `theme.ts`, one in
    `MantineDataTableToCards.tsx:250`).
-9. Task 667 is `reserved` / `BLOCKED — OWNER DECISION REQUIRED`; Task 751 is `CLOSED AS HISTORY` with F1 measured
-   FAIL and the direction rejected.
+9. **Owner decision 2026-08-27:** no route-composition CI certification exists or will be built; the limitation is
+   accepted, Sprint 59 is closed as *mechanism rejected*, and route-critical changes carry task-scoped real-route
+   evidence (`docs/maintenance-playbook.md` §14.3; `docs/backlog-archive.md`, 2026-08-27).
 10. At design time the worktree held 33 uncommitted entries, including Task 770's implementation; `HEAD` was
     `b73860fc5` on `main` → `origin/main`.
 
@@ -717,8 +745,8 @@ The final report must contain, in this order:
    reads in §3.2 B3 would resolve to nothing — from named facts 5 and 6.
 2. The ten `@apply` rules cannot survive compiler removal without being rewritten, so B2 is a removal blocker
    independent of any consumer count — from fact 2.
-3. The verdict does not depend on Task 667: B1–B4 are each independently sufficient for `NOT_READY` — from facts
-   2, 4, 5, 6 and 7. This is the correction in §3.3.
+3. The verdict rests on B1–B4 alone, each independently sufficient for `NOT_READY` — from facts 2, 4, 5, 6 and 7.
+   This is the correction in §3.3, and Amendment 1 removed the last non-measured input from the formula.
 4. `governance:tailwind` cannot serve as a live-usage census because its findings are comment text — from fact 8.
 5. The `app/[locale]` 11-vs-0 asymmetry is a scope difference, not a contradiction: the gate guards three files,
    the census counts a directory — from facts 1 and 7.
@@ -729,7 +757,6 @@ The final report must contain, in this order:
    class names. Not measured, deliberately (§10.4 bound); a per-string classification is a different task.
 2. Which of the 185 theme-inline-only names are consumed **as Tailwind utilities** (`text-sm`, `rounded-lg`, …)
    rather than as `var()` reads. The B3 census measures `var()` reads only.
-3. What `/[locale]` and every other route actually mounts — the standing 667 gap.
 4. Whether the D65-A disposition would add or remove a B3 row.
 
 ### CONFLICTS
@@ -748,13 +775,13 @@ The final report must contain, in this order:
 | Field | Value |
 |---|---|
 | Task | 771 — Global Tailwind retirement readiness: the decision record |
-| Active route / owner decision | **One route:** read-only audit → `NOT_READY` record at `docs/tailwind-governance.md` §17. Bound by Sprint 65 §2 exit criterion 3 and §8, and by **D65-C** (route certification stays with 667). |
+| Active route / owner decision | **One route:** read-only audit → `NOT_READY` record at `docs/tailwind-governance.md` §17. Bound by Sprint 65 §2 exit criterion 3 and §8, and by **D65-C** (route certification is not duplicated here — and, per the 2026-08-27 owner decision, is an accepted limitation rather than another task's scope). |
 | Decision source, date, scope | Sprint 65 (opened 2026-08-24) §2/§3/§8; D65-C decided 2026-08-24; D65-A pending 2026-08-24 (keeps `PerfDevOverlay` out of scope); Task 770 §3.6 (2026-08-26) names `HeroSearch.stories.tsx` as an input to this task. |
 | Starting worktree mode | **clean isolated** — enforced by §10.0 step 2; a dirty tree is `BLOCKED`, never a manifest path here. |
 | Exact allowed final write set | `docs/tailwind-governance.md` (append §17) · `docs/sessions/2026-08-XX-task771-….md` (new) · `docs/sessions/evidence/task771/**` (new) · `docs/backlog.md` (concise state). Nothing else. |
-| Blocked rule or decision, if any | None blocks execution. D65-A stays pending and is recorded, not decided; Task 667 stays `BLOCKED` and is recorded, not resolved. |
+| Blocked rule or decision, if any | None blocks execution. D65-A stays pending and is recorded, not decided. Route certification is an accepted limitation and is recorded as such, not as a blocked item. |
 
-The candidate brief's second arm (`BLOCKED FOR REDESIGN` if 667 is closed) is **removed**, not deferred: §3.3 shows
+The candidate brief's second arm (`BLOCKED FOR REDESIGN`, keyed on the route-inventory task's disposition — a task since retired) is **removed**, not deferred: §3.3 shows
 it produces no verdict on either branch. This contract has one route and one write set.
 
 ### A.2 Checkpoint matrix
@@ -768,27 +795,26 @@ it produces no verdict on either branch. This contract has one route and one wri
 | 4 | Checkpoint 3 | none | B2 = 10 live `@apply` lines; 6 comment-only hits elsewhere | `Select-String` count + per-hit read (§10.2) → `b2-apply.txt` | Count `0` → `BLOCKED — BASELINE MOVED`. A live `@apply` outside `globals.css` → record as drift, continue. |
 | 5 | Checkpoint 4; probe written to `$env:TEMP`, **outside** the repo | none (repo) | 185 theme-inline-only names; 8 files / 18 pairs / 27 uses / 4 story uses | `node.exe $env:TEMP\task771-theme-inline-census.mjs` (§10.3) → `b3-theme-inline-census.txt`, `b3-probe-source.mjs.txt` | `pairs: 0` → `BLOCKED — BASELINE MOVED`. `git status --porcelain` non-empty immediately after the run → `BLOCKED` (probe leaked a path). A scanner banner in the transcript means a module self-executed → re-run with the probe path as `argv[1]`. |
 | 6 | Checkpoint 5 | none | B4 counts + per-area distribution | six `rg` commands (§10.4) → `b4-utility-census.txt` | `0` files → `BLOCKED — BASELINE MOVED`. Any other value is drift: record beside the kickoff number. |
-| 7 | Checkpoint 6 | none | 667's state string, verbatim, from two sources | three `rg` commands (§10.5) → `b5-task667-state.txt` | Sources disagree → record `CONFLICT` in §17.7 and the log; do not edit either source. 667 no longer `BLOCKED` → record the actual state; the verdict is unchanged (§3.3). |
-| 8 | Checkpoints 3–7 complete | `docs/tailwind-governance.md` | §17.1–§17.10 present; §1–§16 unchanged | manual append + `git --no-optional-locks diff -- docs/tailwind-governance.md` → `final-status.txt` | Diff touches any line above the appended section → revert the file and re-append; a `Q0` read-after-write mismatch → `PARTIALLY IMPLEMENTED`. |
-| 9 | Checkpoint 8 | session log, evidence dir, `docs/backlog.md` | Records complete and concise | manual write → the paths themselves | Backlog entry restating §17 → rewrite to concise state before reporting. |
-| 10 | Checkpoints 0–9 | none | Final state clean of forbidden paths; `check:mojibake` and `check:file-integrity` exit 0; three gates still 0 | §13 commands → `final-checks.txt`, `final-status.txt`, `final-gates.txt` | Any `src/`, `scripts/`, config or lockfile path in the final porcelain → `BLOCKED`, and the report says so. Any non-zero exit → `PARTIALLY IMPLEMENTED`. |
+| 7 | Checkpoints 3–6 complete | `docs/tailwind-governance.md` | §17.1–§17.10 present; §1–§16 unchanged | manual append + `git --no-optional-locks diff -- docs/tailwind-governance.md` → `final-status.txt` | Diff touches any line above the appended section → revert the file and re-append; a `Q0` read-after-write mismatch → `PARTIALLY IMPLEMENTED`. |
+| 8 | Checkpoint 7 | session log, evidence dir, `docs/backlog.md` | Records complete and concise | manual write → the paths themselves | Backlog entry restating §17 → rewrite to concise state before reporting. |
+| 9 | Checkpoints 0–8 | none | Final state clean of forbidden paths; `check:mojibake` and `check:file-integrity` exit 0; three gates still 0 | §13 commands → `final-checks.txt`, `final-status.txt`, `final-gates.txt` | Any `src/`, `scripts/`, config or lockfile path in the final porcelain → `BLOCKED`, and the report says so. Any non-zero exit → `PARTIALLY IMPLEMENTED`. |
 
 Dynamic values tested at both ends: **empty** porcelain is the required pass state at checkpoints 0–1 and a
-**forbidden** state for the write set at checkpoint 10 (four paths must appear); **zero** is the required value for
+**forbidden** state for the write set at checkpoint 9 (four paths must appear); **zero** is the required value for
 every predecessor gate's findings and a **stop condition** for every blocker-class count. The only task-created
 artifacts are the four documentation paths and the out-of-repo probe; all of them are created **after** every
-measurement in checkpoints 3–7, so none can enter its own census. The B3 census additionally excludes
+measurement in checkpoints 3–6, so none can enter its own census. The B3 census additionally excludes
 `src/app/globals.css` by construction, so the declaration source is never counted as a consumer.
 
 ### A.3 Required counterexample trace
 
 | Contract claim | Counterexample | Executed or analytical evidence | Required outcome | Result |
 |---|---|---|---|---|
-| Active route and final write set | A second arm keyed on 667's state (the brief's) | `ANALYTICAL` — §3.3, from the measured B1–B4 facts: both arms terminate without a verdict | Blocked or separate contract | **Removed from the task**; recorded in §3.3 and A.1 |
+| Active route and final write set | A second arm keyed on the retired route-inventory task's state (the brief's) | `ANALYTICAL` — §3.3, from the measured B1–B4 facts: both arms terminate without a verdict | Blocked or separate contract | **Removed from the task**; recorded in §3.3 and A.1 |
 | Stateful baseline / manifest | Empty porcelain treated as a missing artifact | `EXECUTED` — architect ran `git --no-optional-locks status --porcelain` 2026-08-27: 33 lines, a non-empty state that the comparator must reject at checkpoint 0 | Distinct, fail-closed outcomes for empty vs non-empty | Checkpoint 0 defines empty = pass, non-empty = `BLOCKED`; both explicit |
 | Status or diff assertion | An unexpected new path (the probe) inside the repo | `EXECUTED` — the probe was run by the architect from outside the repository tree (`$HOME`), and `git status --porcelain` gained no entry from it | Comparator rejects a leaked path | Checkpoint 5 + AC7 assert the post-probe porcelain |
 | New gate | — | — | — | **N/A: this task creates no gate** (§8.5, R7). The probe is a one-shot measurement whose source is retained as a transcript, never as a repository path or npm script. |
-| Task-created artifact | Evidence directory counted by its own census | `EXECUTED` — the architect's census walks `src/` only; `docs/sessions/evidence/task771/` cannot enter it, and the four written paths are created at checkpoints 8–9, after all measurement | Count/scope difference detected | Creation order fixed by the matrix; census root is `src/` |
+| Task-created artifact | Evidence directory counted by its own census | `EXECUTED` — the architect's census walks `src/` only; `docs/sessions/evidence/task771/` cannot enter it, and the four written paths are created at checkpoints 7–8, after all measurement | Count/scope difference detected | Creation order fixed by the matrix; census root is `src/` |
 | Probe self-execution | An imported scanner running its own `main` and polluting the transcript | `EXECUTED` — architect's run of the §10.3 probe verbatim printed only the probe's own six lines; both modules guard on `process.argv[1]` | No scanner banner in the transcript | Checkpoint 5 comparator |
 
 ### A.4 Publication and review gate
@@ -812,7 +838,7 @@ matched §3.2 B3 exactly. The task author does not approve execution; Opus revie
 | Sprint 65 §3 rule 6 — no new permanent story for a detector | `HeroSearch.stories.tsx` is a visible temptation (§3.2 B3) | No story added, extended or probed | §8.4, §14.7 | `COMPLIANT` |
 | Sprint 65 §8 — no removal of `@import` / `@apply` / `@source` / `@custom-variant` | This task's whole subject is those directives | They are measured and left byte-identical | §8.1, AC6, R6 | `COMPLIANT` |
 | Sprint 65 §5 **D65-A** (pending) | `PerfDevOverlay.tsx` holds 2 of the 18 B3 reads | Out of scope until decided; recorded, not decided | §5 `Q1`, §8.4, §17.5 | `COMPLIANT` |
-| Sprint 65 §5 **D65-C** (2026-08-24) | The audit borders on route certification | Route certification stays with 667; not duplicated | §8.8, §17.7, AC8 | `COMPLIANT` |
+| Sprint 65 §5 **D65-C** (2026-08-24) | The audit borders on route certification | Not duplicated here; recorded as an accepted limitation per the 2026-08-27 owner decision | §8.8, §17.7, AC8 | `COMPLIANT` |
 | Plan default — Mantine-only screenshots for rendered changes | No rendered code changes | No screenshot command in completion criteria | §1, §13, §14.7 | `NOT APPLICABLE` — the default's scope is "tasks that change rendered Homepage code"; this task changes none. |
 | `docs/agent-contract.md` P0 — evidence before claim | Every §3 number is a claim in the record | Each is measured and re-measured with a retained transcript | §3 disclosure, §10, AC2 | `COMPLIANT` |
 | `docs/ai-behavior.md` → Backlog & Session Log Rules | The task writes both | Concise backlog state; detail in the session log | §10.7, AC10 | `COMPLIANT` |

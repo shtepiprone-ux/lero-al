@@ -582,3 +582,37 @@ For each story added:
 1. Follow `docs/storybook-governance.md §3`
 2. Add to screenshot matrix if the component has responsive/locale risk
 3. Re-run `npm run catalog:components` to update status
+
+---
+
+## §14 — KNOWN NOISE, ADVISOR EXCEPTIONS AND ASSESSED-HARMLESS FINDINGS
+
+> Moved out of `docs/backlog.md` on **2026-08-27** by the row-by-row audit. These are settled dispositions, not
+> active work: they exist so a finding that has already been triaged is not re-escalated by the next session.
+> **Do not re-triage anything in this section without new evidence.** Adding a row here is how a finding is closed
+> as accepted; removing one requires a measurement that contradicts it.
+
+### §14.1 — Console noise and advisor exceptions
+
+**🟡 Console NOISE (not bugs — do not re-triage as P0):** `[PRED] … preloaded`, `[LCP] … route`, `[Vercel Speed Insights] debug`, "speculation rule set … will be ignored", Turbopack dev-only CSS-chunk/`*.woff2` preload warnings. OpenTelemetry `import-in-the-middle` fixed by Task 450; Cloudinary LCP preload by Task 437. A stale Turbopack HMR cache can emit a one-off `useId` hydration error that does not survive a clean `next build` (Task 582). **Advisor exceptions** (intentional, no task): `pg_net in public`; `email_change_tokens` RLS-enabled-no-policy — `docs/rls-rules.md`.
+
+### §14.2 — Assessed harmless, do not re-escalate
+
+- `check-homepage-grid.mjs`'s missing `emulateMedia` (704/705 F1) stays **assessed harmless — do not re-escalate**; re-affirmed 2026-08-27 when the row was moved here.
+
+### §14.3 — Accepted limitation: no route-composition CI gate
+
+**Owner decision, 2026-08-27. Accepted as a known limitation — do not file a task to "fix" this.**
+
+No CI gate asserts the Mantine composition of a *route*. `--mantine-only` scopes by Storybook title prefix; only
+`check:story-coverage` reads `mantine-migration-scope.json` and treats anything absent as out of scope. A `15/15`
+figure proves coverage of fifteen enrolled components, **not** the homepage and not any route.
+
+**No gate will be built on an unsupported React DOM→component mapping.** Task 751 measured every candidate mechanism
+as FAIL (fiber walks silently mis-resolve Server Components to a provider — a wrong answer, not a missing one), the
+owner rejected the direction, Sprint 59 is closed and Task 667 is retired.
+
+**Replacement control — this is the part that binds new work.** A route-critical change carries **task-scoped route
+evidence**: the kickoff names the route, locales, viewports and the property it measures, and the executor produces
+that evidence for that change. Never cite a permanent global CI claim for route composition, and never present a
+component-scoped gate result as route certification.

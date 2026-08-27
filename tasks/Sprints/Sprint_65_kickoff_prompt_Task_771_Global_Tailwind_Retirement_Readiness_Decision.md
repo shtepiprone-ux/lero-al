@@ -14,6 +14,13 @@ Kickoff path: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_R
 >
 > **This task is dispatchable as amended.**
 
+> ⚠️ **AMENDMENT 2 — 2026-08-27, execution-environment correction.** `npx.cmd rg` resolves to the unrelated
+> npm package `rg@0.0.2` in this environment, not Ripgrep. The B2/B4 commands in §10 now invoke the available
+> native `rg.exe` directly. This changes neither their patterns, roots, globs, expected values, nor the verdict
+> formula. Checkpoint 0–6 transcripts are staged outside the repository, then copied byte-for-byte to the stated
+> evidence paths only after every clean-tree measurement completes; this preserves the required empty porcelain at
+> the true start and after the B3 probe.
+
 > **This task deletes nothing.** No `@import`, no `@apply`, no `@source`, no `@custom-variant`, no dependency,
 > no PostCSS plugin, no token, no component. It has no `READY` verdict available to it. Its single product is a
 > written, re-measured decision record at one citable SHA.
@@ -377,9 +384,12 @@ into `BLOCKED`, not a wider task.
 
 ## 10. Implementation requirements
 
-All commands are native Windows PowerShell, run from the project root, read-only. Capture **every** transcript to
-`docs/sessions/evidence/task771/` with the filename given in each subsection, and record the **actual**
-`$LASTEXITCODE` next to each command — never a remembered or expected one.
+All commands are native Windows PowerShell, run from the project root, read-only. For checkpoints 0–6, capture
+**every** transcript first under `$env:TEMP\task771-evidence\` with the filename given in each subsection, and
+record the **actual** `$LASTEXITCODE` next to each command — never a remembered or expected one. Do not create
+`docs/sessions/evidence/task771/` or any other repository path before the clean-tree and post-probe checks have
+passed. At checkpoint 7, copy the staged transcripts byte-for-byte to `docs/sessions/evidence/task771/`; the
+evidence paths below name those final persisted copies.
 
 ### 10.0 Mandatory first action — prove the tree before writing anything
 
@@ -426,7 +436,7 @@ Evidence: `b1-build-wiring.txt`. Record every matched line with its line number 
 ```powershell
 (Select-String -Path src/app/globals.css -Pattern '@apply').Count
 Select-String -Path src/app/globals.css -Pattern '@apply' | Select-Object LineNumber, Line
-npx.cmd rg -n '@apply' src --glob '!src/app/globals.css'
+rg.exe -n '@apply' src --glob '!src/app/globals.css'
 ```
 
 Evidence: `b2-apply.txt`. For the third command, **open each hit** and classify it `live rule` or `comment`. §3.2
@@ -504,12 +514,12 @@ Confirm that no scanner banner appears in the transcript.
 ### 10.4 B4 — the utility-class census
 
 ```powershell
-npx.cmd rg -l 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
-npx.cmd rg 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
-npx.cmd rg -l '@/components/ui/' src -g '!*.stories.*' | Measure-Object -Line
-npx.cmd rg -l '@/components/ui/' src | Measure-Object -Line
+rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+rg.exe 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+rg.exe -l '@/components/ui/' src -g '!*.stories.*' | Measure-Object -Line
+rg.exe -l '@/components/ui/' src | Measure-Object -Line
 (Get-ChildItem src/components/ui -File | Measure-Object).Count
-npx.cmd rg -l 'className="' src -g '*.tsx' -g '!*.stories.tsx'
+rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx'
 ```
 
 Evidence: `b4-utility-census.txt`. The last command's output supplies the per-area distribution; group it by the

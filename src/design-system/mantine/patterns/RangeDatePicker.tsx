@@ -452,6 +452,17 @@ function DesktopBody({
             <ChevronLeft size={16} />
           </ActionIcon>
           <Group gap="xs" wrap="nowrap">
+            {/* Task 774 — `dropdownMinWidth` on both selectors. The list inherits the TRIGGER's
+                width (Mantine `Combobox` defaults `width: "target"`), and the row chrome eats a
+                fixed 93px of it before a single glyph is drawn: 24px dropdown padding (theme.ts
+                `Combobox.styles.dropdown` 0.75rem) + 24px option padding (`…styles.option`
+                0.625rem 0.75rem) + 2px border + 12px `Group gap="sm"` + 14px CheckIcon on the
+                SELECTED row + ~17px classic scrollbar (the `mah={220}` cap always overflows).
+                So `min width = widest label + 93`. Measured in Chromium at 14px Open Sans across
+                sq/en/uk/it: widest month = 64.6px (uk «Вересень»/«Березень»), year = 32px.
+                -> month needs 158, year needs 125; set to 190/140 for locale headroom. Below
+                that the label wraps mid-token — the reported «202 / 6» defect. Re-measure these
+                two numbers if a locale with longer month names is added. */}
             {/* Task 773: `withinPortal={false}` on BOTH in-calendar selectors. These render inside
                 the desktop calendar's own `MantinePopover` dropdown; a portalled option list is a
                 sibling of that dropdown in Mantine's shared portal node, never a descendant, so
@@ -468,6 +479,7 @@ function DesktopBody({
               triggerAriaLabel={t('period_month')}
               triggerWidth={150}
               withinPortal={false}
+              dropdownMinWidth={190}
             />
             <MantineCombobox
               variant="button"
@@ -477,6 +489,7 @@ function DesktopBody({
               noResultsLabel={t('no_results')}
               triggerWidth={100}
               withinPortal={false}
+              dropdownMinWidth={140}
             />
           </Group>
           <Text c="gray.5" fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>

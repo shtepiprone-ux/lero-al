@@ -1,6 +1,6 @@
 # Sprint 67 — Nested floating layers, and the gate that cannot see them
 
-**Opened:** 2026-08-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (**773**)
+**Opened:** 2026-08-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (**773** · **774**)
 
 > **Opened by owner instruction, 2026-08-27** — *"Якщо ця задача потребує мінімального коду - зроби це сам."*
 > That instruction is the explicit owner authorization required by `docs/orchestrator-role.md` → Role
@@ -47,14 +47,20 @@ claim jsdom can make. Naming the detector that would catch the *behavior* is thi
 | # | Title | State |
 |---|---|---|
 | **773** | `RangeDatePicker` in-calendar month/year selectors dismiss the calendar | **IMPLEMENTED — AWAITING OWNER NATIVE GATE** |
+| **774** | Those same selectors render their labels wrapped mid-token (`202`/`6`) — pre-existing, surfaced by 773 | **IMPLEMENTED — AWAITING OWNER NATIVE GATE** |
 
 ## Exit criteria
 
-1. 773's fix is verified in a **real browser**, not only by DOM containment. (Open — see 773's Residual evidence.)
+1. ~~773's fix is verified in a **real browser**, not only by DOM containment.~~ **MET (774's session, 2026-08-27):** Playwright/Chromium against the real component, real mouse press — **12/12 cells, 0 failures** across `sq/en/uk/it` × `641/1024/1440`, month and year. Transcript: `docs/sessions/evidence/task774/browser-proof-773-calendar-stays-open.txt`. Residual: the harness renders the COMPONENT, not the route inside the drawer — one owner route pass still outstanding.
 2. The blind spot above is recorded where the next person writing a Mantine overlay test will read it —
    `docs/mantine-responsive-design-system.md`, alongside the Task 553/554 "a green matrix is NOT proof" entry.
 3. Either name the detector that would have caught the user-visible behavior, or record in writing why none is worth
-   building. A real-browser interaction probe in the shape of `scripts/check-click-shield.mjs` is the live candidate.
+   building. **The candidate is now a working artifact, not a proposal:** 774's session built a Vite + Playwright
+   harness that mounts the real `RangeDatePicker` under the real theme and CSS and measures it in Chromium — it
+   caught 774 and proved 773. Landing it as a task-owned probe (the `scripts/task766-route-shell-probe.mjs`
+   pattern) is an owner call, because it adds a Vite entry point the repo does not otherwise have. **It answers
+   BOTH failure modes this sprint found:** portal nesting (invisible to jsdom because `env="test"` inlines
+   portals) and layout wrapping (invisible to jsdom because there is no layout engine at all).
 4. Audit the other `MantineCombobox` / `MantineSelect` / `MantineDropdownMenu` render sites for the same nesting —
    any combobox inside a popover, drawer or menu has the same latent defect. **Not yet done; 773 was bounded to the
    owner-reported surface and deliberately did not sweep.**

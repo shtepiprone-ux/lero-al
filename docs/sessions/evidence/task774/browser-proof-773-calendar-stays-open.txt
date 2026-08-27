@@ -1,0 +1,23 @@
+REAL-BROWSER PROOF — Task 773 (calendar must stay open on month/year pick)
+Chromium 1194 (Playwright), real mouse press (mousedown -> mouseup -> click) on the option.
+Harness: the actual <RangeDatePicker> under the real theme + input-chrome.css +
+range-date-picker-chrome.css + real Open Sans, served by Vite. NOT jsdom.
+
+REAL-BROWSER PROOF — cells 12, failures 0
+ sq@641: month Janar -> picked "Mars" -> trigger "Mars", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ sq@1024: month Janar -> picked "Mars" -> trigger "Mars", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ sq@1440: month Janar -> picked "Mars" -> trigger "Mars", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ en@641: month January -> picked "March" -> trigger "March", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ en@1024: month January -> picked "March" -> trigger "March", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ en@1440: month January -> picked "March" -> trigger "March", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ uk@641: month Січень -> picked "Березень" -> trigger "Березень", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ uk@1024: month Січень -> picked "Березень" -> trigger "Березень", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ uk@1440: month Січень -> picked "Березень" -> trigger "Березень", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ it@641: month Gennaio -> picked "Marzo" -> trigger "Marzo", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ it@1024: month Gennaio -> picked "Marzo" -> trigger "Marzo", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+ it@1440: month Gennaio -> picked "Marzo" -> trigger "Marzo", calendar STAYS OPEN; year: open, year=2022 (picked 2022)
+
+Scope limit, stated rather than glossed: this renders the COMPONENT, not the /
+route inside the FiltersPanel drawer. The drawer adds a Radix Sheet ancestor and
+nothing else that touches this mechanism, but the route-level pass is still the
+owner's to run.

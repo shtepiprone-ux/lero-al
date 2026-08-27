@@ -1,0 +1,41 @@
+WIDTH MEASUREMENT — Task 774 (month/year option labels must not wrap)
+Chromium 1194, real Open Sans, 14px. Windows condition emulated by taking 17px off the
+options list content box (padR=17px below) — headless Linux paints 0-width overlay
+scrollbars, Windows Chrome paints a classic ~17px one, and that 17px is what tipped
+every row over the edge in the owner's screenshot.
+
+=========== BEFORE (no dropdownMinWidth) ===========
+MODE=font  WRAPPED cells: 4/8
+ sq month ddW=150 padR=17px font="Open Sans" maxLabelW=53.9 wrapped=0
+ sq year  ddW=100 padR=17px font="Open Sans" maxLabelW=21   wrapped=1 2026
+ en month ddW=150 padR=17px font="Open Sans" maxLabelW=58.5 wrapped=0
+ en year  ddW=100 padR=17px font="Open Sans" maxLabelW=21   wrapped=1 2026
+ uk month ddW=150 padR=17px font="Open Sans" maxLabelW=64.6 wrapped=0
+ uk year  ddW=100 padR=17px font="Open Sans" maxLabelW=21   wrapped=1 2026
+ it month ddW=150 padR=17px font="Open Sans" maxLabelW=57.7 wrapped=0
+ it year  ddW=100 padR=17px font="Open Sans" maxLabelW=21   wrapped=1 2026
+
+  maxLabelW=21 on the year rows IS the defect: the label box is squeezed to 21px, so
+  "2026" (32px when unconstrained) breaks after three glyphs -> "202" / "6".
+
+=========== AFTER (month 190 / year 140) ===========
+MODE=font  WRAPPED cells: 0/8
+ sq month ddW=190 maxLabelW=53.9 wrapped=0     sq year ddW=140 maxLabelW=32 wrapped=0
+ en month ddW=190 maxLabelW=58.5 wrapped=0     en year ddW=140 maxLabelW=32 wrapped=0
+ uk month ddW=190 maxLabelW=64.6 wrapped=0     uk year ddW=140 maxLabelW=32 wrapped=0
+ it month ddW=190 maxLabelW=57.7 wrapped=0     it year ddW=140 maxLabelW=32 wrapped=0
+
+=========== AFTER, full desktop sweep (4 locales x 641/1024/1440 x month/year) ===========
+cells 24 | WRAPPED cells 0 | offscreen 0
+
+Budget arithmetic the two numbers come from (all values read out of theme.ts, not guessed):
+  dropdown padding  24  (Combobox.styles.dropdown 0.75rem x2)
+  option padding    24  (Combobox.styles.option 0.625rem 0.75rem)
+  border             2
+  Group gap="sm"    12
+  CheckIcon         14  (selected row only — and the selected row is the one that broke)
+  scrollbar         17  (mah={220} always overflows for 12 months / 6+ years)
+  -------------------
+  fixed chrome      93  ->  min width = widest label + 93
+  month: 64.6 + 93 = 158  -> set 190 (32px locale headroom)
+  year:  32.0 + 93 = 125  -> set 140 (15px headroom; a year label is always 4 digits)

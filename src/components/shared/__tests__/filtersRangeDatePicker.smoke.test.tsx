@@ -28,7 +28,7 @@
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeAll, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
 import { render, fireEvent, cleanup, within, screen, waitFor } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'

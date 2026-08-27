@@ -60,9 +60,18 @@ MantinePopover smoke, filtersRangeDatePicker, filtersPanelShell, heroSearch).
 
 **Environment limitation, recorded not skipped.** The repo's `node_modules` is a Windows install; its native
 `rollup`/`esbuild` binaries cannot execute in the mounted Linux shell, so gates ran in a container against a faithful
-copy of `src/` + `messages/` on a freshly resolved dependency tree. `npm ci` there failed on **pre-existing lockfile
-drift** (`Missing: webpack@5.110.0 from lock file`) — unrelated to this task, but worth the owner's attention — so
-`npm install` was used. A production build on that tree would not be authoritative: **`npm run build` is outstanding
+copy of `src/` + `messages/` on a freshly resolved dependency tree, where `npm install` was used.
+
+> **CORRECTION (owner check, 2026-08-27).** This paragraph originally reported that `npm ci` failed on
+> **"pre-existing lockfile drift"** (`Missing: webpack@5.110.0 from lock file`) and flagged it for the owner. **That
+> conclusion was wrong and is withdrawn.** The failure was real but was observed in the *container*: Linux, npm
+> **10.9.7**, against a **reconstructed partial tree** (only `src/`, `messages/`, `package.json`,
+> `package-lock.json` — no `scripts/`, `public/`, or config siblings). On the owner's real repository,
+> `npm ci --dry-run --ignore-scripts` with npm **10.9.8** completes successfully, with no `webpack@5.110.0` error
+> and a clean working tree. **No lockfile defect is established for this repo and no task was filed.** Generalising
+> one failure in a reconstructed environment into a claim about the real repository was the error — an environment
+> difference, not a repo fact. If a real `npm ci` ever reproduces it, what is needed is the full log plus the npm
+> version, not this note. A production build on that tree would not be authoritative: **`npm run build` is outstanding
 and must be owner-native**, per agent-contract clause 9. Under that clause this task is
 `IMPLEMENTED — AWAITING ORCHESTRATOR/OWNER REVIEW`, not complete.
 

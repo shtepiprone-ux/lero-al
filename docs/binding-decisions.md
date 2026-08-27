@@ -8,8 +8,7 @@
 > and do not restate its text in `docs/backlog.md`.
 >
 > **Open, undecided decisions are NOT here.** They are live state and stay in `docs/backlog.md` until decided —
-> currently **D63-B** (homepage de-Tailwind claim), **D65-A** (`PerfDevOverlay`), **D762-3** (`--text-*` scope)
-> and Sprint 59's unapproved D-B/D-D/D-E/D-F/D-G/D-I. When one is decided, move its text here in the same edit
+> currently **D762-3** (`--text-*` scope) and Sprint 59's unapproved D-B/D-D/D-E/D-F/D-G/D-I. When one is decided, move its text here in the same edit
 > that removes it from the backlog.
 >
 > Related: `docs/ai-behavior.md` (executor rules), `docs/orchestrator-procedures.md` (task design, review, Git policy),
@@ -70,6 +69,19 @@ independent of Tailwind. Do not restate it in a wider form, and do not cite it a
 not read. The decision that raised it — whether the stale "✅ COMPLETE" phrasing should be corrected immediately or at
 phase closure — is answered: it was corrected immediately, and the decision is retired.
 
+### D65-A
+
+**D65-A — CLOSED 2026-08-27 (owner).** `PerfDevOverlay` is excluded from the Homepage **production visual and
+functional exit criterion**: it has no intended production UI. This is not an exemption from production-bundle hygiene
+or global Tailwind retirement. The production build measured for this decision still contains the overlay's client module
+and CSS in the `/[locale]` layout graph even though the compiled component returns `null`; a static import plus a
+runtime `NODE_ENV` guard is therefore not evidence of zero production cost. No Sprint 65 task may alter the overlay.
+Any future remediation is a separate developer-tooling task: the server layout must not statically import the overlay;
+a small Client Component may load it only in development, and the task must prove after `next build` that the overlay
+module and CSS are absent from the `/[locale]` production client graph while `next dev` still renders it. Do not enable
+the overlay in production through a public environment flag, and do not call the current implementation "stripped from
+production bundles" until that artifact proof exists.
+
 ## Owner decision pass — 2026-08-27
 
 Ten decisions were executed as one documentation pass. Those that bind future work live in their owning documents;
@@ -87,4 +99,3 @@ this list exists so the pass is traceable from one place.
 | `/listings` mobile overflow | Filed as **Task 772** in **Sprint 66**, scoped to `ListingsSortBar` mobile layout only | `tasks/Sprints/Sprint_66_*` |
 | Task 313 | Approved to start **only** under the five-clause schema contract, once the owner signs it | `tasks/Epics/Epic_HH_Admin_UX_System.md` |
 | Task 689 | Acknowledged retired; no task, no review, no new evidence | `docs/backlog-archive.md` |
-

@@ -7,8 +7,8 @@
 
 ## Last Session (2026-08-27)
 
-Task 771 (Sprint 65, Level 4) is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
-Session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`.
+Task 771's orchestrator review is approved and committed; Sprint 65 is closed as a bounded Homepage
+Tailwind-exit delivery. Its closure does not claim route certification or global Tailwind retirement.
 
 ## Open — needs action
 
@@ -16,7 +16,6 @@ Session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readin
 |---|---|---|
 | **Cleanup step 3** | UNBLOCKED (696 = step 1, 701 = step 2, I-D landed in 703) | Delete 3 consolidated probes: `task420-qa-grid-step.mjs` · `task668-qa-grid-1440.mjs` · `task668-qa-header-geometry.mjs` (**1084 lines by `wc -l`, 946 non-blank** — say which you mean). **Must also update `check-homepage-grid.mjs`, which names all three in 18 provenance comments.** `scripts/` holds **13** task-numbered probes, all unwired; the other 10 are a separate call, incl. **670** |
 | **665** | `PARTIALLY IMPLEMENTED / PARTIALLY VERIFIED` | **Only §13.7's live-route before/after DOM/computed-style baseline is outstanding** (AC1 — needs a routable dev server + seeded DB; use §16.1's corrected `classList.contains` locator). Also decide the orphan `listing.fixture.ts` |
-| **Homepage — Tailwind exit** | bounded fact, **not** route certification | **Task 766 gate: 0 static utility literals in its 3 guarded files.** That is the whole claim. It is **not** homepage completion and **not** route certification — no gate in this repository asserts the Mantine composition of a route, and per the 2026-08-27 owner decision none will be built (`docs/maintenance-playbook.md` §14.3). Route-critical changes carry **task-scoped route evidence**; nothing here may be cited as standing proof. |
 
 ## Pending Action Items (owner)
 
@@ -36,7 +35,6 @@ Session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readin
 **Sprint 57 — Delete what no longer earns its place** (`tasks/Sprints/Sprint_57_Delete_What_No_Longer_Earns_Its_Place.md`): **676** · **682**. Opened 2026-08-08. Pure removal, both proven inert before deletion rather than after. Owner cleanup step 3 stays in Sprint 46, not here. 🟠 OPEN.
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
-**Sprint 65 — Homepage finishes the Tailwind exit** (`tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md`): 766–770 are archived. **771** is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`. ⚠️ **D65-A PENDING** (`PerfDevOverlay`) is the sprint's only open decision. 🟠 OPEN.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
 
 ## Task registry — single source for every open number. Last used **772**, NEXT FREE **773**.
@@ -46,7 +44,6 @@ Session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readin
 | # | State | What |
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
-| **771** | **`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — **Sprint 65**, `Q0` | Global Tailwind retirement readiness decision record. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`. Session: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`. |
 | **772** | **KICKOFF FILED** — **Sprint 66**, P1 | **`/listings` horizontal overflow below 640px.** `ListingsSortBar`'s right-hand group is `shrink-0` while the `size="lg"` filters `Button` carries `max-sm:w-full` and the sort `Combobox` wrapper carries `min-w-35`; the sort trigger is `h-9` (36px), below the 44px floor. Deliverable is the bounded mobile-layout fix **plus** route-level proof at 320/375/390 × sq/en/uk/it. Kickoff: `tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |

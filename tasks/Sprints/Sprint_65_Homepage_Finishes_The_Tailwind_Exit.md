@@ -1,6 +1,6 @@
 # Sprint 65 — Homepage finishes the Tailwind exit
 
-**Opened:** 2026-08-24 · **Status:** 🟠 OPEN · **Baseline:** `main` / `origin/main` @ `7b9a13c37`
+**Opened:** 2026-08-24 · **Status:** ✅ CLOSED AS BOUNDED DELIVERY 2026-08-27 · **Baseline:** `main` / `origin/main` @ `7b9a13c37`
 **Filed from:** the owner's Homepage → Mantine completion package (2026-08-24)
 
 ---
@@ -70,15 +70,16 @@ to Tailwind — and end with an honest decision about the global compiler rather
 | 764 — listing hover / trigger area | ✅ `APPROVED` 2026-08-24, in `main` (`3bf769858`, `d652faad9`) | `listing` hover, `.cardGrid` scale and the `imageActions` slot are not re-derived. |
 | 765 — motion/radius runtime tokens | ✅ `APPROVED WITH NOTES` 2026-08-24, in `main` (`7b9a13c37`) | Its `:root` tokens are consumed, never rewritten; its P3″ control is not re-litigated. |
 
-`PerfDevOverlay.tsx` is deliberately **not** in this sprint. It returns `null` outside development. Whether a
-dev-only overlay belongs to the production exit criterion is an **open owner decision** (D65-A, §5). Until it is
-decided, no task in this sprint may quietly add it to scope.
+`PerfDevOverlay.tsx` is deliberately **not** in this sprint. Per closed D65-A, it is outside the Homepage production
+visual and functional exit criterion, but it remains subject to production-bundle hygiene and global Tailwind
+retirement. Its future remediation is a separate developer-tooling task; no task in this sprint may quietly add it to
+scope.
 
 ## 5. Owner decisions
 
 | ID | State | Decision |
 |---|---|---|
-| **D65-A** | ⚠️ **PENDING** | Does `PerfDevOverlay.tsx` (dev-only, returns `null` in production) belong to the Homepage production exit criterion? Until decided, it is out of scope for every task here. |
+| **D65-A** | ✅ **CLOSED 2026-08-27** | `PerfDevOverlay.tsx` is outside the Homepage production visual and functional exit criterion, but not exempt from production-bundle hygiene or global Tailwind retirement. The current static import still ships its client module and CSS in the `/[locale]` production graph; any remediation is a separate developer-tooling task with production-artifact proof. |
 | **D65-B** | ✅ **DECIDED 2026-08-24** | The 766-769 package is filed as Sprint 65, not as an extension of Sprint 63. Sprint 63's goal (`763`/`764`) is closed; a task is assigned by goal fit, not by adjacent number. Supersedes the draft header of the Task 766 kickoff, which read "Sprint 63". |
 | **D65-C** | ✅ **DECIDED 2026-08-24** | Task 667 is not duplicated by a file in this sprint. Either the owner re-scopes/unblocks 667, or Sprint 59 closes with it. Route-level certification stays with 667. |
 | **D65-D** | ✅ **CLOSED 2026-08-26** | Permit Task 768's one narrow AppImage change: replace `.imageLayer` `inset: var(--space-0)` with `inset: 0`. The computed 0px value is preserved; motion, radius, variants, loading, markup and every other declaration remain frozen. No later task may cite this decision to touch a second AppImage line. |
@@ -94,7 +95,7 @@ decided, no task in this sprint may quietly add it to scope.
 | 768 | ✅ **APPROVED WITH NOTES 2026-08-26**, merged to `main` @ `6b43b9676` | **D65-D AppImage spacing closure.** The one permitted `AppImage.module.css` read moved from `var(--space-0)` to native `0`; Level-3 census is now 42 pairs / 79 uses. Ledger: `docs/reviews/2026-08-26-task768-appimage-d65d-spacing-closure.review-ledger.json`. |
 | **769** | ✅ **APPROVED WITH NOTES 2026-08-26**, merged to `main` @ `06091ba1d` — 11/11 VERIFIED, 0 open P0/P1/P2, 6 P3 notes | **Task-767 scanner hardening.** Missing configured TSX inputs are fatal in every mode, and the nine AST-extracted `theme.ts` `vars`/`styles` keys classify `external` globally, per **D65-F**. `--verify-gate` 4 → 10 asserted outcomes, all passing; the shipped scan's output is byte-identical. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_769_Runtime_Token_Scanner_Hardening.md`; ledger: `docs/reviews/2026-08-26-task769-runtime-token-scanner-hardening.review-ledger.json`. |
 | **770** | ✅ **APPROVED WITH NOTES 2026-08-27** | **Level 3 — `@theme inline` runtime exit.** The fixed 42-pair / 79-use twelve-file manifest migrated to nineteen `--homepage-runtime-*` `:root` tokens of identical value. `check:homepage-theme-runtime-deps` supplies the thirteen-input ownership control, D65-E expected-zero AppImage arm and six passing `--verify-gate` outcomes. The retained 244-cell comparison has no verdict changes; the final ledger has six verified requirements and no findings. `@theme inline` stays byte-identical; eighteen non-manifest references still depend on it. Ledger: `docs/reviews/2026-08-27-task770-homepage-theme-inline-runtime-exit.review-ledger.json`. |
-| **771** | 📋 **KICKOFF FILED 2026-08-27, AMENDED 2026-08-27 (Amendment 1)** | **Level 4 — global Tailwind retirement readiness.** Read-only `Q0` decision record, no deletion and no detector: verdict `NOT_READY` against **four** separately measured blocker classes — **B1** build wiring (3 `@import` + 3 `@source` + `@custom-variant` + the sole PostCSS plugin), **B2** the ten live `@apply` rules, **B3** the 185 `@theme inline`-only names none of which `:root` shadows, with 8 files / 18 pairs / 27 uses still reading them, **B4** the 152-file / 2350-occurrence literal-`className` surface (census, explicitly not a certification), **B5** *(withdrawn — see Amendment 1 below)*. ✅ **AMENDMENT 1 APPLIED 2026-08-27** — B5 is no longer a blocker class. Task 667 is retired and the absence of route-composition certification is an **accepted limitation** (`docs/maintenance-playbook.md` §14.3); 667 was removed from the kickoff's blocker classes, acceptance criteria, checkpoint matrix, facts/unknowns and verdict formula, and the accepted limitation is recorded in its place (§17.7). **`NOT_READY` now rests on B1–B4 alone.** The task was `AMENDMENT REQUIRED / NOT DISPATCHABLE` between the owner decision and this amendment; it is **dispatchable as amended**. Corrects the candidate brief, whose rule made the verdict a function of 667 alone. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`. |
+| **771** | ✅ **APPROVED AND COMMITTED 2026-08-27** | **Level 4 — global Tailwind retirement readiness.** Read-only `Q0` decision record: `NOT_READY` rests on the four measured global blocker classes B1–B4; it authorises no deletion or migration. Route-composition certification remains an accepted limitation, not a blocker. D65-A is closed separately: `PerfDevOverlay` is outside the Homepage production exit but remains global production-bundle/Tailwind-retirement hygiene. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`. |
 | 667 | reserved / BLOCKED in **Sprint 59** | Route-level inventory and certification. Referenced here, owned there. See D65-C. |
 
 **Numbers 769-771 are not reserved by this sprint.** Before each is filed, its owner re-reads the registry in

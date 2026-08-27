@@ -1,0 +1,215 @@
+### git --no-optional-locks diff -- docs/tailwind-governance.md docs/backlog.md
+diff --git a/docs/backlog.md b/docs/backlog.md
+index 199d460ee..87ebcfcb0 100644
+--- a/docs/backlog.md
++++ b/docs/backlog.md
+@@ -7,9 +7,8 @@
+ 
+ ## Last Session (2026-08-27)
+ 
+-Task 770 was independently reviewed, closed and archived; its session log and review ledger are cited in its archive row.
+-
+-**Owner decision pass, 2026-08-27 — ten decisions executed in one documentation pass.** D63-B approved and retired; Sprint 63 closed as SUPERSEDED/REPLANNED and Sprint 64 as DELIVERED; Sprint 59 closed as MECHANISM REJECTED with **Task 667 retired**; Epic MM's tracker and epic file demoted to HISTORICAL; HIBP deferred to a Supabase Pro upgrade; the notification item narrowed to one owner QA action; `/listings` mobile overflow filed as **Task 772** in the new **Sprint 66** (**771** had just been taken by a parallel Sprint 65 filing — see that row); Task 313's schema contract recorded and awaiting the owner's signature; Task 689 acknowledged retired. Full record: the 2026-08-27 archive rows.
++Task 771 (Sprint 65, Level 4) is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
++Session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`.
+ 
+ ## Open — needs action
+ 
+@@ -37,7 +36,7 @@ Task 770 was independently reviewed, closed and archived; its session log and re
+ **Sprint 57 — Delete what no longer earns its place** (`tasks/Sprints/Sprint_57_Delete_What_No_Longer_Earns_Its_Place.md`): **676** · **682**. Opened 2026-08-08. Pure removal, both proven inert before deletion rather than after. Owner cleanup step 3 stays in Sprint 46, not here. 🟠 OPEN.
+ **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
+ **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
+-**Sprint 65 — Homepage finishes the Tailwind exit** (`tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md`): 766–770 are archived. **771** is 📋 **KICKOFF FILED 2026-08-27, amended 2026-08-27 (Amendment 1)** — the read-only `Q0` Level-4 decision record (`NOT_READY` against four measured blocker classes; deletes nothing, authorises nothing). Route-composition certification is an accepted limitation, not a blocker; route-critical changes retain task-scoped real-route evidence. Its execution precondition is an empty `git status --porcelain` with Task 770 landed. ⚠️ **D65-A PENDING** (`PerfDevOverlay`) is the sprint's only open decision — D65-D/E/F were decided 2026-08-26 and their text lives in the sprint file. Binding rules for anything filed here: control ships with the fix unless D65-E explicitly says otherwise; no author-applied exemption; mechanism only, never restyle; new runtime values in `:root`; and no global Tailwind deletion or route certification in this sprint. 🟠 OPEN.
++**Sprint 65 — Homepage finishes the Tailwind exit** (`tasks/Sprints/Sprint_65_Homepage_Finishes_The_Tailwind_Exit.md`): 766–770 are archived. **771** is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; session log: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`. ⚠️ **D65-A PENDING** (`PerfDevOverlay`) is the sprint's only open decision. 🟠 OPEN.
+ **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
+ 
+ ## Task registry — single source for every open number. Last used **772**, NEXT FREE **773**.
+@@ -47,7 +46,7 @@ Task 770 was independently reviewed, closed and archived; its session log and re
+ | # | State | What |
+ |---|---|---|
+ | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
+-| **771** | **KICKOFF FILED** — **Sprint 65**, `Q0` — **amended 2026-08-27 (Amendment 1), dispatchable** | **Global Tailwind retirement readiness — a read-only decision record.** Verdict `NOT_READY` against **four** measured blocker classes (build wiring · live `@apply` rules · `@theme inline`-only names · the literal-`className` census). Deletes nothing, authorises nothing. **Amendment 1:** the former fifth class (route certification) was withdrawn after the owner retired Task 667 and accepted the absence of route-composition certification as a known limitation (`docs/maintenance-playbook.md` §14.3); it is now recorded in §17.7 as a limitation with task-scoped real-route evidence as the replacement control, and no task state enters the verdict. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`. |
++| **771** | **`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — **Sprint 65**, `Q0` | Global Tailwind retirement readiness decision record. Kickoff: `tasks/Sprints/Sprint_65_kickoff_prompt_Task_771_Global_Tailwind_Retirement_Readiness_Decision.md`. Session: `docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md`. |
+ | **772** | **KICKOFF FILED** — **Sprint 66**, P1 | **`/listings` horizontal overflow below 640px.** `ListingsSortBar`'s right-hand group is `shrink-0` while the `size="lg"` filters `Button` carries `max-sm:w-full` and the sort `Combobox` wrapper carries `min-w-35`; the sort trigger is `h-9` (36px), below the 44px floor. Deliverable is the bounded mobile-layout fix **plus** route-level proof at 320/375/390 × sq/en/uk/it. Kickoff: `tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`. |
+ | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
+ | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |
+diff --git a/docs/tailwind-governance.md b/docs/tailwind-governance.md
+index da9c41410..29754e3b2 100644
+--- a/docs/tailwind-governance.md
++++ b/docs/tailwind-governance.md
+@@ -331,3 +331,165 @@ Every allowlist entry MUST include:
+ - Suppressing CRITICAL findings without explicit written justification
+ 
+ **Review cadence:** Quarterly — check all allowlist entries against current state.
++
++## §17 — GLOBAL RETIREMENT READINESS (Task 771)
++
++Read-only Level-4 decision record for Sprint 65. **This section deletes nothing, removes nothing, and authorizes no
++removal.** Full command transcripts are retained in `docs/sessions/evidence/task771/`.
++
++### 17.1 Verdict
++
++**`NOT_READY`**
++
++- Audited SHA: `960e78c50` (`docs(task771): correct native evidence commands`, branch `main` → `origin/main`).
++- Execution date: 2026-08-27.
++- Reason: **B1–B4 measured non-empty at the audited SHA.** No task state or route-certification question enters
++  this formula.
++
++### 17.2 Predecessor baseline
++
++The standard output of `git --no-optional-locks status --porcelain` was empty before any Task-771 repository path
++was written. `preflight-git.txt` separately retains two harmless stderr warnings about an unreadable user Git ignore
++file; no porcelain path was emitted. The audited commit tracks
++`scripts/check-homepage-theme-runtime-deps.mjs` and contains `src/app/globals.css:370`'s
++`--homepage-runtime-space-0` token, confirming Task 770 is present.
++
++| Exact command | Exit | Evidence |
++|---|---:|---|
++| `npm.cmd run check:homepage-literal-utilities` | 0 | `preflight-gates.txt` |
++| `npm.cmd run check:tailwind-runtime-tokens` | 0 | `preflight-gates.txt` |
++| `npm.cmd run check:tailwind-runtime-tokens:verify-gate` | 0 (10/10 assertions) | `preflight-gates.txt` |
++| `npm.cmd run check:homepage-theme-runtime-deps` | 0 | `preflight-gates.txt` |
++| `npm.cmd run check:homepage-theme-runtime-deps:verify-gate` | 0 (6/6 assertions) | `preflight-gates.txt` |
++
++### 17.3 B1 — build wiring
++
++`src/app/globals.css` has seven compiler directives: `@import` at lines 1–3, `@source` at lines 11, 12 and 25,
++and `@custom-variant` at line 27. `postcss.config.mjs` contains only `{"@tailwindcss/postcss": {}}`.
++`package.json` retains `tailwindcss ^4`, `@tailwindcss/postcss ^4`, `tw-animate-css ^1.4.0`, `shadcn ^4.3.0`,
++`class-variance-authority ^0.7.1`, `clsx ^2.1.1`, and `tailwind-merge ^3.5.0`.
++
++Exact commands:
++
++```powershell
++Select-String -Path src/app/globals.css -Pattern '^@(import|source|custom-variant|plugin|config)' | Select-Object LineNumber, Line
++Get-Content postcss.config.mjs
++Select-String -Path package.json -Pattern 'tailwindcss|@tailwindcss/postcss|tw-animate-css|"shadcn"|class-variance-authority|clsx|tailwind-merge'
++```
++
++No drift from kickoff §3.2 B1. Evidence: `b1-build-wiring.txt`.
++
++### 17.4 B2 — `@apply`
++
++`src/app/globals.css` has **10 live `@apply` rules** at lines 612, 616, 629, 635, 640, 641, 642, 651, 655 and
++660. The exact search below returns six other source hits, and opening every site confirms each is a comment:
++`CaptchaWidget.tsx:32`, `NotificationItem.tsx:214`, `NotificationCenter.tsx:57`,
++`PasswordRequirementsHint.tsx:53`, `FooterView.module.css:23`, and `MobileNavDrawer.tsx:52`. There are zero live
++rules outside `globals.css`.
++
++```powershell
++(Select-String -Path src/app/globals.css -Pattern '@apply').Count
++Select-String -Path src/app/globals.css -Pattern '@apply' | Select-Object LineNumber, Line
++rg.exe -n '@apply' src --glob '!src/app/globals.css'
++```
++
++No drift from kickoff §3.2 B2. Evidence: `b2-apply.txt`.
++
++### 17.5 B3 — the `@theme inline` alias layer
++
++The sanctioned temporary probe reports **185** `@theme inline` names, **111** plain `:root` names, and **zero
++overlap**. Eight files retain **18 (file, name) pairs / 27 uses**, including four Storybook uses:
++
++| File | Pairs / uses | Names |
++|---|---:|---|
++| `src/app/[locale]/listings/[slug]/loading.tsx` | 3 / 3 | `--listing-gallery-h-{mobile,tablet,desktop}` |
++| `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx` | 3 / 6 | same three |
++| `src/modules/listings/components/GalleryStaticFrame.tsx` | 3 / 3 | same three |
++| `src/modules/listings/components/ListingGallery.tsx` | 3 / 3 | same three |
++| `src/components/shared/PerfDevOverlay.tsx` | 2 / 3 | `--color-status-success`, `--color-status-warning` |
++| `src/components/ui/button.tsx` | 1 / 4 | `--radius-md` |
++| `src/design-system/mantine/input-chrome.css` | 1 / 1 | `--color-input` |
++| `src/stories/mantine/primitives/HeroSearch.stories.tsx` | 2 / 4 | `--space-16`, `--space-24` |
++| **Total** | **18 / 27** | |
++
++`PerfDevOverlay.tsx` remains D65-A-pending and out of scope. `HeroSearch.stories.tsx` remains the deliberate
++Task-770 divergence; it is recorded here, not repaired.
++
++```powershell
++node.exe $env:TEMP\task771-theme-inline-census.mjs (Get-Location).Path
++```
++
++No drift from kickoff §3.2 B3. Evidence: `b3-theme-inline-census.txt`, `b3-probe-source.mjs.txt`.
++
++### 17.6 B4 — the utility-class consumer surface (census, not certification)
++
++| Measure | Kickoff value | Measured value | Drift |
++|---|---:|---:|---|
++| Files containing a literal `className="` | 152 | 152 | none |
++| Lines containing a literal `className="` | 2350 | 2350 | none |
++| Files referencing `@/components/ui/` (stories excluded) | 102 | 102 | none |
++| Files referencing `@/components/ui/` (stories included) | 110 | 110 | none |
++| Files in `src/components/ui/` | 49 (45 `.tsx`, 3 `.ts`, 1 `.css`) | 49 (45 `.tsx`, 3 `.ts`, 1 `.css`) | none |
++
++```powershell
++rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
++rg.exe 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
++rg.exe -l '@/components/ui/' src -g '!*.stories.*' | Measure-Object -Line
++rg.exe -l '@/components/ui/' src | Measure-Object -Line
++(Get-ChildItem src/components/ui -File | Measure-Object).Count
++rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx'
++```
++
++Distribution by top-level area (152 files): `modules/listings` 48 · `components/admin` 33 · `app/admin` 17 ·
++`components/ui` 14 · `components/shared` 12 · `app/[locale]` 11 · `modules/cabinet` 5 ·
++`design-system/mantine` 4 · `components/layout` 4 · `modules/auth` 2 · `modules/contacts` 1 ·
++`components/listing` 1.
++
++Amendment 2 replaces the invalid `npx.cmd rg` invocation with native `rg.exe`; no substitute script is used. The
++two earlier `-2` counts were caused by a narrowed `.tsx`-only substitute and the earlier `+25` counted occurrences,
++not lines. **The bound, stated verbatim:** this is an order-of-magnitude census of literal `className` strings. It
++does **not** classify each string as a Tailwind utility, does not distinguish a live route from dead code, and is
++**not** a route certification. Its only claim is that the utility-class consumer surface outside the Homepage is
++large and unmeasured — which is sufficient to refuse `READY`, and insufficient to schedule the work.
++
++The `app/[locale]` 11-vs-0 asymmetry is not a contradiction: the Homepage gate guards three files, while this
++census counts a directory. Evidence: `b4-utility-census.txt`.
++
++### 17.7 Accepted limitation — no route-composition CI certification
++
++No route-composition CI certification exists, and none will be built on the unsupported React DOM→component mapping.
++Per the owner decision of 2026-08-27, Sprint 59 closed as mechanism rejected and Task 667 is retired; see
++`docs/maintenance-playbook.md` §14.3 and the 2026-08-27 `docs/backlog-archive.md` row.
++
++This is an **accepted limitation**, not a blocker and not a task state; it does not enter the §17.1 formula.
++Task 771 preserves D65-C's non-duplication boundary: it does not certify a route or create a replacement route
++task. The replacement control is **task-scoped real-route evidence**: a route-critical kickoff names the route, locales,
++viewports and measured property, and its executor produces that evidence. Never cite a permanent global CI claim
++for route composition or present a component-scoped gate as route certification.
++
++### 17.8 Gate bounds
++
++| Gate | Actual scope | What it cannot say |
++|---|---|---|
++| `check:homepage-literal-utilities` | 3 guarded files | Nothing about the other 149 B4 files |
++| `check:tailwind-runtime-tokens` | 25 `src/**/*.module.css` files and 2 fixed runtime TSX files | Nothing about unlisted TSX or route coverage |
++| `check:homepage-theme-runtime-deps` | 12 migration inputs and 1 expected-zero input | Nothing about the 8 B3 files |
++
++`governance:tailwind` is not retirement evidence. Its ten HIGH findings are comment sites: `theme.ts` lines 282,
++296, 400, 607, 632, 633, 828, 843 and 844, plus `MantineDataTableToCards.tsx:250`. It was not run by this task.
++
++### 17.9 Conditions for a future `READY` audit
++
++1. A disposition exists for all 185 `@theme inline`-only names.
++2. The ten live `@apply` rules are removed or re-homed to compiler-independent CSS.
++3. A decided answer exists for the 18 residual reads, including D65-A.
++4. An evidenced classification exists for the B4 literal-`className` surface.
++
++Route-composition certification is an accepted limitation, not a condition. *None of these is authorized, scheduled
++or numbered by Task 771.*
++
++### 17.10 What this record does not authorize
++
++No `@import`, `@apply`, `@source`, `@custom-variant`, dependency, PostCSS-plugin, token or story change is
++authorized by this record; nothing here certifies a route; a future audit is re-designed against its own baseline,
++not against these numbers.
+exit=0
+
+### git --no-optional-locks status --porcelain
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+ M docs/backlog.md
+ M docs/tailwind-governance.md
+?? docs/sessions/2026-08-27-task771-global-tailwind-retirement-readiness.md
+?? docs/sessions/evidence/task771/
+exit=0

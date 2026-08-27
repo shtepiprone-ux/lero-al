@@ -1,0 +1,46 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { join, relative, extname } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const ROOT = process.argv[2];
+const dep = await import(pathToFileURL(join(ROOT, 'scripts/check-homepage-theme-runtime-deps.mjs')).href);
+const csv = await import(pathToFileURL(join(ROOT, 'scripts/check-css-var-resolvability.mjs')).href);
+
+const globals = readFileSync(join(ROOT, 'src/app/globals.css'), 'utf8');
+const { plainRoot, themeInline } = dep.extractPlainRootAndThemeInline(globals);
+const root = new Set(plainRoot);
+const only = new Set([...themeInline].filter((n) => !root.has(n)));
+
+const files = [];
+(function walk(dir) {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, e.name);
+    if (e.isDirectory()) walk(full);
+    else if (/\.(tsx|ts|css)$/.test(e.name)) files.push(full);
+  }
+})(join(ROOT, 'src'));
+
+const byFile = new Map();
+const pairs = new Set();
+let uses = 0;
+let storyUses = 0;
+for (const f of files) {
+  const rel = relative(ROOT, f).replace(/\\/g, '/');
+  if (rel === 'src/app/globals.css') continue;
+  const stripped = csv.stripComments(readFileSync(f, 'utf8'), extname(f) === '.css');
+  const refs = csv.findVarReferences(stripped).filter((r) => only.has(r.name));
+  if (!refs.length) continue;
+  byFile.set(rel, refs);
+  uses += refs.length;
+  refs.forEach((r) => pairs.add(rel + '|' + r.name));
+  if (rel.includes('/stories/') || rel.includes('.stories.')) storyUses += refs.length;
+}
+
+console.log('plain :root names: ' + root.size);
+console.log('@theme inline names: ' + [...themeInline].length);
+console.log('theme-inline-ONLY names: ' + only.size);
+console.log('files: ' + byFile.size + ' | pairs: ' + pairs.size + ' | uses: ' + uses + ' | story uses: ' + storyUses);
+for (const [rel, refs] of [...byFile.entries()].sort()) {
+  const names = [...new Set(refs.map((r) => r.name))];
+  console.log('  ' + rel + '  ' + names.length + '/' + refs.length + '  ' + names.join(','));
+}

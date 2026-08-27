@@ -331,3 +331,165 @@ Every allowlist entry MUST include:
 - Suppressing CRITICAL findings without explicit written justification
 
 **Review cadence:** Quarterly — check all allowlist entries against current state.
+
+## §17 — GLOBAL RETIREMENT READINESS (Task 771)
+
+Read-only Level-4 decision record for Sprint 65. **This section deletes nothing, removes nothing, and authorizes no
+removal.** Full command transcripts are retained in `docs/sessions/evidence/task771/`.
+
+### 17.1 Verdict
+
+**`NOT_READY`**
+
+- Audited SHA: `960e78c50` (`docs(task771): correct native evidence commands`, branch `main` → `origin/main`).
+- Execution date: 2026-08-27.
+- Reason: **B1–B4 measured non-empty at the audited SHA.** No task state or route-certification question enters
+  this formula.
+
+### 17.2 Predecessor baseline
+
+The standard output of `git --no-optional-locks status --porcelain` was empty before any Task-771 repository path
+was written. `preflight-git.txt` separately retains two harmless stderr warnings about an unreadable user Git ignore
+file; no porcelain path was emitted. The audited commit tracks
+`scripts/check-homepage-theme-runtime-deps.mjs` and contains `src/app/globals.css:370`'s
+`--homepage-runtime-space-0` token, confirming Task 770 is present.
+
+| Exact command | Exit | Evidence |
+|---|---:|---|
+| `npm.cmd run check:homepage-literal-utilities` | 0 | `preflight-gates.txt` |
+| `npm.cmd run check:tailwind-runtime-tokens` | 0 | `preflight-gates.txt` |
+| `npm.cmd run check:tailwind-runtime-tokens:verify-gate` | 0 (10/10 assertions) | `preflight-gates.txt` |
+| `npm.cmd run check:homepage-theme-runtime-deps` | 0 | `preflight-gates.txt` |
+| `npm.cmd run check:homepage-theme-runtime-deps:verify-gate` | 0 (6/6 assertions) | `preflight-gates.txt` |
+
+### 17.3 B1 — build wiring
+
+`src/app/globals.css` has seven compiler directives: `@import` at lines 1–3, `@source` at lines 11, 12 and 25,
+and `@custom-variant` at line 27. `postcss.config.mjs` contains only `{"@tailwindcss/postcss": {}}`.
+`package.json` retains `tailwindcss ^4`, `@tailwindcss/postcss ^4`, `tw-animate-css ^1.4.0`, `shadcn ^4.3.0`,
+`class-variance-authority ^0.7.1`, `clsx ^2.1.1`, and `tailwind-merge ^3.5.0`.
+
+Exact commands:
+
+```powershell
+Select-String -Path src/app/globals.css -Pattern '^@(import|source|custom-variant|plugin|config)' | Select-Object LineNumber, Line
+Get-Content postcss.config.mjs
+Select-String -Path package.json -Pattern 'tailwindcss|@tailwindcss/postcss|tw-animate-css|"shadcn"|class-variance-authority|clsx|tailwind-merge'
+```
+
+No drift from kickoff §3.2 B1. Evidence: `b1-build-wiring.txt`.
+
+### 17.4 B2 — `@apply`
+
+`src/app/globals.css` has **10 live `@apply` rules** at lines 612, 616, 629, 635, 640, 641, 642, 651, 655 and
+660. The exact search below returns six other source hits, and opening every site confirms each is a comment:
+`CaptchaWidget.tsx:32`, `NotificationItem.tsx:214`, `NotificationCenter.tsx:57`,
+`PasswordRequirementsHint.tsx:53`, `FooterView.module.css:23`, and `MobileNavDrawer.tsx:52`. There are zero live
+rules outside `globals.css`.
+
+```powershell
+(Select-String -Path src/app/globals.css -Pattern '@apply').Count
+Select-String -Path src/app/globals.css -Pattern '@apply' | Select-Object LineNumber, Line
+rg.exe -n '@apply' src --glob '!src/app/globals.css'
+```
+
+No drift from kickoff §3.2 B2. Evidence: `b2-apply.txt`.
+
+### 17.5 B3 — the `@theme inline` alias layer
+
+The sanctioned temporary probe reports **185** `@theme inline` names, **111** plain `:root` names, and **zero
+overlap**. Eight files retain **18 (file, name) pairs / 27 uses**, including four Storybook uses:
+
+| File | Pairs / uses | Names |
+|---|---:|---|
+| `src/app/[locale]/listings/[slug]/loading.tsx` | 3 / 3 | `--listing-gallery-h-{mobile,tablet,desktop}` |
+| `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx` | 3 / 6 | same three |
+| `src/modules/listings/components/GalleryStaticFrame.tsx` | 3 / 3 | same three |
+| `src/modules/listings/components/ListingGallery.tsx` | 3 / 3 | same three |
+| `src/components/shared/PerfDevOverlay.tsx` | 2 / 3 | `--color-status-success`, `--color-status-warning` |
+| `src/components/ui/button.tsx` | 1 / 4 | `--radius-md` |
+| `src/design-system/mantine/input-chrome.css` | 1 / 1 | `--color-input` |
+| `src/stories/mantine/primitives/HeroSearch.stories.tsx` | 2 / 4 | `--space-16`, `--space-24` |
+| **Total** | **18 / 27** | |
+
+`PerfDevOverlay.tsx` remains D65-A-pending and out of scope. `HeroSearch.stories.tsx` remains the deliberate
+Task-770 divergence; it is recorded here, not repaired.
+
+```powershell
+node.exe $env:TEMP\task771-theme-inline-census.mjs (Get-Location).Path
+```
+
+No drift from kickoff §3.2 B3. Evidence: `b3-theme-inline-census.txt`, `b3-probe-source.mjs.txt`.
+
+### 17.6 B4 — the utility-class consumer surface (census, not certification)
+
+| Measure | Kickoff value | Measured value | Drift |
+|---|---:|---:|---|
+| Files containing a literal `className="` | 152 | 152 | none |
+| Lines containing a literal `className="` | 2350 | 2350 | none |
+| Files referencing `@/components/ui/` (stories excluded) | 102 | 102 | none |
+| Files referencing `@/components/ui/` (stories included) | 110 | 110 | none |
+| Files in `src/components/ui/` | 49 (45 `.tsx`, 3 `.ts`, 1 `.css`) | 49 (45 `.tsx`, 3 `.ts`, 1 `.css`) | none |
+
+```powershell
+rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+rg.exe 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+rg.exe -l '@/components/ui/' src -g '!*.stories.*' | Measure-Object -Line
+rg.exe -l '@/components/ui/' src | Measure-Object -Line
+(Get-ChildItem src/components/ui -File | Measure-Object).Count
+rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx'
+```
+
+Distribution by top-level area (152 files): `modules/listings` 48 · `components/admin` 33 · `app/admin` 17 ·
+`components/ui` 14 · `components/shared` 12 · `app/[locale]` 11 · `modules/cabinet` 5 ·
+`design-system/mantine` 4 · `components/layout` 4 · `modules/auth` 2 · `modules/contacts` 1 ·
+`components/listing` 1.
+
+Amendment 2 replaces the invalid `npx.cmd rg` invocation with native `rg.exe`; no substitute script is used. The
+two earlier `-2` counts were caused by a narrowed `.tsx`-only substitute and the earlier `+25` counted occurrences,
+not lines. **The bound, stated verbatim:** this is an order-of-magnitude census of literal `className` strings. It
+does **not** classify each string as a Tailwind utility, does not distinguish a live route from dead code, and is
+**not** a route certification. Its only claim is that the utility-class consumer surface outside the Homepage is
+large and unmeasured — which is sufficient to refuse `READY`, and insufficient to schedule the work.
+
+The `app/[locale]` 11-vs-0 asymmetry is not a contradiction: the Homepage gate guards three files, while this
+census counts a directory. Evidence: `b4-utility-census.txt`.
+
+### 17.7 Accepted limitation — no route-composition CI certification
+
+No route-composition CI certification exists, and none will be built on the unsupported React DOM→component mapping.
+Per the owner decision of 2026-08-27, Sprint 59 closed as mechanism rejected and Task 667 is retired; see
+`docs/maintenance-playbook.md` §14.3 and the 2026-08-27 `docs/backlog-archive.md` row.
+
+This is an **accepted limitation**, not a blocker and not a task state; it does not enter the §17.1 formula.
+Task 771 preserves D65-C's non-duplication boundary: it does not certify a route or create a replacement route
+task. The replacement control is **task-scoped real-route evidence**: a route-critical kickoff names the route, locales,
+viewports and measured property, and its executor produces that evidence. Never cite a permanent global CI claim
+for route composition or present a component-scoped gate as route certification.
+
+### 17.8 Gate bounds
+
+| Gate | Actual scope | What it cannot say |
+|---|---|---|
+| `check:homepage-literal-utilities` | 3 guarded files | Nothing about the other 149 B4 files |
+| `check:tailwind-runtime-tokens` | 25 `src/**/*.module.css` files and 2 fixed runtime TSX files | Nothing about unlisted TSX or route coverage |
+| `check:homepage-theme-runtime-deps` | 12 migration inputs and 1 expected-zero input | Nothing about the 8 B3 files |
+
+`governance:tailwind` is not retirement evidence. Its ten HIGH findings are comment sites: `theme.ts` lines 282,
+296, 400, 607, 632, 633, 828, 843 and 844, plus `MantineDataTableToCards.tsx:250`. It was not run by this task.
+
+### 17.9 Conditions for a future `READY` audit
+
+1. A disposition exists for all 185 `@theme inline`-only names.
+2. The ten live `@apply` rules are removed or re-homed to compiler-independent CSS.
+3. A decided answer exists for the 18 residual reads, including D65-A.
+4. An evidenced classification exists for the B4 literal-`className` surface.
+
+Route-composition certification is an accepted limitation, not a condition. *None of these is authorized, scheduled
+or numbered by Task 771.*
+
+### 17.10 What this record does not authorize
+
+No `@import`, `@apply`, `@source`, `@custom-variant`, dependency, PostCSS-plugin, token or story change is
+authorized by this record; nothing here certifies a route; a future audit is re-designed against its own baseline,
+not against these numbers.

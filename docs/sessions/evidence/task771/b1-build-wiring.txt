@@ -1,0 +1,33 @@
+### Select-String -Path src/app/globals.css -Pattern '^@(import|source|custom-variant|plugin|config)' | Select-Object LineNumber, Line
+
+LineNumber Line
+---------- ----
+         1 @import "tailwindcss";
+         2 @import "tw-animate-css";
+         3 @import "shadcn/tailwind.css";
+        11 @source not "../../docs";
+        12 @source not "../../tasks";
+        25 @source not "../../scripts";
+        27 @custom-variant dark (&:is(.dark *));
+exit=0
+
+### Get-Content postcss.config.mjs
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+exit=0
+
+### Select-String -Path package.json -Pattern 'tailwindcss|@tailwindcss/postcss|tw-animate-css|"shadcn"|class-variance-authority|clsx|tailwind-merge'
+
+package.json:115:    "class-variance-authority": "^0.7.1",
+package.json:116:    "clsx": "^2.1.1",
+package.json:134:    "tailwind-merge": "^3.5.0",
+package.json:135:    "tw-animate-css": "^1.4.0",
+package.json:144:    "@tailwindcss/postcss": "^4",
+package.json:160:    "shadcn": "^4.3.0",
+package.json:162:    "tailwindcss": "^4",
+exit=0

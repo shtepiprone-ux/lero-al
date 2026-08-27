@@ -1,0 +1,22 @@
+### node.exe $env:TEMP\task771-theme-inline-census.mjs (Get-Location).Path
+plain :root names: 111
+@theme inline names: 185
+theme-inline-ONLY names: 185
+files: 8 | pairs: 18 | uses: 27 | story uses: 4
+  src/app/[locale]/listings/[slug]/loading.tsx  3/3  --listing-gallery-h-mobile,--listing-gallery-h-tablet,--listing-gallery-h-desktop
+  src/components/shared/PerfDevOverlay.tsx  2/3  --color-status-success,--color-status-warning
+  src/components/ui/button.tsx  1/4  --radius-md
+  src/design-system/mantine/input-chrome.css  1/1  --color-input
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  3/6  --listing-gallery-h-mobile,--listing-gallery-h-tablet,--listing-gallery-h-desktop
+  src/modules/listings/components/GalleryStaticFrame.tsx  3/3  --listing-gallery-h-mobile,--listing-gallery-h-tablet,--listing-gallery-h-desktop
+  src/modules/listings/components/ListingGallery.tsx  3/3  --listing-gallery-h-mobile,--listing-gallery-h-tablet,--listing-gallery-h-desktop
+  src/stories/mantine/primitives/HeroSearch.stories.tsx  2/4  --space-16,--space-24
+exit=0
+
+### git --no-optional-locks status --porcelain (must be empty)
+STDOUT:
+
+STDERR:
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+exit=0

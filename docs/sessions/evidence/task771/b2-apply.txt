@@ -1,0 +1,39 @@
+### (Select-String -Path src/app/globals.css -Pattern '@apply').Count
+10
+exit=0
+
+### Select-String -Path src/app/globals.css -Pattern '@apply' | Select-Object LineNumber, Line
+
+LineNumber Line
+---------- ----
+       612     @apply border-border outline-ring/50;
+       616     @apply font-sans antialiased;
+       629     @apply bg-background text-foreground;
+       635     @apply outline-2 outline-offset-2 outline-ring;
+       640   ::-webkit-scrollbar-track { @apply bg-muted; }
+       641   ::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+       642   ::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/40; }
+       651     @apply font-semibold leading-tight tracking-tight;
+       655     @apply leading-relaxed;
+       660     @apply max-w-full;
+exit=0
+
+### rg.exe -n '@apply' src --glob '!src/app/globals.css'
+src\components\auth\CaptchaWidget.tsx:32:    // lh is 19.5px (not text-xs's paired 16px): globals.css's `p { @apply leading-relaxed }`
+src\modules\notifications\components\NotificationItem.tsx:214:            `p { @apply leading-relaxed }` base rule won over text-xs's own paired 16px line-height
+src\modules\notifications\components\NotificationCenter.tsx:57:            globals.css's `p { @apply leading-relaxed }` wins over text-sm's own paired 20px
+src\components\ui\PasswordRequirementsHint.tsx:53:        // lh matches the pre-migration <p>'s measured 19.5px (globals.css `p { @apply
+src\components\layout\FooterView.module.css:23: * `p { @apply leading-relaxed; }` base rule (`globals.css` `@layer base`, ~line 583) for their
+src\components\layout\MobileNavDrawer.tsx:52:                  pre-migration, so globals.css's `p { @apply leading-relaxed }` base rule won
+exit=0
+### Classification of rg.exe hits after opening each source location
+| File | Line | Classification | Direct context |
+|---|---:|---|---|
+| src/components/auth/CaptchaWidget.tsx | 32 | comment | `//` line comment |
+| src/modules/notifications/components/NotificationItem.tsx | 214 | comment | JSX `{/* ... */}` block |
+| src/modules/notifications/components/NotificationCenter.tsx | 57 | comment | JSX `{/* ... */}` block |
+| src/components/ui/PasswordRequirementsHint.tsx | 53 | comment | JSX expression with `//` comment |
+| src/components/layout/FooterView.module.css | 23 | comment | CSS `/* ... */` block |
+| src/components/layout/MobileNavDrawer.tsx | 52 | comment | JSX `{/* ... */}` block |
+
+RESULT: 6 hits, all six comment-only; zero live rule outside `src/app/globals.css`.

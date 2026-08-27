@@ -1,0 +1,203 @@
+### rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+  152
+exit=0
+ ### rg.exe 'className="' src -g '*.tsx' -g '!*.stories.tsx' | Measure-Object -Line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+ 2350
+exit=0
+ ### rg.exe -l '@/components/ui/' src -g '!*.stories.*' | Measure-Object -Line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+  102
+exit=0
+ ### rg.exe -l '@/components/ui/' src | Measure-Object -Line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+  110
+exit=0
+ ### (Get-ChildItem src/components/ui -File | Measure-Object).Count
+49
+exit=0
+ ### rg.exe -l 'className="' src -g '*.tsx' -g '!*.stories.tsx'
+src\components\listing\WhatsAppContactButton.tsx
+src\modules\contacts\components\ContactForm.tsx
+src\components\ui\table.tsx
+src\components\ui\switch.tsx
+src\components\ui\slider.tsx
+src\components\admin\AdminLegalManager.tsx
+src\components\ui\sheet.tsx
+src\components\admin\AdminInquiriesManager.tsx
+src\components\ui\dropdown-menu.tsx
+src\components\ui\dialog.tsx
+src\components\admin\AdminFooterManager.tsx
+src\components\ui\command.tsx
+src\components\ui\select.tsx
+src\components\admin\AdminExchangeProvidersManager.tsx
+src\components\admin\AdminEmailTemplatesManager.tsx
+src\components\ui\checkbox.tsx
+src\components\ui\scroll-area.tsx
+src\components\admin\AdminEditLayout.tsx
+src\modules\auth\components\ResetPasswordClient.tsx
+src\components\ui\radio-group.tsx
+src\components\admin\AdminDashboardRecentListings.tsx
+src\components\admin\AdminCurrencyTabs.tsx
+src\modules\cabinet\components\SavedSearchesTab.tsx
+src\modules\auth\components\AuthRedirect.tsx
+src\components\admin\AdminCurrenciesManager.tsx
+src\components\admin\AdminCompaniesManager.tsx
+src\modules\cabinet\components\ProfileTab.tsx
+src\components\layout\Section.tsx
+src\components\admin\AdminCardList.tsx
+src\modules\cabinet\components\ListingsTab.tsx
+src\components\ui\PasswordInput.tsx
+src\components\layout\PageShell.tsx
+src\modules\cabinet\components\CabinetShell.tsx
+src\components\ui\pagination.tsx
+src\components\admin\StatusChangeHistory.tsx
+src\modules\cabinet\components\CabinetPasswordSection.tsx
+src\components\admin\StatusChangeControl.tsx
+src\design-system\mantine\patterns\MantineHomeSection.tsx
+src\design-system\mantine\patterns\MantineListingGalleryPattern.tsx
+src\components\layout\PageHeader.tsx
+src\design-system\mantine\patterns\MantineListingDetailPattern.tsx
+src\components\ui\navigation-menu.tsx
+src\components\admin\AdminUserProfile.tsx
+src\components\admin\AdminUserCreate.tsx
+src\components\admin\AdminPropertyTypesManager.tsx
+src\components\admin\AdminUserAvatar.tsx
+src\design-system\mantine\patterns\RangeDatePicker.tsx
+src\components\admin\AdminPopularLocationsManager.tsx
+src\modules\listings\components\ActiveFilterChips.tsx
+src\components\admin\AdminTable.tsx
+src\modules\listings\components\ClearRecentlyViewedButton.tsx
+src\components\admin\AdminMobileHeader.tsx
+src\components\admin\AdminSupportManager.tsx
+src\components\admin\AdminLocationsManager.tsx
+src\components\admin\AdminPermissionsManager.tsx
+src\components\admin\AdminSidebar.tsx
+src\components\admin\AdminLocaleSwitcher.tsx
+src\components\admin\AdminPageShell.tsx
+src\components\admin\AdminListingsTable.tsx
+src\modules\listings\components\FavoritesTypeFilter.tsx
+src\components\admin\AdminShell.tsx
+src\modules\listings\components\CollectionsSection.tsx
+src\components\layout\FilterBar.tsx
+src\components\admin\AdminPagesManager.tsx
+src\components\admin\AdminSearchInput.tsx
+src\modules\listings\components\FavoritesShell.tsx
+src\components\admin\AdminReportsManager.tsx
+src\components\admin\AdminSettings.tsx
+src\modules\listings\components\FeaturedListingsView.tsx
+src\components\admin\AdminPageHeader.tsx
+src\modules\listings\components\GalleryStaticFrame.tsx
+src\components\shared\AvatarCropModal.tsx
+src\components\shared\DatePicker.tsx
+src\modules\listings\components\ImageUpload.tsx
+src\components\shared\MapWrapper.tsx
+src\modules\listings\components\form\AreaPairField.tsx
+src\components\shared\Combobox.tsx
+src\modules\listings\components\LatestListingsView.tsx
+src\modules\listings\components\form\BuildingFloorsField.tsx
+src\components\shared\Map.tsx
+src\modules\listings\components\LightboxView.tsx
+src\modules\listings\components\form\ButtonGroupField.tsx
+src\components\shared\FilterToggleGroup.tsx
+src\modules\listings\components\form\DynamicFieldSection.tsx
+src\modules\listings\components\ListingBackButton.tsx
+src\components\shared\HeroSearchView.tsx
+src\components\shared\PropertyTypeCombobox.tsx
+src\modules\listings\components\form\EnumSelectorField.tsx
+src\components\shared\PhoneField.tsx
+src\modules\listings\components\form\FloorGroupField.tsx
+src\components\shared\PerfDevOverlay.tsx
+src\modules\listings\components\form\MultiToggleField.tsx
+src\components\shared\YearCombobox.tsx
+src\app\[locale]\[slug]\page.tsx
+src\modules\listings\components\ListingDetailView.tsx
+src\modules\listings\components\form\NumInputField.tsx
+src\modules\listings\components\ListingContact.tsx
+src\app\[locale]\page.tsx
+src\modules\listings\components\form\YearComboboxField.tsx
+src\modules\listings\components\form\RoomsSelectorField.tsx
+src\modules\listings\components\ListingFormShell.tsx
+src\modules\listings\components\ListingFormShellView.tsx
+src\modules\listings\components\ListingGallery.tsx
+src\modules\listings\components\ListingMobileCTA.tsx
+src\modules\listings\components\ListingInquiryDialog.tsx
+src\components\shared\__tests__\heroSearch.smoke.test.tsx
+src\app\[locale]\auth\confirm-email\page.tsx
+src\modules\listings\components\ListingReportDialog.tsx
+src\modules\listings\components\ListingsFilterBar.tsx
+src\modules\listings\components\ListingsFilters.tsx
+src\modules\listings\components\ListingsPagination.tsx
+src\app\admin\currency\page.tsx
+src\modules\listings\components\ListingsShell.tsx
+src\modules\listings\components\ListingsSortBar.tsx
+src\modules\listings\components\ListingsStatusTabs.tsx
+src\modules\listings\components\ListingStatusBanner.tsx
+src\app\[locale]\favorites\page.tsx
+src\modules\listings\components\RecentlyViewedGridView.tsx
+src\app\admin\companies\page.tsx
+src\app\[locale]\favorites\loading.tsx
+src\modules\listings\components\RecentlyViewedSection.tsx
+src\modules\listings\components\SaveSearchButton.tsx
+src\app\[locale]\auth\verified\VerifiedCard.tsx
+src\modules\listings\components\SaveToCollectionButton.tsx
+src\app\[locale]\listings\[slug]\loading.tsx
+src\modules\listings\components\SimilarListings.tsx
+src\modules\listings\components\SimilarListingsView.tsx
+src\app\[locale]\contact\page.tsx
+src\app\[locale]\listings\[slug]\edit\page.tsx
+src\app\[locale]\listings\page.tsx
+src\app\[locale]\listings\create\page.tsx
+src\modules\listings\components\steps\StepBasicInfo.tsx
+src\modules\listings\components\steps\StepDetails.tsx
+src\app\admin\email-templates\page.tsx
+src\modules\listings\components\steps\StepLocation.tsx
+src\app\admin\footer\page.tsx
+src\modules\listings\components\__tests__\ListingCard.smoke.test.tsx
+src\modules\listings\components\steps\StepPhotos.tsx
+src\modules\listings\components\steps\StepPreview.tsx
+src\app\admin\users\[id]\page.tsx
+src\app\admin\popular-locations\page.tsx
+src\app\admin\page.tsx
+src\app\admin\inquiries\sales\page.tsx
+src\app\admin\users\page.tsx
+src\app\admin\settings\page.tsx
+src\app\admin\inquiries\support\page.tsx
+src\app\admin\reports\page.tsx
+src\app\admin\property-types\page.tsx
+src\app\admin\users\new\page.tsx
+src\app\admin\support\page.tsx
+src\app\admin\locations\page.tsx
+src\app\admin\pages\page.tsx
+exit=0
+ 
+### Distribution by top-level area (from the final rg.exe file list)
+  modules/listings  48
+  components/admin  33
+  app/admin  17
+  components/ui  14
+  components/shared  12
+  app/[locale]  11
+  modules/cabinet  5
+  components/layout  4
+  design-system/mantine  4
+  modules/auth  2
+  components/listing  1
+  modules/contacts  1
+
+### git --no-optional-locks status --porcelain after B4
+STDOUT:
+
+STDERR:
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+exit=0

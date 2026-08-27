@@ -7,8 +7,11 @@
 
 ## Last Session (2026-08-27)
 
-Task 771's orchestrator review is approved and committed; Sprint 65 is closed as a bounded Homepage
-Tailwind-exit delivery. Its closure does not claim route certification or global Tailwind retirement.
+Task 773 (owner-reported: picking a month closed the whole date-range calendar) is IMPLEMENTED under the explicit
+owner authorization for Opus to write the code; Sprint 67 opened for it. Root cause was a nested portalled combobox
+reading as an outside click. The finding that outranks the fix: **`env="test"` inlines Mantine portals, so no RTL
+test in this repo can see a portal-nesting defect** — the first regression test written for 773 passed on the broken
+tree. `npm run build` is outstanding and must be owner-native.
 
 ## Open — needs action
 
@@ -23,6 +26,7 @@ Tailwind-exit delivery. Its closure does not claim route certification or global
 |---|---|
 | 👁️ **Notification localization — one production QA pass.** ① Confirm `template_id` and `template_params` exist in Supabase. ② Open one template-driven notification under `/sq`, then the same notification under `/uk`. ③ Confirm the **same** notification localizes in **both** locales. | **PASS → archive this item.** **FAIL → file one P1 bug**, nothing else; no speculative task before a measured FAIL. Supersedes the old open-ended "eyeball `/sq`" item (owner decision 2026-08-27). |
 | 🐞 **`/listings` mobile overflow — P1, filed as Task 772** (`tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`). Scope is **`ListingsSortBar` mobile layout only**; no unrelated de-Tailwind or component migration. | Owner action: dispatch 772 to an executor. Proof it must return: real `/listings` at **320 · 375 · 390 × sq/en/uk/it**, `documentElement.scrollWidth <= clientWidth + 2`, filters and sort still usable, controls ≥ **44px** touch targets. |
+| 👁️ **Task 773 — native gate + one real-browser pass.** Fix landed for the Advanced-filters date calendar closing on month/year pick. | Run `npm run build` (**required, exit 0, not reproducible off-device**), `npm run typecheck`, `lint`, `check:i18n`, `check:mojibake`. Then **in a browser**: Homepage → Advanced filters → calendar → Month, then Year — panel stays open, both panes advance, list not clipped (`uk@320` + one desktop width). Also noted in passing: `npm ci` fails on pre-existing lockfile drift (`Missing: webpack@5.110.0`). |
 | 🖋️ **Task 313 (Verified Agents) — sign the schema contract to authorize execution.** The contract is recorded verbatim at `tasks/Epics/Epic_HH_Admin_UX_System.md` → "Task 313 — owner schema contract": `verification_state`; immutable `user_verification_events`; a DB transaction that validates allowed state transitions **and** writes the audit event; public output exposes **only** `is_verified`; admin-only by default, moderator explicitly denied until separately granted. | Owner signs the contract → 313 becomes executable. Until signed, no kickoff and no implementation. |
 
 ## Sprints
@@ -36,8 +40,9 @@ Tailwind-exit delivery. Its closure does not claim route certification or global
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
+**Sprint 67 — Nested floating layers, and the gate that cannot see them** (`tasks/Sprints/Sprint_67_Nested_Floating_Layers.md`): **773** only, P1, `IMPLEMENTED — AWAITING OWNER NATIVE GATE`. Opened 2026-08-27 — no open sprint fits (goal-fit table in the plan file); 55 is closest in spirit but its subject is ARIA. Its transferable output is the finding, not the 3-line fix: **under `MantineProvider env="test"` Mantine inlines every portal, so the entire RTL layer is structurally blind to portal-nesting defects in ALL Mantine overlays** — and without `env="test"` jsdom’s 0×0 rects disable click-outside instead. Exit criteria 2–4 (record it, name the detector, audit the other nested sites) are 🟠 OPEN.
 
-## Task registry — single source for every open number. Last used **772**, NEXT FREE **773**.
+## Task registry — single source for every open number. Last used **773**, NEXT FREE **774**.
 
 > Allocatable and reserved numbers only. A number leaves this table when its task is archived. Full justification for a reserved number → [`backlog-reserved.md`](backlog-reserved.md); retired and folded numbers → the same file's "Registry bookkeeping".
 

@@ -29,7 +29,7 @@
 
 import React from 'react'
 import { describe, it, expect, vi, beforeAll, beforeEach, afterEach } from 'vitest'
-import { render, fireEvent, cleanup, within, screen } from '@testing-library/react'
+import { render, fireEvent, cleanup, within, screen, waitFor } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
 import { format } from 'date-fns'
@@ -235,5 +235,104 @@ describe('ListingsFilters — RangeDatePicker wiring (Task 559)', () => {
     const pushedUrl = mockRouterPush.mock.calls[0][0] as string
     expect(pushedUrl).not.toContain('date_from=')
     expect(pushedUrl).not.toContain('date_to=')
+  })
+})
+
+// ── Task 773 ────────────────────────────────────────────────────────────────────────────────
+// Registry: docs/critical-flow-registry.md -> "Listings date-range filter".
+//
+// Defect (owner-reported, 2026-08-27): in the "Advanced filters" drawer, opening the
+// RangeDatePicker and choosing a MONTH closed the whole calendar instead of moving it.
+//
+// Mechanism, established from source rather than inferred:
+//   * Mantine `Popover` closes through `useClickOutside(cb, ['mousedown','touchstart'],
+//     [targetNode, dropdownNode])` (Popover.mjs:159) and that hook triggers when
+//     `event.composedPath()` contains NEITHER node (use-click-outside.mjs).
+//   * `MantineCombobox` renders its option list through Mantine's `Combobox`, whose
+//     `withinPortal` defaults to `true` (Combobox.mjs:41) -> the list mounts in the shared
+//     `[data-mantine-shared-portal-node]` as a SIBLING of the calendar popover's dropdown,
+//     never a descendant.
+//   * `ComboboxOption` calls `event.preventDefault()` on mousedown but never
+//     `stopPropagation()` (ComboboxOption.mjs:61-63), so that mousedown does reach the document
+//     listener -> composedPath misses the calendar dropdown -> the calendar closes.
+//
+// WHY THIS TEST ASSERTS DOM CONTAINMENT AND NOT "the calendar is still open".
+// jsdom cannot observe the symptom in EITHER provider configuration, which is also why the 6
+// tests above (and the 14 in the two RangeDatePicker suites) never caught this:
+//   * with `env="test"` — the configuration every existing suite uses — Mantine's
+//     `OptionalPortal` returns its children inline (`env === "test" || !withinPortal`,
+//     OptionalPortal.mjs), so `withinPortal` is a NO-OP and the option is already a descendant.
+//     The whole RTL suite is structurally blind to portal-nesting defects.
+//   * without `env="test"` the portals are real, but every jsdom rect is 0x0, so the popover's
+//     `hideDetached` marks the reference hidden and click-outside stops firing altogether
+//     (verified: a `mousedown` on `document.body` does NOT close the calendar there).
+// Containment is therefore the strongest claim jsdom can make — and it is exactly the predicate
+// `composedPath().includes(dropdownNode)` evaluates in a real browser. Real-browser proof of the
+// user-visible behavior is out of this task's reach; see the follow-up filed in docs/backlog.md.
+//
+// Planted-violation proof (run, then reverted): dropping `withinPortal={false}` from the month
+// selector in RangeDatePicker.tsx makes assertion 2 below FAIL — the option list mounts outside
+// the calendar dropdown (`contains` -> false).
+
+// This suite's shared `withProviders` sets `env="test"`, which disables portals and would make
+// the assertion below vacuously pass. This one test must run against REAL portals.
+function withRealPortals(children: React.ReactNode) {
+  return (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme}>{children}</MantineProvider>
+    </NextIntlClientProvider>
+  )
+}
+
+describe('FiltersPanel — in-calendar month selector stays inside the calendar popover (Task 773)', () => {
+  it('mounts the month option list inside the calendar dropdown, and the pick takes effect', async () => {
+    render(
+      withRealPortals(
+        <FiltersPanel
+          open
+          onClose={() => {}}
+          values={{ date_from: ANCHOR_FROM, date_to: undefined }}
+          onChange={() => {}}
+          onApply={() => {}}
+          locations={[]}
+        />,
+      ),
+    )
+
+    // Open the calendar. ANCHOR_FROM anchors the left pane on January 2026; day cells carry
+    // `data-date`, which is the portal-agnostic "the calendar panel is mounted" probe.
+    fireEvent.click(within(document.body).getByDisplayValue('10.01.2026'))
+    await waitFor(() => {
+      if (document.querySelectorAll('[data-date]').length === 0) throw new Error('calendar not open')
+    })
+
+    // The calendar's own popover dropdown = the `.mantine-Popover-dropdown` holding the day grid.
+    // Selecting it by content rather than by order keeps this stable once the nested combobox
+    // mounts a second `.mantine-Popover-dropdown` of its own.
+    const calendarDropdown = Array.from(
+      document.querySelectorAll('.mantine-Popover-dropdown'),
+    ).find((d) => d.querySelector('[data-date]'))
+    expect(calendarDropdown).toBeTruthy()
+
+    // Open the nested month selector (MantineCombobox variant="button", aria-label "Month").
+    fireEvent.click(document.querySelector('input[aria-label="Month"]') as HTMLElement)
+    await waitFor(() => {
+      if (within(document.body).queryAllByText('March').length === 0) throw new Error('no options')
+    })
+    const marchOption = within(document.body).getAllByText('March')[0]
+
+    // 1. Sanity: the option really is rendered (guards against a vacuous pass if the dropdown
+    //    silently stopped opening).
+    expect(marchOption).toBeTruthy()
+    // 2. THE REGRESSION ASSERTION: the option must live inside the calendar popover's own
+    //    dropdown subtree, so its `mousedown` is an INSIDE click for `useClickOutside`.
+    expect(calendarDropdown!.contains(marchOption)).toBe(true)
+
+    // 3. The fix must not break selection itself: a real pointer press fires mousedown then
+    //    click, and the calendar must re-anchor on the chosen month.
+    fireEvent.mouseDown(marchOption)
+    fireEvent.click(marchOption)
+    expect((document.querySelector('input[aria-label="Month"]') as HTMLInputElement).value).toBe('March')
+    expect(document.querySelectorAll('[data-date]').length).toBeGreaterThan(0)
   })
 })

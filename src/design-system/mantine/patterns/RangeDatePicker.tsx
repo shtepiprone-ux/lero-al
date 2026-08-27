@@ -452,6 +452,13 @@ function DesktopBody({
             <ChevronLeft size={16} />
           </ActionIcon>
           <Group gap="xs" wrap="nowrap">
+            {/* Task 773: `withinPortal={false}` on BOTH in-calendar selectors. These render inside
+                the desktop calendar's own `MantinePopover` dropdown; a portalled option list is a
+                sibling of that dropdown in Mantine's shared portal node, never a descendant, so
+                the `mousedown` that selects an option fails the popover's
+                `composedPath().includes(dropdownNode)` outside-click test and closes the whole
+                calendar before the pick lands. Rendering the list inline keeps it inside the
+                popover's DOM subtree. Owner-reported 2026-08-27. */}
             <MantineCombobox
               variant="button"
               options={monthOptions}
@@ -460,6 +467,7 @@ function DesktopBody({
               noResultsLabel={t('no_results')}
               triggerAriaLabel={t('period_month')}
               triggerWidth={150}
+              withinPortal={false}
             />
             <MantineCombobox
               variant="button"
@@ -468,6 +476,7 @@ function DesktopBody({
               onChange={(v) => setLeftMonth(new Date(Number(v), anchorMonth.getMonth(), 1))}
               noResultsLabel={t('no_results')}
               triggerWidth={100}
+              withinPortal={false}
             />
           </Group>
           <Text c="gray.5" fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>

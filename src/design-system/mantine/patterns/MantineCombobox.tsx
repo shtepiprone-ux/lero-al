@@ -89,6 +89,17 @@ export interface MantineComboboxProps {
    * rows — Task 556). Default `undefined` — this prop changes nothing when absent.
    */
   dropdownMinWidth?: number
+  /**
+   * Passed straight through to Mantine's `Combobox` (which defaults it to `true`). Set `false`
+   * when this combobox is rendered INSIDE another floating layer whose `closeOnClickOutside`
+   * would otherwise tear that layer down: Mantine's `Popover` closes via `useClickOutside`, which
+   * tests `event.composedPath().includes(dropdownNode)` on `mousedown` — a portalled option list
+   * is a SIBLING of the outer dropdown in `[data-mantine-shared-portal-node]`, never a
+   * descendant, so pressing an option reads as an outside click and closes the outer layer
+   * (Task 773 — `RangeDatePicker`'s in-calendar month/year selectors). Default `undefined` —
+   * this prop changes nothing when absent (Mantine's own `true` still applies).
+   */
+  withinPortal?: boolean
 }
 
 function CheckIcon() {
@@ -167,6 +178,10 @@ function filterOptions(options: MantineComboboxOption[], query: string): Mantine
  * inside a scroll container out of the box. `dropdownMinWidth` (Task 556 STOP-and-ASK #2, owner
  * Option A) covers the first Phase-2 consumer that needs it — a compact fixed-width trigger
  * (`PhoneField`'s country selector) whose dropdown content is wider than the trigger itself.
+ *
+ * Task 773 adds the opt-OUT (`withinPortal={false}`) rather than the legacy opt-in: portalling is
+ * still the right default for the clipping case above, but it is the WRONG default when this
+ * primitive is nested inside another floating layer — see the `withinPortal` prop doc below.
  */
 export function MantineCombobox({
   options,
@@ -188,6 +203,7 @@ export function MantineCombobox({
   onInputChange,
   onKeyDown,
   dropdownMinWidth,
+  withinPortal,
 }: MantineComboboxProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
@@ -255,7 +271,7 @@ export function MantineCombobox({
 
   return (
     <Box>
-      <Combobox store={combobox} onOptionSubmit={handleSelect}>
+      <Combobox store={combobox} onOptionSubmit={handleSelect} withinPortal={withinPortal}>
         <Combobox.Target targetType={variant === 'input' ? 'input' : 'button'}>
           {variant === 'input' ? (
             <TextInput

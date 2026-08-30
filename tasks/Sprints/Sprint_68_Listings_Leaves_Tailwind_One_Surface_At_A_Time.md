@@ -66,7 +66,7 @@ this sprint as written:
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ⛔ **BLOCKED — OWNER DECISION REQUIRED (D775-A, D775-B)** 2026-08-30 — `Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`. Complete in every other section; dispatchable the moment both decisions are answered. |
+| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **KICKOFF FILED — READY** 2026-08-30 — `Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`. **A2 + B2 + C1**, all three closed by the owner 2026-08-30 and bound to one route each with binary ACs (AC3, AC4, AC12). Awaiting executor dispatch. |
 
 ## Execution order
 
@@ -104,14 +104,36 @@ alternative entry point; 775 then follows it unchanged.
 3. No slice in this sprint changes the filter URL contract, the SSR query, `listings_restore`, the favorites set, or
    the currency behavior. Any of those changing is a rejected diff, not a note.
 4. No slice touches `ListingsSortBar` or `SaveSearchButton` while Task 772 is open.
-5. The sprint states, in writing, what the page-width contract for `/listings` is after migration — either the
-   byte-identical `.container-wide` geometry or an owner-approved delta — so that later slices inherit a decision
-   rather than re-litigating it.
+5. Every later slice inherits **D775-A**, **D775-B** and whatever **D775-C** settles, rather than re-litigating
+   them: layout in Mantine responsive props on this theme's breakpoints, visual values from TailAdmin through
+   registered tokens. A slice that needs to depart from any of them states why and stops for an owner decision.
 
-## Open decisions
+## Decisions
+
+### Closed — binding on this sprint
+
+| ID | Decision | Decided |
+|---|---|---|
+| **D775-C = C1** | The Mantine spacing scale gains two semantic keys, `2xl: '2rem'` and `3xl: '3rem'`, declared natively in the Mantine types through `MantineThemeSizesOverride`. A migrated surface then expresses its gutter as `md → xl → 2xl → 3xl` — Mantine tokens only, no raw values, no `design-tokens-allow:` markers, no Tailwind vars. C2 was rejected as a permanent exception inside a new Mantine surface, C3 as a return to the Tailwind token layer. | Owner, 2026-08-30 |
+| **D775-A = A2** | The gutter uses **Mantine responsive props only**, with the top step at `xxl = 1440`. **1536 is not used anywhere** — neither a Mantine breakpoint nor a CSS-module media query. A1 and A3 were rejected because both carry a legacy Tailwind container or breakpoint into a new Mantine component. The resulting padding change across **1440–1535px** (`2rem → 3rem`) is an accepted migration outcome, not a regression. | Owner, 2026-08-30 (revised the same day, superseding A1) |
+| **D775-B = B2** | Migrated breadcrumb chrome takes the measured TailAdmin contract: 14px, link gray-500, current gray-800, gap 6px, separator gray-400 — the only route that gives migrated chrome TailAdmin provenance. B1 was rejected because it preserves a legacy deviation inside a new Mantine component. | Owner, 2026-08-30 |
+
+Both bind every later slice in this sprint: a migrated `/listings` surface expresses layout in Mantine responsive
+props on this theme's breakpoints — never a reproduced Tailwind container and never 1536 — and takes its visual
+values from TailAdmin through registered theme tokens (**D27** — token, not hex).
+
+They also give the sprint its token rule: a migrated surface consumes **Mantine tokens only**. A raw value, an
+allowlist marker or a `--space-*` reference in a migrated file is a rejected diff, not a note.
+
+Two accepted, temporary divergences follow and are **not** defects to fix inside this sprint. `/favorites` and the
+listing detail page keep the legacy breadcrumb until their own migration. And because `HeaderView.tsx:114` and
+`FooterView.tsx:69` still carry `.container-wide`, a migrated page's content column stops aligning with the site
+chrome across **1440–1535px**, against `docs/design-system.md:155`. The owner accepted this explicitly and forbade
+widening Task 775 to those files: *"лише виміряти й зафіксувати це в evidence."* It resolves when the header and
+footer migrate — a candidate slice for this sprint, not a defect.
+
+### Open
 
 | ID | Decision | Owner | Blocks |
 |---|---|---|---|
 | **D68-1** | Task 772 lands first and the toolbar slices re-measure after it, **or** 772 is explicitly folded into this sprint. | Owner | sprint order, not 775 |
-| **D775-A** | Page-width contract for `ListingsPageFrame` — see the kickoff §5. | Owner | 775 |
-| **D775-B** | Breadcrumb type scale — preserve the current 12px, or adopt the measured TailAdmin 14px. See the kickoff §5. | Owner | 775 |

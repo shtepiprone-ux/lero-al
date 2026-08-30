@@ -99,3 +99,48 @@ this list exists so the pass is traceable from one place.
 | `/listings` mobile overflow | Filed as **Task 772** in **Sprint 66**, scoped to `ListingsSortBar` mobile layout only | `tasks/Sprints/Sprint_66_*` |
 | Task 313 | Approved to start **only** under the five-clause schema contract, once the owner signs it | `tasks/Epics/Epic_HH_Admin_UX_System.md` |
 | Task 689 | Acknowledged retired; no task, no review, no new evidence | `docs/backlog-archive.md` |
+
+### D775-A
+
+**D775-A = A2 — CLOSED 2026-08-30 (owner, Task 775).** A migrated public surface expresses its page gutter in
+**Mantine responsive props only**, on this theme's breakpoints, with the top step at **`xxl = 1440`**. **1536 is not
+used anywhere** — not as a Mantine breakpoint, not as a CSS-module media query, not as a literal. `max-width` comes
+from the registered root token `var(--width-page-max)` (`globals.css:299`). Rejected: **A1**, a component CSS module
+reproducing `.container-wide`'s ladder, and **A3**, keeping `className="container-wide"` — *"вони тягнуть legacy
+Tailwind container/breakpoint у новий Mantine-компонент"*. The consequence is bounded and accepted: because
+`.container-wide` steps to 3rem at 1536 and the Mantine ladder steps at 1440, a migrated surface pads **3rem where
+the legacy markup padded 2rem across 1440–1535px** — *"усвідомлений результат міграції на Mantine, не регресія"*.
+Second-order effect, recorded when the decision was applied: `HeaderView.tsx:114` and `FooterView.tsx:69` still carry
+`.container-wide`, so in that same band a migrated page's content column no longer aligns with the site chrome,
+against `docs/design-system.md:155`. That divergence is accepted until the header and footer migrate; Task 775
+measures and reports it. Its `2rem` and `3rem` steps are supplied by **D775-C**.
+
+### D775-B
+
+**D775-B = B2 — CLOSED 2026-08-30 (owner, Task 775).** Migrated breadcrumb chrome takes the **measured TailAdmin
+contract** (`docs/tailadmin-style-reference.md` §6d `:154`-`:156`, measured row `:453`): **14px**, link **gray-500**,
+current page **gray-800**, separator **gray-400**, gap **6px**. Rationale: it is the only route under which migrated
+chrome has TailAdmin provenance (`agent-contract.md` 16). Rejected: **B1**, preserving the legacy 12px /
+`--muted-foreground` deviation inside a new Mantine component. Consumption is **token, not hex** (**D27**): the three
+values are already the registered theme tuple `gray.4` / `gray.5` / `gray.8` (`theme.ts:5`-`:16`), and 14px is
+`fontSizes.sm` (`:222`), i.e. `Breadcrumbs size="sm"` — a raw hex or raw px in a consumer is a violation, not a
+shortcut. Scope, owner, same date: `/favorites` (`page.tsx:72`) and the listing detail page
+(`ListingDetailView.tsx:190`) keep the legacy breadcrumb until their own migration; the resulting temporary
+difference between those routes and `/listings` is accepted, not a defect.
+
+### D775-C
+
+**D775-C = C1 — CLOSED 2026-08-30 (owner, Task 775).** The Mantine spacing scale gains two semantic keys —
+**`2xl: '2rem'`** and **`3xl: '3rem'`** — so a migrated public surface expresses its page gutter as the Mantine token
+ladder **`md → xl → 2xl → 3xl`**, with **no raw values, no `design-tokens-allow:` markers and no Tailwind variables**.
+The keys are declared **natively in the Mantine types** via `declare module '@mantine/core'` augmenting
+`MantineThemeSizesOverride.spacing` with all seven keys (owner: *"краще використовувати рідні Mantine ключі spacing у
+типах"*); omitting a default key would retype `theme.spacing` for every existing consumer. Rejected: **C2**, raw
+values plus gate markers — *"створює постійний виняток у новому Mantine surface"*; **C3**, `--space-8`/`--space-12` —
+*"повертає залежність від Tailwind-token layer"*, and those names live inside `@theme inline` (`globals.css:35`,
+`:132`-`:140`), the family Sprint 62/65 is retiring. Verified in the installed framework before adoption: custom
+spacing keys are emitted as CSS variables (`default-css-variables-resolver.mjs:85` iterates the whole `theme.spacing`
+object) and resolve through `spacing-resolver.mjs`. **Known limit, not a defect:** `_MantineSpacing` keeps an
+unconditional `| (string & {})` member (`theme.types.d.ts:138`-`:140`), so the augmentation gives autocomplete and one
+declared source of truth but does **not** reject a mistyped key — a typo compiles and silently renders a raw length.
+A rendered assertion, not the type, is the guard.

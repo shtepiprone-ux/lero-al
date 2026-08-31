@@ -2381,7 +2381,15 @@
       "home_section_caption_muted": "Attenuato — sfondo con tinta al 30%",
       "home_section_caption_brandfade": "Sfumatura del brand — sfondo con gradiente diagonale",
       "home_section_body": "Il ritmo verticale (48 / 64 / 80px) e lo sfondo sono basati su token; ogni sezione racchiude il contenuto in `.container-wide`.",
-      "home_section_cta": "Vedi gli annunci"
+      "home_section_cta": "Vedi gli annunci",
+      "listings_page_frame_home": "Home",
+      "listings_page_frame_current": "Annunci",
+      "listings_page_frame_aria": "Percorso di navigazione",
+      "listings_page_frame_home_long": "Home page dell'intero mercato immobiliare Lero",
+      "listings_page_frame_current_long": "Tutti gli annunci immobiliari attualmente disponibili in vendita e in affitto in tutta l'Albania",
+      "listings_page_frame_body": "Segnaposto dei risultati degli annunci",
+      "listings_page_frame_section_short": "Etichette brevi",
+      "listings_page_frame_section_long": "Etichette localizzate più lunghe"
     }
   },
   "ui": {

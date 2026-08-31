@@ -2381,7 +2381,15 @@
       "home_section_caption_muted": "Muted — 30% tinted band background",
       "home_section_caption_brandfade": "Brand fade — diagonal gradient background",
       "home_section_body": "Vertical rhythm (48 / 64 / 80px) and background are token-driven; every band wraps its content in `.container-wide`.",
-      "home_section_cta": "View listings"
+      "home_section_cta": "View listings",
+      "listings_page_frame_home": "Home",
+      "listings_page_frame_current": "Listings",
+      "listings_page_frame_aria": "Breadcrumb",
+      "listings_page_frame_home_long": "Homepage of the entire Lero real estate marketplace",
+      "listings_page_frame_current_long": "All property listings currently available for sale and rent across Albania",
+      "listings_page_frame_body": "Listing results placeholder",
+      "listings_page_frame_section_short": "Short labels",
+      "listings_page_frame_section_long": "Longest localized labels"
     }
   },
   "ui": {

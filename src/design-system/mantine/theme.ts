@@ -1,6 +1,17 @@
 import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
 import { brand } from '@/design-system/brand'
 
+// Task 775 (D775-C = C1) — native Mantine typing for the two additive spacing keys below.
+// MantineThemeSizesOverride lists ALL seven keys (not just the two new ones): omitting a default
+// would retype theme.spacing for every existing consumer in src/ (§3.3c). The `(string & {})`
+// escape hatch in Mantine's own _MantineSpacing type still accepts a mistyped key silently (it is
+// NOT typo-proof) — AC12's rendered assertion is the actual guard, not this augmentation.
+declare module '@mantine/core' {
+  export interface MantineThemeSizesOverride {
+    spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl', string>
+  }
+}
+
 // TailAdmin gray scale (Task 484 §1b — source of truth for neutral tones)
 const gray: MantineColorsTuple = [
   '#f9fafb', // 0 — gray-50
@@ -193,6 +204,12 @@ export const theme = createTheme({
     md: '1rem',      // 16px — card inner gap, table vertical spacing
     lg: '1.25rem',   // 20px — card padding, table horizontal spacing, block gaps
     xl: '1.5rem',    // 24px — page section separation
+    // Task 775 (D775-C = C1) — the two upper steps of the `.container-wide` gutter ladder
+    // (globals.css:705-715: 2rem from 1024px, 3rem from 1536px), added natively to the Mantine
+    // scale so ListingsPageFrame's page-width gutter (D775-A = A2) consumes only Mantine spacing
+    // tokens, never a `.container-wide` reference or a raw px/rem gutter value.
+    '2xl': '2rem',   // 32px — container-wide's ≥1024px step
+    '3xl': '3rem',   // 48px — container-wide's ≥1536px step
   },
 
   // Radius: TailAdmin real values (§1b). lg=8px for controls, 2xl=16px for Card/Paper.

@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { ListingsPageFrame } from '@/modules/listings/components/ListingsPageFrame'
 import { ListingsShell } from '@/modules/listings/components/ListingsShell'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
@@ -78,31 +78,21 @@ export default async function ListingsPage({ params, searchParams }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Breadcrumbs */}
-      <div className="bg-muted/40 border-b">
-        <div className="container-wide py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label={tc('aria_breadcrumb')}>
-            <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
-              {tNav('home')}
-            </Link>
-            <span>/</span>
-            <span className="text-foreground">{t('listings_page_title')}</span>
-          </nav>
-        </div>
-      </div>
-
-      <div className="container-wide py-6">
-        <ListingsShell
-          listings={(listings ?? []) as unknown as CardListingData[]}
-          total={count ?? 0}
-          page={page}
-          locations={locations ?? []}
-          activeFiltersCount={countActiveFilters(filters)}
-          tab={tab}
-          favoriteIds={favoriteIds}
-        />
-      </div>
-    </div>
+    <ListingsPageFrame
+      homeHref={`/${locale}`}
+      homeLabel={tNav('home')}
+      currentLabel={t('listings_page_title')}
+      breadcrumbAriaLabel={tc('aria_breadcrumb')}
+    >
+      <ListingsShell
+        listings={(listings ?? []) as unknown as CardListingData[]}
+        total={count ?? 0}
+        page={page}
+        locations={locations ?? []}
+        activeFiltersCount={countActiveFilters(filters)}
+        tab={tab}
+        favoriteIds={favoriteIds}
+      />
+    </ListingsPageFrame>
   )
 }

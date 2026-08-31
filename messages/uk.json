@@ -2381,7 +2381,15 @@
       "home_section_caption_muted": "Приглушений — фон з 30% відтінком",
       "home_section_caption_brandfade": "Градієнт бренду — діагональний градієнтний фон",
       "home_section_body": "Вертикальний ритм (48 / 64 / 80px) і фон задаються токенами; кожна секція обгортає вміст у `.container-wide`.",
-      "home_section_cta": "Переглянути оголошення"
+      "home_section_cta": "Переглянути оголошення",
+      "listings_page_frame_home": "Головна",
+      "listings_page_frame_current": "Оголошення",
+      "listings_page_frame_aria": "Навігаційний шлях",
+      "listings_page_frame_home_long": "Головна сторінка всього ринку нерухомості Lero",
+      "listings_page_frame_current_long": "Усі оголошення про нерухомість, доступні для продажу та оренди по всій Албанії",
+      "listings_page_frame_body": "Заповнювач результатів списку оголошень",
+      "listings_page_frame_section_short": "Короткі підписи",
+      "listings_page_frame_section_long": "Найдовші локалізовані підписи"
     }
   },
   "ui": {

@@ -2381,7 +2381,15 @@
       "home_section_caption_muted": "E zbehur — sfond me nuancë 30%",
       "home_section_caption_brandfade": "Zbehje e markës — sfond me gradient diagonal",
       "home_section_body": "Ritmi vertikal (48 / 64 / 80px) dhe sfondi bazohen te tokena; çdo brez e mbështjell përmbajtjen në `.container-wide`.",
-      "home_section_cta": "Shiko listimet"
+      "home_section_cta": "Shiko listimet",
+      "listings_page_frame_home": "Kryefaqja",
+      "listings_page_frame_current": "Njoftimet",
+      "listings_page_frame_aria": "Rrugëzimi",
+      "listings_page_frame_home_long": "Faqja kryesore e të gjithë tregut të pasurive të paluajtshme Lero",
+      "listings_page_frame_current_long": "Të gjitha njoftimet për prona aktualisht në shitje dhe me qira në të gjithë Shqipërinë",
+      "listings_page_frame_body": "Vendmbajtës i rezultateve të listimeve",
+      "listings_page_frame_section_short": "Etiketa të shkurtra",
+      "listings_page_frame_section_long": "Etiketat më të gjata të lokalizuara"
     }
   },
   "ui": {

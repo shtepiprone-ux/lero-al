@@ -1,0 +1,21 @@
+/* Task 775 — breadcrumb-only lengths/states with no Mantine token and no reachable Mantine
+   CSS-variable hook. The page-width gutter itself (D775-A = A2) lives entirely in Mantine
+   responsive props on ListingsPageFrame.tsx — this file must never gain a container, max-width,
+   or breakpoint rule. */
+
+/* page.tsx:84 `.container-wide py-2.5` = 10px vertical padding on the breadcrumb band. No Mantine
+   spacing token matches 10px (xs=8px, sm=12px, docs/design-system.md `.container-wide` ladder),
+   so the measured length is preserved directly rather than rounded to an adjacent token. */
+.breadcrumbBand {
+  padding-block: 0.625rem; /* design-tokens-allow: padding-block: 0.625rem — page.tsx:84 container-wide py-2.5 = 10px, no Mantine spacing token matches (xs=8px, sm=12px), preserved geometry not a gutter value */
+}
+
+/* §3.3a — hover preserves the existing semantic: the home link darkens to the current-page
+   colour (gray.8), no new colour introduced. Mantine's compiled Anchor CSS
+   (`node_modules/@mantine/core/styles.css` `.m_849cf0da`) has no hover-color hook at all (only a
+   `text-decoration` toggle), so there is no `vars`-reachable CSS variable to piggyback on the way
+   `--button-hover` works for Button (theme.ts) — a real `:hover` rule is the only mechanism, and
+   it must live in this component's own CSS module, not `theme.ts` (out of scope per D775-C = C1). */
+.homeLink:hover {
+  color: var(--mantine-color-gray-8);
+}

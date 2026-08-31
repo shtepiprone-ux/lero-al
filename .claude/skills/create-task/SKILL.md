@@ -232,19 +232,17 @@ write `None` for an empty category rather than omitting it.
 
 ## Owner-run Git handoff
 
-After saving and verifying the task artifact, emit an owner-run commit and push handoff when this task design changed
-task or documentation artifacts. List every changed path explicitly, then provide only:
+After saving and verifying the task artifact, emit an owner-run commit handoff when this task design changed task or
+documentation artifacts. List every changed path explicitly, then provide only:
 
 ```powershell
 git add <explicit-task-or-doc-paths>
 git commit -m "docs(TaskN): <short description>"
-git push -u <verified-remote> <verified-branch>
 ```
 
-Never execute the commands. Never use `git add -A`, `git add -u`, wildcards, a bare `git push`, or a command that
-stages an uninspected file. Before emitting the handoff, inspect the current branch and remote/upstream with read-only
-Git and replace both push placeholders with verified values. If the branch has no upstream, use `-u` with the verified
-remote and current branch; otherwise use the verified remote and upstream branch. Inspect read-only `git status
+Never execute the commands. A task-design handoff must never contain `git push`; only an `APPROVED` /
+`APPROVED WITH NOTES` implementation review may emit a verified-remote push handoff under the review protocol. Never
+use `git add -A`, `git add -u`, wildcards, or a command that stages an uninspected file. Inspect read-only `git status
 --short` and reconcile all changed or untracked paths with the task/document artifacts created in this session. Include
 every reconciled artifact exactly once. List unrelated parallel changes as `EXCLUDED AS UNRELATED` without staging
 them; they do not block a handoff. Use `STATUS/REPORT MISMATCH` only for a path that should belong to this task/design

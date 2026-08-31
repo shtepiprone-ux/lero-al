@@ -126,16 +126,17 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git clean`
 - `git config`
 
-After a verified task design that changed task/docs artifacts, Opus must emit an explicit-path owner-run **commit and
-push** handoff for exactly those artifacts, through the `create-task` skill's verified-branch/remote protocol and
-including its stale `.git/index.lock` cleanup preflight. After Opus has completed an `APPROVED` / `APPROVED WITH
+After verified task design that changed task/docs artifacts, Opus must emit an explicit-path owner-run **commit**
+handoff for exactly those artifacts, including the `create-task` skill's stale `.git/index.lock` cleanup preflight.
+**A task-design handoff must never include `git push`.** After Opus has completed an `APPROVED` / `APPROVED WITH
 NOTES` implementation review, it must emit the corresponding owner-run **commit and push** handoff for the verified
 implementation and review artifacts. Sonnet has no approval authority and must not emit, suggest, or run mutating git
 commands, including any form of `git push`.
 
-**ALWAYS-DO (owner rule):** every time Opus creates or edits a task/docs artifact, it MUST end that response with the
-explicit-path owner-run `git add` + `git commit` + verified-remote `git push` handoff for exactly the file(s) touched.
-Never finish a task-creation response without those Git commands. This is mandatory, not optional.
+**ALWAYS-DO (owner rule):** every task-design response that creates or edits a task/docs artifact MUST end with the
+explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a task-creation
+response without those commit commands, and never append `git push`. A verified-remote `git push` handoff is mandatory
+only after an `APPROVED` / `APPROVED WITH NOTES` implementation review. This is mandatory, not optional.
 
 ## UI rule split
 

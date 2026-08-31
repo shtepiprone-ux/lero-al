@@ -1,0 +1,1414 @@
+{
+  "label": "current",
+  "runId": "task775-final-20260831-01",
+  "baseUrl": "http://127.0.0.1:3000",
+  "capturedAt": "2026-08-31T12:03:05.343Z",
+  "probeHash": "43ad570daddb0c87cd8c630627b1934ffccdbe03",
+  "gitCommit": "e20c43657254f372a074f707b2ed811a87868494",
+  "cells": [
+    {
+      "locale": "en",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 452,
+      "clientWidth": 320,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 452
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 375,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 507,
+      "clientWidth": 375,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 507
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 522,
+      "clientWidth": 390,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 522
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 612,
+      "clientWidth": 480,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 612
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 692,
+      "clientWidth": 560,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 692
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 680,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 680,
+      "clientWidth": 680,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 810,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 810,
+      "clientWidth": 810,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 960,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 960,
+      "clientWidth": 960,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 1200,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1200,
+      "clientWidth": 1200,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence",
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem"
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence",
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem",
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task775\\runs\\task775-final-20260831-01\\route-probe.current.en.1440.png"
+    },
+    {
+      "locale": "en",
+      "width": 1920,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "en",
+      "width": 2560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 452,
+      "clientWidth": 320,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 452
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 375,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 507,
+      "clientWidth": 375,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 507
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 522,
+      "clientWidth": 390,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 522
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 612,
+      "clientWidth": 480,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 612
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 692,
+      "clientWidth": 560,
+      "overflowCulprit": {
+        "tagName": "DIV",
+        "className": "relative w-auto min-w-35",
+        "right": 692
+      },
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 680,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 680,
+      "clientWidth": 680,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 810,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 810,
+      "clientWidth": 810,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 960,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 960,
+      "clientWidth": 960,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 1200,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1200,
+      "clientWidth": 1200,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence",
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem"
+    },
+    {
+      "locale": "uk",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence",
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem",
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task775\\runs\\task775-final-20260831-01\\route-probe.current.uk.1440.png"
+    },
+    {
+      "locale": "uk",
+      "width": 1920,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    },
+    {
+      "locale": "uk",
+      "width": 2560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": true,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "lab(98.26 0 0)",
+      "bandBackgroundColor": "oklab(0.960998 -0.00000953674 0.0000224113 / 0.4)",
+      "bandBorderBottom": "1px solid lab(90.952 -0.0000596046 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "failReason": "nextjs-portal present — next dev server detected, refusing to treat as production evidence"
+    }
+  ],
+  "interactions": {
+    "filters": {
+      "control": "advanced filters trigger",
+      "startPath": "/en/listings",
+      "expected": "sheet content visible and URL unchanged",
+      "urlBefore": null,
+      "urlAfter": "http://127.0.0.1:3000/en/listings",
+      "changed": false,
+      "failReason": "nextjs-portal present — next dev server detected"
+    },
+    "sort": {
+      "control": "sort trigger -> price_asc option",
+      "startPath": "/en/listings?page=2",
+      "expected": "sort=price_asc and page is absent or 1",
+      "urlBefore": null,
+      "urlAfter": "http://127.0.0.1:3000/en/listings?page=2",
+      "changed": false,
+      "failReason": "nextjs-portal present — next dev server detected"
+    },
+    "statusTab": {
+      "control": "inactive listings status tab -> closed",
+      "startPath": "/en/listings",
+      "expected": "tab=closed",
+      "urlBefore": null,
+      "urlAfter": "http://127.0.0.1:3000/en/listings",
+      "changed": false,
+      "failReason": "nextjs-portal present — next dev server detected"
+    },
+    "pagination": {
+      "control": "listings pagination -> page 2",
+      "startPath": "/en/listings",
+      "expected": "page=2",
+      "urlBefore": null,
+      "urlAfter": "http://127.0.0.1:3000/en/listings",
+      "changed": false,
+      "failReason": "nextjs-portal present — next dev server detected"
+    }
+  }
+}

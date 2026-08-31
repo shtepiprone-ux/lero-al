@@ -116,6 +116,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
       {/* More / advanced filters → opens full Sheet */}
       <Button
         type="button"
+        data-testid="task775-advanced-filters"
         variant="outline"
         size="lg"
         className="rounded-xl text-xs gap-1.5 shrink-0 relative"

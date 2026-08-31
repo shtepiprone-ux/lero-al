@@ -17,7 +17,7 @@ export interface ListingsPageFrameProps {
  * (precedent: `src/app/[locale]/page.tsx` + `MantineHomeSection.tsx`, §3.2).
  *
  * Gutter (D775-A = A2): Mantine responsive props only, `md -> xl -> 2xl -> 3xl`, `maw` from the
- * registered `--width-page-max` token — never `.container-wide`, never a 1536px step.
+ * registered `--width-page-max` token, with no legacy Tailwind gutter class and no step above `xxl`.
  * Breadcrumb (D775-B = B2): measured TailAdmin contract, `docs/tailadmin-style-reference.md` §6d
  * (:154-:156) and the measured row (:453) — 14px, links gray.5, current gray.8, separator gray.4,
  * gap 6px via Mantine's own `separatorMargin` prop (no CSS-module length needed for the gap).

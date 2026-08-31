@@ -3,11 +3,11 @@
    responsive props on ListingsPageFrame.tsx — this file must never gain a container, max-width,
    or breakpoint rule. */
 
-/* page.tsx:84 `.container-wide py-2.5` = 10px vertical padding on the breadcrumb band. No Mantine
-   spacing token matches 10px (xs=8px, sm=12px, docs/design-system.md `.container-wide` ladder),
-   so the measured length is preserved directly rather than rounded to an adjacent token. */
+/* page.tsx:84 previously carried 10px vertical padding on the breadcrumb band. No Mantine
+   spacing token matches 10px (xs=8px, sm=12px), so the measured length is preserved directly
+   rather than rounded to an adjacent token. */
 .breadcrumbBand {
-  padding-block: 0.625rem; /* design-tokens-allow: padding-block: 0.625rem — page.tsx:84 container-wide py-2.5 = 10px, no Mantine spacing token matches (xs=8px, sm=12px), preserved geometry not a gutter value */
+  padding-block: 0.625rem; /* design-tokens-allow: padding-block: 0.625rem — preserved 10px breadcrumb-band block padding; no Mantine token matches */
 }
 
 /* §3.3a — hover preserves the existing semantic: the home link darkens to the current-page

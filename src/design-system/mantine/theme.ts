@@ -204,12 +204,12 @@ export const theme = createTheme({
     md: '1rem',      // 16px — card inner gap, table vertical spacing
     lg: '1.25rem',   // 20px — card padding, table horizontal spacing, block gaps
     xl: '1.5rem',    // 24px — page section separation
-    // Task 775 (D775-C = C1) — the two upper steps of the `.container-wide` gutter ladder
-    // (globals.css:705-715: 2rem from 1024px, 3rem from 1536px), added natively to the Mantine
-    // scale so ListingsPageFrame's page-width gutter (D775-A = A2) consumes only Mantine spacing
-    // tokens, never a `.container-wide` reference or a raw px/rem gutter value.
-    '2xl': '2rem',   // 32px — container-wide's ≥1024px step
-    '3xl': '3rem',   // 48px — container-wide's ≥1536px step
+    // Task 775 (D775-C = C1) — the two upper steps of the legacy page-gutter ladder
+    // (globals.css:705-715), added natively to the Mantine scale so ListingsPageFrame's
+    // page-width gutter (D775-A = A2) consumes only Mantine spacing tokens, never a legacy
+    // gutter class reference or a raw px/rem gutter value.
+    '2xl': '2rem',   // 32px
+    '3xl': '3rem',   // 48px
   },
 
   // Radius: TailAdmin real values (§1b). lg=8px for controls, 2xl=16px for Card/Paper.

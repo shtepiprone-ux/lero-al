@@ -42,7 +42,14 @@ would have failed AC3 unconditionally on the pre-existing `.container-wide` at `
 "Phase C ran without a bundle" state is deleted everywhere; §0a assigns `pre-edit` to the owner and `post-edit` to
 Sonnet with no overlap; `probeHash` becomes a required top-level JSON field (§10.10e) instead of an unlocated
 "same hash" requirement; the `BLOCKED` row no longer places fingerprint mismatch in Phase A; and no line count is
-asserted anywhere. **Phase A remains not started.**
+asserted anywhere.
+
+**Phase A status, 2026-08-31.** Phase A was implemented and reviewed. Its string-ban arm passed on an independent
+re-run (both assertions), the marker matches §10.3c byte for byte, the component diff is comments-only, and
+`npm run build` exit 0 with `/[locale]/listings` still `ƒ` is **confirmed natively by the owner**. It was
+nonetheless **returned for targeted rework** on three findings — the interaction pass asserts nothing (§10.10c), the
+probe can overwrite Revision 1 evidence (§10.10f), and Phase A is not yet committed (§0a Phase A2). Phase B does not
+begin until those close.
 
 ## 0a. Execution order and status ladder — the single authority (Revision 2)
 
@@ -66,11 +73,32 @@ the two. Sonnet never produces a `pre-edit` run; the owner never produces a `pos
 **Phase C cannot start without a valid bundle.** There is no "Phase C ran without a bundle" state anywhere in this
 task: if the bundle is absent or invalid, Phase C does not begin.
 
+**Phase A2 — the rework gate, added 2026-08-31.** Phase A's first pass landed the comment fixes and the probe
+fields, and was returned. Phase A is complete only when all four hold:
+
+1. §10.10c's asserted interaction contract is implemented — per-interaction `BrowserContext`, sort starting from
+   `?page=2`, exact postcondition checks with `failReason` + exit 1, `price_asc` chosen by value, no
+   `waitForTimeout`.
+2. §10.10f's evidence layout is implemented — Revision 1 evidence moved to `revision1/`, per-run directories with
+   immutable run metadata, and `{ flag: 'wx' }` on JSON write. The pair manifest is a **Phase D** comparison record:
+   it cannot exist until both the Phase-B `pre-edit` and Phase-C `post-edit` runs exist.
+3. `node --check scripts/task775-listings-frame-route-probe.mjs`, `npm.cmd run typecheck`, and `npm.cmd run build`
+   all exit 0. Phase A2 adds two inert JSX data attributes as evidence hooks, so the build must be current even
+   though the interaction contract itself can only be proven by live route evidence in Phase B/C.
+4. **Phase A is committed.** The instrument must be reproducible from Git before the owner runs the baseline:
+   `probeHash` identifies file *content*, but an uncommitted probe cannot be recovered from a commit, and §13a's
+   manifest records the instrument's **commit**, which does not exist until Phase A is committed. The owner commits
+   it; the executor neither runs nor proposes the command (§14).
+
+**Document synchronisation.** `kickoff`, `docs/backlog.md` and the session log must always name the **same** phase.
+They may be advanced to Phase B only together, and only after Phase A2 closes. As of 2026-08-31 the status is
+`REVISION 2 — RETURNED TO EXECUTOR (Phase A)`.
+
 **Status ladder — the only vocabulary this task uses:**
 
 | Status | Meaning |
 |---|---|
-| `REVISION 2 — RETURNED TO EXECUTOR (Phase A)` | current state; Revision 1 reviewed and not approved |
+| `REVISION 2 — RETURNED TO EXECUTOR (Phase A)` | current state; covers both the original return and the Phase A2 rework of §10.10c / §10.10f / commit |
 | `AWAITING OWNER BASELINE (Phase B)` | Phase A landed; the bundle is the only blocker |
 | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Phase D)` | Phase C complete with the bundle in hand — the executor's strongest status |
 | `PARTIALLY IMPLEMENTED` | Phase A is complete, but the owner bundle is absent or invalid, so Phase C never started and AC3 / AC7 / AC9 / AC10 are **NOT MET** and unwaivable |
@@ -415,6 +443,8 @@ Exactly these paths may appear in the diff:
 | `src/stories/patterns/mantine/ListingsPageFrame.stories.tsx` | **new** — canonical story |
 | `scripts/mantine-migration-scope.json` | add exactly one entry |
 | `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json` | add the new `storybook.mantine.*` keys |
+| `src/components/shared/Combobox.tsx` | **Phase A2 exception** — add only `data-value={opt.value}` to rendered `role="option"` buttons, so the probe can select `price_asc` by value rather than position; no visual or behavioural change |
+| `src/modules/listings/components/ListingsFilterBar.tsx` | **Phase A2 exception** — add only `data-testid="task775-advanced-filters"` to the existing advanced-filters `Button`, so the probe has one non-localized target; no visual or behavioural change |
 | `scripts/task775-listings-frame-route-probe.mjs` | **new** — task-owned probe, no `package.json` entry |
 | `docs/sessions/evidence/task775/**` | evidence |
 | `docs/sessions/<date>-task-775-*.md` | session log |
@@ -427,8 +457,10 @@ appear in the diff.
 
 ## 8. Out of scope
 
-- `ListingsShell.tsx`, `ListingsFilters.tsx`, `ListingsFilterBar.tsx`, `ListingsStatusTabs.tsx`,
-  `ListingsSortBar.tsx`, `ActiveFilterChips.tsx`, `ListingsPagination.tsx`, `SaveSearchButton.tsx`.
+- `ListingsShell.tsx`, `ListingsFilters.tsx`, `ListingsStatusTabs.tsx`, `ListingsSortBar.tsx`,
+  `ActiveFilterChips.tsx`, `ListingsPagination.tsx`, `SaveSearchButton.tsx`, and every line of
+  `ListingsFilterBar.tsx` except the single §7 Phase-A2 `data-testid` attribute.
+  `src/components/shared/Combobox.tsx` is likewise out of scope except its single §7 Phase-A2 `data-value` attribute.
   **`ListingsSortBar.tsx` and the sort-bar row holding `SaveSearchButton` are owned by Task 772** (Sprint 66, P1,
   `KICKOFF FILED`), whose R4 forbids migration there. A diff touching them is rejected on sight.
 - `src/app/globals.css`, `.container-wide` itself, and its other 41 `.tsx` consumers.
@@ -509,6 +541,8 @@ blanket rule
    - `src/stories/patterns/mantine/ListingsPageFrame.stories.tsx`
    - `scripts/mantine-migration-scope.json`
    - `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json`
+   - `src/components/shared/Combobox.tsx` — only its Phase-A2 `data-value` addition
+   - `src/modules/listings/components/ListingsFilterBar.tsx` — only its Phase-A2 `data-testid` addition
 
    Explicitly **outside** the set, and never a violation: this kickoff, `docs/sessions/**` (session log and
    evidence), `docs/backlog.md`, and `scripts/task775-listings-frame-route-probe.mjs`. The probe is excluded because
@@ -533,7 +567,9 @@ blanket rule
      ":(literal)src/app/[locale]/listings/page.tsx" `
      src/design-system/mantine/theme.ts `
      scripts/mantine-migration-scope.json `
-     messages/en.json messages/sq.json messages/uk.json messages/it.json |
+     messages/en.json messages/sq.json messages/uk.json messages/it.json `
+     src/components/shared/Combobox.tsx `
+     src/modules/listings/components/ListingsFilterBar.tsx |
      Where-Object { $_ -like '+*' -and $_ -notlike '+++*' } |
      Set-Content -Encoding utf8 $corpus
 
@@ -567,10 +603,13 @@ blanket rule
    the current `design-tokens-allow:` marker itself. Run against the Revision 1 tree this scan prints **9** lines;
    Phase A is done when it prints none.
 
-   The single matched marker line must equal the §10.3c string byte for byte — note that the §10.3c wording
-   deliberately contains no `container-wide`, so the marker currently in the tree fails both assertions at once. Split (A)/(B) exists because the three
-   new files are untracked, and `git diff` cannot show an untracked file without `git add -N`, which is a mutating
-   git command the executor may not run (§14).
+   The single matched marker line must equal the §10.3c string byte for byte; the §10.3c wording deliberately
+   contains no `container-wide`.
+
+   **Why the (A)/(B) split, corrected 2026-08-31.** The reason is **not** that the three files are untracked — since
+   `90f1412d8` they are tracked. The reason is that they **do not exist at `c864431d0`**: `git diff c864431d0` would
+   render each as one all-`+` hunk, so listing them in (A) as well as (B) would double-count them. (B) reads them
+   whole because a wholly-new file is entirely "added". Do not "fix" this by folding them into (A).
 
    **§10.3b — what is banned in that corpus, comments included.**
    any `1536` — media query, breakpoint entry, literal **or comment prose**; any `.container-wide` reference,
@@ -656,24 +695,61 @@ blanket rule
    `padding-left`. An empty string is the silent failure mode of a mistyped key (§3.3c) and fails AC12. Revision 1
    inferred these from the consumed padding; AC12 asks for the variables themselves.
 
-   **§10.10c — the interaction pass (new, AC7).** Revision 1's probe only called `page.goto`; a static diff read is
-   **not** an acceptable substitute. At the `1440` / `en` cell the probe performs four real interactions against the
-   running production server and records, for each, the URL before, the URL after and a boolean `changed`, under an
-   `interactions` key in the same JSON:
+   **§10.10c — the interaction pass (AC7). Amended 2026-08-31 — it must ASSERT, not merely record.** Revision 1's
+   probe only called `page.goto`; the Phase-A probe records `urlBefore` / `urlAfter` / `changed` but still checks no
+   postcondition, so a wrong `sort` value or a missing `tab` param passes. `changed: true` is not evidence that the
+   *correct* thing changed. Rewrite to this contract:
 
-   | Interaction | Control | Asserted result |
+   | Interaction | Start URL | Exact postcondition, asserted |
    |---|---|---|
-   | filters | the filters trigger | panel becomes visible; URL unchanged |
-   | sort | select a non-default sort | `sort` param set **and** `page` reset |
-   | status tab | activate a non-active tab | `tab` param set |
-   | pagination | follow the page-2 link | `page=2` |
+   | filters | `/en/listings` | panel visible **and** `urlAfter === urlBefore` |
+   | sort | `/en/listings?page=2` | `sort=price_asc` present **and** `page` absent or `1` |
+   | status tab | `/en/listings` | `tab=closed` (the one inactive tab when this start URL makes `active` current) |
+   | pagination | `/en/listings` | `page=2` present |
 
-   The pass runs on the baseline and on the final tree. A control whose URL change does not reproduce the baseline's
-   is a regression and is `BLOCKED`.
+   Binding rules:
 
-   **§10.10e — `probeHash`, a required top-level field (new, Phase A).** Every JSON the probe writes — both
-   `route-probe.pre-edit.json` and `route-probe.post-edit.json` — carries a top-level `probeHash` string, beside
-   `label` / `baseUrl` / `capturedAt`. Its value is the output of
+   - **Isolation.** Each of the four runs in its **own `BrowserContext`**, created and closed around that one
+     interaction. One shared context lets state from an earlier action leak into a later one, which is exactly what
+     makes a failure irreproducible ([Playwright browser contexts](https://playwright.dev/docs/browser-contexts)).
+   - **Sort must start from `?page=2`.** From a URL with no `page`, "page was reset" is unprovable — there was
+     nothing to reset. This is the only way the §11 positive flow's reset claim becomes checkable.
+   - **Assert, then fail closed.** After each action, parse `urlAfter` with `URL`/`URLSearchParams` and compare
+     against the table. A mismatch writes a `failReason` naming the expected and the actual value, and the probe
+     exits **1**. Today `failReason` is set only when a control is *not found*.
+   - **No `nth(1)` for the sort option.** Select it by its stable value `price_asc`, never by list position — the
+     option order is not a contract ([Playwright assertions](https://playwright.dev/docs/test-assertions)).
+   - **No fixed `waitForTimeout`.** Replace every `waitForTimeout(200|300)` with a wait on the real condition —
+     `page.waitForURL(...)` or an expected-state locator wait. A sleep is a race, not a synchronisation.
+
+   The pass runs on the baseline and on the final tree. A control whose asserted postcondition does not reproduce
+   the baseline's is a regression and is `BLOCKED`.
+
+   **§10.10f — evidence is append-only; no run may overwrite another (new, 2026-08-31).** `writeFile(outPath, …)`
+   replaces an existing file silently ([Node `fs`](https://nodejs.org/api/fs.html)), and
+   `docs/sessions/evidence/task775/route-probe.post-edit.json` — the Revision 1 artefact, 34 401 bytes, committed in
+   `90f1412d8`, carrying **no `probeHash`** — sits at the former Phase-C output path. Rules:
+
+   - **Do not delete the Revision 1 evidence.** Move that JSON and its two 1440 PNGs, unmodified, to
+     `docs/sessions/evidence/task775/revision1/`. They stay as the historical record of the rejected revision.
+   - **Every run gets its own directory**, `docs/sessions/evidence/task775/runs/<runId>/`, holding only that run's
+     JSON and PNGs. The CLI requires `<label> <runId>`; `label` is exactly `pre-edit` or `post-edit`, and `runId`
+     must be a single safe path segment. Reusing an existing run directory is a hard failure.
+   - Every probe JSON records the run's **`subjectCommit`** (the tree served at `BASE_URL`) and
+     **`instrumentCommit`** (the Git worktree that executed the probe), alongside its top-level `probeHash`.
+     `SUBJECT_COMMIT` is required input; the probe cannot infer a remote server's checkout.
+   - **Only Phase D creates a pair manifest**, after both immutable run directories exist:
+     `docs/sessions/evidence/task775/comparisons/<comparisonId>/manifest.json`. It names the exact `pre-edit` and
+     `post-edit` JSON paths and copies from each: `probeHash`, `subjectCommit`, and `instrumentCommit`. A comparison
+     may only be made across a pair named by one such manifest. A Phase-B run cannot truthfully create that manifest
+     because its Phase-C counterpart does not yet exist.
+   - The probe opens its JSON with the exclusive flag (`writeFile(path, data, { flag: 'wx' })`) so a collision fails
+     loudly instead of destroying evidence.
+
+   **§10.10e — `probeHash`, a required top-level field (new, Phase A).** Every JSON the probe writes —
+   `runs/<runId>/route-probe.pre-edit.json` or `runs/<runId>/route-probe.post-edit.json` — carries a top-level
+   `probeHash` string, beside `label` / `runId` / `baseUrl` / `capturedAt` / `subjectCommit` / `instrumentCommit`.
+   Its value is the output of
 
    ```text
    git hash-object scripts/task775-listings-frame-route-probe.mjs
@@ -839,8 +915,9 @@ Visual evidence:
 
 Sonnet cannot produce this. Reconstructing the pre-edit tree requires mutating git, which the executor is forbidden
 to run, emit, suggest or delegate (§14), and reading "before" values out of source instead is exactly the
-substitution that failed Revision 1. The owner produces the bundle natively from the pre-edit commit and places it
-under `docs/sessions/evidence/task775/baseline/` before the executor resumes:
+substitution that failed Revision 1. The owner produces the baseline bundle natively from the pre-edit commit before
+the executor resumes. Gate logs belong under `docs/sessions/evidence/task775/baseline/`; the immutable probe run
+belongs under `docs/sessions/evidence/task775/runs/<preRunId>/` (§10.10f):
 
 1. **The commit it was taken at** — expected **`c864431d0`** — with `git log -1 --oneline` and a clean
    `git status --short` proving that tree carried no Task 775 edits.
@@ -857,21 +934,24 @@ under `docs/sessions/evidence/task775/baseline/` before the executor resumes:
      computes `probeHash` with `git hash-object` at start-up (§10.10e) and fails closed outside one. The probe is a
      black-box HTTP client — it never reads the tree it measures — so running it from elsewhere does not contaminate
      the baseline.
-   - Both identities are recorded **in artefacts, not in prose**: the subject's commit SHA in the bundle, and the
-     instrument's hash as the top-level **`probeHash`** field inside `route-probe.pre-edit.json` (§10.10e).
-     `route-probe.post-edit.json` must carry the **identical** `probeHash`; two runs taken with different probe
-     versions are not comparable, and the comparison is `BLOCKED`. This is checkable in one line:
+   - Both identities are recorded **in each probe JSON, not in prose**: `subjectCommit` is the served tree SHA and
+     `instrumentCommit` is the probe worktree SHA. The instrument's content hash is the top-level `probeHash`
+     (§10.10e). The final run must carry the **identical** `probeHash` and `instrumentCommit`; two runs taken with
+     different probe versions or commits are not comparable, and the comparison is `BLOCKED`. Phase D records the
+     verified pair in its comparison manifest (§10.10f). This is checkable from that manifest after Phase C:
      ```powershell
-     $a = (Get-Content docs/sessions/evidence/task775/baseline/route-probe.pre-edit.json -Raw | ConvertFrom-Json).probeHash
-     $b = (Get-Content docs/sessions/evidence/task775/route-probe.post-edit.json      -Raw | ConvertFrom-Json).probeHash
-     "$a`n$b`nmatch=$($a -eq $b)"
+     $m = Get-Content docs/sessions/evidence/task775/comparisons/<comparisonId>/manifest.json -Raw | ConvertFrom-Json
+     $m.preEdit.probeHash
+     $m.postEdit.probeHash
+     "hashMatch=$($m.preEdit.probeHash -eq $m.postEdit.probeHash)"
+     "instrumentMatch=$($m.preEdit.instrumentCommit -eq $m.postEdit.instrumentCommit)"
      ```
-   - The two runs must also agree on port and label. Use label `pre-edit` for the baseline and `post-edit` for the
-     final tree, exactly as the script's per-label output naming expects.
+   - Use label `pre-edit` for the baseline and `post-edit` for the final tree. The probe command also receives a
+     unique `runId` and `SUBJECT_COMMIT=<served-tree-sha>` (§10.10f); the two runs need not use the same port.
 2. **All thirteen §13 gate transcripts** from that commit, named `*.before.log`, each with its exit code.
-3. **`route-probe.pre-edit.json` and its PNGs** — the full **28 cells** (`en`/`uk` × the 14 Q3 widths), produced by
-   the same probe script the final run uses, and therefore including `separatorColor`, the §10.10b spacing
-   variables and the §10.10d `overflowCulprit`.
+3. **`runs/<preRunId>/route-probe.pre-edit.json` and its PNGs** — the full **28 cells** (`en`/`uk` × the 14 Q3
+   widths), produced by the same committed probe script the final run uses, and therefore including
+   `separatorColor`, the §10.10b spacing variables and the §10.10d `overflowCulprit`.
 4. **The baseline interaction results** (§10.10c) — the four controls with their before/after URLs.
 
 Until this bundle exists, **AC3, AC7, AC9 and AC10 are NOT MET and cannot be waived**, and the strongest status the
@@ -890,7 +970,7 @@ Report, in this order:
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Phase D)`; if the bundle is absent or invalid so that Phase C never
    started, `PARTIALLY IMPLEMENTED`; on a red build, a broken Phase-A rule, or a probe-hash / fingerprint mismatch in
    Phase C/D, `BLOCKED`. Never self-approve; you hold no approval authority.
-2. **Decided routes** — confirm you implemented **D775-A = A2**, **D775-B = B2** and **D775-C = C1** as written in §10.3, §10.4 and §10.8. Build the **§10.3b-1 corpus** exactly as written there and paste **both assertion commands with their real output and exit codes** — not a prose claim. The corpus must contain no colour hex, no `1536`, no `.container-wide` in any form including comments, no raw or bare-number gutter value, no `--space-*` reference, and exactly one `design-tokens-allow:` marker matching §10.3c byte for byte. State that the only `theme.ts` change is the two additive spacing keys plus the seven-key augmentation. Do **not** report a whole-file grep: pre-existing hits such as `messages/*.json:2383` are outside the corpus. Revision 1's log asserted zero hits from a grep whose pattern did not cover the claim and whose result was wrong — the pasted output is what replaces that assertion. Quote the measured `--mantine-spacing-2xl` / `--mantine-spacing-3xl` values. Quote the top-level `probeHash` from **both** `route-probe.pre-edit.json` and `route-probe.post-edit.json` and state that they are identical; a missing field, or two different values, is `BLOCKED` and no AC3 / AC7 / AC9 / AC12 claim may be made on that comparison.
+2. **Decided routes** — confirm you implemented **D775-A = A2**, **D775-B = B2** and **D775-C = C1** as written in §10.3, §10.4 and §10.8. Build the **§10.3b-1 corpus** exactly as written there and paste **both assertion commands with their real output and exit codes** — not a prose claim. The corpus must contain no colour hex, no `1536`, no `.container-wide` in any form including comments, no raw or bare-number gutter value, no `--space-*` reference, and exactly one `design-tokens-allow:` marker matching §10.3c byte for byte. State that the only `theme.ts` change is the two additive spacing keys plus the seven-key augmentation. Do **not** report a whole-file grep: pre-existing hits such as `messages/*.json:2383` are outside the corpus. Revision 1's log asserted zero hits from a grep whose pattern did not cover the claim and whose result was wrong — the pasted output is what replaces that assertion. Quote the measured `--mantine-spacing-2xl` / `--mantine-spacing-3xl` values. Quote the top-level `probeHash` and `instrumentCommit` from both probe JSONs **via the Phase-D comparison manifest** (§10.10f), and state that both pairs are identical; a missing field, two different values, or a missing manifest is `BLOCKED` and no AC3 / AC7 / AC9 / AC12 claim may be made on that comparison.
 3. **Changed files** — a table matching the real diff exactly.
 4. **Requirement IDs completed** — R1-R11, each `MET` / `NOT MET` / `BLOCKED`, with its AC.
 5. **Commands run and actual results** — command, exit code, and where the transcript is retained. Report real exit

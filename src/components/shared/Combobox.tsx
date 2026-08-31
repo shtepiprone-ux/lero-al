@@ -255,6 +255,7 @@ export function Combobox({
             key={opt.value}
             type="button"
             role="option"
+            data-value={opt.value}
             aria-selected={value === opt.value}
             className={cn(
               'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2 max-sm:min-h-11',

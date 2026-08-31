@@ -82,7 +82,7 @@ node scripts/task775-listings-frame-route-probe.mjs current task775-final-<uniqu
 ```
 
 The run creates `docs/sessions/evidence/task775/runs/<unique-id>/route-probe.current.json` and two 1440 PNGs. It
-records 28 `/en` and `/uk` viewport cells, spacing variables, separator colour, overflow culprits and four real
+records 28 `/en` and `/uk` viewport cells, spacing variables, separator colour, overflow culprits and three real
 interactions. It fails if a route cell is non-OK, a required route selector is missing or ambiguous, an interaction's
 exact postcondition fails. It records `serverMode` as `development` or `production`; development mode is valid
 current-route UI evidence, while `npm.cmd run build` remains the production-build gate. It performs the route check
@@ -95,9 +95,8 @@ At 1440 `/en`, the probe must verify:
 | Advanced filters | `/en/listings` | Sheet opens and URL is unchanged. |
 | Sort | `/en/listings?page=2` | `sort=price_asc`; `page` is absent or `1`. |
 | Status tab | `/en/listings` | `tab=closed`. |
-| Pagination | `/en/listings` | `page=2`. |
 
-`route-probe.current.json` must contain `gitCommit`, `probeHash`, `serverMode`, 28 cells and all four interaction
+`route-probe.current.json` must contain `gitCommit`, `probeHash`, `serverMode`, 28 cells and all three interaction
 results, with no `failReason`. Its run directory is append-only; never reuse a run ID.
 
 ## 7. Acceptance criteria
@@ -110,7 +109,7 @@ results, with no `failReason`. Its run directory is append-only; never reuse a r
 | AC4 | The current probe records 14px, `rgb(102, 112, 133)`, `rgb(29, 41, 57)`, `rgb(152, 162, 179)` and 6px for the breadcrumb's font, link, current, separator and gap respectively. |
 | AC5 | `npm.cmd run check:story-coverage` exits 0 and maps `Patterns/Mantine/ListingsPageFrame` to the frame source. |
 | AC6 | `npm.cmd run check:i18n` and `npm.cmd run check:stories` exit 0. |
-| AC7 | The four current-route interactions in §6 pass their exact postconditions. |
+| AC7 | The three current-route interactions in §6 pass their exact postconditions. Pagination is not assessed by Task 775: the current route has two listings and renders no pagination control. This is neither a pass nor a defect finding. |
 | AC8 | The diff stays within §4; the two selector-hook exceptions remain one attribute each. |
 | AC9 | The current probe records every width. At every measured Q3 route width of 680px and above there is no horizontal overflow. Results below 640px are reported to Task 772, not used to accept or reject Task 775. |
 | AC10 | Every required command in §8 exits 0 on the current tree. `npm.cmd test`, `npm.cmd run check:locale-leak:mantine-only`, and `npm.cmd run screenshots:assert -- --mantine-only` are optional repository-health diagnostics and are reported verbatim, not treated as Task-775 gates. |

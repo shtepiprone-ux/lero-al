@@ -34,7 +34,7 @@
  *   - At the 1200 and 1440 cells, additionally records the resolved `--mantine-spacing-2xl` /
  *     `--mantine-spacing-3xl` CSS variables (§10.10b, AC12), beside that cell's padding.
  *   - At the 1440/en cell, runs a real interaction pass (§10.10c, AC7) against the running
- *     server — filters trigger, sort change, status tab, pagination — recording each control's
+ *     server — filters trigger, sort change and status tab — recording each control's
  *     URL before/after and a `changed` boolean under a top-level `interactions` key.
  *   - Records whether the server is `next dev` or `next start`; production-build correctness is
  *     established independently by `npm run build`.
@@ -291,25 +291,6 @@ async function runInteractions(browser) {
         actual.searchParams.get('tab') === 'closed'
           ? null
           : queryFailure('expected tab=closed', actual.toString()),
-    }),
-    pagination: await recordInteraction(browser, {
-      name: 'listings pagination -> page 2',
-      startPath: '/en/listings',
-      expected: 'page=2',
-      action: async (page) => {
-        const pageTwo = await exactlyOne(
-          page.locator('.listings-pagination').getByRole('button', { name: '2', exact: true }),
-          'page-2 pagination control'
-        );
-        await Promise.all([
-          page.waitForURL((url) => url.searchParams.get('page') === '2', { timeout: 5000 }),
-          pageTwo.click(),
-        ]);
-      },
-      assertUrl: (actual) =>
-        actual.searchParams.get('page') === '2'
-          ? null
-          : queryFailure('expected page=2', actual.toString()),
     }),
   };
 

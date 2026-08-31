@@ -1,0 +1,94 @@
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (27 tests | 1 failed) 20ms
+     × matches the real globals.css measured count (257) — Task 695 re-derivation 10ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 1 failed) 35ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 10ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 2421ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 95ms
+     × archived listing renders the archived badge + dimmed card 135ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the real globals.css measured count (257) — Task 695 re-derivation
+AssertionError: expected 296 to be 257 // Object.is equality
+
+- Expected
++ Received
+
+- 257
++ 296
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:208:24
+    206|     // (NotificationCenter's 390px threshold retargeted to the canonic…
+    207|     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    208|     expect(owned.size).toBe(257)
+       |                        ^
+    209|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    210|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  3 failed | 79 passed (82)
+      Tests  4 failed | 1410 passed (1414)
+   Start at  14:55:38
+   Duration  68.63s (transform 64.74s, setup 27.83s, import 361.61s, tests 119.05s, environment 432.75s)
+
+EXIT_CODE=1

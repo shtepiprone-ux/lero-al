@@ -1,0 +1,15 @@
+
+> lero-al@0.1.0 check:design-tokens:strict
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 456 src/**/*.{tsx,ts,css} files
+    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+
+✅  check:design-tokens — 0 violations found.
+EXIT_CODE=0

@@ -319,6 +319,23 @@ async function runInteractions(browser) {
   return interactions;
 }
 
+// A failed run must not occupy an immutable run ID. Check the server before creating any
+// evidence directory, so pointing BASE_URL at `next dev` is an immediate, clean failure.
+async function assertProductionServer(browser) {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+
+  try {
+    const response = await page.goto(`${BASE_URL}/en/listings`, { waitUntil: 'networkidle', timeout: 30000 });
+    if (!response?.ok()) throw new Error(`preflight returned non-OK status ${response?.status() ?? 'unknown'}`);
+    if ((await page.locator('nextjs-portal').count()) > 0) {
+      throw new Error('nextjs-portal present — next dev server detected');
+    }
+  } finally {
+    await context.close();
+  }
+}
+
 async function main() {
   let probeHash;
   let gitCommit;
@@ -337,13 +354,25 @@ async function main() {
     return;
   }
 
-  // The current-tree identity above is verified before this mutates evidence storage
-  // or launches a browser. A duplicate run ID is a hard failure, never an overwrite.
+  const browser = await chromium.launch({ headless: true });
+  try {
+    await assertProductionServer(browser);
+  } catch (err) {
+    await browser.close();
+    console.error(
+      `\n❌ task775-listings-frame-route-probe: ${err instanceof Error ? err.message : String(err)}. ` +
+      'Refusing to create a current-route evidence run.'
+    );
+    process.exit(1);
+    return;
+  }
+
+  // The current-tree identity and production-server preflight are verified before this mutates
+  // evidence storage. A duplicate run ID is a hard failure, never an overwrite.
   await mkdir(RUNS_DIR, { recursive: true });
   const runDir = join(RUNS_DIR, runId);
   await mkdir(runDir);
 
-  const browser = await chromium.launch({ headless: true });
   const result = {
     label,
     runId,

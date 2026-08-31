@@ -85,6 +85,8 @@ The run creates `docs/sessions/evidence/task775/runs/<unique-id>/route-probe.cur
 records 28 `/en` and `/uk` viewport cells, spacing variables, separator colour, overflow culprits and four real
 interactions. It fails if a route cell is non-OK, a required route selector is missing or ambiguous, an interaction's
 exact postcondition fails, or the server is `next dev`.
+It performs the production-server check before creating the run directory, so an invalid server does not consume a
+run ID.
 
 At 1440 `/en`, the probe must verify:
 

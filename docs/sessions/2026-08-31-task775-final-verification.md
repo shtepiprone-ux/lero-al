@@ -21,6 +21,15 @@ Only evidence and this log:
 `docs/sessions/evidence/task775/runs/` (containing `task775-final-20260831-01/02/03`) was already present on disk
 before this session and was not modified.
 
+## Superseded route-probe runs
+
+- `runs/task775-final-20260831-01/` recorded 28 failed cells and four failed interactions under probe hash
+  `43ad570daddb0c87cd8c630627b1934ffccdbe03`.
+- `runs/task775-final-20260831-02/` recorded zero failed cells and one failed interaction: its pagination selector
+  found no page-2 control. Its probe hash is `f809ff2f7f4fd8c1d71ce0ca88a0f914cea5a1e0`.
+- Both runs are retained as superseded diagnostics only and do not support any acceptance criterion. The final
+  acceptance artifact is `runs/task775-final-20260831-03/`, identified and inspected below.
+
 ## Source-constraint scan (§5) — real output, rebuilt on the final committed tree
 
 Same corpus method as Phase A (`git diff c864431d0`, added lines only, for the tracked files in scope; full content
@@ -60,6 +69,13 @@ kickoff itself. No out-of-scope path.
 | 11 | `npm.cmd run build` | 0 | `.../11-build.log` — `/[locale]/listings` still emitted `ƒ` (dynamic) |
 
 `node.exe -p process.platform` → `win32` (confirmed before this session's commands).
+
+### Retained-transcript metadata limitation
+
+Each retained command log contains its command output and `EXIT_CODE`; none contains a per-session header recording
+the platform, Node version, and working directory. The logs therefore retain the reported command outcomes but not
+the full environment metadata required by the review skill. Do not append that metadata retroactively. A future
+evidence run must capture it before the commands execute.
 
 ## Optional diagnostics (§8) — reported verbatim, not Task-775 gates
 

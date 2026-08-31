@@ -1,0 +1,462 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 776 - /listings: extract ListingsShellView as the pre-migration seam",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "cb6b786da498dad2ce9dd1abd2eb5ba039c57814",
+    "reviewedRevision": "Uncommitted Task 776 candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814; ListingsShell.tsx blob d12192f18e2bce0f12dfa46d6932ff8a5c6b4e8e, ListingsShellView.tsx blob a2875ce6f207b75fca551dfcdac9ea8155342fa4.",
+    "reviewedPaths": [
+      "src/modules/listings/components/ListingsShell.tsx",
+      "src/modules/listings/components/ListingsShellView.tsx",
+      "docs/backlog.md",
+      "tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md",
+      "docs/sessions/2026-08-31-task776-listings-shell-view-seam.md",
+      "docs/reviews/artifacts/2026-08-31-task776/reviewer-jsx-equivalence.txt",
+      "docs/reviews/artifacts/2026-08-31-task776/owner-native-final-gates.txt",
+      "docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 5,
+      "verified": 5,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsShell.tsx",
+        "symbol": "ListingsShell controller",
+        "diffHunks": [
+          "removal of useTranslations/t and the eight presentational imports",
+          "return body replaced by <ListingsShellView ... /> with 21 props and slots"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "useSearchParams",
+          "useAuth",
+          "useExchangeRate",
+          "7 useState hooks",
+          "sessionStorage listings_restore restore",
+          "Show-more fetch",
+          "favorite synchronization",
+          "URL/scroll/navigation handlers",
+          "two dynamic() ssr:false declarations"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story exists for ListingsShell or ListingsShellView, and the kickoff forbids creating one: the Storybook-First gate (docs/component-rules.md:53-60) triggers on a changed rendered result, and this task changes none.",
+          "locales": "The relocation is locale-independent; the four t() keys move verbatim with their JSX and no message file changes.",
+          "viewports": "No layout, className or breakpoint value changes, so no viewport can distinguish before from after.",
+          "states": "No new business state is introduced; every state value is forwarded from the unchanged controller.",
+          "phases": "A single final candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814 is the only phase; there is no before/after capture pair."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsShell.tsx",
+          "command": "git --no-optional-locks grep -nE 'useSearchParams|useAuth|useExchangeRate|RESTORE_KEY|sessionStorage|fetch\\(|requestAnimationFrame|ssr: false|useState|exhaustive-deps'",
+          "observable": "All nine preserved contracts named in kickoff section 5 are still declared in ListingsShell.tsx: 7 useState (58,75-80), both ssr:false (13,29), RESTORE_KEY (32), both fetch call sites (108,148), three sessionStorage accesses (96,99,133), requestAnimationFrame (125), the exhaustive-deps disable (118).",
+          "freshness": "final candidate, reviewed 2026-08-31 on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "useSearchParams",
+              "useAuth",
+              "useExchangeRate",
+              "7 useState hooks",
+              "sessionStorage listings_restore restore",
+              "Show-more fetch",
+              "favorite synchronization",
+              "URL/scroll/navigation handlers",
+              "two dynamic() ssr:false declarations"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/2026-08-31-task776-listings-shell-view-seam.md",
+          "command": "read of the executor Files Changed table and section 3 grep evidence",
+          "observable": "Executor index agrees with the inspected source; no contract is claimed moved.",
+          "freshness": "final candidate, reviewed 2026-08-31",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "useSearchParams",
+              "useAuth",
+              "useExchangeRate",
+              "7 useState hooks",
+              "sessionStorage listings_restore restore",
+              "Show-more fetch",
+              "favorite synchronization",
+              "URL/scroll/navigation handlers",
+              "two dynamic() ssr:false declarations"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "One or more hooks or side effects could have been moved into the View while the controller kept a same-named local, leaving the grep on the controller green.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-31-task776/reviewer-jsx-equivalence.txt",
+          "result": "REFUTED. The complementary grep on ListingsShellView.tsx for fetch(|sessionStorage|useState|useEffect|useCallback|next/navigation|next/dynamic|useExchangeRate|AuthContext|useSearchParams|useAuth returns zero matches, so no contract exists in both files."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No CSS, selector, utility or cascade output changes in this task. The diff relocates JSX between two .tsx modules; no rule is generated, removed or replaced."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsShellView.tsx",
+        "symbol": "ListingsShellView presentational primitive",
+        "diffHunks": [
+          "new file: props/slots interface and the relocated JSX composition"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "prop-and-slot-only interface",
+          "no forbidden imports",
+          "no component-local state",
+          "prior composition reproduced"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story exists for ListingsShell or ListingsShellView, and the kickoff forbids creating one: the Storybook-First gate (docs/component-rules.md:53-60) triggers on a changed rendered result, and this task changes none.",
+          "locales": "The relocation is locale-independent; the four t() keys move verbatim with their JSX and no message file changes.",
+          "viewports": "No layout, className or breakpoint value changes, so no viewport can distinguish before from after.",
+          "states": "No new business state is introduced; every state value is forwarded from the unchanged controller.",
+          "phases": "A single final candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814 is the only phase; there is no before/after capture pair."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsShellView.tsx",
+          "command": "grep -nE 'fetch\\(|sessionStorage|useState|useEffect|useCallback|next/navigation|next/dynamic|useExchangeRate|AuthContext|useSearchParams|useAuth'",
+          "observable": "ListingsShellViewProps (lines 22-45) declares 22 members: 10 data props, 4 view-state props, 6 callbacks and 2 ReactNode slots - nothing else enters the component. Grep for fetch(|sessionStorage|useState|useEffect|useCallback|next/navigation|next/dynamic|useExchangeRate|AuthContext|useSearchParams|useAuth returns zero matches. The only hook the View calls is useTranslations('listing') at line 71, explicitly authorised by docs/component-rules.md:44-48 for a presentational primitive. Imports are limited to react types, next-intl, lucide-react, two ui primitives and six already-existing listing components.",
+          "freshness": "final candidate, reviewed 2026-08-31, blob a2875ce6f207b75fca551dfcdac9ea8155342fa4",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "prop-and-slot-only interface",
+              "no forbidden imports",
+              "no component-local state"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-31-task776/reviewer-jsx-equivalence.txt",
+          "command": "python3 normalized unified diff of the HEAD JSX block against the View JSX block",
+          "observable": "The View reproduces the prior composition exactly: zero residual diff after the 12 authorised substitutions.",
+          "freshness": "regenerated by the reviewer on 2026-08-31 against HEAD cb6b786da498dad2ce9dd1abd2eb5ba039c57814",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "prior composition reproduced"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The View could have quietly introduced local state or a data hook that the identifier grep pattern missed by spelling.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ListingsShellView.tsx",
+          "result": "REFUTED. The whole 168-line file was read line by line. Its only statement before the return is const t = useTranslations('listing'); every other value is a destructured prop."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No CSS, selector, utility or cascade output changes in this task. The diff relocates JSX between two .tsx modules; no rule is generated, removed or replaced."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsShellView.tsx",
+        "symbol": "relocated JSX composition",
+        "diffHunks": [
+          "JSX moved from ListingsShell.tsx lines 172-268 to ListingsShellView.tsx lines 73-167"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "URL contract",
+          "Show-more append",
+          "listings_restore session restore",
+          "favorites set",
+          "displayCurrency resolution",
+          "rendering conditions",
+          "DOM structure and className values"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story exists for ListingsShell or ListingsShellView, and the kickoff forbids creating one: the Storybook-First gate (docs/component-rules.md:53-60) triggers on a changed rendered result, and this task changes none.",
+          "locales": "The relocation is locale-independent; the four t() keys move verbatim with their JSX and no message file changes.",
+          "viewports": "No layout, className or breakpoint value changes, so no viewport can distinguish before from after.",
+          "states": "No new business state is introduced; every state value is forwarded from the unchanged controller.",
+          "phases": "A single final candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814 is the only phase; there is no before/after capture pair."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-31-task776/reviewer-jsx-equivalence.txt",
+          "command": "python3 difflib.unified_diff on the normalized blocks + literal className census",
+          "observable": "Zero residual diff; 13 literal className attributes in HEAD and 13 in the View in an identical ordered sequence; both conditional class expressions preserved. No rendering condition, element order or class value differs from HEAD other than by relocation.",
+          "freshness": "regenerated by the reviewer on 2026-08-31 against HEAD cb6b786da498dad2ce9dd1abd2eb5ba039c57814",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "rendering conditions",
+              "DOM structure and className values"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/components/ListingsShell.tsx",
+          "command": "git --no-optional-locks diff src/modules/listings/components/ListingsShell.tsx",
+          "observable": "The diff touches only the import block, the removed const t, and the return body. Controller lines 48-160 - which own the URL contract, Show-more fetch, listings_restore restore, favorites set and displayCurrency resolution - are untouched.",
+          "freshness": "final candidate, reviewed 2026-08-31, blob d12192f18e2bce0f12dfa46d6932ff8a5c6b4e8e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "URL contract",
+              "Show-more append",
+              "listings_restore session restore",
+              "favorites set",
+              "displayCurrency resolution"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "ListingCard.onToggled takes (newState); the controller handler takes (listingId, newState). Forwarding the handler directly through the View would silently break favourites while leaving every className identical.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-31-task776/reviewer-jsx-equivalence.txt",
+          "result": "REFUTED. ListingsShellView.tsx:137 rebuilds the per-card closure: onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}. A second counter-check on prop identity (six moved children greped for React.memo/memo(, zero matches) shows the consolidated onFiltersOpen closure cannot change render behaviour either."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No CSS, selector, utility or cascade output changes in this task. The diff relocates JSX between two .tsx modules; no rule is generated, removed or replaced."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsShell.tsx",
+        "symbol": "task diff scope",
+        "diffHunks": [
+          "five-path working tree on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "ListingsShell.tsx",
+          "ListingsShellView.tsx",
+          "docs/backlog.md",
+          "Sprint 68 plan file",
+          "session log"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story exists for ListingsShell or ListingsShellView, and the kickoff forbids creating one: the Storybook-First gate (docs/component-rules.md:53-60) triggers on a changed rendered result, and this task changes none.",
+          "locales": "The relocation is locale-independent; the four t() keys move verbatim with their JSX and no message file changes.",
+          "viewports": "No layout, className or breakpoint value changes, so no viewport can distinguish before from after.",
+          "states": "No new business state is introduced; every state value is forwarded from the unchanged controller.",
+          "phases": "A single final candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814 is the only phase; there is no before/after capture pair."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-31-task776-listings-shell-view-seam.md",
+          "command": "git --no-optional-locks status --porcelain reconciled against the session Files Changed table",
+          "observable": "Exactly five paths, all authorised by kickoff section 4. src/app/[locale]/listings/page.tsx and scripts/mantine-migration-scope.json are absent from both status and diff; no Storybook story was created.",
+          "freshness": "final candidate, reviewed 2026-08-31",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "ListingsShell.tsx",
+              "ListingsShellView.tsx",
+              "docs/backlog.md",
+              "Sprint 68 plan file",
+              "session log"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A path outside section 4 could have been changed and then hidden by a path-filtered diff.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-08-31-task776-listings-shell-view-seam.md",
+          "result": "REFUTED. Unfiltered git --no-optional-locks status --short returns the same five paths, and the executor's own check:file-integrity pass 2 independently counted 5 files from the same set."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No CSS, selector, utility or cascade output changes in this task. The diff relocates JSX between two .tsx modules; no rule is generated, removed or replaced."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "tasks/Sprints/Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md",
+        "symbol": "kickoff section 10 required checks",
+        "diffHunks": [
+          "six required gates on the final five-path candidate"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "eslint (targeted)",
+          "typecheck",
+          "check:file-integrity",
+          "check:mojibake",
+          "build",
+          "git diff --check"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook story exists for ListingsShell or ListingsShellView, and the kickoff forbids creating one: the Storybook-First gate (docs/component-rules.md:53-60) triggers on a changed rendered result, and this task changes none.",
+          "locales": "The relocation is locale-independent; the four t() keys move verbatim with their JSX and no message file changes.",
+          "viewports": "No layout, className or breakpoint value changes, so no viewport can distinguish before from after.",
+          "states": "No new business state is introduced; every state value is forwarded from the unchanged controller.",
+          "phases": "A single final candidate on base cb6b786da498dad2ce9dd1abd2eb5ba039c57814 is the only phase; there is no before/after capture pair."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-31-task776/owner-native-final-gates.txt",
+          "command": "npx.cmd eslint <two files>; npm.cmd run typecheck; npm.cmd run build - native Windows PowerShell",
+          "observable": "Owner-run on win32 in C:\\Claude_Code_Projects\\lero-al: eslint printed no problem block, tsc --noEmit printed no error line, next build printed the full route table with 40/40 static pages and no npm ERR! block. The /[locale]/listings route builds at 18.3 kB / 663 kB First Load JS.",
+          "freshness": "owner-run 2026-08-31 on the reviewed five-path candidate",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "eslint (targeted)",
+              "typecheck",
+              "build"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/2026-08-31-task776-listings-shell-view-seam.md",
+          "command": "npm.cmd run check:file-integrity; npm.cmd run check:mojibake - executor transcripts with the win32 platform receipt",
+          "observable": "Pass 2, after every artifact existed: check:file-integrity 5/5 files clean, exit 0; check:mojibake 0 artifacts in 3461 files, exit 0. The 5 files counted match the 5 status paths exactly. Platform receipt win32, node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al.",
+          "freshness": "executor final pass 2026-08-31",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:file-integrity",
+              "check:mojibake"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-31-task776/owner-native-final-gates.txt",
+          "command": "git --no-optional-locks diff --check - reviewer-run, read-only, platform-neutral",
+          "observable": "No whitespace or conflict-marker errors; exit 0.",
+          "freshness": "reviewer-run 2026-08-31 on the reviewed candidate",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "git diff --check"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The gates could have been run against an earlier candidate and be stale for the reviewed diff.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-31-task776/owner-native-final-gates.txt",
+          "result": "REFUTED. The owner-native eslint/typecheck/build run was executed after the final five-path candidate was in place and after the first review inspected it; the executor's pass 2 was explicitly the post-artifact run and its 5-file count matches the reviewed status set exactly."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No CSS, selector, utility or cascade output changes in this task. The diff relocates JSX between two .tsx modules; no rule is generated, removed or replaced."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "AC5 / R5",
+      "requirementIds": [
+        "AC1 / R1",
+        "AC5 / R5"
+      ],
+      "evidence": "First review (2026-08-31) could not approve: docs/orchestrator-role.md Review clause 11 requires a persisted review ledger, and none existed for Task 776 - the newest file in docs/reviews/ was 2026-08-27-task770. RESOLVED by this ledger and its owner-run check:review-ledger receipt. No product code changed to resolve it."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "RESOLVED",
+      "requirements": "AC5 / R5",
+      "requirementIds": [
+        "AC1 / R1",
+        "AC5 / R5"
+      ],
+      "evidence": "Validation transcripts were not retained as repository artifacts: docs/sessions/evidence/task776/ does not exist, unlike tasks 765/768/769/770/771/775. After the BOM self-correction the executor recaptured evidence outside the repository, leaving only prose in the session log. This was a defect of the kickoff, which asked for output and exit codes but not for a retained artifact path. RESOLVED by the reviewer retaining docs/reviews/artifacts/2026-08-31-task776/owner-native-final-gates.txt and reviewer-jsx-equivalence.txt."
+    },
+    {
+      "id": "F3",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "AC3 / R3",
+      "requirementIds": [
+        "AC3 / R3"
+      ],
+      "evidence": "docs/critical-flow-registry.md:105 registers /en/listings under 'Hydration / console errors - live public routes' with check:hydration on a running server as its regression evidence. That row's own Coverage records the live public-route evidence as owner-run with no booted-Next CI step, per an owner scope decision, and the kickoff scoped it as a non-blocking owner-native handoff. It remains unrun: BASE_URL=http://localhost:3000 npm.cmd run check:hydration. Not a defect of this diff; the extraction adds no server/client boundary, both modules are 'use client' and both dynamic() ssr:false declarations are unchanged."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC5 / R5",
+    "reviewer": "Opus"
+  }
+}

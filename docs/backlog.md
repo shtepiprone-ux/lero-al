@@ -5,13 +5,13 @@
 > **No volatile facts in this file.** No `HEAD`/commit SHAs, branch names, divergence counts, tree cleanliness, or "N today" tallies — all of them are false within one commit. Read them live at the moment you need them (`git --no-optional-locks status` · `git --no-optional-locks rev-list` · the registry heading below). Durable Git lessons → `docs/orchestrator-procedures.md` → "Git state — durable lessons".
 > **Decided is not active.** Binding decisions → [`docs/binding-decisions.md`](binding-decisions.md) · recurring orchestrator failure modes → `docs/orchestrator-procedures.md` · known console noise and assessed-harmless findings → `docs/maintenance-playbook.md` §14. Only **undecided** decisions live in this file.
 
-## Last Session (2026-08-27)
+## Last Session (2026-08-31)
 
-Tasks 773 + 774 are ✅ APPROVED by the owner, committed and archived; **Sprint 67 is closed as delivered**, all
-four exit criteria met the day it opened. The durable output is not the 5 changed lines but
-`mantine-responsive-design-system.md` **§18.10**: a floating layer nested inside a `Popover`/`Menu` must pass
-`withinPortal={false}`, drawers are NOT affected (overlay-click dismiss), and **neither defect is assertable in
-RTL** — `env="test"` inlines portals, and jsdom has no layout engine at all.
+Task 776 (`ListingsShellView` seam, Sprint 68) is ✅ **APPROVED WITH NOTES** and archived; ledger
+`docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json` passes the gate on win32. The durable
+output is not the extraction but the two process lessons in its archive row: a clean diff is not approvable without
+the clause-11 ledger, and a kickoff that names commands but no **retained evidence path** loses its proof to prose.
+**775** is ✅ **APPROVED WITH NOTES** and archived in the same pass: its verdict had been issued and had already driven two corrective commits, but was never written down — the failure mode `orchestrator-procedures.md` records for 661 · 703/704/705 · 702, now closed for Sprint 68.
 
 ## Open — needs action
 
@@ -39,7 +39,7 @@ RTL** — `env="test"` inlines portals, and jsdom has no layout engine at all.
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
-**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** (`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`) + **776** (`KICKOFF FILED`, the pre-migration seam, no open decision), both P2. Opened 2026-08-30 from the owner's `/listings` Mantine migration plan — no open sprint fits (goal-fit table in the plan file; **66 is the same route with the opposite intent** — its 772 forbids migration on that surface). Each slice carries its own measured census; story and migration land in the same PR. 🟠 OPEN, zero landed tasks.
+**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** both ✅ APPROVED WITH NOTES and archived, both P2. Opened 2026-08-30 from the owner's `/listings` Mantine migration plan — no open sprint fits (goal-fit table in the plan file; **66 is the same route with the opposite intent** — its 772 forbids migration on that surface). Each slice carries its own measured census; story and migration land in the same PR. 🟠 OPEN for its remaining slices; **two landed tasks (775 · 776)**.
 
 ## Task registry — single source for every open number. Last used **776**, NEXT FREE **777**.
 
@@ -49,8 +49,6 @@ RTL** — `env="test"` inlines portals, and jsdom has no layout engine at all.
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
 | **772** | **KICKOFF FILED** — **Sprint 66**, P1 | **`/listings` horizontal overflow below 640px.** `ListingsSortBar`'s right-hand group is `shrink-0` while the `size="lg"` filters `Button` carries `max-sm:w-full` and the sort `Combobox` wrapper carries `min-w-35`; the sort trigger is `h-9` (36px), below the 44px floor. Deliverable is the bounded mobile-layout fix **plus** route-level proof at 320/375/390 × sq/en/uk/it. Kickoff: `tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`. |
-| **775** | `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` — **Sprint 68**, P2, QA **Q3** | **`/listings` route chrome → Mantine `ListingsPageFrame`.** Current-tree verification evidence and the raw optional-diagnostic outputs are in the session log. Below-640 route overflow remains Task 772 scope. Session: `docs/sessions/2026-08-31-task775-final-verification.md`. Kickoff: `tasks/Sprints/Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`. |
-| **776** | `KICKOFF FILED` — **Sprint 68**, P2, QA **Q1** | **`/listings`: extract `ListingsShellView` as the pre-migration seam.** Frontend refactor, not a migration: `ListingsShell` stays the controller (hooks, state, `listings_restore`, Show-more fetch, favorites, dynamic `ssr:false`), the View takes props/slots at zero DOM/URL/style delta. No story and no `mantine-migration-scope.json` entry — the View is not Mantine. `check:hydration` on `/en/listings` is an owner-native handoff, per registry line 105. Kickoff: `tasks/Sprints/Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |
 | **745** | reserved — **Sprint 46.10**, Q4 | A partially unstyled capture is admitted as a real width verdict. Detect that the **measured controls themselves** are unstyled, retry, then classify as `unstyled-render` — never as a product width regression, and never retry a valid `fullWidth=false` into a pass. Per **D37** the mechanism is not established: 745 must characterise it. Evidence → `backlog-reserved.md`. |

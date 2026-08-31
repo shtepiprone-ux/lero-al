@@ -1,0 +1,90 @@
+Task 776 - owner-run native Windows validation, transcribed verbatim from the owner's
+PowerShell session on 2026-08-31 and retained by the reviewer (Opus).
+
+Platform gate: node.exe -p process.platform -> win32   (docs/orchestrator-role.md, Windows-native validation rule)
+Working directory: C:\Claude_Code_Projects\lero-al
+Shell: native Windows PowerShell (not WSL, not a Linux VM, not a mounted Linux view)
+
+Exit codes were not captured with an explicit "EXIT_CODE=$LASTEXITCODE" line in this session.
+What is recorded below is the actual observed output. Success reading, stated explicitly so a
+later reader does not have to reconstruct it:
+  - eslint prints nothing and exits 0 when a file set is clean; any rule violation prints a
+    problem block. No block was printed.
+  - tsc --noEmit prints nothing and exits 0 when there is no type error; errors print TSxxxx lines.
+    No error line was printed.
+  - next build prints the route table and the final optimization lines only after a successful
+    compile; npm additionally prints an "npm ERR!" block on a non-zero script exit. The route
+    table is present and no npm ERR! block appears.
+
+--------------------------------------------------------------------------------
+PS C:\Claude_Code_Projects\lero-al> node.exe -p process.platform
+win32
+
+--------------------------------------------------------------------------------
+PS C:\Claude_Code_Projects\lero-al> npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json
+
+> lero-al@0.1.0 check:review-ledger
+> node scripts/check-review-ledger.mjs --file docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json
+
+[X] docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json: ledger file does not exist
+[X] check:review-ledger FAILED - 1 invalid ledger file(s)
+
+NOTE: this run predates the ledger. It is retained as the reason the first review could not
+approve, not as a gate result for the final ledger. The confirming run is the one the owner
+returns after this artifact was written.
+
+--------------------------------------------------------------------------------
+PS C:\Claude_Code_Projects\lero-al> npx.cmd eslint src/modules/listings/components/ListingsShell.tsx src/modules/listings/components/ListingsShellView.tsx
+(no output)
+
+--------------------------------------------------------------------------------
+PS C:\Claude_Code_Projects\lero-al> npm.cmd run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+(no output)
+
+--------------------------------------------------------------------------------
+PS C:\Claude_Code_Projects\lero-al> npm.cmd run build
+
+> lero-al@0.1.0 build
+> next build
+
+   Next.js 15.5.18
+   - Environments: .env.local
+   - Experiments (use with caution):
+     - clientTraceMetadata
+   Creating an optimized production build ...
+ [ok] Compiled successfully in 38.9s
+   Skipping linting
+ [ok] Checking validity of types
+ [ok] Collecting page data
+ [ok] Generating static pages (40/40)
+ [ok] Collecting page traces
+ [ok] Finalizing page optimization
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+...
+| f /[locale]/listings                   18.3 kB         663 kB
+| f /[locale]/listings/[slug]              385 B         581 kB
+| f /[locale]/listings/[slug]/edit       2.38 kB         252 kB
+| f /[locale]/listings/create            2.38 kB         252 kB
+...
++ First Load JS shared by all             184 kB
+  | chunks/3434-2d4d03271ef4c6c1.js       126 kB
+  | chunks/4bd1b696-ad216e4073dcea52.js  54.4 kB
+  | other shared chunks (total)          4.37 kB
+f Middleware                              165 kB
+
+(40 static pages generated; 56 route rows printed; the full table is in the owner's session
+scrollback. The /[locale]/listings row is the route this task changes and is reproduced above.
+Box-drawing and check characters in the original output are transliterated here to ASCII so this
+retained artifact carries no glyphs that a later encoding gate would have to special-case.)
+
+--------------------------------------------------------------------------------
+Reviewer-run, read-only, platform-neutral (git, not a Node command):
+
+$ git --no-optional-locks diff --check
+(no output)
+EXIT=0

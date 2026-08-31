@@ -1,0 +1,461 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task 775 - /listings route chrome -> ListingsPageFrame (Mantine)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "3752459e7b9ad9e3bb8da293762043ead7388c9e",
+    "reviewedRevision": "Committed Task 775 series ending at 3752459e7b9ad9e3bb8da293762043ead7388c9e (90f1412d8 implementation, 4c4be8ee3 retained failed diagnostics, 3752459e7 evidence provenance). Verdict issued by a prior Opus orchestrator session on 2026-08-31 and never persisted; this ledger records it. Every factual claim in that verdict was independently re-verified against the committed tree before persisting, and one was refined - see R2's counter-check on why run -02 is superseded.",
+    "reviewedPaths": [
+      "src/modules/listings/components/ListingsPageFrame.tsx",
+      "src/app/[locale]/listings/page.tsx",
+      "src/stories/patterns/mantine/ListingsPageFrame.stories.tsx",
+      "scripts/mantine-migration-scope.json",
+      "scripts/task775-listings-frame-route-probe.mjs",
+      "docs/sessions/2026-08-30-task775-listings-page-frame.md",
+      "docs/sessions/2026-08-31-task775-final-verification.md",
+      "docs/sessions/evidence/task775/runs/task775-final-20260831-01/route-probe.current.json",
+      "docs/sessions/evidence/task775/runs/task775-final-20260831-02/route-probe.current.json",
+      "docs/sessions/evidence/task775/runs/task775-final-20260831-03/route-probe.current.json",
+      "docs/sessions/evidence/task775/checks-20260831/11-build.log",
+      "docs/backlog.md",
+      "tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md",
+      "tasks/Sprints/Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md",
+      "docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 5,
+      "verified": 5,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "R1 / AC-gates",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task775/checks-20260831/11-build.log",
+        "symbol": "section 8 mandatory gate set",
+        "diffHunks": [
+          "11 retained gate transcripts for the final current tree"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "node-check",
+          "typecheck",
+          "check:stories",
+          "check:story-coverage",
+          "check:i18n",
+          "check:mojibake",
+          "check:file-integrity",
+          "check:design-tokens strict",
+          "governance:tailwind",
+          "build-storybook",
+          "build"
+        ],
+        "notApplicable": {
+          "stories": "The canonical story src/stories/patterns/mantine/ListingsPageFrame.stories.tsx exists and is registered in scripts/mantine-migration-scope.json; story-level proof is carried by check:story-coverage and check:stories in the section 8 gate set, not by this row.",
+          "locales": "The route probe captures en and uk. sq and it are covered by the Storybook matrix gates, not by this artifact; the probe's own locale set is stated rather than widened.",
+          "viewports": "All 14 canonical widths are listed in the subjects for the probe row; other rows are viewport-independent.",
+          "states": "No independent runtime state applies; the frame is stateless chrome.",
+          "phases": "Final current-tree run -03 is the accepted phase; -01 and -02 are superseded and recorded as such."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task775/checks-20260831/11-build.log",
+          "command": "tail of each docs/sessions/evidence/task775/checks-20260831/*.log",
+          "observable": "All 11 logs terminate in EXIT_CODE=0, re-read individually by the reviewer on 2026-08-31: 01-node-check, 02-typecheck, 03-check-stories, 04-check-story-coverage, 05-check-i18n, 06-check-mojibake, 07-check-file-integrity, 08-check-design-tokens-strict, 09-governance-tailwind, 10-build-storybook, 11-build. The final npm run build hard gate is 11-build.log.",
+          "freshness": "final current-tree run 2026-08-31, retained at base 3752459e7b9ad9e3bb8da293762043ead7388c9e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "node-check",
+              "typecheck",
+              "check:stories",
+              "check:story-coverage",
+              "check:i18n",
+              "check:mojibake",
+              "check:file-integrity",
+              "check:design-tokens strict",
+              "governance:tailwind",
+              "build-storybook",
+              "build"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A log could end in EXIT_CODE=0 while an earlier line in the same file records a failure the tail hides.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task775/checks-20260831/11-build.log",
+          "result": "Checked. The gate set is additionally corroborated by 10-build-storybook and 11-build, which cannot emit their completion output after a failed compile. No log carries a failure line above a zero exit."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Task 775 introduces a Mantine component and its story; it does not remove or replace a generated CSS rule, selector or cascade utility, so there is no before/after generated rule to compare."
+      }
+    },
+    {
+      "id": "R2 / AC12 route probe",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F5"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task775/runs/task775-final-20260831-03/route-probe.current.json",
+        "symbol": "task775-final-20260831-03 current-tree route probe",
+        "diffHunks": [
+          "28-cell capture plus 3 interaction checks"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "probe integrity",
+          "28 cells",
+          "0 failReason",
+          "filters interaction",
+          "sort interaction",
+          "statusTab interaction"
+        ],
+        "notApplicable": {
+          "stories": "The canonical story src/stories/patterns/mantine/ListingsPageFrame.stories.tsx exists and is registered in scripts/mantine-migration-scope.json; story-level proof is carried by check:story-coverage and check:stories in the section 8 gate set, not by this row.",
+          "locales": "The route probe captures en and uk. sq and it are covered by the Storybook matrix gates, not by this artifact; the probe's own locale set is stated rather than widened.",
+          "states": "No independent runtime state applies; the frame is stateless chrome.",
+          "phases": "Final current-tree run -03 is the accepted phase; -01 and -02 are superseded and recorded as such."
+        },
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "480",
+          "560",
+          "680",
+          "768",
+          "810",
+          "960",
+          "1024",
+          "1200",
+          "1440",
+          "1920",
+          "2560"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task775/runs/task775-final-20260831-03/route-probe.current.json",
+          "command": "git --no-optional-locks hash-object scripts/task775-listings-frame-route-probe.mjs compared with probeHash in the run manifest",
+          "observable": "probeHash 8ad9077900274dca638c52c6d8a90e1d1888d5be recorded in the -03 manifest is byte-identical to git hash-object of scripts/task775-listings-frame-route-probe.mjs, so the manifest was produced by the probe now in the tree. gitCommit 95c3ba570a1a2df578a5c3d86990aaaaefb76354. 28 cells (en, uk x 14 canonical widths), 0 cells carrying failReason, and all three interaction checks - filters, sort, statusTab - report result 'changed' against their stated expectation.",
+          "freshness": "final accepted run, captured 2026-08-31T12:22:06Z",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "probe integrity",
+              "28 cells",
+              "0 failReason",
+              "filters interaction",
+              "sort interaction",
+              "statusTab interaction"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "480",
+              "560",
+              "680",
+              "768",
+              "810",
+              "960",
+              "1024",
+              "1200",
+              "1440",
+              "1920",
+              "2560"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Three runs are all labelled 'current'; the accepted one could be an earlier or non-current capture.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task775/runs/task775-final-20260831-02/route-probe.current.json",
+          "result": "REFUTED, and the reason is sharper than the review recorded. -01 failed 28/28 cells on 'nextjs-portal present - next dev server detected, refusing to capture'. -02 carries probeHash f809ff2f... and gitCommit 4b96655e5..., i.e. it ran an OLDER probe: its data-dependent pagination assertion was deferred by commit 95c3ba570 'fix(Task775): defer data-dependent pagination probe'. -02 therefore shows 0 per-cell failReason yet is still superseded, because the probe binary itself changed. Only -03 matches the probe in the tree."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Task 775 introduces a Mantine component and its story; it does not remove or replace a generated CSS rule, selector or cascade utility, so there is no before/after generated rule to compare."
+      }
+    },
+    {
+      "id": "R3 / AC3-AC4 scope and chrome",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/listings/page.tsx",
+        "symbol": "listings route composition",
+        "diffHunks": [
+          "legacy markup replaced by <ListingsPageFrame>"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "page.tsx consumes ListingsPageFrame",
+          "no className on the frame",
+          "migration-scope registration"
+        ],
+        "notApplicable": {
+          "locales": "The route probe captures en and uk. sq and it are covered by the Storybook matrix gates, not by this artifact; the probe's own locale set is stated rather than widened.",
+          "viewports": "All 14 canonical widths are listed in the subjects for the probe row; other rows are viewport-independent.",
+          "states": "No independent runtime state applies; the frame is stateless chrome.",
+          "phases": "Final current-tree run -03 is the accepted phase; -01 and -02 are superseded and recorded as such."
+        },
+        "stories": [
+          "Patterns/Mantine/ListingsPageFrame"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "src/app/[locale]/listings/page.tsx",
+          "command": "read of src/app/[locale]/listings/page.tsx lines 80-96",
+          "observable": "The route returns <ListingsPageFrame homeHref homeLabel currentLabel breadcrumbAriaLabel> wrapping <ListingsShell>. No className is passed to the frame, so no Tailwind escape hatch reopens on the migrated surface.",
+          "freshness": "committed tree at 3752459e7b9ad9e3bb8da293762043ead7388c9e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "page.tsx consumes ListingsPageFrame",
+              "no className on the frame"
+            ],
+            "stories": [
+              "Patterns/Mantine/ListingsPageFrame"
+            ]
+          }
+        },
+        {
+          "path": "src/stories/patterns/mantine/ListingsPageFrame.stories.tsx",
+          "command": "ls of src/stories/patterns/mantine/ + git grep for ListingsPageFrame in scripts/mantine-migration-scope.json",
+          "observable": "The canonical Patterns/Mantine story exists and ListingsPageFrame.tsx is registered in scripts/mantine-migration-scope.json, satisfying Sprint 68 exit criterion 2 (story and migration in the same PR).",
+          "freshness": "committed tree at 3752459e7b9ad9e3bb8da293762043ead7388c9e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "migration-scope registration"
+            ],
+            "stories": [
+              "Patterns/Mantine/ListingsPageFrame"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The frame could carry a local className or raw value that the story does not exercise, reopening the Tailwind surface D775-C forbids.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ListingsPageFrame.tsx",
+          "result": "REFUTED at the consumer. page.tsx passes only the four content props. The token-level arm is additionally held by 08-check-design-tokens-strict.log and 09-governance-tailwind.log, both EXIT_CODE=0."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Task 775 introduces a Mantine component and its story; it does not remove or replace a generated CSS rule, selector or cascade utility, so there is no before/after generated rule to compare."
+      }
+    },
+    {
+      "id": "R4 / AC11 error path",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/listings/page.tsx",
+        "symbol": "listings page error path",
+        "diffHunks": [
+          "no early return before the frame"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "query error still renders the frame",
+          "empty list renders inside ListingsShell"
+        ],
+        "notApplicable": {
+          "stories": "The canonical story src/stories/patterns/mantine/ListingsPageFrame.stories.tsx exists and is registered in scripts/mantine-migration-scope.json; story-level proof is carried by check:story-coverage and check:stories in the section 8 gate set, not by this row.",
+          "locales": "The route probe captures en and uk. sq and it are covered by the Storybook matrix gates, not by this artifact; the probe's own locale set is stated rather than widened.",
+          "viewports": "All 14 canonical widths are listed in the subjects for the probe row; other rows are viewport-independent.",
+          "states": "No independent runtime state applies; the frame is stateless chrome.",
+          "phases": "Final current-tree run -03 is the accepted phase; -01 and -02 are superseded and recorded as such."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/app/[locale]/listings/page.tsx",
+          "command": "read of the whole component body for return statements",
+          "observable": "The component has exactly one return (line 80) and it returns <ListingsPageFrame>. The only other return in the file is inside generateMetadata (line 20). There is no early return on a failed query, so the frame renders regardless; an empty result set is rendered by ListingsShell's own empty state, not by a different page branch.",
+          "freshness": "committed tree at 3752459e7b9ad9e3bb8da293762043ead7388c9e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "query error still renders the frame",
+              "empty list renders inside ListingsShell"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An error could still bypass the frame through a thrown exception or a notFound() call rather than an early return.",
+          "kind": "EXECUTED",
+          "path": "src/app/[locale]/listings/page.tsx",
+          "result": "Inspected. The data reads resolve to nullish-coalesced values at the call site (listings ?? [], count ?? 0, locations ?? []), which is why AC11 holds structurally rather than by convention."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Task 775 introduces a Mantine component and its story; it does not remove or replace a generated CSS rule, selector or cascade utility, so there is no before/after generated rule to compare."
+      }
+    },
+    {
+      "id": "R5 / documentation accuracy",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-31-task775-final-verification.md",
+        "symbol": "final verification session log and backlog record",
+        "diffHunks": [
+          "corrective doc edits in 4c4be8ee3 and 3752459e7"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no volatile Git facts in backlog",
+          "no historical inference as evidence",
+          "scanner result stated as scanner result",
+          "superseded runs marked"
+        ],
+        "notApplicable": {
+          "stories": "The canonical story src/stories/patterns/mantine/ListingsPageFrame.stories.tsx exists and is registered in scripts/mantine-migration-scope.json; story-level proof is carried by check:story-coverage and check:stories in the section 8 gate set, not by this row.",
+          "locales": "The route probe captures en and uk. sq and it are covered by the Storybook matrix gates, not by this artifact; the probe's own locale set is stated rather than widened.",
+          "viewports": "All 14 canonical widths are listed in the subjects for the probe row; other rows are viewport-independent.",
+          "states": "No independent runtime state applies; the frame is stateless chrome.",
+          "phases": "Final current-tree run -03 is the accepted phase; -01 and -02 are superseded and recorded as such."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-31-task775-final-verification.md",
+          "command": "read of the corrected final verification log and docs/backlog.md",
+          "observable": "The three rejected formulations were corrected rather than argued: the HEAD SHA and the duplicated gate narrative were removed from docs/backlog.md; 'pre-existing' and the Revision 1 fingerprint comparison were removed from the session log; the Italian \"Home\" value is now stated as a scanner result rather than a translation defect. Commits 4c4be8ee3 and 3752459e7 carry these edits; no code or evidence file was touched to satisfy them.",
+          "freshness": "corrected tree at 3752459e7b9ad9e3bb8da293762043ead7388c9e",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no volatile Git facts in backlog",
+              "no historical inference as evidence",
+              "scanner result stated as scanner result",
+              "superseded runs marked"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The corrective edits could have removed the inaccurate claims by also removing the underlying evidence, which would trade one defect for a worse one.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task775/runs/task775-final-20260831-01/route-probe.current.json",
+          "result": "REFUTED. The failed diagnostic runs -01 and -02 were retained and committed on purpose (4c4be8ee3), not deleted. The correction narrowed the claims while keeping every artifact readable."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Task 775 introduces a Mantine component and its story; it does not remove or replace a generated CSS rule, selector or cascade utility, so there is no before/after generated rule to compare."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "R5 / documentation accuracy",
+      "requirementIds": [
+        "R5 / documentation accuracy"
+      ],
+      "evidence": "docs/backlog.md carried a HEAD SHA and a detailed restatement of the gate results, against its own rules banning volatile Git facts and session-log duplication. RESOLVED by the corrective doc edit; no code changed."
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "R5 / documentation accuracy",
+      "requirementIds": [
+        "R5 / documentation accuracy"
+      ],
+      "evidence": "'pre-existing' and 'same fingerprint from Revision 1' were historical inference presented as fact, which Revision 3 forbids as evidence. RESOLVED by removing both from the session log and backlog."
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "R5 / documentation accuracy",
+      "requirementIds": [
+        "R5 / documentation accuracy"
+      ],
+      "evidence": "The scanner found an Italian value \"Home\" identical to English. Calling it an untranslated defect without a language source is an assumption. RESOLVED: the log now states only the scanner result."
+    },
+    {
+      "id": "F4",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "R5 / documentation accuracy",
+      "requirementIds": [
+        "R5 / documentation accuracy"
+      ],
+      "evidence": "NOTE-1. The retained transcripts in docs/sessions/evidence/task775/checks-20260831/*.log record the command and EXIT_CODE but carry no environment header: no node.exe -p process.platform, no Node version, no cwd, which the review skill requires of retained transcripts. Independently confirmed - grep for 'process.platform' or 'win32' across those logs returns no file. Correctly recorded as a limitation rather than back-filled with metadata that was never captured. Correction belongs to the next evidence run: emit the header to its own file before the first gate."
+    },
+    {
+      "id": "F5",
+      "priority": "NOTE",
+      "status": "NOTE",
+      "requirements": "R2 / AC12 route probe",
+      "requirementIds": [
+        "R2 / AC12 route probe"
+      ],
+      "evidence": "NOTE-2. Three runs all carry label 'current'. -01 failed 28/28 cells on 'nextjs-portal present - next dev server detected, refusing to capture'. -02 shows ZERO failing cells yet is still superseded: it carries probeHash f809ff2f... and gitCommit 4b96655e5..., i.e. it ran an older probe. ROOT CAUSE, owner-supplied and confirmed against the artifacts: the production data set has only two listings, so /listings renders no pagination control at all and the probe's '.listings-pagination -> button 2' locator could never resolve. Commit 95c3ba570 therefore removed the pagination interaction outright (21 lines deleted from the probe) and amended the kickoff's AC7 to read verbatim: 'Pagination is not assessed by Task 775: the current route has two listings and renders no pagination control. This is neither a pass nor a defect finding.' The route probe consequently carries three interactions, not four, which is exactly what run -03 records. DURABLE CONSEQUENCE for the rest of Sprint 68: pagination is not provable at route level with the current data set; its only proof surface is Storybook. Both failed runs retained on purpose (4c4be8ee3). Residual risk: a run label that cannot distinguish superseded from accepted leaves the manifest as the only guard."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "R5 / documentation accuracy",
+    "reviewer": "Opus"
+  }
+}

@@ -1,6 +1,6 @@
 # Sprint 68 — `/listings` leaves Tailwind, one surface at a time
 
-**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0
+**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (775 · 776 — both APPROVED WITH NOTES 2026-08-31)
 
 > **Opened by owner instruction, 2026-08-30** — the owner supplied a route-level migration plan for `/listings`
 > (working note, untracked: `Codex-tasks/listings-mantine-migration-plan.md`) and asked for a sprint plus its first
@@ -66,8 +66,8 @@ this sprint as written:
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | **IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW** — state mirrored from `docs/backlog.md` on 2026-08-31, **not** a review verdict. Kickoff `Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`; session `docs/sessions/2026-08-31-task775-final-verification.md`. **A2 + B2 + C1** closed by the owner 2026-08-30. |
-| **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **KICKOFF FILED — READY** 2026-08-31 — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Frontend refactor, **not** a migration: zero DOM/URL/style delta, no story, no `mantine-migration-scope.json` entry. Carries no open decision; **D68-1** does not gate it. Awaiting executor dispatch. |
+| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json` (gate PASSED on win32). 11/11 section-8 gates `EXIT_CODE=0`; probe `-03` hash-matched, 28 cells, 0 `failReason`. NOTE-1 missing platform header · NOTE-2 `-01`/`-02` superseded. **A2 + B2 + C1** closed by the owner 2026-08-30. |
+| **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json` (gate PASSED on win32). JSX equivalence reproduced by the reviewer: zero residual diff, 13/13 `className`. Kickoff `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md` — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Session: `docs/sessions/2026-08-31-task776-listings-shell-view-seam.md`. |
 
 ## Execution order
 
@@ -78,8 +78,11 @@ Order and gating only — read state from the Tasks table above.
    `storybook.mantine.*` keys in four locales, the migration-scope enrolment, and the page-width contract.
 2. **776** — `ListingsShellView` extraction (no Mantine, no visual delta), filed 2026-08-31. It is the seam the
    later slices edit behind, so it precedes them. Still **not filed and not numbered**, and re-check
-   `docs/backlog.md` before filing any of them: `ListingsPagination` (87 lines, thin URL adapter over the existing
-   `MantinePagination`); then `ListingsFilters` together with the `Sheet` → `MantineDrawer` swap that lives inside
+   `docs/backlog.md` before filing any of them: `ListingsPagination` — 87 lines, and ⚠️ **measured 2026-08-31: it is
+   NOT a thin adapter over `MantinePagination`.** It is a hand-rolled control importing the shadcn `Button` with lucide
+   `ChevronLeft`/`ChevronRight` over `useRouter`/`usePathname`/`useSearchParams`; `MantinePagination.tsx` exists in the
+   pattern library but this file does not consume it. The slice is therefore a real migration, not a re-wire, and per the
+   corrected precondition above its proof is a story, not a route probe; then `ListingsFilters` together with the `Sheet` → `MantineDrawer` swap that lives inside
    `ListingsShell.tsx:181-188`; then `ListingsFilterBar`.
 3. Toolbar (`ListingsStatusTabs`, `ActiveFilterChips`, `ListingsSortBar`) and `SaveSearchButton` — **after Task 772
    lands**, with a fresh census.
@@ -91,9 +94,15 @@ point — filed 2026-08-31 as **776**, and dispatchable independently of 775's r
 
 ## Preconditions
 
-- A routable server (`next start` against a production build, or `next dev`) and a seeded database with at least two
-  pages of listings, so the route renders at realistic height and the shell's own states are visible. A zero-result
-  page is not a sufficient measurement surface for a chrome change either — the page gutter must contain content.
+- A routable server (`next start` against a production build, or `next dev`). ⚠️ **Corrected 2026-08-31 by Task 775's
+  closure — the original text required "a seeded database with at least two pages of listings", and that precondition is
+  NOT satisfiable against the current data set: the product has two listings in total.** The consequence is concrete and
+  binds every later slice: `/listings` renders **no pagination control at all**, so no route probe can assert pagination.
+  Task 775 deleted its pagination interaction for exactly this reason (`95c3ba570`, 21 lines removed from the probe) and
+  its AC7 now records the state as *neither a pass nor a defect finding*. **Pagination's only proof surface in this sprint
+  is Storybook.** A slice needing pagination evidence must either seed the database first and say so, or prove it in a
+  story — never silently probe the route and read an absent control as a pass. A zero-result page remains an insufficient
+  measurement surface for a chrome change: the page gutter must contain content.
 - The four locales `sq` · `en` · `uk` · `it` all resolve on `/listings`.
 - Storybook builds (`npm run build-storybook`) and `npm run screenshots:assert -- --mantine-only` are green **before**
   the first slice edits anything. A gate already red at baseline blocks the slice; it is not repaired inside it.

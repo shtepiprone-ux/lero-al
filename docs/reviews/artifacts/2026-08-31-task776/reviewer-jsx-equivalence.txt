@@ -1,0 +1,76 @@
+Task 776 - reviewer reproduction of the JSX-equivalence claim (Opus, 2026-08-31)
+Read-only. Not a Node project command; python3 + read-only git in the bridge session.
+
+METHOD
+  1. Extract the JSX return block of ListingsShell.tsx at HEAD cb6b786da498dad2ce9dd1abd2eb5ba039c57814
+     (from the outer div.listings-shell to the closing paren of return).
+  2. Extract the same block from the new ListingsShellView.tsx.
+  3. Apply ONLY the 12 substitutions the kickoff authorises (11 identifier renames +
+     collapsing the <ListingsFilters .../> element into the {filtersSlot} placeholder).
+  4. Unified-diff the normalized HEAD block against the View block.
+
+AUTHORISED SUBSTITUTIONS APPLIED
+  onFiltersOpen={() => setFiltersOpen(true)}
+    -> onFiltersOpen={onFiltersOpen}
+  <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+    -> <Sheet open={filtersOpen} onOpenChange={onFiltersOpenChange}>
+  perPage={LISTINGS_PER_PAGE}
+    -> perPage={perPage}
+  onViewChange={setView}
+    -> onViewChange={onViewChange}
+  {user && <SaveSearchButton />}
+    -> {saveSearchSlot}
+  allListings.length === 0
+    -> listings.length === 0
+  {allListings.map(
+    -> {listings.map(
+  onBeforeNavigate={handleBeforeNavigate}
+    -> onBeforeNavigate={onBeforeNavigate}
+  isFavorited={localFavoriteIds.has(listing.id)}
+    -> isFavorited={favoriteIds.has(listing.id)}
+  onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
+    -> onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+  onClick={handleShowMore}
+    -> onClick={onShowMore}
+  <ListingsFilters locations={locations} onClose={() => setFiltersOpen(false)} />
+    -> {filtersSlot}
+
+BLOCK SIZES   HEAD JSX: 96 lines | View JSX: 93 lines
+
+RESULT
+  Zero residual diff. The relocated JSX is character-for-character identical to HEAD
+  after the authorised substitutions and nothing else.
+
+LITERAL className CENSUS
+  HEAD: 13 | View: 13 | identical ordered sequence: True
+    1. listings-shell flex flex-col gap-0
+    2. w-80 max-w-[90vw] overflow-y-auto p-5
+    3. flex-1 min-w-0 flex flex-col gap-0 mt-4
+    4. flex items-center gap-2
+    5. flex-1 min-w-0
+    6. flex flex-col items-center justify-center py-24 gap-4 text-center
+    7. h-16 w-16 rounded-2xl bg-muted flex items-center justify-center
+    8. text-2xl
+    9. font-semibold text-lg
+   10. text-muted-foreground text-sm mt-1
+   11. flex justify-center pt-8
+   12. min-w-48 rounded-xl
+   13. h-4 w-4 animate-spin mr-2
+
+CONDITIONAL CLASS EXPRESSIONS (not literal className attributes)
+   grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 pt-5   present: True
+   flex flex-col gap-3 pt-5                                                   present: True
+
+COUNTER-CHECK (the defect this task could most plausibly have shipped)
+  ListingCard.onToggled has signature (newState: boolean) => void, but the controller's
+  handler is (listingId, newState) => void. Forwarding the controller handler directly
+  would silently break favourites. ListingsShellView.tsx:137 rebuilds the per-card
+  closure: onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+  REFUTED as a defect - the closure is present and correct.
+
+COUNTER-CHECK (prop identity)
+  Consolidating two separate () => setFiltersOpen(true) closures into one shared
+  onFiltersOpen prop could change render behaviour if any recipient were memoised.
+  grep for React.memo/memo( across ListingsSortBar, ListingsFilterBar, ListingCard,
+  ListingsPagination, ActiveFilterChips, ListingsStatusTabs: no match in any of the six.
+  REFUTED - prop identity cannot alter render behaviour here.

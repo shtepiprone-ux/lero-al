@@ -1,6 +1,6 @@
 # Sprint 68 — `/listings` leaves Tailwind, one surface at a time
 
-**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (775 · 776 — both APPROVED WITH NOTES 2026-08-31)
+**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (775 · 776 — both APPROVED WITH NOTES 2026-08-31) · **Filed, not started:** 777
 
 > **Opened by owner instruction, 2026-08-30** — the owner supplied a route-level migration plan for `/listings`
 > (working note, untracked: `Codex-tasks/listings-mantine-migration-plan.md`) and asked for a sprint plus its first
@@ -68,6 +68,7 @@ this sprint as written:
 |---|---|---|---|---|
 | **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json` (gate PASSED on win32). 11/11 section-8 gates `EXIT_CODE=0`; probe `-03` hash-matched, 28 cells, 0 `failReason`. NOTE-1 missing platform header · NOTE-2 `-01`/`-02` superseded. **A2 + B2 + C1** closed by the owner 2026-08-30. |
 | **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json` (gate PASSED on win32). JSX equivalence reproduced by the reviewer: zero residual diff, 13/13 `className`. Kickoff `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md` — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Session: `docs/sessions/2026-08-31-task776-listings-shell-view-seam.md`. |
+| **777** | `/listings` pagination → `MantinePagination`, with its canonical story | **P2** | **Q3** | **KICKOFF FILED** 2026-08-31 — not dispatched. Real migration, not a re-wire: the current file is hand-rolled shadcn `Button` + lucide over `useRouter`/`usePathname`/`useSearchParams`. Proof is Storybook only (the route renders no pagination — see Preconditions). Kickoff: `Sprint_68_kickoff_prompt_Task_777_ListingsPagination_Mantine.md`. Carries one bounded `MantinePagination` extension (`aria-current` parity with Mantine stock) and one fail-closed `UNKNOWN` (control size → 40×40). |
 
 ## Execution order
 
@@ -82,7 +83,7 @@ Order and gating only — read state from the Tasks table above.
    NOT a thin adapter over `MantinePagination`.** It is a hand-rolled control importing the shadcn `Button` with lucide
    `ChevronLeft`/`ChevronRight` over `useRouter`/`usePathname`/`useSearchParams`; `MantinePagination.tsx` exists in the
    pattern library but this file does not consume it. The slice is therefore a real migration, not a re-wire, and per the
-   corrected precondition above its proof is a story, not a route probe; then `ListingsFilters` together with the `Sheet` → `MantineDrawer` swap that lives inside
+   corrected precondition above its proof is a story, not a route probe. **Filed 2026-08-31 as 777**; then `ListingsFilters` together with the `Sheet` → `MantineDrawer` swap that lives inside
    `ListingsShell.tsx:181-188`; then `ListingsFilterBar`.
 3. Toolbar (`ListingsStatusTabs`, `ActiveFilterChips`, `ListingsSortBar`) and `SaveSearchButton` — **after Task 772
    lands**, with a fresh census.

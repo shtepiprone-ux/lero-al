@@ -66,7 +66,8 @@ this sprint as written:
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **KICKOFF FILED — READY** 2026-08-30 — `Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`. **A2 + B2 + C1**, all three closed by the owner 2026-08-30 and bound to one route each with binary ACs (AC3, AC4, AC12). Awaiting executor dispatch. |
+| **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | **IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW** — state mirrored from `docs/backlog.md` on 2026-08-31, **not** a review verdict. Kickoff `Sprint_68_kickoff_prompt_Task_775_Listings_Route_Frame.md`; session `docs/sessions/2026-08-31-task775-final-verification.md`. **A2 + B2 + C1** closed by the owner 2026-08-30. |
+| **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **KICKOFF FILED — READY** 2026-08-31 — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Frontend refactor, **not** a migration: zero DOM/URL/style delta, no story, no `mantine-migration-scope.json` entry. Carries no open decision; **D68-1** does not gate it. Awaiting executor dispatch. |
 
 ## Execution order
 
@@ -75,16 +76,18 @@ Order and gating only — read state from the Tasks table above.
 1. **775** — route chrome. Chosen first because it is the only surface on the route with no URL contract, no client
    state and no overlap with Task 772. It also fixes the conventions every later slice reuses: story path and title,
    `storybook.mantine.*` keys in four locales, the migration-scope enrolment, and the page-width contract.
-2. Candidate next, **not filed and not numbered** — re-check `docs/backlog.md` before filing either:
-   `ListingsShellView` extraction (no Mantine, no visual delta); then `ListingsPagination` (87 lines, thin URL
-   adapter over the existing `MantinePagination`); then `ListingsFilters` together with the
-   `Sheet` → `MantineDrawer` swap that lives inside `ListingsShell.tsx:181-188`; then `ListingsFilterBar`.
+2. **776** — `ListingsShellView` extraction (no Mantine, no visual delta), filed 2026-08-31. It is the seam the
+   later slices edit behind, so it precedes them. Still **not filed and not numbered**, and re-check
+   `docs/backlog.md` before filing any of them: `ListingsPagination` (87 lines, thin URL adapter over the existing
+   `MantinePagination`); then `ListingsFilters` together with the `Sheet` → `MantineDrawer` swap that lives inside
+   `ListingsShell.tsx:181-188`; then `ListingsFilterBar`.
 3. Toolbar (`ListingsStatusTabs`, `ActiveFilterChips`, `ListingsSortBar`) and `SaveSearchButton` — **after Task 772
    lands**, with a fresh census.
-4. `ListingsShellView` → Mantine last, when its children are already migrated.
+4. `ListingsShellView` → Mantine last, when its children are already migrated. 776 creates that view; it
+   does not migrate it.
 
-If the owner prefers a first slice carrying **no** open decision, item 2's `ListingsShellView` extraction is the
-alternative entry point; 775 then follows it unchanged.
+If the owner prefers a slice carrying **no** open decision, item 2's `ListingsShellView` extraction is that entry
+point — filed 2026-08-31 as **776**, and dispatchable independently of 775's review.
 
 ## Preconditions
 

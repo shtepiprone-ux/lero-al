@@ -49,6 +49,25 @@ reinterpret, or replace a mandatory rule unless that rule explicitly permits it 
 Complete `docs/orchestrator-execution-contract-template.md` and retain both completed artifacts with the kickoff.
 An unresolved owner decision produces a blocked decision note, not a multi-route task for Sonnet.
 
+## STOP — mandatory startup gate
+
+After reading only enough of the request to identify task design, do not open an existing task, source files, diff,
+executor report, validation evidence, or begin task analysis or a kickoff until you have opened all of these files in
+the current session, in order:
+
+1. `.claude/skills/create-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The router's injected skill text, a previous-session read, a summary, or a remembered workflow does not satisfy this
+gate. The first substantive task-design response must begin with exactly:
+
+`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+If a required file cannot be opened, stop and return `BLOCKED` with the unavailable path. If the receipt was omitted
+or any required file was not read, discard every preliminary task-design conclusion and restart at this gate; do not
+write a kickoff or issue a decision first.
+
 ## Gather evidence before writing
 
 1. Classify the request and state the task type.

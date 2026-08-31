@@ -25,6 +25,10 @@ review work.
 - If a prompt is ambiguous or the hook is unavailable, Opus must classify the mode before its first substantive
   response and invoke the matching skill itself.
 
+Injected workflow context is not a substitute for opening the required source files in the current session. The
+task-design and implementation-review startup gates below remain mandatory even when the router selected and injected
+`create-task` or `review-task`.
+
 ## Automatic Sonnet execution
 
 On every Sonnet session start, the project `SessionStart` hook injects `.claude/skills/execute-task/SKILL.md` before
@@ -52,6 +56,44 @@ For Opus orchestration or review, also read:
 - `docs/orchestrator-procedures.md`
 - `.claude/skills/create-task/SKILL.md` when designing an implementation task.
 - `.claude/skills/review-task/SKILL.md` when reviewing implementation, Storybook/UI evidence, or release readiness.
+
+### STOP — task-design startup gate
+
+After reading only enough of the request to identify task design, and before opening an existing task, source files,
+diff, executor report, evidence, or writing task analysis or a kickoff, Opus must open all of these files in the
+current session:
+
+1. `.claude/skills/create-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The first substantive task-design response must begin with exactly:
+
+`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+Do not continue from a prior-session read, an injected excerpt, a summary, or an assumed workflow. If any file cannot
+be opened, stop before task design and return `BLOCKED`, naming the unavailable path. If this receipt was omitted or
+any required file was not read, discard all preliminary task-design conclusions and restart the preflight before
+writing a kickoff or issuing a decision.
+
+### STOP — implementation-review startup gate
+
+After reading only enough of the request to identify a review, and before opening the implementation task, diff,
+source files, executor report, evidence, or writing any review analysis, Opus must open all of these files in the
+current session:
+
+1. `.claude/skills/review-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The first substantive review response must begin with exactly:
+
+`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+Do not continue from a prior-session read, an injected excerpt, a summary, or an assumed workflow. If any file cannot
+be opened, stop before reviewing and return `BLOCKED`, naming the unavailable path. If this receipt was omitted or
+any required file was not read, discard all preliminary review conclusions and restart the preflight before issuing a
+finding or decision.
 
 For Sonnet implementation, use the automatically loaded `.claude/skills/execute-task/SKILL.md` and the task's
 pre-read bundle.

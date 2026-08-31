@@ -57,6 +57,25 @@ is an environment screen, not repository evidence: do not issue a finding, verdi
 Re-run in native Windows PowerShell, or mark the validation `MISSING EVIDENCE` and provide the exact owner-native
 PowerShell command. Only Windows-native or CI output may support the final review decision.
 
+## STOP — mandatory startup gate
+
+After reading only enough of the request to identify an implementation review, do not open the implementation task,
+diff, source files, executor report, validation evidence, or begin review analysis until you have opened all of these
+files in the current session, in order:
+
+1. `.claude/skills/review-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The router's injected skill text, a previous-session read, a summary, or a remembered workflow does not satisfy this
+gate. The first substantive review response must begin with exactly:
+
+`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+If a required file cannot be opened, stop and return `BLOCKED` with the unavailable path. If the receipt was omitted
+or any required file was not read, discard every preliminary conclusion and restart at this gate; do not issue a
+finding or decision first.
+
 ## Establish the review baseline
 
 1. Read the complete implementation task and rebuild its requirement ledger.

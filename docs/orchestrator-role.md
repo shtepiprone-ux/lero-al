@@ -31,6 +31,44 @@ At the start of an orchestration or review session:
 
 Do not claim a rule file was read unless it was actually read in the current session.
 
+### STOP — task-design startup gate
+
+For task design or an implementation handoff, classification is the only permitted action before the gate. Before
+opening an existing task, source, diff, executor report, or evidence, open these three files in the current session,
+in order:
+
+1. `.claude/skills/create-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The router's injected workflow text does not satisfy this gate. The first substantive task-design response must begin
+with this exact receipt:
+
+`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+If any file is unavailable, return `BLOCKED` with its path and do not begin task design. An omitted receipt or any
+unread file invalidates preliminary task-design work: restart from the gate and issue no kickoff or decision until it
+is complete.
+
+### STOP — implementation-review startup gate
+
+For implementation review, QA validation, Storybook/UI evidence review, or release-readiness review, classification
+is the only permitted action before the gate. Before opening the task, diff, source, executor report, or evidence,
+open these three files in the current session, in order:
+
+1. `.claude/skills/review-task/SKILL.md`
+2. `docs/orchestrator-role.md`
+3. `docs/orchestrator-procedures.md`
+
+The router's injected workflow text does not satisfy this gate. The first substantive review response must begin
+with this exact receipt:
+
+`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+
+If any file is unavailable, return `BLOCKED` with its path and do not begin the review. An omitted receipt or any
+unread file invalidates preliminary review work: restart from the gate and issue no finding or decision until it is
+complete.
+
 ## Git policy
 
 Read-only git is allowed for inspection:

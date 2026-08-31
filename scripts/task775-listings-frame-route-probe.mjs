@@ -8,16 +8,15 @@
  * EVIDENCE TOOLING, not a gate: no `package.json` script entry, nothing in CI depends on it.
  *
  * Usage:
- *   SUBJECT_COMMIT=<served-tree-sha> node scripts/task775-listings-frame-route-probe.mjs <label> <runId>
- * <label> is 'pre-edit' or 'post-edit'. Every run writes only to its new, unique
+ *   node scripts/task775-listings-frame-route-probe.mjs current <runId>
+ * The probe captures the current production tree. Every run writes only to its new, unique
  * docs/sessions/evidence/task775/runs/<runId>/ directory; no existing evidence is overwritten.
  *
  * Contract (kickoff §10.10):
  *   - Reads BASE_URL from the environment, defaulting to http://127.0.0.1:3000.
- *   - Computes a top-level `probeHash` field (§10.10e) via `git hash-object` on this file, run
- *     from the Git worktree the probe executes in (via `child_process`, never a shell). Fails
- *     closed — writes nothing and exits non-zero — if the hash cannot be computed (not a Git
- *     worktree, or the command fails).
+ *   - Computes top-level `probeHash` and `gitCommit` fields via `git hash-object` / `git rev-parse`
+ *     in the current Git checkout (via `child_process`, never a shell). Fails closed — writes
+ *     nothing and exits non-zero — if that identity cannot be computed.
  *   - For /en/listings and /uk/listings, at every Q3 canonical width (320/375/390/480/560/680/
  *     768/810/960/1024/1200/1440/1920/2560), records:
  *       - documentElement.scrollWidth vs clientWidth (overflow check); when it overflows,
@@ -58,18 +57,13 @@ const SPACING_VAR_WIDTHS = new Set([1200, 1440]);
 
 const label = process.argv[2];
 const runId = process.argv[3];
-const subjectCommit = process.env.SUBJECT_COMMIT;
-if (!['pre-edit', 'post-edit'].includes(label) || !runId || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(runId)) {
-  console.error('Usage: SUBJECT_COMMIT=<served-tree-sha> node scripts/task775-listings-frame-route-probe.mjs <pre-edit|post-edit> <runId>');
-  process.exit(2);
-}
-if (!subjectCommit || !/^[0-9a-f]{7,40}$/i.test(subjectCommit)) {
-  console.error('SUBJECT_COMMIT must be the 7–40 character Git SHA of the tree served at BASE_URL.');
+if (label !== 'current' || !runId || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(runId)) {
+  console.error('Usage: node scripts/task775-listings-frame-route-probe.mjs current <runId>');
   process.exit(2);
 }
 
-// §10.10e — computed inside the Git worktree the probe runs from (the "instrument" worktree of
-// §13a), via child_process so it never depends on a shell being present.
+// Computed in the current Git checkout via child_process, so the run records the exact probe
+// content and commit without depending on a shell being present.
 function computeProbeHash() {
   return execFileSync('git', ['hash-object', 'scripts/task775-listings-frame-route-probe.mjs'], {
     cwd: ROOT,
@@ -77,7 +71,7 @@ function computeProbeHash() {
   }).trim();
 }
 
-function computeInstrumentCommit() {
+function computeGitCommit() {
   return execFileSync('git', ['rev-parse', 'HEAD'], {
     cwd: ROOT,
     encoding: 'utf8',
@@ -327,23 +321,23 @@ async function runInteractions(browser) {
 
 async function main() {
   let probeHash;
-  let instrumentCommit;
+  let gitCommit;
   try {
     probeHash = computeProbeHash();
     if (!probeHash) throw new Error('empty git hash-object output');
-    instrumentCommit = computeInstrumentCommit();
-    if (!/^[0-9a-f]{40}$/i.test(instrumentCommit)) throw new Error('invalid git rev-parse HEAD output');
+    gitCommit = computeGitCommit();
+    if (!/^[0-9a-f]{40}$/i.test(gitCommit)) throw new Error('invalid git rev-parse HEAD output');
   } catch (err) {
     console.error(
-      `\n❌ task775-listings-frame-route-probe: unable to identify the Git instrument (${
+      `\n❌ task775-listings-frame-route-probe: unable to identify the current Git tree (${
         err instanceof Error ? err.message : String(err)
-      }). Not a Git worktree, or a Git command failed — refusing to write evidence without those identities (§10.10e).`
+      }). Not a Git worktree, or a Git command failed — refusing to write evidence without a reproducible commit (§10.10e).`
     );
     process.exit(1);
     return;
   }
 
-  // The instrument and subject identities above are verified before this mutates evidence storage
+  // The current-tree identity above is verified before this mutates evidence storage
   // or launches a browser. A duplicate run ID is a hard failure, never an overwrite.
   await mkdir(RUNS_DIR, { recursive: true });
   const runDir = join(RUNS_DIR, runId);
@@ -356,8 +350,7 @@ async function main() {
     baseUrl: BASE_URL,
     capturedAt: new Date().toISOString(),
     probeHash,
-    subjectCommit: subjectCommit.toLowerCase(),
-    instrumentCommit,
+    gitCommit,
     cells: [],
   };
   let hardFail = false;

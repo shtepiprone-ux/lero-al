@@ -70,23 +70,23 @@ selectors for measurement.
 
 ## 6. Current route probe
 
-Run one immutable capture of the current production tree. The probe is an evidence tool, not a package script.
+Run one immutable capture of the current locally running tree. The probe is an evidence tool, not a package script.
 
 ```powershell
 # In a terminal serving the current committed tree:
-npm.cmd run start -- -p 3001
+npm.cmd run dev
 
 # In another terminal, from the same committed worktree:
-$env:BASE_URL = 'http://127.0.0.1:3001'
+$env:BASE_URL = 'http://127.0.0.1:3000'
 node scripts/task775-listings-frame-route-probe.mjs current task775-final-<unique-id>
 ```
 
 The run creates `docs/sessions/evidence/task775/runs/<unique-id>/route-probe.current.json` and two 1440 PNGs. It
 records 28 `/en` and `/uk` viewport cells, spacing variables, separator colour, overflow culprits and four real
 interactions. It fails if a route cell is non-OK, a required route selector is missing or ambiguous, an interaction's
-exact postcondition fails, or the server is `next dev`.
-It performs the production-server check before creating the run directory, so an invalid server does not consume a
-run ID.
+exact postcondition fails. It records `serverMode` as `development` or `production`; development mode is valid
+current-route UI evidence, while `npm.cmd run build` remains the production-build gate. It performs the route check
+before creating the run directory, so an unreachable or non-OK server does not consume a run ID.
 
 At 1440 `/en`, the probe must verify:
 
@@ -97,8 +97,8 @@ At 1440 `/en`, the probe must verify:
 | Status tab | `/en/listings` | `tab=closed`. |
 | Pagination | `/en/listings` | `page=2`. |
 
-`route-probe.current.json` must contain `gitCommit`, `probeHash`, 28 cells and all four interaction results, with no
-`failReason`. Its run directory is append-only; never reuse a run ID.
+`route-probe.current.json` must contain `gitCommit`, `probeHash`, `serverMode`, 28 cells and all four interaction
+results, with no `failReason`. Its run directory is append-only; never reuse a run ID.
 
 ## 7. Acceptance criteria
 

@@ -69,6 +69,7 @@ this sprint as written:
 | **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json` (gate PASSED on win32). 11/11 section-8 gates `EXIT_CODE=0`; probe `-03` hash-matched, 28 cells, 0 `failReason`. NOTE-1 missing platform header · NOTE-2 `-01`/`-02` superseded. **A2 + B2 + C1** closed by the owner 2026-08-30. |
 | **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json` (gate PASSED on win32). JSX equivalence reproduced by the reviewer: zero residual diff, 13/13 `className`. Kickoff `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md` — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Session: `docs/sessions/2026-08-31-task776-listings-shell-view-seam.md`. |
 | **777** | `/listings` pagination → `MantinePagination`, with its canonical story | **P2** | **Q3** | ✅ **COMPLETE** 2026-09-01 (owner decision). Closed under **D68-2** differential baseline, which replaced the unattainable global-green precondition: **B** `1241/1348 PASS, 80 FAIL, 27 AMBIGUOUS` → **P** `1257/1364 PASS, 80 FAIL, 27 AMBIGUOUS`, so `P \ B = ∅` and all **16** new `Patterns/Mantine/ListingsPagination` cells passed. Control size: Mantine default **32×32** accepted by the visual owner — supersedes AC6's 40×40, no `size` prop, no raw-pixel CSS. Owner visually accepted story + live server. Final test-only edit: smoke test **23/23**, ESLint exit 0 (one pre-existing warning at `MantinePagination.tsx:238`, deliberately not silenced). No route probe — Storybook remained the only proof surface. Session: `docs/sessions/2026-08-31-task777-listings-pagination-mantine.md` §14. |
+| **778** | `/listings`: `ListingsFilters` → Mantine, hosted by the canonical `MantineDrawer` | **P2** | **Q3** | 🟠 **KICKOFF FILED** 2026-09-01. `Sprint_68_kickoff_prompt_Task_778_ListingsFilters_Mantine_Drawer.md`. Migrates the 367-line filters panel off shadcn `Button`/`Input`/`cn` (measured pre-edit: 27 `className`, 4 `cn(`, 8 `<Button`, 1 `<Input`) and swaps `ListingsShellView.tsx:82-86`'s `Sheet` for `MantineDrawer` (`side="left"`, `size="xs"` = 20rem = the legacy 320px, token-clean). New canonical story `Patterns/Mantine/ListingsFilters` (+16 cells), manifest 20 → 21. **`ListingsShellView` is deliberately NOT enrolled** — it stays a mixed legacy composite until its own final slice. First slice bound by **D68-2**. Records five accepted canonical changes rather than claiming visual neutrality — chief among them that the desktop drawer **gains** a close affordance the legacy `Sheet` explicitly hid (`showCloseButton={false}`). |
 
 ## Execution order
 
@@ -105,8 +106,19 @@ point — filed 2026-08-31 as **776**, and dispatchable independently of 775's r
   story — never silently probe the route and read an absent control as a pass. A zero-result page remains an insufficient
   measurement surface for a chrome change: the page gutter must contain content.
 - The four locales `sq` · `en` · `uk` · `it` all resolve on `/listings`.
-- Storybook builds (`npm run build-storybook`) and `npm run screenshots:assert -- --mantine-only` are green **before**
-  the first slice edits anything. A gate already red at baseline blocks the slice; it is not repaired inside it.
+- Storybook builds (`npm run build-storybook`). ⚠️ **Corrected 2026-09-01 by owner decision D68-2 (below) — the
+  original text also required `npm run screenshots:assert -- --mantine-only` to be "green **before** the first slice
+  edits anything. A gate already red at baseline blocks the slice; it is not repaired inside it." That precondition
+  was unsatisfiable and is superseded.** Task 777 measured the identical `1241/1348 PASS, 80 FAIL, 27 AMBIGUOUS`
+  already sitting in Task 775's own receipts, with all 107 failing cells traced to harness causes and **zero product
+  defects**. Rendered acceptance for every remaining slice is therefore **differential**, per D68-2:
+  1. capture a **clean pre-edit baseline B** before the slice's first edit, and never overwrite it;
+  2. after the change, `P \ B = ∅` — no failure cell in P that is not already in B, compared as a set of normalized
+     cell identities, not as a count;
+  3. **every** new cell the slice adds must PASS;
+  4. pre-existing global FAIL/AMBIGUOUS cells are **not** an automatic blocker and are **not** repaired inside the
+     slice.
+  A slice must still reconcile its arithmetic explicitly (`total(P) = total(B) + n`, `pass(P) = pass(B) + n`).
 
 ## Exit criteria
 
@@ -130,6 +142,7 @@ point — filed 2026-08-31 as **776**, and dispatchable independently of 775's r
 | **D775-C = C1** | The Mantine spacing scale gains two semantic keys, `2xl: '2rem'` and `3xl: '3rem'`, declared natively in the Mantine types through `MantineThemeSizesOverride`. A migrated surface then expresses its gutter as `md → xl → 2xl → 3xl` — Mantine tokens only, no raw values, no `design-tokens-allow:` markers, no Tailwind vars. C2 was rejected as a permanent exception inside a new Mantine surface, C3 as a return to the Tailwind token layer. | Owner, 2026-08-30 |
 | **D775-A = A2** | The gutter uses **Mantine responsive props only**, with the top step at `xxl = 1440`. **1536 is not used anywhere** — neither a Mantine breakpoint nor a CSS-module media query. A1 and A3 were rejected because both carry a legacy Tailwind container or breakpoint into a new Mantine component. The resulting padding change across **1440–1535px** (`2rem → 3rem`) is an accepted migration outcome, not a regression. | Owner, 2026-08-30 (revised the same day, superseding A1) |
 | **D775-B = B2** | Migrated breadcrumb chrome takes the measured TailAdmin contract: 14px, link gray-500, current gray-800, gap 6px, separator gray-400 — the only route that gives migrated chrome TailAdmin provenance. B1 was rejected because it preserves a legacy deviation inside a new Mantine component. | Owner, 2026-08-30 |
+| **D68-2** | Rendered acceptance in this sprint is **differential**, never a global green exit code. Capture a clean pre-edit baseline **B**; after the change require `P \ B = ∅` and a PASS on every new cell; existing global FAIL/AMBIGUOUS cells are not an automatic blocker. Supersedes the Preconditions paragraph's global-green demand, corrected above in the same edit. Established while closing Task **777**, whose executor correctly refused to proceed against an unsatisfiable precondition. | Owner, 2026-09-01 |
 
 Both bind every later slice in this sprint: a migrated `/listings` surface expresses layout in Mantine responsive
 props on this theme's breakpoints — never a reproduced Tailwind container and never 1536 — and takes its visual

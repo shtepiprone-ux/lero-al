@@ -2389,7 +2389,12 @@
       "listings_page_frame_current_long": "Tutti gli annunci immobiliari attualmente disponibili in vendita e in affitto in tutta l'Albania",
       "listings_page_frame_body": "Segnaposto dei risultati degli annunci",
       "listings_page_frame_section_short": "Etichette brevi",
-      "listings_page_frame_section_long": "Etichette localizzate più lunghe"
+      "listings_page_frame_section_long": "Etichette localizzate più lunghe",
+      "listings_pagination_section_first": "Prima pagina — Precedente disabilitato",
+      "listings_pagination_section_middle": "Pagina centrale — entrambi i lati attivi",
+      "listings_pagination_section_last": "Ultima pagina — Successivo disabilitato",
+      "listings_pagination_section_ellipsis": "Intervallo ampio — puntini di sospensione",
+      "listings_pagination_section_narrow": "Contenitore stretto — scala di riduzione"
     }
   },
   "ui": {

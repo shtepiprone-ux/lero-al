@@ -17,5 +17,6 @@
   "src/design-system/mantine/patterns/MantineAddItemPanel.tsx",
   "src/components/shared/LocationCombobox.tsx",
   "src/modules/auth/components/AuthSheet.tsx",
-  "src/modules/listings/components/ListingsPageFrame.tsx"
+  "src/modules/listings/components/ListingsPageFrame.tsx",
+  "src/modules/listings/components/ListingsPagination.tsx"
 ]

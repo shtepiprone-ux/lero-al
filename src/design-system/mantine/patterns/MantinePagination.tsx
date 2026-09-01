@@ -274,6 +274,7 @@ export function MantinePagination({
               active={item === activePage}
               onClick={() => handleChange(item)}
               aria-label={getPageAriaLabel?.(item)}
+              aria-current={item === activePage ? 'page' : undefined}
             >
               {item}
             </Pagination.Control>

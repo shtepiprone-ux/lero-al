@@ -2389,7 +2389,12 @@
       "listings_page_frame_current_long": "Усі оголошення про нерухомість, доступні для продажу та оренди по всій Албанії",
       "listings_page_frame_body": "Заповнювач результатів списку оголошень",
       "listings_page_frame_section_short": "Короткі підписи",
-      "listings_page_frame_section_long": "Найдовші локалізовані підписи"
+      "listings_page_frame_section_long": "Найдовші локалізовані підписи",
+      "listings_pagination_section_first": "Перша сторінка — «Назад» вимкнено",
+      "listings_pagination_section_middle": "Середня сторінка — обидва краї активні",
+      "listings_pagination_section_last": "Остання сторінка — «Далі» вимкнено",
+      "listings_pagination_section_ellipsis": "Великий діапазон — багатокрапка",
+      "listings_pagination_section_narrow": "Вузький контейнер — драбина стиснення"
     }
   },
   "ui": {

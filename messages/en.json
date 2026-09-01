@@ -2389,7 +2389,12 @@
       "listings_page_frame_current_long": "All property listings currently available for sale and rent across Albania",
       "listings_page_frame_body": "Listing results placeholder",
       "listings_page_frame_section_short": "Short labels",
-      "listings_page_frame_section_long": "Longest localized labels"
+      "listings_page_frame_section_long": "Longest localized labels",
+      "listings_pagination_section_first": "First page — Previous disabled",
+      "listings_pagination_section_middle": "Middle page — both edges enabled",
+      "listings_pagination_section_last": "Last page — Next disabled",
+      "listings_pagination_section_ellipsis": "Large range — ellipsis",
+      "listings_pagination_section_narrow": "Narrow container — shed ladder"
     }
   },
   "ui": {

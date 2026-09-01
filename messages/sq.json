@@ -2389,7 +2389,12 @@
       "listings_page_frame_current_long": "Të gjitha njoftimet për prona aktualisht në shitje dhe me qira në të gjithë Shqipërinë",
       "listings_page_frame_body": "Vendmbajtës i rezultateve të listimeve",
       "listings_page_frame_section_short": "Etiketa të shkurtra",
-      "listings_page_frame_section_long": "Etiketat më të gjata të lokalizuara"
+      "listings_page_frame_section_long": "Etiketat më të gjata të lokalizuara",
+      "listings_pagination_section_first": "Faqja e parë — Mbrapa e çaktivizuar",
+      "listings_pagination_section_middle": "Faqja e mesme — të dyja anët aktive",
+      "listings_pagination_section_last": "Faqja e fundit — Para e çaktivizuar",
+      "listings_pagination_section_ellipsis": "Interval i madh — tre pika",
+      "listings_pagination_section_narrow": "Kontejner i ngushtë — shkallë tkurrjeje"
     }
   },
   "ui": {

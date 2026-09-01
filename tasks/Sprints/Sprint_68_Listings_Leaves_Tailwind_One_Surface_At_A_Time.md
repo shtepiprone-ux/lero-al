@@ -1,6 +1,6 @@
 # Sprint 68 — `/listings` leaves Tailwind, one surface at a time
 
-**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (775 · 776 — both APPROVED WITH NOTES 2026-08-31) · **Filed, not started:** 777
+**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 3 (775 · 776 APPROVED WITH NOTES 2026-08-31 · 777 COMPLETE 2026-09-01)
 
 > **Opened by owner instruction, 2026-08-30** — the owner supplied a route-level migration plan for `/listings`
 > (working note, untracked: `Codex-tasks/listings-mantine-migration-plan.md`) and asked for a sprint plus its first
@@ -68,7 +68,7 @@ this sprint as written:
 |---|---|---|---|---|
 | **775** | `/listings` route chrome — `ListingsPageFrame`, Mantine, with its canonical story | **P2** | **Q3** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task775-listings-route-frame.review-ledger.json` (gate PASSED on win32). 11/11 section-8 gates `EXIT_CODE=0`; probe `-03` hash-matched, 28 cells, 0 `failReason`. NOTE-1 missing platform header · NOTE-2 `-01`/`-02` superseded. **A2 + B2 + C1** closed by the owner 2026-08-30. |
 | **776** | `/listings`: extract `ListingsShellView` as the pre-migration seam | **P2** | **Q1** | ✅ **APPROVED WITH NOTES** (Opus) 2026-08-31 — archived. Ledger: `docs/reviews/2026-08-31-task776-listings-shell-view-seam.review-ledger.json` (gate PASSED on win32). JSX equivalence reproduced by the reviewer: zero residual diff, 13/13 `className`. Kickoff `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md` — `Sprint_68_kickoff_prompt_Task_776_Listings_Shell_View_Seam.md`. Session: `docs/sessions/2026-08-31-task776-listings-shell-view-seam.md`. |
-| **777** | `/listings` pagination → `MantinePagination`, with its canonical story | **P2** | **Q3** | **KICKOFF FILED** 2026-08-31 — not dispatched. Real migration, not a re-wire: the current file is hand-rolled shadcn `Button` + lucide over `useRouter`/`usePathname`/`useSearchParams`. Proof is Storybook only (the route renders no pagination — see Preconditions). Kickoff: `Sprint_68_kickoff_prompt_Task_777_ListingsPagination_Mantine.md`. Carries one bounded `MantinePagination` extension (`aria-current` parity with Mantine stock) and one fail-closed `UNKNOWN` (control size → 40×40). |
+| **777** | `/listings` pagination → `MantinePagination`, with its canonical story | **P2** | **Q3** | ✅ **COMPLETE** 2026-09-01 (owner decision). Closed under **D68-2** differential baseline, which replaced the unattainable global-green precondition: **B** `1241/1348 PASS, 80 FAIL, 27 AMBIGUOUS` → **P** `1257/1364 PASS, 80 FAIL, 27 AMBIGUOUS`, so `P \ B = ∅` and all **16** new `Patterns/Mantine/ListingsPagination` cells passed. Control size: Mantine default **32×32** accepted by the visual owner — supersedes AC6's 40×40, no `size` prop, no raw-pixel CSS. Owner visually accepted story + live server. Final test-only edit: smoke test **23/23**, ESLint exit 0 (one pre-existing warning at `MantinePagination.tsx:238`, deliberately not silenced). No route probe — Storybook remained the only proof surface. Session: `docs/sessions/2026-08-31-task777-listings-pagination-mantine.md` §14. |
 
 ## Execution order
 

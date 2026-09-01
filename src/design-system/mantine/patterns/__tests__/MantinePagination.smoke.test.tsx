@@ -174,4 +174,14 @@ describe('MantinePagination — never-wraps CSS invariant (Rule 1)', () => {
     const { container } = render(withProvider(<MantinePagination total={0} value={1} onChange={() => {}} />))
     expect(container.querySelector('.mantine-Pagination-root')).toBeNull()
   })
+
+  it('Task 777 — the active control carries aria-current="page" and a non-active control does not', () => {
+    const { getAllByRole, getByRole } = render(withProvider(<MantinePagination total={10} value={5} onChange={() => {}} />))
+    const activeControl = getByRole('button', { name: '5' })
+
+    expect(activeControl).toHaveAttribute('aria-current', 'page')
+    getAllByRole('button')
+      .filter((control) => control !== activeControl)
+      .forEach((control) => expect(control).not.toHaveAttribute('aria-current'))
+  })
 })

@@ -22,8 +22,10 @@ carried-over changes; **zero diff to either in this session**, confirmed by `git
 (only `ListingsFilterBar.tsx`'s line count changed vs. the pre-780R tree). `useListingsUrlFilters.ts` and
 `listingsFilterBar.smoke.test.tsx` — zero diff, confirmed absent from `git status --porcelain`/`diff --stat`.
 
-`tasks/Sprints/Sprint_68_Task_780_review_ledger.PENDING-VALIDATION.json` appears untracked in the worktree — an
-orchestrator artifact, not created or touched by this session.
+`tasks/Sprints/Sprint_68_Task_780_review_ledger.PENDING-VALIDATION.json` appeared untracked in the worktree during
+this session — an orchestrator artifact, not created or touched by it. It was a staging copy of the Task 780 review
+ledger and was **deleted on 2026-09-02** once the final validated ledger landed at
+`docs/reviews/2026-09-02-task780R-listings-filter-bar-rework.review-ledger.json`. It was never committed.
 
 ---
 

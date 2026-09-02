@@ -46,7 +46,7 @@ modelled on `scripts/task766-route-shell-probe.mjs`, which exists for the same r
 
 | # | Title | Priority | State |
 |---|---|---|---|
-| **772** | `ListingsSortBar` mobile overflow — bounded layout fix plus route-level proof | **P1** | **KICKOFF FILED** 2026-08-27 — `Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md` |
+| **772** | `ListingsSortBar` mobile overflow — bounded layout fix plus route-level proof | **P1** | **KICKOFF FILED** 2026-08-27, **revised 2026-09-02** (pre-dispatch accuracy pass — kickoff §16; scope and QA profile unchanged) — `Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md` |
 
 ## Execution order
 
@@ -57,14 +57,22 @@ Order and gating only — read state from the Tasks table above.
 
 ## Preconditions
 
-- A routable server (`next start` against a production build, or `next dev`) and a seeded database with **at least
-  two pages of listings**, so `total`, `from`–`to` and the pagination-dependent strings render at realistic width.
-  A zero-result page hides `showing_results` (`ListingsSortBar.tsx:52`) and is **not** a sufficient measurement.
+- A routable server (`next start` against a production build, or `next dev`) and a database whose default,
+  unfiltered `/listings` returns **`total > 0`**.
+  > **Corrected 2026-09-02.** This precondition previously demanded *"at least two pages of listings"*. That was
+  > false: `ListingsSortBar.tsx:52` gates `showing_results` on `total > 0` alone, `:53` is `hidden sm:block` so the
+  > string does not render at 320/375/390 at all, and `LISTINGS_PER_PAGE = 25`
+  > (`src/modules/listings/constants/index.ts:99`) would have made "two pages" mean 26 listings. **Two listings are
+  > sufficient** for every overflow cell and every desktop-regression cell. A `total === 0` default route is still
+  > `BLOCKED`; `total === 0` and `total === 1` are separate negative-flow cells reached by filtering.
 - The four locales `sq` · `en` · `uk` · `it` all resolve on `/listings`.
 - **For the authenticated cells only:** `TASK772_AUTH_STORAGE_STATE` points to a local, untracked Playwright
   storage-state file with a valid authenticated session. If it is absent or the session does not validate, the task
   records `AUTH_STATE_UNAVAILABLE` and finishes `BLOCKED`; the authenticated acceptance criterion may not be claimed
   as passed by any other means. The anonymous cells are measured regardless.
+  **Confirm this before dispatch, not at runtime** — the kickoff's §5.0 carries the native PowerShell check and its
+  dispatch dispositions. File presence is necessary but never sufficient; only the probe's live validation yields
+  `AUTH_STATE_VALID`.
 
 ## Exit criteria
 
@@ -76,6 +84,7 @@ Order and gating only — read state from the Tasks table above.
 4. The before/after evidence is retained per width, per locale, and per authentication state, and the "before" run
    demonstrably reproduces the defect it claims to fix. A width/locale cell where the defect does **not** reproduce
    is recorded as such — never dropped.
-5. No unrelated de-Tailwind, no component migration, and no change to `SaveSearchButton`, the filters sheet contents
-   or the desktop layout. A residual overflow attributable to a sibling of the sort bar is **reported as a finding**,
-   not fixed here.
+5. No unrelated de-Tailwind, no component migration, and no change to `SaveSearchButton`, the **filters drawer**
+   contents (`MantineDrawer` → `ListingsFilters`; renamed 2026-09-02 from the legacy `Sheet` wording — kickoff §3.7,
+   same boundary) or the desktop layout. A residual overflow attributable to a sibling of the sort bar is **reported
+   as a finding**, not fixed here.

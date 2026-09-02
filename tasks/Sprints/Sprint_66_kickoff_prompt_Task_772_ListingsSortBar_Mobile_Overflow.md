@@ -1,6 +1,7 @@
 # Task 772 — `ListingsSortBar` mobile overflow: bounded layout fix with route-level proof
 
 **Sprint:** 66 · **Priority:** P1 · **Filed:** 2026-08-27 by owner decision · **Status:** `KICKOFF FILED`
+**Revised:** 2026-09-02 (pre-dispatch accuracy revision — see §16). Scope, QA profile and acceptance intent unchanged.
 
 ## 1. Mode and task type
 
@@ -58,20 +59,40 @@ Every line reference below was read in this repository on 2026-08-27. Labels are
   floor comes from `min-w-35` at the call site, not from the label.
 - **INFERENCE** — `min-w-35` resolves to `min-width: 8.75rem` (140px) on Tailwind v4's spacing scale. **Confirm from
   the compiled CSS, not from this line.**
+- **FACT (added 2026-09-02)** — `src/app/globals.css` declares explicit `--spacing-N` overrides only for
+  `0-12, 14, 16, 20, 24` (`:151-167`); **there is no `--spacing-35`**, and `min-w-35` is its **only** occurrence in
+  `src/`. The value therefore comes from the default scale that `@import "tailwindcss"` supplies, which
+  `globals.css:278` already names as the source of truth for this project. This does **not** convert the INFERENCE
+  into a FACT — it names exactly what the compiled-CSS confirmation must look at.
 
-### 3.4 The row has a second occupant — `src/modules/listings/components/ListingsShell.tsx`
+### 3.4 The row has a second occupant — `src/modules/listings/components/ListingsShellView.tsx`
 
-- **FACT** `:193-206` — the sort bar is not alone: `<div className="flex items-center gap-2">` wraps
-  `<div className="flex-1 min-w-0"><ListingsSortBar …/></div>` and, **when a user is authenticated**,
-  `{user && <SaveSearchButton />}`.
-- **FACT** `src/modules/listings/components/SaveSearchButton.tsx:72-76` — that button is a `Button` with
-  `className="gap-1.5 rounded-xl"` and a `hidden sm:inline` label, so it inherits the same `max-sm:w-full` behaviour
-  from its size variant.
+> **Corrected 2026-09-02.** Task 776 (`29b8bcc43`, *"extract ListingsShellView seam"*) moved this row out of
+> `ListingsShell.tsx`. The superseded `ListingsShell.tsx:193-206` anchor no longer exists. Every reference below was
+> re-read on 2026-09-02.
+
+- **FACT** `ListingsShellView.tsx:93` — the sort bar is not alone: `<div className="flex items-center gap-2">` opens
+  the row; `:94-103` wrap `<div className="flex-1 min-w-0"><ListingsSortBar …/></div>`; `:105` renders
+  `{saveSearchSlot}` as its sibling; `:106` closes the row.
+- **FACT** `ListingsShellView.tsx:45` — `saveSearchSlot: ReactNode` is a **view prop**. The view imports no
+  `SaveSearchButton` and knows nothing about authentication; **the container decides**.
+- **FACT** `ListingsShell.tsx:186` — the container supplies it: `saveSearchSlot={user ? <SaveSearchButton /> : null}`,
+  with `const { user } = useAuth()` at `:53`. **This is the authenticated-only affordance** referenced by §5, §11 and
+  AC6 — it replaces the superseded `ListingsShell.tsx:205` anchor used elsewhere in the 2026-08-27 draft.
+- **FACT** `ListingsShell.tsx:27-30` — `SaveSearchButton` is a `next/dynamic` import with **`{ ssr: false }`**. In the
+  authenticated state it therefore mounts **after** hydration. **The probe must wait for it to be attached before it
+  measures an authenticated cell**; a measurement taken before it mounts is an anonymous-layout measurement carrying
+  an authenticated label, and would silently satisfy AC6 for the wrong reason.
+- **FACT** `src/modules/listings/components/SaveSearchButton.tsx:69-77` — that button is a `Button` with
+  `variant="outline"` (`:70`), `size="lg"` (`:71`), `className="gap-1.5 rounded-xl"` (`:72`) and a `hidden sm:inline`
+  label (`:76`), so it inherits the same `max-sm:w-full` behaviour from its size variant.
 - **CONFLICT — read this before scoping.** The owner scoped this task to *"only ListingsSortBar mobile layout"*, and
   the measured row contains a sibling that plausibly contributes to the same overflow. **Do not widen scope.**
   Measure **both** authentication states; fix only inside `ListingsSortBar`; if a residual overflow remains in the
   authenticated state and is attributable to `SaveSearchButton`, **report it as a finding with its measurement** and
-  leave it unfixed. A finding is the correct output here; a scope widening is not.
+  leave it unfixed. A finding is the correct output here; a scope widening is not. The seam correction above does not
+  move this boundary: `ListingsShellView.tsx` and `ListingsShell.tsx` are **read for context only** and stay out of
+  scope (§8).
 
 ### 3.5 Route and locales
 
@@ -90,12 +111,41 @@ Every line reference below was read in this repository on 2026-08-27. Labels are
   dependency. Its header states why it exists: nothing in `scripts/` renders a real route.
   **772 follows that shape exactly.**
 
+### 3.7 How the filters panel opens — `MantineDrawer`, not the legacy `Sheet` (added 2026-09-02)
+
+> **Naming and selector correction only.** The 2026-08-27 draft called this affordance "the filters sheet", which
+> named the legacy `src/components/ui/sheet.tsx` surface. Tasks 778 / 780R migrated this route's filter surfaces to
+> Mantine. **`ListingsFilters` and the drawer's contents remain out of scope (§8); nothing here widens the task.**
+> What changes is the name the kickoff uses and the observable AC3 is allowed to assert.
+
+- **FACT** `ListingsShellView.tsx:8` — the view imports `MantineDrawer` from `@/design-system/mantine/patterns`.
+- **FACT** `ListingsShellView.tsx:85-87` —
+  `<MantineDrawer opened={filtersOpen} onClose={() => onFiltersOpenChange(false)} side="left" size="xs">{filtersSlot}</MantineDrawer>`.
+  **No `title` and no `footer` prop is passed.**
+- **FACT** `ListingsShell.tsx:185` — `filtersSlot={<ListingsFilters locations={locations} onClose={…} />}`.
+- **FACT** `MantineDrawer.tsx:123-133` — below the mobile breakpoint `MantineDrawer` does **not** render a side
+  drawer; it returns `ResponsiveBottomSheet` (a bottom-anchored Mantine `Drawer`), and `side="left"` has **no effect**
+  there. The breakpoint is `useMediaQuery('(max-width: 40em)')` (`responsiveBottomSheet.tsx:51`) = **640px**, so
+  **every R1-R4 cell (320 / 375 / 390) opens the bottom-sheet form**, not a left drawer.
+- **FACT** `responsiveBottomSheet.tsx:186-199` — `data-testid="mantine-drawer-scroll-content"` (`:188`) and
+  `data-testid="mantine-drawer-footer"` (`:192`) render **only when a `footer` prop is passed**. This consumer passes
+  none, so **those test ids do not exist on this surface — do not target them.**
+- **FACT** `node_modules/@mantine/core/cjs/components/ModalBase/ModalBaseContent.cjs:45` (Mantine `8.3.18`) — the
+  content element carries `role="dialog"`. **The stable observable for AC3 is the Mantine drawer content element
+  (`role="dialog"` / `.mantine-Drawer-content`) becoming visible** — not a `Sheet` selector, not a `mantine-drawer-*`
+  test id.
+- **FACT** `MantineDrawer.tsx:110-112` — `isMobile` is `false` on first render (Mantine v8
+  `getInitialValueInEffect`). The probe must assert the opened form **after that effect settles**, or it can observe
+  the desktop branch at a phone width.
+- **Out of scope, restated:** the drawer's contents, `ListingsFilters`, `MantineDrawer` itself and
+  `responsiveBottomSheet` are **read-only context**. This task changes none of them.
+
 ## 4. Requirements
 
 | ID | Source | Observable requirement | Priority | Verification | Status |
 |---|---|---|---|---|---|
 | R1 | Owner, 2026-08-27 | On real `/listings` at 320/375/390 in sq/en/uk/it, `documentElement.scrollWidth <= clientWidth + 2` | P0 | Task probe, post-fix run | Confirmed |
-| R2 | Owner, 2026-08-27 | Filters and sort remain usable: the filters trigger opens the sheet; the sort control opens and a selection updates the `sort` query parameter | P0 | Task probe interaction assertions | Confirmed |
+| R2 | Owner, 2026-08-27 | Filters and sort remain usable: the filters trigger opens the filters drawer (the `MantineDrawer` bottom-sheet form below 640px — §3.7); the sort control opens and a selection updates the `sort` query parameter | P0 | Task probe interaction assertions | Confirmed |
 | R3 | Owner, 2026-08-27 | Every interactive control in the sort bar renders at height >= 44px at those widths | P0 | Probe `getBoundingClientRect().height` per control | Confirmed |
 | R4 | Owner, 2026-08-27 | No unrelated de-Tailwind and no component migration | P0 | Diff inspection at review | Confirmed |
 | R5 | §3.4 | Both authentication states are measured; a residual attributable to `SaveSearchButton` is reported, not fixed | P1 | Probe run in both states + completion report | Confirmed |
@@ -106,22 +156,59 @@ Every line reference below was read in this repository on 2026-08-27. Labels are
 
 ## 5. Assumptions and open questions
 
+### 5.0 Pre-dispatch owner confirmation — blocking, run before this task is handed to Sonnet (added 2026-09-02)
+
+Sonnet cannot create this precondition; it can only fail on it. Confirm it **before** dispatch, or dispatch knowing
+the authenticated half will return `BLOCKED`. Run natively in **Windows PowerShell** from the project root
+(`docs/orchestrator-role.md` → Windows-native validation rule):
+
+```powershell
+$env:TASK772_AUTH_STORAGE_STATE
+Test-Path $env:TASK772_AUTH_STORAGE_STATE
+Get-Item $env:TASK772_AUTH_STORAGE_STATE | Select-Object FullName, Length, LastWriteTime
+```
+
+| Observed | Meaning | Dispatch disposition |
+|---|---|---|
+| Variable empty | Not set in the session Sonnet will inherit | Authenticated cells will finish `BLOCKED` (R5a). Either set it first, or dispatch and accept an anonymous-only result. |
+| `Test-Path` = `False` | Set but the path does not exist | Same as above. Fix the path before dispatch. |
+| File exists | Necessary, **not sufficient** | A storage state can exist and no longer authenticate. **Only the probe's own live validation (§5, first bullet) settles it** — file presence is never reported as `AUTH_STATE_VALID`. |
+
+Whichever holds, the anonymous cells (AC1-AC5, AC5a, AC7, AC8) are unaffected and are still measured and reported.
+The variable must point **outside the repository tree, or under an ignored path**, and is never committed.
+
 - **Precondition, binding — the authenticated probe run.** The authenticated cells require
   **`TASK772_AUTH_STORAGE_STATE`**, an environment variable holding the absolute path to a **local, untracked**
   Playwright storage-state JSON carrying a **valid authenticated session** for this environment. It is created by
   the executor outside the repository tree (or under an ignored path), is **never** committed, and **no credential
   is written into any evidence file, transcript or session log**.
   - The probe **must verify the session is actually valid** — load the state, open `/listings`, and confirm the
-    authenticated-only affordance (`SaveSearchButton`, `ListingsShell.tsx:205`) is present. A storage state that
-    loads without error but no longer authenticates is **invalid**, not usable.
+    authenticated-only affordance is present — `SaveSearchButton`, supplied by the container at
+    `ListingsShell.tsx:186` and rendered through `saveSearchSlot` at `ListingsShellView.tsx:105`. Because that import
+    is `dynamic(..., { ssr: false })` (`ListingsShell.tsx:27-30`), **wait for the node to attach**; its absence in the
+    first frame is not proof of an invalid session. A storage state that loads without error but no longer
+    authenticates is **invalid**, not usable.
   - **If the variable is unset, the path does not exist, or the session does not validate:** record
     **`AUTH_STATE_UNAVAILABLE`** in the evidence and the session log, naming which of the three conditions failed,
     and finish the task as **`BLOCKED`**. Do **not** report **AC6** as `PASS`, do not infer the authenticated result
     from the anonymous run, and do not substitute a mocked or hand-built session.
   - The anonymous cells are unaffected and are still measured and reported.
-- **Assumption** — a seeded database with at least two pages of listings is available. Without it `showing_results`
-  never renders (`:52`) and the measurement is not representative. If it is unavailable, publish `BLOCKED`; do not
-  measure an empty page and call it a pass.
+- **Precondition — route data. Corrected 2026-09-02; the superseded wording was false.** The 2026-08-27 draft
+  required *"a seeded database with at least two pages of listings"* on the grounds that `showing_results` otherwise
+  *"never renders"*. **Both halves are wrong:**
+  - **FACT** `ListingsSortBar.tsx:52` — the guard is `{total > 0 && …}`. It depends on `total > 0` and on nothing
+    else; no page count appears in it.
+  - **FACT** `src/modules/listings/constants/index.ts:99` — `LISTINGS_PER_PAGE = 25`, so "two pages" would have
+    demanded **26** listings for a string that needs one.
+  - **FACT** `ListingsSortBar.tsx:53` — that span is `hidden sm:block`, so at **320 / 375 / 390 it does not render at
+    all**. It cannot contribute to, or be needed by, any R1-R4 overflow measurement.
+  - **FACT (owner, 2026-09-02)** — the available environment holds **two listings**.
+
+  **The actual requirement:** the default, unfiltered `/listings` route must return **`total > 0`** in each locale.
+  Two listings satisfy every R1-R4 overflow cell and every R6 desktop-regression cell. If the route returns
+  `total === 0` by default, publish `BLOCKED` — a non-empty route is the requirement, **a page count is not**.
+  `total === 0` and `total === 1` stay **separate negative-flow cells** (§11), reached by applying a filter, not by
+  the state of the seed data.
 - **Open question, non-blocking** — whether the correct fix is to drop `shrink-0`, to constrain the filters button's
   `max-sm:w-full` at this call site, to lower or remove `min-w-35` below `sm`, or a combination. **The executor
   chooses after the "before" measurement names the actual contributor.** Any of them is acceptable if it satisfies
@@ -155,7 +242,11 @@ Read exactly these, in this order. Do not read all docs.
 
 ## 8. Out of scope
 
-- `SaveSearchButton`, `ListingsFilters`, the filters sheet contents, `ListingsStatusTabs`, `ActiveFilterChips`.
+- `SaveSearchButton`, `ListingsFilters` and the **filters drawer contents**, `ListingsStatusTabs`,
+  `ActiveFilterChips`. (Renamed 2026-09-02: this affordance is a `MantineDrawer`, not the legacy `Sheet` — §3.7.
+  The rename changes no boundary; the drawer and its contents were out of scope before and remain so.)
+- `ListingsShellView.tsx`, `ListingsShell.tsx`, `MantineDrawer.tsx` and `responsiveBottomSheet.tsx` — read for
+  context (§3.4, §3.7), never edited.
 - `src/components/ui/button.tsx` and `src/components/shared/Combobox.tsx` themselves — no edit to their size maps,
   variants or props. If R3 cannot be met from the call site, publish `BLOCKED` with the measurement rather than
   editing a shared primitive.
@@ -172,8 +263,9 @@ trigger and a sort control. The right-hand group is `shrink-0`; the filters `But
 wrapper carries `min-w-35`; the sort trigger is 36px tall.
 
 **Required after.** At 320/375/390 in all four locales the document does not scroll horizontally
-(`scrollWidth <= clientWidth + 2`); the filters trigger still opens the sheet; the sort control still opens and still
-changes `sort`; every interactive control in the bar is at least 44px tall.
+(`scrollWidth <= clientWidth + 2`); the filters trigger still opens the filters drawer (its bottom-sheet form below
+640px — §3.7); the sort control still opens and still changes `sort`; every interactive control in the bar is at
+least 44px tall.
 
 **Preserved, must not change.** The active-filter badge stays attached to the filters trigger and still shows the
 count. `showing_results` stays hidden below `sm` and visible at and above it. The grid/list toggle stays hidden below
@@ -197,8 +289,8 @@ onto a utility class (**D33**). All localized strings stay untouched; this is a 
 ## 11. Positive and negative flows
 
 **Positive flow.** A phone-width visitor opens `/listings` in any locale, sees the result count, the filters trigger
-and the sort control on one line with no horizontal scroll, taps the filters trigger and the sheet opens, taps the
-sort control, picks another option, and the list re-sorts with `?sort=` updated.
+and the sort control on one line with no horizontal scroll, taps the filters trigger and the filters drawer opens as
+a bottom sheet (§3.7), taps the sort control, picks another option, and the list re-sorts with `?sort=` updated.
 
 | Branch | Applicable? | Owner/source | Expected behavior | Evidence |
 |---|---:|---|---|---|
@@ -206,9 +298,9 @@ sort control, picks another option, and the list re-sorts with `?sort=` updated.
 | Authorization / RLS | **No** | `/listings` is a public route; this task changes no data access | N/A | — |
 | Offline / network | **No** | Existing global behavior unchanged | N/A | — |
 | Concurrent writer | **No** | No write path | N/A | — |
-| **Authenticated vs anonymous** | **Yes** | `ListingsShell.tsx:205` renders `SaveSearchButton` only for `user` | Anonymous must pass R1 outright. Authenticated is measured; a residual attributable to `SaveSearchButton` is reported as a finding, not fixed | Probe run in both states |
+| **Authenticated vs anonymous** | **Yes** | `ListingsShell.tsx:186` passes `SaveSearchButton` into `saveSearchSlot` only for `user`; rendered at `ListingsShellView.tsx:105` | Anonymous must pass R1 outright. Authenticated is measured; a residual attributable to `SaveSearchButton` is reported as a finding, not fixed | Probe run in both states |
 | **Authenticated session unavailable** | **Yes** | §5 precondition | `AUTH_STATE_UNAVAILABLE` recorded with the failing condition; task finishes `BLOCKED`; AC6 never claimed as `PASS` | `auth-state.txt` in the evidence directory |
-| **Empty result set (`total === 0`)** | **Yes** | `ListingsSortBar.tsx:52` hides `showing_results` at 0 | No overflow, no layout collapse, count line still rendered | Probe cell with a filter that yields zero results |
+| **Empty result set (`total === 0`)** | **Yes** | `ListingsSortBar.tsx:52` hides `showing_results` at 0 | No overflow, no layout collapse, count line (`:49-51`) still rendered | Probe cell reached **by applying a filter that yields zero results** — never by emptying the data set (§5) |
 | **Singular result (`total === 1`)** | **Yes** | `:50` swaps to `found_results_one` | No overflow; the shorter string must not be the only reason a cell passes | Probe cell at `total === 1` |
 | **Longest-label locale** | **Yes** | §3.5 measured `it`/`uk` sort labels as the longest | No overflow with the longest sort option selected, not only the default | Probe selects `sort_price_desc` before measuring one cell per locale |
 
@@ -219,14 +311,27 @@ sort control, picks another option, and the list re-sorts with `?sort=` updated.
   recorded as `no-defect`, not omitted.
 - **AC2 [R1]** — *Given* the fixed code, *when* the same probe runs over the same cells, *then* every cell reports
   `documentElement.scrollWidth <= documentElement.clientWidth + 2` in the anonymous state.
-- **AC3 [R2]** — *Given* a phone-width `/listings`, *when* the probe activates the filters trigger, *then* the filters
-  sheet becomes visible; *when* it opens the sort control and selects a different option, *then* the URL's `sort`
-  parameter equals the selected value.
+- **AC3 [R2]** — *Given* a phone-width `/listings`, *when* the probe activates the filters trigger, *then* the
+  **filters drawer becomes visible in its bottom-sheet form** — asserted on the Mantine drawer content element
+  (`role="dialog"` / `.mantine-Drawer-content`, §3.7), **not** on a legacy `Sheet` selector and **not** on a
+  `mantine-drawer-*` test id, which this consumer does not render; *when* it opens the sort control and selects a
+  different option, *then* the URL's `sort` parameter equals the selected value.
+  The assertion is made **after** the `isMobile` effect settles (`MantineDrawer.tsx:110-112`); observing the desktop
+  side-drawer branch at a phone width means the probe measured too early, not that the drawer is broken.
 - **AC4 [R3]** — *Given* the fixed code at 320/375/390, *when* the probe measures each interactive control in the sort
   bar, *then* every measured height is `>= 44`.
-- **AC5 [R6]** — *Given* the fixed code at 768/1024/1440, *when* the layout is rendered, *then* the sort-bar text
-  label, `showing_results` and the grid/list toggle are present and the bar remains a single row — unchanged from
-  `before` at those widths.
+- **AC5 [R6]** — *Given* the fixed code at 768 / 1024 / 1440, *when* the layout is rendered, *then*
+  `showing_results` is visible, the grid/list toggle is visible, the sort `Combobox` is present, and the bar remains
+  a single row — each unchanged from the `before` capture at those widths.
+  > **Task-design defect corrected 2026-09-02.** The superseded AC5 also required *"the sort-bar text label"* at
+  > these widths. **FACT** `ListingsSortBar.tsx:65` — the mobile filters `Button` carries `md:hidden`, and this
+  > project uses Tailwind's default breakpoints (`globals.css:278` names `@import "tailwindcss"` as their source of
+  > truth; no `--breakpoint-*` override exists in `globals.css`), so `md` = **768px**. That button and its label
+  > (`:69`) are therefore **absent at every AC5 width by design**. The criterion was unsatisfiable as written; the
+  > correct desktop assertion is *absent*, and it is AC5a.
+- **AC5a [R6]** — *Given* the fixed code at 768 / 1024 / 1440, *when* the sort bar is inspected, *then* the mobile
+  filters trigger is **not rendered** (`md:hidden`), matching the `before` capture. A fix that causes it to appear at
+  these widths is a regression, not an improvement.
 - **AC6 [R5, R5a]** — *Given* a session validated from `TASK772_AUTH_STORAGE_STATE`, *when* the probe runs the AC2
   cells in the authenticated state, *then* either they all pass, or the completion report names the residual, its
   measured contribution and the element responsible, with **no** change to `SaveSearchButton`.
@@ -260,7 +365,7 @@ required by the profile. Any cell not run is named in the report.
    **No credential, token or cookie value is written to any evidence file.**
 3. `npm run check:mojibake` — the repository requires it for touched text files.
 4. `npm run build` — exit 0, transcript retained (AC8).
-5. Rendered evidence for AC5 at 768/1024/1440 from the same probe run.
+5. Rendered evidence for **AC5 and AC5a** at 768/1024/1440 from the same probe run.
 
 **What may not be cited as proof.** No Storybook matrix result and no component-scoped gate may be presented as
 route evidence for R1-R3 (`docs/maintenance-playbook.md` §14.3). The probe's own output is the proof.
@@ -276,6 +381,8 @@ Report, in `docs/sessions/2026-08-<dd>-task772-listings-mobile-overflow.md`:
 - The measured mechanism: which element actually caused the overflow, stated against the `before` numbers, and
   whether it matched §3.2's hypothesis. **If it did not, say so plainly** — the hypothesis is not the finding.
 - The authenticated-state result and any `SaveSearchButton` residual, as a finding — or `AUTH_STATE_UNAVAILABLE` and a `BLOCKED` status if the precondition in §5 was not met. Never both.
+- Whether the authenticated cells waited for the `ssr: false` dynamic `SaveSearchButton` to attach (§3.4) — state the
+  wait condition used, not that one existed.
 - Assumptions, deviations, limitations, unresolved issues.
 - Final status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED`.
   **Never self-approve**; Sonnet has no approval authority.
@@ -290,19 +397,53 @@ Report, in `docs/sessions/2026-08-<dd>-task772-listings-mobile-overflow.md`:
 - Scope names what must not change, including the two shared primitives and the sibling button. ✅
 - Negative flows are selected by applicability, not copied: four branches marked `No` with their reason, four real
   branches marked `Yes`. ✅
-- No command, file, story or behavior is claimed here that was not inspected on 2026-08-27; the one mechanism this
-  kickoff finds plausible is labelled **INFERENCE** and the task is required to measure it before relying on it. ✅
+- No command, file, story or behavior is claimed here that was not inspected on 2026-08-27 **and re-verified on
+  2026-09-02 (§16)**; the one mechanism this kickoff finds plausible is labelled **INFERENCE** and the task is
+  required to measure it before relying on it. ✅
+- Every line anchor outside `ListingsSortBar.tsx` was re-read on 2026-09-02 against the post-776 tree; the four
+  stale or false statements found are corrected in place and logged in §16, not silently overwritten. ✅
+- No acceptance criterion asserts a state the source cannot produce: the unsatisfiable desktop-label clause in AC5
+  was removed and replaced with AC5a's `absent` assertion. ✅
 - The control can fail: AC1 requires the `before` run to reproduce the defect, and R7 forbids dropping a
   non-reproducing cell. ✅
 - No permanent Storybook artifact is created or extended. ✅
 - No owner exception is claimed; the owner decision quoted in §2 and §3.4 is the 2026-08-27 decision pass recorded in
   `docs/backlog-archive.md`. ✅
 
+## 16. Revision log — 2026-09-02, pre-dispatch accuracy pass
+
+Scope, QA profile (`Q2`), requirement set and acceptance intent are **unchanged**. Every anchor outside
+`ListingsSortBar.tsx` was re-read against the current tree; `ListingsSortBar.tsx`'s own §3.1 anchors
+(`:46, :48, :52-56, :60, :62-65, :69, :71, :78-85, :88`) were re-verified and are **all still exact** — that file has
+not changed since 2026-08-27.
+
+| # | What was wrong on 2026-08-27 | Evidence | Correction |
+|---|---|---|---|
+| 1 | §3.4 anchored the sort-bar row at `ListingsShell.tsx:193-206` | Task 776 (`29b8bcc43`) extracted the `ListingsShellView` seam; that anchor no longer exists | §3.4 rewritten against `ListingsShellView.tsx:93 / :105` with the container's `saveSearchSlot` at `ListingsShell.tsx:186`. The stale `:205` anchor is replaced in §5, §11 and AC6 too |
+| 2 | §5 required "at least two pages of listings", claiming `showing_results` otherwise "never renders" | `ListingsSortBar.tsx:52` gates on `total > 0` alone; `:53` is `hidden sm:block`, so it never renders at 320/375/390; `LISTINGS_PER_PAGE = 25` | Precondition replaced with **`total > 0` on the default route**. Two listings are sufficient. `total === 0` / `total === 1` stay separate negative-flow cells reached by filtering |
+| 3 | The filters affordance was called a legacy `Sheet` | `ListingsShellView.tsx:8, :85-87` render `MantineDrawer`, which below 640px returns `ResponsiveBottomSheet` | New §3.7 records the real component, the 640px switch, and the **only** valid observable (`role="dialog"` / `.mantine-Drawer-content`). §8, §9, §11, R2 and AC3 renamed. **`ListingsFilters` and drawer contents stay out of scope** |
+| 4 | `TASK772_AUTH_STORAGE_STATE` had no pre-dispatch check — only a runtime `BLOCKED` | R5a / AC6 already require `BLOCKED`; nothing told the owner to check first | New §5.0 gives the native PowerShell confirmation and its dispatch dispositions. **File presence is necessary, never sufficient** — only the probe's live validation yields `AUTH_STATE_VALID` |
+
+Found during that re-verification and corrected in the same pass:
+
+| # | Defect | Evidence | Correction |
+|---|---|---|---|
+| 5 | **AC5 was unsatisfiable.** It required "the sort-bar text label" present at 768/1024/1440 | `ListingsSortBar.tsx:65` — the filters `Button` is `md:hidden`; default Tailwind breakpoints apply (`globals.css:278`, no `--breakpoint-*` override), so `md` = 768px and the button is absent at every AC5 width | AC5 restated on `showing_results`, the grid/list toggle, the sort `Combobox` and the single row; new **AC5a** asserts the filters trigger is **absent** at those widths |
+| 6 | §3.4 omitted that `SaveSearchButton` is lazily mounted | `ListingsShell.tsx:27-30` — `dynamic(..., { ssr: false })` | §3.4 and §5 now require the probe to wait for the node to attach before measuring an authenticated cell, and §14 requires the wait condition to be reported |
+| 7 | §3.3's `min-w-35` INFERENCE named no target for its confirmation | `globals.css:151-167` defines `--spacing-N` only for `0-12, 14, 16, 20, 24`; no `--spacing-35`; `min-w-35` is its sole use in `src/` | FACT added. It stays an **INFERENCE** — the compiled-CSS confirmation is still required, it now just knows where to look |
+
+**Unchanged and still binding:** the first technical action is the `before` probe run against **unmodified** code
+(§10.1, AC1, R7); only then is the minimal fix chosen (§5, open question). No mechanism in §3.2 may be treated as the
+finding before that run measures it.
+
 ---
 
-**FACTS** — §3.1-§3.6, each with its file and line, read 2026-08-27.
+**FACTS** — §3.1-§3.7, each with its file and line: §3.1 read 2026-08-27 and re-verified 2026-09-02; §3.4, §3.7 and
+the §3.3 spacing fact read 2026-09-02.
 **INFERENCES** — the `max-sm:w-full` overflow mechanism (§3.2) and `min-w-35` = 140px (§3.3); both must be measured.
-**UNKNOWNS** — actual `scrollWidth` per cell; whether 375/390 reproduce; whether `SaveSearchButton` contributes.
+**UNKNOWNS** — actual `scrollWidth` per cell; whether 375/390 reproduce; whether `SaveSearchButton` contributes;
+whether `TASK772_AUTH_STORAGE_STATE` is set and valid in the owner's environment (§5.0 — not observable from the
+agent environment; owner-native check only).
 **CONFLICTS** — §3.4: the owner's "ListingsSortBar only" scope versus a shared row that contains a sibling button.
 Resolved without an owner round trip by measuring both states, fixing only in scope, and reporting the residual.
 

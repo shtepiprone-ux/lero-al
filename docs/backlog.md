@@ -7,7 +7,9 @@
 
 ## Last Session (2026-09-02)
 
-Task **778** is **APPROVED WITH NOTES**. `ListingsFilters` now uses Mantine primitives and is hosted by `MantineDrawer`; its canonical story adds 16 passing visual cells. The isolated B/P comparison is clean (`P \ B = ∅`), and build, typecheck, Storybook, token, i18n and targeted test gates pass. Full evidence: `docs/sessions/2026-09-01-task778-listings-filters-mantine.md`.
+Task **779** kickoff filed (Sprint 68) — `ListingsFilterBar` → Mantine, with the bar's `hidden md:flex` moving into a thin `<Box visibleFrom="md">` in `ListingsShellView` so the canonical story renders real UI at 320/375/390. Design was **stopped once on a census drift** and resumed after the owner pinned the measuring command: `physical lines (Get-Content | Measure-Object -Line) = 135`; `119` is the non-blank count and is not a baseline.
+
+⚠️ **Task 778's closure is incomplete** — it is `APPROVED WITH NOTES` in the registry and the sprint Tasks table, but has **no `docs/backlog-archive.md` row** and the Sprint 68 header still reads `Landed tasks: 3`. Close both in one edit before the next verdict. Evidence: `docs/sessions/2026-09-01-task778-listings-filters-mantine.md`.
 
 ## Open — needs action
 
@@ -35,9 +37,9 @@ Task **778** is **APPROVED WITH NOTES**. `ListingsFilters` now uses Mantine prim
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
-**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** are archived; **778 is ✅ APPROVED WITH NOTES**. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell).
+**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** are archived; **778 is ✅ APPROVED WITH NOTES**. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779** (`ListingsFilterBar`) is 🟠 `KICKOFF FILED` 2026-09-02.
 
-## Task registry — single source for every open number. Last used **778**, NEXT FREE **779**.
+## Task registry — single source for every open number. Last used **779**, NEXT FREE **780**.
 
 > Allocatable and reserved numbers only. A number leaves this table when its task is archived. Full justification for a reserved number → [`backlog-reserved.md`](backlog-reserved.md); retired and folded numbers → the same file's "Registry bookkeeping".
 
@@ -45,6 +47,7 @@ Task **778** is **APPROVED WITH NOTES**. `ListingsFilters` now uses Mantine prim
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
 | **778** | **✅ APPROVED WITH NOTES** — **Sprint 68**, P2, Q3 | **`/listings`: `ListingsFilters` → Mantine + `Sheet` → `MantineDrawer`.** Evidence: isolated-worktree differential `P \ B = ∅`, 16 new cells PASS, and all required code and visual gates pass. Full record: `docs/sessions/2026-09-01-task778-listings-filters-mantine.md`. |
+| **779** | **KICKOFF FILED** — **Sprint 68**, P2, Q3 | **`/listings`: `ListingsFilterBar` → Mantine + route visibility relocated.** Bar migrates onto Mantine `Button`/`Group`/`Divider`/`Indicator`/`MantineCombobox`; `hidden md:flex` moves into a thin `<Box visibleFrom="md">` in `ListingsShellView` (same 768px — `theme.ts:177`), so the new `Patterns/Mantine/ListingsFilterBar` story (+16 cells, manifest 21 → 22) renders real UI at 320/375/390. `Indicator` is forced by Mantine `Button`'s `overflow:hidden`. Census baseline is **method-pinned**: 135 physical lines via `Get-Content | Measure-Object -Line`. Kickoff: `tasks/Sprints/Sprint_68_kickoff_prompt_Task_779_ListingsFilterBar_Mantine.md`. |
 | **772** | **KICKOFF FILED** — **Sprint 66**, P1 | **`/listings` horizontal overflow below 640px.** `ListingsSortBar`'s right-hand group is `shrink-0` while the `size="lg"` filters `Button` carries `max-sm:w-full` and the sort `Combobox` wrapper carries `min-w-35`; the sort trigger is `h-9` (36px), below the 44px floor. Deliverable is the bounded mobile-layout fix **plus** route-level proof at 320/375/390 × sq/en/uk/it. Kickoff: `tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |

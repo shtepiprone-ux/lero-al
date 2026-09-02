@@ -37,7 +37,7 @@ Every fact below was read from the working tree on **2026-09-02** in the review 
 
 ### 3.1 Worktree state at design time
 
-`FACT` `git --no-optional-locks log --oneline -1` → `3beabc9cc`. `git --no-optional-locks status --porcelain -- src
+`FACT` **at design time** `git --no-optional-locks log --oneline -1` → `3beabc9cc`; that SHA remains B's baseline, but `HEAD` has since advanced over documentation-only commits (see S0 Revision 1). `git --no-optional-locks status --porcelain -- src
 scripts docs tasks` returns exactly ten paths: `M docs/backlog.md`, `M scripts/mantine-migration-scope.json`,
 `M src/modules/listings/components/ListingsFilterBar.tsx`, `M src/modules/listings/components/ListingsShellView.tsx`,
 and untracked `docs/sessions/2026-09-02-task779-…md`, `docs/sessions/2026-09-02-task780-…md`,
@@ -131,7 +131,7 @@ does not reopen it.
 `FACT` `docs/sessions/evidence/task780/B-manifest.json` exists, `timestamp 2026-09-02T12-42`,
 `runMode: mantine-only`, `phasesSkipped: ['phase1-assert-stories','phase2-geometry-only']`, summary
 `1380 total / 1273 pass / 80 fail / 27 ambiguous`. It was captured from an isolated `git archive HEAD` tree.
-`FACT` `HEAD` is still `3beabc9cc` and nothing has been committed since.
+`FACT` B's baseline is `3beabc9cc`. `HEAD` has since advanced, but only over commits touching `docs/` and `tasks/` — measured, see S0's comparator. No input consumed by `build-storybook`, `screenshots:assert`, `check:stories`, `check:story-coverage` or `npm run build` differs between `3beabc9cc` and current `HEAD`.
 `INFERENCE` B remains a valid pre-edit baseline for the identical tree, so this task captures **one** new
 `screenshots:assert` run (P), not two. **S0 re-verifies `HEAD` before relying on this.**
 
@@ -375,10 +375,39 @@ nothing — the executor runs every gate in its own native session.**
 **S0 — preconditions (before any write).**
 ```powershell
 node.exe -p process.platform
-git --no-optional-locks rev-parse HEAD          # MUST equal 3beabc9cc — otherwise B is invalid, STOP and report
+git --no-optional-locks rev-parse HEAD
+git --no-optional-locks diff --name-only 3beabc9cc HEAD
 git --no-optional-locks status --porcelain      # compare to §3.1's ten paths
 ```
-If `HEAD` moved, **stop**: B must be re-captured and this kickoff's §3.8 no longer holds.
+
+**Comparator for B's validity — this is the gate, and it is not a judgement call.** `HEAD` is permitted to move.
+What may not change is any input the rendering gates actually consume. Take
+`git --no-optional-locks diff --name-only 3beabc9cc HEAD` and apply this rule:
+
+- **PASS** — every returned path begins with `docs/` or `tasks/`. Those are consumed by no gate:
+  `.storybook/main.ts:11-13` globs stories from `../src/**` only and `:47` serves `staticDirs: ['../public']`;
+  `check-stories-rendered.mjs`, `check-stories.mjs` and `check-story-coverage.mjs` reference `docs/` **only in
+  comments and one `console.log` path string**, never as a read. B stays valid; proceed.
+- **STOP and report** — any returned path lies outside those two prefixes. In particular anything under `src/`,
+  `scripts/`, `.storybook/`, `messages/`, `public/`, or a root config/lockfile (`package.json`,
+  `package-lock.json`, `next.config.ts`, `postcss.config.mjs`, `tsconfig.json`) invalidates B, which must then be
+  re-captured at the current `HEAD` before S1.
+
+Do **not** substitute a narrower path-limited check such as `-- src/ scripts/`: a `.storybook/` or lockfile change
+would pass it while genuinely invalidating B. Run the comparator with **no pathspec** and read the whole list.
+
+> **Revision 1 — 2026-09-02, orchestrator task-design defect, recorded not absorbed.** S0 originally read
+> `rev-parse HEAD` *"MUST equal `3beabc9cc`"*. That tested SHA equality when the property B actually depends on is
+> **rendered-input equality**, so the first execution attempt was correctly halted `BLOCKED` by two of the
+> orchestrator's own documentation commits (`fbd362b44`, `e8cbcfb43`) that changed nothing any gate reads. The
+> executor was right to refuse to reinterpret an unconditional stop rule on its own judgement; the defect was the
+> rule, not the halt. This is the standing "recurring orchestrator failure mode" corollary again — a kickoff's own
+> measured facts are not exempt, and the defect was authored in the same session that executed it (cf. 694).
+> The gate above replaces a judgement with a comparator; measured at revision time,
+> `git --no-optional-locks diff --name-only 3beabc9cc HEAD` returned exactly four paths — `docs/backlog-archive.md`,
+> `docs/backlog.md`, `tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`,
+> `tasks/Sprints/Sprint_68_kickoff_prompt_Task_780_ListingsFilterBar_ReviewRework.md` — so **B is re-authorized and
+> S1 may begin.**
 
 **S1 — implement R1 and R2.** Then run the instrument (R5) to confirm 16/16 before touching the gates.
 
@@ -469,7 +498,7 @@ Do not run any mutating git command.
 
 ## 17. FACTS · INFERENCES · UNKNOWNS · CONFLICTS
 
-**FACTS** — `HEAD` `3beabc9cc` with all of 779/780 uncommitted; `ListingsFilterBar.tsx:75` `me="sm"`;
+**FACTS** — B baseline `3beabc9cc` with all of 779/780 uncommitted (`HEAD` has since advanced over docs-only commits — S0 Revision 1); `ListingsFilterBar.tsx:75` `me="sm"`;
 `theme.ts:203` `sm: '0.75rem'` = 12px; `layout-measurements.json` `barRootWidth` 308/363/378/1012 with
 `barRootRight === barRootWidth`; `ListingsShellView.tsx:74-92` siblings carry no inset;
 `ListingsPageFrame.tsx:74-81` `px={{ base:'md', sm:'xl', lg:'2xl', xxl:'3xl' }}`; `theme.ts:201-212` 16/24/32/48px and

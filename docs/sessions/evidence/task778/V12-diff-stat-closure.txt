@@ -1,0 +1,69 @@
+CAPTURE ENVIRONMENT — READ THIS BEFORE USING THIS ARTIFACT
+platform:      linux (reviewer bridge mount of the Windows checkout)
+NOT a Windows-native executor gate. V12 is plain read-only git; the header must not be
+mistaken for win32 executor evidence. Native re-capture command is at the end of this file.
+captured-by:   Opus (reviewer), owner-authorized documentation closure
+captured-at:   2026-09-02T08:13:20Z
+git version:   git version 2.34.1
+node version:  v22.23.2 (capture environment only; no node command was run for this artifact)
+device path:   C:\Claude_Code_Projects\lero-al
+mount path:    /sessions/rcw-01f9siupiwms5by1ex8s6svv/mnt/lero-al
+supersedes:    V12-diff-stat.txt, V12-diff-stat-final.txt
+reason:        V12-diff-stat-final.txt lists "?? scripts/task778-qa-measurements.mjs" (since
+               deleted) and "docs/backlog.md | 7 +-" where the final tree has 9, so it no
+               longer describes the reviewed diff. AC14 evidence is re-taken here.
+
+command:       git --no-optional-locks diff --stat
+--- output ---
+ docs/backlog.md                                    |   9 +-
+ messages/it.json                                   |   4 +-
+ scripts/mantine-migration-scope.json               |   3 +-
+ src/components/shared/FilterMultiToggle.tsx        |  15 +-
+ .../__tests__/filterLeafComponents.smoke.test.tsx  |  86 +++++++++
+ .../filtersRangeDatePicker.smoke.test.tsx          | 119 +++++++++++-
+ .../listings/components/ListingsFilters.tsx        | 212 +++++++++++++--------
+ src/modules/listings/components/ListingsShell.tsx  |   8 +-
+ .../listings/components/ListingsShellView.tsx      |  12 +-
+ 9 files changed, 361 insertions(+), 107 deletions(-)
+EXIT_CODE=0
+
+command:       git --no-optional-locks status --short
+--- output ---
+ M docs/backlog.md
+ M messages/it.json
+ M scripts/mantine-migration-scope.json
+ M src/components/shared/FilterMultiToggle.tsx
+ M src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx
+ M src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+ M src/modules/listings/components/ListingsFilters.tsx
+ M src/modules/listings/components/ListingsShell.tsx
+ M src/modules/listings/components/ListingsShellView.tsx
+?? docs/sessions/2026-09-01-task778-listings-filters-mantine.md
+?? docs/sessions/evidence/task778/
+?? src/stories/patterns/mantine/ListingsFilters.stories.tsx
+EXIT_CODE=0
+
+AC14 reconciliation against kickoff section 7 (nine paths) + the owner-authorized extension:
+  1 src/modules/listings/components/ListingsFilters.tsx        M   in scope (row 1)
+  2 src/modules/listings/components/ListingsShellView.tsx      M   in scope (row 2)
+  3 src/modules/listings/components/ListingsShell.tsx          M   in scope (row 3)
+  4 src/components/shared/FilterMultiToggle.tsx                M   in scope (row 4)
+  5 src/stories/patterns/mantine/ListingsFilters.stories.tsx   ??  in scope (row 5, new file)
+  6 scripts/mantine-migration-scope.json                       M   in scope (row 6)
+  7 src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx  M  in scope (row 7)
+  8 src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx    M  in scope (row 8)
+  9 docs/backlog.md                                            M   in scope (row 9)
+ 10 docs/sessions/2026-09-01-task778-listings-filters-mantine.md ?? in scope (row 9)
+ 11 docs/sessions/evidence/task778/                            ??  in scope (row 9, section 13)
+ 12 messages/it.json                                           M   OWNER-AUTHORIZED EXTENSION (2026-09-02)
+
+  src/modules/listings/hooks/useListingsUrlFilters.ts — ABSENT from the diff (zero-diff file, R16). Confirmed.
+  scripts/task778-qa-measurements.mjs — ABSENT (one-time helper, deleted). Confirmed.
+  .artifacts/reviews/ — the review ledger lives there and is git-ignored (.gitignore:61 /.artifacts/),
+                        so it cannot appear above or in any Task 778 diff or PR.
+  No path outside the reconciled set appears. AC14 holds.
+
+Native re-capture (Windows PowerShell, from the project root):
+  node.exe -p process.platform
+  git --no-optional-locks diff --stat *>&1 | Out-File -Encoding utf8 docs/sessions/evidence/task778/V12-diff-stat-closure.txt
+  git --no-optional-locks status --short *>&1 | Out-File -Append -Encoding utf8 docs/sessions/evidence/task778/V12-diff-stat-closure.txt

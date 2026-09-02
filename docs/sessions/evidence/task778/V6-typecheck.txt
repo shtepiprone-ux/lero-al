@@ -1,0 +1,10 @@
+﻿win32
+
+01 September 2026 17:38:20
+
+
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+EXIT_CODE=0

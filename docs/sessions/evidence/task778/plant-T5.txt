@@ -1,0 +1,38 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 1 failed | 13 skipped) 780ms
+     × T5 — a floor value below the domain-aware minimum is dropped from the URL, not written 769ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/components/shared/__tests__/filter ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > ListingsFilters — URL contract, property-type visibility, negative flows (Task 778) > T5 — a floor value below the domain-aware minimum is dropped 
+from the URL, not written
+AssertionError: expected '/listings?floor_min=-15' not to contain 'floor_min='
+
+Expected: "floor_min="
+Received: "/listings?floor_min=-15"
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:425:27
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  17:34:27
+   Duration  4.08s (transform 726ms, setup 87ms, import 2.35s, tests 780ms, environment 713ms)
+
+    423|     expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    424|     const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    425|     expect(pushedUrl).not.toContain('floor_min=')
+       |                           ^
+    426|   })
+    427|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

@@ -1,0 +1,57 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx (14 tests | 2 failed | 10 skipped) 116ms
+     × orientation="vertical" renders the same Mantine Stack the legacy className path renders 64ms
+     × AC9 — orientation="vertical" and the legacy className path resolve the identical Stack gap (measured, not assumed) 20ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/components/shared/__tests__/filter ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx > FilterMultiToggle — orientation prop (Task 778) > orientation="vertical" renders the same Mantine Stack the legacy className path renders
+Error: expect(element).toHaveClass("mantine-Stack-root")
+
+Expected the element to have class:
+  mantine-Stack-root
+Received:
+  m_4081bf90 mantine-Group-root
+ ❯ src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx:141:18
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed | 10 skipped (14)
+   Start at  17:35:19
+   Duration  1.95s (transform 91ms, setup 90ms, import 873ms, tests 116ms, environment 724ms)
+
+    139|     )
+    140|     const root = container.querySelector('[data-testid="filter-chip-ro…
+    141|     expect(root).toHaveClass('mantine-Stack-root')
+       |                  ^
+    142|   })
+    143|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx > FilterMultiToggle — orientation prop (Task 778) > AC9 — orientation="vertical" and the legacy className path resolve the identical Stack gap (measured, 
+not assumed)
+Error: expect(element).toHaveClass("mantine-Stack-root")
+
+Expected the element to have class:
+  mantine-Stack-root
+Received:
+  m_4081bf90 mantine-Group-root
+ ❯ src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx:167:19
+    165|     const rootA = viaOrientation.querySelector('[data-testid="filter-c…
+    166|     const rootB = viaClassName.querySelector('[data-testid="filter-chi…
+    167|     expect(rootA).toHaveClass('mantine-Stack-root')
+       |                   ^
+    168|     expect(rootB).toHaveClass('mantine-Stack-root')
+    169|     expect(rootA.style.getPropertyValue('--stack-gap')).toBe(rootB.sty…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+EXIT_CODE=1

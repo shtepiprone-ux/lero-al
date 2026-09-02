@@ -1,0 +1,38 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 1 failed | 13 skipped) 658ms
+     × T3 / AC4 — switching property type drops the dependent param the new type does not show 645ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/components/shared/__tests__/filter ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > ListingsFilters — URL contract, property-type visibility, negative flows (Task 778) > T3 / AC4 — switching property type drops the dependent param the 
+new type does not show
+AssertionError: expected '/listings?property_type=commercial&he…' not to contain 'heating='
+
+Expected: "heating="
+Received: "/listings?property_type=commercial&heating=electric"
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:387:27
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  17:34:03
+   Duration  4.04s (transform 772ms, setup 92ms, import 2.42s, tests 658ms, environment 733ms)
+
+    385|     expect(pushedUrl).toContain('property_type=commercial')
+    386|     // commercial's schema (SCHEMA_COMMERCIAL) omits 'heating' entirel…
+    387|     expect(pushedUrl).not.toContain('heating=')
+       |                           ^
+    388|   })
+    389|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

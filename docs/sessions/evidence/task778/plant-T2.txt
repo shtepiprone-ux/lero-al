@@ -1,0 +1,38 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 1 failed | 13 skipped) 495ms
+     × T2 / AC3 — a single filter change is one immediate push that preserves other params and resets only page 480ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/components/shared/__tests__/filter ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > ListingsFilters — URL contract, property-type visibility, negative flows (Task 778) > T2 / AC3 — a single filter change is one immediate push that 
+preserves other params and resets only page
+AssertionError: expected '/listings?sort=price_asc&currency=EUR…' not to contain 'page='
+
+Expected: "page="
+Received: "/listings?sort=price_asc&currency=EUR&page=3&type=sale"
+
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:370:27
+
+    368|     expect(pushedUrl).toContain('sort=price_asc')
+    369|     expect(pushedUrl).toContain('currency=EUR')
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 skipped (14)
+   Start at  17:33:40
+   Duration  3.82s (transform 740ms, setup 88ms, import 2.39s, tests 495ms, environment 708ms)
+
+    370|     expect(pushedUrl).not.toContain('page=')
+       |                           ^
+    371|     expect(pushedUrl).toContain('type=sale')
+    372|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

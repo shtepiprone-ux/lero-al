@@ -18,5 +18,6 @@
   "src/components/shared/LocationCombobox.tsx",
   "src/modules/auth/components/AuthSheet.tsx",
   "src/modules/listings/components/ListingsPageFrame.tsx",
-  "src/modules/listings/components/ListingsPagination.tsx"
+  "src/modules/listings/components/ListingsPagination.tsx",
+  "src/modules/listings/components/ListingsFilters.tsx"
 ]

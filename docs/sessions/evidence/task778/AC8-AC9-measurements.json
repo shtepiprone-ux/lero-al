@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-09-02T07:04:16.850Z",
+  "platform": "win32",
+  "ac9": {
+    "horizontal": {
+      "tag": "DIV",
+      "className": "m_4081bf90 mantine-Group-root",
+      "flexDirection": "row",
+      "rowGap": "8px",
+      "columnGap": "8px"
+    },
+    "legacy": {
+      "tag": "DIV",
+      "className": "flex-col gap-1.5 m_6d731127 mantine-Stack-root",
+      "flexDirection": "column",
+      "rowGap": "6px",
+      "columnGap": "6px"
+    },
+    "orientation": {
+      "tag": "DIV",
+      "className": "m_6d731127 mantine-Stack-root",
+      "flexDirection": "column",
+      "rowGap": "6px",
+      "columnGap": "6px"
+    },
+    "pass": true,
+    "note": "ac9.legacy = FilterControls story className=\"flex-col gap-1.5\" call site; ac9.orientation = the REAL orientation=\"vertical\" call site (ListingsFilters.tsx \"Condition\" section), measured live inside the built Patterns/Mantine/ListingsFilters/Default story, not inferred from shared-code-path reasoning."
+  },
+  "ac8": {
+    "desktop-1024": {
+      "viewport": {
+        "name": "desktop-1024",
+        "width": 1024,
+        "height": 768
+      },
+      "contentWidth": 320,
+      "dragHandlePresent": false,
+      "expected": "left Drawer content width ~320px (size=\"xs\" = 20rem token), no drag handle",
+      "pass": true
+    },
+    "mobile-320": {
+      "viewport": {
+        "name": "mobile-320",
+        "width": 320,
+        "height": 812
+      },
+      "contentWidth": 320,
+      "dragHandlePresent": true,
+      "expected": "bottom sheet, full-width (~320px), drag handle present",
+      "pass": true
+    },
+    "mobile-375": {
+      "viewport": {
+        "name": "mobile-375",
+        "width": 375,
+        "height": 812
+      },
+      "contentWidth": 375,
+      "dragHandlePresent": true,
+      "expected": "bottom sheet, full-width (~375px), drag handle present",
+      "pass": true
+    },
+    "mobile-390": {
+      "viewport": {
+        "name": "mobile-390",
+        "width": 390,
+        "height": 844
+      },
+      "contentWidth": 390,
+      "dragHandlePresent": true,
+      "expected": "bottom sheet, full-width (~390px), drag handle present",
+      "pass": true
+    }
+  },
+  "overallPass": true
+}

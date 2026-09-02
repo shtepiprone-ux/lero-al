@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Stack, Skeleton } from '@mantine/core'
 
 // ListingsFilters renders <Input> elements in the desktop sidebar.
 // ssr:false ensures those inputs are never in the server HTML.
@@ -12,9 +12,9 @@ const ListingsFilters = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex flex-col gap-3 pt-1">
-        {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-8 rounded-xl w-full" />)}
-      </div>
+      <Stack gap="sm" pt={4}>
+        {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} height={32} radius="lg" />)}
+      </Stack>
     ),
   }
 )

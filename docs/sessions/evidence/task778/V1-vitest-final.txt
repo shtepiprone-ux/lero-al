@@ -1,0 +1,15 @@
+﻿win32
+
+02 September 2026 00:05:06
+
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  53 passed (53)
+   Start at  00:05:07
+   Duration  7.21s (transform 1.01s, setup 388ms, import 6.76s, tests 9.04s, environment 3.07s)
+
+EXIT_CODE=0

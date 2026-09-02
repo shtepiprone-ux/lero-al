@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent } from '@/components/ui/sheet'
+import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { ListingsSortBar } from '@/modules/listings/components/ListingsSortBar'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
@@ -78,12 +78,10 @@ export function ListingsShellView({
         onFiltersOpen={onFiltersOpen}
       />
 
-      {/* ── Filters Sheet (full panel — mobile + "More filters" on desktop) ── */}
-      <Sheet open={filtersOpen} onOpenChange={onFiltersOpenChange}>
-        <SheetContent side="left" showCloseButton={false} className="w-80 max-w-[90vw] overflow-y-auto p-5">
-          {filtersSlot}
-        </SheetContent>
-      </Sheet>
+      {/* ── Filters Drawer (full panel — mobile + "More filters" on desktop) ── */}
+      <MantineDrawer opened={filtersOpen} onClose={() => onFiltersOpenChange(false)} side="left" size="xs">
+        {filtersSlot}
+      </MantineDrawer>
 
       {/* ── Main content ── */}
       <div className="flex-1 min-w-0 flex flex-col gap-0 mt-4">

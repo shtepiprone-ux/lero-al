@@ -1,0 +1,62 @@
+﻿win32
+
+01 September 2026 17:39:05
+
+
+
+> lero-al@0.1.0 check:locale-leak:mantine-only
+> node scripts/check-locale-leak.mjs --mantine-only
+
+🔍  Locale leak detector — full mode (mantine-only)
+Mantine selected: 83; non-Mantine excluded: 239
+    Stories: 83 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-01T15-39/
+
+.......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+npm.cmd : ❌  Locale leak detector: 24 leak(s) found:
+At line:3 char:1
++ npm.cmd run check:locale-leak:mantine-only *>&1 | Out-File -Append -E ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  Locale leak ... leak(s) found::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  Story: Admin/AdminUsersTable/Default
+    [sq] "Moderator"
+    [sq] "Administrator"
+    [sq] "Tirana Real Estate Group"
+    [sq] "Online"
+    [sq] "Gentiana Hoxha"
+    [uk] "Tirana Real Estate Group"
+    [uk] "Gentiana Hoxha"
+    [it] "Tirana Real Estate Group"
+    [it] "Online"
+    [it] "Gentiana Hoxha"
+    [sq] "Tirana Real Estate Group · #101"
+    [uk] "Tirana Real Estate Group · #101"
+    [it] "Tirana Real Estate Group · #101"
+
+  Story: Mantine/Primitives/FilterControls/Default
+    [sq] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+    [uk] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+    [it] "FilterMultiToggle — vertical branch (mobile filters drawer, className="flex-col gap-1.5")"
+
+  Story: Patterns/Mantine/AuthSheet/Login
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+  Story: Patterns/Mantine/AuthSheet/Login Validation Error
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+  Story: Patterns/Mantine/ListingsFilters/Default
+    [it] "Max"
+
+  Story: Patterns/Mantine/ListingsPageFrame/Default
+    [it] "Home"
+
+    Report: .screenshots/locale-leak/2026-09-01T15-39/report.json
+EXIT_CODE=1

@@ -47,7 +47,17 @@ vi.mock('@/hooks/useExchangeRate', () => ({
   useExchangeRate: () => ({ rates: null, rate: null, loading: false }),
 }))
 vi.mock('@/hooks/usePropertyTypes', () => ({
-  usePropertyTypes: () => ({ propertyTypes: [], loading: false }),
+  usePropertyTypes: () => ({
+    // Task 778: two real schema keys (`apartment` shows every §ALL_FILTER_SECTIONS entry;
+    // `commercial` is a genuine subset omitting heating/wall_type/layout_features/year_built —
+    // see propertyTypeSchema.ts SCHEMA_APARTMENT/SCHEMA_COMMERCIAL) so the property-type-switch
+    // tests below can click a real button instead of only the always-present "All types" clear.
+    propertyTypes: [
+      { value: 'apartment', label: 'Apartment' },
+      { value: 'commercial', label: 'Commercial' },
+    ],
+    loading: false,
+  }),
 }))
 vi.mock('@/modules/currency/hooks/useCurrencies', () => ({
   useCurrencies: () => ({ currencies: [], loading: false }),
@@ -334,5 +344,112 @@ describe('FiltersPanel — in-calendar month selector stays inside the calendar 
     fireEvent.click(marchOption)
     expect((document.querySelector('input[aria-label="Month"]') as HTMLInputElement).value).toBe('March')
     expect(document.querySelectorAll('[data-date]').length).toBeGreaterThan(0)
+  })
+})
+
+// ── Task 778 ────────────────────────────────────────────────────────────────────────────────
+// Registry: docs/critical-flow-registry.md -> "Listings filter controls — leaf sub-components +
+// shell (Mantine)". Extends coverage for the ListingsFilters -> Mantine migration: the immediate
+// single-push URL contract (AC3), property-type-dependent section narrowing plus multi-select
+// deselection (AC4), the two negative-flow value-normalization paths (§11.2), and the mobile
+// Apply handler (AC6).
+//
+// Planted-violation obligation (T2/T3/T5/T6): each assertion below was verified to FAIL against
+// the specific planted defect it guards, then reverted — see the session log for the exact diffs
+// and failure output.
+describe('ListingsFilters — URL contract, property-type visibility, negative flows (Task 778)', () => {
+  it('T2 / AC3 — a single filter change is one immediate push that preserves other params and resets only page', () => {
+    mockSearchParams = new URLSearchParams('sort=price_asc&currency=EUR&page=3')
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    fireEvent.click(within(baseElement).getByText('For sale'))
+
+    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    expect(pushedUrl).toContain('sort=price_asc')
+    expect(pushedUrl).toContain('currency=EUR')
+    expect(pushedUrl).not.toContain('page=')
+    expect(pushedUrl).toContain('type=sale')
+  })
+
+  it('T3 / AC4 — switching property type drops the dependent param the new type does not show', () => {
+    mockSearchParams = new URLSearchParams('property_type=apartment&heating=electric')
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    // apartment shows 'heating' (propertyTypeSchema.ts SCHEMA_APARTMENT.ui.filters) — sanity
+    // check the section is actually present before the switch.
+    expect(within(baseElement).getByRole('button', { name: 'Heating' })).toBeTruthy()
+
+    fireEvent.click(within(baseElement).getByText('Commercial'))
+
+    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    expect(pushedUrl).toContain('property_type=commercial')
+    // commercial's schema (SCHEMA_COMMERCIAL) omits 'heating' entirely.
+    expect(pushedUrl).not.toContain('heating=')
+  })
+
+  it('T3 — with no property_type in the URL, every section is visible (the all-sections default branch)', () => {
+    mockSearchParams = new URLSearchParams()
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    expect(within(baseElement).getByRole('button', { name: 'Heating' })).toBeTruthy()
+    expect(within(baseElement).getByRole('button', { name: 'Wall type' })).toBeTruthy()
+    expect(within(baseElement).getByRole('button', { name: 'Market type' })).toBeTruthy()
+  })
+
+  it('AC4 (multi-select) — deselecting one value from a 3-value CSV keeps the other two', () => {
+    mockSearchParams = new URLSearchParams('condition=good,needs_repair,new_build')
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    const conditionToggle = within(baseElement).getByRole('button', { name: 'Condition' })
+    fireEvent.click(conditionToggle)
+    const conditionSection = conditionToggle.parentElement as HTMLElement
+    fireEvent.click(within(conditionSection).getByText('Good condition'))
+
+    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    expect(pushedUrl).toContain('condition=needs_repair%2Cnew_build')
+  })
+
+  it('T5 — a floor value below the domain-aware minimum is dropped from the URL, not written', () => {
+    // No property_type -> getFloorFilterMin('') falls back to SCHEMA_OTHER (propertyTypeSchema.ts
+    // SCHEMA_OTHER.floor: { allowNegative: true, minFloor: -10 }) — -15 is below even that
+    // permissive floor, so it must be dropped rather than clamped or written.
+    mockSearchParams = new URLSearchParams()
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    const floorToggle = within(baseElement).getByRole('button', { name: 'Floor' })
+    fireEvent.click(floorToggle)
+    const floorSection = floorToggle.parentElement as HTMLElement
+    const floorMinInput = within(floorSection).getByPlaceholderText('Min')
+    fireEvent.change(floorMinInput, { target: { value: '-15' } })
+
+    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    expect(pushedUrl).not.toContain('floor_min=')
+  })
+
+  it('T5 (source-verified deviation from the kickoff\'s literal wording) — a negative area value clamps to 0 and IS written, it is not deleted', () => {
+    // ListingsFilters.tsx: onMinChange={v => updateParams({ area_min: v ? String(Math.max(0, Number(v))) : null })}
+    // A non-empty negative string is truthy, so Math.max(0, -N) writes "0" — it never reaches the
+    // null/delete branch. Asserted against the actual source rather than the kickoff's summary,
+    // per the no-invented-requirement rule.
+    mockSearchParams = new URLSearchParams()
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} />))
+    const areaToggle = within(baseElement).getByRole('button', { name: 'Area (m²)' })
+    fireEvent.click(areaToggle)
+    const areaSection = areaToggle.parentElement as HTMLElement
+    const areaMinInput = within(areaSection).getByPlaceholderText('Min')
+    fireEvent.change(areaMinInput, { target: { value: '-5' } })
+
+    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    const pushedUrl = mockRouterPush.mock.calls[0][0] as string
+    expect(pushedUrl).toContain('area_min=0')
+  })
+
+  it('T6 / AC6 — mobile Apply calls onClose exactly once and pushes nothing', () => {
+    mockSearchParams = new URLSearchParams()
+    const onClose = vi.fn()
+    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} onClose={onClose} />))
+    fireEvent.click(within(baseElement).getByRole('button', { name: 'Apply filters' }))
+
+    expect(onClose).toHaveBeenCalledTimes(1)
+    expect(mockRouterPush).not.toHaveBeenCalled()
   })
 })

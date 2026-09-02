@@ -1,0 +1,24 @@
+CAPTURE ENVIRONMENT — READ THIS BEFORE USING THIS ARTIFACT
+platform:      linux (reviewer bridge mount of the Windows checkout)
+NOT a Windows-native executor gate. The Windows-native rule (docs/orchestrator-role.md)
+binds node/npm/npx/Playwright/Next/Tailwind/Vite/Storybook commands; V11 is plain read-only
+git, whose output is platform-neutral here, but this header must not be mistaken for win32
+executor evidence. Native re-capture command is given at the end of this file.
+captured-by:   Opus (reviewer), owner-authorized documentation closure
+captured-at:   2026-09-02T08:12:55Z
+git version:   git version 2.34.1
+node version:  v22.23.2 (capture environment only; no node command was run for this artifact)
+device path:   C:\Claude_Code_Projects\lero-al
+mount path:    /sessions/rcw-01f9siupiwms5by1ex8s6svv/mnt/lero-al
+supersedes:    V11-diff-check.txt, V11-diff-check-final.txt
+reason:        V11/V12-final predate the deletion of scripts/task778-qa-measurements.mjs and
+               the final docs/backlog.md edit, so they no longer describe the final tree.
+
+command:       git --no-optional-locks diff --check
+--- output ---
+--- end output (empty above means no whitespace or conflict-marker defect) ---
+EXIT_CODE=0
+
+Native re-capture (Windows PowerShell, from the project root):
+  node.exe -p process.platform
+  git --no-optional-locks diff --check *>&1 | Out-File -Encoding utf8 docs/sessions/evidence/task778/V11-diff-check-closure.txt

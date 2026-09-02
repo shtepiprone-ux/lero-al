@@ -9,17 +9,22 @@ interface FilterMultiToggleProps {
   getLabel: (key: string) => string
   /** Wrapper className — use 'flex-col gap-1.5' for vertical layout */
   className?: string
+  /** Explicit vertical/horizontal request (Task 778) — the non-className path for consumers
+   *  migrated off Tailwind utility strings. Resolution order below keeps the legacy `className`
+   *  sniff working unchanged for `FilterControls.stories.tsx` and any other `className` consumer. */
+  orientation?: 'horizontal' | 'vertical'
   /** Accessible name for the toggle-chip group (e.g. the section's own visible label). */
   ariaLabel?: string
 }
 
 export function FilterMultiToggle({
-  options, selected, onToggle, getLabel, className, ariaLabel,
+  options, selected, onToggle, getLabel, className, orientation, ariaLabel,
 }: FilterMultiToggleProps) {
-  // `className` is still an external override (ListingsFilters.tsx passes the literal
-  // 'flex-col gap-1.5' string at 3 call sites to switch this row to a vertical stack) — detect
-  // that request and render the corresponding Mantine primitive instead of a Tailwind flex-col div.
-  const vertical = className?.includes('flex-col') ?? false
+  // `className` is still an external override (`FilterControls.stories.tsx` exercises the vertical
+  // branch through this path) — detect that request, or the explicit `orientation` prop (Task 778's
+  // `ListingsFilters.tsx`, which passes no `className`), and render the corresponding Mantine
+  // primitive instead of a Tailwind flex-col div.
+  const vertical = orientation === 'vertical' || (className?.includes('flex-col') ?? false)
   const rootProps = ariaLabel ? { role: 'group' as const, 'aria-label': ariaLabel } : {}
   const buttons = options.map(opt => (
     <Button

@@ -1,0 +1,23 @@
+ docs/backlog.md                                    |   7 +-
+ messages/it.json                                   |   4 +-
+ scripts/mantine-migration-scope.json               |   3 +-
+ src/components/shared/FilterMultiToggle.tsx        |  15 +-
+ .../__tests__/filterLeafComponents.smoke.test.tsx  |  86 +++++++++
+ .../filtersRangeDatePicker.smoke.test.tsx          | 119 +++++++++++-
+ .../listings/components/ListingsFilters.tsx        | 212 +++++++++++++--------
+ src/modules/listings/components/ListingsShell.tsx  |   8 +-
+ .../listings/components/ListingsShellView.tsx      |  12 +-
+ 9 files changed, 360 insertions(+), 106 deletions(-)
+ M docs/backlog.md
+ M messages/it.json
+ M scripts/mantine-migration-scope.json
+ M src/components/shared/FilterMultiToggle.tsx
+ M src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx
+ M src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+ M src/modules/listings/components/ListingsFilters.tsx
+ M src/modules/listings/components/ListingsShell.tsx
+ M src/modules/listings/components/ListingsShellView.tsx
+?? docs/sessions/2026-09-01-task778-listings-filters-mantine.md
+?? docs/sessions/evidence/task778/
+?? scripts/task778-qa-measurements.mjs
+?? src/stories/patterns/mantine/ListingsFilters.stories.tsx

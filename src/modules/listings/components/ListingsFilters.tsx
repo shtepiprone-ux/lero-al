@@ -2,9 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { Button, TextInput, ActionIcon, Badge, Box, Divider, Group, SimpleGrid, Text, useMantineTheme } from '@mantine/core'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -18,34 +16,60 @@ import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
 
 interface Location { id: number; name_al: string; type: string }
-interface Props { locations: Location[]; className?: string; onClose?: () => void }
+interface Props { locations: Location[]; onClose?: () => void }
+
+// Fixed render order of every accordion section — mirrors the JSX below exactly. Used only to
+// derive which visible section is LAST (so it omits its own bottom divider, mirroring the legacy
+// `last:border-b-0`), never to hardcode a divider index: presence still comes from the live
+// `shows()` predicate on every render.
+const SECTION_ORDER = [
+  'type', 'property_type', 'location', 'market_type', 'rooms', 'price', 'area',
+  'floor', 'floors_total', 'condition', 'layout_features', 'year_built',
+  'heating', 'wall_type', 'offer_type', 'purchase_conditions', 'period', 'listing_id',
+] as const
 
 function AccordionSection({
-  title, open, onToggle, children,
+  title, open, onToggle, withDivider, children,
 }: {
-  title: string; open: boolean; onToggle: () => void; children: React.ReactNode
+  title: string; open: boolean; onToggle: () => void; withDivider: boolean; children: React.ReactNode
 }) {
   return (
-    <div className="border-b border-border last:border-b-0 py-4">
-      <Button
-        type="button"
-        variant="ghost"
-        onClick={onToggle}
-        className="flex w-full items-center justify-between select-none min-h-11 h-auto rounded-none px-0 hover:bg-transparent group"
-      >
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors duration-150">
-          {title}
-        </span>
-        <ChevronDown className={cn('h-3.5 w-3.5 text-muted-foreground/60 transition-transform duration-200 shrink-0', open && 'rotate-180')} />
-      </Button>
-      {open && <div className="mt-3">{children}</div>}
-    </div>
+    <Box>
+      <Box py="md">
+        <Button
+          type="button"
+          variant="subtle"
+          fullWidth
+          justify="space-between"
+          onClick={onToggle}
+          styles={{ root: { paddingInline: 0 } }}
+          rightSection={
+            <ChevronDown
+              size={14}
+              style={{
+                color: 'var(--mantine-color-gray-5)',
+                transition: 'transform 200ms ease',
+                transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                flexShrink: 0,
+              }}
+            />
+          }
+        >
+          <Text size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: '0.05em' }}>
+            {title}
+          </Text>
+        </Button>
+        {open && <Box mt="sm">{children}</Box>}
+      </Box>
+      {withDivider && <Divider color="gray.3" />}
+    </Box>
   )
 }
 
-export function ListingsFilters({ locations, className, onClose }: Props) {
+export function ListingsFilters({ locations, onClose }: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
 
   const {
     get, updateParams, toggleMulti,
@@ -61,49 +85,78 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
   const priceLabel = `${tc('price_range')} (${currency})`
 
+  const sectionVisibility: Record<(typeof SECTION_ORDER)[number], boolean> = {
+    type: true,
+    property_type: true,
+    location: true,
+    market_type: shows('market_type'),
+    rooms: shows('rooms'),
+    price: true,
+    area: shows('area'),
+    floor: shows('floor'),
+    floors_total: shows('floors_total'),
+    condition: shows('condition'),
+    layout_features: shows('layout_features'),
+    year_built: shows('year_built'),
+    heating: shows('heating'),
+    wall_type: shows('wall_type'),
+    offer_type: shows('offer_type'),
+    purchase_conditions: shows('purchase_conditions'),
+    period: true,
+    listing_id: true,
+  }
+  const lastVisibleSection = [...SECTION_ORDER].reverse().find(key => sectionVisibility[key])
+  const withBottomDivider = (key: (typeof SECTION_ORDER)[number]) => key !== lastVisibleSection
+
   return (
-    <div className={cn('listings-filters flex flex-col', className)}>
+    <Box>
       {/* Header */}
-      <div className="flex items-center gap-2 mb-4">
-        <SlidersHorizontal className="h-4 w-4 text-primary" />
-        <span className="font-semibold text-sm">{t('filters_title')}</span>
+      <Group gap="xs" mb="md" wrap="nowrap">
+        <SlidersHorizontal size={16} color="var(--mantine-color-brand-7)" />
+        <Text fw={600} size="sm">{t('filters_title')}</Text>
         {activeCount > 0 && (
-          <span className="text-xs bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
+          <Badge color="brand" variant="filled" radius="pill">
             {activeCount}
-          </span>
+          </Badge>
         )}
         {onClose && (
-          <Button variant="ghost" size="icon-xl" onClick={onClose} className="ml-auto lg:hidden" aria-label={tc('close')}>
-            <X className="h-5 w-5" />
-          </Button>
+          <ActionIcon
+            variant="subtle"
+            mih={theme.other.touchTarget}
+            miw={theme.other.touchTarget}
+            onClick={onClose}
+            aria-label={tc('close')}
+            hiddenFrom="sm"
+            style={{ marginLeft: 'auto' }}
+          >
+            <X size={20} />
+          </ActionIcon>
         )}
-      </div>
+      </Group>
 
-      <div>
+      <Box>
 
         {/* Listing type */}
-        <AccordionSection title={tc('listing_type')} open={sections.type} onToggle={() => toggle('type')}>
-          <div className="flex flex-col sm:flex-row gap-2">
+        <AccordionSection title={tc('listing_type')} open={sections.type} onToggle={() => toggle('type')} withDivider={withBottomDivider('type')}>
+          <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xs">
             {(['', 'sale', 'rent'] as const).map(type => (
               <Button
                 key={type}
-                variant={get('type') === type || (!get('type') && type === '') ? 'default' : 'outline'}
-                size="xl"
-                className="flex-1 rounded-xl text-xs"
+                variant={get('type') === type || (!get('type') && type === '') ? 'filled' : 'default'}
                 onClick={() => updateParams({ type: type || null })}
               >
                 {type === '' ? tc('all') : t(type)}
               </Button>
             ))}
-          </div>
+          </SimpleGrid>
         </AccordionSection>
 
         {/* Property type */}
-        <AccordionSection title={tc('property_type')} open={sections.property_type} onToggle={() => toggle('property_type')}>
-          <div className="grid grid-cols-2 gap-1.5">
+        <AccordionSection title={tc('property_type')} open={sections.property_type} onToggle={() => toggle('property_type')} withDivider={withBottomDivider('property_type')}>
+          <SimpleGrid cols={2} spacing="xs">
             <Button
-              variant="outline"
-              className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', !get('property_type') && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
+              variant={!get('property_type') ? 'light' : 'default'}
+              justify="flex-start"
               onClick={() => handlePropertyTypeChange(null)}
             >
               {tc('all_types')}
@@ -111,18 +164,18 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             {propertyTypes.map(pt => (
               <Button
                 key={pt.value}
-                variant="outline"
-                className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', get('property_type') === pt.value && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
+                variant={get('property_type') === pt.value ? 'light' : 'default'}
+                justify="flex-start"
                 onClick={() => handlePropertyTypeChange(get('property_type') === pt.value ? null : pt.value)}
               >
                 {pt.label}
               </Button>
             ))}
-          </div>
+          </SimpleGrid>
         </AccordionSection>
 
         {/* Location */}
-        <AccordionSection title={tc('location')} open={sections.location} onToggle={() => toggle('location')}>
+        <AccordionSection title={tc('location')} open={sections.location} onToggle={() => toggle('location')} withDivider={withBottomDivider('location')}>
           <LocationCombobox
             locations={locations}
             value={get('location_id')}
@@ -133,12 +186,10 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Market type */}
         {shows('market_type') && (
-          <AccordionSection title={tc('market_type')} open={sections.market_type} onToggle={() => toggle('market_type')}>
-            <div className="flex flex-col sm:flex-row gap-2">
+          <AccordionSection title={tc('market_type')} open={sections.market_type} onToggle={() => toggle('market_type')} withDivider={withBottomDivider('market_type')}>
+            <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xs">
               <Button
-                variant={!get('market_type') ? 'default' : 'outline'}
-                size="xl"
-                className="flex-1 rounded-xl text-xs"
+                variant={!get('market_type') ? 'filled' : 'default'}
                 onClick={() => updateParams({ market_type: null })}
               >
                 {tc('all')}
@@ -146,21 +197,19 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               {MARKET_TYPES.map(mt => (
                 <Button
                   key={mt.value}
-                  variant={get('market_type') === mt.value ? 'default' : 'outline'}
-                  size="xl"
-                  className="flex-1 rounded-xl text-xs whitespace-normal leading-snug"
+                  variant={get('market_type') === mt.value ? 'filled' : 'default'}
                   onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
                 >
                   {t(mt.labelKey)}
                 </Button>
               ))}
-            </div>
+            </SimpleGrid>
           </AccordionSection>
         )}
 
         {/* Rooms */}
         {shows('rooms') && (
-          <AccordionSection title={tc('rooms_label')} open={sections.rooms} onToggle={() => toggle('rooms')}>
+          <AccordionSection title={tc('rooms_label')} open={sections.rooms} onToggle={() => toggle('rooms')} withDivider={withBottomDivider('rooms')}>
             <FilterRoomsRow
               selected={selectedRooms}
               onToggle={v => toggleMulti('rooms', v)}
@@ -170,7 +219,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         )}
 
         {/* Price */}
-        <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
+        <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')} withDivider={withBottomDivider('price')}>
           <FilterRangeInputs
             minValue={get('price_min')}
             maxValue={get('price_max')}
@@ -180,16 +229,16 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             maxPlaceholder={tc('max')}
           />
           {currency !== 'ALL' && rate != null && (
-            <p className="text-xs text-muted-foreground mt-2">
+            <Text size="xs" c="gray.5" mt="xs">
               {tc('exchange_rate')}:{' '}
               1 {currency} ≈ {rate.toFixed(2)} ALL
-            </p>
+            </Text>
           )}
         </AccordionSection>
 
         {/* Area — area_range already includes "(m²)" in translation */}
         {shows('area') && (
-          <AccordionSection title={tc('area_range')} open={sections.area} onToggle={() => toggle('area')}>
+          <AccordionSection title={tc('area_range')} open={sections.area} onToggle={() => toggle('area')} withDivider={withBottomDivider('area')}>
             <FilterRangeInputs
               min={0}
               minValue={get('area_min')}
@@ -204,7 +253,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Floor — domain-aware min (negative for garage/parking/warehouse, 0 otherwise) */}
         {shows('floor') && (
-          <AccordionSection title={tc('floor_range')} open={sections.floor} onToggle={() => toggle('floor')}>
+          <AccordionSection title={tc('floor_range')} open={sections.floor} onToggle={() => toggle('floor')} withDivider={withBottomDivider('floor')}>
             <FilterRangeInputs
               min={floorFilterMin}
               minValue={get('floor_min')}
@@ -219,7 +268,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Building floors — min 1 */}
         {shows('floors_total') && (
-          <AccordionSection title={tc('floors_total_range')} open={sections.floors_total} onToggle={() => toggle('floors_total')}>
+          <AccordionSection title={tc('floors_total_range')} open={sections.floors_total} onToggle={() => toggle('floors_total')} withDivider={withBottomDivider('floors_total')}>
             <FilterRangeInputs
               min={1}
               minValue={get('floors_total_min')}
@@ -234,13 +283,13 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Condition — multi-select */}
         {shows('condition') && (
-          <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')}>
+          <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')} withDivider={withBottomDivider('condition')}>
             <FilterMultiToggle
               options={CONDITIONS}
               selected={selectedConditions}
               onToggle={v => toggleMulti('condition', v)}
               getLabel={k => t(k)}
-              className="flex-col gap-1.5"
+              orientation="vertical"
               ariaLabel={tc('condition')}
             />
           </AccordionSection>
@@ -248,7 +297,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Layout features */}
         {shows('layout_features') && (
-          <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')}>
+          <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')} withDivider={withBottomDivider('layout_features')}>
             <FilterMultiToggle
               options={LAYOUT_FEATURES}
               selected={selectedLayoutFeatures}
@@ -261,8 +310,8 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Year built — dropdown per dom.ria.com */}
         {shows('year_built') && (
-          <AccordionSection title={tc('year_built_range')} open={sections.year_built} onToggle={() => toggle('year_built')}>
-            <div className="grid grid-cols-2 gap-2">
+          <AccordionSection title={tc('year_built_range')} open={sections.year_built} onToggle={() => toggle('year_built')} withDivider={withBottomDivider('year_built')}>
+            <SimpleGrid cols={2} spacing="xs">
               <YearCombobox
                 value={get('year_built_min') ? parseInt(get('year_built_min')) : undefined}
                 onChange={v => updateParams({ year_built_min: v != null ? String(v) : null })}
@@ -275,13 +324,13 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 placeholder={tc('year_to')}
                 portal
               />
-            </div>
+            </SimpleGrid>
           </AccordionSection>
         )}
 
         {/* Heating — multi-select */}
         {shows('heating') && (
-          <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')}>
+          <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')} withDivider={withBottomDivider('heating')}>
             <FilterMultiToggle
               options={HEATING_TYPES}
               selected={selectedHeatingTypes}
@@ -294,7 +343,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Wall type — multi-select */}
         {shows('wall_type') && (
-          <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')}>
+          <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')} withDivider={withBottomDivider('wall_type')}>
             <FilterMultiToggle
               options={WALL_TYPES}
               selected={selectedWallTypes}
@@ -307,13 +356,13 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Offer type — multi-select */}
         {shows('offer_type') && (
-          <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')}>
+          <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')} withDivider={withBottomDivider('offer_type')}>
             <FilterMultiToggle
               options={OFFER_TYPES}
               selected={selectedOfferTypes}
               onToggle={v => toggleMulti('offer_type', v)}
               getLabel={k => t(k)}
-              className="flex-col gap-1.5"
+              orientation="vertical"
               ariaLabel={tc('offer_type')}
             />
           </AccordionSection>
@@ -321,20 +370,20 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Purchase conditions */}
         {shows('purchase_conditions') && (
-          <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')}>
+          <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')} withDivider={withBottomDivider('purchase_conditions')}>
             <FilterMultiToggle
               options={PURCHASE_CONDITIONS}
               selected={selectedPurchaseConditions}
               onToggle={v => toggleMulti('purchase_conditions', v)}
               getLabel={k => t(k)}
-              className="flex-col gap-1.5"
+              orientation="vertical"
               ariaLabel={tc('purchase_conditions')}
             />
           </AccordionSection>
         )}
 
         {/* Posting period — range date picker (Task 559) */}
-        <AccordionSection title={tc('period')} open={sections.period} onToggle={() => toggle('period')}>
+        <AccordionSection title={tc('period')} open={sections.period} onToggle={() => toggle('period')} withDivider={withBottomDivider('period')}>
           <RangeDatePicker
             value={{ from: get('date_from') || undefined, to: get('date_to') || undefined }}
             onChange={next => updateParams({ date_from: next.from ?? null, date_to: next.to ?? null })}
@@ -343,25 +392,24 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         </AccordionSection>
 
         {/* Search by ID */}
-        <AccordionSection title={tc('listing_id_label')} open={sections.listing_id} onToggle={() => toggle('listing_id')}>
-          <Input
+        <AccordionSection title={tc('listing_id_label')} open={sections.listing_id} onToggle={() => toggle('listing_id')} withDivider={withBottomDivider('listing_id')}>
+          <TextInput
             type="text"
             placeholder={tc('listing_id_placeholder')}
             value={get('listing_id')}
-            onChange={e => updateParams({ listing_id: e.target.value || null })}
-            className="h-10 rounded-xl"
+            onChange={e => updateParams({ listing_id: e.currentTarget.value || null })}
           />
         </AccordionSection>
 
-      </div>
+      </Box>
 
       {/* Mobile apply button */}
       {onClose && (
-        <Button size="xl" className="lg:hidden mt-4" onClick={onClose}>
+        <Button fullWidth mt="md" hiddenFrom="sm" onClick={onClose}>
           {tc('apply_filters')}
           {activeCount > 0 && ` (${activeCount})`}
         </Button>
       )}
-    </div>
+    </Box>
   )
 }

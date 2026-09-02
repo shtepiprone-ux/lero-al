@@ -1,0 +1,217 @@
+﻿win32
+
+01 September 2026 21:56:06
+
+
+06e4a6824 docs: archive Task 777 and align Git handoff policy
+
+> lero-al@0.1.0 screenshots:assert
+> node scripts/check-stories-rendered.mjs --mantine-only
+
+📸  Starting rendered assertion (mantine-only mode)
+    Output: .screenshots/rendered-assert/2026-09-01T19-56/
+
+Mantine selected: 82; non-Mantine excluded: 239
+mantine-only run. NOT RUN: Phase 1 (ASSERT_STORIES — including the 4 `.listing-card` anchor rows: system-featuredlistings--default, system-latestlistings--default, system-similarlistings--default, patterns-mantine-homepagelistinggrids--default); Phase 2 (geometry-only sweep).
+
+  mantine: ??✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓?✓✓✓?✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓????✓✓✓????✓✓✓????✓✓✓????✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓~✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓??✓✓✓✓✓✓?✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✓✗✗✓✗✗✗✓✗✗✗✓✗✗✗✓✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓
+
+
+Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md
+Results: 1285/1364 PASS, 52 FAIL, 27 AMBIGUOUS (needs-owner-decision)
+  ambiguous-overlap: 27
+flaky-recovered: 1
+  Recovered cells (passed only after retry):
+    Mantine/Primitives/ScrollArea/Default × uk × mobile-375 (retries: 1)
+Manifest: .screenshots/rendered-assert/2026-09-01T19-56/manifest.json
+PNGs: .screenshots/rendered-assert/2026-09-01T19-56/*.png
+npm.cmd : 
+At line:5 char:1
++ npm.cmd run screenshots:assert *>&1 | Out-File -Append -Encoding utf8 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+❌ Failed cells:
+  Patterns/Mantine/AuthSheet/Login × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Forgot Password × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Login Validation Error × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-320
+    ✗ text button not full-width at <640: Zgjidhni skedarin
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Zgjidhni skedarin
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Zgjidhni skedarin
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-320
+    ✗ text button not full-width at <640: Choose file
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Choose file
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Choose file
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-320
+    ✗ text button not full-width at <640: Обрати файл
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Обрати файл
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Обрати файл
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-320
+    ✗ text button not full-width at <640: Scegli file
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-375
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Scegli file
+  Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-390
+    ✗ text button not full-width at <640: trigger (Story opens the drawer directly, Scegli file
+
+⚠️  27 cells have ambiguous findings (needs-owner-decision):
+  Admin/AdminUsersTable/Default × sq × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-hnkxrexnq-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-hnkxrexnq-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-hnkxrexnq-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-hnkxrexnq-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Admin/AdminUsersTable/Default × sq × mobile-375
+    ? [ambiguous-text-clipped-scrollable]: #mantine-u6ym57c2z-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-u6ym57c2z-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Admin/AdminUsersTable/Default × uk × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-su0gs3d5z-tab-all — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-su0gs3d5z-tab-verified — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-su0gs3d5z-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-su0gs3d5z-tab-verified — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Combobox/Default × sq × mobile-390
+    ? [ambiguous-overlap]: #mantine-uyba8s3gr ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-390
+    ? [ambiguous-overlap]: #mantine-g9t6w8f78 ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-390
+    ? [ambiguous-overlap]: #mantine-ov81a56f1 ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-390
+    ? [ambiguous-overlap]: #mantine-9ngdju6q8 ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × sq × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × en × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × uk × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-320
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-375
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × mobile-390
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/PopularLocationsView/Long City Name × it × desktop-1024
+    ? [text-clipped-ellipsis]: a("Rrogozhinë-Peqin-Kavajë Bashki") — intentional ellipsis with accessible name or content link
+  Mantine/Primitives/Tabs/Default × sq × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-j1epkbim4-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-j1epkbim4-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-j1epkbim4-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-j1epkbim4-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-j1epkbim4-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × sq × mobile-375
+    ? [ambiguous-text-clipped-scrollable]: #mantine-kxco3qr8w-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-kxco3qr8w-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-kxco3qr8w-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-outside-scrollable]: #mantine-kxco3qr8w-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × uk × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-ctrjdc8hy-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-ctrjdc8hy-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-ctrjdc8hy-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-outside-scrollable]: #mantine-ctrjdc8hy-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+  Mantine/Primitives/Tabs/Default × it × mobile-320
+    ? [ambiguous-text-clipped-scrollable]: #mantine-tcyavynou-tab-overview — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-tcyavynou-tab-details — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-text-clipped-scrollable]: #mantine-tcyavynou-tab-activity — text reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+    ? [ambiguous-offscreen]: #mantine-tcyavynou-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+    ? [ambiguous-outside-scrollable]: #mantine-tcyavynou-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs) — same R1 rule as Check 2
+EXIT_CODE=1

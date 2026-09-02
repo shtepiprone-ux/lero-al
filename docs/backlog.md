@@ -17,8 +17,6 @@ allocated without one: `tasks/Sprints/Sprint_68_kickoff_prompt_Task_780_Listings
 Baseline **B** stays reusable while `HEAD` is unmoved, so the rework captures one new `P`, not two. Evidence:
 `docs/sessions/2026-09-02-task780-…-review-rework.md` · 779's original: `…-task779-listings-filter-bar-mantine.md`.
 
-⚠️ **Task 778's closure is incomplete** — it is `APPROVED WITH NOTES` in the registry and the sprint Tasks table, but has **no `docs/backlog-archive.md` row** and the Sprint 68 header still reads `Landed tasks: 3`. Close both in one edit before the next verdict. Evidence: `docs/sessions/2026-09-01-task778-listings-filters-mantine.md`.
-
 ## Open — needs action
 
 | Item | State | Next step |
@@ -45,7 +43,7 @@ Baseline **B** stays reusable while `HEAD` is unmoved, so the rework captures on
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 66 — `/listings` mobile overflow** (`tasks/Sprints/Sprint_66_Listings_Mobile_Overflow.md`): **772** only, P1, `KICKOFF FILED`. Opened 2026-08-27 — no open sprint fits a legacy `/listings` responsive defect (goal-fit table in the plan file). Scope is bounded to `ListingsSortBar`'s mobile row; the sprint exists so the fix carries route-level mobile evidence instead of a Storybook proxy. 🟠 OPEN, zero landed tasks.
-**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** are archived; **778 is ✅ APPROVED WITH NOTES**. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779** is superseded by **780**, which was returned **`NEEDS REVISION`** 2026-09-02 and re-filed with a real kickoff the same day; **778 still needs its archive row** (see the warning above).
+**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** + **778** are archived. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779** is superseded by **780**, which was returned **`NEEDS REVISION`** 2026-09-02 and re-filed with a real kickoff the same day.
 
 ## Task registry — single source for every open number. Last used **780**, NEXT FREE **781**.
 
@@ -54,7 +52,6 @@ Baseline **B** stays reusable while `HEAD` is unmoved, so the rework captures on
 | # | State | What |
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
-| **778** | **✅ APPROVED WITH NOTES** — **Sprint 68**, P2, Q3 | **`/listings`: `ListingsFilters` → Mantine + `Sheet` → `MantineDrawer`.** Evidence: isolated-worktree differential `P \ B = ∅`, 16 new cells PASS, and all required code and visual gates pass. Full record: `docs/sessions/2026-09-01-task778-listings-filters-mantine.md`. |
 | **779** | superseded by **780** | **`ListingsFilterBar` → Mantine + route visibility relocated.** Implemented; its code is in the same uncommitted diff and is carried by 780. Evidence: `docs/sessions/2026-09-02-task779-listings-filter-bar-mantine.md`. |
 | **780** | **NEEDS REVISION** (Opus 2026-09-02) — **Sprint 68**, P2, Q3, **KICKOFF FILED** | **`ListingsFilterBar` review rework.** Two real fixes retained; `me="sm"` withdrawn by owner decision 2026-09-02 — a 12px production-visible inset introduced for a Storybook-only zero-gutter condition. Overhang moves to the story harness (`preview.tsx:119-124`); the `Indicator` `offset` route is rejected against CC4/Task 777/R12. Also returned for pre-final `V2`-`V6` transcripts and a missing review ledger. Kickoff: `Sprint_68_kickoff_prompt_Task_780_ListingsFilterBar_ReviewRework.md`. |
 | **772** | **KICKOFF FILED** — **Sprint 66**, P1 | **`/listings` horizontal overflow below 640px.** `ListingsSortBar`'s right-hand group is `shrink-0` while the `size="lg"` filters `Button` carries `max-sm:w-full` and the sort `Combobox` wrapper carries `min-w-35`; the sort trigger is `h-9` (36px), below the 44px floor. Deliverable is the bounded mobile-layout fix **plus** route-level proof at 320/375/390 × sq/en/uk/it. Kickoff: `tasks/Sprints/Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md`. |

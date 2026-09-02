@@ -1,0 +1,341 @@
+{
+  "generatedAt": "2026-09-02T14:46:22.977Z",
+  "story": "patterns-mantine-listingsfilterbar--default",
+  "tolerance": 2,
+  "totalCells": 16,
+  "allPass": true,
+  "cells": [
+    {
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "barRootWidth": 308,
+      "barRootRight": 308,
+      "propertyTypeWidth": 308,
+      "locationWidth": 308,
+      "premiumWidth": 308,
+      "resetWidth": 308,
+      "advancedWidth": 308,
+      "advancedRight": 308,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 306,
+      "pass": true
+    },
+    {
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "barRootWidth": 363,
+      "barRootRight": 363,
+      "propertyTypeWidth": 363,
+      "locationWidth": 363,
+      "premiumWidth": 363,
+      "resetWidth": 363,
+      "advancedWidth": 363,
+      "advancedRight": 363,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 361,
+      "pass": true
+    },
+    {
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "barRootWidth": 378,
+      "barRootRight": 378,
+      "propertyTypeWidth": 378,
+      "locationWidth": 378,
+      "premiumWidth": 378,
+      "resetWidth": 378,
+      "advancedWidth": 378,
+      "advancedRight": 378,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 376,
+      "pass": true
+    },
+    {
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "barRootWidth": 1012,
+      "barRootRight": 1012,
+      "propertyTypeWidth": 212,
+      "locationWidth": 230,
+      "premiumWidth": 145.796875,
+      "resetWidth": 120.875,
+      "advancedWidth": 166.328125,
+      "advancedRight": 1012,
+      "checks": {
+        "rightAligned": true
+      },
+      "rightEdgeDiff": 0,
+      "pass": true
+    },
+    {
+      "locale": "en",
+      "viewport": "mobile-320",
+      "barRootWidth": 308,
+      "barRootRight": 308,
+      "propertyTypeWidth": 308,
+      "locationWidth": 308,
+      "premiumWidth": 308,
+      "resetWidth": 308,
+      "advancedWidth": 308,
+      "advancedRight": 308,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 306,
+      "pass": true
+    },
+    {
+      "locale": "en",
+      "viewport": "mobile-375",
+      "barRootWidth": 363,
+      "barRootRight": 363,
+      "propertyTypeWidth": 363,
+      "locationWidth": 363,
+      "premiumWidth": 363,
+      "resetWidth": 363,
+      "advancedWidth": 363,
+      "advancedRight": 363,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 361,
+      "pass": true
+    },
+    {
+      "locale": "en",
+      "viewport": "mobile-390",
+      "barRootWidth": 378,
+      "barRootRight": 378,
+      "propertyTypeWidth": 378,
+      "locationWidth": 378,
+      "premiumWidth": 378,
+      "resetWidth": 378,
+      "advancedWidth": 378,
+      "advancedRight": 378,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 376,
+      "pass": true
+    },
+    {
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "barRootWidth": 1012,
+      "barRootRight": 1012,
+      "propertyTypeWidth": 212,
+      "locationWidth": 230,
+      "premiumWidth": 130.984375,
+      "resetWidth": 132.546875,
+      "advancedWidth": 157.546875,
+      "advancedRight": 1012,
+      "checks": {
+        "rightAligned": true
+      },
+      "rightEdgeDiff": 0,
+      "pass": true
+    },
+    {
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "barRootWidth": 308,
+      "barRootRight": 308,
+      "propertyTypeWidth": 308,
+      "locationWidth": 308,
+      "premiumWidth": 308,
+      "resetWidth": 308,
+      "advancedWidth": 308,
+      "advancedRight": 308,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 306,
+      "pass": true
+    },
+    {
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "barRootWidth": 363,
+      "barRootRight": 363,
+      "propertyTypeWidth": 363,
+      "locationWidth": 363,
+      "premiumWidth": 363,
+      "resetWidth": 363,
+      "advancedWidth": 363,
+      "advancedRight": 363,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 361,
+      "pass": true
+    },
+    {
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "barRootWidth": 378,
+      "barRootRight": 378,
+      "propertyTypeWidth": 378,
+      "locationWidth": 378,
+      "premiumWidth": 378,
+      "resetWidth": 378,
+      "advancedWidth": 378,
+      "advancedRight": 378,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 376,
+      "pass": true
+    },
+    {
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "barRootWidth": 1012,
+      "barRootRight": 1012,
+      "propertyTypeWidth": 212,
+      "locationWidth": 230,
+      "premiumWidth": 139.21875,
+      "resetWidth": 170.96875,
+      "advancedWidth": 184.9375,
+      "advancedRight": 1012,
+      "checks": {
+        "rightAligned": true
+      },
+      "rightEdgeDiff": 0,
+      "pass": true
+    },
+    {
+      "locale": "it",
+      "viewport": "mobile-320",
+      "barRootWidth": 308,
+      "barRootRight": 308,
+      "propertyTypeWidth": 308,
+      "locationWidth": 308,
+      "premiumWidth": 308,
+      "resetWidth": 308,
+      "advancedWidth": 308,
+      "advancedRight": 308,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 306,
+      "pass": true
+    },
+    {
+      "locale": "it",
+      "viewport": "mobile-375",
+      "barRootWidth": 363,
+      "barRootRight": 363,
+      "propertyTypeWidth": 363,
+      "locationWidth": 363,
+      "premiumWidth": 363,
+      "resetWidth": 363,
+      "advancedWidth": 363,
+      "advancedRight": 363,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 361,
+      "pass": true
+    },
+    {
+      "locale": "it",
+      "viewport": "mobile-390",
+      "barRootWidth": 378,
+      "barRootRight": 378,
+      "propertyTypeWidth": 378,
+      "locationWidth": 378,
+      "premiumWidth": 378,
+      "resetWidth": 378,
+      "advancedWidth": 378,
+      "advancedRight": 378,
+      "checks": {
+        "propertyType": true,
+        "location": true,
+        "premium": true,
+        "reset": true,
+        "advanced": true
+      },
+      "tolerance": 2,
+      "minRequiredWidth": 376,
+      "pass": true
+    },
+    {
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "barRootWidth": 1012,
+      "barRootRight": 1012,
+      "propertyTypeWidth": 212,
+      "locationWidth": 230,
+      "premiumWidth": 131.28125,
+      "resetWidth": 155.546875,
+      "advancedWidth": 139.390625,
+      "advancedRight": 1012,
+      "checks": {
+        "rightAligned": true
+      },
+      "rightEdgeDiff": 0,
+      "pass": true
+    }
+  ]
+}

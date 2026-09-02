@@ -1,0 +1,46 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 12 skipped) 990ms
+     × router.push is called with the pathname and no query string 960ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T4 (AC4): reset produces a bare pathname push > router.push is called with the pathname and no query string
+AssertionError: expected "vi.fn()" to be called with arguments: [ '/en/listings' ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   "/en/listings",
++   "/en/listings?type=sale&premium=true",
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:209:22
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  11:42:00
+   Duration  4.08s (transform 559ms, setup 93ms, import 2.09s, tests 990ms, environment 748ms)
+
+    207|
+    208|     expect(pushMock).toHaveBeenCalledTimes(1)
+    209|     expect(pushMock).toHaveBeenCalledWith(PATHNAME)
+       |                      ^
+    210|     expect((pushMock.mock.calls[0][0] as string).includes('?')).toBe(f…
+    211|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

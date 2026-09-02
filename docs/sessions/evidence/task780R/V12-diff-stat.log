@@ -1,0 +1,5 @@
+ scripts/mantine-migration-scope.json               |   3 +-
+ .../listings/components/ListingsFilterBar.tsx      | 209 ++++++++++++---------
+ .../listings/components/ListingsShellView.tsx      |  11 +-
+ 3 files changed, 130 insertions(+), 93 deletions(-)
+EXIT_CODE=0

@@ -1,0 +1,46 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 12 skipped) 347ms
+     × the reset control is absent from the DOM and the Indicator renders no badge 312ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T7: zero active filters hides reset and the count badge > the reset control is absent from the DOM and the Indicator renders 
+no badge
+AssertionError: expected <span …(2)></span> to be null
+
+- Expected:
+null
+
++ Received:
+<span
+  class="m_811560b9 mantine-Button-label"
+  style="white-space: normal; overflow: visible; word-break: normal; overflow-wrap: break-word;"
+>
+  Reset filters
+</span>
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:285:49
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  11:44:20
+   Duration  3.22s (transform 487ms, setup 87ms, import 1.92s, tests 347ms, environment 690ms)
+
+    283|   it('the reset control is absent from the DOM and the Indicator rende…
+    284|     const { container } = renderBar('')
+    285|     expect(screen.queryByText('Reset filters')).toBeNull()
+       |                                                 ^
+    286|     expect(container.querySelector('.mantine-Indicator-indicator')).to…
+    287|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

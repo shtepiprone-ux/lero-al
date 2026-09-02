@@ -19,5 +19,6 @@
   "src/modules/auth/components/AuthSheet.tsx",
   "src/modules/listings/components/ListingsPageFrame.tsx",
   "src/modules/listings/components/ListingsPagination.tsx",
-  "src/modules/listings/components/ListingsFilters.tsx"
+  "src/modules/listings/components/ListingsFilters.tsx",
+  "src/modules/listings/components/ListingsFilterBar.tsx"
 ]

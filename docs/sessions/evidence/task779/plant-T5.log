@@ -1,0 +1,46 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 12 skipped) 613ms
+     × clicking the advanced-filters control fires onFiltersOpen exactly once and 0 router.push calls 578ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T5 (AC4): advanced filters calls onFiltersOpen, pushes nothing > clicking the advanced-filters control fires onFiltersOpen 
+exactly once and 0 router.push calls
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "/en/listings?advanced=1",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:222:26
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  11:42:19
+   Duration  3.59s (transform 531ms, setup 92ms, import 1.99s, tests 613ms, environment 729ms)
+
+    220|
+    221|     expect(onFiltersOpen).toHaveBeenCalledTimes(1)
+    222|     expect(pushMock).not.toHaveBeenCalled()
+       |                          ^
+    223|   })
+    224| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

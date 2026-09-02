@@ -1,0 +1,171 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed) 2881ms
+     × ListingsFilterBar.tsx contains no visibleFrom/hiddenFrom/hidden md: markup 23ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T6 (AC5): route visibility lives in the ListingsShellView wrapper > ListingsFilterBar.tsx contains no 
+visibleFrom/hiddenFrom/hidden md: markup
+AssertionError: expected '\'use client\'\n\n/**\n * ListingsFil…' not to match /visibleFrom|hiddenFrom|hidden md:/
+
+- Expected:
+/visibleFrom|hiddenFrom|hidden md:/
+
++ Received:
+"'use client'
+
+/**
+ * ListingsFilterBar — horizontal filter bar for the listings page (E.1 / Task 131; Mantine
+ * migration Task 779).
+ *
+ * Route visibility (md+) lives in the host (`ListingsShellView` wraps this in
+ * `<Box visibleFrom=\"md\">`) — the component itself carries no visibility gate, so it renders
+ * real UI at every Storybook viewport (Task 779 §3.5/§3.6).
+ *
+ * All filter state routes through useListingsUrlFilters → filterEngine.ts.
+ * No new filter logic — existing primitives only.
+ */
+
+import { SlidersHorizontal, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { Button, Divider, Group, Indicator, Stack } from '@mantine/core'
+import { MantineCombobox } from '@/design-system/mantine/patterns'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
+import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
+
+interface Location { id: number; name_al: string; type: string }
+
+interface Props {
+  locations: Location[]
+  /** Opens the full-filters Drawer (same handler used by mobile sort bar) */
+  onFiltersOpen: () => void
+}
+
+export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
+  const t = useTranslations('listing')
+  const tc = useTranslations('common')
+
+  const {
+    get, updateParams, handlePropertyTypeChange,
+    activeCount, propertyTypes, resetFilters,
+  } = useListingsUrlFilters()
+
+  const listingType = get('type') || ''
+  const propertyType = get('property_type') || ''
+  const locationId = get('location_id') || ''
+  const isPremium = get('premium') === 'true'
+
+  const propertyTypeOptions = [
+    { value: '', label: tc('all_types') },
+    ...propertyTypes.map(pt => ({ value: pt.value, label: pt.label })),
+  ]
+
+  return (
+    <Stack gap={0}>
+      <Group wrap=\"wrap\" gap=\"xs\" py=\"sm\" justify=\"space-between\">
+        <Group wrap=\"wrap\" gap=\"xs\">
+          {/* Listing type — sale / rent */}
+          <Group gap=\"xs\" wrap=\"nowrap\">
+            {(['', 'sale', 'rent'] as const).map(type => (
+              <Button
+                key={type}
+                type=\"button\"
+                variant={listingType === type ? 'filled' : 'default'}
+
+                onClick={() => updateParams({ type: type || null })}
+              >
+                {type === '' ? tc('all') : t(type)}
+              </Button>
+            ))}
+          </Group>
+
+          <Divider orientation=\"vertical\" color=\"gray.3\" />
+
+          {/* Property type */}
+          <MantineCombobox
+            options={propertyTypeOptions}
+            value={propertyType}
+            onChange={v => handlePropertyTypeChange(v || null)}
+            placeholder={tc('all_types')}
+            variant=\"button\"
+            noResultsLabel={tc('no_results')}
+          />
+
+          {/* Location */}
+          <LocationCombobox
+            locations={locations}
+            value={locationId}
+            onChange={id => updateParams({ location_id: id ?? null })}
+            placeholder={tc('all_locations')}
+            portal
+          />
+
+          {/* Premium-only toggle */}
+          <Button
+            type=\"button\"
+            variant={isPremium ? 'filled' : 'default'}
+            onClick={() => updateParams({ premium: isPremium ? null : 'true' })}
+          >
+            {t('filter_premium_toggle_label')}
+          </Button>
+        </Group>
+
+        <Group gap=\"xs\" wrap=\"nowrap\">
+          {/* Global reset — shown only when filters are active */}
+          {activeCount > 0 && (
+            <Button
+              type=\"button\"
+              variant=\"subtle\"
+              color=\"gray\"
+              leftSection={<X size={14} />}
+              onClick={resetFilters}
+            >
+              {tc('reset_filters')}
+            </Button>
+          )}
+
+          {/* More / advanced filters → opens full Drawer */}
+          <Indicator label={activeCount} disabled={activeCount === 0} color=\"brand\">
+            <Button
+              type=\"button\"
+              data-testid=\"task775-advanced-filters\"
+              variant=\"default\"
+              leftSection={<SlidersHorizontal size={14} />}
+              onClick={onFiltersOpen}
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 59 passed (60)
+   Start at  11:38:39
+   Duration  19.57s (transform 1.06s, setup 426ms, import 6.27s, tests 31.01s, environment 3.23s)
+
+            >
+              {tc('advanced_filters')}
+            </Button>
+          </Indicator>
+        </Group>
+      </Group>
+
+      <Divider color=\"gray.3\" />
+    </Stack>
+  )
+}
+"
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:275:21
+    273|       'utf-8',
+    274|     )
+    275|     expect(src).not.toMatch(/visibleFrom|hiddenFrom|hidden md:/)
+       |                     ^
+    276|   })
+    277| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

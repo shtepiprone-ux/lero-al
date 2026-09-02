@@ -1,0 +1,1124 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-780R — ListingsFilterBar rework: withdraw the production inset, absorb the Indicator overhang in the story harness",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "e8cbcfb436a933b4c21c3b31aa2939f2ec704647",
+    "reviewedRevision": "worktree at 2026-09-02 18:56 on top of HEAD e8cbcfb43; Tasks 779, 780 and 780R share one uncommitted diff with no commit boundary between them",
+    "reviewedPaths": [
+      "src/modules/listings/components/ListingsFilterBar.tsx",
+      "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx",
+      "src/modules/listings/components/ListingsShellView.tsx",
+      "scripts/mantine-migration-scope.json",
+      "docs/sessions/2026-09-02-task780R-listings-filter-bar-rework.md",
+      "docs/sessions/evidence/task780R/measure-layout-instrument.mjs",
+      "docs/backlog.md"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 12,
+      "verified": 12,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-02-task780R-listings-filter-bar-rework.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+        "symbol": "ListingsFilterBar root Stack",
+        "diffHunks": [
+          "src/modules/listings/components/ListingsFilterBar.tsx:73"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "root Stack inset withdrawal"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static source inspection; not locale-dependent.",
+          "viewports": "Static source inspection; not viewport-dependent.",
+          "states": "Unconditional markup, not state-dependent.",
+          "stories": "Source scope, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+          "command": "reviewer grep of the final file",
+          "observable": "Root is `<Stack gap={0} data-testid=\"listings-filter-bar-root\">` at :73 with no margin prop. Whole file: className= 0, mr= 0, ml= 0; the single `me=` hit and one of two `ms=` hits are inside the doc comment (:16, :24); the only functional `ms=` is `ms={{ sm: 'auto' }}` at :134 on the right-actions Group, which AC1 requires be retained.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "root Stack inset withdrawal"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A different margin/padding/width prop silently replaced `me` as an inset.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/instrument-final.log",
+          "result": "REFUTED by measurement, not by grep alone: barInsetRight = 0.00 at all 16 cells, so no compensating inset of any kind survives."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC2 + AC5 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx",
+        "symbol": "Default.render",
+        "diffHunks": [
+          "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx:78-80"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "story containing block"
+        ],
+        "stories": [
+          "patterns-mantine-listingsfilterbar--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "activeCount>0"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx",
+          "command": "reviewer read of the final story file",
+          "observable": "`<Box px={{ base:'md', sm:'xl', lg:'2xl', xxl:'3xl' }}>` at :78 wraps the rendered bar; `Box` imported at :2; the provenance comment at :30-31 names ListingsPageFrame.tsx. Mantine spacing tokens only — no raw px/rem, no className, no style, no CSS module. `skipCanvas: true` and `layout: 'fullscreen'` unchanged.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "story containing block"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": ".screenshots/rendered-assert/2026-09-02T17-30/patterns-mantine-listingsfilterbar--default__uk__desktop-1024.png",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "Reviewer opened the retained render: the gutter is present on BOTH sides (bar spans ~32..992 of 1024) and the bottom Divider is symmetric — no asymmetric inset remains.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "story containing block"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "uk"
+            ],
+            "viewports": [
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The container is cosmetic and the overflow would still occur without it.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/plant-PB-instrument.log",
+          "result": "REFUTED. Plant P-B removed the container and noDocumentOverflow went false at all 16 cells while containerRelative stayed true — the container is load-bearing and its assertion is discriminating."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+        "symbol": "Indicator",
+        "diffHunks": [
+          "src/modules/listings/components/ListingsFilterBar.tsx:150"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "Indicator props"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static source inspection; not locale-dependent.",
+          "viewports": "Static source inspection; not viewport-dependent.",
+          "states": "Unconditional markup, not state-dependent.",
+          "stories": "Source scope, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+          "command": "reviewer grep of the final file",
+          "observable": "`<Indicator label={activeCount} disabled={activeCount === 0} color=\"brand\" w={FULL_BELOW_SM}>` — no `size`, no `offset`, no `position` prop, so Mantine defaults (position top-end, offset 0) are preserved as Task 779 CC4 and the Task 777 precedent require.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Indicator props"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The overhang was reduced at the Indicator instead of the harness, contrary to the selected route.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+          "result": "REFUTED — no offset/position/size prop exists; the badge still overhangs by design and the harness absorbs it (AC2 evidence)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+        "symbol": "width cascade",
+        "diffHunks": [
+          "src/modules/listings/components/ListingsFilterBar.tsx:73-170"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "combobox Box wrappers",
+          "width cascade",
+          "test ids"
+        ],
+        "stories": [
+          "patterns-mantine-listingsfilterbar--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "activeCount>0"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsFilterBar.tsx",
+          "command": "reviewer grep of the final file",
+          "observable": "Two `<Box w={FULL_BELOW_SM}>` combobox wrappers survive; 10 `w={FULL_BELOW_SM}` occurrences total; `data-testid=\"task775-advanced-filters\"` and `data-testid=\"listings-filter-bar-root\"` each present exactly once.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "combobox Box wrappers",
+              "width cascade",
+              "test ids"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Withdrawing the inset regressed a control back to content width.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/instrument-final.log",
+          "result": "REFUTED — propertyType/location/premium/reset/advanced all true at every mobile cell, and the P manifest reports fullWidthControlsAtMobile true for all 16."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC6 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task780R/measure-layout-instrument.mjs",
+        "symbol": "checks.containerRelative",
+        "diffHunks": [
+          "docs/sessions/evidence/task780R/measure-layout-instrument.mjs:129-133"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "container-relative assertion"
+        ],
+        "stories": [
+          "patterns-mantine-listingsfilterbar--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "activeCount>0"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task780R/measure-layout-instrument.mjs",
+          "command": "reviewer read of the retained producer",
+          "observable": "`barInsetRight = containerContentRight - barRootRight` (:129); `checks.containerRelative = |barInsetRight| <= TOLERANCE` (:132); `checks.noDocumentOverflow` compares documentElement scrollWidth to clientWidth (:133). The comparator is measured against the containing block, not the bar root.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "container-relative assertion"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task780R/plant-PA-instrument.log",
+          "command": "node measure-layout-instrument.mjs",
+          "observable": "Plant P-A (me=\"sm\" re-added): containerRelative false with barInsetRight=12.00 at all 16 cells, 0/16 PASS, EXIT_CODE=1 — WHILE propertyType/location/premium/reset/advanced/rightAligned all still report true.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "container-relative assertion"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new assertion is a procedural addition that could not have caught the withdrawn defect.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/plant-PA-instrument.log",
+          "result": "REFUTED, and this is the strongest artifact in the task: under P-A every relative-only check passes while containerRelative alone fails. That is a direct demonstration that the previous instrument was structurally blind to the defect and this one is not."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC7 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task780R/P-manifest.json",
+        "symbol": "matrix[] vs B-manifest.json",
+        "diffHunks": [
+          "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx:78"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "differential rendered acceptance"
+        ],
+        "stories": [
+          "patterns-mantine-listingsfilterbar--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "1024"
+        ],
+        "states": [
+          "activeCount>0"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task780R/P-manifest.json",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "Reviewer rebuilt story x locale x viewport identity sets from both manifests independently of the executor's compare-manifests.mjs: P\\B = 16 identities, all Patterns/Mantine/ListingsFilterBar/Default, every one verdict=pass with noHorizontalOverflow=true; P_fail\\B_fail, P_amb\\B_amb and B_fail\\P_fail all empty; 80/80 and 27/27 unchanged; 1396=1380+16 and 1289=1273+16. All 16 visualContentCheck.pass true, min nonBackgroundRatio 0.1317 (no blank canvas).",
+          "freshness": "P manifest timestamp 2026-09-02T17-30, after the 17:28:42 final source write and the 17:29 V7 build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "differential rendered acceptance"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task780R/B-manifest.json",
+          "command": "reused per kickoff §3.8, not re-captured",
+          "observable": "B timestamp 2026-09-02T12-42, runMode mantine-only, identical phasesSkipped to P. Reuse authorised by S0 Revision 1's comparator: diff 3beabc9cc..HEAD touches only docs/ and tasks/, which no gate reads.",
+          "freshness": "baseline, deliberately not re-captured",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "differential rendered acceptance"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "B is stale against the tree that produced P.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_68_kickoff_prompt_Task_780_ListingsFilterBar_ReviewRework.md",
+          "result": "REFUTED by the S0 comparator, re-run by the reviewer: git diff --name-only 3beabc9cc HEAD with no pathspec returns four paths, all under docs/ and tasks/. .storybook/main.ts:11-13 globs stories from ../src/** only and :47 serves staticDirs ../public, so none of the four is a rendering input."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC8 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task780R/",
+        "symbol": "V1-V10 transcripts",
+        "diffHunks": [
+          "src/stories/patterns/mantine/ListingsFilterBar.stories.tsx:78"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "gate transcript freshness"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task780R/",
+          "command": "filesystem mtimes vs final source write",
+          "observable": "Final source write is stories.tsx at 17:28:42 (the P-B revert). Every gate artifact is later: V7-final-build 17:29, instrument-final 17:29, V1-V6 17:30, P manifest 17-30, V9 18:52, V10 build 18:54. The staleness that blocked the previous attempt is closed.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "gate transcript freshness"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The V2-V6 transcripts were copied forward again rather than re-run, as in the previous attempt.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/V4-final.log",
+          "result": "UNDECIDABLE from artifacts in either direction, and byte-identical output is expected here: check:design-tokens skips *.stories.tsx (check-design-tokens.mjs:105) and the component carries 0 className, so both scanners must produce the same text. What changed and is decidable is ordering — every transcript now postdates the final write, which is the property AC8 actually asserts."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC9 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task780R/measure-layout-instrument.mjs",
+        "symbol": "file identity",
+        "diffHunks": [
+          "docs/sessions/evidence/task780R/measure-layout-instrument.mjs:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "retained instrument + hash"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task780R/measure-layout-instrument.mjs",
+          "command": "git --no-optional-locks hash-object",
+          "observable": "Reviewer re-derived the hash: 865b114060628fce8871430a91a04f72ca4cade0, byte-identical to the value reported in the session log. The producer is retained and auditable, closing the previous attempt's deleted-instrument gap.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retained instrument + hash"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The retained script is not the one that produced the retained results.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/instrument-final.log",
+          "result": "Hash matches the reported value and the log's per-cell output format matches the script's console.log template at :152. Consistent; note this ties the artifact to the file, not to the exact process invocation."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC10 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-02-task780R-listings-filter-bar-rework.md",
+        "symbol": "section 9",
+        "diffHunks": [
+          "docs/sessions/2026-09-02-task780R-listings-filter-bar-rework.md:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "CC record"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-02-task780R-listings-filter-bar-rework.md",
+          "command": "reviewer read of section 9",
+          "observable": "CC8 corrected to ms={{sm:'auto'}} at :134; CC10 records the inset withdrawal with before 308/363/378/1012 and after barInsetRight 0.00 at all 16 cells; CC11 records the story container with before (raw viewport) and after (viewport-32 at mobile, viewport-64 at 1024). No 'visually neutral' claim appears.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "CC record"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A rendered delta was introduced and left out of the CC record.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/layout-measurements.json",
+          "result": "The two recorded deltas are the only ones the instrument measures. The desktop two-row wrap noted in the previous review is unchanged by this task and was explicitly out of scope; it remains an open UNKNOWN, not a new delta."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC11 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/components/ListingsShellView.tsx",
+        "symbol": "untouched files",
+        "diffHunks": [
+          "src/modules/listings/components/ListingsShellView.tsx:77"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "zero-diff paths"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/modules/listings/components/ListingsShellView.tsx",
+          "command": "git --no-optional-locks status --short + filesystem mtimes",
+          "observable": "Live status shows exactly the expected set and no stray path. ListingsShellView.tsx mtime 09:44:06 and mantine-migration-scope.json 09:35:15 — both predate this session entirely, so their diff is Task 779's carried-over change. useListingsUrlFilters.ts and listingsFilterBar.smoke.test.tsx appear in no diff.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "zero-diff paths"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The session edited a file outside its scope.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task780R/V12-diff-stat.log",
+          "result": "No out-of-scope path appears in either the retained V12 or the reviewer's live diff --stat. The only discrepancy between them is docs/backlog.md, edited at 18:56 after V12 ran at 18:54 — recorded as F2 below."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "AC12 / R11",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/backlog.md",
+        "symbol": "physical line count",
+        "diffHunks": [
+          "docs/backlog.md:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "backlog line count"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/backlog.md",
+          "command": "wc -l",
+          "observable": "69 lines, within the 80-line hard limit. The session log takes its baseline from `git show HEAD:docs/backlog.md` = 73 and explicitly states it was not measured post-edit and reported as pre-existing — the 717/721/722 corollary is respected.",
+          "freshness": "post-final: artifact produced after the last source write at 2026-09-02 17:28:42",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "backlog line count"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The limit was met by deleting active state rather than by consolidation.",
+          "kind": "EXECUTED",
+          "path": "docs/backlog.md",
+          "result": "The reduction is the Last Session paragraph only; the Open/Pending/Sprints/registry sections retain their active rows."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    },
+    {
+      "id": "CLAUSE-9A / review ledger gate",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/",
+        "symbol": "Task 780R review ledger",
+        "diffHunks": [
+          "docs/reviews/README.md:1"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "ledger validator receipt"
+        ],
+        "phases": [
+          "after"
+        ],
+        "notApplicable": {
+          "locales": "Static scanner; not locale-dependent.",
+          "viewports": "Static scanner; not viewport-dependent.",
+          "states": "Not state-dependent.",
+          "stories": "Source scanner, not a rendered scope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/2026-09-02-task780R-listings-filter-bar-rework.review-ledger.json",
+          "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-02-task780R-listings-filter-bar-rework.review-ledger.json",
+          "observable": "Native Windows validator receipt: this final ledger evaluated as valid fail-closed review ledger with exit code 0.",
+          "freshness": "2026-09-02, native Windows PowerShell after final ledger corrections",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "ledger validator receipt"
+            ],
+            "stories": [
+              "patterns-mantine-listingsfilterbar--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "1024"
+            ],
+            "states": [
+              "activeCount>0"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An approval could be issued now and the receipt back-filled.",
+          "kind": "EXECUTED",
+          "path": "docs/backlog-archive.md",
+          "result": "REFUTED by precedent: Task 776's archive row records a review downgraded to PARTIALLY VERIFIED for exactly this reason after a prior APPROVED had been issued without the ledger."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS, selector, cascade layer or policy-sensitive syntax changed. The diff is Mantine component props and JSX structure; no Tailwind compilation input, no CSS module, no custom-property declaration added, removed or moved."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "status": "RESOLVED",
+      "requirements": "CLAUSE-9A / review ledger gate",
+      "requirementIds": [
+        "CLAUSE-9A / review ledger gate"
+      ],
+      "evidence": "The native Windows validator receipt now exists: npm.cmd run check:review-ledger accepted the final ledger with exit code 0. The ledger has been moved to docs/reviews/, satisfying agent-contract.md clause 9a."
+    },
+    {
+      "id": "F2",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC11 / R10",
+      "requirementIds": [
+        "AC11 / R10"
+      ],
+      "evidence": "V12-diff-stat.log ran at 18:54 and lists three tracked files; docs/backlog.md was edited at 18:56 and the live diff --stat lists four. The retained V12 therefore does not describe the final tree. Confined to a documentation path, affects no gate, and the live reconciliation was performed by the reviewer."
+    },
+    {
+      "id": "F3",
+      "priority": "P3",
+      "status": "NOTE",
+      "requirements": "AC10 / R9",
+      "requirementIds": [
+        "AC10 / R9"
+      ],
+      "evidence": "The desktop-1024 render still lays the bar out as two rows (left controls, then right actions on their own right-aligned line), where Task 779 §9 B7 classified right-alignment as 'preserved intent'. Unchanged by this task, explicitly out of scope, and unconfirmable as a regression because no pre-migration rendered baseline exists. Carried forward as an open question for the final ListingsShellView slice."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC10 / R9",
+    "reviewer": "Opus"
+  }
+}

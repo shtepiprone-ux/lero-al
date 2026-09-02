@@ -1,0 +1,40 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 11 skipped) 1478ms
+     × turning premium off deletes the param, one push 450ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T2 (AC2): premium toggle is one immediate push each way > turning premium off deletes the param, one push
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:175:35
+    173|     expect(pushMock).toHaveBeenCalledTimes(1)
+    174|     const { params } = lastPush()
+    175|     expect(params.has('premium')).toBe(false)
+       |                                   ^
+    176|   })
+    177| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 11 skipped (13)
+   Start at  11:41:20
+   Duration  5.06s (transform 607ms, setup 109ms, import 2.50s, tests 1.48s, environment 800ms)
+
+EXIT_CODE=1

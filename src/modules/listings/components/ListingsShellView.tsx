@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
+import { Box } from '@mantine/core'
 import { Button } from '@/components/ui/button'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { ListingsSortBar } from '@/modules/listings/components/ListingsSortBar'
@@ -73,10 +74,12 @@ export function ListingsShellView({
   return (
     <div className="listings-shell flex flex-col gap-0">
       {/* ── Horizontal filter bar (md+); hidden on mobile ── */}
-      <ListingsFilterBar
-        locations={locations}
-        onFiltersOpen={onFiltersOpen}
-      />
+      <Box visibleFrom="md">
+        <ListingsFilterBar
+          locations={locations}
+          onFiltersOpen={onFiltersOpen}
+        />
+      </Box>
 
       {/* ── Filters Drawer (full panel — mobile + "More filters" on desktop) ── */}
       <MantineDrawer opened={filtersOpen} onClose={() => onFiltersOpenChange(false)} side="left" size="xs">

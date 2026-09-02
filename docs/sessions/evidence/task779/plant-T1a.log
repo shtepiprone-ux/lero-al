@@ -1,0 +1,33 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 12 skipped) 972ms
+     × preserves sort/currency, drops page, sets type — exactly one push 925ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T1 (AC2): listing-type change is one immediate push > preserves sort/currency, drops page, sets type — exactly one push
+AssertionError: expected "vi.fn()" to be called 1 times, but got 2 times
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:132:22
+    130|     fireEvent.click(screen.getByText('For sale'))
+    131|
+    132|     expect(pushMock).toHaveBeenCalledTimes(1)
+       |                      ^
+    133|     const { params } = lastPush()
+    134|     expect(params.get('sort')).toBe('newest')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  11:40:42
+   Duration  4.23s (transform 568ms, setup 94ms, import 2.16s, tests 972ms, environment 749ms)
+
+EXIT_CODE=1

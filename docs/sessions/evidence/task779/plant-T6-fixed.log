@@ -1,0 +1,41 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 12 skipped) 836ms
+     × the wrapper root carries mantine-visible-from-md; the bar's own root carries neither visibility class 783ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T6 (AC5): route visibility lives in the ListingsShellView wrapper > the wrapper root carries mantine-visible-from-md; the 
+bar's own root carries neither visibility class
+AssertionError: expected 'm_6d731127 mantine-Stack-root mantine…' not to match /mantine-(visible|hidden)-from-md/
+
+- Expected:
+/mantine-(visible|hidden)-from-md/
+
++ Received:
+"m_6d731127 mantine-Stack-root mantine-visible-from-md"
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:262:35
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  11:43:31
+   Duration  4.06s (transform 593ms, setup 89ms, import 2.15s, tests 836ms, environment 721ms)
+
+    260|     const barRoot = container.querySelector('[data-testid="listings-fi…
+    261|     expect(barRoot).toBeTruthy()
+    262|     expect(barRoot.className).not.toMatch(/mantine-(visible|hidden)-fr…
+       |                                   ^
+    263|
+    264|     const wrapper = barRoot.parentElement!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

@@ -1,0 +1,41 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 11 skipped) 1577ms
+     × switching from a type whose schema shows year_built to one that does not drops the dependent param in the same single push 1062ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T3 (AC3): property-type change routes through handlePropertyTypeChange > switching from a type whose schema shows year_built 
+to one that does not drops the dependent param in the same single push
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:189:42
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 11 skipped (13)
+   Start at  11:41:40
+   Duration  4.79s (transform 658ms, setup 95ms, import 2.23s, tests 1.58s, environment 726ms)
+
+    187|     const { params } = lastPush()
+    188|     expect(params.get('property_type')).toBe('commercial')
+    189|     expect(params.has('year_built_min')).toBe(false)
+       |                                          ^
+    190|   })
+    191|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

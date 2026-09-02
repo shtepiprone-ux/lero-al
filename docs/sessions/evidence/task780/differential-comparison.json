@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-09-02T15:45:34.819Z",
+  "B": {
+    "path": "docs/sessions/evidence/task780/B-manifest.json",
+    "summary": {
+      "total": 1380,
+      "passed": 1273,
+      "failed": 80,
+      "outOfRange": 0,
+      "knownFailure": 0,
+      "ambiguousOnly": 27,
+      "loaderOnly": 0,
+      "blankCanvas": 0,
+      "emptyCanvas": 0,
+      "blankScreenshot": 0,
+      "anchorMissing": 0,
+      "textClipped": 0,
+      "selfClipped": 0,
+      "offscreenControl": 0,
+      "outsideContainer": 0,
+      "elementOverlap": 0,
+      "bottomsheetOverflow": 0,
+      "ambiguousOverlap": 27,
+      "unstyledRender": 0
+    },
+    "timestamp": "2026-09-02T12-42"
+  },
+  "P": {
+    "path": "docs/sessions/evidence/task780/P-manifest.json",
+    "summary": {
+      "total": 1396,
+      "passed": 1289,
+      "failed": 80,
+      "outOfRange": 0,
+      "knownFailure": 0,
+      "ambiguousOnly": 27,
+      "loaderOnly": 0,
+      "blankCanvas": 0,
+      "emptyCanvas": 0,
+      "blankScreenshot": 0,
+      "anchorMissing": 0,
+      "textClipped": 0,
+      "selfClipped": 0,
+      "offscreenControl": 0,
+      "outsideContainer": 0,
+      "elementOverlap": 0,
+      "bottomsheetOverflow": 0,
+      "ambiguousOverlap": 27,
+      "unstyledRender": 0
+    },
+    "timestamp": "2026-09-02T14-47"
+  },
+  "arithmetic": {
+    "totalDiff": 16,
+    "passDiff": 16,
+    "failDiff": 0,
+    "ambiguousDiff": 0,
+    "expectedTotalDiff": 16,
+    "expectedPassDiff": 16,
+    "expectedFailDiff": 0,
+    "expectedAmbiguousDiff": 0
+  },
+  "arithmeticPass": true,
+  "newFailedIdentities": [],
+  "newAmbiguousIdentities": [],
+  "pMinusBEmpty": true,
+  "listingsFilterBarCellCount": 16,
+  "listingsFilterBarAllPass": true,
+  "listingsFilterBarNonPassCells": []
+}

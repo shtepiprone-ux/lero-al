@@ -1,0 +1,40 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed | 11 skipped) 353ms
+     × selecting "All" deletes `type` rather than setting it to an empty string 234ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src/modules/listings/components/__test ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T1 (AC2): listing-type change is one immediate push > selecting "All" deletes `type` rather than setting it to an empty string
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:146:32
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 11 skipped (13)
+   Start at  11:40:24
+   Duration  3.46s (transform 451ms, setup 97ms, import 2.02s, tests 353ms, environment 747ms)
+
+    144|     expect(pushMock).toHaveBeenCalledTimes(1)
+    145|     const { params, raw } = lastPush()
+    146|     expect(params.has('type')).toBe(false)
+       |                                ^
+    147|     expect(raw).not.toContain('type=')
+    148|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

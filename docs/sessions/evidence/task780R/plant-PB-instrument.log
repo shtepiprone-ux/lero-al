@@ -1,0 +1,19 @@
+﻿sq × mobile-320: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+sq × mobile-375: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+sq × mobile-390: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+sq × desktop-1024: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"rightAligned":true}
+en × mobile-320: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+en × mobile-375: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+en × mobile-390: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+en × desktop-1024: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"rightAligned":true}
+uk × mobile-320: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+uk × mobile-375: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+uk × mobile-390: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+uk × desktop-1024: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"rightAligned":true}
+it × mobile-320: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+it × mobile-375: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+it × mobile-390: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"propertyType":true,"location":true,"premium":true,"reset":true,"advanced":true}
+it × desktop-1024: FAIL barInsetRight=0.00 {"containerRelative":true,"noDocumentOverflow":false,"rightAligned":true}
+
+❌ 0/16 cells PASS
+EXIT_CODE=1

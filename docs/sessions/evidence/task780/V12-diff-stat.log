@@ -1,0 +1,6 @@
+ docs/backlog.md                                    |  14 +-
+ scripts/mantine-migration-scope.json               |   3 +-
+ .../listings/components/ListingsFilterBar.tsx      | 211 ++++++++++++---------
+ .../listings/components/ListingsShellView.tsx      |  11 +-
+ 4 files changed, 143 insertions(+), 96 deletions(-)
+EXIT_CODE=0

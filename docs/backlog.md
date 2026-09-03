@@ -7,14 +7,10 @@
 
 ## Last Session (2026-09-03)
 
-Task **781** reviewed → **`PARTIALLY VERIFIED`** (not approved; no commit handoff). Migration itself is sound and
-AC7 was **recomputed by the reviewer**, not accepted from the report: 0/44 overflow cells and 0/22 sort↔save rect
-overlaps in `overflow.after.json`. Owner ran `build` · `check:design-tokens` · `governance:components` ·
-`build-storybook` natively — all clean — and waived the rendered matrix on visual acceptance (**D69-10**).
-Twelve findings remain, all assigned to new Task **782**. **The two that matter:** no canonical story renders the
-real action row (shell story stubs `saveSearchSlot={null}`; the row story hand-duplicates production markup), and
-`check:design-tokens` reported **0 violations** against a measured **129** raw `size={N}` — the gate is
-structurally blind to numeric JSX props, so 782 builds the detector as well as the token scale.
+Task **781** is archived: its committed `/listings` migration remains historically `PARTIALLY VERIFIED` under the
+owner override. Task **782** remains the only active Sprint 69 task, narrowed to **F13**: replace the mobile Filters
+counter with the canonical Mantine toolbar composition. `screenshots:assert` is retired from task and CI proof paths;
+the owner visually reviews the finished canonical story.
 
 ## Open — needs action
 
@@ -41,8 +37,7 @@ structurally blind to numeric JSX props, so 782 builds the detector as well as t
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** + **778** are archived. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779 + 780 + 780R** are archived — the `ListingsFilterBar` slice is closed.
-**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781** `PARTIALLY VERIFIED` + **782** `KICKOFF FILED`. Opened 2026-09-03. Inherits **D775-A/B/C** and **D68-2**; adds **D69-6…D69-10** (tokens-not-hardcode · repo-wide sweep in one task · `miw=192` removed · findings close in 782 · 781's visual waiver does not carry). **D69-3: no review ledger.** 🟠 OPEN, zero archived tasks.
-
+**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781** is archived. **782** `NEEDS REVISION` for **F13 only**: canonical Mantine mobile Filters counter. **D69-3: no review ledger.** 🟠 OPEN, one active task.
 ## Task registry — single source for every open number. Last used **782**, NEXT FREE **783**.
 
 > Allocatable and reserved numbers only. A number leaves this table when its task is archived. Full justification for a reserved number → [`backlog-reserved.md`](backlog-reserved.md); retired and folded numbers → the same file's "Registry bookkeeping".
@@ -50,8 +45,7 @@ structurally blind to numeric JSX props, so 782 builds the detector as well as t
 | # | State | What |
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
-| **781** | **PARTIALLY VERIFIED** — **Sprint 69**, P2, Q3; **not approved, no commit handoff** | **`/listings` Mantine surface completion**, four phases, 5 stories, manifest 22→27. Migration verified; owner-run native gates clean; rendered matrix owner-waived (**D69-10**). **12 open findings → 782**, led by two P1: (a) no canonical story renders the real action row — `ListingsShellView.stories.tsx` stubs `saveSearchSlot={null}` and `ListingsActionRow.stories.tsx` duplicates the production wrapper, so changing `ListingsShellView.tsx:100-113` breaks no story; (b) `FilterMultiToggle.tsx` deleted with live refs surviving in `critical-flow-registry` · `component-catalog:65` · `component-coverage-matrix:117` · `storybook-governance` — and `governance:components` passes anyway because it never reads catalog rows. Detail: review of 2026-09-03 + `docs/sessions/2026-09-03-task781-…md`. |
-| **782** | **KICKOFF FILED** — **Sprint 69**, P2, Q3; **blocked on 781 being committed** (clean baseline B) | **Canonical Mantine dimension tokens + repo-wide sweep + 781 closure**, five phases. **Measured gap:** the project has *no* Mantine token for an icon dimension — only legacy `--icon-sm/md/lg` (`globals.css:294-296`) which D775-C bars from migrated files — while `src` carries **129** raw `size={N}` across **42** files (11 of them stories/tests) plus **30** numeric dimension props. `ThemeIcon`'s own scale stops at 44px (`--ti-size-xl`), so 48/56/64 have no key at all. Mechanism is `extend`, not invention: `theme.other` already exists (`theme.ts:265`) and is already consumed (`ListingsFilters.tsx:148`) — it gains the icon scale plus a `MantineThemeOther` declaration so a typo fails `tsc`, and `ThemeIcon` gains keys via `--ti-size-*`. **Phase 3 builds the detector `check:design-tokens` lacks, with a two-armed plant and a `={0}` false-positive case** — without it the sweep rots invisibly. `={0}`, flex ratios and behavioral CSS are explicitly *not* design values. Kickoff: `tasks/Sprints/Sprint_69_kickoff_prompt_Task_782_Canonical_Mantine_Dimension_Tokens.md`. |
+| **782** | **NEEDS REVISION** — **Sprint 69**, P2, Q3; **F13 only** | **Canonical Mantine mobile Filters counter.** First make `Patterns/Mantine/ListingsSortBar` a canonical story of the real production toolbar; then integrate that composition into `ListingsSortBar`. The counter must be a native content-sized `Badge` immediately to the right of the icon inside the Button's native left section — not `circle`, absolute positioning, bespoke CSS, or a hard-coded dimension. It must stay inside the button and remain legible for 1- and 2+-digit counts at mobile widths. Owner visually reviews the finished story; `screenshots:assert` is not a gate. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |
 | **745** | reserved — **Sprint 46.10**, Q4 | A partially unstyled capture is admitted as a real width verdict. Detect that the **measured controls themselves** are unstyled, retry, then classify as `unstyled-render` — never as a product width regression, and never retry a valid `fullWidth=false` into a pass. Per **D37** the mechanism is not established: 745 must characterise it. Evidence → `backlog-reserved.md`. |

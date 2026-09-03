@@ -103,13 +103,50 @@ The kickoff must require the restoration **evidence**, not merely the restoratio
 `git hash-object` value, and the path's absence from `git status --porcelain` after the final gate run. A kickoff
 that asks only to "revert the probe" has specified a step no reviewer can check.
 
-`create canonical` or a permanent `extend` is allowed only when the task names the in-scope production consumer or
-quotes the owner authorization for independent canonical coverage. If neither exists, publish
-`BLOCKED -- STORY CREATION AUTHORIZATION REQUIRED`, not an implementation kickoff.
+For an in-scope visible production consumer, `create canonical` or a permanent `extend` is required when the
+contract is absent; it needs no separate owner authorization. The task must direct the executor to establish the
+smallest appropriate native Mantine pattern and its standalone proof before composing the consumer. An independent
+canonical artifact with no in-scope production consumer remains owner-authorized coverage, never a workaround for
+the story-first gate.
 
 Do not invent file paths, current behavior, APIs, commands, test results, or user decisions. Do not write `read all docs`; name the exact pre-read bundle needed by the executor.
 Do not call an exception "owner-approved" or "owner-acknowledged" unless the actual owner decision is quoted or
 precisely referenced with its date and scope. Otherwise stop for `BLOCKED -- OWNER DECISION REQUIRED`.
+
+### UI hierarchy — canonical story before consumer composition (blocking)
+
+For every task that creates, migrates, materially restyles, or changes the visible states of a user-facing UI
+component, establish its standalone visual contract **before** proposing its parent, shell, toolbar, or route
+composition. This is a project-wide rule, not a Storybook preference.
+
+1. `reuse` an existing canonical story only when it statically imports the real production component and already
+   proves every changed state. Otherwise `extend` that source and story. If no project contract exists, the only
+   permitted `create canonical` disposition is the smallest appropriate **native Mantine pattern** using the
+   project's MantineProvider token path; its standalone story is created before any consumer composition.
+2. The standalone story must prove the real component at the relevant mobile and desktop breakpoints, supported
+   locales, and all applicable zero/empty, non-zero, enabled/disabled, selected/unselected, and error states. Story
+   fixtures may seed deterministic data, but must be identified as fixtures; production state/data flow must remain
+   separately traced.
+3. Only after that component-level story and its canonical token/primitive decision are defined may a parent story
+   prove composition, and only then may the production parent consume the component. A route, shell, or composite
+   story is supplementary evidence; it never substitutes for the child component's canonical story.
+4. A default Mantine primitive is not automatically the right canonical pattern. If a badge, indicator, overlay,
+   toolbar, control, or other visible artifact lacks a project contract, **stop feature integration and establish
+   the native Mantine pattern first**: choose the semantic Mantine composition, use the shared MantineProvider
+   tokens, and prove it in the standalone story. There is no feature-local alternative and no owner-style decision
+   to request. Do not invent local styling, raw values, utility classes, CSS modules, or inline style props to make
+   it look plausible.
+5. Parent components may compose behavior and layout, but may not independently recreate or tune a child's visual
+   chrome. The task must name the component → composition → route hierarchy and the evidence for each layer.
+
+This gate does not require a new story for a non-visible data-only or layout-only change. The task must state that
+classification and its evidence explicitly; a claimed "layout-only" change that alters visible chrome is still
+subject to this gate.
+
+**Resolution rule:** `CANONICAL STYLE DECISION REQUIRED` means "do not compose or integrate yet"—not "ask for a
+custom visual decision." When no local primitive/story/theme contract exists, create or extend the canonical source
+as a native Mantine pattern and its standalone proof, then resume the hierarchy. A custom feature-local UI is never
+a valid resolution.
 
 ## Build the requirement ledger
 

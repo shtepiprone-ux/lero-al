@@ -66,10 +66,10 @@ Before editing code:
      responsive behavior locally.
    - `extend`: change the canonical owner and its canonical story once, then update all task-owned consumers that
      would otherwise diverge.
-   - `create canonical`: when no source exists and the task explicitly authorizes this disposition, create the
-     shared primitive/pattern/token in the correct library, add or update its toolbar-reactive canonical Storybook
-     proof, and perform required catalog/coverage registration before consuming it. Do not create a local style as an
-     interim answer.
+   - `create canonical`: when no suitable project source exists, the only permitted resolution is to create the
+     smallest appropriate shared **native Mantine** primitive/pattern using the MantineProvider token path, add or
+     update its toolbar-reactive canonical Storybook proof, and perform required catalog/coverage registration
+     before consuming it. Do not create a local style as an interim answer or ask for a custom visual decision.
 
    A missing API-specific story does not authorize permanent story markup. When a proposed story change exists only
    to exercise a selector, gate, regression, or measurement, treat it as a reversible probe in an inspected existing
@@ -77,15 +77,38 @@ Before editing code:
    Prove the restoration; never assert it. Record the story's pre-probe `git hash-object` value and the path's
    absence from `git status --porcelain`, both captured after the final gate run. A restoration claimed without
    those two facts is unverifiable at review and is treated as unrestored.
-   A permanent Storybook addition or extension requires either a named in-scope production consumer or an explicit
-   owner authorization for independent canonical coverage. If the task does not supply one, stop before editing and
-   report `STORY CREATION AUTHORIZATION REQUIRED` to Opus; never manufacture permanent UI solely to create gate
-   evidence.
+   A permanent Storybook addition or extension for an in-scope visible production component is required canonical
+   coverage, not an optional independent artifact. Create it before consumer integration when the contract is absent;
+   never manufacture permanent UI solely to create gate evidence.
 
    If the task lacks this record, its search result is contradicted by the repository, it asks for a local style where
-   a canonical source exists, or a needed visual value has no approved provenance, stop before implementation and
-   report `CANONICAL UI SPECIFICATION GAP` or `CANONICAL STYLE DECISION REQUIRED` to Opus. A scanner allowlist does
-   not authorize an uncited one-off style.
+   a canonical source exists, or a visible primitive has no project contract, stop **feature integration**. Resolve
+   the gap by extending or creating the canonical native Mantine source and standalone story first; do not report it
+   as a request for custom styling. A scanner allowlist does not authorize an uncited one-off style.
+
+### Story-first composition gate — blocking
+
+For every changed user-visible UI component, work from the lowest visible unit upward:
+
+1. First `reuse`, `extend`, or create the canonical Storybook proof for the **real production source**. When no
+   project contract exists, create the smallest appropriate native Mantine pattern first—this is the sole permitted
+   resolution, not an owner-decision branch.
+   It must render every changed visual state at the task's required breakpoints and locales, including applicable
+   zero/empty, non-zero, selected/unselected, enabled/disabled, loading, and error states.
+2. Inspect and validate that standalone story before wiring the component into a parent, toolbar, shell, or route.
+   A parent/composite story proves integration only; it never replaces the standalone component proof.
+3. Only then integrate the same production component into its consumer. Do not duplicate the child's markup or
+   visual rules in the consumer, and do not use local raw values, utility classes, CSS modules, inline styles, or an
+   unthemed default Mantine primitive as a substitute for a canonical visual contract.
+4. A deterministic number, label, callback, or state in a Storybook fixture is permitted only as labelled fixture
+   data. Trace and preserve the production data flow separately; never copy fixture values or no-op behavior into the
+   application.
+
+If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
+native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local
+implementation first, defer its visual contract to review, or ask for a feature-local style decision. A genuine
+non-visible data-only/layout-only change is exempt only when the task records and the executor verifies that
+classification.
 
 Do not invent missing behavior, paths, commands, prior test results, or owner decisions. Do not begin broad cleanup
 or a redesign because the task feels incomplete.
@@ -101,6 +124,8 @@ or a redesign because the task feels incomplete.
   assertion, or validation rule merely to get a green result.
 - Treat the canonical UI decision record as an implementation contract: any new visual value belongs in its named
   shared source, never only in the feature component.
+- Preserve the visual hierarchy in the final evidence: standalone component story first, composition story second,
+  route proof last. Do not present a green parent screenshot as proof of an unverified child component.
 - After each meaningful edit, read the affected file back. When a defect is not fixed, continue investigation or
   report it; never relabel an unverified code change as a fix.
 

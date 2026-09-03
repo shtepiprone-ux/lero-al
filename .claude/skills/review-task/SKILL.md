@@ -172,6 +172,31 @@ Attempt to invalidate the happy path with conditions relevant to the change: inv
 For UI changes or preservation claims, read [UI review requirements](../../../docs/orchestrator-ui-review.md) before accepting the
 executor's explanation or assigning a decision.
 
+### Story-first composition audit — mandatory for every changed visible UI artifact
+
+Review the UI hierarchy from the lowest changed visible component upward. A route or composite screenshot is never
+evidence that a child component has a canonical visual contract.
+
+1. Inspect the standalone canonical story for the real production component. Confirm it statically imports that
+   source and covers every changed state at the task-required breakpoints/locales, including applicable zero/empty,
+   non-zero, selected/unselected, enabled/disabled, loading, and error states.
+2. Inspect the canonical primitive/theme/token path for every changed badge, indicator, overlay, toolbar, control,
+   or other chrome. Mantine's unconfigured default appearance is not by itself proof that the semantic pattern is
+   correct; where no project contract existed, accept only the smallest appropriate native Mantine pattern using the
+   shared MantineProvider tokens and its new/extended standalone proof—not feature-local chrome.
+3. Inspect the parent/composition story separately. It must consume the same real child component rather than
+   duplicate its markup or feature-local visual rules. Then inspect route proof as the final integration layer.
+4. Trace deterministic Storybook fixture data separately from production state/data flow. A fixture count, label, or
+   no-op callback must not be mistaken for application behavior or copied into production.
+5. Treat feature-local raw values, utility classes, CSS modules, inline style props, or unapproved default primitive
+   chrome as a finding when they recreate or tune a changed child visual contract outside its canonical source.
+
+If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
+composition consumes the proven source, return a non-approved decision. The correction is never a request for a
+custom visual choice: where no local contract exists, the executor must first establish the canonical native Mantine
+pattern and its standalone story, then re-submit the composition. A claimed non-visible data-only/layout-only
+exception requires inspected evidence that no visible chrome changed; otherwise review it under this gate.
+
 When a task claims a new validation or regression gate, verify that it asserts observable behavior. Q4 gate claims require planted-violation failure proof. Do not accept a test that only mirrors an implementation detail, is weakened to pass, or fails to exercise the changed flow.
 
 ## Findings

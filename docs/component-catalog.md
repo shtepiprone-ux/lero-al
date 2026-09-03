@@ -62,7 +62,6 @@ See `docs/component-risk-register.md` for risk register.
 | `AvatarCropModal` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
 | `Combobox` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `DatePicker` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `FilterMultiToggle` | APPROVED | — | — | —  |
 | `FilterRangeInputs` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `FilterRoomsRow` | APPROVED | — | — | —  |
 | `FiltersPanel` | NEEDS_STORY | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |

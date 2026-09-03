@@ -1,0 +1,13 @@
+
+> lero-al@0.1.0 screenshots:assert
+> node scripts/check-stories-rendered.mjs --mantine-only
+
+📸  Starting rendered assertion (mantine-only mode)
+    Output: .screenshots/rendered-assert/2026-09-03T17-43/
+
+
+❌ Port 6008 is already in use by another process.
+   This harness only tears down the static server it spawns itself —
+   it will NOT kill an unknown/foreign process on port 6008.
+   Free port 6008 and rerun.
+EXIT_CODE=1

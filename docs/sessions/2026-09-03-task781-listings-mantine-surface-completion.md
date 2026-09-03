@@ -30,7 +30,7 @@ the owner (§10). This is the one remaining reason the status is not
 | `scripts/mantine-migration-scope.json` | manifest 22 → 27 |
 | `scripts/task772-listings-overflow-probe.mjs` | retargeted 3 dead locators + mobile-sheet-aware interaction selector (§6) |
 | `scripts/task775-listings-frame-route-probe.mjs` | retargeted 3 dead locators + `filters` interaction (`[data-slot="sheet-content"]` → `.mantine-Drawer-content`, found dead during the live re-run, §7) |
-| `src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx` | new — C1/C2/C5/C7/C10/C12 RTL coverage (25 tests) |
+| `src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx` | new — C1/C2/C5/C7/C10/C12 RTL coverage (25 tests) — **CORRECTION (Task 782 F11, 2026-09-03): actual count is 12** (`grep -cE '^\s*it\(' src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx`), not 25. The figure above is left in place, uncorrected in situ, per F11's instruction to record the correction rather than silently edit history. |
 | `src/design-system/mantine/theme.ts` | **owner-directed, out of kickoff scope** — `Button.vars`: `--button-padding-x: 1rem` moved out of the outline/default-only branch so every variant gets the same §6l 16px padding-inline |
 | `.storybook/stubs/crypto.ts` | added a `randomBytes` stub (same never-invoked pattern as `createHash`) |
 | `src/components/shared/FilterChoiceGroup.tsx` | new — **owner-directed, out of kickoff scope** — `FilterMultiToggle` generalized to `mode="single" \| "multiple"` |
@@ -368,6 +368,12 @@ theme's radius scale rather than a raw `var(--mantine-radius-lg)` string). None 
 hardcodes even before this pass, but a raw `style` object bypasses Mantine's own system-props resolver — the
 owner's objection ("чому ти захардкодила") was resolved by using the props Mantine exposes specifically so
 consumers don't need `style` for exactly these properties.
+
+**CORRECTION (Task 782 F11, 2026-09-03):** the claim above ("every ad-hoc `style` object... was replaced") is
+inaccurate — `ListingsSortBar.tsx:65` retains one: `style={{ borderBottom: '1px solid var(--mantine-color-gray-2)' }}`
+(a CSS var-valued border, not expressible via a `bd`/`bdrs`-style Mantine system prop the same way `flex`/`miw` are).
+Recorded, not silently fixed — out of Task 782's own scope per §8 (no Task 781 component re-migration beyond the
+named F3-F12 findings, and this residual style object is not itself one of them).
 
 ### 12.6 Reversible story probe — restoration proof
 

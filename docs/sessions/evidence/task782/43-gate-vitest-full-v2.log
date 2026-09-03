@@ -1,0 +1,108 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (27 tests | 1 failed) 33ms
+     × matches the real globals.css measured count (257) — Task 695 re-derivation 18ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 1 failed) 16ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 6ms
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed) 2244ms
+     × the wrapper root carries mantine-visible-from-md; the bar's own root carries neither visibility class 153ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 1210ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 58ms
+     × archived listing renders the archived badge + dimmed card 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the real globals.css measured count (257) — Task 695 re-derivation
+AssertionError: expected 296 to be 257 // Object.is equality
+
+- Expected
++ Received
+
+- 257
++ 296
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:208:24
+    206|     // (NotificationCenter's 390px threshold retargeted to the canonic…
+    207|     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    208|     expect(owned.size).toBe(257)
+       |                        ^
+    209|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    210|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T6 (AC5): route visibility lives in the ListingsShellView wrapper > the wrapper root carries mantine-visible-from-md; the bar's own root carries neither visibility class
+AssertionError: expected 'mantine-visible-from-sm' to contain 'mantine-visible-from-md'
+
+Expected: "mantine-visible-from-md"
+Received: "mantine-visible-from-sm"
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:264:31
+    262|
+    263|     const wrapper = barRoot.parentElement!
+    264|     expect(wrapper.className).toContain('mantine-visible-from-md')
+       |                               ^
+    265|
+    266|     expect(barRoot.className).not.toMatch(/mantine-(visible|hidden)-fr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  4 failed | 80 passed (84)
+      Tests  5 failed | 1460 passed (1465)
+   Start at  19:31:50
+   Duration  23.02s (transform 11.00s, setup 12.17s, import 102.84s, tests 74.51s, environment 121.03s)
+
+EXIT_CODE=1

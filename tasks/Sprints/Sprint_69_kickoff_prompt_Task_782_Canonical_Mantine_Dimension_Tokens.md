@@ -68,6 +68,9 @@ behavioral CSS with no dimension: `wordBreak`, `whiteSpace`, `overflowY`, `flexS
 | **D69-9** | All Task 781 review findings close **inside this task**. Owner, 2026-09-03: *«в цю задачу ти маєш внести всі проблеми з твого рев'ю, щоб їх закрити однією задачею»* | this session |
 | **D69-10** | `npm run screenshots:assert` was **not** required for Task 781's closure; the owner accepted its rendered result visually (*«я візуально все переглянув, мені підходить»*, 2026-09-03). **That waiver does not carry into 782** — 782 changes admin, cabinet, auth and site chrome, which the owner did not review visually. | this session |
 
+| **D69-12** | **Owner triage of the 145 FAIL cells (2026-09-03, revision round 1).** All 145 are accepted as non-defects: 64 = the 4 `AuthSheet` stories that render `CaptchaWidget` (Cloudflare Turnstile holds a connection open, so Playwright's `waitUntil:'networkidle'` never settles → `page.goto` 20 s timeout; correlation is exact 6/6 — the 2 captcha-free AuthSheet stories time out 0/16). 65 = the mobile «Filters» trigger's `flex="1 1 auto"` row, owner: *«Візуально все добре»*. 16 = `AuthSheet.stories.tsx`'s own disabled decoy trigger, not production UI. Retained triage artifact: `.screenshots/rendered-assert/2026-09-03T17-44/triage-fail-ambiguous.html`. | Owner, 2026-09-03 |
+| **D69-13** | **The `Badge circle` counter defect is folded into Task 782's revision, overriding this task's own §8.** Owner, 2026-09-03, on the «Many Active Filters» cell: *«Counter схоже захардкоджений і не змінює свій розмір в залежності від кількості тексту всередині. Це треба виправити… привести до канонічного Mantine з усіма канонічними відступами і стилями»*, and, asked where to file it, chose «Додати в ревізію 782» over a separate task. This is the owner authorization §8 requires; without it the counter would be out of scope. | Owner, 2026-09-03 |
+
 D775-A/B/C and D68-2 are inherited from Sprint 69 and bind this task unchanged.
 
 ### 3.4 Task 781 review findings this task must close
@@ -86,6 +89,7 @@ Full text: the orchestrator review of 2026-09-03 (this session). Severity as ass
 | **F10** | P2 | `SaveSearchButton` is `w={{base:'100%'}}` below 640 while its label stays `visibleFrom="sm"` (`:75`) → a full-width button with no text. The same round decided the opposite for the filters button (§12.5 of the 781 session log). |
 | **F11** | P3 | Session-log accuracy: §1 claims "25 tests", actual **12** (`grep -cE '^\s*it\('`); §12.5 claims every ad-hoc `style` object was replaced, but `ListingsSortBar.tsx:64` retains one. |
 | **F12** | P3 | The 772 probe records the sort/save rects but asserts nothing about overlap or the 44px floor. The reviewer computed both from retained data (0/22 overlaps, no sub-44px at mobile) — the evidence exists, the control does not. |
+| **F13** | **P2** | **Opened at revision round 1 (owner triage, D69-13) — not a Task 781 review finding.** `ListingsSortBar.tsx:120` renders the active-filter counter as `<Badge circle size="sm" …>`. Mantine's own `styles/Badge.css:72-76` sets `.m_347db0ec:where([data-circle]) { padding-inline: 2px; display: flex; width: var(--badge-height); }` — **width is pinned to height**, so the badge cannot grow with its content and a two-digit count (`12`, story `ManyActiveFilters`) is cramped inside a one-digit circle. ⚠️ Task 781 documented this exact CSS **as a feature** (`ListingsSortBar.stories.tsx:14-15`, "a true circle") and `theme.ts`'s `Badge.styles` carries a deliberate `props.circle` branch that skips the canonical padding override to protect it — the constraint was known, the multi-digit consequence was not. ⚠️ **The visual matrix is blind to it:** all 16 `ManyActiveFilters` cells produced zero clip/overflow signals (verified against the P manifest), so a re-run of `screenshots:assert` is **not** evidence for this finding. |
 
 ### 3.5 What is verified and must NOT be re-done
 
@@ -115,6 +119,7 @@ Do not re-migrate `ListingsStatusTabs`, `ActiveFilterChips`, `ListingsSortBar`, 
 | **R13** | F11/F12 | Session-log figures corrected; the probe asserts overlap and the 44px floor | P3 | AC13 | Confirmed |
 | **R14** | clause 9 · D68-2 · D69-10 | `npm run build` exit 0 and a **full** differential rendered matrix on the final diff | P0 | AC14 | Confirmed |
 | **R15** | clause 3/5 | No control, state branch, URL contract or server action changes anywhere in the sweep | P0 | AC15 | Confirmed |
+| **R16** | F13 · D69-13 | The active-filter counter sizes itself from its content and consumes the theme's canonical `Badge` padding/typography — no `circle` width==height pin, no feature-local values | P2 | AC16 | Confirmed |
 
 ---
 
@@ -169,6 +174,8 @@ before consumer composition".
 | `SaveSearchButton` open modal / pending | no standalone story exists | `MantineModal` (already canonical) | **create canonical story** | in-scope production consumer exists → required, no separate authorization needed (`create-task/SKILL.md`, amended 2026-09-03) |
 | Empty state | `MantineEmptyLoadingErrorState.tsx:84-86` read — `state='empty'` renders `Center py="xl"` + `ThemeIcon` + title + description, i.e. the same shape `ListingsShellView` hand-composed | `MantineEmptyLoadingErrorState` | **reuse, or documented composition** | consume the pattern; if its API cannot express the emoji tile, record exactly why in the session log — kickoff 781 §6a asked for this and it was not answered |
 
+| Active-filter counter badge (`ListingsSortBar.tsx:120`) | `src/stories/mantine/primitives/Badge.stories.tsx` opened; `theme.ts:609-639` `Badge` block read (`defaultProps radius:'pill' variant:'light' size:'sm'` + a `!props.circle` branch supplying `0.75rem`/`1.125rem`/`padding:'0.125rem 0.5rem'`); `node_modules/@mantine/core/styles/Badge.css:72-76` read; `docs/tailadmin-style-reference.md:74,514` read (`rounded-full px-2 py-0.5`, 12px/500/18px) | the theme's own non-`circle` `Badge` contract | **reuse** | drop `circle` at the call site so the badge falls through to the canonical pill branch already in `theme.ts`; the existing `ManyActiveFilters`/`TwoActiveFilters`/`SortSelected`/`ListViewSelected` story cells already cover 1-, 2- and 12-count states, so **no new story** — correct `ListingsSortBar.stories.tsx:13-15`'s doc comment, which currently documents the defect as intended, and the title of `listingsMigratedControls.smoke.test.tsx:211` (its assertions do not test `circle` and need no change). If `theme.ts`'s `props.circle` branch is left with no consumer, say so in the session log; deleting it is **out of scope**. |
+
 **No `create canonical` primitive is authorized.** Every row above reuses or extends an existing source. If
 implementation finds a genuinely missing primitive, establish the smallest native Mantine pattern and its
 standalone story first — do **not** stop for a visual decision and do **not** improvise a local style
@@ -211,6 +218,7 @@ artifact Task 781 could not produce; there is no excuse this time — capture it
 
 - Deleting `--icon-sm/md/lg` from `globals.css` (A2) or any other `globals.css` edit.
 - Re-migrating any Task 781 component beyond the findings in §3.4.
+  **Amended by D69-13:** F13 (the counter badge in `ListingsSortBar.tsx`) is now inside §3.4 and therefore in scope. No other 781 component is reopened.
 - `src/components/shared/Combobox.tsx`, `ListingsShell.tsx`, and every contract listed in Sprint 69 exit criterion 3.
 - Numeric literals inside `__tests__`/`*.test.tsx` that assert behavior (A3).
 - The reserved detector-gap family 738 · 743 · 745 · 746 · 750. If this task's evidence reproduces one, record it
@@ -275,6 +283,7 @@ every Task 781 story cell still passes and the new stories pass.
 - **Δ4** (F6) — filter-chip height 28px → 44px on desktop.
 - **Δ5** (F6) — empty-state vertical padding 96px → 24px.
 - **Δ6** (D69-8) — "Показати ще" desktop width becomes content-based.
+- **Δ8** (F13/D69-13) — the counter badge stops being a fixed circle and becomes a content-sized pill: at one digit it renders slightly wider than tall (canonical `padding: 2px 8px`), at two digits it grows instead of cramping. **This is an intended, owner-directed visual change — show it, do not claim neutrality.**
 - **Δ7** — any rounding introduced when a measured value maps to a scale key. **A Δ7 entry with a non-zero pixel
   difference is a finding, not an accepted delta** — the scale must contain the exact value instead.
 Δ1-Δ3 remain Task 781's and are re-shown under AC9.
@@ -315,6 +324,36 @@ every Task 781 story cell still passes and the new stories pass.
   every new cell and explicit arithmetic. **D69-10: the Task 781 visual waiver does not apply here.**
 - **AC15 [R15]** — `git diff` shows no change to any URL-building expression, server action, hook, or control
   outside the findings in §3.4; `ListingsShell.tsx` is untouched.
+- **AC16 [R16]** — Given `activeFiltersCount = 12`, when `Patterns/Mantine/ListingsSortBar/Many Active Filters` is
+  rendered at `mobile-375` and `mobile-390` in all four locales, then the counter badge's rendered `width` is
+  **strictly greater** than the width the same badge renders at `activeFiltersCount = 1`
+  (`List View Selected`), and its full text is not clipped (`scrollWidth <= clientWidth`). Capture both widths as
+  numbers in the session log — a screenshot alone does not satisfy this. `grep` proves `circle` is absent from
+  `ListingsSortBar.tsx`. The stale doc comment at `ListingsSortBar.stories.tsx:13-15` and the stale test title at
+  `listingsMigratedControls.smoke.test.tsx:211` no longer describe the badge as a fixed-width circle.
+  ⚠️ **`screenshots:assert` cannot close AC16** — §3.4 F13 records that all 16 `ManyActiveFilters` cells produced
+  zero clip/overflow signals while the defect was live, so the matrix is a non-detector here. Use a real measurement.
+
+---
+
+## 12a. Revision round 1 — what the orchestrator review returned (2026-09-03)
+
+The first execution returned `PARTIALLY IMPLEMENTED`; the review returned **`NEEDS REVISION`**. Phases 1-4 stand and
+must **not** be re-done. This round closes exactly these items:
+
+| # | Sev | What must change | Done when |
+|---|---|---|---|
+| **V1** | P1 | §7 of `docs/sessions/2026-09-03-task782-…md` and the `docs/backlog.md` Last Session block both assert *«All 145 FAILs are one check (text button not full-width at <640)»*. **The P manifest contradicts this:** 81 cells are that check; the other **64** carry `error: "page.goto: Timeout 20000ms exceeded"` with `assertions: {}` — an entirely different class, on 4 `AuthSheet` stories whose source **this task edited**. | Both records state the real 81/64 split and D69-12's established cause. **`docs/backlog.md` was already corrected by the reviewer in the same session — do not redo it; verify it and correct only `docs/sessions/2026-09-03-task782-…md` §7 and its R14 row.** |
+| **V2** | P0 | AC14's `P \ B = ∅` was never produced. **Partly closed at review:** B's 1086 surviving PNGs were compared byte-for-byte against P — 1066 identical, and of the FAIL/AMBIGUOUS cells present in B (16 full-width, 27 ambiguous) **every one is byte-identical**, i.e. unchanged by this task. 77 of the 178 problem cells are absent from B. | Either an owner-native clean B re-run against pre-782 `HEAD` (§13 command), or an explicit owner acceptance of the byte-differential as the substitute. Record whichever happened. |
+| **V3** | P0 | AC2 asked for a computed `width`/`height` from a real render for the 4 `ThemeIcon` project keys. Only the CSS-variable **mechanism** was source-verified; no pixel capture exists. `DimensionTokens.stories.tsx` already carries the per-row `data-testid` such a probe needs. | Four measured pairs (24/48/56/64) captured from a real render and quoted in the session log. |
+| **V4** | P2 | F13 / R16 / AC16 — the counter badge (D69-13). | AC16 passes. |
+| **V5** | P3 | `theme.ts:912` `closeButtonProps: { size: 24, iconSize: 16 }` carries raw numbers in the theme itself. Outside AC3's literal `*.tsx` scope but against D69-6's intent. | Either converted to the scale, or recorded in the session log as a deliberate exclusion with its reason. |
+
+**Accepted at review, do not re-litigate:** the AC3 story-fixture interpretation (§5 of the session log) is
+**correct** — `check-design-tokens.mjs:108` `SKIP_SUFFIXES` structurally excludes `.stories.tsx` from every category,
+so converting story literals would create a class no gate can hold. AC3's literal wording is a task-design defect,
+not an execution defect. F5/F12/R8/R13 remain blocked on a live route server and stay open as an owner-native
+follow-up, not as a revision item.
 
 ---
 
@@ -361,6 +400,11 @@ npm.cmd run build                     # HARD GATE — exit 0 required
 
 # Route evidence (running server + valid storage state)
 node.exe scripts/task772-listings-overflow-probe.mjs after
+
+# AC16 (R16/F13) — measure, do not screenshot. Storybook must be built and served first.
+#   Compare the counter badge's rendered width at activeFiltersCount 12 vs 1:
+#   stories patterns-mantine-listingssortbar--many-active-filters and --list-view-selected,
+#   selector [data-testid="listings-mobile-filters-count"], viewports mobile-375/390, all 4 locales.
 node.exe scripts/task775-listings-frame-route-probe.mjs current <runId>
 ```
 

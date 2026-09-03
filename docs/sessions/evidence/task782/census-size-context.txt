@@ -1,0 +1,267 @@
+src/app/[locale]/page.tsx-76-          <Box ta="center" mb="md">
+src/app/[locale]/page.tsx:77:            <Building2 size={48} color="var(--mantine-color-brand-7)" />
+--
+src/components/admin/AdminUsersTable.tsx-153-              >
+src/components/admin/AdminUsersTable.tsx:154:                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+--
+src/components/admin/AdminUsersTable.tsx-166-          >
+src/components/admin/AdminUsersTable.tsx:167:            <ChevronRight size={14} />
+--
+src/components/admin/AdminUsersTable.tsx-176-      return (
+src/components/admin/AdminUsersTable.tsx:177:        <Avatar src={u.avatar_url ?? null} radius="pill" size={40} color="brand">
+--
+src/components/admin/AdminUsersTable.tsx-222-          <Group gap="xs" wrap="nowrap">
+src/components/admin/AdminUsersTable.tsx:223:            <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+--
+src/components/admin/AdminUsersTable.tsx-245-              radius="pill"
+src/components/admin/AdminUsersTable.tsx:246:              size={40}
+--
+src/components/admin/AdminUsersTable.tsx-262-                <Group gap="xs" wrap="nowrap">
+src/components/admin/AdminUsersTable.tsx:263:                  <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+--
+src/components/admin/AdminUsersTable.tsx-338-              >
+src/components/admin/AdminUsersTable.tsx:339:                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+--
+src/components/admin/AdminUsersTable.tsx-348-            >
+src/components/admin/AdminUsersTable.tsx:349:              <ChevronRight size={14} />
+--
+src/components/admin/AdminUsersTable.tsx-367-          <Group gap="sm" wrap="nowrap">
+src/components/admin/AdminUsersTable.tsx:368:            <Avatar radius="pill" size={40} color="brand" style={{ flexShrink: 0 }}>
+--
+src/components/admin/AdminUsersTable.tsx-410-            >
+src/components/admin/AdminUsersTable.tsx:411:              <ShieldOff size={14} />
+--
+src/components/admin/AdminUsersTable.tsx-454-            placeholder={t('search_placeholder')}
+src/components/admin/AdminUsersTable.tsx:455:            leftSection={<Search size={14} />}
+--
+src/components/admin/AdminUsersTable.tsx-482-              fullWidth={isMobile}
+src/components/admin/AdminUsersTable.tsx:483:              leftSection={<MapPin size={12} />}
+--
+src/components/layout/HeaderActions.tsx-33-        >
+src/components/layout/HeaderActions.tsx:34:          <Heart size={20} />
+--
+src/components/layout/HeaderActions.tsx-43-        >
+src/components/layout/HeaderActions.tsx:44:          <Heart size={20} />
+--
+src/components/layout/HeaderView.tsx:169:              (variant="default", 2.75rem/44px min touch target). `size={20}` replaces the prior
+--
+src/components/layout/HeaderView.tsx-180-          >
+src/components/layout/HeaderView.tsx:181:            <Menu size={20} />
+--
+src/components/layout/MobileNavDrawer.tsx-49-            <Group gap="sm">
+src/components/layout/MobileNavDrawer.tsx:50:              <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
+--
+src/components/layout/MobileNavDrawer.tsx-127-              justify="flex-start"
+src/components/layout/MobileNavDrawer.tsx:128:              leftSection={<LogOut size={16} />}
+--
+src/components/layout/UserMenu.tsx-19-  const items: DropdownMenuItemDef[] = [
+src/components/layout/UserMenu.tsx:20:    { label: t('profile'), icon: <User size={16} />, onClick: () => onNavigate(`/${locale}/cabinet`) },
+src/components/layout/UserMenu.tsx:21:    { label: t('my_listings'), icon: <LayoutList size={16} />, onClick: () => onNavigate(`/${locale}/cabinet?tab=listings`) },
+src/components/layout/UserMenu.tsx:22:    { label: t('add_listing'), icon: <ListPlus size={16} />, onClick: () => onNavigate(`/${locale}/listings/create`), separator: true },
+--
+src/components/layout/UserMenu.tsx-25-          label: <span style={{ fontWeight: 500 }}>{t('admin_dashboard')}</span>,
+src/components/layout/UserMenu.tsx:26:          icon: <LayoutDashboard size={16} />,
+--
+src/components/layout/UserMenu.tsx-31-      : []),
+src/components/layout/UserMenu.tsx:32:    { label: t('logout'), icon: <LogOut size={16} />, color: 'red', onClick: onLogout, separator: true },
+--
+src/components/layout/UserMenu.tsx-39-          variant="default"
+src/components/layout/UserMenu.tsx:40:          leftSection={<Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={28} />}
+src/components/layout/UserMenu.tsx:41:          rightSection={<ChevronDown size={12} />}
+--
+src/components/shared/AgentCtaButton.tsx-18-      size="sm"
+src/components/shared/AgentCtaButton.tsx:19:      leftSection={<Building2 size={16} />}
+--
+src/components/shared/FiltersPanel.tsx-113-          </MantineCountButton>
+src/components/shared/FiltersPanel.tsx:114:          <Button variant="default" fullWidth leftSection={<RotateCcw size={16} />} onClick={handleReset}>
+--
+src/components/shared/HeroSearchView.tsx-134-              aria-label={t('advanced_filters')}
+src/components/shared/HeroSearchView.tsx:135:              leftSection={<SlidersHorizontal size={16} />}
+--
+src/components/shared/HeroSearchView.tsx-144-              className={styles.searchControl}
+src/components/shared/HeroSearchView.tsx:145:              leftSection={<Search size={16} />}
+--
+src/components/shared/HowItWorksSteps.tsx-36-              <Box pos="relative">
+src/components/shared/HowItWorksSteps.tsx:37:                <ThemeIcon size={56} radius="2xl" color="brand" variant="light">
+src/components/shared/HowItWorksSteps.tsx:38:                  <Icon size={24} />
+--
+src/components/shared/HowItWorksSteps.tsx-40-                <ThemeIcon
+src/components/shared/HowItWorksSteps.tsx:41:                  size={24}
+--
+src/components/shared/LocaleSwitcher.tsx-55-          disabled={isPending}
+src/components/shared/LocaleSwitcher.tsx:56:          rightSection={isPending ? <Loader2 size={12} className={styles.pendingIcon} /> : <ChevronDown size={12} />}
+--
+src/components/shared/LocationCombobox.tsx-120-        clearLabel={tc('all_locations')}
+src/components/shared/LocationCombobox.tsx:121:        icon={<MapPin size={16} />}
+--
+src/components/shared/YearCombobox.tsx-55-        inputMode="numeric"
+src/components/shared/YearCombobox.tsx:56:        icon={<Calendar size={16} />}
+--
+src/components/ui/PasswordRequirementsHint.tsx-30-      {met ? (
+src/components/ui/PasswordRequirementsHint.tsx:31:        <Check size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+src/components/ui/PasswordRequirementsHint.tsx-32-      ) : (
+src/components/ui/PasswordRequirementsHint.tsx:33:        <X size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+--
+src/design-system/mantine/patterns/MantineCopyIdButton.tsx-48-      {copied
+src/design-system/mantine/patterns/MantineCopyIdButton.tsx:49:        ? <Check size={10} className={styles.copiedIcon} />
+src/design-system/mantine/patterns/MantineCopyIdButton.tsx:50:        : <Copy size={10} className={styles.notCopiedIcon} />
+--
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx-85-      <Stack align="center" gap="md" maw={360}>
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx:86:        <ThemeIcon size={48} radius="xl" color="gray" variant="light">
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-92-          <Avatar src={state === 'ownerDeleted' ? null : agent.avatarUrl} radius="xl" size="lg" color="brand">
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:93:            {state === 'ownerDeleted' ? <UserX size={20} /> : agent.initials}
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-127-        {state === 'ownerDeleted' && (
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:128:          <NoticeBox icon={<UserX size={20} />} title={labels.deletedTitle} desc={labels.deletedDesc} />
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-131-        {state === 'ownerUnavailable' && (
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:132:          <NoticeBox icon={<UserX size={20} />} desc={labels.unavailableDesc} />
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-136-          <Stack gap="sm">
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:137:            <NoticeBox icon={<LogIn size={20} />} title={labels.guestTitle} desc={labels.guestDesc} />
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:138:            <Button color="brand" fullWidth onClick={onLogin} leftSection={<LogIn size={16} />}>
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-155-                onClick={onCall}
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:156:                leftSection={<Phone size={18} />}
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-166-                onClick={onWhatsApp}
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:167:                leftSection={<MessageCircle size={18} />}
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-186-            onClick={onShare}
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:187:            leftSection={<Share2 size={16} />}
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-226-    <ThemeIcon size="sm" radius="xl" color="brand" variant="light" aria-label={label}>
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:227:      <CheckCircle size={12} />
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-134-                <Group gap={4} wrap="nowrap">
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:135:                  <MapPin size={16} className="shrink-0 text-muted-foreground" />
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-141-              <Group gap={4} wrap="nowrap">
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:142:                <Eye size={16} className="shrink-0 text-muted-foreground" />
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-147-              <Group gap={4} wrap="nowrap">
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:148:                <CalendarDays size={16} className="shrink-0 text-muted-foreground" />
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-451-          >
+src/design-system/mantine/patterns/RangeDatePicker.tsx:452:            <ChevronLeft size={16} />
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-503-          >
+src/design-system/mantine/patterns/RangeDatePicker.tsx:504:            <ChevronRight size={16} />
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-839-      className={className}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:840:      leftSection={<CalendarDays size={16} style={{ color: 'var(--mantine-color-gray-5)' }} />}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-850-          >
+src/design-system/mantine/patterns/RangeDatePicker.tsx:851:            <X size={14} />
+--
+src/modules/auth/components/AuthSheet.tsx-223-      <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
+src/modules/auth/components/AuthSheet.tsx:224:        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+--
+src/modules/auth/components/AuthSheet.tsx-470-                <div className={styles.logoPlaceholder}>
+src/modules/auth/components/AuthSheet.tsx:471:                  <ImagePlus size={16} style={{ color: 'var(--muted-foreground)' }} />
+--
+src/modules/auth/components/AuthSheet.tsx-652-      <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
+src/modules/auth/components/AuthSheet.tsx:653:        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+--
+src/modules/listings/components/ActiveFilterChips.tsx-193-          onClick={() => removeChip(chip)}
+src/modules/listings/components/ActiveFilterChips.tsx:194:          rightSection={<X size={12} aria-hidden="true" />}
+--
+src/modules/listings/components/FavoriteButton.tsx-133-  // which lets `:hover` correctly cascade over the resting state.
+src/modules/listings/components/FavoriteButton.tsx:134:  const icon = <Heart size={16} fill={!disabled && favorited ? 'currentColor' : 'none'} />
+--
+src/modules/listings/components/FavoriteButton.tsx-162-      // (same borderless baseline as the HeaderActions.tsx favorites precedent); `radius="pill"` is the
+src/modules/listings/components/FavoriteButton.tsx:163:      // theme's own 9999px token (matches the legacy `rounded-full`); `size={32}` matches the legacy
+src/modules/listings/components/FavoriteButton.tsx-164-      // `w-8 h-8` (32px) exactly.
+src/modules/listings/components/FavoriteButton.tsx:165:      <ActionIcon {...commonProps} variant="subtle" size={32} radius="pill">
+--
+src/modules/listings/components/ListingsFilterBar.tsx-141-              w={FULL_BELOW_SM}
+src/modules/listings/components/ListingsFilterBar.tsx:142:              leftSection={<X size={14} />}
+--
+src/modules/listings/components/ListingsFilterBar.tsx-155-              w={FULL_BELOW_SM}
+src/modules/listings/components/ListingsFilterBar.tsx:156:              leftSection={<SlidersHorizontal size={14} />}
+--
+src/modules/listings/components/ListingsFilters.tsx-70-            <ChevronDown
+src/modules/listings/components/ListingsFilters.tsx:71:              size={14}
+--
+src/modules/listings/components/ListingsFilters.tsx-137-      <Group gap="xs" mb="md" wrap="nowrap">
+src/modules/listings/components/ListingsFilters.tsx:138:        <SlidersHorizontal size={16} color="var(--mantine-color-brand-7)" />
+--
+src/modules/listings/components/ListingsFilters.tsx-154-          >
+src/modules/listings/components/ListingsFilters.tsx:155:            <X size={20} />
+--
+src/modules/listings/components/ListingsShellView.tsx-117-            <Stack align="center" gap="md" ta="center">
+src/modules/listings/components/ListingsShellView.tsx:118:              <ThemeIcon size={64} radius="2xl" color="gray" variant="light">
+--
+src/modules/listings/components/ListingsShellView.tsx-174-                  miw={{ sm: 192 }}
+src/modules/listings/components/ListingsShellView.tsx:175:                  leftSection={isLoadingMore ? <Loader size={16} color="gray" /> : undefined}
+--
+src/modules/listings/components/ListingsSortBar.tsx-116-          miw={0}
+src/modules/listings/components/ListingsSortBar.tsx:117:          leftSection={<SlidersHorizontal size={16} />}
+--
+src/modules/listings/components/ListingsSortBar.tsx-174-            >
+src/modules/listings/components/ListingsSortBar.tsx:175:              <LayoutGrid size={16} />
+--
+src/modules/listings/components/ListingsSortBar.tsx-183-            >
+src/modules/listings/components/ListingsSortBar.tsx:184:              <List size={16} />
+--
+src/modules/listings/components/SaveSearchButton.tsx-71-        w={{ base: '100%', sm: 'auto' }}
+src/modules/listings/components/SaveSearchButton.tsx:72:        leftSection={<Bookmark size={16} />}
+--
+src/modules/listings/components/SaveSearchButton.tsx-90-              disabled={isPending}
+src/modules/listings/components/SaveSearchButton.tsx:91:              leftSection={isPending ? <Loader size={14} color="white" /> : <Bookmark size={14} />}
+--
+src/modules/listings/components/SaveToCollectionButton.tsx-148-        // as FavoriteButton.module.css, Task 653) so the overlay's frosted-white look is unchanged.
+src/modules/listings/components/SaveToCollectionButton.tsx:149:        // `size={28}` matches the legacy `icon-sm` (`size-7` = 1.75rem = 28px) exactly.
+src/modules/listings/components/SaveToCollectionButton.tsx:150:        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={28} radius="0.75rem">
+--
+src/modules/locations/components/PopularLocationsView.tsx-81-              <Box mb={2}>
+src/modules/locations/components/PopularLocationsView.tsx:82:                <MapPin size={14} style={{ opacity: 0.7 }} aria-hidden />
+--
+src/modules/notifications/components/NotificationBellView.tsx-33-          color="red.5"
+src/modules/notifications/components/NotificationBellView.tsx:34:          size={16}
+--
+src/modules/notifications/components/NotificationBellView.tsx-38-          <ActionIcon variant="default" aria-label={t('title')} mih="2.75rem" miw="2.75rem">
+src/modules/notifications/components/NotificationBellView.tsx:39:            <Bell size={20} />
+--
+src/modules/notifications/components/NotificationCenter.tsx-63-            color="brand"
+src/modules/notifications/components/NotificationCenter.tsx:64:            leftSection={<CheckCheck size={14} />}
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--

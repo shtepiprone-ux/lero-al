@@ -1,0 +1,285 @@
+src/app/[locale]/page.tsx-30-        <Box className="container-wide">
+src/app/[locale]/page.tsx:31:          <Box maw={768} mx="auto" ta="center" mb={40}>
+src/app/[locale]/page.tsx:32:            <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--homepage-runtime-font-size-3xl)', sm: 'var(--homepage-runtime-font-size-4xl)', md: 'var(--homepage-runtime-font-size-5xl)' }} mb="md">
+--
+src/app/[locale]/page.tsx-34-            </Title>
+src/app/[locale]/page.tsx:35:            <Text c="white" fw={700} fz={{ base: 'var(--homepage-runtime-font-size-xl)', sm: 'var(--homepage-runtime-font-size-2xl)' }} maw={576} mx="auto">
+--
+src/app/[locale]/page.tsx-50-        <Group justify="space-between" align="center" wrap="nowrap" mb="xl">
+src/app/[locale]/page.tsx:51:          <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{tl('latest')}</Title>
+--
+src/app/[locale]/page.tsx-74-      <MantineHomeSection variant="brandFade" containIntrinsicSize="auto 280px">
+src/app/[locale]/page.tsx:75:        <Box maw={672} mx="auto" ta="center">
+--
+src/app/[locale]/page.tsx-78-          </Box>
+src/app/[locale]/page.tsx:79:          <Title order={2} fw={700} fz={SECTION_HEADING_FZ} mb="sm">
+--
+src/components/admin/AdminCompaniesManager.tsx-142-              onChange={e => setName(e.target.value)}
+src/components/admin/AdminCompaniesManager.tsx:143:              maxLength={120}
+--
+src/components/admin/AdminCurrenciesManager.tsx-96-                placeholder="EUR"
+src/components/admin/AdminCurrenciesManager.tsx:97:                maxLength={10}
+--
+src/components/admin/AdminCurrenciesManager.tsx-107-                placeholder="€"
+src/components/admin/AdminCurrenciesManager.tsx:108:                maxLength={10}
+--
+src/components/admin/AdminReportsManager.tsx-260-                  className="rounded-xl resize-none text-sm"
+src/components/admin/AdminReportsManager.tsx:261:                  maxLength={500}
+--
+src/components/admin/AdminUsersTable.tsx-182-    title: (u) => (
+src/components/admin/AdminUsersTable.tsx:183:      <Text size="sm" fw={500} c="gray.7" truncate="end">
+--
+src/components/admin/AdminUsersTable.tsx-253-              <Link href={`/admin/users/${u.id}`} style={{ textDecoration: 'none' }}>
+src/components/admin/AdminUsersTable.tsx:254:                <Text size="sm" fw={500} c="gray.7" truncate="end">{fullName}</Text>
+--
+src/components/admin/AdminUsersTable.tsx-372-              <Link href={`/admin/users/${u.id}`} style={{ textDecoration: 'none' }} data-testid="agent-detail-link">
+src/components/admin/AdminUsersTable.tsx:373:                <Text size="sm" fw={500} c="gray.7" truncate="end">{u.name ?? '—'}</Text>
+--
+src/components/layout/MobileNavDrawer.tsx-53-                  over text-sm's own paired 20px line-height (see Task 753/754 finding). */}
+src/components/layout/MobileNavDrawer.tsx:54:              <Text size="sm" fw={500} lh={1.625}>{user.name}</Text>
+--
+src/components/layout/UserMenu.tsx-42-        >
+src/components/layout/UserMenu.tsx:43:          <Text component="span" truncate inherit maw={120}>{user.name}</Text>
+--
+src/components/shared/FiltersPanel.tsx-97-        <Group gap="xs">
+src/components/shared/FiltersPanel.tsx:98:          <Text component="span" fw={600} size="md">{t('advanced_filters')}</Text>
+--
+src/components/shared/HeroSearchFallback.tsx-21-  return (
+src/components/shared/HeroSearchFallback.tsx:22:    <Box maw={768} mx="auto" w="100%">
+--
+src/components/shared/HeroSearchView.tsx-130-              count={activeFiltersCount}
+src/components/shared/HeroSearchView.tsx:131:              iconOnlyBelow={860}
+--
+src/components/shared/HowItWorksSteps.tsx-27-    <>
+src/components/shared/HowItWorksSteps.tsx:28:      <Title order={2} ta="center" fw={700} fz={SECTION_HEADING_FZ} mb={40}>
+--
+src/components/shared/HowItWorksSteps.tsx-30-      </Title>
+src/components/shared/HowItWorksSteps.tsx:31:      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={32} maw={768} mx="auto">
+--
+src/components/shared/HowItWorksSteps.tsx-46-                  fz="xs"
+src/components/shared/HowItWorksSteps.tsx:47:                  fw={700}
+--
+src/components/shared/HowItWorksSteps.tsx-55-              </Box>
+src/components/shared/HowItWorksSteps.tsx:56:              <Text component="h3" fw={600} size="md">
+--
+src/components/shared/LocationCombobox.tsx-140-            fz="xs"
+src/components/shared/LocationCombobox.tsx:141:            fw={500}
+--
+src/components/shared/LocationCombobox.tsx-150-            <MantineAddItemPanel mt={4}>
+src/components/shared/LocationCombobox.tsx:151:              <Text size="xs" fw={600}>{tc('new_location')}</Text>
+--
+src/components/shared/PhoneField.tsx:164:          triggerWidth={{ base: '7rem', sm: '7rem' }} // design-tokens-allow: : '7rem' — owner-specified (Task 556 STOP-AND-ASK #1), matches the legacy w-28 compact country-trigger width (112px = 7rem) verbatim
+src/components/shared/PhoneField.tsx:165:          dropdownMinWidth={240}
+--
+src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx-71-      <Group justify="space-between" align="center" gap="xs">
+src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx:72:        <Text fw={700} size="lg">
+--
+src/design-system/mantine/patterns/MantineAppShellFoundation.tsx-67-            />
+src/design-system/mantine/patterns/MantineAppShellFoundation.tsx:68:            <Text fw={700} size="lg" c="brand">
+--
+src/design-system/mantine/patterns/MantineCombobox.tsx-345-                sibling canonical primitive rather than inventing a new value. */}
+src/design-system/mantine/patterns/MantineCombobox.tsx:346:            <Combobox.Options mah={220} style={{ overflowY: 'auto' }}>
+--
+src/design-system/mantine/patterns/MantineDataTableToCards.tsx-373-                  >
+src/design-system/mantine/patterns/MantineDataTableToCards.tsx:374:                    <Text size="xs" c="dimmed" fw={500} style={{ width: '38%', flexShrink: 0 }}>
+--
+src/design-system/mantine/patterns/MantineDataTableToCards.tsx-438-                >
+src/design-system/mantine/patterns/MantineDataTableToCards.tsx:439:                  <Text size="xs" fw={500} c="gray.5">
+--
+src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx-95-              </Box>
+src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx:96:              <Text fw={600} size="lg">{title}</Text>
+--
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx-84-    <Center py="xl" style={{ minHeight: 200 }}>
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx:85:      <Stack align="center" gap="md" maw={360}>
+--
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx-91-        {title && (
+src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx:92:          <Text fw={600} size="lg" ta="center">
+--
+src/design-system/mantine/patterns/MantineFilterSection.tsx-41-      <Group justify="space-between" mb="sm">
+src/design-system/mantine/patterns/MantineFilterSection.tsx:42:        <Text size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: '0.05em' }}>
+--
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx-223-            </Group>
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx:224:            <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
+--
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx-231-                <Group align="baseline" wrap="wrap" gap="xs">
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx:232:                  <Text component="span" size="md" fw={700} c="brand" style={{ whiteSpace: 'nowrap' }}>
+--
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx-359-        )}
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx:360:        <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
+--
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx-380-          <Group gap={6} align="baseline" mt={4} wrap="wrap">
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx:381:            <Text fw={700} size="md" c="brand">
+--
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx-388-        ) : (
+src/design-system/mantine/patterns/MantineListingCardPattern.tsx:389:          <Text fw={700} size="md" c="brand" mt={4}>
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-96-            <Group gap={6} wrap="nowrap">
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:97:              <Text fw={600} size="sm" truncate>
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-114-        <Stack gap={2}>
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:115:          <Text fw={700} size="xl" c="brand">
+--
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx-239-        {title && (
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:240:          <Text size="sm" fw={600}>
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-116-            <Group gap="sm" align="baseline" wrap="wrap">
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:117:              <Text fw={700} size="xl" c="brand">
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-169-                    </Group>
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:170:                    <Text size="sm" fw={600}>
+--
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx-204-                      </Text>
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:205:                      <Text size="sm" fw={500}>
+--
+src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx-92-                  <div className={cn(styles.extraCountOverlay, 'absolute inset-0 flex items-center justify-center')}>
+src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:93:                    <Text size="sm" fw={600} c="var(--overlay-foreground)">
+--
+src/design-system/mantine/patterns/MantineNotificationPattern.tsx-98-                  <Group gap="xs">
+src/design-system/mantine/patterns/MantineNotificationPattern.tsx:99:                    <Text size="sm" fw={600}>{item.title}</Text>
+--
+src/design-system/mantine/patterns/MantineProgress.tsx-64-          {label && (
+src/design-system/mantine/patterns/MantineProgress.tsx:65:            <Text size="sm" fw={500} c="gray.7" style={{ wordBreak: 'break-word', whiteSpace: 'normal' }}>
+--
+src/design-system/mantine/patterns/MantineTooltip.tsx-98-      fz="xs"
+src/design-system/mantine/patterns/MantineTooltip.tsx:99:      fw={500}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-339-          >
+src/design-system/mantine/patterns/RangeDatePicker.tsx:340:            <Text size="xs" fw={700} c="gray.5">
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-420-            radius="lg"
+src/design-system/mantine/patterns/RangeDatePicker.tsx:421:            w={280}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-427-              fz="var(--mantine-font-size-xs)"
+src/design-system/mantine/patterns/RangeDatePicker.tsx:428:              fw={500}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-459-                0.625rem 0.75rem) + 2px border + 12px `Group gap="sm"` + 14px CheckIcon on the
+src/design-system/mantine/patterns/RangeDatePicker.tsx:460:                SELECTED row + ~17px classic scrollbar (the `mah={220}` cap always overflows).
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-479-              triggerAriaLabel={t('period_month')}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:480:              triggerWidth={150}
+src/design-system/mantine/patterns/RangeDatePicker.tsx-481-              withinPortal={false}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:482:              dropdownMinWidth={190}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-489-              noResultsLabel={t('no_results')}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:490:              triggerWidth={100}
+src/design-system/mantine/patterns/RangeDatePicker.tsx-491-              withinPortal={false}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:492:              dropdownMinWidth={140}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-494-          </Group>
+src/design-system/mantine/patterns/RangeDatePicker.tsx:495:          <Text c="gray.5" fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-643-          triggerAriaLabel={t('period_month')}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:644:          triggerWidth={150}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-652-          triggerAriaLabel={t('period_year')}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:653:          triggerWidth={100}
+--
+src/design-system/mantine/patterns/RangeDatePicker.tsx-675-              {/* D3: Title → weekday row (inside MonthGrid) → day grid, in this order, per section. */}
+src/design-system/mantine/patterns/RangeDatePicker.tsx:676:              <Text fw={600} size="sm" c="gray.8" mb={8} ta="center">
+--
+src/design-system/mantine/patterns/responsiveBottomSheet.tsx-139-          {title && (
+src/design-system/mantine/patterns/responsiveBottomSheet.tsx:140:            <Text fw={600} size="sm" c="gray.8">
+--
+--
+src/modules/auth/components/AuthSheet.tsx-224-        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+src/modules/auth/components/AuthSheet.tsx:225:        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('forgot_password_success_title')}</Text>
+--
+src/modules/auth/components/AuthSheet.tsx-452-            placeholder={label}
+src/modules/auth/components/AuthSheet.tsx:453:            maxLength={120}
+--
+src/modules/auth/components/AuthSheet.tsx-653-        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+src/modules/auth/components/AuthSheet.tsx:654:        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('register_success_title')}</Text>
+--
+src/modules/auth/components/AuthSheet.tsx-799-    <>
+src/modules/auth/components/AuthSheet.tsx:800:      <Text component="span" fw={600} size="lg">{titles[view]}</Text>
+--
+src/modules/listings/components/CollectionsSection.tsx-183-              placeholder={t('name_placeholder')}
+src/modules/listings/components/CollectionsSection.tsx:184:              maxLength={100}
+--
+src/modules/listings/components/CollectionsSection.tsx-211-              placeholder={t('new_name_placeholder')}
+src/modules/listings/components/CollectionsSection.tsx:212:              maxLength={100}
+--
+src/modules/listings/components/FeaturedListingsView.tsx-18-      <Box className={styles.skeletonBody}>
+src/modules/listings/components/FeaturedListingsView.tsx:19:        <Skeleton height={12} width={80} />
+--
+src/modules/listings/components/FeaturedListingsView.tsx-21-        <Skeleton height={16} width="75%" />
+src/modules/listings/components/FeaturedListingsView.tsx:22:        <Skeleton height={20} width={128} />
+--
+src/modules/listings/components/FeaturedListingsView.tsx-52-    >
+src/modules/listings/components/FeaturedListingsView.tsx:53:      <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{t('featured')}</Title>
+--
+src/modules/listings/components/LatestListingsView.tsx-16-      <Box className={styles.skeletonBody}>
+src/modules/listings/components/LatestListingsView.tsx:17:        <Skeleton height={12} width={80} />
+src/modules/listings/components/LatestListingsView.tsx-18-        <Skeleton height={16} />
+src/modules/listings/components/LatestListingsView.tsx:19:        <Skeleton height={20} width={112} />
+--
+src/modules/listings/components/ListingFormShellView.tsx-194-                    placeholder={t('field_title_hint')}
+src/modules/listings/components/ListingFormShellView.tsx:195:                    maxLength={150}
+--
+src/modules/listings/components/ListingFormShellView.tsx-214-                    rows={4}
+src/modules/listings/components/ListingFormShellView.tsx:215:                    maxLength={5000}
+--
+src/modules/listings/components/ListingFormShellView.tsx-288-                  <Label htmlFor="address" className="text-sm font-medium">{t('field_address')}</Label>
+src/modules/listings/components/ListingFormShellView.tsx:289:                  <Input id="address" value={data.address ?? ''} onChange={e => patch({ address: e.target.value || undefined })} placeholder={t('field_address_placeholder')} maxLength={300} className="h-11 rounded-xl" />
+--
+src/modules/listings/components/ListingInquiryDialog.tsx-106-              placeholder={t('inquiry_name_placeholder')}
+src/modules/listings/components/ListingInquiryDialog.tsx:107:              maxLength={200}
+--
+src/modules/listings/components/ListingInquiryDialog.tsx-120-              placeholder={t('inquiry_email_placeholder')}
+src/modules/listings/components/ListingInquiryDialog.tsx:121:              maxLength={200}
+--
+src/modules/listings/components/ListingInquiryDialog.tsx-133-              rows={5}
+src/modules/listings/components/ListingInquiryDialog.tsx:134:              maxLength={5000}
+--
+src/modules/listings/components/ListingReportDialog.tsx-138-                rows={3}
+src/modules/listings/components/ListingReportDialog.tsx:139:                maxLength={500}
+--
+src/modules/listings/components/ListingsFilters.tsx-80-        >
+src/modules/listings/components/ListingsFilters.tsx:81:          <Text component="span" size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: '0.05em' }}>
+--
+src/modules/listings/components/ListingsFilters.tsx-138-        <SlidersHorizontal size={16} color="var(--mantine-color-brand-7)" />
+src/modules/listings/components/ListingsFilters.tsx:139:        <Text fw={600} size="sm">{t('filters_title')}</Text>
+--
+src/modules/listings/components/ListingsShellView.tsx-121-              <Box>
+src/modules/listings/components/ListingsShellView.tsx:122:                <Text fw={600} size="lg">
+--
+src/modules/listings/components/ListingsSortBar.tsx-71-          that shrink degrade to a real ellipsis instead. */}
+src/modules/listings/components/ListingsSortBar.tsx:72:      <Stack gap={2} miw={0}>
+src/modules/listings/components/ListingsSortBar.tsx:73:        <Text fw={600} size="sm" c="gray.9" truncate="end">
+--
+src/modules/listings/components/SaveSearchButton.tsx-102-          placeholder={buildAutoName()}
+src/modules/listings/components/SaveSearchButton.tsx:103:          maxLength={80}
+--
+src/modules/listings/components/SaveToCollectionButton.tsx-219-                  placeholder={t('name_placeholder')}
+src/modules/listings/components/SaveToCollectionButton.tsx:220:                  maxLength={100}
+--
+src/modules/listings/components/steps/StepBasicInfo.tsx-82-          placeholder={t('field_title_hint')}
+src/modules/listings/components/steps/StepBasicInfo.tsx:83:          maxLength={150}
+--
+src/modules/listings/components/steps/StepBasicInfo.tsx-103-          rows={5}
+src/modules/listings/components/steps/StepBasicInfo.tsx:104:          maxLength={5000}
+--
+src/modules/listings/components/steps/StepLocation.tsx-43-          placeholder={t('field_address_placeholder')}
+src/modules/listings/components/steps/StepLocation.tsx:44:          maxLength={300}
+--
+src/modules/locations/components/PopularLocationsView.tsx-46-    <MantineHomeSection variant="muted" containIntrinsicSize="auto 380px">
+src/modules/locations/components/PopularLocationsView.tsx:47:      <Title order={2} fw={700} fz={SECTION_HEADING_FZ} mb="xl">
+--
+src/modules/locations/components/PopularLocationsView.tsx-59-            pos="relative"
+src/modules/locations/components/PopularLocationsView.tsx:60:            h={112}
+--
+src/modules/locations/components/PopularLocationsView.tsx-83-              </Box>
+src/modules/locations/components/PopularLocationsView.tsx:84:              <Text fw={600} size="sm" lh={1.25} truncate>
+--
+src/modules/notifications/components/NotificationBellView.tsx-44-      position="bottom-end"
+src/modules/notifications/components/NotificationBellView.tsx:45:      width={320}
+--
+src/modules/notifications/components/NotificationCenter.tsx-58-            line-height for any <p> with no explicit leading-* class (see Task 753 finding). */}
+src/modules/notifications/components/NotificationCenter.tsx:59:        <Text size="sm" fw={600} lh={1.625}>{t('title')}</Text>
+--
+src/modules/notifications/components/NotificationCenter.tsx-78-        {notifications.length === 0 ? (
+src/modules/notifications/components/NotificationCenter.tsx:79:          <Text size="sm" c="var(--muted-foreground)" ta="center" lh={1.625} px="md" py={32}>
+--
+src/modules/notifications/components/NotificationItem.tsx-240-        <Box
+src/modules/notifications/components/NotificationItem.tsx:241:          h={8}
+src/modules/notifications/components/NotificationItem.tsx:242:          w={8}

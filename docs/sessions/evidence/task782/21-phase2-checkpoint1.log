@@ -1,0 +1,23 @@
+src/components/shared/AgentCtaButton.tsx(20,37): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/AgentCtaButton.tsx(20,37): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/FiltersPanel.tsx(115,77): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/FiltersPanel.tsx(115,77): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/HeroSearchFallback.tsx(23,15): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/HeroSearchFallback.tsx(23,15): error TS18048: 'theme.other.boxSize' is possibly 'undefined'.
+src/components/shared/HeroSearchView.tsx(136,53): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/HeroSearchView.tsx(136,53): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/HeroSearchView.tsx(146,42): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/HeroSearchView.tsx(146,42): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/HowItWorksSteps.tsx(32,63): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/HowItWorksSteps.tsx(32,63): error TS18048: 'theme.other.boxSize' is possibly 'undefined'.
+src/components/shared/HowItWorksSteps.tsx(39,31): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/HowItWorksSteps.tsx(39,31): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/LocaleSwitcher.tsx(57,52): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/LocaleSwitcher.tsx(57,52): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/LocaleSwitcher.tsx(57,135): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/LocaleSwitcher.tsx(57,135): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/LocationCombobox.tsx(122,29): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/LocationCombobox.tsx(122,29): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+src/components/shared/YearCombobox.tsx(57,31): error TS18048: 'theme.other' is possibly 'undefined'.
+src/components/shared/YearCombobox.tsx(57,31): error TS18048: 'theme.other.iconSize' is possibly 'undefined'.
+EXIT_CODE=2

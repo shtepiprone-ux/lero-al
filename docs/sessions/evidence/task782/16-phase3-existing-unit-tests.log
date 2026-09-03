@@ -1,0 +1,10 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  98 passed (98)
+   Start at  19:08:49
+   Duration  417ms (transform 87ms, setup 137ms, import 83ms, tests 29ms, environment 0ms)
+
+EXIT_CODE=0

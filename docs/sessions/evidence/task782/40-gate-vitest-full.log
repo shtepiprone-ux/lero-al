@@ -1,0 +1,179 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (27 tests | 1 failed) 33ms
+     × matches the real globals.css measured count (257) — Task 695 re-derivation 17ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 1 failed) 18ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 7ms
+ ❯ src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx (21 tests | 21 failed) 179ms
+     × revoke button calls toggleUserVerified(userId, false) for verified user + shows toast 122ms
+     × verify button calls toggleUserVerified(userId, true) for unverified user + shows toast 5ms
+     × server error on toggle → no success toast (error path preserved) 5ms
+     × user detail link href is /admin/users/[id] 2ms
+     × clicking verified tab calls router.push with tab=verified 4ms
+     × clicking all tab calls router.push without tab param 3ms
+     × role SegmentedControl change calls router.push with role=agent 2ms
+     × status SegmentedControl change calls router.push with status=blocked 2ms
+     × next page button calls router.push with page=2 8ms
+     × prev page button is disabled on page 1 2ms
+     × next page button is disabled on last page 2ms
+     × revoke in verified agents tab calls toggleUserVerified(userId, false) 2ms
+     × card actions revoke-btn calls toggleUserVerified(userId, false) for verified user 2ms
+     × card actions user-detail-link has correct href 4ms
+     × row gets opacity-50 class while toggle is in flight 2ms
+     × role SegmentedControl renders and includes all role options 1ms
+     × on mobile (isMobile=true) pagination buttons are full-width 1ms
+     × renders empty-state when no users 1ms
+     × renders user rows from the users prop 1ms
+     × location request badge renders in user row when location_request is set 1ms
+     × role Badge data-color is blueLight for an agent row and orange for a moderator row 1ms
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx (13 tests | 1 failed) 2307ms
+     × the wrapper root carries mantine-visible-from-md; the bar's own root carries neither visibility class 134ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 1084ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 61ms
+     × archived listing renders the archived badge + dimmed card 40ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 26 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the real globals.css measured count (257) — Task 695 re-derivation
+AssertionError: expected 296 to be 257 // Object.is equality
+
+- Expected
++ Received
+
+- 257
++ 296
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:208:24
+    206|     // (NotificationCenter's 390px threshold retargeted to the canonic…
+    207|     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    208|     expect(owned.size).toBe(257)
+       |                        ^
+    209|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    210|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/26]⎯
+
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — verify/revoke handler (Task 483) > revoke button calls toggleUserVerified(userId, false) for verified user + shows toast
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — verify/revoke handler (Task 483) > verify button calls toggleUserVerified(userId, true) for unverified user + shows toast
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — verify/revoke handler (Task 483) > server error on toggle → no success toast (error path preserved)
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — detail links > user detail link href is /admin/users/[id]
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > clicking verified tab calls router.push with tab=verified
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > clicking all tab calls router.push without tab param
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > role SegmentedControl change calls router.push with role=agent
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > status SegmentedControl change calls router.push with status=blocked
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > next page button calls router.push with page=2
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > prev page button is disabled on page 1
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — navigation via navigate() > next page button is disabled on last page
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — verified tab revoke > revoke in verified agents tab calls toggleUserVerified(userId, false)
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — card actions (mobile card anatomy) > card actions revoke-btn calls toggleUserVerified(userId, false) for verified user
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — card actions (mobile card anatomy) > card actions user-detail-link has correct href
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — loading state > row gets opacity-50 class while toggle is in flight
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — responsive layout (via useMediaQuery mock) > role SegmentedControl renders and includes all role options
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — responsive layout (via useMediaQuery mock) > on mobile (isMobile=true) pagination buttons are full-width
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — empty state > renders empty-state when no users
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — data rendering > renders user rows from the users prop
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — data rendering > location request badge renders in user row when location_request is set
+ FAIL  src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx > AdminUsersTable — data rendering > role Badge data-color is blueLight for an agent row and orange for a moderator row
+Error: [vitest] No "useMantineTheme" export is defined on the "@mantine/core" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@mantine/core"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ AdminUsersTable src/components/admin/AdminUsersTable.tsx:80:17
+     78|   const t = useTranslations('admin.users')
+     79|   const locale = useLocale()
+     80|   const theme = useMantineTheme()
+       |                 ^
+     81|   const router = useRouter()
+     82|   const pathname = usePathname()
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/26]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/26]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/26]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: [31mnull[39m
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/26]⎯
+
+ FAIL  src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx > ListingsFilterBar — T6 (AC5): route visibility lives in the ListingsShellView wrapper > the wrapper root carries mantine-visible-from-md; the bar's own root carries neither visibility class
+AssertionError: expected 'mantine-visible-from-sm' to contain 'mantine-visible-from-md'
+
+Expected: "mantine-visible-from-md"
+Received: "mantine-visible-from-sm"
+
+ ❯ src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx:264:31
+    262|
+    263|     const wrapper = barRoot.parentElement!
+    264|     expect(wrapper.className).toContain('mantine-visible-from-md')
+       |                               ^
+    265|
+    266|     expect(barRoot.className).not.toMatch(/mantine-(visible|hidden)-fr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/26]⎯
+
+
+ Test Files  5 failed | 79 passed (84)
+      Tests  26 failed | 1439 passed (1465)
+   Start at  19:29:35
+   Duration  27.26s (transform 13.14s, setup 14.70s, import 121.35s, tests 87.53s, environment 147.29s)
+
+EXIT_CODE=1

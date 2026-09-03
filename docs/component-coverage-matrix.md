@@ -114,7 +114,6 @@ Components without Storybook stories (future coverage targets):
 | `AgentCtaButton` | shared-ui | — |
 | `AvatarCropModal` | shared-ui | Locale-sensitive |
 | `DatePicker` | shared-ui | Locale-sensitive |
-| `FilterMultiToggle` | shared-ui | — |
 | `FilterRangeInputs` | shared-ui | — |
 | `FilterRoomsRow` | shared-ui | — |
 | `FiltersPanel` | shared-ui | Locale-sensitive |

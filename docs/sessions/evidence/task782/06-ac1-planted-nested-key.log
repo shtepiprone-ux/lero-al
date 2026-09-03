@@ -1,0 +1,4 @@
+=== PLANTED (expect non-zero) ===
+src/__typecheck_probe782_AC1.ts(4,39): error TS2339: Property 'wrongKeyProbe782' does not exist on type 'Record<"micro" | "badge" | "compact" | "standard" | "comfortable" | "roomy" | "decorative" | "feature" | "prominent" | "banner" | "touch" | "hero" | "spotlight" | "colossal", number>'.
+src/__typecheck_probe782_AC1.ts(5,38): error TS2339: Property 'wrongKeyProbe782' does not exist on type 'Record<"statusDot" | "thumbnail" | "truncateLabel" | "dropdownPanel" | "compactTrigger" | "emptyState" | "prose" | "ctaSection" | "content", string>'.
+EXIT_CODE=2

@@ -1,0 +1,11 @@
+src/design-system/mantine/patterns/RangeDatePicker.tsx:462:mah={220}
+src/stories/mantine/primitives/DimensionTokens.stories.tsx:26:w={80}
+src/stories/mantine/primitives/DimensionTokens.stories.tsx:41:h={24}
+src/stories/mantine/primitives/DimensionTokens.stories.tsx:53:w={100}
+src/stories/mantine/primitives/ScrollArea.stories.tsx:34:h={180}
+src/stories/mantine/primitives/ScrollArea.stories.tsx:54:miw={140}
+src/stories/mantine/primitives/ScrollArea.stories.tsx:55:h={80}
+src/stories/mantine/primitives/ScrollArea.stories.tsx:72:h={80}
+src/stories/patterns/mantine/ListingCardPattern.stories.tsx:83:h={180}
+src/stories/patterns/mantine/ListingContactPattern.stories.tsx:75:maw={360}
+src/stories/patterns/mantine/ListingsPagination.stories.tsx:37:w={280}

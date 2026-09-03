@@ -1,0 +1,26 @@
+=== FINAL PLANTED ARM (expect non-zero, names ListingsFilters.tsx line, no other violations) ===
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 457 src/**/*.{tsx,ts,css} files
+    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)
+
+  ── LISTING  (1 finding) ──
+  src/modules/listings/components/ListingsFilters.tsx  (1)
+    :151  [raw-dimension-prop:raw numeric dimension/size prop]  "w={16}"
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 1 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    raw-dimension-prop   1
+
+❌  check:design-tokens STRICT — 1 raw style-value violation(s) + 0 stale-marker(s) found.
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT_CODE=1

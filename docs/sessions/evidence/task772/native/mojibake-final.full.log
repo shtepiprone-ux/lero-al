@@ -1,0 +1,15 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=npm.cmd run check:mojibake
+note=final fixed-code state, re-run after all task772 evidence files exist (BOM stripped from this directory's own .log files)
+---
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 3635 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 3635 files
+---
+exit_code=0

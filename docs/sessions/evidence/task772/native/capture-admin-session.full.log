@@ -1,0 +1,32 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=npm.cmd run capture:admin-session
+note=real login via existing scripts/capture-admin-session.mjs precedent tool; output written to git-ignored playwright/.auth/admin-storage-state.json; no credential is captured in this transcript (the script itself masks the email and never logs the password)
+---
+
+> lero-al@0.1.0 capture:admin-session
+> node scripts/capture-admin-session.mjs
+
+
+🔐 capture-admin-session
+   Target:  http://127.0.0.1:3000
+   Email:   agr***
+   Output:  C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json
+
+   [1/4] Navigating to app…
+   [2/4] Opening login form…
+   [3/4] Filling credentials…
+   [4/4] Waiting for authentication…
+
+✅ Admin session captured (1 auth cookie(s))
+   Saved to: C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json
+
+   Next step — run the admin hydration check:
+   HYDRATION_GATE_STORAGE_STATE=C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json \
+     HYDRATION_ADMIN_USER_ID=<real-uuid> \
+     BASE_URL=http://127.0.0.1:3000 \
+     npm run check:hydration -- --with-admin
+
+---
+exit_code=0

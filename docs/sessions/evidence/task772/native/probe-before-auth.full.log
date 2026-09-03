@@ -1,0 +1,53 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=node.exe scripts/task772-listings-overflow-probe.mjs before
+BASE_URL=http://127.0.0.1:3000
+TASK772_AUTH_STORAGE_STATE=C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json
+note=code state: UNFIXED (unmodified ListingsSortBar.tsx) — authenticated before-run
+---
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task772\overflow.before.json
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task772\auth-state.before.txt
+
+Anonymous cells measured: 22
+Anonymous cells overflowing: 16
+Anonymous cells failed (hard): 0
+Auth state: AUTH_STATE_VALID
+Authenticated cells measured: 22
+Authenticated cells overflowing: 9
+Authenticated cells failed (hard): 0
+Interaction cell: ok
+Negative-flow cells failed (hard): 0
+
+Overflowing anonymous cells:
+  mobile-default 320xsq: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  mobile-default 320xen: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  mobile-default 320xuk: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  mobile-default 320xit: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  mobile-default 375xsq: scrollWidth=507 clientWidth=375 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":507,"width":140,"overflowBy":132}
+  mobile-default 375xen: scrollWidth=507 clientWidth=375 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":507,"width":140,"overflowBy":132}
+  mobile-default 375xuk: scrollWidth=507 clientWidth=375 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":507,"width":140,"overflowBy":132}
+  mobile-default 375xit: scrollWidth=507 clientWidth=375 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":507,"width":140,"overflowBy":132}
+  mobile-default 390xsq: scrollWidth=522 clientWidth=390 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":522,"width":140,"overflowBy":132}
+  mobile-default 390xen: scrollWidth=522 clientWidth=390 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":522,"width":140,"overflowBy":132}
+  mobile-default 390xuk: scrollWidth=522 clientWidth=390 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":522,"width":140,"overflowBy":132}
+  mobile-default 390xit: scrollWidth=522 clientWidth=390 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":522,"width":140,"overflowBy":132}
+  longest-label 320xsq?sort=price_desc: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  longest-label 320xen?sort=price_desc: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  longest-label 320xuk?sort=price_desc: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+  longest-label 320xit?sort=price_desc: scrollWidth=452 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":452,"width":140,"overflowBy":132}
+
+Overflowing authenticated cells:
+  mobile-default 320xsq: scrollWidth=366 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":366,"width":140,"overflowBy":46} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  mobile-default 320xen: scrollWidth=366 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":366,"width":140,"overflowBy":46} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  mobile-default 320xuk: scrollWidth=366 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":366,"width":140,"overflowBy":46} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  mobile-default 320xit: scrollWidth=386 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":385.78125,"width":140,"overflowBy":65.78125} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  mobile-default 375xit: scrollWidth=386 clientWidth=375 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":385.78125,"width":140,"overflowBy":10.78125} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":343,"height":44,"top":236.5,"left":24,"right":367}}
+  longest-label 320xsq?sort=price_desc: scrollWidth=392 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":392.40625,"width":140,"overflowBy":72.40625} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  longest-label 320xen?sort=price_desc: scrollWidth=377 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":377.265625,"width":140,"overflowBy":57.265625} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  longest-label 320xuk?sort=price_desc: scrollWidth=367 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":367.171875,"width":140,"overflowBy":47.171875} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+  longest-label 320xit?sort=price_desc: scrollWidth=391 clientWidth=320 widest={"tag":"div","className":"relative w-auto min-w-35","testId":"combobox","right":391.0625,"width":140,"overflowBy":71.0625} saveSearchButton={"selector":"button:has(svg.lucide-bookmark)","found":true,"rect":{"width":288,"height":44,"top":236.5,"left":24,"right":312}}
+
+✅ task772-listings-overflow-probe: all branches captured cleanly (overflow is data, not a hard failure — see JSON).
+---
+exit_code=0

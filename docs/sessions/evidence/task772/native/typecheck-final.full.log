@@ -1,0 +1,8 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=npx.cmd tsc --noEmit
+note=final fixed-code state
+---
+---
+exit_code=0

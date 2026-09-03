@@ -1,0 +1,33 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=node.exe scripts/task772-inspect-auth-tmp.mjs
+note=diagnostic: confirms SaveSearchButton is attached+computed-visible but occluded in paint order by the positioned Combobox wrapper, at 320px authenticated, fixed code
+---
+{
+  "btnRect": {
+    "x": 24,
+    "y": 236.5,
+    "w": 288,
+    "h": 44
+  },
+  "svgRect": {
+    "x": 160,
+    "y": 250.5,
+    "w": 16,
+    "h": 16
+  },
+  "svgVisibility": "visible",
+  "svgDisplay": "block",
+  "btnBackground": "oklch(0.985 0 0)",
+  "btnBorderColor": "oklch(0.922 0 0)",
+  "justifyContent": "center",
+  "alignItems": "center",
+  "topElementAtIconCenter": {
+    "tag": "SPAN",
+    "className": "flex-1 min-w-0 truncate",
+    "isBookmarkSvgOrAncestor": false
+  }
+}
+---
+exit_code=0

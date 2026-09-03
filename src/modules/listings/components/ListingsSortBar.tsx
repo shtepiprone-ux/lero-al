@@ -62,7 +62,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
         <Button
           variant="outline"
           size="lg"
-          className="md:hidden px-3 rounded-xl relative gap-1.5"
+          className="md:hidden px-3 rounded-xl relative gap-1.5 max-sm:w-auto"
           onClick={onFiltersOpen}
         >
           <SlidersHorizontal className="h-4 w-4" />
@@ -82,6 +82,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           variant="button"
           size="sm"
           className="w-auto min-w-35"
+          triggerClassName="max-sm:min-h-11"
         />
 
         {/* Grid / List toggle */}

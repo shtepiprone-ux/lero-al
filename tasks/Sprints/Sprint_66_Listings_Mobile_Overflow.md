@@ -46,7 +46,7 @@ modelled on `scripts/task766-route-shell-probe.mjs`, which exists for the same r
 
 | # | Title | Priority | State |
 |---|---|---|---|
-| **772** | `ListingsSortBar` mobile overflow — bounded layout fix plus route-level proof | **P1** | **KICKOFF FILED** 2026-08-27, **revised 2026-09-02** (pre-dispatch accuracy pass — kickoff §16; scope and QA profile unchanged) — `Sprint_66_kickoff_prompt_Task_772_ListingsSortBar_Mobile_Overflow.md` |
+| **772** | `ListingsSortBar` mobile overflow — bounded layout fix plus route-level proof | **P1** | **`APPROVED`** 2026-09-03 (orchestrator review) — executor status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Anonymous matrix 16/22 → 0/22; authenticated matrix (real validated storage state) 9/22 → 0/22; build, tsc and mojibake exit 0 with `platform=win32` receipts. Scope held to two call-site lines in `ListingsSortBar.tsx`. A pre-existing `SaveSearchButton` occlusion is recorded as a **non-blocking, out-of-scope finding** with no task number (owner decision 2026-09-03). Session log: `docs/sessions/2026-09-02-task772-listings-mobile-overflow.md`. |
 
 ## Execution order
 

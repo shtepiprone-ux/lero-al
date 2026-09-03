@@ -1,0 +1,4247 @@
+{
+  "label": "after",
+  "baseUrl": "http://127.0.0.1:3000",
+  "capturedAt": "2026-09-03T08:00:54.080Z",
+  "cells": [
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 68.921875,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 84.921875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 156
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 164,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.03125,
+        "width": 189.21875,
+        "overflowBy": 19.03125
+      }
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 75.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 156
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 164,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 86,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 102
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 114,
+          "right": 156
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 164,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.890625,
+        "width": 142.03125,
+        "overflowBy": 19.890625
+      }
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 66.203125,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 82.203125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 236,
+          "left": 94.21875,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 94.21875,
+          "right": 136.21875
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 236,
+          "left": 144.21875,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 68.921875,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 84.921875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 211
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 219,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 75.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 211
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 219,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 90.75,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 106.75
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 169,
+          "right": 211
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 219,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 66.203125,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 82.203125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 236,
+          "left": 149.21875,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 149.21875,
+          "right": 191.21875
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 236,
+          "left": 199.21875,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 374
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 68.921875,
+          "height": 20,
+          "top": 216,
+          "left": 16,
+          "right": 84.921875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 374
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 226
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 234,
+          "right": 374
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 374
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 20,
+          "top": 216,
+          "left": 16,
+          "right": 75.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 374
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 226
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 234,
+          "right": 374
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 374
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 90.75,
+          "height": 20,
+          "top": 216,
+          "left": 16,
+          "right": 106.75
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 374
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 184,
+          "right": 226
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 234,
+          "right": 374
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 374
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 66.203125,
+          "height": 20,
+          "top": 216,
+          "left": 16,
+          "right": 82.203125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 204,
+          "left": 164.21875,
+          "right": 374
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 164.21875,
+          "right": 206.21875
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 204,
+          "left": 214.21875,
+          "right": 374
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 768,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 720,
+          "height": 61,
+          "top": 347,
+          "left": 24,
+          "right": 744
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 367,
+          "left": 24,
+          "right": 141.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 359,
+          "left": 532,
+          "right": 744
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 359,
+          "left": 532,
+          "right": 672
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 359,
+          "left": 680,
+          "right": 744
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 960,
+          "height": 61,
+          "top": 295,
+          "left": 32,
+          "right": 992
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 315,
+          "left": 32,
+          "right": 149.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 307,
+          "left": 780,
+          "right": 992
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 307,
+          "left": 780,
+          "right": 920
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 307,
+          "left": 928,
+          "right": 992
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "sq",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 136.578125,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 200.578125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1312,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 181.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1312,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "uk",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 143.65625,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 207.65625
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 1164,
+          "right": 1304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1312,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "it",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 123.6875,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 187.6875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 231.78125,
+          "height": 36,
+          "top": 255,
+          "left": 1144.21875,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 36,
+          "top": 255,
+          "left": 1144.21875,
+          "right": 1304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1312,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "sq",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.59375,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 75.59375
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 216.40625,
+          "height": 44,
+          "top": 236,
+          "left": 87.59375,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 87.59375,
+          "right": 129.59375
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 166.40625,
+          "height": 44,
+          "top": 236,
+          "left": 137.59375,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.03125,
+        "width": 189.21875,
+        "overflowBy": 19.03125
+      }
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "en",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 20,
+          "top": 248,
+          "left": 16,
+          "right": 75.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 201.265625,
+          "height": 44,
+          "top": 236,
+          "left": 102.734375,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 102.734375,
+          "right": 144.734375
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 151.265625,
+          "height": 44,
+          "top": 236,
+          "left": 152.734375,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "uk",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 84.828125,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 100.828125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 191.171875,
+          "height": 44,
+          "top": 236,
+          "left": 112.828125,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 112.828125,
+          "right": 154.828125
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 141.171875,
+          "height": 44,
+          "top": 236,
+          "left": 162.828125,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.890625,
+        "width": 142.03125,
+        "overflowBy": 19.890625
+      }
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "it",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 60.9375,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 76.9375
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 215.0625,
+          "height": 44,
+          "top": 236,
+          "left": 88.9375,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 88.9375,
+          "right": 130.9375
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 165.0625,
+          "height": 44,
+          "top": 236,
+          "left": 138.9375,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    }
+  ],
+  "interaction": {
+    "kind": "interaction",
+    "width": 375,
+    "locale": "en",
+    "ok": true,
+    "waitConditionUsed": "fixed 500ms post-load delay before interacting, to let MantineDrawer's isMobile useEffect settle",
+    "filtersDrawerOpened": true,
+    "sortUrlUpdated": true,
+    "finalUrl": "http://127.0.0.1:3000/en/listings?sort=price_asc"
+  },
+  "negativeFlow": [
+    {
+      "kind": "negative-flow-total-0",
+      "width": 375,
+      "height": 812,
+      "locale": "en",
+      "query": "?price_min=40001",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "0 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 284,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 20,
+          "top": 308,
+          "left": 16,
+          "right": 75.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 296,
+          "left": 169,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 296,
+          "left": 169,
+          "right": 211
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 296,
+          "left": 219,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null,
+      "seedDataFilters": {
+        "totalListings": 2,
+        "maxPrice": 40000,
+        "zeroResultsQuery": "?price_min=40001",
+        "oneResultQuery": "?property_type=house",
+        "oneResultQueryError": null
+      }
+    },
+    {
+      "kind": "negative-flow-total-1",
+      "width": 375,
+      "height": 812,
+      "locale": "en",
+      "query": "?property_type=house",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "1 listing",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 69,
+          "top": 284,
+          "left": 16,
+          "right": 359
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 52.359375,
+          "height": 20,
+          "top": 308,
+          "left": 16,
+          "right": 68.359375
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 296,
+          "left": 169,
+          "right": 359
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 296,
+          "left": 169,
+          "right": 211
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 296,
+          "left": 219,
+          "right": 359
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null,
+      "seedDataFilters": {
+        "totalListings": 2,
+        "maxPrice": 40000,
+        "zeroResultsQuery": "?price_min=40001",
+        "oneResultQuery": "?property_type=house",
+        "oneResultQueryError": null
+      }
+    }
+  ],
+  "authCells": [
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.03125,
+        "width": 189.21875,
+        "overflowBy": 19.03125
+      }
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.890625,
+        "width": 142.03125,
+        "overflowBy": 19.890625
+      }
+    },
+    {
+      "kind": "mobile-default",
+      "width": 320,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 237.78125
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 237.78125
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 367
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 367
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 367
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 375,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 237.78125
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 237.78125
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 343,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 367
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "sq",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 206,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 44,
+          "top": 204.5,
+          "left": 24,
+          "right": 382
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 206,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 44,
+          "top": 204.5,
+          "left": 24,
+          "right": 382
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "uk",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 206,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 190,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 218
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 44,
+          "top": 204,
+          "left": 78,
+          "right": 218
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 44,
+          "top": 204.5,
+          "left": 24,
+          "right": 382
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "mobile-default",
+      "width": 390,
+      "height": 812,
+      "locale": "it",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 192,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 206,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 209.78125,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 237.78125
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 204,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 44,
+          "top": 204,
+          "left": 78,
+          "right": 237.78125
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 358,
+          "height": 44,
+          "top": 204.5,
+          "left": 24,
+          "right": 382
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 768,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 579.6875,
+          "height": 61,
+          "top": 347,
+          "left": 24,
+          "right": 603.6875
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 367,
+          "left": 24,
+          "right": 141.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 359,
+          "left": 391.6875,
+          "right": 603.6875
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 359,
+          "left": 391.6875,
+          "right": 531.6875
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 359,
+          "left": 539.6875,
+          "right": 603.6875
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 132.3125,
+          "height": 36,
+          "top": 359.5,
+          "left": 611.6875,
+          "right": 744
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1024,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 819.6875,
+          "height": 61,
+          "top": 295,
+          "left": 32,
+          "right": 851.6875
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 315,
+          "left": 32,
+          "right": 149.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 307,
+          "left": 639.6875,
+          "right": 851.6875
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 307,
+          "left": 639.6875,
+          "right": 779.6875
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 307,
+          "left": 787.6875,
+          "right": 851.6875
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 132.3125,
+          "height": 36,
+          "top": 307.5,
+          "left": 859.6875,
+          "right": 992
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "sq",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1158.1875,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1222.1875
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 136.578125,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 200.578125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 1010.1875,
+          "right": 1222.1875
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 1010.1875,
+          "right": 1150.1875
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1158.1875,
+          "right": 1222.1875
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 145.8125,
+          "height": 36,
+          "top": 255.5,
+          "left": 1230.1875,
+          "right": 1376
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1171.6875,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1235.6875
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 117.53125,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 181.53125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 1023.6875,
+          "right": 1235.6875
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 1023.6875,
+          "right": 1163.6875
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1171.6875,
+          "right": 1235.6875
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 132.3125,
+          "height": 36,
+          "top": 255.5,
+          "left": 1243.6875,
+          "right": 1376
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "uk",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1134.578125,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1198.578125
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 143.65625,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 207.65625
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 36,
+          "top": 255,
+          "left": 986.578125,
+          "right": 1198.578125
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 140,
+          "height": 36,
+          "top": 255,
+          "left": 986.578125,
+          "right": 1126.578125
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1134.578125,
+          "right": 1198.578125
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 169.421875,
+          "height": 36,
+          "top": 255.5,
+          "left": 1206.578125,
+          "right": 1376
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "it",
+      "query": "",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1166.9375,
+          "height": 61,
+          "top": 243,
+          "left": 64,
+          "right": 1230.9375
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 123.6875,
+          "height": 20,
+          "top": 263,
+          "left": 64,
+          "right": 187.6875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 231.78125,
+          "height": 36,
+          "top": 255,
+          "left": 999.15625,
+          "right": 1230.9375
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 159.78125,
+          "height": 36,
+          "top": 255,
+          "left": 999.15625,
+          "right": 1158.9375
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 64,
+          "height": 36,
+          "top": 255,
+          "left": 1166.9375,
+          "right": 1230.9375
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 137.0625,
+          "height": 36,
+          "top": 255.5,
+          "left": 1238.9375,
+          "right": 1376
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "sq",
+      "query": "?sort=price_desc",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 njoftime",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 216.40625,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 244.40625
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 166.40625,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 244.40625
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.03125,
+        "width": 189.21875,
+        "overflowBy": 19.03125
+      }
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "en",
+      "query": "?sort=price_desc",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 listings",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 201.265625,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 229.265625
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 151.265625,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 229.265625
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": null
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "uk",
+      "query": "?sort=price_desc",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 оголошень",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 191.171875,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 219.171875
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 141.171875,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 219.171875
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": {
+        "tag": "button",
+        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "testId": null,
+        "right": 339.890625,
+        "width": 142.03125,
+        "overflowBy": 19.890625
+      }
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "it",
+      "query": "?sort=price_desc",
+      "authState": "authenticated",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "saveSearchButtonAttached": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": "2 annunci",
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 69,
+          "top": 224,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 40,
+          "top": 238,
+          "left": 16,
+          "right": 16
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 215.0625,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 243.0625
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar button.md\\:hidden",
+        "found": true,
+        "rect": {
+          "width": 42,
+          "height": 44,
+          "top": 236,
+          "left": 28,
+          "right": 70
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "found": true,
+        "rect": {
+          "width": 165.0625,
+          "height": 44,
+          "top": 236,
+          "left": 78,
+          "right": 243.0625
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": {
+        "selector": "button:has(svg.lucide-bookmark)",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 44,
+          "top": 236.5,
+          "left": 24,
+          "right": 312
+        }
+      },
+      "widestOverflow": null
+    }
+  ],
+  "authState": {
+    "status": "AUTH_STATE_VALID",
+    "storageStatePath": "C:\\Claude_Code_Projects\\lero-al\\playwright\\.auth\\admin-storage-state.json"
+  }
+}

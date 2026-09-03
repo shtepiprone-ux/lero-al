@@ -1,0 +1,9 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=node.exe scripts/task772-verify-auth-state-tmp.mjs
+TASK772_AUTH_STORAGE_STATE=C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json
+---
+SaveSearchButton ATTACHED — storage state is valid
+---
+exit_code=0

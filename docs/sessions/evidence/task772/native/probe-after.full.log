@@ -1,0 +1,21 @@
+platform=win32
+node_version=v22.22.3
+cwd=C:\Claude_Code_Projects\lero-al
+command=node.exe scripts/task772-listings-overflow-probe.mjs after
+BASE_URL=http://127.0.0.1:3000
+TASK772_AUTH_STORAGE_STATE=
+---
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task772\overflow.after.json
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task772\auth-state.after.txt
+
+Anonymous cells measured: 22
+Anonymous cells overflowing: 0
+Anonymous cells failed (hard): 0
+Auth state: AUTH_STATE_UNAVAILABLE
+Authenticated cells measured: 0
+Interaction cell: ok
+Negative-flow cells failed (hard): 0
+
+✅ task772-listings-overflow-probe: all branches captured cleanly (overflow is data, not a hard failure — see JSON).
+---
+exit_code=0

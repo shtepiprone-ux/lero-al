@@ -1,6 +1,6 @@
 # Sprint 69 — `/listings` finishes the Mantine migration
 
-**Opened:** 2026-09-03 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0
+**Opened:** 2026-09-03 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 · **Active tasks:** 2
 
 > **Opened by owner instruction, 2026-09-03.** The owner asked for the remaining `/listings` Mantine
 > migration to be filed as **one** task. The first placement instruction named **Sprint 66**; the same
@@ -33,6 +33,10 @@ No open sprint fits under the owner's placement instruction. Opened 69.
 `ListingsShellView` — move to Mantine behind canonical `Patterns/Mantine/*` stories, with **zero** change to
 the route's URL contract, data loading, restore, favorites or currency behavior.
 
+Task 783 is a deliberately narrow post-migration correction within the existing Mantine `ListingsFilterBar`: its
+Advanced filters count must use the already-canonical inline count pattern, not an overhanging `Indicator`. It does
+not reopen the migration or add a sixth surface.
+
 The narrower point this sprint exists to prove: **a migration that changes the DOM also changes what the
 route's own evidence tooling can see.** Sprint 66's Task 772 and Sprint 68's Task 775 both left retained route
 probes whose locators are Tailwind- and shadcn-derived (`button.md\:hidden`, `[data-testid="combobox"]`,
@@ -49,8 +53,9 @@ discipline, not the component diff.
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **781** | `/listings` Mantine surface completion — status tabs, filter chips, action row and shell presentation, in four gated phases | **P2** | **Q3** | 🟡 **PARTIALLY VERIFIED** (Opus, 2026-09-03). Migration itself sound: R1–R4 · AC6/AC7/AC10/AC14 `VERIFIED`; manifest 22→27; owner-run native `build` 0, `check:design-tokens` 0, `build-storybook` 0. **AC7 independently recomputed by the reviewer** from `overflow.after.json`: 0/44 overflow, 0/22 sort↔save rect overlaps, `AUTH_STATE_VALID`. Rendered matrix **owner-waived** (D69-10). Open: F3 · F4 (P1), F5–F10 (P2), F11–F12 (P3) → all assigned to **782**. Session log `docs/sessions/2026-09-03-task781-…md`. |
-| **782** | Canonical Mantine dimension tokens, repo-wide raw-size sweep, and Task 781 review closure — five gated phases + revision round 1 | **P2** | **Q3** | 🔴 **NEEDS REVISION** (Opus, 2026-09-03). Phases 1-4 verified and stand: `theme.other.iconSize`/`.boxSize` typed scale, `ThemeIcon` project keys, full sweep (`check:design-tokens` 86→0), new `raw-dimension-prop` detector with a genuine two-armed plant, F3-F12 closed bar the route-probe pair. Blocking: **V1** the session log/backlog misreport the 145 FAIL split (81 full-width vs **64** `page.goto` timeouts on this task's own edited `AuthSheet`); **V2** AC14 `P\B=∅` unproduced (reviewer's byte-differential closes 101 of 178 cells); **V3** AC2 has no computed-pixel capture. Added by owner: **V4/F13** the `Badge circle` counter defect (D69-13). Revision items: kickoff §12a. |
+| **781** | `/listings` Mantine surface completion — status tabs, filter chips, action row and shell presentation, in four gated phases | **P2** | **Q3** | 🗄️ **ARCHIVED** (2026-09-03). Its committed migration remains historically `PARTIALLY VERIFIED` under D69-11; its session log records the evidence and the owner override. |
+| **782** | Canonical Mantine dimension tokens, repo-wide raw-size sweep, and Task 781 review closure — five gated phases + revision round 1 | **P2** | **Q3** | 🟡 **IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW** for **F13 only**. The canonical mobile Filters counter revision is complete; owner visual review remains required. |
+| **783** | Canonical inline counter for `ListingsFilterBar` Advanced filters | **P2** | **Q2** | 🟡 **KICKOFF FILED**. Existing `MantineCountButton` story/source first; then replace the production `Indicator` composition and prove real filter-engine counts 0/1/12. |
 
 ## Execution order
 
@@ -65,9 +70,9 @@ Order and gating only — read state from the Tasks table above.
 2. **782** after 781 is committed. It establishes the token scale the sweep needs, sweeps all 129 raw
    `size={N}` sites repo-wide, adds the detector that keeps them converted, and closes every open finding from
    781's review. Owner decision **D69-7** made it one task rather than a `/listings`-scoped slice.
-3. Nothing else is in this sprint. The route-level cutover inventory the owner's plan lists as step 5 is
-   folded into 781's AC10, because after Phase 4 there is nothing left on the route for a separate task to
-   inventory.
+3. **783** starts only after the current Task 782 F13 diff is committed. It is a frontend-only corrective slice:
+   use the existing canonical `MantineCountButton` in `ListingsFilterBar`, retain its URL contract, and visually
+   inspect the real stories. It neither reopens 781 nor performs another migration inventory.
 
 ## Preconditions
 
@@ -130,6 +135,7 @@ Order and gating only — read state from the Tasks table above.
 | **D69-11** | **Owner override, 2026-09-03 — Task 781 is committed at `PARTIALLY VERIFIED`.** Owner: *«я комічу Task 781 як є»*. This overrides the fail-closed rule in `docs/orchestrator-procedures.md` → Approval-closure gate, which otherwise forbids a commit handoff for a non-approved decision. **What the override does and does not cover:** it authorizes the **commit only**. No `git push` is authorized — a push remains gated on an `APPROVED` / `APPROVED WITH NOTES` verdict, and none was issued. The twelve findings stay open and are Task **782**'s scope (D69-9); committing does not close them, and 781 is **not** archived. The reason the owner chose this over starting 782 on a dirty tree: D68-2's baseline **B** cannot be clean while 781's diff is uncommitted, and a dirty-worktree manifest for 34 entries costs more than it proves. | Owner, 2026-09-03 |
 | **D69-12** | **Owner triage of Task 782's 145 FAIL visual-matrix cells (2026-09-03).** All accepted as non-defects: 64 = Cloudflare Turnstile (`CaptchaWidget`) keeping `networkidle` from settling on the 4 AuthSheet stories that render it — correlation exact 6/6 against the 2 captcha-free ones; 65 = the mobile «Filters» trigger's deliberate `flex="1 1 auto"` row (781R), owner: *«Візуально все добре»*; 16 = `AuthSheet.stories.tsx`'s own disabled decoy button, not production UI. Triage artifact: `.screenshots/rendered-assert/2026-09-03T17-44/triage-fail-ambiguous.html`. **Consequence to plan for:** the 64 Turnstile timeouts will recur on every future full run until the harness stops waiting for `networkidle` on captcha stories — unfiled, owner not yet asked. | Owner, 2026-09-03 |
 | **D69-13** | **The `Badge circle` counter defect is folded into Task 782's revision rather than a separate task**, overriding 782 §8's bar on reopening 781 components. Owner, 2026-09-03: *«Counter схоже захардкоджений… Це треба виправити»* → «Додати в ревізію 782». Scope is exactly `ListingsSortBar.tsx`'s counter plus its stale doc comment and test title; no other 781 component reopens. Tracked as F13/R16/AC16. | Owner, 2026-09-03 |
+| **D69-14** | **`ListingsFilterBar` has the same, distinct `Indicator` counter defect and is Task 783, not a reopening of 782.** Owner, 2026-09-03, supplied the observed `Patterns/Mantine/ListingsFilterBar` mobile story and directed a separate, narrow frontend task in Sprint 69. The solution must consume the pre-existing canonical `MantineCountButton`; no new primitive, theme contract, filter semantics or screenshot-harness work is authorized. | Owner, 2026-09-03 |
 | **D775-A** *(inherited)* | Layout uses **Mantine responsive props only**, top step at `xxl = 1440`. **1536 is used nowhere** — not a Mantine breakpoint, not a CSS-module media query. | Owner, 2026-08-30 |
 | **D775-B** *(inherited)* | Migrated chrome takes the measured **TailAdmin** contract rather than preserving a legacy deviation inside a new Mantine component. A resulting visual delta is an accepted migration outcome to be **recorded**, not a regression — and not a licence to invent a value. | Owner, 2026-08-30 |
 | **D775-C** *(inherited)* | A migrated surface consumes **Mantine tokens only**. A raw value, a `design-tokens-allow:` marker or a `--space-*` reference in a migrated file is a rejected diff, not a note. The spacing scale's `2xl: '2rem'` / `3xl: '3rem'` keys are native Mantine types. | Owner, 2026-08-30 |

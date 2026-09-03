@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, ThemeIcon } from '@mantine/core'
+import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, ThemeIcon, useMantineTheme } from '@mantine/core'
 import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
 
 export interface MantineListingContactAgent {
@@ -83,6 +83,7 @@ export function MantineListingContactPattern({
   inquiryTrigger,
   reportTrigger,
 }: MantineListingContactPatternProps) {
+  const theme = useMantineTheme()
   const dimmed = state === 'ownerDeleted' || state === 'guestCta' || state === 'ownerUnavailable'
 
   return (
@@ -90,7 +91,7 @@ export function MantineListingContactPattern({
       <Stack gap="md">
         <Group gap="sm" wrap="nowrap" style={dimmed ? { opacity: 0.5 } : undefined}>
           <Avatar src={state === 'ownerDeleted' ? null : agent.avatarUrl} radius="xl" size="lg" color="brand">
-            {state === 'ownerDeleted' ? <UserX size={20} /> : agent.initials}
+            {state === 'ownerDeleted' ? <UserX size={theme.other.iconSize.roomy} /> : agent.initials}
           </Avatar>
           <Stack gap={2} style={{ flex: 1, minWidth: 0 }}>
             <Group gap={6} wrap="nowrap">
@@ -125,17 +126,17 @@ export function MantineListingContactPattern({
         <Divider />
 
         {state === 'ownerDeleted' && (
-          <NoticeBox icon={<UserX size={20} />} title={labels.deletedTitle} desc={labels.deletedDesc} />
+          <NoticeBox icon={<UserX size={theme.other.iconSize.roomy} />} title={labels.deletedTitle} desc={labels.deletedDesc} />
         )}
 
         {state === 'ownerUnavailable' && (
-          <NoticeBox icon={<UserX size={20} />} desc={labels.unavailableDesc} />
+          <NoticeBox icon={<UserX size={theme.other.iconSize.roomy} />} desc={labels.unavailableDesc} />
         )}
 
         {state === 'guestCta' && (
           <Stack gap="sm">
-            <NoticeBox icon={<LogIn size={20} />} title={labels.guestTitle} desc={labels.guestDesc} />
-            <Button color="brand" fullWidth onClick={onLogin} leftSection={<LogIn size={16} />}>
+            <NoticeBox icon={<LogIn size={theme.other.iconSize.roomy} />} title={labels.guestTitle} desc={labels.guestDesc} />
+            <Button color="brand" fullWidth onClick={onLogin} leftSection={<LogIn size={theme.other.iconSize.standard} />}>
               {labels.loginCta}
             </Button>
           </Stack>
@@ -153,7 +154,7 @@ export function MantineListingContactPattern({
               <Button
                 color="brand"
                 onClick={onCall}
-                leftSection={<Phone size={18} />}
+                leftSection={<Phone size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
@@ -164,7 +165,7 @@ export function MantineListingContactPattern({
               <Button
                 color="green"
                 onClick={onWhatsApp}
-                leftSection={<MessageCircle size={18} />}
+                leftSection={<MessageCircle size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
@@ -184,7 +185,7 @@ export function MantineListingContactPattern({
           <Button
             variant="default"
             onClick={onShare}
-            leftSection={<Share2 size={16} />}
+            leftSection={<Share2 size={theme.other.iconSize.standard} />}
             fullWidth
           >
             {labels.share}
@@ -222,9 +223,10 @@ export function MantineListingContactPattern({
 }
 
 function CheckIconBadge({ label }: { label: string }) {
+  const theme = useMantineTheme()
   return (
     <ThemeIcon size="sm" radius="xl" color="brand" variant="light" aria-label={label}>
-      <CheckCircle size={12} />
+      <CheckCircle size={theme.other.iconSize.badge} />
     </ThemeIcon>
   )
 }

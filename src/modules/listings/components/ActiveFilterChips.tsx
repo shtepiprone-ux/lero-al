@@ -3,7 +3,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
-import { Button, Group } from '@mantine/core'
+import { Button, Group, useMantineTheme } from '@mantine/core'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -27,6 +27,7 @@ function fmt(n: number) {
 export function ActiveFilterChips({ locations }: Props) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
+  const theme = useMantineTheme()
   const { propertyTypes } = usePropertyTypes()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -191,7 +192,7 @@ export function ActiveFilterChips({ locations }: Props) {
           radius="pill"
           size="xs"
           onClick={() => removeChip(chip)}
-          rightSection={<X size={12} aria-hidden="true" />}
+          rightSection={<X size={theme.other.iconSize.badge} aria-hidden="true" />}
           aria-label={`${chip.label} — ${t('aria_remove_filter')}`}
         >
           {chip.label}

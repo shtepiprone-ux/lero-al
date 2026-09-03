@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Text, Button, Loader, Alert, Center, ThemeIcon } from '@mantine/core'
+import { Stack, Text, Button, Loader, Alert, Center, ThemeIcon, useMantineTheme } from '@mantine/core'
 
 export type StateType = 'empty' | 'loading' | 'error'
 
@@ -33,6 +33,7 @@ export function MantineEmptyLoadingErrorState({
   actionLabel,
   onAction,
 }: MantineEmptyLoadingErrorStateProps) {
+  const theme = useMantineTheme()
   if (state === 'loading') {
     return (
       <Center py="xl" style={{ minHeight: 200 }}>
@@ -82,8 +83,8 @@ export function MantineEmptyLoadingErrorState({
   // empty state
   return (
     <Center py="xl" style={{ minHeight: 200 }}>
-      <Stack align="center" gap="md" maw={360}>
-        <ThemeIcon size={48} radius="xl" color="gray" variant="light">
+      <Stack align="center" gap="md" maw={theme.other.boxSize.emptyState}>
+        <ThemeIcon size="hero" radius="xl" color="gray" variant="light">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3 7h18M3 12h18M3 17h18" />
           </svg>

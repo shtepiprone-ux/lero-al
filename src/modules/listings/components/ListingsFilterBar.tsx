@@ -35,7 +35,7 @@
 
 import { SlidersHorizontal, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Box, Button, Divider, Group, Indicator, Stack } from '@mantine/core'
+import { Box, Button, Divider, Group, Indicator, Stack, useMantineTheme } from '@mantine/core'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
@@ -53,6 +53,7 @@ const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
 
   const {
     get, updateParams, handlePropertyTypeChange,
@@ -139,7 +140,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
               variant="subtle"
               color="gray"
               w={FULL_BELOW_SM}
-              leftSection={<X size={14} />}
+              leftSection={<X size={theme.other.iconSize.compact} />}
               onClick={resetFilters}
             >
               {tc('reset_filters')}
@@ -153,7 +154,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
               data-testid="task775-advanced-filters"
               variant="default"
               w={FULL_BELOW_SM}
-              leftSection={<SlidersHorizontal size={14} />}
+              leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
               onClick={onFiltersOpen}
             >
               {tc('advanced_filters')}

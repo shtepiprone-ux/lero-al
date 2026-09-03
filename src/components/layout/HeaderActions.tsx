@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { ActionIcon, Button, Group } from '@mantine/core'
+import { ActionIcon, Button, Group, useMantineTheme } from '@mantine/core'
 import { Heart } from 'lucide-react'
 
 export interface HeaderActionsProps {
@@ -16,6 +16,7 @@ export interface HeaderActionsProps {
 
 export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, notificationSlot }: HeaderActionsProps) {
   const t = useTranslations('nav')
+  const theme = useMantineTheme()
 
   return (
     <>
@@ -31,7 +32,7 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
           miw="2.75rem"
           aria-label={t('favorites')}
         >
-          <Heart size={20} />
+          <Heart size={theme.other.iconSize.roomy} />
         </ActionIcon>
       ) : (
         <ActionIcon
@@ -41,7 +42,7 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
           aria-label={t('favorites')}
           onClick={() => onOpenAuth('login')}
         >
-          <Heart size={20} />
+          <Heart size={theme.other.iconSize.roomy} />
         </ActionIcon>
       )}
 

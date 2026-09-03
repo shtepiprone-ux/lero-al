@@ -11,7 +11,7 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Alert, Box, Button, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+import { Alert, Box, Button, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { MantineAddItemPanel, MantineCombobox, MantineDrawer } from '@/design-system/mantine/patterns'
 import styles from './AuthSheet.module.css'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
@@ -191,6 +191,7 @@ function ForgotPasswordView({
 }) {
   const t = useTranslations('auth')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -221,7 +222,7 @@ function ForgotPasswordView({
   if (submitted) {
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
-        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+        <CheckCircle2 size={theme.other.iconSize.hero} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
         <Text component="h3" fw={600} size="lg" lh={1.25}>{t('forgot_password_success_title')}</Text>
         <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('forgot_password_success_body')}</Text>
         <button
@@ -322,6 +323,7 @@ function CompanyField({
   addNewLabel: string
 }) {
   const t = useTranslations('auth')
+  const theme = useMantineTheme()
   const tc = useTranslations('common')
   const { companies, refetch } = useCompanies()
   const logoInputRef = useRef<HTMLInputElement>(null)
@@ -468,7 +470,7 @@ function CompanyField({
                 />
               ) : (
                 <div className={styles.logoPlaceholder}>
-                  <ImagePlus size={16} style={{ color: 'var(--muted-foreground)' }} />
+                  <ImagePlus size={theme.other.iconSize.standard} style={{ color: 'var(--muted-foreground)' }} />
                 </div>
               )}
               <Button
@@ -584,6 +586,7 @@ function RegisterView({
   const t = useTranslations('auth')
   const tc = useTranslations('common')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const [name, setName] = useState(initialShared?.name ?? '')
   const [email, setEmail] = useState(initialShared?.email ?? '')
   const [phone, setPhone] = useState<PhoneFieldValue>(initialShared?.phone ?? DEFAULT_PHONE_VALUE)
@@ -650,7 +653,7 @@ function RegisterView({
   if (success) {
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
-        <CheckCircle2 size={48} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
+        <CheckCircle2 size={theme.other.iconSize.hero} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
         <Text component="h3" fw={600} size="lg" lh={1.25}>{t('register_success_title')}</Text>
         <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('register_success_body')}</Text>
         <Button fullWidth mt="xs" onClick={onClose}>

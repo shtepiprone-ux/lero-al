@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { RotateCcw } from 'lucide-react'
-import { Button, TextInput, Group, Text, Badge, Stack, SimpleGrid, Flex } from '@mantine/core'
+import { Button, TextInput, Group, Text, Badge, Stack, SimpleGrid, Flex, useMantineTheme } from '@mantine/core'
 import { MantineDrawer, MantineCountButton, RangeDatePicker, MantineFilterSection } from '@/design-system/mantine/patterns'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
 export type { FilterValues }
@@ -48,6 +48,7 @@ const SECTION_ORDER = [
 export function FiltersPanel({ open, onClose, values, onChange, onApply, locations }: FiltersPanelProps) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
+  const theme = useMantineTheme()
 
   const {
     local, update,
@@ -111,7 +112,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           <MantineCountButton fullWidth count={activeCount} onClick={handleApply}>
             {t('apply_filters')}
           </MantineCountButton>
-          <Button variant="default" fullWidth leftSection={<RotateCcw size={16} />} onClick={handleReset}>
+          <Button variant="default" fullWidth leftSection={<RotateCcw size={theme.other.iconSize.standard} />} onClick={handleReset}>
             {t('reset_filters')}
           </Button>
         </Stack>

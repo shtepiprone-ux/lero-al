@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Skeleton } from '@mantine/core'
+import { Box, Skeleton, useMantineTheme } from '@mantine/core'
 
 /**
  * `HeroSearchClient`'s `ssr:false` `loading:` fallback, extracted into its own presentational
@@ -18,8 +18,9 @@ import { Box, Skeleton } from '@mantine/core'
  * `Skeleton`'s own `xl` theme default (Task 670 kickoff §10 I3).
  */
 export function HeroSearchFallback() {
+  const theme = useMantineTheme()
   return (
-    <Box maw={768} mx="auto" w="100%">
+    <Box maw={theme.other.boxSize.content} mx="auto" w="100%">
       <Skeleton data-testid="hero-search-fallback" radius="lg" h={{ base: 279, sm: 175, md: 123 }} />
     </Box>
   )

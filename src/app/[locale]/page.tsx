@@ -12,6 +12,13 @@ import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import { HowItWorksSteps } from '@/components/shared/HowItWorksSteps'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
+import { theme } from '@/design-system/mantine/theme'
+
+// Task 782 — Server Component (async, no client hooks available); see PopularLocationsView.tsx
+// for the `!` rationale (createTheme()'s own return type is deep-partial, not this project's
+// runtime guarantee).
+const iconSize = theme.other!.iconSize!
+const boxSize = theme.other!.boxSize!
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -28,11 +35,11 @@ export default async function HomePage() {
       {/* Task 770 — py base/md was @theme inline --space-16/--space-24 (§22.1) */}
       <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--homepage-runtime-space-16)', md: 'var(--homepage-runtime-space-24)' }}>
         <Box className="container-wide">
-          <Box maw={768} mx="auto" ta="center" mb={40}>
+          <Box maw={boxSize.content} mx="auto" ta="center" mb={40}>
             <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--homepage-runtime-font-size-3xl)', sm: 'var(--homepage-runtime-font-size-4xl)', md: 'var(--homepage-runtime-font-size-5xl)' }} mb="md">
               {t('hero_title')}
             </Title>
-            <Text c="white" fw={700} fz={{ base: 'var(--homepage-runtime-font-size-xl)', sm: 'var(--homepage-runtime-font-size-2xl)' }} maw={576} mx="auto">
+            <Text c="white" fw={700} fz={{ base: 'var(--homepage-runtime-font-size-xl)', sm: 'var(--homepage-runtime-font-size-2xl)' }} maw={boxSize.prose} mx="auto">
               {t('hero_subtitle')}
             </Text>
           </Box>
@@ -72,9 +79,9 @@ export default async function HomePage() {
 
       {/* ── Agent CTA ── */}
       <MantineHomeSection variant="brandFade" containIntrinsicSize="auto 280px">
-        <Box maw={672} mx="auto" ta="center">
+        <Box maw={boxSize.ctaSection} mx="auto" ta="center">
           <Box ta="center" mb="md">
-            <Building2 size={48} color="var(--mantine-color-brand-7)" />
+            <Building2 size={iconSize.hero} color="var(--mantine-color-brand-7)" />
           </Box>
           <Title order={2} fw={700} fz={SECTION_HEADING_FZ} mb="sm">
             {t('agent_cta_title')}

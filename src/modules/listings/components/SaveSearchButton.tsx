@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Bookmark } from 'lucide-react'
-import { Box, Button, Flex, Loader, TextInput } from '@mantine/core'
+import { Button, Flex, Loader, TextInput, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
 import { MantineModal } from '@/design-system/mantine/patterns'
 import { saveSavedSearch } from '@/modules/cabinet/actions'
@@ -14,6 +14,7 @@ const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 export function SaveSearchButton() {
   const t = useTranslations('saved_search')
+  const theme = useMantineTheme()
   const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
@@ -66,13 +67,18 @@ export function SaveSearchButton() {
 
   return (
     <>
+      {/* Task 782 F10 fix: below 640px this button was `w="100%"` (full-width) with its label
+          hidden via `visibleFrom="sm"` — an icon-only full-width button with no accessible visible
+          text, the opposite of the mobile filters trigger's convention (label always shown,
+          content-width). The label now always renders so a full-width control never ships without
+          it (agent-contract clause 11). */}
       <Button
         variant="default"
         w={{ base: '100%', sm: 'auto' }}
-        leftSection={<Bookmark size={16} />}
+        leftSection={<Bookmark size={theme.other.iconSize.standard} />}
         onClick={() => setOpen(true)}
       >
-        <Box component="span" visibleFrom="sm">{t('save_action')}</Box>
+        {t('save_action')}
       </Button>
 
       <MantineModal
@@ -88,7 +94,7 @@ export function SaveSearchButton() {
               w={FULL_BELOW_SM}
               onClick={handleSave}
               disabled={isPending}
-              leftSection={isPending ? <Loader size={14} color="white" /> : <Bookmark size={14} />}
+              leftSection={isPending ? <Loader size={theme.other.iconSize.compact} color="white" /> : <Bookmark size={theme.other.iconSize.compact} />}
             >
               {t('save')}
             </Button>

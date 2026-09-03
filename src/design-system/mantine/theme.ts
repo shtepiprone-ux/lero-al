@@ -10,6 +10,63 @@ declare module '@mantine/core' {
   export interface MantineThemeSizesOverride {
     spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl', string>
   }
+
+  // Task 782 (D69-6) — `theme.other` is an untyped `Record<string, any>` by Mantine's own default
+  // (verified: no `MantineThemeOther` augmentation existed anywhere in this file before this task),
+  // so a typo in a consumer (`theme.other.touchTarge`) silently resolves to `undefined` and renders a
+  // default-sized control with zero compile-time signal — exactly the failure this augmentation
+  // closes (R1/AC1). Every existing AND new `other` key is listed here, matching the
+  // `MantineThemeSizesOverride` precedent above (Task 775) of typing the WHOLE object, not just the
+  // keys a given task adds.
+  export interface MantineThemeOther {
+    touchTarget: string
+    mobileGate: string
+    // Icon/control dimension scale (Task 782, §3.1/§3.2) — the project's ONLY token source for a
+    // lucide `size` prop, a Mantine `Avatar`/`Loader` numeric `size`, or any other plain-number
+    // dimension prop. Named by role (Implementation requirement #3), not by pixel. `badge`/
+    // `standard`/`decorative` cite globals.css:294-296's own legacy `--icon-sm`/`--icon-md`/
+    // `--icon-lg` role comments as provenance (D775-C bars consuming those legacy tokens directly in
+    // a migrated file, but their ROLE naming is still the right provenance to cite). Values are plain
+    // numbers (px) — the exact convention a lucide `size` prop and every measured raw call site
+    // already used; converting to rem strings here would be a value-representation change with no
+    // behavioral upside for a non-Mantine SVG dimension prop.
+    iconSize: Record<
+      | 'micro'        // 10px — inline badge/pin marker (e.g. AdminUsersTable location pin)
+      | 'badge'        // 12px — globals.css --icon-sm role: "tiny/badge icons"
+      | 'compact'      // 14px
+      | 'standard'     // 16px — globals.css --icon-md role: "standard UI icons"
+      | 'comfortable'  // 18px
+      | 'roomy'        // 20px
+      | 'decorative'   // 24px — globals.css --icon-lg role: "section/decorative icons"
+      | 'feature'      // 28px
+      | 'prominent'    // 32px
+      | 'banner'       // 40px
+      | 'touch'        // 44px
+      | 'hero'         // 48px
+      | 'spotlight'    // 56px
+      | 'colossal',    // 64px
+      number
+    >
+    // Layout/container dimension scale (Task 782, §3.2) — the raw `maw`/`mah`/`w`/`h` numeric props
+    // measured repo-wide. A DIFFERENT scale from `iconSize`: these are one-off content/container
+    // constraints (empty-state stack width, dropdown max-height, hero max-width…), not a repeating
+    // icon ladder, so each key is a distinct rendered role rather than a t-shirt rung. Values are rem
+    // strings (Mantine's own `getSpacing`/dimension-prop convention — matches `theme.spacing`/
+        // `theme.other.touchTarget` above), consumed via Mantine's size props which accept a CSS length
+    // string directly.
+    boxSize: Record<
+      | 'statusDot'       // 8px  — NotificationItem unread-status dot (h=w)
+      | 'thumbnail'       // 112px — PopularLocationsView location-card height
+      | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
+      | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
+      | 'compactTrigger'  // 280px — RangeDatePicker compact trigger width
+      | 'emptyState'      // 360px — MantineEmptyLoadingErrorState stack max-width
+      | 'prose'           // 576px — homepage hero subtitle max-width
+      | 'ctaSection'       // 672px — homepage CTA box max-width
+      | 'content',        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
+      string
+    >
+  }
 }
 
 // TailAdmin gray scale (Task 484 §1b — source of truth for neutral tones)
@@ -265,6 +322,38 @@ export const theme = createTheme({
   other: {
     touchTarget: '2.75rem',  // 44px minimum
     mobileGate: '40em',      // 640px — P0 full-width gate
+    // Task 782 — canonical icon/control dimension scale (D69-6). Plain numbers, consumed directly
+    // by a lucide `size` prop / Mantine `Avatar`/`Loader` numeric `size` — see the `MantineThemeOther`
+    // augmentation above for the full role-name rationale and globals.css provenance citations.
+    iconSize: {
+      micro: 10,
+      badge: 12,
+      compact: 14,
+      standard: 16,
+      comfortable: 18,
+      roomy: 20,
+      decorative: 24,
+      feature: 28,
+      prominent: 32,
+      banner: 40,
+      touch: 44,
+      hero: 48,
+      spotlight: 56,
+      colossal: 64,
+    },
+    // Task 782 — canonical layout/container dimension scale (D69-6). Rem strings — see the
+    // `MantineThemeOther` augmentation above for the full role-name rationale.
+    boxSize: {
+      statusDot: '0.5rem',       //   8px
+      thumbnail: '7rem',         // 112px
+      truncateLabel: '7.5rem',   // 120px
+      dropdownPanel: '13.75rem', // 220px
+      compactTrigger: '17.5rem', // 280px
+      emptyState: '22.5rem',     // 360px
+      prose: '36rem',            // 576px
+      ctaSection: '42rem',       // 672px
+      content: '48rem',          // 768px
+    },
   },
 
   // Component-level defaults aligned to TailAdmin density (§1.4 / §1b).
@@ -477,6 +566,37 @@ export const theme = createTheme({
     // Size is NOT baked in here — passed by consumers (40 default, 44 form).
     Avatar: {
       defaultProps: { radius: 'pill' },
+    },
+    // ThemeIcon (Task 782, R2/§3.1) — Mantine's own built-in scale tops out at `xl`=44px
+    // (`node_modules/@mantine/core/styles/ThemeIcon.css`: --ti-size-xs/sm/md/lg/xl = 18/22/28/34/44)
+    // and has no key at all above it. The project measured 4 ThemeIcon call sites needing a size
+    // outside that native ladder (24 sits between native sm/md; 48/56/64 sit above xl) — extending,
+    // not replacing, Mantine's own mechanism: ThemeIcon's `getSize(size, 'ti-size')` resolves a
+    // STRING `size` prop to `var(--ti-size-{key})` (`get-size.cjs`), so defining these 4 additional
+    // `--ti-size-*` custom properties here lets a consumer pass `size="decorative"` /
+    // `size="hero"` / `size="spotlight"` / `size="colossal"` and get the exact project pixel value —
+    // no raw number at any call site (R2). Values/names are the SAME 4 `theme.other.iconSize` rungs
+    // that already cover these exact pixel values, so one semantic name means the same thing whether
+    // consumed as a plain number (lucide) or a ThemeIcon token string.
+    //
+    // Mechanism verified by reading Mantine's own merge code (not assumed — A1's stated risk):
+    // `resolve-vars.cjs` -> `mergeVars.cjs` merges the built-in `varsResolver` output with
+    // `theme.components.ThemeIcon.vars` output per-selector, per-key (`Object.keys(current[key])`
+    // spread) — since the built-in resolver's `root` object only ever sets `--ti-size` (not
+    // `--ti-size-decorative` etc.), there is no key collision: both sets of custom properties survive
+    // on the same inline `style` object. `--ti-size: var(--ti-size-decorative)` (built-in, when
+    // `size="decorative"` is passed) then resolves against the `--ti-size-decorative` value this
+    // block defines — a real, source-verified mechanism, not an assumption requiring a runtime
+    // fallback. AC2's computed-style capture is the rendered proof of this reading.
+    ThemeIcon: {
+      vars: (theme: MantineTheme) => ({
+        root: {
+          '--ti-size-decorative': `${theme.other.iconSize.decorative}px`, // 24px
+          '--ti-size-hero': `${theme.other.iconSize.hero}px`,             // 48px
+          '--ti-size-spotlight': `${theme.other.iconSize.spotlight}px`,   // 56px
+          '--ti-size-colossal': `${theme.other.iconSize.colossal}px`,     // 64px
+        },
+      }),
     },
     // Badge: pill radius, light variant, sm size, fw=500 (TailAdmin status badge standard).
     // Mantine's OWN Badge CSS hardcodes 10px/uppercase/700/letter-spacing per size, independent of

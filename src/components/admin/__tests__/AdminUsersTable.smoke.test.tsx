@@ -164,7 +164,21 @@ vi.mock('@mantine/core', () => {
   // Divider
   const Divider = (props: any) => React.createElement('hr', { 'data-mantine': 'divider', ...props })
 
-  return { Stack, Group, Text, Badge, Avatar, Loader, Button, ActionIcon, TextInput, Tabs, SegmentedControl, ScrollArea, Box, Divider }
+  // useMantineTheme (Task 782) — AdminUsersTable now reads theme.other.iconSize.* for its icon
+  // dimension tokens instead of a raw number. Values below are copied from
+  // src/design-system/mantine/theme.ts's own `other.iconSize` — a literal, not an import, so this
+  // mock factory (hoisted above module imports by vi.mock) has no load-order dependency.
+  const useMantineTheme = () => ({
+    other: {
+      iconSize: {
+        micro: 10, badge: 12, compact: 14, standard: 16, comfortable: 18, roomy: 20,
+        decorative: 24, feature: 28, prominent: 32, banner: 40, touch: 44, hero: 48,
+        spotlight: 56, colossal: 64,
+      },
+    },
+  })
+
+  return { Stack, Group, Text, Badge, Avatar, Loader, Button, ActionIcon, TextInput, Tabs, SegmentedControl, ScrollArea, Box, Divider, useMantineTheme }
 })
 
 // ── MantineDataTableToCards mock ──────────────────────────────────────────────

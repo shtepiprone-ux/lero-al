@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Search, SlidersHorizontal } from 'lucide-react'
-import { Box, Button, SegmentedControl } from '@mantine/core'
+import { Box, Button, SegmentedControl, useMantineTheme } from '@mantine/core'
 import { MantineCountButton } from '@/design-system/mantine/patterns'
 import { FiltersPanel } from '@/components/shared/FiltersPanel'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
@@ -44,6 +44,7 @@ export function HeroSearchView({
   const t = useTranslations('common')
   const tl = useTranslations('listing')
   const th = useTranslations('home')
+  const theme = useMantineTheme()
 
   return (
     <>
@@ -132,7 +133,7 @@ export function HeroSearchView({
               iconOnlyAbove={640}
               onClick={onOpenFilters}
               aria-label={t('advanced_filters')}
-              leftSection={<SlidersHorizontal size={16} />}
+              leftSection={<SlidersHorizontal size={theme.other.iconSize.standard} />}
               className={styles.filtersControl}
             >
               {t('advanced_filters')}
@@ -142,7 +143,7 @@ export function HeroSearchView({
               variant="filled"
               onClick={() => onSearch()}
               className={styles.searchControl}
-              leftSection={<Search size={16} />}
+              leftSection={<Search size={theme.other.iconSize.standard} />}
             >
               {t('search')}
             </Button>

@@ -23,6 +23,9 @@
  *     prefix-or-exact-name list (Task 718, category css-undefined-var, blocking
  *     from the start — see "A documented token is not an implemented token" in
  *     docs/orchestrator-procedures.md)
+ *   - Raw numeric dimension/size JSX props: size={N} / miw|maw|mih|mah|w|h={N}
+ *     (Task 782, category raw-dimension-prop, blocking from the start). `={0}` is
+ *     exempt (flex-shrink behavior, not a dimension — see §3.2 of the Task 782 kickoff).
  *
  * Does NOT flag:
  *   - var(--token) references, including function-wrapped *-[var(--token)] forms
@@ -195,6 +198,22 @@ export const DETECTION_PATTERNS = [
     re: /\b(transitionDuration|animationDuration)\s*:\s*['"]?[\d]+ms/g,
     cat: 'duration',
     label: 'inline duration value',
+  },
+
+  // Raw numeric dimension/size JSX prop (Task 782, Phase 3 — the detector this task exists to
+  // add: 129 raw `size={N}` + 30 raw `miw|maw|mih|mah|w|h={N}` occurrences existed repo-wide with
+  // ZERO detection by every pattern above, all of which are shaped around Tailwind's arbitrary-
+  // bracket syntax or inline `style` object literals — a bare numeric JSX prop matches neither).
+  // Matches: size={16}, miw={192}, w={280}, h={44}. Does NOT match: size="md" (string token,
+  // already canonical), size={theme.other.iconSize.standard} (a token reference, not a literal —
+  // the regex only matches a BARE integer between the braces), or `={0}` (filtered below — §3.2:
+  // `miw={0}`/`gap={0}` express flex-shrink behavior, not a design value, and must never be
+  // flagged as a missing token).
+  {
+    re: /\b(?:size|miw|maw|mih|mah|w|h)=\{\d+\}/g,
+    cat: 'raw-dimension-prop',
+    label: 'raw numeric dimension/size prop',
+    filter: (m) => !/=\{0\}$/.test(m),
   },
 
   // ── Plain CSS declaration coverage (Task 714, report-only category — see §23.6) ──

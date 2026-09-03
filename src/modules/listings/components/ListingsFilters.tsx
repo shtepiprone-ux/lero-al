@@ -56,6 +56,7 @@ function AccordionSection({
 }: {
   title: string; open: boolean; onToggle: () => void; withDivider: boolean; children: React.ReactNode
 }) {
+  const theme = useMantineTheme()
   return (
     <Box>
       <Box py="md">
@@ -68,7 +69,7 @@ function AccordionSection({
           styles={{ root: { paddingInline: 0 } }}
           rightSection={
             <ChevronDown
-              size={14}
+              size={theme.other.iconSize.compact}
               style={{
                 color: 'var(--mantine-color-gray-5)',
                 transition: 'transform 200ms ease',
@@ -135,7 +136,7 @@ export function ListingsFilters({ locations, onClose }: Props) {
     <Box>
       {/* Header */}
       <Group gap="xs" mb="md" wrap="nowrap">
-        <SlidersHorizontal size={16} color="var(--mantine-color-brand-7)" />
+        <SlidersHorizontal size={theme.other.iconSize.standard} color="var(--mantine-color-brand-7)" />
         <Text fw={600} size="sm">{t('filters_title')}</Text>
         {activeCount > 0 && (
           <Badge color="brand" variant="filled" radius="pill">
@@ -152,7 +153,7 @@ export function ListingsFilters({ locations, onClose }: Props) {
             hiddenFrom="sm"
             style={{ marginLeft: 'auto' }}
           >
-            <X size={20} />
+            <X size={theme.other.iconSize.roomy} />
           </ActionIcon>
         )}
       </Group>

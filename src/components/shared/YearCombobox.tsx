@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { Calendar } from 'lucide-react'
+import { useMantineTheme } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
 import { MIN_PROPERTY_YEAR } from '@/modules/listings/constants'
@@ -31,6 +32,7 @@ interface Props {
 
 export function YearCombobox({ value, onChange, placeholder, className }: Props) {
   const t = useTranslations('common')
+  const theme = useMantineTheme()
 
   const options = useMemo(
     () => YEAR_OPTIONS.map(y => ({ value: String(y), label: String(y) })),
@@ -53,7 +55,7 @@ export function YearCombobox({ value, onChange, placeholder, className }: Props)
         onChange={v => onChange(v ? parseInt(v, 10) : undefined)}
         onInputChange={handleInputChange}
         inputMode="numeric"
-        icon={<Calendar size={16} />}
+        icon={<Calendar size={theme.other.iconSize.standard} />}
         placeholder={placeholder}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={t('no_results')}

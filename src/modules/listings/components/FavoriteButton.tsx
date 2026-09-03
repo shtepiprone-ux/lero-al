@@ -3,7 +3,7 @@
 import { useState, useTransition, useEffect, useRef, type CSSProperties } from 'react'
 import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
-import { ActionIcon, Button } from '@mantine/core'
+import { ActionIcon, Button, useMantineTheme } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { addFavorite, removeFavorite } from '@/modules/listings/actions/favoriteActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
@@ -56,6 +56,7 @@ const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
 
 export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon', size, overlay = false }: FavoriteButtonProps) {
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
   const { user, status } = useAuth()
   const [favorited, setFavorited] = useState(isFavorited)
   const [isPending, startTransition] = useTransition()
@@ -131,7 +132,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   // `[data-fav-disabled]`/`[data-pending]` attribute selectors instead compete with Mantine's
   // own unlayered CSS on equal footing via specificity (0,2,0 vs Mantine's plain-class (0,1,0)),
   // which lets `:hover` correctly cascade over the resting state.
-  const icon = <Heart size={16} fill={!disabled && favorited ? 'currentColor' : 'none'} />
+  const icon = <Heart size={theme.other.iconSize.standard} fill={!disabled && favorited ? 'currentColor' : 'none'} />
 
   // See the `overlay` doc block above — inline style is the only mechanism that reliably wins
   // over ActionIcon's own unlayered `position: relative`, for these 3 position-only properties.
@@ -162,7 +163,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
       // (same borderless baseline as the HeaderActions.tsx favorites precedent); `radius="pill"` is the
       // theme's own 9999px token (matches the legacy `rounded-full`); `size={32}` matches the legacy
       // `w-8 h-8` (32px) exactly.
-      <ActionIcon {...commonProps} variant="subtle" size={32} radius="pill">
+      <ActionIcon {...commonProps} variant="subtle" size={theme.other.iconSize.prominent} radius="pill">
         {icon}
       </ActionIcon>
     )

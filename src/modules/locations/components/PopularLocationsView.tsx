@@ -4,7 +4,19 @@ import { MapPin } from 'lucide-react'
 import { AppImage } from '@/components/ui/AppImage'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
+import { theme } from '@/design-system/mantine/theme'
 import styles from './PopularLocationsView.module.css'
+
+// Task 782 — this component is hook-free (no useTranslations/data-fetching) so it can render as a
+// Server Component; `useMantineTheme()` requires Client Component context, so the dimension tokens
+// are read from the static `theme` export instead. `createTheme()`'s own return type is
+// `MantineThemeOverride` (a deep-partial of `MantineTheme`, verified in
+// `node_modules/@mantine/core/lib/core/MantineProvider/create-theme/create-theme.d.ts`), so
+// `theme.other` types as possibly-undefined even though every key is unconditionally set in this
+// project's `createTheme({...})` call (`theme.ts`) — the `!` below reflects that runtime guarantee,
+// not a workaround.
+const iconSize = theme.other!.iconSize!
+const boxSize = theme.other!.boxSize!
 
 export interface PopularLocationsViewLocation {
   id: string
@@ -57,7 +69,7 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
             direction="column"
             justify="flex-end"
             pos="relative"
-            h={112}
+            h={boxSize.thumbnail}
             p="sm"
             c="white"
             bdrs="xl"
@@ -79,7 +91,7 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
             )}
             <Box pos="relative" className={styles.content}>
               <Box mb={2}>
-                <MapPin size={14} style={{ opacity: 0.7 }} aria-hidden />
+                <MapPin size={iconSize.compact} style={{ opacity: 0.7 }} aria-hidden />
               </Box>
               <Text fw={600} size="sm" lh={1.25} truncate>
                 {loc.name}

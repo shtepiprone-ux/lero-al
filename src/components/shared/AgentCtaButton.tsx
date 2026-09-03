@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@mantine/core'
+import { Button, useMantineTheme } from '@mantine/core'
 import { Building2 } from 'lucide-react'
 
 export interface AgentCtaButtonProps {
@@ -10,13 +10,14 @@ export interface AgentCtaButtonProps {
 }
 
 export function AgentCtaButton({ href, label }: AgentCtaButtonProps) {
+  const theme = useMantineTheme()
   return (
     <Button
       component={Link}
       href={href}
       variant="filled"
       size="sm"
-      leftSection={<Building2 size={16} />}
+      leftSection={<Building2 size={theme.other.iconSize.standard} />}
       data-track="register"
       w={{ base: '100%', sm: 'auto' }}
       styles={{

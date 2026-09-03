@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider } from '@mantine/core'
+import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, useMantineTheme } from '@mantine/core'
 import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
 import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
@@ -88,6 +88,7 @@ export function MantineListingDetailPattern({
   amenities = [],
   contact,
 }: MantineListingDetailPatternProps) {
+  const theme = useMantineTheme()
   return (
     <Grid gutter={0}>
       <Grid.Col span={{ base: 12, sm: 8 }} pr={{ base: 0, sm: 'lg' }} mb={{ base: 'lg', sm: 0 }}>
@@ -132,20 +133,20 @@ export function MantineListingDetailPattern({
             <Group gap="md" wrap="wrap">
               {data.location && (
                 <Group gap={4} wrap="nowrap">
-                  <MapPin size={16} className="shrink-0 text-muted-foreground" />
+                  <MapPin size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
                   <Text size="sm" c="dimmed">
                     {data.location}
                   </Text>
                 </Group>
               )}
               <Group gap={4} wrap="nowrap">
-                <Eye size={16} className="shrink-0 text-muted-foreground" />
+                <Eye size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
                 <Text size="sm" c="dimmed">
                   {data.views} {data.viewsLabel}
                 </Text>
               </Group>
               <Group gap={4} wrap="nowrap">
-                <CalendarDays size={16} className="shrink-0 text-muted-foreground" />
+                <CalendarDays size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
                 <Text size="sm" c="dimmed">
                   {data.date}
                 </Text>

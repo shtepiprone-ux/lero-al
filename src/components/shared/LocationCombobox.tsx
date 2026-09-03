@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import type { KeyboardEventHandler } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { MapPin } from 'lucide-react'
-import { Anchor, Button, Flex, TextInput, Text } from '@mantine/core'
+import { Anchor, Button, Flex, TextInput, Text, useMantineTheme } from '@mantine/core'
 import { MantineCombobox, MantineAddItemPanel } from '@/design-system/mantine/patterns'
 import { cn, capitalize, normalizeSearch } from '@/lib/utils'
 
@@ -61,6 +61,7 @@ export function LocationCombobox({
 }: Props) {
   const tc = useTranslations('common')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const [showAdd, setShowAdd] = useState(false)
   const [addName, setAddName] = useState('')
   const [addRegionId, setAddRegionId] = useState<number | null>(null)
@@ -118,7 +119,7 @@ export function LocationCombobox({
         onChange={v => onChange(v || null)}
         variant="input"
         clearLabel={tc('all_locations')}
-        icon={<MapPin size={16} />}
+        icon={<MapPin size={theme.other.iconSize.standard} />}
         placeholder={resolvedPlaceholder}
         error={error}
         onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}

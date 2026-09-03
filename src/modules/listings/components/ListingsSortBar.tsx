@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
-import { ActionIcon, Badge, Box, Button, Group, Stack, Text } from '@mantine/core'
+import { ActionIcon, Badge, Box, Button, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
 
 interface Props {
@@ -27,6 +27,7 @@ const SORT_OPTIONS = [
 export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFiltersOpen, activeFiltersCount }: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -70,7 +71,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           `truncate="end"` (Mantine's own Text prop, not a Tailwind/CSS-module addition) makes
           that shrink degrade to a real ellipsis instead. */}
       <Stack gap={2} miw={0}>
-        <Text fw={600} size="sm" c="gray.9" truncate="end">
+        <Text fw={600} size="sm" c="gray.9" truncate="end" data-testid="listings-count-text">
           {total === 1 ? t('found_results_one') : t('found_results', { count: total })}
         </Text>
         {total > 0 && (
@@ -114,7 +115,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           hiddenFrom="sm"
           flex="1 1 auto"
           miw={0}
-          leftSection={<SlidersHorizontal size={16} />}
+          leftSection={<SlidersHorizontal size={theme.other.iconSize.standard} />}
           rightSection={activeFiltersCount > 0 ? (
             <Badge circle size="sm" variant="filled" color="brand" data-testid="listings-mobile-filters-count">
               {activeFiltersCount}
@@ -172,7 +173,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
               onClick={() => onViewChange('grid')}
               aria-label={t('view_grid')}
             >
-              <LayoutGrid size={16} />
+              <LayoutGrid size={theme.other.iconSize.standard} />
             </ActionIcon>
             <ActionIcon
               variant={view === 'list' ? 'filled' : 'subtle'}
@@ -181,7 +182,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
               onClick={() => onViewChange('list')}
               aria-label={t('view_list')}
             >
-              <List size={16} />
+              <List size={theme.other.iconSize.standard} />
             </ActionIcon>
           </Group>
         </Group>

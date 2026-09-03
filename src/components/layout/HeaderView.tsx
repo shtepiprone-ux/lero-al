@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { Menu } from 'lucide-react'
-import { ActionIcon, Anchor, Box, Group, Text } from '@mantine/core'
+import { ActionIcon, Anchor, Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { UserMenu } from '@/components/layout/UserMenu'
@@ -86,6 +86,7 @@ export function HeaderView({
   authSheetSlot,
 }: HeaderViewProps) {
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
 
   return (
     <Box component="header" className={cn('site-header', styles.header)}>
@@ -178,7 +179,7 @@ export function HeaderView({
             miw="2.75rem"
             onClick={onOpenMobile}
           >
-            <Menu size={20} />
+            <Menu size={theme.other.iconSize.roomy} />
           </ActionIcon>
           <MobileNavDrawer
             opened={mobileOpen}

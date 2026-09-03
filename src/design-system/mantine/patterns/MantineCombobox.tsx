@@ -10,6 +10,7 @@ import {
   TextInput,
   UnstyledButton,
   useCombobox,
+  useMantineTheme,
   type TextInputProps,
 } from '@mantine/core'
 import { normalizeSearch } from '@/lib/utils'
@@ -205,6 +206,7 @@ export function MantineCombobox({
   dropdownMinWidth,
   withinPortal,
 }: MantineComboboxProps) {
+  const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -343,7 +345,7 @@ export function MantineCombobox({
                 resolves to 220px, empirically measured via a rendered long-list `getComputedStyle`
                 proof, NOT the legacy `Combobox.tsx`'s unrelated 224px `max-h-56`). Matches the
                 sibling canonical primitive rather than inventing a new value. */}
-            <Combobox.Options mah={220} style={{ overflowY: 'auto' }}>
+            <Combobox.Options mah={theme.other.boxSize.dropdownPanel} style={{ overflowY: 'auto' }}>
               {clearLabel && (
                 <Combobox.Option value="" key="__clear__" active={value === ''}>
                   <Group justify="space-between" wrap="nowrap" gap="sm">

@@ -776,3 +776,45 @@ describe('§J — extractCssCustomPropertyDefinitions: line-anchored definitions
     expect(findings[0].match).toBe('var(--foo)')
   })
 })
+
+describe('raw-dimension-prop — Task 782 detector (repo measured 129 raw size={N} + 30 raw dimension props, 0 detected before this category)', () => {
+  it('flags a raw numeric size prop', () => {
+    const findings = regular(`<Icon size={16} />`)
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'raw-dimension-prop', match: 'size={16}' })
+  })
+
+  it('flags each of miw/maw/mih/mah/w/h with a raw number', () => {
+    const findings = regular(
+      `<Box miw={192} maw={360} mih={44} mah={220} w={280} h={112} />`
+    )
+    expect(findings.filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(6)
+  })
+
+  it('does NOT flag ={0} — flex-shrink behavior, not a dimension (§3.2)', () => {
+    expect(regular(`<Box miw={0} gap={0} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a string token (already canonical)', () => {
+    expect(regular(`<ThemeIcon size="md" />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a token-reference expression (not a bare integer literal)', () => {
+    expect(regular(`<Icon size={theme.other.iconSize.standard} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag inside a JSX comment', () => {
+    expect(regular(`{/* <Icon size={16} /> */}`)).toHaveLength(0)
+  })
+
+  it('two-armed plant: introducing then removing a raw value flips the finding', () => {
+    const planted = `<ActionIcon w={16} onClick={onClose} />`
+    const reverted = `<ActionIcon onClick={onClose} />`
+    expect(regular(planted).some(f => f.cat === 'raw-dimension-prop' && f.match === 'w={16}')).toBe(true)
+    expect(regular(reverted).filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(0)
+  })
+
+  it('gap is NOT in the detected prop set (behavioral, not a dimension token per §3.2)', () => {
+    expect(regular(`<Group gap={16} />`)).toHaveLength(0)
+  })
+})

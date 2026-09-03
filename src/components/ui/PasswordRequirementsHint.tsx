@@ -2,7 +2,7 @@
 
 import { Check, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Group, Stack, Text } from '@mantine/core'
+import { Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import {
   checkPasswordRules,
   allPasswordRulesMet,
@@ -17,6 +17,7 @@ interface RuleRowProps {
 }
 
 function RuleRow({ met, label }: RuleRowProps) {
+  const theme = useMantineTheme()
   return (
     <Group
       component="li"
@@ -28,9 +29,9 @@ function RuleRow({ met, label }: RuleRowProps) {
       c={met ? 'var(--status-success)' : 'var(--muted-foreground)'}
     >
       {met ? (
-        <Check size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+        <Check size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
       ) : (
-        <X size={14} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+        <X size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
       )}
       <span>{label}</span>
     </Group>

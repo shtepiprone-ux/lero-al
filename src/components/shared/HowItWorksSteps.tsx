@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core'
+import { Box, SimpleGrid, Stack, Text, ThemeIcon, Title, useMantineTheme } from '@mantine/core'
 import { Search, Home, Phone } from 'lucide-react'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 
@@ -23,22 +23,23 @@ export interface HowItWorksStepsProps {
  * storyT() and in the future page.tsx consumer (Task 645).
  */
 export function HowItWorksSteps({ heading, steps }: HowItWorksStepsProps) {
+  const theme = useMantineTheme()
   return (
     <>
       <Title order={2} ta="center" fw={700} fz={SECTION_HEADING_FZ} mb={40}>
         {heading}
       </Title>
-      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={32} maw={768} mx="auto">
+      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={32} maw={theme.other.boxSize.content} mx="auto">
         {steps.map((step, index) => {
           const Icon = STEP_ICONS[index]
           return (
             <Stack key={step.title} align="center" ta="center" gap="sm">
               <Box pos="relative">
-                <ThemeIcon size={56} radius="2xl" color="brand" variant="light">
-                  <Icon size={24} />
+                <ThemeIcon size="spotlight" radius="2xl" color="brand" variant="light">
+                  <Icon size={theme.other.iconSize.decorative} />
                 </ThemeIcon>
                 <ThemeIcon
-                  size={24}
+                  size="decorative"
                   radius="pill"
                   color="brand"
                   variant="filled"

@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderOpen, Folder, Check, Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import { ActionIcon, Button as MantineButton } from '@mantine/core'
+import { ActionIcon, Button as MantineButton, useMantineTheme } from '@mantine/core'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -42,6 +42,7 @@ const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
 
 export function SaveToCollectionButton({ listingId, variant = 'icon', className, size }: Props) {
   const t = useTranslations('collections')
+  const theme = useMantineTheme()
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -147,7 +148,7 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
         // `bg-card/80`/`hover:bg-card` resting/hover background (same technique + same token values
         // as FavoriteButton.module.css, Task 653) so the overlay's frosted-white look is unchanged.
         // `size={28}` matches the legacy `icon-sm` (`size-7` = 1.75rem = 28px) exactly.
-        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={28} radius="0.75rem">
+        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={theme.other.iconSize.feature} radius="0.75rem">
           {icon}
         </ActionIcon>
       ) : (

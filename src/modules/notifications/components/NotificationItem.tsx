@@ -5,7 +5,7 @@ import { useTransition } from 'react'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale as DfLocale } from 'date-fns'
-import { Anchor, Box, Group, Text } from '@mantine/core'
+import { Anchor, Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { formatCount } from '@/lib/formatters'
 import styles from './NotificationItem.module.css'
@@ -127,6 +127,7 @@ export function NotificationItem({ notification, onRead }: Props) {
   const t = useTranslations('notifications')
   const tl = useTranslations('listing')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const dfLocale = DF_LOCALE_MAP[locale] ?? enUS
   const [isPending, startTransition] = useTransition()
 
@@ -238,8 +239,8 @@ export function NotificationItem({ notification, onRead }: Props) {
       </Box>
       {!notification.is_read && (
         <Box
-          h={8}
-          w={8}
+          h={theme.other.boxSize.statusDot}
+          w={theme.other.boxSize.statusDot}
           bdrs="pill"
           bg="var(--primary)"
           mt={6}

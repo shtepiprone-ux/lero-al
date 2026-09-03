@@ -115,7 +115,11 @@ async function measureSortBar(page, saveSearchButtonSelector) {
     const root = document.documentElement;
     const sortBarRoot = document.querySelector('.listings-sort-bar');
     const groups = sortBarRoot ? sortBarRoot.querySelectorAll(':scope > div') : [];
-    const countEl = sortBarRoot ? sortBarRoot.querySelector('span.font-semibold') : null;
+    // Task 782 F5 retarget — the legacy `span.font-semibold` locator has been dead since the
+    // Task 781 Mantine migration (count text is now a Mantine `<Text>`, no such class exists);
+    // `renderedCountText` measured null in 44/44 cells. `ListingsSortBar.tsx` now carries an
+    // explicit `data-testid="listings-count-text"` hook on that exact element (Task 782).
+    const countEl = sortBarRoot ? sortBarRoot.querySelector('[data-testid="listings-count-text"]') : null;
     return {
       scrollWidth: root.scrollWidth,
       clientWidth: root.clientWidth,
@@ -413,6 +417,33 @@ async function main() {
 
   const overflowingCells = result.cells.filter(c => c.overflow);
   const overflowingAuthCells = result.authCells.filter(c => c.overflow);
+
+  // Task 782 F12 — the probe recorded sortComboboxTrigger/saveSearchButton rects but asserted
+  // nothing about their overlap or the 44px touch-target floor (the reviewer had to compute both
+  // from retained data by hand: 0/22 overlaps, no sub-44px cells at mobile). This closes that gap
+  // with a real, fail-closed assertion instead of leaving the computation to a human reader.
+  function rectsOverlap(a, b) {
+    return !(a.right <= b.left || b.right <= a.left || (a.top + a.height) <= b.top || (b.top + b.height) <= a.top);
+  }
+  const TOUCH_FLOOR_PX = 44;
+  const sortSaveViolations = [];
+  for (const c of result.authCells) {
+    const sort = c.sortComboboxTrigger;
+    const save = c.saveSearchButton;
+    if (sort?.found && sort.rect.height + 0.5 < TOUCH_FLOOR_PX) {
+      sortSaveViolations.push({ cell: `${c.kind} ${c.width}x${c.locale}`, control: 'sortComboboxTrigger', height: sort.rect.height });
+    }
+    if (save?.found && save.rect.height + 0.5 < TOUCH_FLOOR_PX) {
+      sortSaveViolations.push({ cell: `${c.kind} ${c.width}x${c.locale}`, control: 'saveSearchButton', height: save.rect.height });
+    }
+    if (sort?.found && save?.found && rectsOverlap(sort.rect, save.rect)) {
+      sortSaveViolations.push({ cell: `${c.kind} ${c.width}x${c.locale}`, control: 'sortComboboxTrigger↔saveSearchButton', overlap: true });
+    }
+  }
+  console.log(`\nSort/save-search geometry (F12): ${result.authCells.length} authenticated cell(s) checked, ${sortSaveViolations.length} violation(s) (overlap or sub-${TOUCH_FLOOR_PX}px).`);
+  if (sortSaveViolations.length > 0) {
+    console.log(JSON.stringify(sortSaveViolations, null, 2));
+  }
   console.log(`\nAnonymous cells measured: ${result.cells.length}`);
   console.log(`Anonymous cells overflowing: ${overflowingCells.length}`);
   console.log(`Anonymous cells failed (hard): ${anonFailedCells.length}`);
@@ -440,7 +471,8 @@ async function main() {
   const hardFail = anonFailedCells.length > 0
     || authFailedCells.length > 0
     || negativeFlowFailedCells.length > 0
-    || interactionFailed;
+    || interactionFailed
+    || sortSaveViolations.length > 0;
 
   if (hardFail) {
     console.error('\n❌ task772-listings-overflow-probe: one or more cells/branches failed closed.');
@@ -448,6 +480,7 @@ async function main() {
     if (authFailedCells.length > 0) console.error(`  authenticated core cells: ${authFailedCells.length}`);
     if (negativeFlowFailedCells.length > 0) console.error(`  negative-flow cells: ${negativeFlowFailedCells.length}`);
     if (interactionFailed) console.error(`  interaction cell: ${JSON.stringify(result.interaction)}`);
+    if (sortSaveViolations.length > 0) console.error(`  sort/save geometry (F12): ${sortSaveViolations.length} violation(s)`);
     process.exit(1);
   }
   console.log('\n✅ task772-listings-overflow-probe: all branches captured cleanly (overflow is data, not a hard failure — see JSON).');

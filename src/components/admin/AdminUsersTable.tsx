@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { ShieldCheck, ShieldOff, MapPin, Search, ChevronRight } from 'lucide-react'
 import {
   Avatar, Badge, Button, Group, Stack, Tabs, Text, TextInput, ActionIcon, Loader,
-  SegmentedControl, ScrollArea,
+  SegmentedControl, ScrollArea, useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { MantineDataTableToCards, type TableColumn, type CardConfig } from '@/design-system/mantine/patterns'
@@ -77,6 +77,7 @@ export function AdminUsersTable({
 }: Props) {
   const t = useTranslations('admin.users')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -151,7 +152,7 @@ export function AdminUsersTable({
                 })}
                 data-testid={u.is_verified ? 'revoke-btn' : 'verify-btn'}
               >
-                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+                {u.is_verified ? <ShieldCheck size={theme.other.iconSize.compact} /> : <ShieldOff size={theme.other.iconSize.compact} />}
               </ActionIcon>
             )
           }
@@ -164,7 +165,7 @@ export function AdminUsersTable({
             href={`/admin/users/${u.id}`}
             data-testid="user-detail-link"
           >
-            <ChevronRight size={14} />
+            <ChevronRight size={theme.other.iconSize.compact} />
           </ActionIcon>
         </Group>
       )
@@ -174,7 +175,7 @@ export function AdminUsersTable({
         ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
         : '?'
       return (
-        <Avatar src={u.avatar_url ?? null} radius="pill" size={40} color="brand">
+        <Avatar src={u.avatar_url ?? null} radius="pill" size={theme.other.iconSize.banner} color="brand">
           {initials}
         </Avatar>
       )
@@ -220,7 +221,7 @@ export function AdminUsersTable({
         label: t('location_request_badge'),
         value: (u) => u.location_request ? (
           <Group gap="xs" wrap="nowrap">
-            <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+            <MapPin size={theme.other.iconSize.micro} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
             <Text size="xs" c="orange.6">{t('location_request_badge')}</Text>
           </Group>
         ) : null,
@@ -243,7 +244,7 @@ export function AdminUsersTable({
             <Avatar
               src={u.avatar_url ?? null}
               radius="pill"
-              size={40}
+              size={theme.other.iconSize.banner}
               color="brand"
               style={{ flexShrink: 0 }}
             >
@@ -260,7 +261,7 @@ export function AdminUsersTable({
               )}
               {u.location_request && (
                 <Group gap="xs" wrap="nowrap">
-                  <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+                  <MapPin size={theme.other.iconSize.micro} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
                   <Text size="xs" c="orange.6">{t('location_request_badge')}</Text>
                 </Group>
               )}
@@ -336,7 +337,7 @@ export function AdminUsersTable({
                 })}
                 data-testid={u.is_verified ? 'revoke-btn' : 'verify-btn'}
               >
-                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+                {u.is_verified ? <ShieldCheck size={theme.other.iconSize.compact} /> : <ShieldOff size={theme.other.iconSize.compact} />}
               </ActionIcon>
             )}
             <ActionIcon
@@ -346,7 +347,7 @@ export function AdminUsersTable({
               href={`/admin/users/${u.id}`}
               data-testid="user-detail-link"
             >
-              <ChevronRight size={14} />
+              <ChevronRight size={theme.other.iconSize.compact} />
             </ActionIcon>
           </Group>
         )
@@ -365,7 +366,7 @@ export function AdminUsersTable({
           : '?'
         return (
           <Group gap="sm" wrap="nowrap">
-            <Avatar radius="pill" size={40} color="brand" style={{ flexShrink: 0 }}>
+            <Avatar radius="pill" size={theme.other.iconSize.banner} color="brand" style={{ flexShrink: 0 }}>
               {initials}
             </Avatar>
             <Stack gap={0} style={{ minWidth: 0 }}>
@@ -408,7 +409,7 @@ export function AdminUsersTable({
               })}
               data-testid="revoke-btn"
             >
-              <ShieldOff size={14} />
+              <ShieldOff size={theme.other.iconSize.compact} />
             </ActionIcon>
           </Group>
         )
@@ -452,7 +453,7 @@ export function AdminUsersTable({
           <TextInput
             value={searchValue}
             placeholder={t('search_placeholder')}
-            leftSection={<Search size={14} />}
+            leftSection={<Search size={theme.other.iconSize.compact} />}
             onChange={handleSearchChange}
             style={{ width: '100%' }}
             data-testid="users-search"
@@ -480,7 +481,7 @@ export function AdminUsersTable({
               color="orange"
               size="sm"
               fullWidth={isMobile}
-              leftSection={<MapPin size={12} />}
+              leftSection={<MapPin size={theme.other.iconSize.badge} />}
               onClick={() => navigate({ location_request: null, page: null })}
               data-testid="location-request-filter"
             >

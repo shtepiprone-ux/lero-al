@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 import { Box } from '@mantine/core';
 import { ListingsShellView, type ListingsShellViewProps } from '@/modules/listings/components/ListingsShellView';
+import { SaveSearchButton } from '@/modules/listings/components/SaveSearchButton';
 import { makeCardListingFixtures } from '@/stories/fixtures/cardListingData.fixture';
 
 /**
@@ -17,10 +18,12 @@ import { makeCardListingFixtures } from '@/stories/fixtures/cardListingData.fixt
  * (1536px, which does not exist on this theme) to Mantine `xxl` (1440px) — an accepted,
  * recorded migration outcome, not a regression.
  *
- * `filtersSlot`/`saveSearchSlot` are stubbed `null` here — `ListingsFilterBar`'s Drawer content
- * and `SaveSearchButton` are each covered by their own canonical story
- * (`Patterns/Mantine/ListingsFilterBar`, `Patterns/Mantine/ListingsActionRow`); this story is
- * scoped to the shell/grid/empty-state presentation layer this phase actually changed.
+ * `filtersSlot` is stubbed `null` — `ListingsFilterBar`'s Drawer content has its own canonical
+ * story (`Patterns/Mantine/ListingsFilterBar`). `saveSearchSlot` renders the REAL
+ * `SaveSearchButton` (Task 782 F3 fix — was stubbed `null`, meaning no canonical story ever
+ * rendered the production action row; `Patterns/Mantine/ListingsActionRow` covers the row's own
+ * states in isolation, this story proves the SAME real component composes correctly inside the
+ * full shell).
  */
 const meta: Meta<typeof ListingsShellView> = {
   title: 'Patterns/Mantine/ListingsShellView',
@@ -72,7 +75,7 @@ function ShellDemo(props: Partial<ListingsShellViewProps> & { locale: string }) 
         onBeforeNavigate={() => {}}
         onFavoriteToggled={() => {}}
         filtersSlot={null}
-        saveSearchSlot={null}
+        saveSearchSlot={<SaveSearchButton />}
       />
     </Box>
   );

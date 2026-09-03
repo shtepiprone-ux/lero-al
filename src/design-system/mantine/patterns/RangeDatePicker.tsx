@@ -12,6 +12,7 @@ import {
   Text,
   TextInput,
   UnstyledButton,
+  useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import {
@@ -383,6 +384,7 @@ function DesktopBody({
   onApply: () => void
   onCancel: () => void
 }) {
+  const theme = useMantineTheme()
   const rightMonth = addMonths(anchorMonth, 1)
 
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
@@ -418,7 +420,7 @@ function DesktopBody({
             value={rangeSummary}
             placeholder={t('select_range')}
             radius="lg"
-            w={280}
+            w={theme.other.boxSize.compactTrigger}
           />
           <Group gap="md" wrap="nowrap">
             <Anchor
@@ -449,7 +451,7 @@ function DesktopBody({
             disabled={!canPrev}
             onClick={() => setLeftMonth(subMonths(anchorMonth, 1))}
           >
-            <ChevronLeft size={16} />
+            <ChevronLeft size={theme.other.iconSize.standard} />
           </ActionIcon>
           <Group gap="xs" wrap="nowrap">
             {/* Task 774 — `dropdownMinWidth` on both selectors. The list inherits the TRIGGER's
@@ -501,7 +503,7 @@ function DesktopBody({
             disabled={!canNext}
             onClick={() => setLeftMonth(addMonths(anchorMonth, 1))}
           >
-            <ChevronRight size={16} />
+            <ChevronRight size={theme.other.iconSize.standard} />
           </ActionIcon>
         </Group>
 
@@ -807,6 +809,7 @@ export function RangeDatePicker({
   disablePastDates,
 }: RangeDatePickerProps) {
   const t = useTranslations('common')
+  const theme = useMantineTheme()
   const isMobile = useMediaQuery('(max-width: 40em)') ?? false
 
   const effectiveMinDate = useMemo(
@@ -837,7 +840,7 @@ export function RangeDatePicker({
       value={displayText}
       placeholder={placeholder ?? t('select_range')}
       className={className}
-      leftSection={<CalendarDays size={16} style={{ color: 'var(--mantine-color-gray-5)' }} />}
+      leftSection={<CalendarDays size={theme.other.iconSize.standard} style={{ color: 'var(--mantine-color-gray-5)' }} />}
       rightSection={
         hasValue ? (
           <ActionIcon
@@ -848,7 +851,7 @@ export function RangeDatePicker({
             tabIndex={-1}
             onClick={clearValue}
           >
-            <X size={14} />
+            <X size={theme.other.iconSize.compact} />
           </ActionIcon>
         ) : undefined
       }

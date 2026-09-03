@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { CheckCheck } from 'lucide-react'
-import { Button, Flex, Stack, Text } from '@mantine/core'
+import { Button, Flex, Stack, Text, useMantineTheme } from '@mantine/core'
 import { markAllNotificationsRead } from '@/modules/notifications/lib/mutations'
 import { NotificationItem } from './NotificationItem'
 import type { Notification } from '@/types/database'
@@ -16,6 +16,7 @@ interface Props {
 
 export function NotificationCenter({ notifications, onRead }: Props) {
   const t = useTranslations('notifications')
+  const theme = useMantineTheme()
   const [isPending, startTransition] = useTransition()
 
   function handleMarkAll() {
@@ -61,7 +62,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
           <Button
             variant="transparent"
             color="brand"
-            leftSection={<CheckCheck size={14} />}
+            leftSection={<CheckCheck size={theme.other.iconSize.compact} />}
             onClick={handleMarkAll}
             disabled={isPending}
             justify="flex-start"

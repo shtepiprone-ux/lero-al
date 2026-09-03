@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { Avatar, Button, Divider, Group, Stack, Text } from '@mantine/core'
+import { Avatar, Button, Divider, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import { LogOut } from 'lucide-react'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 import styles from './MobileNavDrawer.module.css'
@@ -21,6 +21,7 @@ export interface MobileNavDrawerProps {
 
 export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onOpenAuth, onLogout }: MobileNavDrawerProps) {
   const t = useTranslations('nav')
+  const theme = useMantineTheme()
 
   function navigate(path: string) {
     onClose()
@@ -47,7 +48,7 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
           // non-uniform 16px-then-24px spacing exactly (see Task 755 report).
           <Stack gap="md">
             <Group gap="sm">
-              <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
+              <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={theme.other.iconSize.banner} />
               {/* lh=1.625 (leading-relaxed) — this <p> had no explicit leading-* class
                   pre-migration, so globals.css's `p { @apply leading-relaxed }` base rule won
                   over text-sm's own paired 20px line-height (see Task 753/754 finding). */}
@@ -125,7 +126,7 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
               color="red"
               fullWidth
               justify="flex-start"
-              leftSection={<LogOut size={16} />}
+              leftSection={<LogOut size={theme.other.iconSize.standard} />}
               styles={{ root: { paddingLeft: 0 } }}
               onClick={logout}
             >

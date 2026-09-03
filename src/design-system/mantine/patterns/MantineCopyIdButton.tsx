@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { UnstyledButton } from '@mantine/core'
+import { UnstyledButton, useMantineTheme } from '@mantine/core'
 import { Copy, Check } from 'lucide-react'
 import styles from './MantineCopyIdButton.module.css'
 
@@ -25,6 +25,7 @@ export interface MantineCopyIdButtonProps {
  * props; this component has no i18n of its own.
  */
 export function MantineCopyIdButton({ id, label, copyLabel, copiedLabel }: MantineCopyIdButtonProps) {
+  const theme = useMantineTheme()
   const [copied, setCopied] = useState(false)
 
   function handleClick(e: React.MouseEvent) {
@@ -46,8 +47,8 @@ export function MantineCopyIdButton({ id, label, copyLabel, copiedLabel }: Manti
     >
       {label}
       {copied
-        ? <Check size={10} className={styles.copiedIcon} />
-        : <Copy size={10} className={styles.notCopiedIcon} />
+        ? <Check size={theme.other.iconSize.micro} className={styles.copiedIcon} />
+        : <Copy size={theme.other.iconSize.micro} className={styles.notCopiedIcon} />
       }
     </UnstyledButton>
   )

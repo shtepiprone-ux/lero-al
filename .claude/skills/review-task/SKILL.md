@@ -197,6 +197,16 @@ custom visual choice: where no local contract exists, the executor must first es
 pattern and its standalone story, then re-submit the composition. A claimed non-visible data-only/layout-only
 exception requires inspected evidence that no visible chrome changed; otherwise review it under this gate.
 
+### Owner visual-review rule — `screenshots:assert` retired (owner decision 2026-09-03)
+
+Do not run, require, or accept `npm run screenshots:assert`, any `screenshots:assert:*` alias, or
+`governance:screenshots:assert` as review evidence. Its historical PASS/FAIL/AMBIGUOUS output is not a valid
+approval criterion.
+
+For every changed visible Storybook artifact, inspect the explicit owner visual-review matrix: story, state, locale,
+viewport, and the owner's recorded accepted/returned result. Until the owner has reviewed every required tuple, the
+visual criterion is `NOT VERIFIABLE`; do not replace that missing owner decision with an automated screenshot result.
+
 When a task claims a new validation or regression gate, verify that it asserts observable behavior. Q4 gate claims require planted-violation failure proof. Do not accept a test that only mirrors an implementation detail, is weakened to pass, or fails to exercise the changed flow.
 
 ## Findings

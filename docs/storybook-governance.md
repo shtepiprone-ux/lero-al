@@ -18,6 +18,13 @@ Status: PERMANENT GOVERNANCE REFERENCE
 > **Validation depth:** use `docs/qa-profiles.md`. New primitives, overlays, TailAdmin conformance, and
 > Storybook governance work are normally Q3. Small story text or fixture adjustments can be Q1/Q2 when no
 > responsive or visual chrome behavior changes.
+>
+> **Owner visual-review supersession — 2026-09-03.** `screenshots:assert`, every
+> `screenshots:assert:*` alias, and `governance:screenshots:assert` are retired from CI and all task proof paths.
+> Do not run them or interpret their PASS/FAIL/AMBIGUOUS output as visual evidence. Every earlier requirement or
+> historical section below that calls this script an enforced/mandatory/rendered gate is superseded. For each
+> changed visible Storybook artifact, the required proof is the owner’s explicit visual review of the exact story ×
+> state × locale × viewport matrix, recorded as accepted or returned.
 
 **Storybook version:** `10.4.2` (upgraded from 8.6.18 by Task 394, 2026-06-05)
 **Framework:** `@storybook/nextjs-vite@10.4.2` (was `@storybook/experimental-nextjs-vite@8.6.18`)
@@ -612,28 +619,9 @@ H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃ�
 15. **Unregistered Mantine colour prop** (Task 685/686) — `color`/`c`/`bg` literal (Form A), `var(--mantine-color-*)` (Form B), and `*COLOR*`-named object-literal map (Form C) values must resolve to `theme.ts`'s registered colour set or a documented passthrough (CSS-wide keyword, CSS function call, `#hex`, Mantine keyword)
 16. **Wall-clock fixture value** (Task 697/698, §14.10) — `Date.now()` used anywhere as a value, or bare zero-argument `new Date()` used as a value, outside comments and outside string/template literals. Does NOT flag `new Date(<non-empty argument>)`
 
-**check-stories-rendered.mjs**
-
-- **Default — `npm run screenshots:assert`:** canonical Mantine stories only (Phase 0), at
-  {320,375,390,1024} × {sq,en,uk,it} plus each story's declared extra viewport cells. It skips
-  Phase 1 (`ASSERT_STORIES`) and Phase 2 (geometry-only). The equivalent explicit invocation is
-  `npm run screenshots:assert -- --mantine-only`; task transcripts may retain that flag to make
-  scope unambiguous.
-- **Default fast alias — `npm run screenshots:assert:fast`:** passes `--mantine-only --fast`.
-  Phase 0 remains mandatory, so its manifest must state the actual scope rather than claiming a
-  smaller matrix.
-- **Full legacy sweep — opt-in only:** `npm run screenshots:assert:full` restores the historical
-  non-Mantine phases: Phase 1 at the canonical 14 widths
-  {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} × {sq,en,uk,it}, plus Phase 2
-  geometry-only coverage; Mantine Phase 0 keeps its own declared matrix.
-  `npm run screenshots:assert:full:fast` runs that profile's fast mode (Phase 1
-  {320,375,390}; Phase 2 skipped; Phase 0 still mandatory). Full sweeps are local/owner evidence
-  only, never the default CI or Homepage-migration acceptance path.
-
-Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls
-`offsetWidth >= container content width - 8px` at <640. Every run emits a JSON manifest and PNG
-per cell to `.screenshots/rendered-assert/<timestamp>/`. Cite the manifest's `runMode` and
-`phasesSkipped`, not a script name, for any claim about cells rendered.
+**`check-stories-rendered.mjs` — retired.** Owner decision 2026-09-03 removes every
+`screenshots:assert` invocation and generated manifest from the proof path. Do not cite its output. The required
+rendered proof is the owner’s explicit Storybook review of the task’s exact story × state × locale × viewport matrix.
 
 ### 14.6 Inline locale map prohibition (Task 389, 2026-06-04)
 
@@ -738,7 +726,10 @@ Full allowlist: `scripts/check-locale-leak.mjs` → `LEAK_ALLOWLIST` array.
 
 ---
 
-## §14.9 — Mantine/Primitives/* enforced rendered gate (Task 529, 2026-07-02)
+## §14.9 — Retired Mantine/Primitives rendered gate (historical Task 529 record)
+
+> This entire section is historical. The owner decision dated 2026-09-03 retires the harness and its CI job; none of
+> the commands, allowlists, manifests, PASS/FAIL/AMBIGUOUS counts, or blocking claims below are current requirements.
 
 **Why.** `scripts/check-stories-rendered.mjs` (`npm run screenshots:assert`, §14.3/14.4) is the ENFORCED rendered
 gate, but until Task 529 its `ASSERT_STORIES` allowlist was hand-maintained and never included any
@@ -1859,7 +1850,7 @@ paths, clause-11 reasoning) at `.screenshots/task724-evidence/I2-classification-
 | # | Story | Disposition | Mechanism |
 |---:|---|---|---|
 | 1 | `Mantine/Primitives/Button/Default` | FIX (story-only) | Canonical `MantineResponsiveActionFooter` stack pattern applied to each demo row's `Group`/`Button` |
-| 2 | `Mantine/Primitives/FilterControls/Default` | FIX (production, domain exemption) | `role="group"` + `aria-label` on `FilterMultiToggle`/`FilterRoomsRow` — the same criterion the assertion already exempts for Mantine `ButtonGroup` |
+| 2 | `Mantine/Primitives/FilterControls/Default` | FIX (production, domain exemption) | `role="group"` + `aria-label` on the pre-Task-781 multi-toggle leaf component (since generalized into `FilterChoiceGroup.tsx`, Task 781)/`FilterRoomsRow` — the same criterion the assertion already exempts for Mantine `ButtonGroup` |
 | 3 | `Mantine/Primitives/FiltersPanelShell/Default` | FIX (production) | Same `role="group"` mechanism reused via #2's fixed leaf components, plus the property-type grid in `FiltersPanel.tsx` |
 | 4 | `Mantine/Primitives/NotificationBellView/Default` | FIX (production) | Retargeted `NotificationCenter.tsx`'s header/button breakpoint from the custom 390px `notification-compact` token to the project's canonical 640px `sm` — see the flagged tension with Task 593 below |
 | 5 | `Patterns/Mantine/FilterSection/Default` | FIX (story-only) | `fullWidth` + `width:auto`@40em on the 2 demo buttons |
@@ -1914,7 +1905,8 @@ every in-scope story is green; the only residual failures are the ones the kicko
 Session: `docs/sessions/2026-08-07-task724-fullwidth-buttons-13-story-adjudication.md`.
 
 **CORRECTION (Task 724R, 2026-08-07) — the #2/#3/#9 mechanism above was reverted.** The orchestrator implementation
-review found that `role="group"` had been added to four production containers (`FilterMultiToggle.tsx`,
+review found that `role="group"` had been added to four production containers (the pre-Task-781 multi-toggle leaf
+component, since generalized into `FilterChoiceGroup.tsx` (Task 781),
 `FilterRoomsRow.tsx`, `FiltersPanel.tsx`'s property-type grid, `MantineListingContactPattern.tsx`'s Favorite+Report
 row) *specifically because* `check-stories-rendered.mjs:1180` already uses `el.closest('[role="group"]')` as the
 assertion's own skip condition — the fix mechanism and the gate's blind spot were the same attribute, turning 48/136
@@ -1952,7 +1944,8 @@ sites also picked up an unnamed `role="group"` with no `aria-label` passed (F2).
   `role="group"` is unchanged and still exempts a real Mantine `ButtonGroup`. R7/R8 planted-violation proof for all
   three conditions (flex-direction, grid-track-count, median dominance — both a negative arm that must fail and a
   positive arm using real production chip data that must stay exempted) is recorded in the 724R session log.
-  `FilterMultiToggle.tsx`/`FilterRoomsRow.tsx` keep their (now roleless) `aria-label` prop as a genuine, independent
+  The pre-Task-781 multi-toggle leaf component (since generalized into `FilterChoiceGroup.tsx`)/`FilterRoomsRow.tsx`
+  keep their (now roleless) `aria-label` prop as a genuine, independent
   accessibility improvement — unrelated to gate behavior.
 - **#9 (`ListingContactPattern`) — re-elected route (a) REAL FIX for "Report listing".** `role="group"` removed;
   Report gets its own single-child `Group justify="flex-end"` row (the same container `reportTrigger` used alone
@@ -2414,7 +2407,9 @@ Session: `docs/sessions/2026-08-09-task727-click-shield-ci-and-contextual-n6.md`
 
 ## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)
 
-**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only run over canonical Mantine stories as their sole mandatory CI scope (Task Q0R — see §14.9 for the rendered-proof gate this criterion originated from). This gate ensures that a component enrolled in the Mantine migration actually has a canonical Mantine story proving it, so the migration can't silently regress (a component moved into scope, then its story quietly stops importing it) without CI catching it.
+**Why.** The remaining `check:locale-leak` gate runs over canonical Mantine stories. This static-import gate ensures
+that a component enrolled in the Mantine migration has a canonical Mantine story proving it, so the migration cannot
+silently regress by dropping that story import.
 
 ### §15.1 Gate: `check:story-coverage` (manifest-based, Task Q0R)
 
@@ -2490,7 +2485,9 @@ The scaffold:
 
 ## §MQ — Manual visual QA requirements (machine-detection limits, 2026-06-08)
 
-> Added by Task 412. See also `docs/design-system.md §27.3` and `docs/responsive-screenshot-governance.md §MQ`.
+> **Owner decision 2026-09-03:** every visible Storybook artifact is owner-reviewed manually. `screenshots:assert`
+> is retired and no longer detects, classifies, or proves any visual condition. The historical detector description
+> below is superseded; retain it only as historical context.
 
 `screenshots:assert` (`check-stories-rendered.mjs`) machine-checks three assertions per cell:
 (a) no `scrollWidth > clientWidth` overflow; (b) SelectTrigger / TabsList / form input fill their

@@ -148,6 +148,17 @@ custom visual decision." When no local primitive/story/theme contract exists, cr
 as a native Mantine pattern and its standalone proof, then resume the hierarchy. A custom feature-local UI is never
 a valid resolution.
 
+### Owner visual-review rule — `screenshots:assert` retired (owner decision 2026-09-03)
+
+Do not put `npm run screenshots:assert`, any `screenshots:assert:*` alias, or
+`governance:screenshots:assert` in a kickoff, acceptance criterion, QA plan, or completion contract. Its
+PASS/FAIL/AMBIGUOUS classifications are not evidence and must not drive implementation decisions.
+
+For every changed or newly created visible Storybook artifact, require an explicit `OWNER VISUAL QA REQUIRED`
+matrix: exact story, state, locale, and viewport tuples to be opened in Storybook after implementation. The owner
+alone records each tuple as accepted or returned with a concrete visual defect. A task may require Storybook to
+build, but no automated screenshot verdict may substitute for this owner review.
+
 ## Build the requirement ledger
 
 Normalize every explicit requirement before decomposition.
@@ -170,7 +181,7 @@ The task must contain all of the following:
 6. One positive flow and a negative-flow applicability table. Mark irrelevant branches `No` with the existing owner or reason; do not invent scope for every possible failure mode.
 7. Acceptance criteria in `ACn [R...] Given / when / then` form.
 8. The selected `Q0`-`Q4` QA profile, why it applies, and the exact evidence required.
-9. A verification plan with only commands, stories, viewports, locales, or manual steps known from the repository and selected rule bundle. Every non-Q0 plan must include the final `npm run build` hard gate and require its actual zero-exit transcript; a failed or unrun build permits only `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+9. A verification plan with only commands, stories, viewports, locales, or manual steps known from the repository and selected rule bundle. Every non-Q0 plan must include the final `npm run build` hard gate and require its actual zero-exit transcript; a failed or unrun build permits only `PARTIALLY IMPLEMENTED` or `BLOCKED`. For visible Storybook UI, it must also include the owner visual-review matrix and must not invoke `screenshots:assert`.
 10. A completion-report contract for Sonnet: changed files, completed requirement IDs, commands run and actual results, evidence locations, assumptions, deviations, limitations, and unresolved issues.
 
 The implementation handoff must direct Sonnet to the saved task path and the `execute-task` workflow. It must require

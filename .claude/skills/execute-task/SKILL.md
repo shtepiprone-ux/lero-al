@@ -160,6 +160,17 @@ Before reporting, perform the following implementation validation against every 
    Update every active consumer and run its relevant gate. Record every command's actual exit status. A known active
    broken reference or non-zero required gate is in scope for the change; it cannot be deferred as cleanup.
 
+### Owner visual-review rule — `screenshots:assert` retired (owner decision 2026-09-03)
+
+Never run `npm run screenshots:assert`, any `screenshots:assert:*` alias, or
+`governance:screenshots:assert`. Do not treat a historical task that names one of those commands as authorization:
+record that its automated visual-gate requirement is superseded and prepare the task's Storybook matrix for the
+owner instead.
+
+For every changed visible Storybook artifact, report the exact story, state, locale, and viewport tuples that require
+`OWNER VISUAL QA REQUIRED`. You may build Storybook and collect non-visual implementation evidence, but you must not
+mark those tuples visually passed, failed, or ambiguous on the owner's behalf.
+
 If any requirement lacks evidence, any test is unavailable, or a defect remains, report that status explicitly. Do
 not hide it in a positive summary. Do not describe the work as "all clean", complete, validated, or ready for review
 while a required check is unrun or failing.

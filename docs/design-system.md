@@ -484,7 +484,7 @@ PASS requires **real rendered verification** at the §3 canon:
 4. For interactive surfaces: empty / loading / error / success / cancel states each verified at mobile + desktop (this is also a flow requirement, §12/§14).
 5. Either **browser QA evidence** (preferred) **OR an explicit `OWNER QA REQUIRED` gate** recorded in the session log. A task may not self-approve a responsive change purely from code analysis.
 
-**§27 (Storybook responsive-proof contract)** governs what counts as PASS/FAIL for each story × viewport × locale cell. See §27.3 for what `screenshots:assert` does and does NOT prove (button full-width and popup bottom-sheet compliance are machine-checked as of Task 421; wide-desktop sparsity is NOT machine-checked); §27.4 for the error-screen = FAIL rule.
+**§27 (Storybook responsive-proof contract)** governs owner visual acceptance for each story × viewport × locale cell. `screenshots:assert` is retired; §27.3 records the superseding owner-review rule and §27.4 retains the error-screen rule.
 
 ---
 
@@ -1745,33 +1745,20 @@ Every story MUST render in a full-available-width frame that accurately reflects
 PASS ONLY when:
 
 1. The story renders in a browser at the specified viewport × locale (not just "builds").
-2. The rendered output is visually inspected or machine-asserted against the acceptance criteria.
-3. Evidence is recorded: `screenshots:assert` PNG/JSON artifacts per cell (uk@320/375/390 mandatory).
+2. The owner visually inspects the rendered output against the acceptance criteria.
+3. The session log records the exact story × state × locale × viewport tuple and the owner's accepted or returned
+   result. Required tuples that have not been owner-reviewed are `OWNER VISUAL QA REQUIRED`, never PASS.
 
-### 27.3 — What `screenshots:assert` does and does NOT prove
+### 27.3 — Retired automated assertion harness
 
-`scripts/check-stories-rendered.mjs` machine-checks five assertions per cell:
+**Owner decision 2026-09-03:** `screenshots:assert`, every `screenshots:assert:*` alias, and
+`governance:screenshots:assert` are retired from all task, review, and CI proof paths. Do not run them and do not
+use their historical PASS/FAIL/AMBIGUOUS classifications as evidence. Historical descriptions below in this document
+are records of prior work only and are superseded by this section.
 
-| Assertion | What it checks | Reliable? |
-|---|---|---|
-| (a) No horizontal overflow | `scrollWidth > clientWidth` at the viewport | ✅ Reliable |
-| (b) Form controls full-width | `SelectTrigger`, `TabsList`, form `input` elements fill their parent at `<640` | ✅ Reliable for those selectors |
-| (c) No render failure | Error-boundary screen, blank canvas, missing router/provider | ✅ Reliable for known error patterns |
-| (d) Text buttons full-width | Every visible `[data-slot="button"]:not([data-icon-only])` (excluding `[data-slot="button-group"]` members) fills its parent at `<640` — including text CTAs inside open overlays | ✅ Reliable for those selectors (Task 421) |
-| (e) Open popups = bottom sheet | Every visible open overlay content slot (`dialog-content`, `sheet-content` except `data-side="left"`, `select-content`, `popover-content`, `dropdown-menu-content`, `navigation-menu-popup`) is edge-to-edge full-width and bottom-anchored at `<640` | ✅ Reliable for those selectors (Task 421) |
-
-**What `screenshots:assert` does NOT detect (requires manual visual QA):**
-
-| Gap | Description | Manual QA gate |
-|---|---|---|
-| Overflow-hidden masking | `overflow-hidden` hides a defect — no overflow but content clipped | §24.4 |
-| Inaccessible table columns | Columns off-screen at specific viewport but parent not overflowing | §25.1 |
-| Wide-desktop sparsity | Whitespace waste at 1920/2560 — no whitespace detector | §4, §8 |
-| Labels behind sticky/fixed layers | z-index collision hiding content | §22.3 z-index |
-| Visually broken but non-overflowing | Layout broken but `scrollWidth` not exceeded | General |
-
-**These gaps MUST be covered by manual visual QA** and recorded as `OWNER QA REQUIRED`
-in the session log for any task touching these surfaces.
+The owner visually checks the complete required matrix, including clipping/overflow, control placement and touch
+targets, overlays and backdrops, fixed/sticky-layer occlusion, locale expansion, and the relevant desktop layout.
+There is no machine verdict for these concerns.
 
 ### 27.4 — Error screen = FAIL
 
@@ -1783,14 +1770,8 @@ re-rendered after the root cause is fixed before it can contribute to PASS evide
 
 **PASS:**
 - Story renders without error (27.4 not triggered).
-- No horizontal overflow at the viewport.
-- Full-width form controls at `<640` (machine-checked).
-- `screenshots:assert` exit 0 for the cell.
-- uk@320/375/390 cells explicitly passed (mandatory stress cells).
+- The owner has visually accepted the exact story × state × locale × viewport tuple.
 
 **FAIL:**
-- Render error / error-boundary screen.
-- Any `scrollWidth > clientWidth` overflow.
-- Form control (SelectTrigger / TabsList / input) not full-width at `<640`.
-- Cell not run — untested cells are NOT PASS; mark `OWNER QA REQUIRED`.
-- `screenshots:assert` exit 1 for the cell.
+- The owner observes a rendered defect or error screen in the exact tuple.
+- A required tuple is not reviewed: mark `OWNER VISUAL QA REQUIRED`; it is not PASS.

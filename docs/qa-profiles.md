@@ -21,6 +21,10 @@ Every kickoff and review must name one QA profile:
 - Legacy shadcn/Tailwind surfaces use the legacy docs only until migrated.
 - TailAdmin visual conformance is required when visual chrome, density, spacing, typography, border, shadow, radius, or primitive styling is in scope.
 - A logic-only task that touches a UI file does not automatically become `Q3`; choose the profile by user-visible and layout risk.
+- **Owner decision 2026-09-03:** `screenshots:assert` and all of its aliases are retired as QA evidence and must
+  not be run by task design, execution, review, or CI. For each changed visible Storybook artifact, Q2–Q4 require an
+  `OWNER VISUAL QA REQUIRED` matrix of exact story × state × locale × viewport tuples. The owner reviews the rendered
+  stories and records accepted or returned; an automated PASS/FAIL/AMBIGUOUS status cannot replace that review.
 
 ## Viewport policy
 

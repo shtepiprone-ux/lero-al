@@ -270,39 +270,17 @@ When adding a new screenshot target:
 
 ## §MQ — Machine-detection limits + manual visual QA requirement (2026-06-08)
 
-> Added by Task 412. See also `docs/design-system.md §27.3` and `docs/storybook-governance.md §MQ`.
+> **Owner decision 2026-09-03:** retire `screenshots:assert` as a visual gate. It is not run in CI or as part of a
+> task, and its PASS/FAIL/AMBIGUOUS output is not evidence. This supersedes any earlier statement in this document
+> that characterises one of its assertions as reliable.
 
-### What `screenshots:assert` reliably catches
+### OWNER VISUAL QA REQUIRED gate
 
-| Assertion | What is checked | Reliability |
-|---|---|---|
-| (a) Horizontal overflow | `scrollWidth > clientWidth` at every viewport | ✅ High |
-| (b) Form control width | SelectTrigger / TabsList / form inputs fill parent at `<640` | ✅ High for those selectors |
-| (c) Render failure | Error-boundary screen, blank canvas, missing router/provider | ✅ High for known patterns |
+Every task with changed visible UI must record the exact Storybook/app matrix for the owner to inspect after the
+implementation is complete: artifact, state, locale, viewport, and the specific visual conditions to judge. The
+owner records each tuple as accepted or returned with a concrete defect; an unreviewed tuple remains
+`OWNER VISUAL QA REQUIRED`.
 
-### What `screenshots:assert` does NOT catch (manual QA required)
-
-| Gap | Consequence if missed | Manual QA action |
-|---|---|---|
-| **Button not full-width at `<640`** | User must side-scroll or cannot tap button | Open story at 320px, visually verify every text button is full-width (`§26.1`) |
-| **`overflow-hidden` masking a defect** | Content silently clipped — no overflow triggered | Read layout structure; verify nothing meaningful is hidden behind `overflow-hidden` (`§24.4`) |
-| **Popup not bottom-sheet at `<640`** | Centered card / mini-dropdown at mobile = bad UX, hard to dismiss | Open overlay primitives at 320/375/390 and confirm bottom-anchor + edge-to-edge (`§26.2`) |
-| **Table columns off-screen at 768–960** | Row actions / data columns inaccessible at tablet | Verify all columns reachable at 768, 810, 960 for any tableAtLg surface (`§25.1`) |
-| **Wide-desktop sparsity at 1920/2560** | Wasteland margins; poor use of screen estate | Visual check at 1920/2560 for container cap and grid column count (`§4`, `§8`) |
-| **Sticky/fixed layer overlap** | Interactive content hidden behind sticky header/bottom-nav | Scroll to bottom at mobile viewports; confirm no overlap (`§22.3 z-index`) |
-
-### OWNER QA REQUIRED gate
-
-Every task that touches surfaces with these gaps MUST include an explicit `OWNER QA REQUIRED`
-matrix row in the session log for the affected checks. `screenshots:assert` PASS alone is not
-sufficient for tasks touching:
-- Overlay/popup primitives (Dialog, Sheet, Select, Combobox, DropdownMenu, Popover, Command)
-- Action button clusters (any surface with more than one Button)
-- Admin data tables at 768–1023px
-- Any component at 1920/2560
-
-### Future improvement
-
-A proposed harness slice in `docs/responsive-storybook-inventory.md §5` would add DOM assertions
-for button width and overlay bottom-sheet positioning, eliminating these manual-QA gaps. Until
-that slice ships, manual QA is mandatory per this section.
+The review covers clipping and overflow, control placement/touch targets, overlays/backdrops, sticky/fixed-layer
+occlusion, responsive wrapping, locale expansion, and desktop density as applicable. No generic DOM heuristic may
+substitute for this review.

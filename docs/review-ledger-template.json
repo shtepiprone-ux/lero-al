@@ -48,9 +48,9 @@
       "evidence": [
         {
           "path": "docs/sessions/2026-01-01-task000-example.md",
-          "command": "npm run screenshots:assert -- --mantine-only",
-          "observable": "Persisted manifest records the exact visual verdict for the listed tuples.",
-          "freshness": "final build for the reviewed diff",
+          "command": "OWNER VISUAL QA REQUIRED — open the listed Storybook tuples after the final build",
+          "observable": "Owner records accepted or returned for every listed story × state × locale × viewport tuple.",
+          "freshness": "owner review of the final build for the reviewed diff",
           "coverageRole": "COVERS",
           "scope": {
             "subjects": ["ExampleComponent/default"],

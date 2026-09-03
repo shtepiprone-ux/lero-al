@@ -146,73 +146,9 @@ jobs:
         if: always()
         run: npm run governance
 
-  # ── Rendered proof, homepage-grid, and locale leak run as independent jobs (no `needs`) ──
-  # Each job gets its own 45-minute GitHub Actions budget. The homepage-grid gate and
-  # its self-test use Playwright extensively, so keeping them before rendered-proof
-  # left the rendered-proof matrix insufficient time to complete. The three jobs build
-  # Storybook independently (no shared artifact). The rendered-proof and homepage-grid
-  # matrices stay blocking — no --fast, reduced stories, locales, or viewports.
-
-  rendered-proof:
-    name: Rendered Proof (Mantine)
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
-
-      - name: Build Storybook (runs check:stories pre-gate)
-        run: npm run build-storybook
-
-      - name: Rendered-proof gate (Task 529 — Mantine/Primitives/* enforced, auto-discovered)
-        # --mantine-only: blocks CI specifically on the Mantine/Primitives/* gate this task adds.
-        # Deliberately does NOT also run the pre-existing ASSERT_STORIES/geometry-only phases here —
-        # running the full assert surfaced pre-existing failures across unrelated admin stories
-        # (AdminSidebar, AdminSupportManager, NotificationCenter, AdminReportsManager, etc.) that
-        # predate this task and are out of its scope to fix; wiring the FULL gate in as blocking
-        # would make every PR red for reasons unrelated to Mantine primitives. See the Task 529
-        # session log for the full breakdown — that pre-existing gap is flagged as a separate
-        # follow-up. Story/cell counts are printed by the run itself; do not hardcode them here.
-        run: npm run screenshots:assert -- --mantine-only
-
-      - name: Assertion-liveness meta-gate (Task 710 — a null-everywhere assertion is a dead gate, not a pass)
-        # Reads the manifest.json the previous step just produced (default discovery: the latest
-        # dir under .screenshots/rendered-assert/, which is exactly that run on a fresh checkout).
-        # Fails on a NEW dead assertion, a STALE or ORPHAN registry entry, or a manifest with no
-        # boolean-shaped assertion at all (Task 721); reports LIVE-THIN loudly without blocking.
-        # Never launches a browser.
-        run: npm run check:assertion-liveness
-
-      - name: Assertion-liveness meta-gate self-test (Task 721 — the gate's own PLANTS harness, wired into CI so a broken arm cannot pass silently)
-        # In-memory only (synthetic fixture manifests, no browser, no dependency on the previous
-        # step's output) — sub-second, so wiring it costs effectively nothing. Proves DEAD-NEW,
-        # STALE-ENTRY, ORPHAN-ENTRY, NO-BOOLEAN-ASSERTIONS, and BAD-INPUT all genuinely fail, LIVE-
-        # THIN reports without blocking, and the real manifest from the previous step genuinely
-        # passes. Without this step, a future edit could silently break any of the gate's five arms
-        # and CI would never notice — the exact "stopped checking" failure this gate itself exists
-        # to catch, one layer up.
-        run: npm run check:assertion-liveness:verify
-
-      - name: Upload rendered-assert report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: rendered-assert-report
-          path: .screenshots/rendered-assert/
-          retention-days: 7
+  # ── Homepage-grid and locale-leak run as independent jobs (no `needs`) ──
+  # `screenshots:assert` is retired by the owner decision dated 2026-09-03. Visual Storybook
+  # proof is an owner-reviewed matrix, so there is deliberately no rendered-proof CI job.
 
   homepage-grid:
     name: Homepage Grid Validation

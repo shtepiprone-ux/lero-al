@@ -1,6 +1,21 @@
 # Sprint 66 — `/listings` mobile overflow
 
-**Opened:** 2026-08-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0
+**Opened:** 2026-08-27 · **Closed:** 2026-09-03 · **Status:** ✅ **CLOSED AS DELIVERED** · **Landed tasks:** 1 (772)
+
+> **Closed and archived by owner instruction, 2026-09-03** — *"хоча, давай створюй окремий Sprint, а Sprint 66
+> закривай та архівуй"*. Task **772** is `APPROVED` (Opus, 2026-09-03) and its fix is committed (`0cb9868af`). This
+> sprint's single goal is met and every exit criterion below is satisfied — including criterion 5, which
+> **forbade component migration**. The remaining `/listings` Mantine work therefore could not live here: it was
+> filed as Task **781** in the newly opened **Sprint 69**
+> (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`), not by widening this sprint.
+> Archive row: `docs/backlog-archive.md`, 2026-09-03.
+
+> **Residual, deliberately un-numbered (owner decision, 2026-09-03).** Task 772's authenticated matrix
+> surfaced a **pre-existing** `SaveSearchButton` occlusion — its own `max-sm:w-full` collapses
+> `.listings-sort-bar`'s wrapper and the positioned sort `Combobox` paints over it at 320–390px. It is
+> byte-identical before and after 772's fix, was correctly held out of scope here, and got no task number.
+> It is **not** an open item of this sprint: **Sprint 69 / Task 781 §3.6 owns it**, as the reason its
+> `ListingsSortBar` + `SaveSearchButton` action-row slice is one phase rather than two.
 
 > ⚠️ **Number correction, same day.** This task was first written as 771. While it was being written, a parallel
 > session filed **771** into Sprint 65 (global Tailwind retirement readiness) and updated that sprint's Tasks table
@@ -84,7 +99,22 @@ Order and gating only — read state from the Tasks table above.
 4. The before/after evidence is retained per width, per locale, and per authentication state, and the "before" run
    demonstrably reproduces the defect it claims to fix. A width/locale cell where the defect does **not** reproduce
    is recorded as such — never dropped.
-5. No unrelated de-Tailwind, no component migration, and no change to `SaveSearchButton`, the **filters drawer**
+5. ✅ **Met, and not amended.** No unrelated de-Tailwind, no component migration, and no change to `SaveSearchButton`, the **filters drawer**
    contents (`MantineDrawer` → `ListingsFilters`; renamed 2026-09-02 from the legacy `Sheet` wording — kickoff §3.7,
    same boundary) or the desktop layout. A residual overflow attributable to a sibling of the sort bar is **reported
    as a finding**, not fixed here.
+
+## Closure record — 2026-09-03
+
+| Exit criterion | Result |
+|---|---|
+| 1 — no horizontal scroll at 320/375/390 × 4 locales | ✅ anonymous 16/22 → 0/22; authenticated 9/22 → 0/22 |
+| 2 — filters + sort remain usable | ✅ both open their panel; a sort selection still changes `sort` |
+| 3 — every sort-bar control ≥ 44px | ✅ sort trigger raised via `triggerClassName="max-sm:min-h-11"` |
+| 4 — before/after evidence per width, locale and auth state, with the "before" reproducing the defect | ✅ retained; non-reproducing cells recorded rather than dropped |
+| 5 — no de-Tailwind, no migration, no `SaveSearchButton` change | ✅ scope held to two call-site lines in `ListingsSortBar.tsx` |
+
+Session log: `docs/sessions/2026-09-02-task772-listings-mobile-overflow.md`. Evidence probe:
+`scripts/task772-listings-overflow-probe.mjs` — ⚠️ **its locators are Tailwind- and shadcn-derived and are
+structurally dead once Task 781 lands**; 781's AC9 owns retargeting or retiring them. Do not treat a
+zero-match locator in that probe as a pass.

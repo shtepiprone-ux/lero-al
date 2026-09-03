@@ -268,7 +268,12 @@ conclusion, revise the ledger and decision rather than retaining the earlier nar
 
 ### Approval-closure gate (mandatory, fail-closed)
 
-Do not choose an approval decision until the reviewer has closed every P0/P1 ledger row against the **final reviewed
+**Frontend/UI exception — owner decision.** Do not require or create a review ledger for frontend implementation
+work (components, pages, styles, and browser-visible behavior) unless the owner explicitly requests one. Record the
+reviewed diff, evidence, findings, and decision in the session log or review response; the normal requirement and
+scope checks below still apply.
+
+For non-frontend work, do not choose an approval decision until the reviewer has closed every P0/P1 ledger row against the **final reviewed
 diff**. For each row, the review record must carry a scope certificate with all applicable fields:
 
 | Required field | What the reviewer records |
@@ -280,7 +285,7 @@ diff**. For each row, the review record must carry a scope certificate with all 
 | Counter-check | The most direct contrary branch, artifact, or generated form inspected, with its observed result |
 | Verdict | `VERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED` — never a bare checkmark |
 
-Persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json`, using
+For non-frontend work, persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json`, using
 `docs/review-ledger-template.json`, and run `npm run check:review-ledger -- --file <ledger>`. The validator checks
 retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, derived coverage
 totals, gate receipt consistency, decision consistency, finding-to-requirement links, and the non-approved handoff
@@ -302,7 +307,7 @@ matrix does not substitute for a required computed-style/cascade capture; a coun
 per-cell records the criterion requires. `diffCount: 0` proves only the named fields for the targets actually
 captured. Every omitted required target is `UNVERIFIED` and blocks approval.
 
-For generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
+For non-frontend generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
 the input removed or replaced. Compare its full semantic envelope — ancestor/descendant relation, selector
 specificity, `@media`/`@supports` wrappers, layer, source-order dependence, declarations, and custom-property
 behavior — rather than comparing only computed desktop values or declaration text. Schema v4 records this as

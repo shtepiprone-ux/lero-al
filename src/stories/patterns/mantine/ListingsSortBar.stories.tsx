@@ -4,28 +4,29 @@ import { Box } from '@mantine/core';
 import { ListingsSortBar } from '@/modules/listings/components/ListingsSortBar';
 
 /**
- * Task 781R — canonical standalone story for `ListingsSortBar`, statically importing the real
- * production component (clause 16c). Proven here BEFORE integration into `ListingsActionRow` /
- * `ListingsShellView` — a green composition/route screenshot is not evidence for this child's own
- * visual contract (owner instruction, 2026-09-03).
+ * Task 781R, revised Task 782/F13 — canonical standalone story for `ListingsSortBar`, statically
+ * importing the real production component (clause 16c). Proven here BEFORE integration into
+ * `ListingsActionRow` / `ListingsShellView` — a green composition/route screenshot is not
+ * evidence for this child's own visual contract (owner instruction, 2026-09-03).
  *
  * Canonical Mantine primitives selected (search evidence — task session, 2026-09-03):
- * - Active-filter count: Mantine `Badge` `circle` — Mantine's own native round-counter mod
- *   (`node_modules/@mantine/core` `Badge.mjs`/`styles.css` `[data-circle]`: `width:
- *   var(--badge-height)` + `padding-inline: 0.125rem`, i.e. width==height, a true circle), NOT
- *   `Indicator` (an absolutely-positioned overlay — the prior pattern, and the exact mechanism of
- *   the reported defect: an overlay escapes the button's own box and can visually collide with
- *   neighboring controls at narrow widths). `theme.ts`'s `Badge.styles` callback was extended
- *   (Task 781R) to exempt `circle` from the §6b oval-pill height/padding override, so the circle
- *   shape isn't fought by the theme's own inline styles. Rendered as the trigger `Button`'s
- *   `rightSection` — in-flow content contributing to the button's own layout box, not an overlay.
+ * - Mobile filters trigger + active-filter count: the project's canonical `MantineCountButton`
+ *   pattern (`src/design-system/mantine/patterns/MantineCountButton.tsx`, `Mantine/Primitives/
+ *   CountButton` story) — the SAME shared Button+count primitive already consumed by
+ *   `HeroSearchView.tsx`'s `advanced_filters` trigger and `FiltersPanel.tsx`'s apply button, not a
+ *   feature-local composition. It renders the count as a plain, content-sized `Badge` inline in
+ *   the Button's `rightSection` (Task 782/F13, owner triage D69-13, 2026-09-03: replaces an
+ *   earlier feature-local `Badge circle`, whose Mantine-native `[data-circle]` CSS pins `width:
+ *   var(--badge-height)`, cramping a two-digit count). Never `Indicator` (an
+ *   absolutely-positioned overlay — the original pre-781R pattern, and the exact mechanism of that
+ *   reported defect: an overlay escapes the button's own box and can visually collide with
+ *   neighboring controls at narrow widths).
  * - Sort selector: `MantineCombobox variant="button"` (unchanged — already canonical, reused from
  *   `Mantine/Primitives/Combobox`).
  * - View toggle: `ActionIcon` pair inside a `Group` (unchanged — already canonical per §6a of the
  *   Task 781 kickoff's decision record; `SegmentedControl` was inspected and rejected there since
  *   this task's own §6a explicitly named `Button`/`ActionIcon`/`Indicator` as the reuse target for
  *   this exact control, before `Indicator` was itself superseded by this follow-up).
- * - Mobile filters trigger: `Button` `hiddenFrom="md"` (unchanged).
  */
 const meta: Meta<typeof ListingsSortBar> = {
   title: 'Patterns/Mantine/ListingsSortBar',
@@ -35,7 +36,7 @@ const meta: Meta<typeof ListingsSortBar> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Task 781R — `/listings` sort/action toolbar migrated onto a canonical Mantine `Badge circle` counter (no `Indicator` overlay). Viewport and locale switched via the Storybook toolbar.',
+        component: 'Task 782/F13 — `/listings` sort/action toolbar with the canonical `MantineCountButton` mobile filters trigger (content-sized `Badge` counter in `rightSection`, no `circle`, no `Indicator` overlay). Viewport and locale switched via the Storybook toolbar.',
       },
     },
   },
@@ -66,6 +67,12 @@ function SortBarDemo({
 export const Default: Story = {
   parameters: { nextjs: { navigation: { pathname: '/listings', query: {} } } },
   render: () => <SortBarDemo activeFiltersCount={0} total={24} />,
+};
+
+// activeFiltersCount=1 — story fixture. Single-digit counter state, required by AC16/Task 782/F13.
+export const OneActiveFilter: Story = {
+  parameters: { nextjs: { navigation: { pathname: '/listings', query: {} } } },
+  render: () => <SortBarDemo activeFiltersCount={1} total={16} />,
 };
 
 // activeFiltersCount=2 — story fixture. Matches the count in the owner's reported defect screenshot.

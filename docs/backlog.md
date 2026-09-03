@@ -8,10 +8,12 @@
 ## Last Session (2026-09-03)
 
 Task **781** is archived: its committed `/listings` migration remains historically `PARTIALLY VERIFIED` under the
-owner override. Task **782**'s **F13** revision is implemented and awaits review. Task **783** is filed as the
-separate, narrow follow-up for `ListingsFilterBar`'s advanced-filters counter: replace its absolute `Indicator`
-with the existing canonical `MantineCountButton`, prove real URL-derived counts 0/1/12 in stories, then obtain
-owner visual review. `screenshots:assert` is not validation for either task (owner rule, 2026-09-03).
+owner override. Task **782**'s **F13** revision is also archived after approval: `ListingsSortBar.tsx` now reuses
+the canonical `MantineCountButton` for its mobile Filters counter, whose 0/1/12 states were reviewed at 375/390px
+across all four locales. Task **783** remains the separate, narrow follow-up for `ListingsFilterBar`'s
+advanced-filters counter: same primitive, replace its absolute `Indicator`, prove real URL-derived counts 0/1/12 in
+stories, then obtain owner visual review. `screenshots:assert` is not validation for either task (owner rule,
+2026-09-03).
 
 ## Open — needs action
 
@@ -38,7 +40,7 @@ owner visual review. `screenshots:assert` is not validation for either task (own
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
 **Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** + **778** are archived. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779 + 780 + 780R** are archived — the `ListingsFilterBar` slice is closed.
-**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781** is archived. **782** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` for **F13 only**: canonical Mantine mobile Filters counter. **783** `KICKOFF FILED`: canonical inline counter for `ListingsFilterBar`'s Advanced filters control. **D69-3: no review ledger.** 🟠 OPEN, two active tasks.
+**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781 + 782** are archived; 782 closed as the approved **F13-only** canonical Mantine mobile Filters-counter revision. **783** `KICKOFF FILED`: canonical inline counter for `ListingsFilterBar`'s Advanced filters control. **D69-3: no review ledger.** 🟠 OPEN, one active task.
 ## Task registry — single source for every open number. Last used **783**, NEXT FREE **784**.
 
 > Allocatable and reserved numbers only. A number leaves this table when its task is archived. Full justification for a reserved number → [`backlog-reserved.md`](backlog-reserved.md); retired and folded numbers → the same file's "Registry bookkeeping".
@@ -46,7 +48,6 @@ owner visual review. `screenshots:assert` is not validation for either task (own
 | # | State | What |
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
-| **782** | **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** — **Sprint 69**, P2, Q3; **F13 only** | **Canonical Mantine mobile Filters counter — implemented 2026-09-03.** `ListingsSortBar.tsx` mobile filters `Button`: counter `Badge` moved from `rightSection` (`circle`) into `leftSection`, next to the icon, in a native `Group`; `circle` dropped so it falls through to `theme.ts`'s canonical content-sized pill `Badge.styles` branch. `Patterns/Mantine/ListingsSortBar` story gained `OneActiveFilter`; `Default` (0) and `ManyActiveFilters` (12) already existed. Stale `circle`-describing doc comment and test title corrected. `typecheck`/`check:stories`/`check:story-coverage`/`check:design-tokens`/targeted `vitest`/`build-storybook`/`build` all exit 0 (evidence: session log). Owner visually reviews the finished story; `screenshots:assert` was not run as validation. |
 | **783** | **KICKOFF FILED** — **Sprint 69**, P2, Q2 | **Canonical inline `ListingsFilterBar` counter.** Replace the Advanced filters control's absolute `Indicator` with existing `MantineCountButton`; no new primitive or filter behavior. Extend the canonical primitive story first, then the real production story with URL-derived 0/1/12 states. Owner visual review is the rendered proof; `screenshots:assert` is excluded. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |

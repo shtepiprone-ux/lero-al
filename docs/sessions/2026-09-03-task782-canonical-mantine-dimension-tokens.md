@@ -305,3 +305,89 @@ See `docs/backlog.md` — concise active-state entry added for Task 782, current
 3. **Does R14/AC14 block `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`?** P is now captured and analyzed (§7); the missing piece is a genuine pre-782 B to produce the literal `P \ B = ∅` arithmetic AC14 asks for. Every other gate (build, tsc, full vitest, lint, check:design-tokens, check:stories, check:story-coverage) is green.
 4. **F5/F12/R8/R13** need a native route-probe run (command given in §9) — this session could not reach a live server.
 5. **Please independently re-verify** the "5 pre-existing failures" claim (§5, `vitest`) — this session used `git status --porcelain` on implicated lines rather than `git stash` (unavailable to Sonnet) to establish pre-existence; a `git stash`-based re-run (owner or Opus, both permitted mutating git in their own contexts per the project's role split) would be a stronger proof.
+
+---
+
+## 14. Revision round 2 (2026-09-03) — F13 only: canonical mobile Filters counter
+
+**Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, scoped **exclusively** to F13/R16/AC16 (the counter badge)
+per the narrowed backlog state (`docs/backlog.md` Sprint 69 row: `782` `NEEDS REVISION` for **F13 only**). V1/V2/V3/V5
+from §12a of the kickoff are **not** touched by this round — they belong to the prior, broader revision scope and
+were not reopened by the instruction that produced this round. `screenshots:assert` was not run (owner rule,
+2026-09-03: retired from task/CI proof paths); no review ledger (D69-3, frontend work).
+
+**This section supersedes two earlier drafts of this same round**, corrected in-session on live owner feedback
+before any handoff was made — recorded here for traceability, not as separate rounds:
+1. First draft placed the badge in the Button's `leftSection` (between icon and label). Owner correction, live:
+   *"у кнопці фільтрів Counter має бути праворуч від назви кнопки, а не між іконкою та назвою кнопки"* (the counter
+   must be to the right of the button's LABEL, not between the icon and the label) — moved to `rightSection`.
+2. Second draft hand-composed `Button` + raw `Badge` directly in `ListingsSortBar.tsx`. Owner correction, live:
+   *"у проєкті є канонічна Mantine CountButton. Не видумуй стилі!"* (the project has a canonical Mantine
+   `CountButton` — do not invent styles) — this session had not searched `src/design-system/mantine/patterns/`
+   before implementing, which is exactly the omission the UI start gate exists to catch. Replaced with the
+   project's actual canonical primitive, `MantineCountButton` (below).
+
+**Platform receipt:** `node.exe -p process.platform` → `win32`. Node per this session's `npm`/`npx` invocations.
+
+### 14.1 Files Changed (final)
+
+| File | Reason |
+|---|---|
+| `src/modules/listings/components/ListingsSortBar.tsx` | Mobile filters trigger now renders via the canonical `MantineCountButton` (`src/design-system/mantine/patterns`) instead of a raw `Button`: `count={activeFiltersCount}` replaces the hand-rolled `rightSection={<Badge circle .../>}`. `MantineCountButton` renders the count as its own content-sized, non-`circle` `Badge` inline in the Button's `rightSection` — to the right of the label, matching the owner's placement correction. `Badge`/`Button` imports from `@mantine/core` replaced by `MantineCountButton` from `@/design-system/mantine/patterns` (already imported for `MantineCombobox`). Comment block rewritten to cite the canonical primitive and both owner corrections. |
+| `src/stories/patterns/mantine/ListingsSortBar.stories.tsx` | Meta doc comment and `docs.description` rewritten to describe the canonical `MantineCountButton` composition (not a feature-local `Badge`/`circle`). Added `OneActiveFilter` story (`activeFiltersCount=1`) so the three required states — 0 (`Default`), 1 (`OneActiveFilter`), 12 (`ManyActiveFilters`) — are each named explicitly; `Default`/`ManyActiveFilters` were pre-existing and unchanged. |
+| `src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx` | Stale test title/comments (`"Badge circle"`) corrected to cite `MantineCountButton`/`rightSection`. The badge selector changed from a component-local `data-testid="listings-mobile-filters-count"` (which `MantineCountButton` does not expose — it does not forward a testid to its internal `Badge`) to `.mantine-Badge-root` scoped inside the trigger button — the SAME selector convention the canonical primitive's own test suite uses (`MantineCountButton.smoke.test.tsx:114,128`). No assertion outcome changed: badge presence/absence, its text content, and its in-flow (non-overlay) DOM position are still asserted; all 12 tests in this file pass. |
+
+### 14.2 Canonical UI decision record (final)
+
+| Visible artifact | Search/inspection | Canonical source | Disposition | Implementation |
+|---|---|---|---|---|
+| Mobile filters trigger + active-filter counter badge, `ListingsSortBar.tsx` | Corrected search (post owner feedback): `grep -rliE "count.?button" src` found `src/design-system/mantine/patterns/MantineCountButton.tsx`, its story `src/stories/mantine/primitives/CountButton.stories.tsx` (`Mantine/Primitives/CountButton`), and its smoke test. Read `MantineCountButton.tsx` in full: it wraps `Button`, accepts `count`/`leftSection`/`variant`/etc., and renders the count as a content-sized `Badge` in `rightSection` — variant-aware (`filled` host → white/brand pill, non-`filled` host incl. `variant="default"` → gray-2/gray-7 pill). Confirmed two existing production consumers use the identical shape (`variant="default"` + `leftSection` filter icon + `count`): `HeroSearchView.tsx`'s `advanced_filters` trigger and `FiltersPanel.tsx`'s apply button. | `MantineCountButton` (`src/design-system/mantine/patterns/MantineCountButton.tsx`) | **reuse** — this is not a new primitive and required no `theme.ts`/pattern-file edit; `ListingsSortBar.tsx`'s mobile filters trigger is functionally the same "secondary button + icon + active count" shape as the two existing consumers | `<MantineCountButton variant="default" ... leftSection={<SlidersHorizontal .../>} count={activeFiltersCount} ...>{t('filters_title')}</MantineCountButton>` replaces the raw `Button` |
+
+The task's own rule ("If no canonical native Mantine composition exists for this, STOP and report BLOCKED") did not
+apply, but the first two drafts of this round reached that conclusion without actually completing the required
+search of `src/design-system/mantine/patterns/` first — the canonical composition existed the whole time. This is
+recorded as a process defect, not a design decision: the NON-NEGOTIABLE UI START GATE requires inspecting canonical
+patterns *before* writing JSX, and this round did not do that until the owner pointed at the specific component name.
+
+### 14.3 Requirement/acceptance evidence
+
+| Requirement | Evidence | Result |
+|---|---|---|
+| Story renders the real production `ListingsSortBar`, not copied JSX | `ListingsSortBar.stories.tsx:4` imports `@/modules/listings/components/ListingsSortBar` directly; `render()` calls it with props, no duplicated markup | **VERIFIED** (grep + read) |
+| Story includes no-active-filters, 1-active-filter, 12-active-filters states | `Default` (`activeFiltersCount=0`), new `OneActiveFilter` (`activeFiltersCount=1`), `ManyActiveFilters` (`activeFiltersCount=12`) | **VERIFIED** (read) |
+| Native Mantine `Button` sections/components only | `ListingsSortBar.tsx` now consumes `MantineCountButton` (itself a thin native-Mantine `Button` wrapper) instead of composing `Button`+`Badge` locally; no bespoke wrapper element in `ListingsSortBar.tsx` at all | **VERIFIED** (read) |
+| Badge is content-sized, immediately right of the icon, inside the Button's native left section | **Superseded by live owner correction** — the owner's placement instruction, given after this requirement was written, places the counter to the right of the **label** (`rightSection`), not between the icon and label. Implemented as `rightSection` via `MantineCountButton`'s own `count` prop, consistent with the identical existing pattern in `HeroSearchView.tsx`/`FiltersPanel.tsx` | **IMPLEMENTED PER OWNER'S LIVE CORRECTION — supersedes the written task text** |
+| No `circle`, absolute positioning, bespoke CSS, hard-coded width/height, hand-rolled counter | `grep -n circle src/modules/listings/components/ListingsSortBar.tsx` returns only prose comment lines, no `circle` prop or raw `Badge` at all — the counter is entirely owned by `MantineCountButton` | **VERIFIED** (grep + read) |
+| Count stays inside the button, readable/unclipped for 1 and 12+ at mobile widths | Not independently pixel-measured this round (no live Storybook-server measurement script was in the given scope, and `screenshots:assert` is explicitly excluded). `MantineCountButton`'s own smoke test (`MantineCountButton.smoke.test.tsx:101-107`) already asserts the badge is not absolutely positioned; the theme's non-`circle` `Badge.styles` branch it consumes removes the `width==height` constraint that caused the original clipping — this is `INFERENCE` from an already-tested shared primitive, not a fresh rendered measurement of `ListingsSortBar` itself | **NOT INDEPENDENTLY MEASURED — owner visual review required** |
+| Icon, count, label, sibling sort control stay responsive, no overlap | `flex="1 1 auto"`/`miw={0}`/`hiddenFrom="sm"`/`onClick`/`data-testid` all pass through `MantineCountButton`'s `...props` spread onto the underlying `Button` unchanged; the parent `Group`'s `wrap="wrap"` is untouched | **INFERENCE from unchanged surrounding layout and prop pass-through, not re-measured** — owner visual review required |
+
+### 14.4 Validation evidence (final, after the canonical-primitive correction)
+
+| Command | Result |
+|---|---|
+| `node.exe -p process.platform` | `win32` |
+| `npm.cmd run typecheck` | exit 0 |
+| `npm.cmd run check:stories` | 140 files checked, 0 violations, exit 0 |
+| `npm.cmd run check:story-coverage` | 27/27 covered, 0 unproven, exit 0 |
+| `npm.cmd run check:design-tokens` (strict) | 0 violations, exit 0 |
+| `npx.cmd vitest run src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx` | 12/12 passed, exit 0 |
+| `npm.cmd run build-storybook` | exit 0 (run twice — once per draft correction; both exit 0) |
+| `npm.cmd run build` (hard gate, non-Q0) | exit 0 (run twice — once per draft correction; both exit 0) |
+
+`npm run screenshots:assert` was **not** run, per the task's explicit instruction and the owner's 2026-09-03 retirement of that gate from task/CI proof paths.
+
+### 14.5 Assumptions, deviations, limitations
+
+- **This round's first two implementation drafts were superseded before handoff** by live owner correction (§14, top) — the diff and all evidence in this section describe the final, corrected state only. Both corrections are preserved in the code's own comments so the reasoning survives review.
+- **No new Storybook state beyond `OneActiveFilter`** was added — `Default` and `ManyActiveFilters` already existed from the prior round and needed no change; only their doc comment was rewritten.
+- **`theme.ts` was not touched.** `MantineCountButton` and the canonical non-`circle` `Badge.styles` branch it relies on both already existed; this round only pointed `ListingsSortBar.tsx` at the existing shared primitive instead of hand-composing an equivalent locally. This is `reuse`, not `extend`/`create canonical`.
+- **The `data-testid="listings-mobile-filters-count"` selector no longer exists** — `MantineCountButton` has no prop to forward a testid to its internal `Badge`, and adding one would mean extending the shared primitive for a single consumer's test convenience. The smoke test now uses `.mantine-Badge-root` scoped inside `[data-testid="listings-mobile-filters-trigger"]`, matching `MantineCountButton.smoke.test.tsx`'s own established convention. The full kickoff's AC16 measurement plan (§13 of the kickoff) cites the old testid as its selector; a future measurement pass should use the `.mantine-Badge-root` selector instead.
+- **No pixel-level width measurement was captured** (see §14.3). That measurement script was not part of this round's given scope (`Run relevant typecheck/story checks and build Storybook` — no route/measurement probe named) and `screenshots:assert` is explicitly excluded. Reported as an open gap, not claimed as passed.
+- **`docs/backlog.md`** was updated in place (baseline `git --no-optional-locks show HEAD:docs/backlog.md` = 64 lines; this session's edit brought it to 66 lines, under the 80-line limit). A concurrent session subsequently filed Task 783 (a related but separate `ListingsFilterBar` counter follow-up) in the same file — that addition was not made by this session and is left as-is per the file's current on-disk state.
+
+### 14.6 Opus handoff — exact open questions for this round
+
+1. **Rendered proof for the core counter claim** (badge grows with content, stays unclipped at 1 vs 12, sits correctly to the right of the label) has not been captured in this round — a computed `getBoundingClientRect().width`/`scrollWidth<=clientWidth` check on `.mantine-Badge-root` inside `[data-testid="listings-mobile-filters-trigger"]`, comparing `OneActiveFilter`/`ManyActiveFilters`, at mobile viewports, would close it. Not run because no such probe was named in the given task instructions and the given validation commands (typecheck/story checks/build Storybook) do not produce one.
+2. **Owner visual review is the closing step**, per the task's own instruction ("do not self-approve"; "leave the task awaiting owner visual review of the finished canonical story"). The exact tuples to review: story `Patterns/Mantine/ListingsSortBar`, states `Default`/`OneActiveFilter`/`ManyActiveFilters`, at mobile viewports (375/390px), across the 4 locales the Storybook toolbar exposes — specifically confirming the counter now sits to the right of the "Filters" label, not between the icon and the label.
+3. **Please confirm the `MantineCountButton` reuse and the `rightSection` placement are the intended final shape** — both came from live corrections mid-session rather than from the written task text, which had specified `leftSection` and did not name the canonical primitive.
+4. Confirm whether the broader kickoff's V1/V2/V3/V5 (§12a) remain intentionally out of scope for this round, or should be picked up next — this round treated the backlog's "F13 only" narrowing as authoritative and did not reopen them. Note Task 783 (filed by another session while this one was in progress) covers the sibling `ListingsFilterBar` counter using the same `MantineCountButton` primitive — the two tasks should stay consistent with each other.

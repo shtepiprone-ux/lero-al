@@ -208,12 +208,13 @@ describe('ListingsSortBar — C7: mobile filters trigger + count badge gating', 
     expect(pushMock).not.toHaveBeenCalled()
   })
 
-  it('activeFiltersCount=0 renders no count badge; activeFiltersCount>0 renders one, in-flow inside the button (Task 781R — Badge circle, not Indicator overlay)', () => {
+  it('activeFiltersCount=0 renders no count badge; activeFiltersCount>0 renders one, in-flow inside the button (Task 782/F13 — canonical MantineCountButton, content-sized Badge in rightSection, not circle/Indicator overlay)', () => {
     currentSearch = ''
     const { container: zero } = render(withProviders(
       <ListingsSortBar {...sortBarProps} onFiltersOpen={vi.fn()} activeFiltersCount={0} />,
     ))
-    expect(zero.querySelector('[data-testid="listings-mobile-filters-count"]')).toBeNull()
+    const zeroTrigger = zero.querySelector('[data-testid="listings-mobile-filters-trigger"]')
+    expect(zeroTrigger?.querySelector('.mantine-Badge-root')).toBeNull()
     // No leftover Indicator overlay mechanism at all.
     expect(zero.querySelector('.mantine-Indicator-indicator')).toBeNull()
     cleanup()
@@ -221,13 +222,13 @@ describe('ListingsSortBar — C7: mobile filters trigger + count badge gating', 
     const { container: nonZero } = render(withProviders(
       <ListingsSortBar {...sortBarProps} onFiltersOpen={vi.fn()} activeFiltersCount={3} />,
     ))
-    const badge = nonZero.querySelector('[data-testid="listings-mobile-filters-count"]')
-    expect(badge).not.toBeNull()
+    const trigger = nonZero.querySelector('[data-testid="listings-mobile-filters-trigger"]')
+    const badge = trigger?.querySelector('.mantine-Badge-root')
+    expect(badge).toBeTruthy()
     expect(badge).toHaveTextContent('3')
     // The badge is a normal descendant of the trigger button (in-flow rightSection content),
     // not a sibling escaping it via absolute positioning.
-    const trigger = nonZero.querySelector('[data-testid="listings-mobile-filters-trigger"]')
-    expect(trigger?.contains(badge)).toBe(true)
+    expect(trigger?.contains(badge!)).toBe(true)
     expect(nonZero.querySelector('.mantine-Indicator-indicator')).toBeNull()
   })
 })

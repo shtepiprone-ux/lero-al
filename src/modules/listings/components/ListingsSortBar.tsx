@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
-import { ActionIcon, Badge, Box, Button, Group, Stack, Text, useMantineTheme } from '@mantine/core'
-import { MantineCombobox } from '@/design-system/mantine/patterns'
+import { ActionIcon, Box, Group, Stack, Text, useMantineTheme } from '@mantine/core'
+import { MantineCombobox, MantineCountButton } from '@/design-system/mantine/patterns'
 
 interface Props {
   total: number
@@ -92,13 +92,16 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           natural sizes actually fit, wrap the combobox to its own full-width line only when they
           don't — not a guessed pixel breakpoint. */}
       <Group align="center" wrap="wrap" gap="xs" flex="0 0 auto" w={{ base: '100%', sm: 'auto' }}>
-        {/* Mobile filters button — active-filter count is an in-flow Mantine `Badge circle`
-            inside the button's own `rightSection` (Task 781R, owner decision), not an
-            absolutely-positioned `Indicator` overlay: an overlay escapes the button's own
-            layout box and can visually collide with the adjacent sort/count controls at narrow
-            viewports, which is exactly the defect this replaces. `circle` is Mantine's own
-            native round-counter mod (theme.ts Badge.styles now exempts it from the oval-pill
-            height/padding override so `circle`'s own width==height contract isn't fought).
+        {/* Mobile filters button — Task 782/F13 (owner triage D69-13, 2026-09-03): uses the
+            canonical `MantineCountButton` pattern (`src/design-system/mantine/patterns`),
+            already the project's shared Button+count primitive (same composition as
+            `HeroSearchView.tsx`'s `advanced_filters` trigger and `FiltersPanel.tsx`'s apply
+            button). It renders the count as a plain, content-sized Mantine `Badge` inline in the
+            Button's `rightSection` — never `circle` (whose native `[data-circle]` CSS pins
+            `width: var(--badge-height)`, cramping a two-digit count) and never an
+            absolutely-positioned `Indicator` overlay (the pre-781R pattern, and the exact
+            mechanism of that reported defect: an overlay escapes the button's own box and can
+            collide with neighboring controls at narrow widths).
             `hiddenFrom="sm"` (not "md"): `ListingsShellView` now shows the full
             `ListingsFilterBar` from 640px up (owner decision, Task 781R, 2026-09-03 — filters
             must be visible inline the same as desktop from 640px, not gated behind this compact
@@ -110,22 +113,18 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
             controls share a row's surplus space evenly via Mantine's own `flex` style prop; when
             even a fully-shrunk pair can't both stay readable, the parent Group's `wrap="wrap"`
             still drops the combobox to its own line rather than clipping either control. */}
-        <Button
+        <MantineCountButton
           variant="default"
           hiddenFrom="sm"
           flex="1 1 auto"
           miw={0}
           leftSection={<SlidersHorizontal size={theme.other.iconSize.standard} />}
-          rightSection={activeFiltersCount > 0 ? (
-            <Badge circle size="sm" variant="filled" color="brand" data-testid="listings-mobile-filters-count">
-              {activeFiltersCount}
-            </Badge>
-          ) : undefined}
+          count={activeFiltersCount}
           onClick={onFiltersOpen}
           data-testid="listings-mobile-filters-trigger"
         >
           {t('filters_title')}
-        </Button>
+        </MantineCountButton>
 
         <Group align="center" wrap="nowrap" gap="xs" flex="1 1 auto" miw={0}>
           {/* Sort combobox. No fixed pixel `triggerWidth` (a measured-but-still-fixed 280 was

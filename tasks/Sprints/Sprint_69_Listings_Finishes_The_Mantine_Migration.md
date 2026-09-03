@@ -49,7 +49,8 @@ discipline, not the component diff.
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **781** | `/listings` Mantine surface completion — status tabs, filter chips, action row and shell presentation, in four gated phases | **P2** | **Q3** | 🟠 **KICKOFF FILED** 2026-09-03 — `Sprint_69_kickoff_prompt_Task_781_Listings_Mantine_Surface_Completion.md`. Not yet dispatched. |
+| **781** | `/listings` Mantine surface completion — status tabs, filter chips, action row and shell presentation, in four gated phases | **P2** | **Q3** | 🟡 **PARTIALLY VERIFIED** (Opus, 2026-09-03). Migration itself sound: R1–R4 · AC6/AC7/AC10/AC14 `VERIFIED`; manifest 22→27; owner-run native `build` 0, `check:design-tokens` 0, `build-storybook` 0. **AC7 independently recomputed by the reviewer** from `overflow.after.json`: 0/44 overflow, 0/22 sort↔save rect overlaps, `AUTH_STATE_VALID`. Rendered matrix **owner-waived** (D69-10). Open: F3 · F4 (P1), F5–F10 (P2), F11–F12 (P3) → all assigned to **782**. Session log `docs/sessions/2026-09-03-task781-…md`. |
+| **782** | Canonical Mantine dimension tokens, repo-wide raw-size sweep, and Task 781 review closure — five gated phases | **P2** | **Q3** | 🟠 **KICKOFF FILED** 2026-09-03 — `Sprint_69_kickoff_prompt_Task_782_Canonical_Mantine_Dimension_Tokens.md`. **Precondition: 781 committed first** (a clean baseline B is impossible otherwise). |
 
 ## Execution order
 
@@ -61,7 +62,10 @@ Order and gating only — read state from the Tasks table above.
    (§7.4). Phase 3 is one phase and not three because the two controls are siblings in one flex row whose
    collapse/occlusion interaction is exactly what a per-component proof cannot see — see the kickoff's §3.6
    measurement of Task 772's authenticated matrix.
-2. Nothing else is in this sprint. The route-level cutover inventory the owner's plan lists as step 5 is
+2. **782** after 781 is committed. It establishes the token scale the sweep needs, sweeps all 129 raw
+   `size={N}` sites repo-wide, adds the detector that keeps them converted, and closes every open finding from
+   781's review. Owner decision **D69-7** made it one task rather than a `/listings`-scoped slice.
+3. Nothing else is in this sprint. The route-level cutover inventory the owner's plan lists as step 5 is
    folded into 781's AC10, because after Phase 4 there is nothing left on the route for a separate task to
    inventory.
 
@@ -113,6 +117,12 @@ Order and gating only — read state from the Tasks table above.
 | **D69-2** | The work lives in a **new sprint**, and **Sprint 66 is closed and archived**. Owner instruction, 2026-09-03: *"хоча, давай створюй окремий Sprint, а Sprint 66 закривай та архівуй"*. This supersedes the same session's earlier "Sprint 66" placement answer. | Owner, 2026-09-03 |
 | **D69-3** | **No review ledger** for this task. Owner instruction, 2026-09-03: *"Ledger для цієї задачі не створюй, він не потрібен тут, бо це проста front-end задача"*, which matches the standing frontend exception already recorded in `docs/agent-contract.md` clause 9a and `docs/orchestrator-role.md` → Review. Evidence is the session log, the component diff, the required gate transcripts and the rendered QA. `docs/reviews/*.review-ledger.json` **must not** be created for 781. | Owner, 2026-09-03 |
 | **D69-4** | `ActiveFilterChips` migrates onto **themed Mantine `Button` composition**, not Mantine `Pill`. The owner's plan authorizes either (*"Mantine `Pill` або Mantine button composition"*); a multi-route task is forbidden, so one is chosen here. Measured basis: `theme.ts:274` already carries a TailAdmin-traced `Button` entry, while `theme.ts` has **no** `Pill` and **no** `Chip` entry, `src/` contains no `Pill`/`Chip` consumer, and no `Mantine/Primitives/Pill` story exists — `Pill` would require creating a canonical primitive, a theme entry and a story for one consumer. The chip is also a real `<button>` today; `Button` preserves its focus, keyboard and `aria-label` semantics, which `Pill`'s remove affordance does not. | Orchestrator under the owner's plan, 2026-09-03 |
+| **D69-6** | **Every hardcoded design value becomes a canonical Mantine token.** Owner, 2026-09-03: *«всі хардкодні місця мають бути замінені канонічними токенами Mantine!»* Bounded by measurement, not by slogan: a `={0}`, a flex ratio and behavioral CSS with no dimension are **not** design values and stay as they are (Task 782 §3.2). | Owner, 2026-09-03 |
+| **D69-7** | The raw-size sweep is **repo-wide in one task** (129 occurrences / 42 files), not a `/listings` slice. Owner, 2026-09-03: *«Увесь репозиторій в одній задачі»* — chosen over the `/listings`-only and scale-only alternatives. | Owner, 2026-09-03 |
+| **D69-8** | `miw={{ sm: 192 }}` on "Показати ще" is **removed**, not tokenized: 192px has no provenance beyond the Tailwind class `min-w-48` and no scale reaches it. The content-based desktop width is an accepted recorded delta (Δ6). | Owner, 2026-09-03 |
+| **D69-9** | Every Task 781 review finding closes **inside Task 782**. Owner, 2026-09-03: *«в цю задачу ти маєш внести всі проблеми з твого рев'ю, щоб їх закрити однією задачею»* | Owner, 2026-09-03 |
+| **D69-10** | Task 781's rendered matrix is **owner-waived**: *«screenshot:assert я не запускав, бо вона наразі не потрібна. Я візуально все переглянув, мені підходить»* (2026-09-03), which is the D69-5 visual acceptance being exercised. **The waiver is task-scoped and does not carry into 782**, which changes theme-level contracts across admin, cabinet, auth and site chrome that the owner did not review. | Owner, 2026-09-03 |
+| **D69-11** | **Owner override, 2026-09-03 — Task 781 is committed at `PARTIALLY VERIFIED`.** Owner: *«я комічу Task 781 як є»*. This overrides the fail-closed rule in `docs/orchestrator-procedures.md` → Approval-closure gate, which otherwise forbids a commit handoff for a non-approved decision. **What the override does and does not cover:** it authorizes the **commit only**. No `git push` is authorized — a push remains gated on an `APPROVED` / `APPROVED WITH NOTES` verdict, and none was issued. The twelve findings stay open and are Task **782**'s scope (D69-9); committing does not close them, and 781 is **not** archived. The reason the owner chose this over starting 782 on a dirty tree: D68-2's baseline **B** cannot be clean while 781's diff is uncommitted, and a dirty-worktree manifest for 34 entries costs more than it proves. | Owner, 2026-09-03 |
 | **D775-A** *(inherited)* | Layout uses **Mantine responsive props only**, top step at `xxl = 1440`. **1536 is used nowhere** — not a Mantine breakpoint, not a CSS-module media query. | Owner, 2026-08-30 |
 | **D775-B** *(inherited)* | Migrated chrome takes the measured **TailAdmin** contract rather than preserving a legacy deviation inside a new Mantine component. A resulting visual delta is an accepted migration outcome to be **recorded**, not a regression — and not a licence to invent a value. | Owner, 2026-08-30 |
 | **D775-C** *(inherited)* | A migrated surface consumes **Mantine tokens only**. A raw value, a `design-tokens-allow:` marker or a `--space-*` reference in a migrated file is a rejected diff, not a note. The spacing scale's `2xl: '2rem'` / `3xl: '3rem'` keys are native Mantine types. | Owner, 2026-08-30 |
@@ -122,4 +132,4 @@ Order and gating only — read state from the Tasks table above.
 
 | ID | Decision | Owner | Blocks |
 |---|---|---|---|
-| **D69-5** | `ActiveFilterChips` and `SaveSearchButton` both take TailAdmin/Mantine-theme values in place of their current legacy deviations (D775-B). The two known deltas are enumerated in the kickoff §11 and are **acceptance items, not defects** — but they are *visual* and need the owner's eye at review, exactly as Task 777's 32×32 pagination control did. | Owner, at review | nothing; 781 is dispatchable now |
+| **D69-5** | ✅ **CLOSED 2026-09-03** — exercised as D69-10: the owner reviewed the migrated surfaces visually and accepted them. Δ1–Δ3 stand as accepted; the two deltas the executor did not enumerate (Δ4 chip height, Δ5 empty-state padding) were caught at review and are Task 782 AC9. | Owner | nothing |

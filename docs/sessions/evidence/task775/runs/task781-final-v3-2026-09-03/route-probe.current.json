@@ -1,0 +1,1335 @@
+{
+  "label": "current",
+  "runId": "task781-final-v3-2026-09-03",
+  "baseUrl": "http://127.0.0.1:3000",
+  "capturedAt": "2026-09-03T13:17:37.340Z",
+  "probeHash": "d2cb0ca11ace00495952adedd11f411a76563d72",
+  "gitCommit": "9fb4e303e3a9995322f5fa405d6580cd829d06e5",
+  "serverMode": "production",
+  "cells": [
+    {
+      "locale": "en",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 375,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 480,
+      "clientWidth": 480,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 560,
+      "clientWidth": 560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 680,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 680,
+      "clientWidth": 680,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 810,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 810,
+      "clientWidth": 810,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 960,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 960,
+      "clientWidth": 960,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 1200,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1200,
+      "clientWidth": 1200,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem"
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem",
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task775\\runs\\task781-final-v3-2026-09-03\\route-probe.current.en.1440.png"
+    },
+    {
+      "locale": "en",
+      "width": 1920,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "en",
+      "width": 2560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Breadcrumb",
+      "navItems": [
+        "Home",
+        "/",
+        "Property listings"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 375,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 480,
+      "clientWidth": 480,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 560,
+      "clientWidth": 560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 680,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 680,
+      "clientWidth": 680,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 810,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 810,
+      "clientWidth": 810,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 960,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 960,
+      "clientWidth": 960,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "24px",
+        "paddingRight": "24px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 1200,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1200,
+      "clientWidth": 1200,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem"
+    },
+    {
+      "locale": "uk",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "32px",
+        "paddingRight": "32px"
+      },
+      "mainFound": true,
+      "navFound": true,
+      "mantineSpacing2xl": "2rem",
+      "mantineSpacing3xl": "3rem",
+      "screenshot": "C:\\Claude_Code_Projects\\lero-al\\docs\\sessions\\evidence\\task775\\runs\\task781-final-v3-2026-09-03\\route-probe.current.uk.1440.png"
+    },
+    {
+      "locale": "uk",
+      "width": 1920,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true
+    },
+    {
+      "locale": "uk",
+      "width": 2560,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "overflowCulprit": null,
+      "pageBackgroundColor": "oklch(0.985 0 0)",
+      "bandBackgroundColor": "oklab(0.961 0 0 / 0.4)",
+      "bandBorderBottom": "1px solid oklch(0.922 0 0)",
+      "breadcrumbGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "contentGutter": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "navAriaLabel": "Навігаційний шлях",
+      "navItems": [
+        "Головна",
+        "/",
+        "Оголошення про нерухомість"
+      ],
+      "breadcrumbFontSize": "14px",
+      "linkColor": "rgb(102, 112, 133)",
+      "currentColor": "rgb(29, 41, 57)",
+      "separatorColor": "rgb(152, 162, 179)",
+      "breadcrumbGap": "6px",
+      "headerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "footerGutterPadding": {
+        "maxWidth": "1408px",
+        "paddingLeft": "48px",
+        "paddingRight": "48px"
+      },
+      "mainFound": true,
+      "navFound": true
+    }
+  ],
+  "interactions": {
+    "filters": {
+      "control": "advanced filters trigger",
+      "startPath": "/en/listings",
+      "expected": "sheet content visible and URL unchanged",
+      "urlBefore": "http://127.0.0.1:3000/en/listings",
+      "urlAfter": "http://127.0.0.1:3000/en/listings",
+      "changed": false
+    },
+    "sort": {
+      "control": "sort trigger -> price_asc option",
+      "startPath": "/en/listings?page=2",
+      "expected": "sort=price_asc and page is absent or 1",
+      "urlBefore": "http://127.0.0.1:3000/en/listings?page=2",
+      "urlAfter": "http://127.0.0.1:3000/en/listings?sort=price_asc",
+      "changed": true
+    },
+    "statusTab": {
+      "control": "inactive listings status tab -> closed",
+      "startPath": "/en/listings",
+      "expected": "tab=closed",
+      "urlBefore": "http://127.0.0.1:3000/en/listings",
+      "urlAfter": "http://127.0.0.1:3000/en/listings?tab=closed",
+      "changed": true
+    }
+  }
+}

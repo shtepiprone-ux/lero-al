@@ -53,7 +53,7 @@ export function YearCombobox({ value, onChange, placeholder, className }: Props)
         onChange={v => onChange(v ? parseInt(v, 10) : undefined)}
         onInputChange={handleInputChange}
         inputMode="numeric"
-        icon={<Calendar className="h-4 w-4" />}
+        icon={<Calendar size={16} />}
         placeholder={placeholder}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={t('no_results')}

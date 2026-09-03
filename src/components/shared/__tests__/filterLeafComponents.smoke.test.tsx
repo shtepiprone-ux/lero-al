@@ -1,11 +1,16 @@
 /**
- * Filter leaf sub-components — Mantine migration smoke (Task 566).
+ * Filter leaf sub-components — Mantine migration smoke (Task 566; generalized to
+ * `FilterChoiceGroup` mode="single"/"multiple" in Task 781R).
  *
- * `FilterRangeInputs` / `FilterMultiToggle` / `FilterRoomsRow` were rebuilt on Mantine `TextInput`/
- * `Button` (presentational swap only — Task 556 `PhoneField` precedent). Asserts the public Props
- * API contract is byte-identical: typed/clicked values emit through the SAME callbacks with the
- * SAME shapes as the legacy `@/components/ui/*` versions, and the selected state renders as the
- * active Mantine variant (`data-variant="filled"` vs `"default"`).
+ * `FilterRangeInputs` / `FilterChoiceGroup` (formerly `FilterMultiToggle`) / `FilterRoomsRow` were
+ * rebuilt on Mantine `TextInput`/`Button` (presentational swap only — Task 556 `PhoneField`
+ * precedent). Asserts the public Props API contract is byte-identical: typed/clicked values emit
+ * through the SAME callbacks with the SAME shapes as the legacy `@/components/ui/*` versions, and
+ * the selected state renders as the active Mantine variant (`data-variant="filled"` vs
+ * `"default"`).
+ *
+ * Task 781R adds `mode="single"` coverage: `allOption` prepending, `allowDeselect` re-click
+ * behavior, and the `variant`/`justify` overrides `property_type` needs.
  *
  * Registry: docs/critical-flow-registry.md → "Listings date-range filter" row, extended.
  */
@@ -16,7 +21,7 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { FilterRangeInputs } from '../FilterRangeInputs'
-import { FilterMultiToggle } from '../FilterMultiToggle'
+import { FilterChoiceGroup } from '../FilterChoiceGroup'
 import { FilterRoomsRow } from '../FilterRoomsRow'
 
 beforeAll(() => {
@@ -105,12 +110,12 @@ describe('FilterRangeInputs — Mantine TextInput swap', () => {
   })
 })
 
-describe('FilterMultiToggle — Mantine Button toggle swap', () => {
+describe('FilterChoiceGroup mode="multiple" — Mantine Button toggle swap', () => {
   it('clicking an unselected option fires onToggle(value)', () => {
     const onToggle = vi.fn()
     render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={onToggle} getLabel={getLabel} />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={onToggle} getLabel={getLabel} />,
       ),
     )
     fireEvent.click(screen.getByText('Good'))
@@ -120,7 +125,7 @@ describe('FilterMultiToggle — Mantine Button toggle swap', () => {
   it('a selected value renders as the active (filled) variant; unselected stays default', () => {
     render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={['good']} onToggle={vi.fn()} getLabel={getLabel} />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={['good']} onToggle={vi.fn()} getLabel={getLabel} />,
       ),
     )
     const goodButton = screen.getByText('Good').closest('button')!
@@ -130,11 +135,139 @@ describe('FilterMultiToggle — Mantine Button toggle swap', () => {
   })
 })
 
-describe('FilterMultiToggle — orientation prop (Task 778)', () => {
+const SINGLE_OPTIONS = [
+  { value: 'sale', labelKey: 'sale' },
+  { value: 'rent', labelKey: 'rent' },
+] as const
+const ALL_OPTION = { value: '', labelKey: 'all' }
+function singleGetLabel(key: string) {
+  const labels: Record<string, string> = { all: 'All', sale: 'Sale', rent: 'Rent' }
+  return labels[key] ?? key
+}
+
+describe('FilterChoiceGroup mode="single" — type/market_type-shaped consumer (Task 781R)', () => {
+  it('allOption renders first and fires onChange(\'\') — matches the type/market_type "Усі" contract', () => {
+    const onChange = vi.fn()
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={onChange}
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    fireEvent.click(screen.getByText('All'))
+    expect(onChange).toHaveBeenCalledWith('')
+  })
+
+  it('clicking a different option fires onChange(value)', () => {
+    const onChange = vi.fn()
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={onChange}
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    fireEvent.click(screen.getByText('Rent'))
+    expect(onChange).toHaveBeenCalledWith('rent')
+  })
+
+  it('without allowDeselect, re-clicking the active option re-fires the SAME value (no-op, matches original `type` behavior)', () => {
+    const onChange = vi.fn()
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={onChange}
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    fireEvent.click(screen.getByText('Sale'))
+    expect(onChange).toHaveBeenCalledWith('sale')
+  })
+
+  it('with allowDeselect, re-clicking the active option reverts to allOption.value (matches original `property_type` toggle-off)', () => {
+    const onChange = vi.fn()
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={onChange}
+          allowDeselect
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    fireEvent.click(screen.getByText('Sale'))
+    expect(onChange).toHaveBeenCalledWith('')
+  })
+
+  it('the selected value renders filled by default; variant="light" overrides the selected-state color', () => {
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={vi.fn()}
+          variant="light"
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    const saleButton = screen.getByText('Sale').closest('button')!
+    expect(saleButton.getAttribute('data-variant')).toBe('light')
+    // unaffected sibling stays 'default'
+    const rentButton = screen.getByText('Rent').closest('button')!
+    expect(rentButton.getAttribute('data-variant')).toBe('default')
+  })
+
+  it('justify="flex-start" is forwarded to every rendered Button', () => {
+    render(
+      withProvider(
+        <FilterChoiceGroup
+          mode="single"
+          options={SINGLE_OPTIONS}
+          allOption={ALL_OPTION}
+          selected="sale"
+          onChange={vi.fn()}
+          justify="flex-start"
+          getLabel={singleGetLabel}
+        />,
+      ),
+    )
+    const saleButton = screen.getByText('Sale').closest('button')!
+    // Mantine's Button varsResolver sets `--button-justify` on the root <button> element itself
+    // (node_modules/@mantine/core Button.mjs varsResolver — root: { '--button-justify': justify }),
+    // consumed by `.mantine-Button-inner { justify-content: var(--button-justify) }` in its
+    // compiled stylesheet.
+    expect(saleButton.style.getPropertyValue('--button-justify')).toBe('flex-start')
+  })
+})
+
+describe('FilterChoiceGroup — orientation prop (Task 778)', () => {
   it('orientation="vertical" renders the same Mantine Stack the legacy className path renders', () => {
     const { container } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} orientation="vertical" />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} orientation="vertical" />,
       ),
     )
     const root = container.querySelector('[data-testid="filter-chip-row"]') as HTMLElement
@@ -144,7 +277,7 @@ describe('FilterMultiToggle — orientation prop (Task 778)', () => {
   it('the legacy className="flex-col gap-1.5" path keeps working unchanged', () => {
     const { container } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} className="flex-col gap-1.5" />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} className="flex-col gap-1.5" />,
       ),
     )
     const root = container.querySelector('[data-testid="filter-chip-row"]') as HTMLElement
@@ -169,18 +302,18 @@ describe('FilterMultiToggle — orientation prop (Task 778)', () => {
     // What THIS jsdom test proves instead, reliably: `orientation="vertical"` and the legacy
     // `className="flex-col gap-1.5"` path are not just "expected to render the same" — they
     // execute the exact same `return <Stack {...rootProps} gap={6} className={className}
-    // data-testid="filter-chip-row">{buttons}</Stack>` statement in `FilterMultiToggle.tsx`. Since
+    // data-testid="filter-chip-row">{buttons}</Stack>` statement in `FilterChoiceGroup.tsx`. Since
     // that statement is reached whenever `vertical` is true regardless of which condition produced
     // it, the real-browser measurement of the className call site above is definitionally identical
     // to what orientation="vertical" renders — there is no second code path to separately measure.
     const { container: viaOrientation } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} orientation="vertical" />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} orientation="vertical" />,
       ),
     )
     const { container: viaLegacyClassName } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} className="flex-col gap-1.5" />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} className="flex-col gap-1.5" />,
       ),
     )
     const rootA = viaOrientation.querySelector('[data-testid="filter-chip-row"]') as HTMLElement
@@ -208,7 +341,7 @@ describe('FilterMultiToggle — orientation prop (Task 778)', () => {
   it('horizontal (default — no orientation, no className) stays the wrapping Group, not a Stack', () => {
     const { container } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} />,
       ),
     )
     const root = container.querySelector('[data-testid="filter-chip-row"]') as HTMLElement
@@ -238,10 +371,10 @@ describe('FilterRoomsRow — Mantine Button toggle swap', () => {
   })
 })
 
-describe('FilterMultiToggle / FilterRoomsRow — ARIA group naming (Task 726)', () => {
+describe('FilterChoiceGroup / FilterRoomsRow — ARIA group naming (Task 726)', () => {
   it('renders no role and no aria-label on the container when unnamed', () => {
     const { container: multiToggleContainer } = render(
-      withProvider(<FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} />),
+      withProvider(<FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} />),
     )
     const multiToggleRoot = multiToggleContainer.querySelector('[data-testid="filter-chip-row"]') as HTMLElement
     expect(multiToggleRoot.getAttribute('role')).toBeNull()
@@ -258,7 +391,7 @@ describe('FilterMultiToggle / FilterRoomsRow — ARIA group naming (Task 726)', 
   it('renders role="group" and aria-label on the container when a name is supplied', () => {
     const { container: multiToggleContainer } = render(
       withProvider(
-        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} ariaLabel="Condition" />,
+        <FilterChoiceGroup mode="multiple" options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} ariaLabel="Condition" />,
       ),
     )
     const multiToggleRoot = multiToggleContainer.querySelector('[data-testid="filter-chip-row"]') as HTMLElement

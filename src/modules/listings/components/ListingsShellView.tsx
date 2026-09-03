@@ -2,9 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Loader2 } from 'lucide-react'
-import { Box } from '@mantine/core'
-import { Button } from '@/components/ui/button'
+import { Box, Button, Center, Flex, Group, Loader, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { ListingsSortBar } from '@/modules/listings/components/ListingsSortBar'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
@@ -72,9 +70,12 @@ export function ListingsShellView({
   const t = useTranslations('listing')
 
   return (
-    <div className="listings-shell flex flex-col gap-0">
-      {/* ── Horizontal filter bar (md+); hidden on mobile ── */}
-      <Box visibleFrom="md">
+    <Stack gap={0} className="listings-shell">
+      {/* ── Horizontal filter bar (sm+, 640px); hidden below sm, where the compact drawer-trigger
+          button in `ListingsSortBar` takes over (owner decision, Task 781R, 2026-09-03: filters
+          must be visible inline the same as desktop from 640px up, not gated behind a drawer
+          until 768px) ── */}
+      <Box visibleFrom="sm">
         <ListingsFilterBar
           locations={locations}
           onFiltersOpen={onFiltersOpen}
@@ -87,11 +88,17 @@ export function ListingsShellView({
       </MantineDrawer>
 
       {/* ── Main content ── */}
-      <div className="flex-1 min-w-0 flex flex-col gap-0 mt-4">
+      <Stack gap={0} mt="md" flex="1" miw={0}>
         <ListingsStatusTabs />
         <ActiveFilterChips locations={locations} />
-        <div className="flex items-center gap-2">
-          <div className="flex-1 min-w-0">
+        {/* Task 781R (owner decision, 2026-09-03): stacks vertically below 640px so both the sort
+            bar and the save-search trigger can each be genuinely full-width there (clause 11),
+            without reproducing the shared-nowrap-row collapse/occlusion Task 772 fixed (§3.6) —
+            a `w="100%"` sibling next to a `flex="1"` sibling in one nowrap row was exactly that
+            defect's mechanism. Side-by-side, sort bar growing to fill the remaining row, from
+            `sm` (640px) up — unchanged from the original single-row contract at that width. */}
+        <Flex direction={{ base: 'column', sm: 'row' }} align={{ sm: 'center' }} gap="xs">
+          <Box flex={{ sm: '1' }} w={{ base: '100%', sm: 'auto' }} miw={0}>
             <ListingsSortBar
               total={total}
               page={page}
@@ -101,59 +108,75 @@ export function ListingsShellView({
               onFiltersOpen={onFiltersOpen}
               activeFiltersCount={activeFiltersCount}
             />
-          </div>
+          </Box>
           {saveSearchSlot}
-        </div>
+        </Flex>
 
         {listings.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-            <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center">
-              <span className="text-2xl">🏠</span>
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg">
-                {tab === 'closed' ? t('no_results_closed') : t('no_results_title')}
-              </h3>
-              {tab === 'active' && (
-                <p className="text-muted-foreground text-sm mt-1">{t('no_results_desc')}</p>
-              )}
-            </div>
-          </div>
+          <Center py="xl">
+            <Stack align="center" gap="md" ta="center">
+              <ThemeIcon size={64} radius="2xl" color="gray" variant="light">
+                <Text size="xl" component="span">🏠</Text>
+              </ThemeIcon>
+              <Box>
+                <Text fw={600} size="lg">
+                  {tab === 'closed' ? t('no_results_closed') : t('no_results_title')}
+                </Text>
+                {tab === 'active' && (
+                  <Text c="gray.5" size="sm" mt="xs">{t('no_results_desc')}</Text>
+                )}
+              </Box>
+            </Stack>
+          </Center>
         ) : (
           <>
-            <div className={
-              view === 'grid'
-                ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 pt-5'
-                : 'flex flex-col gap-3 pt-5'
-            }>
-              {listings.map(listing => (
-                <ListingCard
-                  key={listing.id}
-                  listing={listing}
-                  variant={view === 'list' ? 'horizontal' : 'vertical'}
-                  onBeforeNavigate={onBeforeNavigate}
-                  displayCurrency={displayCurrency}
-                  rates={rates}
-                  isFavorited={favoriteIds.has(listing.id)}
-                  onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
-                  layoutContext={view === 'grid' ? 'sidebar' : undefined}
-                />
-              ))}
-            </div>
+            {view === 'grid' ? (
+              <SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="lg" pt="lg">
+                {listings.map(listing => (
+                  <ListingCard
+                    key={listing.id}
+                    listing={listing}
+                    variant="vertical"
+                    onBeforeNavigate={onBeforeNavigate}
+                    displayCurrency={displayCurrency}
+                    rates={rates}
+                    isFavorited={favoriteIds.has(listing.id)}
+                    onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+                    layoutContext="sidebar"
+                  />
+                ))}
+              </SimpleGrid>
+            ) : (
+              <Stack gap="sm" pt="lg">
+                {listings.map(listing => (
+                  <ListingCard
+                    key={listing.id}
+                    listing={listing}
+                    variant="horizontal"
+                    onBeforeNavigate={onBeforeNavigate}
+                    displayCurrency={displayCurrency}
+                    rates={rates}
+                    isFavorited={favoriteIds.has(listing.id)}
+                    onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+                  />
+                ))}
+              </Stack>
+            )}
 
             {showLoadMore && (
-              <div className="flex justify-center pt-8">
+              <Group justify="center" pt="2xl">
                 <Button
                   variant="outline"
                   size="lg"
                   onClick={onShowMore}
                   disabled={isLoadingMore}
-                  className="min-w-48 rounded-xl"
+                  w={{ base: '100%', sm: 'auto' }}
+                  miw={{ sm: 192 }}
+                  leftSection={isLoadingMore ? <Loader size={16} color="gray" /> : undefined}
                 >
-                  {isLoadingMore && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                   {t('show_more')}
                 </Button>
-              </div>
+              </Group>
             )}
 
             <ListingsPagination
@@ -163,7 +186,7 @@ export function ListingsShellView({
             />
           </>
         )}
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   )
 }

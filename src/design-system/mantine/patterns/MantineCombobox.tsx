@@ -309,7 +309,21 @@ export function MantineCombobox({
                 if (isMobile) openDrawer()
                 else combobox.toggleDropdown()
               }}
+              // `text-overflow: ellipsis` on the INPUT element itself, via Mantine's Styles API
+              // `styles={{ input: {...} }}` slot — NOT the `style` prop, which Mantine's `TextInput`
+              // applies to its outer wrapper, not the `<input>` (confirmed empirically this
+              // session: a `style` prop here never reached the `<input>`'s own inline style at
+              // all). A plain `<input>` never auto-sizes to its own value text — its intrinsic/auto
+              // width is a fixed UA default independent of content (confirmed empirically: a
+              // rendered trigger stayed a fixed ~212px regardless of a 44-character selected
+              // label). When a consumer's layout gives this `readOnly` (button-variant) trigger
+              // less room than its selected label needs, the browser's own default is a silent
+              // hard clip with no affordance — `ellipsis` makes that a visible, deliberate
+              // truncation instead, the universal pattern for a fixed-selection trigger (never
+              // applied to `variant="input"`, where the value is live-typed text a user is
+              // actively editing).
               style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
+              styles={{ input: { textOverflow: 'ellipsis' } }}
             />
           )}
         </Combobox.Target>
@@ -403,6 +417,7 @@ export function MantineCombobox({
               sheetFiltered.map((opt) => (
                 <UnstyledButton
                   key={opt.value}
+                  value={opt.value}
                   onClick={() => handleSelect(opt.value)}
                   w="100%"
                   mih="2.75rem"

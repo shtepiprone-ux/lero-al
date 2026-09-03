@@ -4,8 +4,8 @@
  * ListingsFilterBar — horizontal filter bar for the listings page (E.1 / Task 131; Mantine
  * migration Task 779; responsive layout rework Task 780).
  *
- * Route visibility (md+) lives in the host (`ListingsShellView` wraps this in
- * `<Box visibleFrom="md">`) — the component itself carries no visibility gate, so it renders
+ * Route visibility (sm+, 640px — Task 781R) lives in the host (`ListingsShellView` wraps this in
+ * `<Box visibleFrom="sm">`) — the component itself carries no visibility gate, so it renders
  * real UI at every Storybook viewport (Task 779 §3.5/§3.6).
  *
  * Layout contract (Task 780, corrected Task 780R): every non-toggle-set control is full-width

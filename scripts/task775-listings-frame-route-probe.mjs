@@ -241,9 +241,14 @@ async function runInteractions(browser) {
       startPath: '/en/listings',
       expected: 'sheet content visible and URL unchanged',
       action: async (page) => {
+        // Retarget (empirically found dead this session, pre-dating Task 781): the trigger opens
+        // `MantineDrawer` (migrated in Task 778/779), never a shadcn Sheet — `[data-slot="sheet-
+        // content"]` never matched it. `[role="dialog"].mantine-Drawer-content` is the same
+        // selector task772-listings-overflow-probe.mjs's own filters-drawer interaction cell
+        // already uses successfully against this exact component.
         const trigger = await exactlyOne(page.getByTestId('task775-advanced-filters'), 'advanced filters trigger');
         await trigger.click();
-        await page.locator('[data-slot="sheet-content"]').waitFor({ state: 'visible', timeout: 5000 });
+        await page.locator('[role="dialog"].mantine-Drawer-content').waitFor({ state: 'visible', timeout: 5000 });
       },
       assertUrl: (_actual, urlBefore, urlAfter) =>
         urlAfter === urlBefore ? null : queryFailure('expected URL unchanged after opening filters', urlAfter),
@@ -253,12 +258,18 @@ async function runInteractions(browser) {
       startPath: '/en/listings?page=2',
       expected: sortExpected,
       action: async (page) => {
+        // Task 781 retarget: ListingsSortBar's sort control migrated off the legacy
+        // `Combobox` (`data-testid="combobox"`, `<button>` trigger) to Mantine `MantineCombobox`
+        // — a readOnly `<input>` inside `data-testid="listings-sort-trigger"`
+        // (ListingsSortBar.tsx). Its dropdown options portal OUTSIDE `.listings-sort-bar` and
+        // forward `value` as a literal HTML attribute (`role="option"[value=...]`, not
+        // `data-value` — verified against node_modules/@mantine/core ComboboxOption source).
         const trigger = await exactlyOne(
-          page.locator('.listings-sort-bar [data-testid="combobox"] > button'),
+          page.locator('.listings-sort-bar [data-testid="listings-sort-trigger"] input'),
           'sort trigger'
         );
         await trigger.click();
-        const option = await exactlyOne(page.locator('[role="option"][data-value="price_asc"]'), 'price_asc option');
+        const option = await exactlyOne(page.locator('[role="option"][value="price_asc"]'), 'price_asc option');
         await Promise.all([
           page.waitForURL((url) => {
             const params = url.searchParams;
@@ -278,8 +289,13 @@ async function runInteractions(browser) {
       startPath: '/en/listings',
       expected: 'tab=closed',
       action: async (page) => {
+        // Task 781 retarget: ListingsStatusTabs migrated shadcn `TabsTrigger`
+        // (`[data-slot="tabs-trigger"]`) to Mantine `Tabs.Tab`, which emits `role="tab"` and a
+        // `data-active` attribute (no value) on the active tab only (verified against
+        // node_modules/@mantine/core TabsTab source — `mod: [{ active }]` on an UnstyledButton
+        // Box). `:not([data-active])` now selects the inactive tab correctly.
         const tab = await exactlyOne(
-          page.locator('.listings-status-tabs [data-slot="tabs-trigger"]:not([data-active])'),
+          page.locator('.listings-status-tabs [role="tab"]:not([data-active])'),
           'inactive listings status tab'
         );
         await Promise.all([

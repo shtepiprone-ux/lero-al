@@ -301,6 +301,17 @@ export const theme = createTheme({
       // "secondary/outline" — a single reference row), which is intended, not a bug.
       vars: (_theme: MantineTheme, props: ButtonProps) => ({
         root: {
+          // Task 781R (owner-directed fix, 2026-09-03): §6l's 16px (px-4) padding-inline was only
+          // ever applied to the outline/default branch below. Mantine's own unthemed default for
+          // filled/light (18px) leaked through untouched, producing a measured 18px-vs-16px
+          // inconsistency between a selected (filled/light) and an unselected (default/outline)
+          // Button anywhere the two sit as visual siblings (e.g. ListingsFilters.tsx's toggle
+          // rows) — verified via live computed-style audit against `/uk/listings`'s filters
+          // drawer. Moved out of the variant-gated block so every variant gets the same §6l
+          // value; the color-resolver vars below stay gated (only outline/default legitimately
+          // need a fixed neutral bg/text/border — filled/light still resolve color via Mantine's
+          // own variantColorResolver, unaffected by this line).
+          '--button-padding-x': '1rem', // §6l 16px (px-4) — all variants
           ...(props.variant === 'transparent' && props.color === undefined
             ? { '--button-color': 'var(--mantine-color-gray-7)' }
             : {}),
@@ -309,7 +320,6 @@ export const theme = createTheme({
                 '--button-bg': 'var(--mantine-color-white)',
                 '--button-color': 'var(--mantine-color-gray-7)',
                 '--button-bd': '1px solid var(--mantine-color-gray-2)',
-                '--button-padding-x': '1rem', // §6l 16px (px-4)
                 '--button-hover': 'var(--mantine-color-gray-0)', // §6l hover:bg-gray-50
               }
             : {}),
@@ -485,11 +495,23 @@ export const theme = createTheme({
             fontWeight: 500,
             textTransform: 'none',
             letterSpacing: 'normal',
-            ...((size === 'sm' || size === 'xs') && {
+            // Task 781R — `circle` (Mantine's own native round-counter mod, e.g. a filter-count
+            // badge inside a button) must NOT inherit the §6b oval-pill height/padding override
+            // below: Mantine's own `[data-circle]` CSS class sets `width: var(--badge-height)` +
+            // `padding-inline: 0.125rem` so width==height renders a true circle, but this file's
+            // `styles` callback applies as an inline `style` attribute — which always wins over
+            // that external class for the same physical properties (verified precedent elsewhere
+            // in this file: the Button `vars`-vs-`styles` precedence notes above). Forcing
+            // `height:'auto'`/`padding:'0.125rem 0.5rem'` here would fight the circle's own
+            // width==height contract and render an oval, not a circle.
+            ...(!props.circle && (size === 'sm' || size === 'xs') && {
               fontSize: '0.75rem',           // §6b/§6l Addendum — text-theme-xs 12px
               lineHeight: '1.125rem',        // §6l Addendum — 18px (text-theme-xs cited value)
               height: 'auto',
               padding: '0.125rem 0.5rem',    // §6b px-2 py-0.5 — 2px 8px
+            }),
+            ...(props.circle && (size === 'sm' || size === 'xs') && {
+              fontSize: '0.75rem',           // §6b/§6l Addendum — text-theme-xs 12px, kept for circle too
             }),
           },
         }

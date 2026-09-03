@@ -3,14 +3,14 @@
 import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Bookmark, Loader2 } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
+import { Box, Button, Flex, Loader, TextInput } from '@mantine/core'
 import { toast } from '@/lib/toast'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { MantineModal } from '@/design-system/mantine/patterns'
 import { saveSavedSearch } from '@/modules/cabinet/actions'
 import { canonicalizeFilters } from '@/modules/listings/lib/savedSearchCanonicalize'
+
+const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 export function SaveSearchButton() {
   const t = useTranslations('saved_search')
@@ -67,45 +67,44 @@ export function SaveSearchButton() {
   return (
     <>
       <Button
-        variant="outline"
-        size="lg"
-        className="gap-1.5 rounded-xl"
+        variant="default"
+        w={{ base: '100%', sm: 'auto' }}
+        leftSection={<Bookmark size={16} />}
         onClick={() => setOpen(true)}
       >
-        <Bookmark className="h-4 w-4 shrink-0" />
-        <span className="hidden sm:inline">{t('save_action')}</span>
+        <Box component="span" visibleFrom="sm">{t('save_action')}</Box>
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-80 max-w-[calc(100vw-2rem)]"> {/* design-tokens-allow: max-w-[calc(100vw-2rem)] — viewport-minus-margin dialog width, no scale token */}
-          <DialogHeader>
-            <DialogTitle className="text-sm font-semibold">{t('save_modal_title')}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">{t('name_placeholder')}</Label>
-              <Input
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder={buildAutoName()}
-                className="h-9 rounded-xl text-sm"
-                maxLength={80}
-                onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
-                autoFocus
-              />
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
-              <Button variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={isPending}>
-                {t('cancel')}
-              </Button>
-              <Button size="sm" onClick={handleSave} disabled={isPending} className="gap-1.5">
-                {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Bookmark className="h-3.5 w-3.5 shrink-0" />}
-                {t('save')}
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <MantineModal
+        opened={open}
+        onClose={() => setOpen(false)}
+        title={t('save_modal_title')}
+        footer={
+          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
+            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setOpen(false)} disabled={isPending}>
+              {t('cancel')}
+            </Button>
+            <Button
+              w={FULL_BELOW_SM}
+              onClick={handleSave}
+              disabled={isPending}
+              leftSection={isPending ? <Loader size={14} color="white" /> : <Bookmark size={14} />}
+            >
+              {t('save')}
+            </Button>
+          </Flex>
+        }
+      >
+        <TextInput
+          label={t('name_placeholder')}
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder={buildAutoName()}
+          maxLength={80}
+          onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
+          autoFocus
+        />
+      </MantineModal>
     </>
   )
 }

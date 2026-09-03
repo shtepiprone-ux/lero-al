@@ -20,5 +20,10 @@
   "src/modules/listings/components/ListingsPageFrame.tsx",
   "src/modules/listings/components/ListingsPagination.tsx",
   "src/modules/listings/components/ListingsFilters.tsx",
-  "src/modules/listings/components/ListingsFilterBar.tsx"
+  "src/modules/listings/components/ListingsFilterBar.tsx",
+  "src/modules/listings/components/ListingsStatusTabs.tsx",
+  "src/modules/listings/components/ActiveFilterChips.tsx",
+  "src/modules/listings/components/ListingsSortBar.tsx",
+  "src/modules/listings/components/SaveSearchButton.tsx",
+  "src/modules/listings/components/ListingsShellView.tsx"
 ]

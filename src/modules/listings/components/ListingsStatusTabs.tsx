@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ScrollArea, Tabs } from '@mantine/core'
 
 export function ListingsStatusTabs() {
   const t = useTranslations('listing')
@@ -11,7 +11,8 @@ export function ListingsStatusTabs() {
   const searchParams = useSearchParams()
   const activeTab = searchParams.get('tab') === 'closed' ? 'closed' : 'active'
 
-  function switchTab(tab: string) {
+  function switchTab(tab: string | null) {
+    if (!tab) return
     const params = new URLSearchParams(searchParams.toString())
     if (tab === 'active') {
       params.delete('tab')
@@ -25,13 +26,19 @@ export function ListingsStatusTabs() {
   return (
     <Tabs
       value={activeTab}
-      onValueChange={switchTab}
+      onChange={switchTab}
       className="listings-status-tabs"
     >
-      <TabsList>
-        <TabsTrigger value="active">{t('tab_active')}</TabsTrigger>
-        <TabsTrigger value="closed">{t('tab_closed')}</TabsTrigger>
-      </TabsList>
+      {/* Tabs always in a single horizontal row — no wrap (owner P0, theme.ts Tabs.styles.list
+          flexWrap='nowrap'). ScrollArea scrollbarSize={0} enables swipe-scroll on overflow with
+          no visible scrollbar track, matching the canonical Mantine/Primitives/Tabs story
+          (Task 781R — long sq/uk labels overflowed the nowrap list at 320px without this). */}
+      <ScrollArea type="auto" scrollbars="x" scrollbarSize={0}>
+        <Tabs.List>
+          <Tabs.Tab value="active">{t('tab_active')}</Tabs.Tab>
+          <Tabs.Tab value="closed">{t('tab_closed')}</Tabs.Tab>
+        </Tabs.List>
+      </ScrollArea>
     </Tabs>
   )
 }

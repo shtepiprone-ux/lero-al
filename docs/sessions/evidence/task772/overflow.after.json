@@ -1,7 +1,7 @@
 {
   "label": "after",
   "baseUrl": "http://127.0.0.1:3000",
-  "capturedAt": "2026-09-03T08:00:54.080Z",
+  "capturedAt": "2026-09-03T13:16:17.281Z",
   "cells": [
     {
       "kind": "mobile-default",
@@ -18,14 +18,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -34,48 +34,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 68.921875,
-          "height": 20,
-          "top": 248,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 84.921875
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
-          "right": 156
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 164,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -87,12 +87,12 @@
       },
       "saveSearchButton": null,
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.03125,
-        "width": 189.21875,
-        "overflowBy": 19.03125
+        "right": 335.21875,
+        "width": 319.21875,
+        "overflowBy": 15.21875
       }
     },
     {
@@ -110,14 +110,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -126,48 +126,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 59.171875,
-          "height": 20,
-          "top": 248,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 75.171875
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
-          "right": 156
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 164,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -195,14 +195,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -211,48 +211,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 86,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 102
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 114,
-          "right": 156
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 164,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -264,12 +264,12 @@
       },
       "saveSearchButton": null,
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.890625,
-        "width": 142.03125,
-        "overflowBy": 19.890625
+        "right": 336.1875,
+        "width": 320.1875,
+        "overflowBy": 16.1875
       }
     },
     {
@@ -287,14 +287,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -303,48 +303,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 66.203125,
-          "height": 20,
-          "top": 248,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 82.203125
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 94.21875,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 94.21875,
-          "right": 136.21875
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 144.21875,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -372,14 +372,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 359
         }
@@ -388,48 +388,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 68.921875,
-          "height": 20,
-          "top": 248,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 84.921875
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
+          "top": 240,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
-          "right": 211
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 219,
+          "top": 240,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -457,14 +457,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 359
         }
@@ -473,48 +473,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 59.171875,
-          "height": 20,
-          "top": 248,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 75.171875
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
+          "top": 240,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
-          "right": 211
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 219,
+          "top": 240,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -542,14 +542,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 359
         }
@@ -558,48 +558,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 90.75,
-          "height": 20,
-          "top": 248,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 106.75
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
+          "top": 240,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 169,
-          "right": 211
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 219,
+          "top": 240,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -627,14 +627,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 359
         }
@@ -643,48 +643,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 66.203125,
-          "height": 20,
-          "top": 248,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 82.203125
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 149.21875,
+          "top": 240,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 149.21875,
-          "right": 191.21875
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 199.21875,
+          "top": 240,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -712,14 +712,14 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
           "right": 374
         }
@@ -729,8 +729,8 @@
         "found": true,
         "rect": {
           "width": 68.921875,
-          "height": 20,
-          "top": 216,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
           "right": 84.921875
         }
@@ -739,37 +739,37 @@
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
+          "top": 208,
+          "left": 101.34375,
           "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
-          "right": 226
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 234,
+          "top": 208,
+          "left": 162,
           "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -797,14 +797,14 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
           "right": 374
         }
@@ -814,8 +814,8 @@
         "found": true,
         "rect": {
           "width": 59.171875,
-          "height": 20,
-          "top": 216,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
           "right": 75.171875
         }
@@ -824,37 +824,37 @@
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
+          "top": 208,
+          "left": 101.34375,
           "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
-          "right": 226
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 234,
+          "top": 208,
+          "left": 162,
           "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -882,14 +882,14 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
           "right": 374
         }
@@ -898,48 +898,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 90.75,
-          "height": 20,
-          "top": 216,
+          "width": 73.34375,
+          "height": 40.03125,
+          "top": 209.984375,
           "left": 16,
-          "right": 106.75
+          "right": 89.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
+          "top": 208,
+          "left": 101.34375,
           "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 184,
-          "right": 226
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 234,
+          "top": 208,
+          "left": 162,
           "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -967,14 +967,14 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
           "right": 374
         }
@@ -984,8 +984,8 @@
         "found": true,
         "rect": {
           "width": 66.203125,
-          "height": 20,
-          "top": 216,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
           "right": 82.203125
         }
@@ -994,37 +994,37 @@
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 164.21875,
+          "top": 208,
+          "left": 101.34375,
           "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 164.21875,
-          "right": 206.21875
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 214.21875,
+          "top": 208,
+          "left": 162,
           "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -1052,14 +1052,14 @@
       "clientWidth": 768,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 720,
-          "height": 61,
-          "top": 347,
+          "height": 69,
+          "top": 369,
           "left": 24,
           "right": 744
         }
@@ -1068,26 +1068,26 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 367,
+          "width": 59.171875,
+          "height": 40.015625,
+          "top": 382.984375,
           "left": 24,
-          "right": 141.53125
+          "right": 83.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 359,
-          "left": 532,
+          "width": 300,
+          "height": 44,
+          "top": 381,
+          "left": 444,
           "right": 744
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -1098,24 +1098,24 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 359,
-          "left": 532,
-          "right": 672
+          "width": 212,
+          "height": 44,
+          "top": 381,
+          "left": 452,
+          "right": 664
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 359,
-          "left": 680,
+          "width": 72,
+          "height": 44,
+          "top": 381,
+          "left": 672,
           "right": 744
         }
       },
@@ -1137,533 +1137,16 @@
       "clientWidth": 1024,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 960,
-          "height": 61,
-          "top": 295,
+          "height": 69,
+          "top": 317,
           "left": 32,
           "right": 992
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 315,
-          "left": 32,
-          "right": 149.53125
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 307,
-          "left": 780,
-          "right": 992
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 307,
-          "left": 780,
-          "right": 920
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 307,
-          "left": 928,
-          "right": 992
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": null
-    },
-    {
-      "kind": "desktop-regression",
-      "width": 1440,
-      "height": 900,
-      "locale": "sq",
-      "query": "",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 1440,
-      "clientWidth": 1440,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 1312,
-          "height": 61,
-          "top": 243,
-          "left": 64,
-          "right": 1376
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 136.578125,
-          "height": 20,
-          "top": 263,
-          "left": 64,
-          "right": 200.578125
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1376
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1304
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1312,
-          "right": 1376
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": null
-    },
-    {
-      "kind": "desktop-regression",
-      "width": 1440,
-      "height": 900,
-      "locale": "en",
-      "query": "",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 1440,
-      "clientWidth": 1440,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 listings",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 1312,
-          "height": 61,
-          "top": 243,
-          "left": 64,
-          "right": 1376
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 263,
-          "left": 64,
-          "right": 181.53125
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1376
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1304
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1312,
-          "right": 1376
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": null
-    },
-    {
-      "kind": "desktop-regression",
-      "width": 1440,
-      "height": 900,
-      "locale": "uk",
-      "query": "",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 1440,
-      "clientWidth": 1440,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 1312,
-          "height": 61,
-          "top": 243,
-          "left": 64,
-          "right": 1376
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 143.65625,
-          "height": 20,
-          "top": 263,
-          "left": 64,
-          "right": 207.65625
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1376
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 1164,
-          "right": 1304
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1312,
-          "right": 1376
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": null
-    },
-    {
-      "kind": "desktop-regression",
-      "width": 1440,
-      "height": 900,
-      "locale": "it",
-      "query": "",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 1440,
-      "clientWidth": 1440,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 annunci",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 1312,
-          "height": 61,
-          "top": 243,
-          "left": 64,
-          "right": 1376
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 123.6875,
-          "height": 20,
-          "top": 263,
-          "left": 64,
-          "right": 187.6875
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 231.78125,
-          "height": 36,
-          "top": 255,
-          "left": 1144.21875,
-          "right": 1376
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 159.78125,
-          "height": 36,
-          "top": 255,
-          "left": 1144.21875,
-          "right": 1304
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1312,
-          "right": 1376
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": null
-    },
-    {
-      "kind": "longest-label",
-      "width": 320,
-      "height": 812,
-      "locale": "sq",
-      "query": "?sort=price_desc",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 320,
-      "clientWidth": 320,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 288,
-          "height": 69,
-          "top": 224,
-          "left": 16,
-          "right": 304
-        }
-      },
-      "leftGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(1)",
-        "found": true,
-        "rect": {
-          "width": 59.59375,
-          "height": 40,
-          "top": 238,
-          "left": 16,
-          "right": 75.59375
-        }
-      },
-      "rightGroup": {
-        "selector": ".listings-sort-bar > div:nth-of-type(2)",
-        "found": true,
-        "rect": {
-          "width": 216.40625,
-          "height": 44,
-          "top": 236,
-          "left": 87.59375,
-          "right": 304
-        }
-      },
-      "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
-        "found": true,
-        "rect": {
-          "width": 42,
-          "height": 44,
-          "top": 236,
-          "left": 87.59375,
-          "right": 129.59375
-        }
-      },
-      "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
-        "found": true,
-        "rect": {
-          "width": 166.40625,
-          "height": 44,
-          "top": 236,
-          "left": 137.59375,
-          "right": 304
-        }
-      },
-      "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
-        "found": true,
-        "rect": {
-          "width": 0,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "right": 0
-        }
-      },
-      "saveSearchButton": null,
-      "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
-        "testId": null,
-        "right": 339.03125,
-        "width": 189.21875,
-        "overflowBy": 19.03125
-      }
-    },
-    {
-      "kind": "longest-label",
-      "width": 320,
-      "height": 812,
-      "locale": "en",
-      "query": "?sort=price_desc",
-      "authState": "anonymous",
-      "httpStatus": 200,
-      "ok": true,
-      "devServerDetected": false,
-      "sortBarFound": true,
-      "scrollWidth": 320,
-      "clientWidth": 320,
-      "overflow": false,
-      "overflowBy": 0,
-      "renderedCountText": "2 listings",
-      "sortBarRoot": {
-        "selector": ".listings-sort-bar",
-        "found": true,
-        "rect": {
-          "width": 288,
-          "height": 69,
-          "top": 224,
-          "left": 16,
-          "right": 304
         }
       },
       "leftGroup": {
@@ -1671,47 +1154,564 @@
         "found": true,
         "rect": {
           "width": 59.171875,
-          "height": 20,
-          "top": 248,
-          "left": 16,
-          "right": 75.171875
+          "height": 40.015625,
+          "top": 330.984375,
+          "left": 32,
+          "right": 91.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 201.265625,
+          "width": 300,
           "height": 44,
-          "top": 236,
-          "left": 102.734375,
+          "top": 329,
+          "left": 692,
+          "right": 992
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 329,
+          "left": 700,
+          "right": 912
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 72,
+          "height": 44,
+          "top": 329,
+          "left": 920,
+          "right": 992
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "sq",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 69,
+          "top": 265,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 68.921875,
+          "height": 40.015625,
+          "top": 278.984375,
+          "left": 64,
+          "right": 132.921875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 1076,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 1084,
+          "right": 1296
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1304,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "en",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 69,
+          "top": 265,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 59.171875,
+          "height": 40.015625,
+          "top": 278.984375,
+          "left": 64,
+          "right": 123.171875
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 1076,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 1084,
+          "right": 1296
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1304,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "uk",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 69,
+          "top": 265,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 90.75,
+          "height": 40.015625,
+          "top": 278.984375,
+          "left": 64,
+          "right": 154.75
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 1076,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 1084,
+          "right": 1296
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1304,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "desktop-regression",
+      "width": 1440,
+      "height": 900,
+      "locale": "it",
+      "query": "",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 1312,
+          "height": 69,
+          "top": 265,
+          "left": 64,
+          "right": 1376
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 66.203125,
+          "height": 40.015625,
+          "top": 278.984375,
+          "left": 64,
+          "right": 130.203125
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 1076,
+          "right": 1376
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 1084,
+          "right": 1296
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1304,
+          "right": 1376
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": null
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "sq",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 228,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
+          "left": 16,
+          "right": 19.34375
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 272.65625,
+          "height": 44,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 102.734375,
-          "right": 144.734375
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 151.265625,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 152.734375,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
+        "found": true,
+        "rect": {
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "left": 0,
+          "right": 0
+        }
+      },
+      "saveSearchButton": null,
+      "widestOverflow": {
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
+        "testId": null,
+        "right": 335.21875,
+        "width": 319.21875,
+        "overflowBy": 15.21875
+      }
+    },
+    {
+      "kind": "longest-label",
+      "width": 320,
+      "height": 812,
+      "locale": "en",
+      "query": "?sort=price_desc",
+      "authState": "anonymous",
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "sortBarFound": true,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflow": false,
+      "overflowBy": 0,
+      "renderedCountText": null,
+      "sortBarRoot": {
+        "selector": ".listings-sort-bar",
+        "found": true,
+        "rect": {
+          "width": 288,
+          "height": 69,
+          "top": 228,
+          "left": 16,
+          "right": 304
+        }
+      },
+      "leftGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(1)",
+        "found": true,
+        "rect": {
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
+          "left": 16,
+          "right": 19.34375
+        }
+      },
+      "rightGroup": {
+        "selector": ".listings-sort-bar > div:nth-of-type(2)",
+        "found": true,
+        "rect": {
+          "width": 272.65625,
+          "height": 44,
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
+        }
+      },
+      "filtersButton": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
+        "found": true,
+        "rect": {
+          "width": 52.65625,
+          "height": 44,
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
+        }
+      },
+      "sortComboboxTrigger": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
+        "found": true,
+        "rect": {
+          "width": 212,
+          "height": 44,
+          "top": 240,
+          "left": 92,
+          "right": 304
+        }
+      },
+      "gridListToggle": {
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -1739,14 +1739,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -1755,48 +1755,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 84.828125,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 100.828125
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 191.171875,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 112.828125,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 112.828125,
-          "right": 154.828125
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 141.171875,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 162.828125,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -1808,12 +1808,12 @@
       },
       "saveSearchButton": null,
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.890625,
-        "width": 142.03125,
-        "overflowBy": 19.890625
+        "right": 336.1875,
+        "width": 320.1875,
+        "overflowBy": 16.1875
       }
     },
     {
@@ -1831,14 +1831,14 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
           "right": 304
         }
@@ -1847,48 +1847,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 60.9375,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 76.9375
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 215.0625,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 88.9375,
+          "top": 240,
+          "left": 31.34375,
           "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 88.9375,
-          "right": 130.9375
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 165.0625,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 138.9375,
+          "top": 240,
+          "left": 92,
           "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -1928,14 +1928,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "0 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 284,
+          "top": 292,
           "left": 16,
           "right": 359
         }
@@ -1944,48 +1944,48 @@
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 59.171875,
-          "height": 20,
-          "top": 308,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 305.984375,
           "left": 16,
-          "right": 75.171875
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 296,
-          "left": 169,
+          "top": 304,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 296,
-          "left": 169,
-          "right": 211
+          "top": 304,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 296,
-          "left": 219,
+          "top": 304,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2020,14 +2020,14 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "1 listing",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
           "width": 343,
           "height": 69,
-          "top": 284,
+          "top": 292,
           "left": 16,
           "right": 359
         }
@@ -2037,8 +2037,8 @@
         "found": true,
         "rect": {
           "width": 52.359375,
-          "height": 20,
-          "top": 308,
+          "height": 20.015625,
+          "top": 315.984375,
           "left": 16,
           "right": 68.359375
         }
@@ -2047,37 +2047,37 @@
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 296,
-          "left": 169,
+          "top": 304,
+          "left": 86.34375,
           "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 296,
-          "left": 169,
-          "right": 211
+          "top": 304,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 296,
-          "left": 219,
+          "top": 304,
+          "left": 147,
           "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2115,64 +2115,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2188,18 +2188,18 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.03125,
-        "width": 189.21875,
-        "overflowBy": 19.03125
+        "right": 335.21875,
+        "width": 319.21875,
+        "overflowBy": 15.21875
       }
     },
     {
@@ -2218,64 +2218,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2291,9 +2291,9 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": null
@@ -2314,64 +2314,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2387,18 +2387,18 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.890625,
-        "width": 142.03125,
-        "overflowBy": 19.890625
+        "right": 336.1875,
+        "width": 320.1875,
+        "overflowBy": 16.1875
       }
     },
     {
@@ -2417,64 +2417,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 237.78125
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 237.78125
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2490,9 +2490,9 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": null
@@ -2513,64 +2513,64 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 359
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 86.34375,
+          "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 147,
+          "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2586,9 +2586,9 @@
         "rect": {
           "width": 343,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 367
+          "top": 305,
+          "left": 16,
+          "right": 359
         }
       },
       "widestOverflow": null
@@ -2609,64 +2609,64 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 359
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 86.34375,
+          "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 147,
+          "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2682,9 +2682,9 @@
         "rect": {
           "width": 343,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 367
+          "top": 305,
+          "left": 16,
+          "right": 359
         }
       },
       "widestOverflow": null
@@ -2705,64 +2705,64 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 359
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 218
+          "top": 240,
+          "left": 86.34375,
+          "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 218
+          "top": 240,
+          "left": 147,
+          "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2778,9 +2778,9 @@
         "rect": {
           "width": 343,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 367
+          "top": 305,
+          "left": 16,
+          "right": 359
         }
       },
       "widestOverflow": null
@@ -2801,64 +2801,64 @@
       "clientWidth": 375,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 343,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 359
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 58.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 74.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 237.78125
+          "top": 240,
+          "left": 86.34375,
+          "right": 359
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 86.34375,
+          "right": 139
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 237.78125
+          "top": 240,
+          "left": 147,
+          "right": 359
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2874,9 +2874,9 @@
         "rect": {
           "width": 343,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 367
+          "top": 305,
+          "left": 16,
+          "right": 359
         }
       },
       "widestOverflow": null
@@ -2897,64 +2897,64 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
-          "right": 16
+          "right": 374
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 206,
+          "width": 68.921875,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
-          "right": 16
+          "right": 84.921875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 218
+          "top": 208,
+          "left": 101.34375,
+          "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 70
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 78,
-          "right": 218
+          "top": 208,
+          "left": 162,
+          "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -2970,9 +2970,9 @@
         "rect": {
           "width": 358,
           "height": 44,
-          "top": 204.5,
-          "left": 24,
-          "right": 382
+          "top": 273,
+          "left": 16,
+          "right": 374
         }
       },
       "widestOverflow": null
@@ -2993,64 +2993,64 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
-          "right": 16
+          "right": 374
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 206,
+          "width": 59.171875,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
-          "right": 16
+          "right": 75.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 218
+          "top": 208,
+          "left": 101.34375,
+          "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 70
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 78,
-          "right": 218
+          "top": 208,
+          "left": 162,
+          "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3066,9 +3066,9 @@
         "rect": {
           "width": 358,
           "height": 44,
-          "top": 204.5,
-          "left": 24,
-          "right": 382
+          "top": 273,
+          "left": 16,
+          "right": 374
         }
       },
       "widestOverflow": null
@@ -3089,64 +3089,64 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
-          "right": 16
+          "right": 374
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 206,
+          "width": 73.34375,
+          "height": 40.03125,
+          "top": 209.984375,
           "left": 16,
-          "right": 16
+          "right": 89.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 190,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 218
+          "top": 208,
+          "left": 101.34375,
+          "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 70
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 78,
-          "right": 218
+          "top": 208,
+          "left": 162,
+          "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3162,9 +3162,9 @@
         "rect": {
           "width": 358,
           "height": 44,
-          "top": 204.5,
-          "left": 24,
-          "right": 382
+          "top": 273,
+          "left": 16,
+          "right": 374
         }
       },
       "widestOverflow": null
@@ -3185,64 +3185,64 @@
       "clientWidth": 390,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 358,
           "height": 69,
-          "top": 192,
+          "top": 196,
           "left": 16,
-          "right": 16
+          "right": 374
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 206,
+          "width": 66.203125,
+          "height": 20.015625,
+          "top": 219.984375,
           "left": 16,
-          "right": 16
+          "right": 82.203125
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 209.78125,
+          "width": 272.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 237.78125
+          "top": 208,
+          "left": 101.34375,
+          "right": 374
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 204,
-          "left": 28,
-          "right": 70
+          "top": 208,
+          "left": 101.34375,
+          "right": 154
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
+          "width": 212,
           "height": 44,
-          "top": 204,
-          "left": 78,
-          "right": 237.78125
+          "top": 208,
+          "left": 162,
+          "right": 374
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3258,9 +3258,9 @@
         "rect": {
           "width": 358,
           "height": 44,
-          "top": 204.5,
-          "left": 24,
-          "right": 382
+          "top": 273,
+          "left": 16,
+          "right": 374
         }
       },
       "widestOverflow": null
@@ -3281,42 +3281,42 @@
       "clientWidth": 768,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 579.6875,
-          "height": 61,
-          "top": 347,
+          "width": 580.75,
+          "height": 69,
+          "top": 369,
           "left": 24,
-          "right": 603.6875
+          "right": 604.75
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 367,
+          "width": 59.171875,
+          "height": 40.015625,
+          "top": 382.984375,
           "left": 24,
-          "right": 141.53125
+          "right": 83.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 359,
-          "left": 391.6875,
-          "right": 603.6875
+          "width": 300,
+          "height": 44,
+          "top": 381,
+          "left": 304.75,
+          "right": 604.75
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3327,35 +3327,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 359,
-          "left": 391.6875,
-          "right": 531.6875
+          "width": 212,
+          "height": 44,
+          "top": 381,
+          "left": 312.75,
+          "right": 524.75
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 359,
-          "left": 539.6875,
-          "right": 603.6875
+          "width": 72,
+          "height": 44,
+          "top": 381,
+          "left": 532.75,
+          "right": 604.75
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 132.3125,
-          "height": 36,
-          "top": 359.5,
-          "left": 611.6875,
+          "width": 131.25,
+          "height": 44,
+          "top": 381.5,
+          "left": 612.75,
           "right": 744
         }
       },
@@ -3377,42 +3377,42 @@
       "clientWidth": 1024,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 819.6875,
-          "height": 61,
-          "top": 295,
+          "width": 820.75,
+          "height": 69,
+          "top": 317,
           "left": 32,
-          "right": 851.6875
+          "right": 852.75
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 315,
+          "width": 59.171875,
+          "height": 40.015625,
+          "top": 330.984375,
           "left": 32,
-          "right": 149.53125
+          "right": 91.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 307,
-          "left": 639.6875,
-          "right": 851.6875
+          "width": 300,
+          "height": 44,
+          "top": 329,
+          "left": 552.75,
+          "right": 852.75
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3423,35 +3423,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 307,
-          "left": 639.6875,
-          "right": 779.6875
+          "width": 212,
+          "height": 44,
+          "top": 329,
+          "left": 560.75,
+          "right": 772.75
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 307,
-          "left": 787.6875,
-          "right": 851.6875
+          "width": 72,
+          "height": 44,
+          "top": 329,
+          "left": 780.75,
+          "right": 852.75
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 132.3125,
-          "height": 36,
-          "top": 307.5,
-          "left": 859.6875,
+          "width": 131.25,
+          "height": 44,
+          "top": 329.5,
+          "left": 860.75,
           "right": 992
         }
       },
@@ -3473,42 +3473,42 @@
       "clientWidth": 1440,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 1158.1875,
-          "height": 61,
-          "top": 243,
+          "width": 1159.9375,
+          "height": 69,
+          "top": 265,
           "left": 64,
-          "right": 1222.1875
+          "right": 1223.9375
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 136.578125,
-          "height": 20,
-          "top": 263,
+          "width": 68.921875,
+          "height": 40.015625,
+          "top": 278.984375,
           "left": 64,
-          "right": 200.578125
+          "right": 132.921875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 1010.1875,
-          "right": 1222.1875
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 923.9375,
+          "right": 1223.9375
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3519,35 +3519,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 1010.1875,
-          "right": 1150.1875
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 931.9375,
+          "right": 1143.9375
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1158.1875,
-          "right": 1222.1875
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1151.9375,
+          "right": 1223.9375
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 145.8125,
-          "height": 36,
-          "top": 255.5,
-          "left": 1230.1875,
+          "width": 144.0625,
+          "height": 44,
+          "top": 277.5,
+          "left": 1231.9375,
           "right": 1376
         }
       },
@@ -3569,42 +3569,42 @@
       "clientWidth": 1440,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 1171.6875,
-          "height": 61,
-          "top": 243,
+          "width": 1172.75,
+          "height": 69,
+          "top": 265,
           "left": 64,
-          "right": 1235.6875
+          "right": 1236.75
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 117.53125,
-          "height": 20,
-          "top": 263,
+          "width": 59.171875,
+          "height": 40.015625,
+          "top": 278.984375,
           "left": 64,
-          "right": 181.53125
+          "right": 123.171875
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 1023.6875,
-          "right": 1235.6875
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 936.75,
+          "right": 1236.75
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3615,35 +3615,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 1023.6875,
-          "right": 1163.6875
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 944.75,
+          "right": 1156.75
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1171.6875,
-          "right": 1235.6875
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1164.75,
+          "right": 1236.75
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 132.3125,
-          "height": 36,
-          "top": 255.5,
-          "left": 1243.6875,
+          "width": 131.25,
+          "height": 44,
+          "top": 277.5,
+          "left": 1244.75,
           "right": 1376
         }
       },
@@ -3665,42 +3665,42 @@
       "clientWidth": 1440,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 1134.578125,
-          "height": 61,
-          "top": 243,
+          "width": 1139.1875,
+          "height": 69,
+          "top": 265,
           "left": 64,
-          "right": 1198.578125
+          "right": 1203.1875
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 143.65625,
-          "height": 20,
-          "top": 263,
+          "width": 90.75,
+          "height": 40.015625,
+          "top": 278.984375,
           "left": 64,
-          "right": 207.65625
+          "right": 154.75
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 212,
-          "height": 36,
-          "top": 255,
-          "left": 986.578125,
-          "right": 1198.578125
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 903.1875,
+          "right": 1203.1875
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3711,35 +3711,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 140,
-          "height": 36,
-          "top": 255,
-          "left": 986.578125,
-          "right": 1126.578125
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 911.1875,
+          "right": 1123.1875
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1134.578125,
-          "right": 1198.578125
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1131.1875,
+          "right": 1203.1875
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 169.421875,
-          "height": 36,
-          "top": 255.5,
-          "left": 1206.578125,
+          "width": 164.8125,
+          "height": 44,
+          "top": 277.5,
+          "left": 1211.1875,
           "right": 1376
         }
       },
@@ -3761,42 +3761,42 @@
       "clientWidth": 1440,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 1166.9375,
-          "height": 61,
-          "top": 243,
+          "width": 1168.109375,
+          "height": 69,
+          "top": 265,
           "left": 64,
-          "right": 1230.9375
+          "right": 1232.109375
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 123.6875,
-          "height": 20,
-          "top": 263,
+          "width": 66.203125,
+          "height": 40.015625,
+          "top": 278.984375,
           "left": 64,
-          "right": 187.6875
+          "right": 130.203125
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 231.78125,
-          "height": 36,
-          "top": 255,
-          "left": 999.15625,
-          "right": 1230.9375
+          "width": 300,
+          "height": 44,
+          "top": 277,
+          "left": 932.109375,
+          "right": 1232.109375
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3807,35 +3807,35 @@
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 159.78125,
-          "height": 36,
-          "top": 255,
-          "left": 999.15625,
-          "right": 1158.9375
+          "width": 212,
+          "height": 44,
+          "top": 277,
+          "left": 940.109375,
+          "right": 1152.109375
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
-          "width": 64,
-          "height": 36,
-          "top": 255,
-          "left": 1166.9375,
-          "right": 1230.9375
+          "width": 72,
+          "height": 44,
+          "top": 277,
+          "left": 1160.109375,
+          "right": 1232.109375
         }
       },
       "saveSearchButton": {
         "selector": "button:has(svg.lucide-bookmark)",
         "found": true,
         "rect": {
-          "width": 137.0625,
-          "height": 36,
-          "top": 255.5,
-          "left": 1238.9375,
+          "width": 135.890625,
+          "height": 44,
+          "top": 277.5,
+          "left": 1240.109375,
           "right": 1376
         }
       },
@@ -3857,64 +3857,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 njoftime",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 216.40625,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 244.40625
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 166.40625,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 244.40625
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -3930,18 +3930,18 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.03125,
-        "width": 189.21875,
-        "overflowBy": 19.03125
+        "right": 335.21875,
+        "width": 319.21875,
+        "overflowBy": 15.21875
       }
     },
     {
@@ -3960,64 +3960,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 listings",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 201.265625,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 229.265625
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 151.265625,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 229.265625
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -4033,9 +4033,9 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": null
@@ -4056,64 +4056,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 оголошень",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 191.171875,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 219.171875
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 141.171875,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 219.171875
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -4129,18 +4129,18 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": {
-        "tag": "button",
-        "className": "relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap capitalize text-muted-foreground transition-colors duration-150 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 max-sm:min-h-11 bg-transparent data-active:bg-transparent dark:data-active:border-transparent data-active:text-foreground after:absolute after:bg-primary after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 data-active:after:opacity-100",
+        "tag": "div",
+        "className": "m_89d33d6d mantine-Tabs-list",
         "testId": null,
-        "right": 339.890625,
-        "width": 142.03125,
-        "overflowBy": 19.890625
+        "right": 336.1875,
+        "width": 320.1875,
+        "overflowBy": 16.1875
       }
     },
     {
@@ -4159,64 +4159,64 @@
       "clientWidth": 320,
       "overflow": false,
       "overflowBy": 0,
-      "renderedCountText": "2 annunci",
+      "renderedCountText": null,
       "sortBarRoot": {
         "selector": ".listings-sort-bar",
         "found": true,
         "rect": {
-          "width": 0,
+          "width": 288,
           "height": 69,
-          "top": 224,
+          "top": 228,
           "left": 16,
-          "right": 16
+          "right": 304
         }
       },
       "leftGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(1)",
         "found": true,
         "rect": {
-          "width": 0,
-          "height": 40,
-          "top": 238,
+          "width": 3.34375,
+          "height": 40.03125,
+          "top": 241.984375,
           "left": 16,
-          "right": 16
+          "right": 19.34375
         }
       },
       "rightGroup": {
         "selector": ".listings-sort-bar > div:nth-of-type(2)",
         "found": true,
         "rect": {
-          "width": 215.0625,
+          "width": 272.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 243.0625
+          "top": 240,
+          "left": 31.34375,
+          "right": 304
         }
       },
       "filtersButton": {
-        "selector": ".listings-sort-bar button.md\\:hidden",
+        "selector": ".listings-sort-bar [data-testid=\"listings-mobile-filters-trigger\"]",
         "found": true,
         "rect": {
-          "width": 42,
+          "width": 52.65625,
           "height": 44,
-          "top": 236,
-          "left": 28,
-          "right": 70
+          "top": 240,
+          "left": 31.34375,
+          "right": 84
         }
       },
       "sortComboboxTrigger": {
-        "selector": ".listings-sort-bar [data-testid=\"combobox\"] button",
+        "selector": ".listings-sort-bar [data-testid=\"listings-sort-trigger\"] input",
         "found": true,
         "rect": {
-          "width": 165.0625,
+          "width": 212,
           "height": 44,
-          "top": 236,
-          "left": 78,
-          "right": 243.0625
+          "top": 240,
+          "left": 92,
+          "right": 304
         }
       },
       "gridListToggle": {
-        "selector": ".listings-sort-bar .hidden.sm\\:flex",
+        "selector": ".listings-sort-bar [data-testid=\"listings-view-toggle\"]",
         "found": true,
         "rect": {
           "width": 0,
@@ -4232,9 +4232,9 @@
         "rect": {
           "width": 288,
           "height": 44,
-          "top": 236.5,
-          "left": 24,
-          "right": 312
+          "top": 305,
+          "left": 16,
+          "right": 304
         }
       },
       "widestOverflow": null

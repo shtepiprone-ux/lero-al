@@ -125,9 +125,14 @@ async function measureSortBar(page, saveSearchButtonSelector) {
       sortBarRoot: rectOf('.listings-sort-bar'),
       leftGroup: groups[0] ? rectOf('.listings-sort-bar > div:nth-of-type(1)') : null,
       rightGroup: groups[1] ? rectOf('.listings-sort-bar > div:nth-of-type(2)') : null,
-      filtersButton: rectOf('.listings-sort-bar button.md\\:hidden'),
-      sortComboboxTrigger: rectOf('.listings-sort-bar [data-testid="combobox"] button'),
-      gridListToggle: rectOf('.listings-sort-bar .hidden.sm\\:flex'),
+      // Task 781 retarget: ListingsSortBar migrated off shadcn `Button`/legacy `Combobox` onto
+      // Mantine — the mobile filters trigger and grid/list toggle now carry explicit
+      // `data-testid` hooks (ListingsSortBar.tsx), and the sort trigger is a Mantine
+      // `MantineCombobox` (a readOnly `<input>`, not a `<button>`), wrapped in its own
+      // `data-testid="listings-sort-trigger"` Box.
+      filtersButton: rectOf('.listings-sort-bar [data-testid="listings-mobile-filters-trigger"]'),
+      sortComboboxTrigger: rectOf('.listings-sort-bar [data-testid="listings-sort-trigger"] input'),
+      gridListToggle: rectOf('.listings-sort-bar [data-testid="listings-view-toggle"]'),
       saveSearchButton: saveSearchSelector ? rectOf(saveSearchSelector) : null,
       widestOverflow: (function () {
         const vw = document.documentElement.clientWidth;
@@ -207,7 +212,8 @@ async function interactionCell(browser) {
     result.waitConditionUsed = `fixed ${MOBILE_ISMOBILE_SETTLE_WAIT_MS}ms post-load delay before interacting, to let MantineDrawer's isMobile useEffect settle`;
 
     // Open filters trigger, assert the Mantine drawer bottom-sheet form becomes visible.
-    const filtersButton = page.locator('.listings-sort-bar button.md\\:hidden');
+    // Task 781 retarget: stable data-testid on the migrated Mantine trigger (ListingsSortBar.tsx).
+    const filtersButton = page.locator('.listings-sort-bar [data-testid="listings-mobile-filters-trigger"]');
     await filtersButton.click();
     const drawerContent = page.locator('[role="dialog"].mantine-Drawer-content');
     try {
@@ -221,9 +227,19 @@ async function interactionCell(browser) {
     await page.waitForTimeout(300);
 
     // Open sort control, select a different option, assert ?sort= updates.
-    const sortTrigger = page.locator('.listings-sort-bar [data-testid="combobox"] button');
+    // Task 781 retarget, corrected Task 781R (this interaction cell runs at 375px — MOBILE — where
+    // MantineCombobox opens its ResponsiveBottomSheet path, NOT the desktop Combobox.Dropdown):
+    // the mobile sheet renders each option as an `UnstyledButton` (a plain <button>, no
+    // `role="option"`), not a `Combobox.Option` (`<div role="option">`) — verified live via a
+    // Playwright DOM dump against the real running route (MantineCombobox.tsx's `isMobile`
+    // branch). A first pass of this retarget used the desktop-only `[role="option"][value=...]`
+    // selector and it correctly matched zero nodes at this viewport — a real bug, not a probe
+    // false-negative. `value={opt.value}` was added to the mobile UnstyledButton
+    // (MantineCombobox.tsx) so both paths now carry the same `value` attribute; `button[value=…]`
+    // (no role requirement) is the form that actually renders here.
+    const sortTrigger = page.locator('.listings-sort-bar [data-testid="listings-sort-trigger"] input');
     await sortTrigger.click();
-    const priceAscOption = page.locator('.listings-sort-bar [data-testid="combobox"] button[data-value="price_asc"]');
+    const priceAscOption = page.locator('button[value="price_asc"]');
     await priceAscOption.waitFor({ state: 'visible', timeout: 5000 });
     await priceAscOption.click();
     await page.waitForURL(/[?&]sort=price_asc/, { timeout: 5000 });

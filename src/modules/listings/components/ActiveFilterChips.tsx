@@ -3,7 +3,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, Group } from '@mantine/core'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -181,20 +181,22 @@ export function ActiveFilterChips({ locations }: Props) {
   if (chips.length === 0) return null
 
   return (
-    <div className="active-filter-chips flex flex-wrap items-center gap-2 pt-3 pb-1">
+    <Group className="active-filter-chips" gap="xs" wrap="wrap" pt="sm" pb="xs">
       {chips.map(chip => (
         <Button
           key={chip.key}
           type="button"
-          variant="outline"
+          variant="light"
+          color="brand"
+          radius="pill"
+          size="xs"
           onClick={() => removeChip(chip)}
-          className="gap-1.5 h-7 pl-3 pr-2 rounded-full bg-primary/10 text-primary text-xs font-medium border-primary/20 select-none hover:bg-primary/20 min-h-11 sm:min-h-0"
+          rightSection={<X size={12} aria-hidden="true" />}
           aria-label={`${chip.label} — ${t('aria_remove_filter')}`}
         >
           {chip.label}
-          <X className="h-3 w-3 shrink-0" aria-hidden="true" />
         </Button>
       ))}
-    </div>
+    </Group>
   )
 }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
-import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
@@ -54,7 +54,8 @@ function MultiToggleDemo({
 }: { getLabel: (key: string) => string; ariaLabel: string; className?: string }) {
   const [selected, setSelected] = useState<string[]>(['good'])
   return (
-    <FilterMultiToggle
+    <FilterChoiceGroup
+      mode="multiple"
       options={CONDITION_OPTIONS}
       selected={selected}
       getLabel={getLabel}
@@ -63,6 +64,47 @@ function MultiToggleDemo({
       onToggle={value =>
         setSelected(prev => (prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]))
       }
+    />
+  )
+}
+
+const LISTING_TYPE_OPTIONS = [
+  { value: 'sale', labelKey: 'sale' },
+  { value: 'rent', labelKey: 'rent' },
+] as const
+
+// Task 781R — mode="single": type/market_type-shaped consumer (no deselect on re-click).
+function SingleChoiceDemo({ getLabel, ariaLabel }: { getLabel: (key: string) => string; ariaLabel: string }) {
+  const [selected, setSelected] = useState('sale')
+  return (
+    <FilterChoiceGroup
+      mode="single"
+      options={LISTING_TYPE_OPTIONS}
+      allOption={{ value: '', labelKey: 'all' }}
+      selected={selected}
+      onChange={setSelected}
+      getLabel={getLabel}
+      ariaLabel={ariaLabel}
+    />
+  )
+}
+
+// Task 781R — mode="single" + allowDeselect + variant="light" + justify="flex-start":
+// property_type-shaped consumer (re-clicking the active option clears it).
+function SingleChoiceDeselectDemo({ getLabel, ariaLabel }: { getLabel: (key: string) => string; ariaLabel: string }) {
+  const [selected, setSelected] = useState('sale')
+  return (
+    <FilterChoiceGroup
+      mode="single"
+      options={LISTING_TYPE_OPTIONS}
+      allOption={{ value: '', labelKey: 'all' }}
+      selected={selected}
+      onChange={setSelected}
+      allowDeselect
+      variant="light"
+      justify="flex-start"
+      getLabel={getLabel}
+      ariaLabel={ariaLabel}
     />
   )
 }
@@ -97,20 +139,21 @@ export const Default: Story = {
             <RangeInputsDemo minPlaceholder={t('price_min')} maxPlaceholder={t('price_max')} />
           </Stack>
 
-          {/* FilterMultiToggle — Mantine Button toggles (§6a chrome, filled=selected / default=unselected).
+          {/* FilterChoiceGroup mode="multiple" — Mantine Button toggles (§6a chrome, filled=selected / default=unselected).
               Task 624: this annotation used to render as visible <Text>, leaking as a hardcoded
               English string in every locale — kept as a source comment only, never rendered. */}
           <Stack gap="xs">
             <MultiToggleDemo getLabel={getLabel} ariaLabel={storyT(locale, 'common.condition')} />
           </Stack>
 
-          {/* FilterMultiToggle (vertical branch, Task 752R) — the same component with the
-              `className="flex-col gap-1.5"` override the 3 live ListingsFilters.tsx mobile-drawer
-              call sites pass. No story previously exercised this branch (Task 752 note); this is
-              the coverage gap that let the justify="flex-start" label-centering regression ship. */}
+          {/* FilterChoiceGroup mode="multiple" (vertical branch, Task 752R) — the same component
+              with the `className="flex-col gap-1.5"` override the live ListingsFilters.tsx
+              mobile-drawer call sites pass. No story previously exercised this branch (Task 752
+              note); this is the coverage gap that let the justify="flex-start" label-centering
+              regression ship. */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              FilterMultiToggle — vertical branch (mobile filters drawer, className=&quot;flex-col gap-1.5&quot;)
+              FilterChoiceGroup — vertical branch (mobile filters drawer, className=&quot;flex-col gap-1.5&quot;)
             </Text>
             <MultiToggleDemo
               getLabel={getLabel}
@@ -125,6 +168,30 @@ export const Default: Story = {
               FilterRoomsRow — Mantine Button toggles over room counts (5 → &quot;5+&quot;)
             </Text>
             <RoomsRowDemo ariaLabel={storyT(locale, 'common.rooms_label')} />
+          </Stack>
+
+          {/* FilterChoiceGroup mode="single" (Task 781R) — the type/market_type-shaped consumer:
+              allOption present, allowDeselect absent (re-clicking the active option is a no-op). */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              FilterChoiceGroup — mode=&quot;single&quot; (no deselect, filled/centered — type/market_type)
+            </Text>
+            <SingleChoiceDemo
+              getLabel={key => (key === 'all' ? storyT(locale, 'common.all') : storyT(locale, `listing.${key}`))}
+              ariaLabel={storyT(locale, 'common.listing_type')}
+            />
+          </Stack>
+
+          {/* FilterChoiceGroup mode="single" + allowDeselect + variant="light" + justify="flex-start"
+              (Task 781R) — the property_type-shaped consumer: re-clicking the active option clears it. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              FilterChoiceGroup — mode=&quot;single&quot; allowDeselect, variant=&quot;light&quot; justify=&quot;flex-start&quot; (property_type)
+            </Text>
+            <SingleChoiceDeselectDemo
+              getLabel={key => (key === 'all' ? storyT(locale, 'common.all') : storyT(locale, `listing.${key}`))}
+              ariaLabel={storyT(locale, 'common.property_type')}
+            />
           </Stack>
         </Stack>
       </MantineStoryShell>

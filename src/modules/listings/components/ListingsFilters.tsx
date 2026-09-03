@@ -11,7 +11,7 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { RangeDatePicker } from '@/design-system/mantine/patterns'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
-import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
 
@@ -22,6 +22,29 @@ interface Props { locations: Location[]; onClose?: () => void }
 // derive which visible section is LAST (so it omits its own bottom divider, mirroring the legacy
 // `last:border-b-0`), never to hardcode a divider index: presence still comes from the live
 // `shows()` predicate on every render.
+// Task 781R (owner-directed, 2026-09-03): `type`, `market_type` and `property_type` are
+// single-select toggle rows that previously hand-rolled three separate `SimpleGrid` + `Button`
+// compositions, duplicating the canonical toggle-button pattern (`Mantine/Primitives/
+// FilterControls` — §6a filled=selected/default=unselected) AND breaking wrap: `SimpleGrid`'s
+// `cols` breakpoints key off the *viewport* width, not the drawer's own ~320px rendered width, so
+// a fixed-column grid forced long labels (e.g. "Новобудова") into a too-narrow cell at any
+// viewport ≥640px regardless of how narrow the side drawer itself is.
+//
+// `FilterMultiToggle` was generalized into `FilterChoiceGroup` (mode="multiple" | "single") for
+// this fix, per owner instruction, 2026-09-03: the previous "pin `selected` to a one-item array"
+// workaround faked single-select semantics on a multi-select-only component instead of modeling
+// the real contract. `mode="single"` renders a wrapping `Group` (`wrap="wrap"` — sizes each
+// button to its own label, wraps by the container's REAL rendered width, not a media query) with
+// an explicit `allOption` and `allowDeselect`. `type`/`market_type` do not deselect on re-click
+// (their original contract); `property_type` does (its original contract already toggled off).
+const LISTING_TYPE_OPTIONS = [
+  { value: 'sale', labelKey: 'sale' },
+  { value: 'rent', labelKey: 'rent' },
+] as const
+const LISTING_TYPE_ALL_OPTION = { value: '', labelKey: 'all' }
+
+const MARKET_TYPE_ALL_OPTION = { value: '', labelKey: 'all' }
+
 const SECTION_ORDER = [
   'type', 'property_type', 'location', 'market_type', 'rooms', 'price', 'area',
   'floor', 'floors_total', 'condition', 'layout_features', 'year_built',
@@ -138,40 +161,31 @@ export function ListingsFilters({ locations, onClose }: Props) {
 
         {/* Listing type */}
         <AccordionSection title={tc('listing_type')} open={sections.type} onToggle={() => toggle('type')} withDivider={withBottomDivider('type')}>
-          <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xs">
-            {(['', 'sale', 'rent'] as const).map(type => (
-              <Button
-                key={type}
-                variant={get('type') === type || (!get('type') && type === '') ? 'filled' : 'default'}
-                onClick={() => updateParams({ type: type || null })}
-              >
-                {type === '' ? tc('all') : t(type)}
-              </Button>
-            ))}
-          </SimpleGrid>
+          <FilterChoiceGroup
+            mode="single"
+            options={LISTING_TYPE_OPTIONS}
+            allOption={LISTING_TYPE_ALL_OPTION}
+            selected={get('type') || ''}
+            onChange={value => updateParams({ type: value || null })}
+            getLabel={key => (key === 'all' ? tc('all') : t(key))}
+            ariaLabel={tc('listing_type')}
+          />
         </AccordionSection>
 
         {/* Property type */}
         <AccordionSection title={tc('property_type')} open={sections.property_type} onToggle={() => toggle('property_type')} withDivider={withBottomDivider('property_type')}>
-          <SimpleGrid cols={2} spacing="xs">
-            <Button
-              variant={!get('property_type') ? 'light' : 'default'}
-              justify="flex-start"
-              onClick={() => handlePropertyTypeChange(null)}
-            >
-              {tc('all_types')}
-            </Button>
-            {propertyTypes.map(pt => (
-              <Button
-                key={pt.value}
-                variant={get('property_type') === pt.value ? 'light' : 'default'}
-                justify="flex-start"
-                onClick={() => handlePropertyTypeChange(get('property_type') === pt.value ? null : pt.value)}
-              >
-                {pt.label}
-              </Button>
-            ))}
-          </SimpleGrid>
+          <FilterChoiceGroup
+            mode="single"
+            options={propertyTypes.map(pt => ({ value: pt.value, labelKey: pt.label }))}
+            allOption={{ value: '', labelKey: 'all_types' }}
+            selected={get('property_type') || ''}
+            onChange={value => handlePropertyTypeChange(value || null)}
+            allowDeselect
+            variant="light"
+            justify="flex-start"
+            getLabel={key => (key === 'all_types' ? tc('all_types') : key)}
+            ariaLabel={tc('property_type')}
+          />
         </AccordionSection>
 
         {/* Location */}
@@ -187,23 +201,15 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Market type */}
         {shows('market_type') && (
           <AccordionSection title={tc('market_type')} open={sections.market_type} onToggle={() => toggle('market_type')} withDivider={withBottomDivider('market_type')}>
-            <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xs">
-              <Button
-                variant={!get('market_type') ? 'filled' : 'default'}
-                onClick={() => updateParams({ market_type: null })}
-              >
-                {tc('all')}
-              </Button>
-              {MARKET_TYPES.map(mt => (
-                <Button
-                  key={mt.value}
-                  variant={get('market_type') === mt.value ? 'filled' : 'default'}
-                  onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
-                >
-                  {t(mt.labelKey)}
-                </Button>
-              ))}
-            </SimpleGrid>
+            <FilterChoiceGroup
+              mode="single"
+              options={MARKET_TYPES}
+              allOption={MARKET_TYPE_ALL_OPTION}
+              selected={get('market_type') || ''}
+              onChange={value => updateParams({ market_type: value || null })}
+              getLabel={key => (key === 'all' ? tc('all') : t(key))}
+              ariaLabel={tc('market_type')}
+            />
           </AccordionSection>
         )}
 
@@ -284,7 +290,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Condition — multi-select */}
         {shows('condition') && (
           <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')} withDivider={withBottomDivider('condition')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={CONDITIONS}
               selected={selectedConditions}
               onToggle={v => toggleMulti('condition', v)}
@@ -298,7 +305,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Layout features */}
         {shows('layout_features') && (
           <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')} withDivider={withBottomDivider('layout_features')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={LAYOUT_FEATURES}
               selected={selectedLayoutFeatures}
               onToggle={v => toggleMulti('layout_features', v)}
@@ -331,7 +339,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Heating — multi-select */}
         {shows('heating') && (
           <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')} withDivider={withBottomDivider('heating')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={HEATING_TYPES}
               selected={selectedHeatingTypes}
               onToggle={v => toggleMulti('heating', v)}
@@ -344,7 +353,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Wall type — multi-select */}
         {shows('wall_type') && (
           <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')} withDivider={withBottomDivider('wall_type')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={WALL_TYPES}
               selected={selectedWallTypes}
               onToggle={v => toggleMulti('wall_type', v)}
@@ -357,7 +367,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Offer type — multi-select */}
         {shows('offer_type') && (
           <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')} withDivider={withBottomDivider('offer_type')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={OFFER_TYPES}
               selected={selectedOfferTypes}
               onToggle={v => toggleMulti('offer_type', v)}
@@ -371,7 +382,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
         {/* Purchase conditions */}
         {shows('purchase_conditions') && (
           <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')} withDivider={withBottomDivider('purchase_conditions')}>
-            <FilterMultiToggle
+            <FilterChoiceGroup
+              mode="multiple"
               options={PURCHASE_CONDITIONS}
               selected={selectedPurchaseConditions}
               onToggle={v => toggleMulti('purchase_conditions', v)}

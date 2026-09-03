@@ -13,7 +13,7 @@ import {
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
-import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
@@ -277,7 +277,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Condition — multi-select */}
           {shows('condition') && (
             <MantineFilterSection label={t('condition')} withDivider={withTopDivider('condition')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={CONDITIONS}
                 selected={local.conditions ?? []}
                 onToggle={v => {
@@ -294,7 +295,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Layout features */}
           {shows('layout_features') && (
             <MantineFilterSection label={t('layout_features')} withDivider={withTopDivider('layout_features')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={LAYOUT_FEATURES}
                 selected={local.layout_features ?? []}
                 onToggle={v => {
@@ -311,7 +313,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Heating — multi-select */}
           {shows('heating') && (
             <MantineFilterSection label={t('heating')} withDivider={withTopDivider('heating')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={HEATING_TYPES}
                 selected={local.heating_types ?? []}
                 onToggle={v => {
@@ -328,7 +331,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Wall type — multi-select */}
           {shows('wall_type') && (
             <MantineFilterSection label={t('wall_type')} withDivider={withTopDivider('wall_type')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={WALL_TYPES}
                 selected={local.wall_types ?? []}
                 onToggle={v => {
@@ -345,7 +349,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Offer type — multi-select */}
           {shows('offer_type') && (
             <MantineFilterSection label={t('offer_type')} withDivider={withTopDivider('offer_type')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={OFFER_TYPES}
                 selected={local.offer_types ?? []}
                 onToggle={v => {
@@ -362,7 +367,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           {/* Purchase conditions */}
           {shows('purchase_conditions') && (
             <MantineFilterSection label={t('purchase_conditions')} withDivider={withTopDivider('purchase_conditions')}>
-              <FilterMultiToggle
+              <FilterChoiceGroup
+                mode="multiple"
                 options={PURCHASE_CONDITIONS}
                 selected={local.purchase_conditions ?? []}
                 onToggle={v => {

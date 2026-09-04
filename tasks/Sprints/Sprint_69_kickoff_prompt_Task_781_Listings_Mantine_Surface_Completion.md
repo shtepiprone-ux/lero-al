@@ -665,7 +665,7 @@ previous one's gates pass. Report per §14. Strongest allowed status:
 
 # 781R2 — residual closure (binding, filed 2026-09-04)
 
-**State:** `KICKOFF FILED` · **Priority:** P2 · **QA profile:** Q3 · **Sprint:** 69
+**State:** `APPROVED WITH NOTES` (review 2026-09-04; F-A resolved by owner evidence — §9) · **Priority:** P2 · **QA profile:** Q3 · **Sprint:** 69
 **Executor:** fresh Sonnet via `.claude/skills/execute-task/SKILL.md`. Strongest permitted result is
 `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`. No self-approval, no mutating Git. D69-3 frontend exception: no
 review ledger.
@@ -778,3 +778,75 @@ assumptions · deviations · known limitations · what remains open and why.
 **The task is complete when F3 and F6 have rendered proof and R18/R19/R20/R21 are recorded — not when F5 and F12
 close.** Those two close only after the owner runs the probe. Reporting them closed without that run is the
 specific failure this task exists to correct.
+
+
+---
+
+## 9. Review 2026-09-04 — `NEEDS REVISION` (one finding)
+
+**Verified and accepted:** R16 (5/5 rendered checks pass, each asserting the real component by its own accessible
+name; the Pending state proven by MutationObserver events at t=390ms, not by the screenshot — disclosed honestly),
+R17 (chip 44px, empty-state padding 24px at both 1280 and 390, both source values read from `theme.ts` at runtime via
+`readValue`, never hardcoded; `minHeight` correctly compared with `>=`), R19 (precondition table with three distinct
+confidence levels — server `NOT SATISFIED`, Supabase `SATISFIABLE` with credential-validity caveat, auth state
+`UNVERIFIED — candidate exists`; all four findings left `OPEN — owner-native`), R20 (F1/F2 recorded as a permanent
+gap, not a closure, with the verification method stated), R21 (evidence directory created and populated).
+Zero product-code files touched — confirmed against `git status`. All gates exit 0 on `win32`; Vitest 13/13 and 39/39.
+
+### F-A · ~~`P2`~~ → **RESOLVED 2026-09-04 by owner evidence** · R18/AC18 — blank-canvas cell
+
+**Resolution.** The owner rendered `Patterns/Mantine/HomepageListingGrids/Default` at the exact failing
+tuple (`sq` × 390px): it renders fully and correctly. That is the reproduction the `retryCount: 0`
+classification lacked, and it establishes the cell as a genuine capture flake — on evidence rather than on
+the false premise below. **The story is not broken.** Residual risk is harness flakiness only, a class this
+repo already documents (Task 782 §7's B-run crash at exit 127). No re-run and no Sonnet round-trip needed.
+The record correction has been applied to the session log §6 row by the reviewer.
+
+**Original finding, retained for the record:**
+
+**Location:** session log §6, the `blank-canvas / blank-screenshot render flake` classification row.
+
+**Observed.** `Patterns/Mantine/HomepageListingGrids/Default × sq × mobile-390` rendered completely blank
+(`domFailed: true`, `failReason: "blank-canvas"`, `nonBackgroundRatio: 0`, `variance: 0.0`, `retryCount: 0`). The row
+dismisses it as a flake on the ground that the story is *"not touched by any Sprint 69 task"*.
+
+**That ground is false.** `src/stories/patterns/mantine/HomepageListingGrids.stories.tsx` was changed by **Task 784**
+in commit `7dd23e90b` (5 insertions, 5 deletions — the `container-wide mx-auto px-4 py-8` → `Box` swap). Task 784 is
+a Sprint 69 task, and that commit is current `HEAD`. The story is also row 3 of 784's owner visual-delta matrix,
+accepted only at **en × 320/768/1440** — `sq × 390` was never visually reviewed by anyone.
+
+**Second defect: "flake" is asserted, not established.** `retryCount: 0` — the cell was never retried, and no
+reproduction or A/B was run. `orchestrator-procedures.md` is explicit that a flake claim needs a controlled
+comparison, reproduction, or another concrete falsification, and that the cell stays `UNATTRIBUTED` until the cause
+is established. AC18's own text says: record the crash and **retry once**.
+
+**Corroboration that it is new, not pre-existing:** the 782 baseline run
+(`.screenshots/rendered-assert/2026-09-03T17-44/manifest.json`) has `blankCanvas: 0`, `blankScreenshot: 0`; this run
+has `1` and `1`. Reviewer-derived reason classes: this run `{fullWidthButtonsAtMobile: 85, (none): 64,
+renderCheck+visualContentCheck: 1}` versus the baseline's `{fullWidthButtonsAtMobile: 81, (none): 64}` — the third
+class exists only now. So "no new failure type is traced to this task's diff" is correct about *this task's* diff
+(it changed no product code) but wrong as a statement that the failure type is not new to the tree.
+
+**Impact.** A completely blank render of a production pattern story in one locale is potentially user-visible, and
+the stated justification would let a future reader dismiss it without looking. This is the same shape as D69-18's
+misattribution on Task 784: a wrong attribution used to close a finding.
+
+**Required correction.**
+1. Correct the false clause. The story *was* changed by a Sprint 69 task; say so.
+2. Establish flake vs. real for that one cell. **Do not re-run the full 1684-cell matrix** —
+   `check-stories-rendered.mjs` has no per-story filter, so a full run is disproportionate for one cell. Instead add
+   a targeted check to `scripts/task781r2-residual-evidence.mjs`, whose Playwright harness already exists: load
+   `patterns-mantine-homepagelistinggrids--default` at 390×844 in `sq` and assert a non-blank canvas
+   (`nonBackgroundRatio > 0`). Run it three times and record each result.
+3. Until it renders non-blank reproducibly, classify the cell `UNATTRIBUTED`, not `flake`.
+
+**Verification.** The new check passes across three consecutive runs, with results retained in
+`docs/sessions/evidence/task781/`; or, if it reproduces, the cell is reported as a real defect and filed.
+
+### Note, non-blocking
+
+Between the two runs the failing-cell set churned by more than the net +5 suggests: **8** cells fail now that did not
+in the 782 run (7 of them `ListingsSortBar/One Active Filter`, plus the blank-canvas cell) and **3** that failed then
+now pass (all `ListingsSortBar/Many Active Filters`). That One↔Many movement is consistent with 783/784's counter
+work changing which fixture state each cell lands in, and needs no action — but the aggregate "none new" phrasing
+hides it. Worth one sentence in §6 rather than a re-run.

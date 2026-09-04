@@ -1,0 +1,14 @@
+✅ f3-savesearchbutton-default: {"pass":true,"triggerFound":true,"note":"real production SaveSearchButton trigger, asserted by its own accessible name"}
+✅ f3-savesearchbutton-openmodal: {"pass":true,"modalNameFieldLabelVisible":true,"note":"real MantineModal reached its open state via the story's own play function; asserted on the name TextInput's own label text"}
+✅ f3-savesearchbutton-pending: {"pass":true,"loaderAndDisabledSaveObservedViaMutationObserver":true,"events":[{"tMs":390.19999998807907,"type":"loader-mounted"},{"tMs":390.19999998807907,"type":"save-button-disabled"}],"note":"isPending flips synchronously when the transition starts (component doc comment); a MutationObserver installed before story mount recorded the Loader mount + disabled-Save-button timestamps, proving the transient state was reached even though it had already settled back by capture time"}
+✅ f3-listingsactionrow-real-savesearch: {"pass":true,"triggerFound":true,"note":"ListingsActionRow story composes the real SaveSearchButton via saveSearchSlot, not a stub — asserted by the real trigger's own accessible name inside the row"}
+✅ f3-listingsshellview-real-savesearch: {"pass":true,"triggerFound":true,"note":"ListingsShellView.stories.tsx now passes saveSearchSlot={<SaveSearchButton />} (Task 782 F3), not null — asserted by the real trigger's own accessible name inside the full shell"}
+📏 f6-chip-height-1280: {"viewport":1280,"measuredHeightPx":44,"sourceRule":"theme.ts components.Button.styles.root.minHeight","sourceValuePx":44,"matchesSourceRule":true}
+📏 f6-chip-height-390: {"viewport":390,"measuredHeightPx":44,"sourceRule":"theme.ts components.Button.styles.root.minHeight","sourceValuePx":44,"matchesSourceRule":true}
+📏 f6-empty-state-padding-1280: {"viewport":1280,"measuredPaddingTopPx":24,"measuredPaddingBottomPx":24,"sourceRule":"theme.ts spacing.xl (Center py=\"xl\" in ListingsShellView.tsx)","sourceValuePx":24,"matchesSourceRule":true}
+📏 f6-empty-state-padding-390: {"viewport":390,"measuredPaddingTopPx":24,"measuredPaddingBottomPx":24,"sourceRule":"theme.ts spacing.xl (Center py=\"xl\" in ListingsShellView.tsx)","sourceValuePx":24,"matchesSourceRule":true}
+
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task781\residual-evidence\results.json
+
+✅ task781r2-residual-evidence: all F3 checks passed; F6 measurements recorded.
+EXIT_CODE=0

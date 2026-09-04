@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Paper, Title, TextInput, Textarea, Button, Group, Text, useMantineTheme } from '@mantine/core'
+import { Stack, Paper, Title, TextInput, Textarea, Button, Flex, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 export interface FormField {
@@ -41,7 +41,6 @@ export function MantineFormSectionStack({
   onSubmit,
   onCancel,
 }: MantineFormSectionStackProps) {
-  const theme = useMantineTheme()
   const initialValues = sections.flatMap(s => s.fields).reduce(
     (acc, f) => ({ ...acc, [f.name]: '' }),
     {} as Record<string, string>
@@ -91,18 +90,35 @@ export function MantineFormSectionStack({
           </Paper>
         ))}
 
-        <Group
+        {/* Task 785 (sites 3-5): the inert `styles={{root:{'@media...'}}}` blocks never emitted CSS
+            (docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md)
+            — replaced with Flex's native `direction`/`align` responsive props and Button's native
+            `w` responsive prop, gated at `sm` (theme.breakpoints.sm === theme.other.mobileGate,
+            byte-identical). `align="center"` is explicit at every width because Group's own
+            default align is `center` — Flex has no such default, so this preserves the pre-existing
+            centered row alignment rather than only adding it at `sm` as the dead code attempted.
+            `wrap="wrap"` preserves Group's own default wrap behavior.
+            R7 (owner return, 2026-09-04): the dead rule this replaced declared `flexDirection` +
+            `alignItems` but never `justify` — restoring it faithfully left the row at the Flex
+            default (`flex-start`), which reads as "stuck on the left" at desktop. `justify` is now
+            explicit: unchanged (`flex-start`) below `sm`, `flex-end` at `sm`+.
+            R8 (owner return, 2026-09-04): `px="md"` insets this row to the same horizontal edge as
+            the sections' own `<Paper p="md">` content — same spacing token already in use, no new
+            value, no wrapper. */}
+        <Flex
           gap="sm"
-          style={{ flexDirection: 'column' }}
-          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row', alignItems: 'center' } } }}
+          align="center"
+          wrap="wrap"
+          direction={{ base: 'column', sm: 'row' }}
+          justify={{ base: 'flex-start', sm: 'flex-end' }}
+          px="md"
         >
           {cancelLabel && (
             <Button
               variant="outline"
               color="gray"
               onClick={onCancel}
-              fullWidth
-              styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
+              w={{ base: '100%', sm: 'auto' }}
             >
               {cancelLabel}
             </Button>
@@ -110,12 +126,11 @@ export function MantineFormSectionStack({
           <Button
             type="submit"
             color="brand"
-            fullWidth
-            styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
+            w={{ base: '100%', sm: 'auto' }}
           >
             {submitLabel}
           </Button>
-        </Group>
+        </Flex>
         {Object.keys(form.errors).length > 0 && (
           <Text size="sm" c="red">
             {Object.values(form.errors)[0] as string}

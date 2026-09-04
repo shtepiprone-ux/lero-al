@@ -1,6 +1,6 @@
 'use client'
 
-import { Group, Title, Button, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Group, Flex, Title, Button, Stack, Text } from '@mantine/core'
 
 export interface PageHeaderAction {
   label: string
@@ -31,7 +31,6 @@ export function MantinePageHeaderWithActions({
   breadcrumb,
   actions = [],
 }: MantinePageHeaderWithActionsProps) {
-  const theme = useMantineTheme()
   return (
     <Stack gap="xs" mb="lg">
       {breadcrumb && (
@@ -51,25 +50,19 @@ export function MantinePageHeaderWithActions({
           )}
         </Stack>
         {actions.length > 0 && (
-          <Group
+          // Task 785 (site 9): the inert `styles={{root:{'@media...'}}}` block never emitted CSS
+          // (docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md)
+          // — replaced with Flex's native `w`/`direction`/`align` responsive props, gated at `sm`
+          // (theme.breakpoints.sm === theme.other.mobileGate, byte-identical). At <sm actions stack
+          // vertically, full-width, each button stretched (P0 mobile gate, Task 724 — the missing
+          // half of this component's own spec). At sm+ actions return to one row, auto-sized and
+          // grouped right. `wrap="wrap"` preserves Group's own default wrap behavior.
+          <Flex
             gap="sm"
-            style={{
-              width: '100%',
-              flexDirection: 'column',
-              alignItems: 'stretch',
-            }}
-            styles={{
-              root: {
-                // At <sm (640px) actions stack vertically, each button fills full width
-                // (P0 mobile gate, Task 724 — the missing half of this component's own spec).
-                // At sm+ actions return to one row, auto-sized and grouped right.
-                [`@media (min-width: ${theme.other.mobileGate})`]: {
-                  width: 'auto',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                },
-              },
-            }}
+            wrap="wrap"
+            w={{ base: '100%', sm: 'auto' }}
+            direction={{ base: 'column', sm: 'row' }}
+            align={{ base: 'stretch', sm: 'center' }}
           >
             {actions.map((action, i) => (
               <Button
@@ -81,7 +74,7 @@ export function MantinePageHeaderWithActions({
                 {action.label}
               </Button>
             ))}
-          </Group>
+          </Flex>
         )}
       </Group>
     </Stack>

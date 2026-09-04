@@ -1,0 +1,36 @@
+﻿✅ admin-surface-toolbar-direction-639: {"pass":true,"sites":[1],"measured":{"flexDirection":"column"},"expected":"column","width":639,"gatePx":640}
+✅ admin-surface-toolbar-direction-640: {"pass":true,"sites":[1],"measured":{"flexDirection":"row"},"expected":"row","width":640,"gatePx":640}
+✅ admin-surface-add-button-width-639: {"pass":true,"sites":[2],"measured":{"btnWidth":607,"containerWidth":607},"width":639,"gatePx":640}
+✅ admin-surface-add-button-width-640: {"pass":true,"sites":[2],"measured":{"btnWidth":60.34375,"containerWidth":592},"width":640,"gatePx":640}
+✅ form-section-stack-actions-direction-639: {"pass":true,"sites":[3],"measured":{"flexDirection":"column"},"expected":"column","width":639,"gatePx":640}
+✅ form-section-stack-actions-direction-640: {"pass":true,"sites":[3],"measured":{"flexDirection":"row"},"expected":"row","width":640,"gatePx":640}
+✅ form-section-stack-cancel-width-639: {"pass":true,"sites":[4],"measured":{"btnWidth":607,"containerWidth":639},"width":639,"gatePx":640}
+✅ form-section-stack-cancel-width-640: {"pass":true,"sites":[4],"measured":{"btnWidth":78.0625,"containerWidth":640},"width":640,"gatePx":640}
+✅ form-section-stack-submit-width-639: {"pass":true,"sites":[5],"measured":{"btnWidth":607,"containerWidth":639},"width":639,"gatePx":640}
+✅ form-section-stack-submit-width-640: {"pass":true,"sites":[5],"measured":{"btnWidth":64.84375,"containerWidth":640},"width":640,"gatePx":640}
+✅ two-column-form-actions-direction-639: {"pass":true,"sites":[6],"measured":{"flexDirection":"column"},"expected":"column","width":639,"gatePx":640}
+✅ two-column-form-actions-direction-640: {"pass":true,"sites":[6],"measured":{"flexDirection":"row"},"expected":"row","width":640,"gatePx":640}
+✅ two-column-form-cancel-width-639: {"pass":true,"sites":[7],"measured":{"btnWidth":639,"containerWidth":639},"width":639,"gatePx":640}
+✅ two-column-form-cancel-width-640: {"pass":true,"sites":[7],"measured":{"btnWidth":78.0625,"containerWidth":640},"width":640,"gatePx":640}
+✅ two-column-form-submit-width-639: {"pass":true,"sites":[8],"measured":{"btnWidth":639,"containerWidth":639},"width":639,"gatePx":640}
+✅ two-column-form-submit-width-640: {"pass":true,"sites":[8],"measured":{"btnWidth":81.21875,"containerWidth":640},"width":640,"gatePx":640}
+✅ page-header-actions-direction-639: {"pass":true,"sites":[9],"measured":{"flexDirection":"column"},"expected":"column","width":639,"gatePx":640}
+✅ page-header-actions-direction-640: {"pass":true,"sites":[9],"measured":{"flexDirection":"row"},"expected":"row","width":640,"gatePx":640}
+✅ empty-state-action-width-639: {"pass":true,"sites":[11],"measured":{"btnWidth":145.25,"containerWidth":145.25},"width":639,"gatePx":640}
+✅ empty-state-action-width-640: {"pass":true,"sites":[11],"measured":{"btnWidth":79.0625,"containerWidth":145.25},"width":640,"gatePx":640}
+✅ error-state-action-width-639: {"pass":true,"sites":[10],"measured":{"btnWidth":573,"containerWidth":573},"width":639,"gatePx":640}
+✅ error-state-action-width-640: {"pass":true,"sites":[10],"measured":{"btnWidth":81.21875,"containerWidth":574},"width":640,"gatePx":640}
+✅ response-action-footer-direction-639: {"pass":true,"sites":["discovered-1"],"measured":{"flexDirection":"column"},"expected":"column","width":639,"gatePx":640}
+✅ response-action-footer-direction-640: {"pass":true,"sites":["discovered-1"],"measured":{"flexDirection":"row"},"expected":"row","width":640,"gatePx":640}
+✅ response-action-footer-button-width-639: {"pass":true,"sites":["discovered-2"],"measured":{"btnWidth":607,"containerWidth":607},"width":639,"gatePx":640}
+✅ response-action-footer-button-width-640: {"pass":true,"sites":["discovered-2"],"measured":{"btnWidth":64.84375,"containerWidth":608},"width":640,"gatePx":640}
+✅ form-section-stack-actions-justify-639: {"pass":true,"sites":["R7-form-section-stack"],"measured":{"justifyContent":"flex-start"},"expected":"flex-start","width":639,"gatePx":640}
+✅ form-section-stack-actions-justify-640: {"pass":true,"sites":["R7-form-section-stack"],"measured":{"justifyContent":"flex-end"},"expected":"flex-end","width":640,"gatePx":640}
+✅ two-column-form-actions-justify-639: {"pass":true,"sites":["R7-two-column-form"],"measured":{"justifyContent":"flex-start"},"expected":"flex-start","width":639,"gatePx":640}
+✅ two-column-form-actions-justify-640: {"pass":true,"sites":["R7-two-column-form"],"measured":{"justifyContent":"flex-end"},"expected":"flex-end","width":640,"gatePx":640}
+✅ form-section-stack-inset-375: {"pass":true,"sites":["R8"],"measured":{"paperContentLeft":16,"paperContentRight":359,"flexContentLeft":16,"flexContentRight":359},"width":375}
+
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task785\results.json
+
+✅ task785-inert-media-evidence: all checks passed.
+EXIT_CODE=0

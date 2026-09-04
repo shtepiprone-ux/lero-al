@@ -1,6 +1,6 @@
 'use client'
 
-import { SimpleGrid, TextInput, Textarea, Select, Button, Group, Stack, Title, useMantineTheme } from '@mantine/core'
+import { SimpleGrid, TextInput, Textarea, Select, Button, Flex, Stack, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 export interface TwoColField {
@@ -40,7 +40,6 @@ export function MantineTwoColumnForm({
   onSubmit,
   onCancel,
 }: MantineTwoColumnFormProps) {
-  const theme = useMantineTheme()
   const initialValues = fields.reduce(
     (acc, f) => ({ ...acc, [f.name]: '' }),
     {} as Record<string, string>
@@ -91,18 +90,34 @@ export function MantineTwoColumnForm({
           })}
         </SimpleGrid>
 
-        <Group
+        {/* Task 785 (sites 6-8): the inert `styles={{root:{'@media...'}}}` blocks never emitted CSS
+            (docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md)
+            — replaced with Flex's native `direction`/`align` responsive props and Button's native
+            `w` responsive prop, gated at `sm` (theme.breakpoints.sm === theme.other.mobileGate,
+            byte-identical). `align="center"` is explicit at every width because Group's own
+            default align is `center` — Flex has no such default, so this preserves the pre-existing
+            centered row alignment rather than only adding it at `sm` as the dead code attempted.
+            `wrap="wrap"` preserves Group's own default wrap behavior.
+            R7 (owner return, 2026-09-04): the dead rule this replaced declared `flexDirection` +
+            `alignItems` but never `justify` — restoring it faithfully left the row at the Flex
+            default (`flex-start`), which reads as "stuck on the left" at desktop. `justify` is now
+            explicit: unchanged (`flex-start`) below `sm`, `flex-end` at `sm`+. Included alongside
+            `FormSectionStack` because this row is identical and would otherwise diverge for no
+            reason. R8 (the `px="md"` inset) does not apply here — this pattern has no `Paper`
+            wrapper to inset against (verified: zero `Paper` elements in this file). */}
+        <Flex
           gap="sm"
-          style={{ flexDirection: 'column' }}
-          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row', alignItems: 'center' } } }}
+          align="center"
+          wrap="wrap"
+          direction={{ base: 'column', sm: 'row' }}
+          justify={{ base: 'flex-start', sm: 'flex-end' }}
         >
           {cancelLabel && (
             <Button
               variant="outline"
               color="gray"
               onClick={onCancel}
-              fullWidth
-              styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
+              w={{ base: '100%', sm: 'auto' }}
             >
               {cancelLabel}
             </Button>
@@ -110,12 +125,11 @@ export function MantineTwoColumnForm({
           <Button
             type="submit"
             color="brand"
-            fullWidth
-            styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
+            w={{ base: '100%', sm: 'auto' }}
           >
             {submitLabel}
           </Button>
-        </Group>
+        </Flex>
       </Stack>
     </form>
   )

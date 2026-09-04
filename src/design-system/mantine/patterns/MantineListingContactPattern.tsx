@@ -36,7 +36,6 @@ export interface MantineListingContactLabels {
   deletedDesc: string
   unavailableDesc: string
   closedLabel: string
-  favoriteAriaAdd: string
 }
 
 export interface MantineListingContactPatternProps {

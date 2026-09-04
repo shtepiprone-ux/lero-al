@@ -1,6 +1,6 @@
 'use client'
 
-import { Group, Button, Box } from '@mantine/core'
+import { Flex, Button, Box } from '@mantine/core'
 
 export interface FooterAction {
   label: string
@@ -44,17 +44,18 @@ export function MantineResponsiveActionFooter({
         padding: 'var(--mantine-spacing-md)',
       }}
     >
-      <Group
+      {/* Task 785 (discovered beyond the kickoff's 11-site inventory via AC1's directory-wide grep
+          — same defect class, R1's literal scope is `src/design-system/mantine/**`): the inert
+          `styles={{root:{'@media...'}}}` blocks below never emitted CSS
+          (docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md)
+          — replaced with Flex's native `direction` responsive prop and Button's native `w`
+          responsive prop, gated at `sm` (theme.breakpoints.sm === 40em, the literal this file
+          hardcoded). */}
+      <Flex
         justify="flex-end"
         gap="sm"
-        style={{ flexDirection: 'column' }}
-        styles={{
-          root: {
-            '@media (min-width: 40em)': {
-              flexDirection: 'row',
-            },
-          },
-        }}
+        wrap="wrap"
+        direction={{ base: 'column', sm: 'row' }}
       >
         {actions.map((action, i) => (
           <Button
@@ -64,19 +65,12 @@ export function MantineResponsiveActionFooter({
             color={action.color ?? (i === actions.length - 1 ? 'brand' : 'gray')}
             onClick={action.onClick}
             disabled={action.disabled}
-            fullWidth
-            styles={{
-              root: {
-                '@media (min-width: 40em)': {
-                  width: 'auto',
-                },
-              },
-            }}
+            w={{ base: '100%', sm: 'auto' }}
           >
             {action.label}
           </Button>
         ))}
-      </Group>
+      </Flex>
     </Box>
   )
 }

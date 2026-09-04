@@ -31,7 +31,6 @@ function makeLabels(l: string): MantineListingContactLabels {
     deletedDesc: storyT(l, 'storybook.mantine.listing_detail_deleted_desc'),
     unavailableDesc: storyT(l, 'storybook.mantine.listing_detail_unavailable_desc'),
     closedLabel: storyT(l, 'storybook.mantine.listing_detail_closed_label'),
-    favoriteAriaAdd: storyT(l, 'storybook.mantine.card_favorite_aria_add'),
   };
 }
 

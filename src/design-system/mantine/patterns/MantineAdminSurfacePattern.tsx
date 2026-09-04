@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon, useMantineTheme } from '@mantine/core'
+import { Stack, Group, Flex, TextInput, Button, Badge, Text, ActionIcon, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { MantineDataTableToCards, type TableColumn, type TableRow, type CardConfig } from './MantineDataTableToCards'
 import { MantinePagination } from './MantinePagination'
@@ -78,11 +78,18 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
         </Badge>
       </Group>
 
-      <Group
+      {/* Task 785 (sites 1-2): the `styles={{root:{'@media...'}}}` blocks below never emitted CSS
+          (docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md) —
+          replaced with Flex's native `direction` responsive prop and Button's native `w` responsive
+          prop, both gated at `sm` (theme.breakpoints.sm === theme.other.mobileGate, byte-identical).
+          The Add button's mechanism is now `w` alone — the old `fullWidth={isMobile}` JS mechanism
+          is removed so only one mechanism drives this button's width (task instruction: do not
+          stack a working JS mechanism with the CSS one it was meant to complement). */}
+      <Flex
         gap="sm"
         align="flex-end"
-        style={{ flexDirection: 'column' }}
-        styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row' } } }}
+        wrap="wrap"
+        direction={{ base: 'column', sm: 'row' }}
       >
         <TextInput
           placeholder={searchPlaceholder}
@@ -101,12 +108,11 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
         <Button
           color="brand"
           onClick={onAdd}
-          fullWidth={isMobile}
-          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
+          w={{ base: '100%', sm: 'auto' }}
         >
           {addLabel}
         </Button>
-      </Group>
+      </Flex>
 
       <MantineDataTableToCards columns={columns} rows={rows} rowClassName={rowClassName} card={card} />
 

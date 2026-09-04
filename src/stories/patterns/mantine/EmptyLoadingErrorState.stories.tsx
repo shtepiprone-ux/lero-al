@@ -25,6 +25,7 @@ export const Default: Story = {
           title={storyT(l, 'storybook.mantine.empty_title')}
           description={storyT(l, 'storybook.mantine.empty_description')}
           actionLabel={storyT(l, 'storybook.mantine.action_search')}
+          onAction={() => {}}
         />
         <MantineEmptyLoadingErrorState
           state="loading"
@@ -35,6 +36,7 @@ export const Default: Story = {
           title={storyT(l, 'storybook.mantine.error_title')}
           description={storyT(l, 'storybook.mantine.error_description')}
           actionLabel={storyT(l, 'storybook.mantine.action_submit')}
+          onAction={() => {}}
         />
       </Stack>
     );

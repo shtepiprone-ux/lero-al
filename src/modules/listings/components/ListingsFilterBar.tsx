@@ -18,16 +18,16 @@
  * ~768–1024px, where a lone flex item on a wrapped line is not affected by the row's own
  * `justify-content` — only an auto margin on the item itself reliably pushes it to the far edge.
  *
- * The advanced-filters `Indicator` badge is an absolutely-positioned corner element that overhangs
- * its own `Button` by design (Mantine `top-end` default, `translate-x: 50%` — Task 779 §3.7; its
- * `size`/`offset`/`position` are never overridden here). Task 780 first "fixed" the resulting
- * document-edge overflow with a `me="sm"` inset on this `Stack` — but that inset was
- * production-visible (it shipped through `ListingsShellView` onto the real route, offsetting the
- * bar from every sibling) to solve a defect that only exists in Storybook's own zero-gutter
- * `layout:'fullscreen'` story rendering. Task 780R (review rework) withdrew it: the overhang is
- * now absorbed by a Mantine-native container in the STORY file itself, mirroring the gutter
- * production already supplies via `ListingsPageFrame.tsx`. This component carries no
- * compensating margin/padding/inset of any kind.
+ * The advanced-filters count (Task 783 — canonical `MantineCountButton`, replacing the prior
+ * absolutely-positioned `Indicator` corner overlay that overhung the button by design and could
+ * collide with neighboring controls at narrow widths, the same defect class Task 782/F13 fixed on
+ * `ListingsSortBar`'s mobile filters trigger) renders as a plain, content-sized `Badge` inline in
+ * the button's `rightSection` — never a corner overlay. Task 780R withdrew this `Stack`'s prior
+ * compensating `me="sm"` inset (that inset was production-visible, offsetting the bar from every
+ * sibling on the real route, to solve a defect that only existed in Storybook's own zero-gutter
+ * `layout:'fullscreen'` story rendering); the gutter now comes from a Mantine-native container in
+ * the STORY file itself, mirroring the gutter production already supplies via
+ * `ListingsPageFrame.tsx`. This component carries no compensating margin/padding/inset of any kind.
  *
  * All filter state routes through useListingsUrlFilters → filterEngine.ts.
  * No new filter logic — existing primitives only.
@@ -35,8 +35,8 @@
 
 import { SlidersHorizontal, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { Box, Button, Divider, Group, Indicator, Stack, useMantineTheme } from '@mantine/core'
-import { MantineCombobox } from '@/design-system/mantine/patterns'
+import { Box, Button, Divider, Group, Stack, useMantineTheme } from '@mantine/core'
+import { MantineCombobox, MantineCountButton } from '@/design-system/mantine/patterns'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
 
@@ -148,18 +148,17 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
           )}
 
           {/* More / advanced filters → opens full Drawer */}
-          <Indicator label={activeCount} disabled={activeCount === 0} color="brand" w={FULL_BELOW_SM}>
-            <Button
-              type="button"
-              data-testid="task775-advanced-filters"
-              variant="default"
-              w={FULL_BELOW_SM}
-              leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
-              onClick={onFiltersOpen}
-            >
-              {tc('advanced_filters')}
-            </Button>
-          </Indicator>
+          <MantineCountButton
+            type="button"
+            data-testid="task775-advanced-filters"
+            variant="default"
+            w={FULL_BELOW_SM}
+            leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
+            count={activeCount}
+            onClick={onFiltersOpen}
+          >
+            {tc('advanced_filters')}
+          </MantineCountButton>
         </Group>
       </Group>
 

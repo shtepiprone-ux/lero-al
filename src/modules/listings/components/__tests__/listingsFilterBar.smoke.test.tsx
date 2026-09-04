@@ -13,9 +13,16 @@
  *   params for sections the new type does not show, in the same single push.
  * - T4/T5 (AC4): reset produces a bare `router.push(pathname)` with no query string; advanced
  *   filters calls `onFiltersOpen` and pushes nothing.
- * - T6 (AC5): the route visibility gate lives in `ListingsShellView`'s `<Box visibleFrom="md">`
+ * - T6 (AC5): the route visibility gate lives in `ListingsShellView`'s `<Box visibleFrom="sm">`
  *   wrapper, not in `ListingsFilterBar` itself — precedent `mobileBottomNav.smoke.test.tsx:110-114`.
- * - T7: with `activeCount === 0` the reset control and the count badge are both absent.
+ *   The boundary is `sm` (640px), not `md`: Task 781R's owner decision (2026-09-03) moved it so the
+ *   inline filter bar appears from 640px up instead of staying behind the drawer until 768px — see
+ *   `ListingsShellView.tsx:79`. These assertions read `md` until Task 783's review corrected them.
+ * - T7 (AC1/AC2/AC7, Task 783): the Advanced filters control is the canonical `MantineCountButton`,
+ *   not `Indicator` — with `activeCount === 0` the reset control and the count badge are both
+ *   absent and no `Indicator` overlay mechanism remains at all; with `activeCount > 0` the count
+ *   renders as a content-sized `Badge` that is a normal in-flow descendant of the button (never an
+ *   absolutely-positioned sibling escaping it).
  */
 
 import React from 'react'
@@ -249,11 +256,11 @@ describe('ListingsFilterBar — T6 (AC5): route visibility lives in the Listings
     saveSearchSlot: null,
   }
 
-  it('theme.breakpoints.md is 48em (768px) — the boundary the wrapper class must resolve to', () => {
-    expect(theme.breakpoints?.md).toBe('48em')
+  it('theme.breakpoints.sm is 40em (640px) — the boundary the wrapper class must resolve to', () => {
+    expect(theme.breakpoints?.sm).toBe('40em')
   })
 
-  it('the wrapper root carries mantine-visible-from-md; the bar\'s own root carries neither visibility class', () => {
+  it('the wrapper root carries mantine-visible-from-sm; the bar\'s own root carries neither visibility class', () => {
     currentSearch = ''
     const { container } = render(withProviders(<ListingsShellView {...shellProps} />))
 
@@ -261,9 +268,9 @@ describe('ListingsFilterBar — T6 (AC5): route visibility lives in the Listings
     expect(barRoot).toBeTruthy()
 
     const wrapper = barRoot.parentElement!
-    expect(wrapper.className).toContain('mantine-visible-from-md')
+    expect(wrapper.className).toContain('mantine-visible-from-sm')
 
-    expect(barRoot.className).not.toMatch(/mantine-(visible|hidden)-from-md/)
+    expect(barRoot.className).not.toMatch(/mantine-(visible|hidden)-from-sm/)
   })
 
   it('ListingsFilterBar.tsx contains no visibleFrom/hiddenFrom/hidden md: markup', () => {
@@ -279,10 +286,23 @@ describe('ListingsFilterBar — T6 (AC5): route visibility lives in the Listings
   })
 })
 
-describe('ListingsFilterBar — T7: zero active filters hides reset and the count badge', () => {
-  it('the reset control is absent from the DOM and the Indicator renders no badge', () => {
-    const { container } = renderBar('')
+describe('ListingsFilterBar — T7 (Task 783): Advanced filters count is the canonical MantineCountButton, in-flow, not Indicator', () => {
+  it('activeCount=0 hides reset + renders no count badge; activeCount>0 renders one badge in-flow inside the button; no Indicator overlay exists either way', () => {
+    const { container: zero } = renderBar('')
     expect(screen.queryByText('Reset filters')).toBeNull()
-    expect(container.querySelector('.mantine-Indicator-indicator')).toBeNull()
+    const zeroTrigger = zero.querySelector('[data-testid="task775-advanced-filters"]')
+    expect(zeroTrigger?.querySelector('.mantine-Badge-root')).toBeNull()
+    expect(zero.querySelector('.mantine-Indicator-indicator')).toBeNull()
+    cleanup()
+
+    const { container: nonZero } = renderBar('type=sale')
+    const trigger = nonZero.querySelector('[data-testid="task775-advanced-filters"]')
+    const badge = trigger?.querySelector('.mantine-Badge-root')
+    expect(badge).toBeTruthy()
+    expect(badge).toHaveTextContent('1')
+    // In-flow rightSection content — a normal descendant of the button, never a sibling
+    // escaping it via absolute positioning (the exact defect class this task fixes).
+    expect(trigger?.contains(badge!)).toBe(true)
+    expect(nonZero.querySelector('.mantine-Indicator-indicator')).toBeNull()
   })
 })

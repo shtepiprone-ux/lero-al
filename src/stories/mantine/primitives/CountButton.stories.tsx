@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text } from '@mantine/core'
+import { Stack, Text, useMantineTheme } from '@mantine/core'
 import { SlidersHorizontal } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineCountButton } from '@/design-system/mantine/patterns'
@@ -20,6 +20,71 @@ const meta: Meta = {
 }
 export default meta
 type Story = StoryObj<typeof meta>
+
+/**
+ * Task 783 F6 — the default-variant filter-trigger boundary states (0 / 1 / 12) reproduce the
+ * exact production composition, including its icon-sizing role: `theme.other.iconSize.compact`,
+ * the same token `ListingsFilterBar.tsx`'s Advanced filters control passes to its own
+ * `SlidersHorizontal leftSection`. A separate local component (not the top-level story `render`)
+ * is required to call `useMantineTheme()` here without disturbing the two pre-existing `h-4 w-4`
+ * fixture examples above, which stay on their own fixed sizing.
+ */
+/**
+ * Task 784 — canonical replacement for the two generic `h-4 w-4` (16px) fixture icons below.
+ * `theme.other.iconSize.standard` is the named Mantine role whose value (16px) matches the prior
+ * literal exactly — these two fixtures are NOT the same call site as `FilterTriggerBoundaryStates`
+ * above and do not claim to reproduce `ListingsFilterBar.tsx`'s Advanced filters control (that
+ * control's own `SlidersHorizontal` uses `theme.other.iconSize.compact`/14px, per the accurate
+ * claim above). A separate local component (same precedent as `FilterTriggerBoundaryStates`) is
+ * required to call `useMantineTheme()` without disturbing the inline `render` callback's own hook
+ * discipline.
+ */
+function SlidersIcon() {
+  const theme = useMantineTheme()
+  return <SlidersHorizontal size={theme.other.iconSize.standard} />
+}
+
+function FilterTriggerBoundaryStates({ t }: { t: (key: string) => string }) {
+  const theme = useMantineTheme()
+
+  return (
+    <Stack gap="xs">
+      <Text size="xs" c="gray.5" fw={500}>
+        Task 783 — default-variant filter-trigger boundary states (0 / 1 / 12), the exact
+        composition consumed by the real production Advanced filters control
+        (`ListingsFilterBar`): `variant=&quot;default&quot;` + sliders icon `leftSection` +
+        `count` inline in `rightSection`. 0 renders no badge; 12 proves the two-digit count
+        stays content-sized and in-flow, never clipped or overhanging the button edge.
+      </Text>
+      <Stack gap="xs">
+        <MantineCountButton
+          variant="default"
+          leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
+          count={0}
+          onClick={() => {}}
+        >
+          {t('count_button_label')}
+        </MantineCountButton>
+        <MantineCountButton
+          variant="default"
+          leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
+          count={1}
+          onClick={() => {}}
+        >
+          {t('count_button_label')}
+        </MantineCountButton>
+        <MantineCountButton
+          variant="default"
+          leftSection={<SlidersHorizontal size={theme.other.iconSize.compact} />}
+          count={12}
+          onClick={() => {}}
+        >
+          {t('count_button_label')}
+        </MantineCountButton>
+      </Stack>
+    </Stack>
+  )
+}
 
 export const Default: Story = {
   render: (_args, context) => {
@@ -63,7 +128,7 @@ export const Default: Story = {
               the label hides, touch target stays ≥44px (Task 571)
             </Text>
             <MantineCountButton
-              leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              leftSection={<SlidersIcon />}
               count={3}
               iconOnlyBelow={860}
               aria-label={t('count_button_label')}
@@ -80,13 +145,15 @@ export const Default: Story = {
             </Text>
             <MantineCountButton
               variant="default"
-              leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              leftSection={<SlidersIcon />}
               count={2}
               onClick={() => {}}
             >
               {t('count_button_label')}
             </MantineCountButton>
           </Stack>
+
+          <FilterTriggerBoundaryStates t={t} />
         </Stack>
       </MantineStoryShell>
     )

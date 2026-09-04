@@ -5,21 +5,22 @@
 > **No volatile facts in this file.** No `HEAD`/commit SHAs, branch names, divergence counts, tree cleanliness, or "N today" tallies — all of them are false within one commit. Read them live at the moment you need them (`git --no-optional-locks status` · `git --no-optional-locks rev-list` · the registry heading below). Durable Git lessons → `docs/orchestrator-procedures.md` → "Git state — durable lessons".
 > **Decided is not active.** Binding decisions → [`docs/binding-decisions.md`](binding-decisions.md) · recurring orchestrator failure modes → `docs/orchestrator-procedures.md` · known console noise and assessed-harmless findings → `docs/maintenance-playbook.md` §14. Only **undecided** decisions live in this file.
 
-## Last Session (2026-09-03)
+## Last Session (2026-09-04)
 
-Task **781** is archived: its committed `/listings` migration remains historically `PARTIALLY VERIFIED` under the
-owner override. Task **782**'s **F13** revision is also archived after approval: `ListingsSortBar.tsx` now reuses
-the canonical `MantineCountButton` for its mobile Filters counter, whose 0/1/12 states were reviewed at 375/390px
-across all four locales. Task **783** remains the separate, narrow follow-up for `ListingsFilterBar`'s
-advanced-filters counter: same primitive, replace its absolute `Indicator`, prove real URL-derived counts 0/1/12 in
-stories, then obtain owner visual review. `screenshots:assert` is not validation for either task (owner rule,
-2026-09-03).
+Task **784**: **`APPROVED WITH NOTES`** (2026-09-04). R1-R24 verified; owner accepted all six visual tuples. Final
+owner-native run post-D69-27: scoped detector **0**, typecheck 0, lint 0 errors/72 unchanged warnings, check:stories
+140/0, build-storybook 0, browser **35/35**, `build` types-valid 40/40 — all exit 0. Shipped: `--scope=mantine`
+detector mode, the D69-18 theme contracts, D69-20's two inert-restoration fixes, D69-21's CTA gate and the
+owner-directed D69-22…25 (`breakpoints.xs2`, piecewise CTA gate, stack boundary `sm`→`md`, favorite into the badges
+row), plus **D69-27** badge/favorite centre-line — reviewer-authored, shipped broken once, corrected, now 0px delta
+at all five widths (kickoff §19). **Remaining, both mechanical:** the P3 **D69-26** record pass (§18 R21-R23) and the
+owner commit; `CountButton.stories.tsx` is AMBIGUOUS (783+784) and rides with 783. Archive on commit.
 
 ## Open — needs action
 
 | Item | State | Next step |
 |---|---|---|
-| **Cleanup step 3** | UNBLOCKED (696 = step 1, 701 = step 2, I-D landed in 703) | Delete 3 consolidated probes: `task420-qa-grid-step.mjs` · `task668-qa-grid-1440.mjs` · `task668-qa-header-geometry.mjs` (**1084 lines by `wc -l`, 946 non-blank** — say which you mean). **Must also update `check-homepage-grid.mjs`, which names all three in 18 provenance comments.** `scripts/` holds **13** task-numbered probes, all unwired; the other 10 are a separate call, incl. **670** |
+| **Cleanup step 3** | UNBLOCKED (696 = step 1, 701 = step 2, I-D landed in 703) | Delete 3 consolidated probes: `task420-qa-grid-step.mjs` · `task668-qa-grid-1440.mjs` · `task668-qa-header-geometry.mjs`. **Must also update `check-homepage-grid.mjs`, which names all three.** The rest of `scripts/`'s task-numbered probes are a separate call, incl. **670**. **Every figure this row used to quote had rotted — re-measure, never cite:** `wc -l` on the three files (total vs non-blank differ, say which you mean) · `grep -c` the three names in `check-homepage-grid.mjs` · `ls scripts/ \| grep -E '^task[0-9]+'` for the probe census. Verified 2026-09-04: none of them is referenced by `package.json` scripts or `.github/`, so "all unwired" still holds — that is the only durable claim here. |
 | **665** | `PARTIALLY IMPLEMENTED / PARTIALLY VERIFIED` | **Only §13.7's live-route before/after DOM/computed-style baseline is outstanding** (AC1 — needs a routable dev server + seeded DB; use §16.1's corrected `classList.contains` locator). Also decide the orphan `listing.fixture.ts` |
 
 ## Pending Action Items (owner)
@@ -39,16 +40,15 @@ stories, then obtain owner visual review. `screenshots:assert` is not validation
 **Sprint 57 — Delete what no longer earns its place** (`tasks/Sprints/Sprint_57_Delete_What_No_Longer_Earns_Its_Place.md`): **676** · **682**. Opened 2026-08-08. Pure removal, both proven inert before deletion rather than after. Owner cleanup step 3 stays in Sprint 46, not here. 🟠 OPEN.
 **Sprint 62 — Tailwind runtime tokens outlive Tailwind** (`tasks/Sprints/Sprint_62_Tailwind_Runtime_Tokens_Outlive_Tailwind.md`): Task 762 is archived. 🟠 OPEN only for owner decision **D762-3**: whether `--text-*` joins a new task or remains separately scoped.
 **Sprint 61 — The projection layer no gate reads** (`tasks/Sprints/Sprint_61_The_Projection_Layer_No_Gate_Reads.md`): Task 747 is archived. 🟠 OPEN for reserved P1 **761**; **750** fits the goal but is deliberately not assigned.
-**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): **775** + **776** + **778** are archived. **D68-2** binds later slices to differential rendered acceptance (`P \ B = ∅` plus a PASS on every new cell). **779 + 780 + 780R** are archived — the `ListingsFilterBar` slice is closed.
-**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781 + 782** are archived; 782 closed as the approved **F13-only** canonical Mantine mobile Filters-counter revision. **783** `KICKOFF FILED`: canonical inline counter for `ListingsFilterBar`'s Advanced filters control. **D69-3: no review ledger.** 🟠 OPEN, one active task.
-## Task registry — single source for every open number. Last used **783**, NEXT FREE **784**.
+**Sprint 68 — `/listings` leaves Tailwind, one surface at a time** (`tasks/Sprints/Sprint_68_Listings_Leaves_Tailwind_One_Surface_At_A_Time.md`): every task (**775 · 776 · 777 · 778 · 779 · 780 · 780R**) is archived — the per-task detail was restating the archive and is removed. Retained here only because **D68-2** (differential rendered acceptance: `P \ B = ∅` plus a PASS on every new cell) has no entry in `binding-decisions.md`; it has no remaining in-sprint scope. 🟠 OPEN with **zero open tasks**: closure + D68-2's final home are one owner decision.
+**Sprint 69 — `/listings` finishes the Mantine migration** (`tasks/Sprints/Sprint_69_Listings_Finishes_The_Mantine_Migration.md`): **781 · 782** archived; **783 reopened 2026-09-04 for F6** (P3 icon-token fix), code-fixed and gate-verified, pending the owner's repeat visual pass on the `CountButton` 0/1/12 rows only — not yet re-archived; **784** filed 2026-09-04, revised 4× (**D69-16→D69-18→D69-19→D69-20**); D69-20 fixed the P0 regression this task had introduced and is fully verified; D69-21 + 5 owner-directed changes (D69-22…25) landed with fresh 35/35 rendered proof; `NEEDS REVISION` on stale gate evidence only; scope backfilled as kickoff **§17** (see Last Session). **D69-3** (no review ledger) and **D69-6** (canonical dimension scale) live in the sprint file. 🟠 OPEN.
+## Task registry — single source for every open number. Last used **784**, NEXT FREE **785**.
 
 > Allocatable and reserved numbers only. A number leaves this table when its task is archived. Full justification for a reserved number → [`backlog-reserved.md`](backlog-reserved.md); retired and folded numbers → the same file's "Registry bookkeeping".
 
 | # | State | What |
 |---|---|---|
 | **761** | reserved — **Sprint 61**, P1 | CommonMark fence detection for `check-ledger-claim-projection`, binding all five opener/closer cases. **Open owner decision:** whether an unclosed EOF fence is bad input (exit 2). Not a rework of the archived 747. Full text → `backlog-reserved.md`. |
-| **783** | **KICKOFF FILED** — **Sprint 69**, P2, Q2 | **Canonical inline `ListingsFilterBar` counter.** Replace the Advanced filters control's absolute `Indicator` with existing `MantineCountButton`; no new primitive or filter behavior. Extend the canonical primitive story first, then the real production story with URL-derived 0/1/12 states. Owner visual review is the rendered proof; `screenshots:assert` is excluded. |
 | **675 §8 family** | **676** → S57 · **679** → S56 · **677** owner | **676** stale hex comments in `globals.css` — documentation drift, no rendered consequence; must not re-touch `--brand-950` (694's) · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, **folds 680**; Sprint 56 lands the detector fix first so the leak fix has a failing arm. Measured ΔE inventory → `backlog-reserved.md`. |
 | **682 · 683** | **682** → Sprint 57 · **683** blocked | **682** drop `sonner` + `next-themes` from `package.json` — **confirm both are still unused at execution time, not from this row** · **683** TailAdmin bottom-nav conformance slice, blocked because no reference row exists yet. Full text → `backlog-reserved.md`. |
 | **745** | reserved — **Sprint 46.10**, Q4 | A partially unstyled capture is admitted as a real width verdict. Detect that the **measured controls themselves** are unstyled, retry, then classify as `unstyled-render` — never as a product width regression, and never retry a valid `fullWidth=false` into a pass. Per **D37** the mechanism is not established: 745 must characterise it. Evidence → `backlog-reserved.md`. |

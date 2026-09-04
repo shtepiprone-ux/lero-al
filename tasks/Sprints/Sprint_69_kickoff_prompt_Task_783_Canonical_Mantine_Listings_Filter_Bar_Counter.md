@@ -1,6 +1,19 @@
 # Task 783 — canonical inline counter for ListingsFilterBar Advanced filters
 
-**Sprint:** 69 · **Priority:** P2 · **QA profile:** **Q2 Standard UI** · **Filed:** 2026-09-03 · **State:** KICKOFF FILED
+**Sprint:** 69 · **Priority:** P2 · **QA profile:** **Q2 Standard UI** · **Filed:** 2026-09-03 · **State:** 🟡 REOPENED (owner, 2026-09-04) for F6 — was briefly APPROVED/ARCHIVED; F6 icon-token fix applied and gate-verified, pending repeat owner visual QA on the `CountButton` 0/1/12 rows before re-closure
+
+> **Task-design defect corrected in review, 2026-09-04 (orchestrator, author of this kickoff).** §9 below
+> originally required the `ManyActiveFilters` query to produce **12**; its own ten listed addends
+> (`1+1+1+1+1+1+1+2+1+1`) sum to **11**, and `countActiveFilters(parseSearchParams(...))`
+> (`filterEngine.ts:387-415`) returns **11** for that exact query — confirmed by the owner's rendered
+> capture, which shows a badge reading `11`. The criterion's purpose is a **two-digit** URL-derived
+> boundary proving the badge stays content-sized, in-flow and unclipped; 11 satisfies that purpose
+> exactly. R4/AC4 are corrected to "two-digit (11)" below. **No eleventh filter param is to be added.**
+> The literal `12` proof stays where it belongs and remains unchanged: the `CountButton` primitive
+> story's fixture state (R3/AC5), which has no `filterEngine` dependency. Recorded per
+> `orchestrator-procedures.md` → "When feasibility evidence contradicts a drafted acceptance criterion,
+> correct the criterion and record it as a task-design defect." The executor reproduced the query
+> byte-for-byte and reported the true value rather than inventing scope — the correct disposition.
 
 ---
 
@@ -48,7 +61,7 @@ Do not create a feature-local counter, wrapper, CSS override, theme token, or a 
 | R1 | The Advanced filters control consumes `MantineCountButton`, not `Indicator` or a local badge composition. | AC1–AC2 |
 | R2 | Its visible count remains exactly `activeCount` from `useListingsUrlFilters`; no constant, fixture prop, or story-name branch controls production count. | AC3–AC4 |
 | R3 | Canonical primitive proof comes first: the existing CountButton story visibly covers default-button count states **0**, **1**, and **12**, with the filter icon composition. | AC5 + owner visual QA |
-| R4 | The real ListingsFilterBar story visibly covers URL-derived **0**, **1**, and **12** active-filter states. | AC4–AC6 + owner visual QA |
+| R4 | The real ListingsFilterBar story visibly covers URL-derived **0**, **1**, and a **two-digit (11)** active-filter state. | AC4–AC6 + owner visual QA |
 | R5 | Existing Advanced filters click semantics and all filter URL semantics remain unchanged. | AC7 |
 | R6 | No new user-facing strings, hardcoded dimensions, raw CSS, `circle` badge, `Indicator`, or `screenshots:assert` invocation is added. | AC2, AC8 |
 
@@ -97,12 +110,15 @@ confirm Task 782 F13 is committed and the checkout is clean enough to isolate th
 |---|---|---|
 | `activeCount = 0` | Button is inside a disabled `Indicator`; no visible count. | Plain canonical default `MantineCountButton`; no empty badge. |
 | `activeCount = 1` | `Indicator` overlays a corner count. | One content-sized count badge inside the button’s native `rightSection`. |
-| `activeCount = 12` | `Indicator` overlays a corner count. | Two-digit content-sized count badge inside the same in-flow `rightSection`; no clipping or overhang. |
+| `activeCount = 11` (two-digit) | `Indicator` overlays a corner count. | Two-digit content-sized count badge inside the same in-flow `rightSection`; no clipping or overhang. |
 | Click | Opens the filter Drawer and does not write the URL. | Unchanged. |
 
-The `ManyActiveFilters` URL query must produce exactly 12 through the real parser/counter: `type=sale`,
-`property_type=apartment`, `location_id=1`, `price_min=100`, `price_max=200`, `area_min=30`, `area_max=90`,
-`rooms=2,3`, `floor_min=1`, `premium=true`. These are 1+1+1+1+1+1+1+2+1+1 = 12 active filters.
+The `ManyActiveFilters` URL query is `type=sale`, `property_type=apartment`, `location_id=1`,
+`price_min=100`, `price_max=200`, `area_min=30`, `area_max=90`, `rooms=2,3`, `floor_min=1`,
+`premium=true`. Through the real parser/counter this is **9 scalar params × 1 + `rooms` (2 values) = 11**
+— nine `!= null`/truthy scalars plus `filters.rooms.length`, per `filterEngine.ts:387-415`. ~~12~~ **11**
+is the required value (see the corrected-defect note at the top of this file). Do **not** add an
+eleventh param to force 12.
 
 ## 10. Implementation requirements
 
@@ -112,7 +128,8 @@ The `ManyActiveFilters` URL query must produce exactly 12 through the real parse
    `activeCount`, responsive `w`, icon `leftSection`, test id, `type`, variant and click handler directly. Delete the
    `Indicator` wrapper/import and its now-false comments. Do not alter the surrounding Groups or width cascade.
 3. Make `Patterns/Mantine/ListingsFilterBar` stateful only through its existing `nextjs.navigation.query` mechanism:
-   `Default` = 0, `OneActiveFilter` = 1, `ManyActiveFilters` = exact real 12. All render the real component.
+   `Default` = 0, `OneActiveFilter` = 1, `ManyActiveFilters` = the exact real value of the §9 query (**11**).
+   All render the real component.
 4. Update the target smoke suite so zero proves no badge and no Indicator remains; non-zero proves the count badge is
    inside `[data-testid="task775-advanced-filters"]` and no count element is absolutely positioned. Preserve T5.
 5. Record only task-local evidence. Do not run, edit, cite, waive, or replace `screenshots:assert`.
@@ -122,10 +139,10 @@ The `ManyActiveFilters` URL query must produce exactly 12 through the real parse
 | Flow | Expected result |
 |---|---|
 | Open each canonical CountButton state | 0 has no badge; 1 and 12 have a readable, in-button badge to the label’s right. |
-| Open each ListingsFilterBar state | Real URL parser produces its stated count; reset presence tracks `activeCount`; count is in-flow. |
+| Open each ListingsFilterBar state | Real URL parser produces its stated count (0 / 1 / 11); reset presence tracks `activeCount`; count is in-flow. |
 | Click Advanced filters in test | `onFiltersOpen` is called once; `router.push` remains untouched. |
 | Plant: substitute `Indicator` again | Structural test fails because an Indicator/count overlay is present. |
-| Plant: replace `activeCount` with a constant | Story-state assertions fail because 0/1/12 no longer match real query-derived state. |
+| Plant: replace `activeCount` with a constant | Story-state assertions fail because 0/1/11 no longer match real query-derived state. |
 
 ## 12. Acceptance criteria
 
@@ -134,7 +151,7 @@ The `ManyActiveFilters` URL query must produce exactly 12 through the real parse
 | AC1 | `ListingsFilterBar.tsx` has no `Indicator` import, JSX, or overlay compensation; it imports and uses `MantineCountButton`. |
 | AC2 | The Advanced filters button retains native responsive width, icon, label, click handler and test id; the count has no `circle` or absolute positioning. |
 | AC3 | The source passes exactly its existing `activeCount` to the primitive. |
-| AC4 | `ListingsFilterBar` stories’ 0/1/12 variants produce those values through real `nextjs.navigation.query` and `filterEngine`, not a mock. |
+| AC4 | `ListingsFilterBar` stories’ 0 / 1 / two-digit (**11**) variants produce those values through real `nextjs.navigation.query` and `filterEngine`, not a mock. |
 | AC5 | The canonical CountButton story shows matching default-variant + filter-icon 0/1/12 states before the composition story is changed. |
 | AC6 | All four locales render from the existing translation keys; no locale file changes are necessary. |
 | AC7 | Targeted smoke tests prove zero/no-badge, non-zero/in-flow badge, no `Indicator`, and unchanged `onFiltersOpen`/no-push behavior. |
@@ -151,7 +168,7 @@ Run the static checks in §12 and inspect the exact **OWNER VISUAL QA REQUIRED**
 | Story × states | Required manual review |
 |---|---|
 | `Mantine/Primitives/CountButton` × filter-trigger 0/1/12 | `sq`, `en`, `uk`, `it` at 320 and 1440; `en` at 359 (defect reproduction), 390, 768, 1024. |
-| `Patterns/Mantine/ListingsFilterBar` × Default (0), OneActiveFilter (1), ManyActiveFilters (12) | `sq`, `en`, `uk`, `it` at 320 and 1440; `en` at 359 (defect reproduction), 390, 768, 1024. |
+| `Patterns/Mantine/ListingsFilterBar` × Default (0), OneActiveFilter (1), ManyActiveFilters (11) | `sq`, `en`, `uk`, `it` at 320 and 1440; `en` at 359 (defect reproduction), 390, 768, 1024. |
 
 At each tuple, confirm that the counter is absent at zero; otherwise is inside the button and to the right of its
 label; it neither overlaps the border nor clips; and controls remain readable, full width below `sm`, and aligned
@@ -160,7 +177,7 @@ with the story gutter. `uk@320` is mandatory. This matrix replaces all automated
 ## 14. Completion report contract
 
 Return: changed paths and why; source-to-story proof that both stories statically import real production sources;
-the exact query and arithmetic proving 12; targeted test/gate exit codes; the owner visual-QA matrix marked
+the exact query and arithmetic proving the two-digit count (11); targeted test/gate exit codes; the owner visual-QA matrix marked
 `PENDING`, `ACCEPTED`, or `RETURNED`; and `FACTS / INFERENCES / UNKNOWNS / CONFLICTS`.
 
 Do not claim completion or approval while owner visual QA is pending. No review ledger and no git mutation.
@@ -171,7 +188,7 @@ Do not claim completion or approval while owner visual QA is pending. No review 
 |---|---|
 | Objective is one visible defect and one production control | PASS |
 | Canonical primitive/source/story is identified and reused before composition | PASS |
-| Real, deterministic state inputs are specified | PASS — query arithmetic is explicit |
+| Real, deterministic state inputs are specified | ~~PASS~~ **FAIL at filing — corrected 2026-09-04.** The query was explicit and correct; its stated total (12) was wrong. Seventh-family recurrence of "the kickoff's own measured facts are not exempt" — this one was pure arithmetic over the kickoff's own printed addends, catchable by adding ten numbers. |
 | URL/interaction behavior is protected by existing test and scope bar | PASS |
 | Manual rendered proof is exact; retired harness is excluded | PASS |
 | Scope expands beyond frontend composition/story/test/docs | FAIL the task |

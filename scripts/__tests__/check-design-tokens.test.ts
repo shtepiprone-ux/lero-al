@@ -15,6 +15,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import {
   scanContent,
+  scanCanonicalMantineStoryContent,
   stripJsxComments,
   parseInlineMarkers,
   REPORT_ONLY_CATEGORIES,
@@ -777,7 +778,7 @@ describe('§J — extractCssCustomPropertyDefinitions: line-anchored definitions
   })
 })
 
-describe('raw-dimension-prop — Task 782 detector (repo measured 129 raw size={N} + 30 raw dimension props, 0 detected before this category)', () => {
+describe('raw-dimension-prop — Task 782 detector, expanded layout coverage', () => {
   it('flags a raw numeric size prop', () => {
     const findings = regular(`<Icon size={16} />`)
     expect(findings).toHaveLength(1)
@@ -791,8 +792,18 @@ describe('raw-dimension-prop — Task 782 detector (repo measured 129 raw size={
     expect(findings.filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(6)
   })
 
-  it('does NOT flag ={0} — flex-shrink behavior, not a dimension (§3.2)', () => {
-    expect(regular(`<Box miw={0} gap={0} />`)).toHaveLength(0)
+  it('flags raw layout and component dimensions but not data props', () => {
+    const findings = regular(
+      `<Box gap={16} spacing={40} mt={48} separatorMargin={6} width={320} triggerWidth={150} count={12} maxLength={80} />`
+    )
+    expect(findings.filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(6)
+    expect(findings.map(f => f.match)).toEqual(expect.arrayContaining([
+      'gap={16}', 'spacing={40}', 'mt={48}', 'separatorMargin={6}', 'width={320}', 'triggerWidth={150}',
+    ]))
+  })
+
+  it('does NOT flag ={0} — reset/flex behavior is not a design dimension', () => {
+    expect(regular(`<Box miw={0} gap={0} mt={0} width={0} />`)).toHaveLength(0)
   })
 
   it('does NOT flag a string token (already canonical)', () => {
@@ -814,7 +825,43 @@ describe('raw-dimension-prop — Task 782 detector (repo measured 129 raw size={
     expect(regular(reverted).filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(0)
   })
 
-  it('gap is NOT in the detected prop set (behavioral, not a dimension token per §3.2)', () => {
-    expect(regular(`<Group gap={16} />`)).toHaveLength(0)
+  it('flags raw unit-bearing JSX props, including compound and calc values', () => {
+    const findings = regular(`<Box mih="2.75rem" gap="0.25rem 0.75rem" w="calc(100vw - 2rem)" />`)
+    expect(findings.filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(3)
+  })
+
+  it('flags non-zero inline-style dimensions while retaining zero resets', () => {
+    const findings = regular(
+      `<Box style={{ maxHeight: 480, marginTop: 2, lineHeight: '1.25rem', letterSpacing: '0.05em', minWidth: 0, flexShrink: 0 }} />`
+    )
+    expect(findings.filter(f => f.cat === 'raw-inline-dimension')).toHaveLength(4)
+    expect(regular(`<Box style={{ maxHeight: 0, marginTop: 0 }} />`)).toHaveLength(0)
+  })
+})
+
+describe('canonical Mantine stories — Tailwind dimension utilities', () => {
+  const STORY_PATH = 'src/stories/mantine/primitives/__fixture__.stories.tsx'
+
+  it('flags named Tailwind size/spacing utilities in a canonical Mantine story', () => {
+    const findings = scanCanonicalMantineStoryContent(
+      `<Icon className="h-4 w-4 gap-2" />`,
+      STORY_PATH,
+      {},
+    )
+    expect(findings.map(f => f.match)).toEqual(['className="h-4 w-4 gap-2"'])
+    expect(findings.every(f => f.cat === 'tailwind-dimension-utility')).toBe(true)
+  })
+
+  it('does not scan non-canonical stories or non-dimension fixture classes', () => {
+    expect(scanCanonicalMantineStoryContent(
+      `<Icon className="flex items-center text-muted-foreground" />`,
+      STORY_PATH,
+      {},
+    )).toHaveLength(0)
+    expect(scanCanonicalMantineStoryContent(
+      `<Icon className="h-4" />`,
+      'src/stories/legacy/__fixture__.stories.tsx',
+      {},
+    )).toHaveLength(0)
   })
 })

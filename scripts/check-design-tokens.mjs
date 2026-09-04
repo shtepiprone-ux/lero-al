@@ -23,9 +23,13 @@
  *     prefix-or-exact-name list (Task 718, category css-undefined-var, blocking
  *     from the start — see "A documented token is not an implemented token" in
  *     docs/orchestrator-procedures.md)
- *   - Raw numeric dimension/size JSX props: size={N} / miw|maw|mih|mah|w|h={N}
- *     (Task 782, category raw-dimension-prop, blocking from the start). `={0}` is
- *     exempt (flex-shrink behavior, not a dimension — see §3.2 of the Task 782 kickoff).
+ *   - Raw numeric or unit-bearing dimension JSX props. This covers Mantine's
+ *     size/constraint props plus layout spacing, component-specific dimension props,
+ *     and numeric inline-style dimensions. `={0}` remains exempt where it expresses
+ *     flex behaviour rather than a design value.
+ *   - Named Tailwind dimension utilities in canonical Mantine stories. Production
+ *     stories remain fixtures for the other categories, but a Mantine story must not
+ *     reintroduce the Tailwind size/spacing syntax that its production source retired.
  *
  * Does NOT flag:
  *   - var(--token) references, including function-wrapped *-[var(--token)] forms
@@ -106,6 +110,8 @@ const SKIP_FILES = new Set([
   'src/app/globals.css',
 ]);
 const SKIP_SUFFIXES = ['.stories.tsx', '.test.tsx', '.test.ts'];
+const TEST_SUFFIXES = ['.test.tsx', '.test.ts'];
+const CANONICAL_MANTINE_STORY_PATH = /^src\/stories\/(?:mantine|patterns\/mantine)\//;
 
 // ── Detection patterns ────────────────────────────────────────────────────────
 //
@@ -200,20 +206,50 @@ export const DETECTION_PATTERNS = [
     label: 'inline duration value',
   },
 
-  // Raw numeric dimension/size JSX prop (Task 782, Phase 3 — the detector this task exists to
-  // add: 129 raw `size={N}` + 30 raw `miw|maw|mih|mah|w|h={N}` occurrences existed repo-wide with
-  // ZERO detection by every pattern above, all of which are shaped around Tailwind's arbitrary-
-  // bracket syntax or inline `style` object literals — a bare numeric JSX prop matches neither).
-  // Matches: size={16}, miw={192}, w={280}, h={44}. Does NOT match: size="md" (string token,
-  // already canonical), size={theme.other.iconSize.standard} (a token reference, not a literal —
-  // the regex only matches a BARE integer between the braces), or `={0}` (filtered below — §3.2:
-  // `miw={0}`/`gap={0}` express flex-shrink behavior, not a design value, and must never be
-  // flagged as a missing token).
+  // Raw numeric dimension/layout JSX props. Task 782 originally covered the compact
+  // `size|miw|maw|mih|mah|w|h` set only; that left real rendered dimensions such as
+  // `gap={6}`, `spacing={40}`, `separatorMargin={6}`, `width={320}` and
+  // `triggerWidth={150}` invisible. All names below are visual dimensions; data values
+  // such as `count`, `page`, `maxLength`, and `lineClamp` are deliberately absent.
+  // A token reference remains valid because this matches only a bare numeric literal.
   {
-    re: /\b(?:size|miw|maw|mih|mah|w|h)=\{\d+\}/g,
+    re: /\b(?:size|miw|maw|mih|mah|w|h|width|height|minWidth|maxWidth|minHeight|maxHeight|gap|rowGap|columnGap|spacing|verticalSpacing|horizontalSpacing|m|mt|mb|ms|me|mx|my|p|pt|pb|ps|pe|px|py|top|right|bottom|left|inset|insetX|insetY|offset|separatorMargin|triggerWidth|dropdownMinWidth|dropdownMaxHeight|scrollbarSize|thumbSize|radius)=\{-?(?:\d+\.\d+|\d+|\.\d+)\}/g,
     cat: 'raw-dimension-prop',
-    label: 'raw numeric dimension/size prop',
-    filter: (m) => !/=\{0\}$/.test(m),
+    label: 'raw numeric dimension/layout prop',
+    filter: (m) => !/=\{-?0(?:\.0+)?\}$/.test(m),
+    tsxOnly: true,
+  },
+  // Unit-bearing JSX props. Mantine accepts named spacing tokens or token references;
+  // raw `"2.75rem"`, compound `"0.25rem 0.75rem"`, and calc strings with a raw
+  // unit bypass that scale just as much as a numeric prop does.
+  {
+    re: /\b(?:size|miw|maw|mih|mah|w|h|width|height|minWidth|maxWidth|minHeight|maxHeight|gap|rowGap|columnGap|spacing|verticalSpacing|horizontalSpacing|m|mt|mb|ms|me|mx|my|p|pt|pb|ps|pe|px|py|top|right|bottom|left|inset|insetX|insetY|offset|separatorMargin|triggerWidth|dropdownMinWidth|dropdownMaxHeight|scrollbarSize|thumbSize|radius|lh|fz|letterSpacing)=(["'])[^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*\1/g,
+    cat: 'raw-dimension-prop',
+    label: 'raw unit-bearing dimension/layout prop',
+    tsxOnly: true,
+  },
+  // Numeric and unit-bearing dimensions in inline style/style-slot objects.
+  // Zero is intentionally excluded: flex and reset semantics commonly require it.
+  {
+    re: /\b(?:width|height|minWidth|maxWidth|minHeight|maxHeight|margin|marginTop|marginRight|marginBottom|marginLeft|marginInline|marginBlock|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|paddingInline|paddingBlock|gap|rowGap|columnGap|top|right|bottom|left|inset|insetInline|insetBlock|borderRadius|fontSize|lineHeight|letterSpacing)\s*:\s*(?:-?(?:\d+\.\d+|\d+|\.\d+)|["'][^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*["'])/g,
+    cat: 'raw-inline-dimension',
+    label: 'raw inline style dimension',
+    filter: (m) => {
+      const numeric = m.match(/:\s*(-?(?:\d+\.\d+|\d+|\.\d+))$/);
+      if (numeric) return Number(numeric[1]) !== 0;
+      const unit = m.match(/-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)/);
+      return unit ? Number.parseFloat(unit[0]) !== 0 : true;
+    },
+    tsxOnly: true,
+  },
+  // Canonical Mantine stories must use Mantine/theme sizing, not named Tailwind
+  // dimensions. This intentionally targets only sizing/spacing utilities, not
+  // generic fixture classes; it runs through the dedicated canonical-story pass.
+  {
+    re: /\bclassName\s*=\s*(["'])[^"']*(?:-?(?:m|p)(?:[trblxyse])?-\d+(?:\.\d+)?|(?:gap|space-[xy]|h|w|min-h|max-h|min-w|max-w|size)-\d+(?:\.\d+)?)[^"']*\1/g,
+    cat: 'tailwind-dimension-utility',
+    label: 'Tailwind dimension utility in canonical Mantine story',
+    storyOnly: true,
   },
 
   // ── Plain CSS declaration coverage (Task 714, report-only category — see §23.6) ──
@@ -752,7 +788,7 @@ function checkStaleEntries(allowlist) {
 }
 
 // ── File collection ───────────────────────────────────────────────────────────
-function collectFiles(dir, exts) {
+function collectFiles(dir, exts, includeStories = false) {
   const results = [];
   if (!existsSync(dir)) return results;
   for (const entry of readdirSync(dir)) {
@@ -761,10 +797,10 @@ function collectFiles(dir, exts) {
     let stat;
     try { stat = statSync(full); } catch { continue; }
     if (stat.isDirectory()) {
-      results.push(...collectFiles(full, exts));
+      results.push(...collectFiles(full, exts, includeStories));
     } else if (
       exts.some(e => entry.endsWith(e)) &&
-      !SKIP_SUFFIXES.some(s => entry.endsWith(s))
+      !(includeStories ? TEST_SUFFIXES : SKIP_SUFFIXES).some(s => entry.endsWith(s))
     ) {
       const rel = relative(ROOT, full).replace(/\\/g, '/');
       if (!SKIP_FILES.has(rel)) {
@@ -783,10 +819,11 @@ function collectFiles(dir, exts) {
 // exception to "no filesystem": it is a Set of custom-property names computed
 // by the CALLER (run() reads real globals.css once; tests pass their own set
 // or the empty default) — scanContent itself never reads a file.
-export function scanContent(content, relPath, allowlist = {}, globalsDefinedProps = new Set()) {
+export function scanContent(content, relPath, allowlist = {}, globalsDefinedProps = new Set(), options = {}) {
   if (isAllowlisted(relPath, allowlist)) return [];
 
   const isCssFile = relPath.endsWith('.css');
+  const storyOnly = options.storyOnly === true;
   const lines = content.split('\n');
   // §A: strip {/* ... */} JSX comment blocks (incl. multi-line) before detection.
   // Markers are still parsed from the ORIGINAL (unstripped) lines below.
@@ -814,8 +851,10 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
 
     // Collect all pattern matches on the code portion of this line
     const rawMatches = [];
-    for (const { re, cat, label, filter, cssOnly } of DETECTION_PATTERNS) {
+    for (const { re, cat, label, filter, cssOnly, tsxOnly, storyOnly: patternIsStoryOnly } of DETECTION_PATTERNS) {
+      if (storyOnly !== Boolean(patternIsStoryOnly)) continue;
       if (cssOnly && !isCssFile) continue;
+      if (tsxOnly && isCssFile) continue;
       const source = cssOnly ? codeOnlyCss : codeOnly;
       re.lastIndex = 0;
       let m;
@@ -835,7 +874,7 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
     // Task 716: shorthand / function-wrapped css-length/css-duration/css-zindex
     // literals — only ever runs against .css content, on the same CSS-comment-
     // stripped source the single-value cssOnly patterns above already use.
-    if (isCssFile) {
+    if (!storyOnly && isCssFile) {
       for (const spec of SHORTHAND_CSS_SPECS) {
         for (const { cat, label, match } of findShorthandCssLiterals(codeOnlyCss, spec)) {
           rawMatches.push({ file: relPath, line: lineNum, cat, label, match, area: getArea(relPath) });
@@ -906,6 +945,11 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
   return findings;
 }
 
+export function scanCanonicalMantineStoryContent(content, relPath, allowlist = {}, globalsDefinedProps = new Set()) {
+  if (!CANONICAL_MANTINE_STORY_PATH.test(relPath)) return [];
+  return scanContent(content, relPath, allowlist, globalsDefinedProps, { storyOnly: true });
+}
+
 function scanFile(filePath, allowlist, globalsDefinedProps) {
   const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
   let content;
@@ -928,9 +972,14 @@ function run() {
 
   const srcDir = join(ROOT, 'src');
   const allFiles = collectFiles(srcDir, ['.tsx', '.ts', '.css']);
+  const allStoryFiles = collectFiles(srcDir, ['.stories.tsx'], true);
+  const canonicalMantineStoryFiles = allStoryFiles.filter((filePath) =>
+    CANONICAL_MANTINE_STORY_PATH.test(relative(ROOT, filePath).replace(/\\/g, '/'))
+  );
 
-  console.log(`🔍  check:design-tokens — scanning ${allFiles.length} src/**/*.{tsx,ts,css} files`);
-  console.log(`    (excludes globals.css, *.stories.tsx, *.test.tsx, and allowlisted paths)`);
+  console.log(`🔍  check:design-tokens — scanning ${allFiles.length} production src/**/*.{tsx,ts,css} files`);
+  console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
+  console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
   console.log('');
 
   if (staleWarnings.length > 0) {
@@ -942,6 +991,12 @@ function run() {
   const allFindings = [];
   for (const f of allFiles) {
     allFindings.push(...scanFile(f, allowlist, globalsDefinedProps));
+  }
+  for (const f of canonicalMantineStoryFiles) {
+    const relPath = relative(ROOT, f).replace(/\\/g, '/');
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    allFindings.push(...scanCanonicalMantineStoryContent(content, relPath, allowlist, globalsDefinedProps));
   }
 
   // ── --update-allowlist mode (only uses regular findings, not marker errors)

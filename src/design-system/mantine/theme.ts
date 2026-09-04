@@ -8,7 +8,22 @@ import { brand } from '@/design-system/brand'
 // NOT typo-proof) — AC12's rendered assertion is the actual guard, not this augmentation.
 declare module '@mantine/core' {
   export interface MantineThemeSizesOverride {
-    spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl', string>
+    // Task 784 Revision 3 (D69-18) — three additive sub-`xs` rungs (`micro`/`tight`/`compact`),
+    // each migrated exactly once from the pre-D69-16 source recorded in
+    // docs/sessions/2026-09-04-task784-zero-raw-design-dimensions-scope-mode.md §4/§14.3: `micro`
+    // = 2px (0.125rem), `tight` = 4px (0.25rem), `compact` = 6px (0.375rem) — the three distinct
+    // below-8px values measured across the scoped compact-gap inventory. Ascending order by pixel
+    // value, same naming convention as the existing `2xl`/`3xl` upper rungs.
+    spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'micro' | 'tight' | 'compact', string>
+    // Task 784 Revision 3 (D69-18) — `micro` = 10px (0.625rem), the exact pre-D69-16
+    // `MantineNotificationPattern.tsx` inline checkmark glyph `fontSize: 10` value. A DIFFERENT
+    // semantic owner from `theme.other.iconSize.micro` (also 10px, but an icon/SVG-size role) —
+    // this key is typography (a text glyph's font-size), never reused for a non-text dimension.
+    fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'micro', string>
+    // Task 784 Revision 3 (D69-18) — `listingDescription` = 1.6, the exact pre-D69-16
+    // `MantineListingDetailPattern.tsx` description-paragraph `lineHeight: 1.6` value. No existing
+    // `lineHeights` rung (xs=1.5/sm=1.43/md=1.5/lg=1.56/xl=1.5) matches 1.6.
+    lineHeights: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'listingDescription', string>
   }
 
   // Task 782 (D69-6) — `theme.other` is an untyped `Record<string, any>` by Mantine's own default
@@ -66,6 +81,75 @@ declare module '@mantine/core' {
       | 'content',        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
       string
     >
+    // Task 784 Revision 3 (D69-18) — a single shared micro-tracking role for uppercase filter/
+    // section headings. Source: the pre-D69-16 `MantineFilterSection.tsx`/`ListingsFilters.tsx`
+    // `letterSpacing: '0.05em'` value (identical in both consumers — one shared role, not two).
+    letterSpacing: Record<'filterHeading', string>
+    // Task 784 Revision 3 (D69-18) — `MantineTooltip`'s two §6k-documented chrome values that have
+    // no existing named contract. Source: docs/mantine-responsive-design-system.md §25.2/§25.4
+    // (Task 524's own canonical documentation, cited verbatim: "px=\"0.875rem\" (14px — no theme
+    // spacing token matches 14px exactly)" and "multiline + maw=\"16.25rem\" (260px)"). Exclusive
+    // to `MantineTooltip` — `theme.other.boxSize.compactTrigger` (280px) is RangeDatePicker's own
+    // role and must never be reused here even though its value is numerically close (rule 3: same
+    // value, different documented owner, is still invalid).
+    tooltip: {
+      inlinePadding: string
+      multilineWidth: string
+    }
+    // Task 784 Revision 3 (D69-18) — the two listing-grid loading-skeleton variants' full geometry.
+    // Source: the pre-D69-16 `FeaturedListingsView.tsx`/`LatestListingsView.tsx` `CardSkeleton`/
+    // `RowSkeleton` functions (git history / docs/sessions/2026-09-04-task784-…§14.3), plus Task 707's
+    // loading-story provenance for the `4 / 3` media ratio. A skeleton bar's height is a decorative
+    // placeholder geometry, not rendered text — a different semantic owner from `fontSizes` even
+    // where the numbers coincide (12/16/20 also happen to equal `fontSizes.xs/md/xl`), so this gets
+    // its own typed role rather than reusing the typography scale.
+    listingSkeleton: {
+      mediaRatio: number
+      featured: {
+        lineHeights: readonly [number, number, number, number, number]
+        firstLineWidth: number
+        thirdLineWidthPercent: string
+        fourthLineWidth: number
+      }
+      latest: {
+        lineHeights: readonly [number, number, number, number]
+        firstLineWidth: number
+        thirdLineWidth: number
+      }
+    }
+    // Task 784 Revision 3 (D69-18) — four one-off layout geometries, each cited to its own exact
+    // source (no shared "layout" semantics beyond the TS namespace):
+    //   authFormMaxWidth (400) — docs/mantine-responsive-design-system.md §12 `AuthFormPattern` row
+    //     ("Centered, max-width ~400px", both Tablet/Desktop columns) and the pre-D69-16
+    //     `MantineAuthFormPattern.tsx` `maxWidth: 400` media-query value (exact match).
+    //   emptyStateMinBlockSize (200) — the pre-D69-16 `MantineEmptyLoadingErrorState.tsx`
+    //     `style={{ minHeight: 200 }}` value on both the loading and error `Center` wrappers.
+    //   listingContactStickyOffset (80) — the legacy `src/modules/listings/components/
+    //     ListingContact.tsx:124` `sticky top-20` (Tailwind `top-20` = 5rem = 80px), gated at the
+    //     SAME `lg` (1024px) breakpoint the legacy `lg:block` class uses, matching
+    //     docs/mantine-responsive-design-system.md §12 `ListingDetailPattern` row's Desktop-only
+    //     "sticky contact panel" (Tablet's row for the same pattern says "contact right" with no
+    //     "sticky" — the doc itself scopes stickiness to Desktop, not Tablet).
+    //   footerGridGap (40) — docs/sessions/2026-08-01-task673-footerview-de-hybrid.md §5.2
+    //     ("`spacing={40}` reproduces the measured `gap-10` = 40px column/row gap"), the exact
+    //     pre-D69-16 `FooterView.tsx` `SimpleGrid` `spacing={40}` value.
+    layout: {
+      authFormMaxWidth: number
+      emptyStateMinBlockSize: number
+      listingContactStickyOffset: number
+      footerGridGap: number
+    }
+    // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
+    // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
+    // `width: '2.5rem', height: '0.25rem'` values (identical in both — one shared role). The bar's
+    // `borderRadius: '9999px'` is NOT duplicated here — it already matches `theme.radius.pill`
+    // exactly and consumes that existing contract via `var(--mantine-radius-pill)` at each site.
+    overlay: {
+      dragHandle: {
+        width: string
+        height: string
+      }
+    }
   }
 }
 
@@ -226,10 +310,16 @@ export const theme = createTheme({
   colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
-  // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.
+  // xs=320, xs2=480, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.
   // Mantine breakpoints are em-based (assuming 16px root font).
   breakpoints: {
     xs: '20em',   // 320px — mobile minimum
+    // Task 784 (D69-22, owner instruction 2026-09-04) — a new rung between xs and sm. Sole
+    // consumer: `MantineListingContactPattern.tsx`'s Call/WhatsApp CTA `Flex`, which the owner
+    // directed to switch to a two-per-row layout starting at 480px — narrower than `sm` would
+    // allow, and no existing breakpoint sits at 480px. Not part of the original xs/sm/md/lg/xl/xxl
+    // scale; added as its own named rung rather than a raw literal per §6's no-hardcode rule.
+    xs2: '30em',  // 480px — CTA row two-per-row gate (D69-22)
     sm: '40em',   // 640px — P0 mobile gate (< sm = full-width required)
     md: '48em',   // 768px — tablet
     lg: '64em',   // 1024px — desktop
@@ -267,6 +357,11 @@ export const theme = createTheme({
     // gutter class reference or a raw px/rem gutter value.
     '2xl': '2rem',   // 32px
     '3xl': '3rem',   // 48px
+    // Task 784 Revision 3 (D69-18) — see the `MantineThemeSizesOverride` augmentation above for
+    // full provenance. Exact pre-D69-16 compact-gap values, not new design decisions.
+    micro:   '0.125rem', //  2px
+    tight:   '0.25rem',  //  4px
+    compact: '0.375rem', //  6px
   },
 
   // Radius: TailAdmin real values (§1b). lg=8px for controls, 2xl=16px for Card/Paper.
@@ -288,6 +383,9 @@ export const theme = createTheme({
     md: '1.5',
     lg: '1.56',
     xl: '1.5',
+    // Task 784 Revision 3 (D69-18) — see the `MantineThemeSizesOverride` augmentation above.
+    // Exact pre-D69-16 `MantineListingDetailPattern.tsx` description-paragraph value.
+    listingDescription: '1.6',
   },
 
   // Font sizes: TailAdmin type scale (§1b) — xs12/sm14/md16/lg18/xl20 px.
@@ -297,6 +395,9 @@ export const theme = createTheme({
     md: '1rem',      // 16px — emphasized body
     lg: '1.125rem',  // 18px — card/section title
     xl: '1.25rem',   // 20px — page heading
+    // Task 784 Revision 3 (D69-18) — see the `MantineThemeSizesOverride` augmentation above.
+    // Exact pre-D69-16 `MantineNotificationPattern.tsx` inline checkmark glyph value.
+    micro: '0.625rem', // 10px
   },
 
   // Shadow: TailAdmin §5 shadow-theme-lg (Task 530) + shadow-theme-xs (Task 531) — the two
@@ -353,6 +454,42 @@ export const theme = createTheme({
       prose: '36rem',            // 576px
       ctaSection: '42rem',       // 672px
       content: '48rem',          // 768px
+    },
+    // Task 784 Revision 3 (D69-18) — see the `MantineThemeOther` augmentation above for full
+    // per-role provenance. Every value below is an exact, one-time migration of a cited pre-D69-16
+    // source, never a fresh detector-driven invention.
+    letterSpacing: {
+      filterHeading: '0.05em',
+    },
+    tooltip: {
+      inlinePadding: '0.875rem',  // 14px — §25.2 §6k chrome (px-3.5)
+      multilineWidth: '16.25rem', // 260px — §25.2/§25.4 Task 526 wrap fix
+    },
+    listingSkeleton: {
+      mediaRatio: 4 / 3,
+      featured: {
+        lineHeights: [12, 16, 16, 20, 12] as const,
+        firstLineWidth: 80,
+        thirdLineWidthPercent: '75%',
+        fourthLineWidth: 128,
+      },
+      latest: {
+        lineHeights: [12, 16, 20, 12] as const,
+        firstLineWidth: 80,
+        thirdLineWidth: 112,
+      },
+    },
+    layout: {
+      authFormMaxWidth: 400,
+      emptyStateMinBlockSize: 200,
+      listingContactStickyOffset: 80,
+      footerGridGap: 40,
+    },
+    overlay: {
+      dragHandle: {
+        width: '2.5rem',  // 40px
+        height: '0.25rem', // 4px
+      },
     },
   },
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { Group, Title, Button, Stack, Text } from '@mantine/core'
+import { Group, Title, Button, Stack, Text, useMantineTheme } from '@mantine/core'
 
 export interface PageHeaderAction {
   label: string
@@ -31,6 +31,7 @@ export function MantinePageHeaderWithActions({
   breadcrumb,
   actions = [],
 }: MantinePageHeaderWithActionsProps) {
+  const theme = useMantineTheme()
   return (
     <Stack gap="xs" mb="lg">
       {breadcrumb && (
@@ -39,7 +40,7 @@ export function MantinePageHeaderWithActions({
         </Text>
       )}
       <Group justify="space-between" align="flex-start" wrap="wrap" gap="sm">
-        <Stack gap={4}>
+        <Stack gap="tight">
           <Title order={1} size="h2">
             {title}
           </Title>
@@ -62,7 +63,7 @@ export function MantinePageHeaderWithActions({
                 // At <sm (640px) actions stack vertically, each button fills full width
                 // (P0 mobile gate, Task 724 — the missing half of this component's own spec).
                 // At sm+ actions return to one row, auto-sized and grouped right.
-                '@media (min-width: 40em)': {
+                [`@media (min-width: ${theme.other.mobileGate})`]: {
                   width: 'auto',
                   flexDirection: 'row',
                   alignItems: 'center',

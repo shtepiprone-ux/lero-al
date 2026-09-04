@@ -175,8 +175,8 @@ export function HeaderView({
             variant="default"
             aria-label={tc('aria_open_menu')}
             hiddenFrom="md"
-            mih="2.75rem"
-            miw="2.75rem"
+            mih={theme.other.touchTarget}
+            miw={theme.other.touchTarget}
             onClick={onOpenMobile}
           >
             <Menu size={theme.other.iconSize.roomy} />

@@ -214,7 +214,7 @@ export function MantinePagination({
     const measureAndSet = () => {
       const available = parent.clientWidth
       const controlW = probe?.getBoundingClientRect().width || 0
-      const gapPx = parseFloat(getComputedStyle(row).columnGap || getComputedStyle(row).gap || '8') || 8
+      const gapPx = parseFloat(getComputedStyle(row).columnGap || getComputedStyle(row).gap || '0') || 0
       if (!controlW || !available) return
 
       let chosen = FLOOR_LEVEL
@@ -290,7 +290,7 @@ export function MantinePagination({
             ref={probeRef}
             aria-hidden
             tabIndex={-1}
-            style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none', left: -9999, top: -9999 }}
+            style={{ position: 'fixed', visibility: 'hidden', pointerEvents: 'none' }}
           >
             {String(total)}
           </Pagination.Control>

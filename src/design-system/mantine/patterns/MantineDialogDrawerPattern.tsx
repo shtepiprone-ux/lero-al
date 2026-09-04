@@ -1,6 +1,6 @@
 'use client'
 
-import { Modal, Drawer, Button, Text, Stack, Group, Box } from '@mantine/core'
+import { Modal, Drawer, Button, Text, Stack, Group, Box, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 
 export interface MantineDialogDrawerPatternProps {
@@ -46,9 +46,10 @@ export function MantineDialogDrawerPattern({
   cancelLabel,
   onConfirm,
 }: MantineDialogDrawerPatternProps) {
+  const theme = useMantineTheme()
   const [opened, { open, close }] = useDisclosure(false)
   // SSR caveat: false until hydrated (see component comment above)
-  const isMobile = useMediaQuery('(max-width: 40em)')
+  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
 
   const handleConfirm = () => {
     onConfirm?.()
@@ -76,19 +77,24 @@ export function MantineDialogDrawerPattern({
           size="auto"
           title={
             <Box>
-              {/* Visible drag handle — swipe affordance */}
+              {/* Task 784 Revision 3 (D69-18): the decorative pill bar is restored via the typed,
+                  provenance-cited theme.other.overlay.dragHandle contract (Revision 2's outright
+                  removal is superseded — D69-16 is superseded). Matches the canonical DragHandle
+                  definition in responsiveBottomSheet.tsx — same theme contract, same rendered
+                  geometry, kept as a separate render path per this component's own existing
+                  structure (no de-duplication refactor in this task's scope). */}
               <Box
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  paddingBottom: '0.5rem', // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+                  paddingBottom: 'var(--mantine-spacing-xs)',
                 }}
               >
                 <Box
                   style={{
-                    width: '2.5rem', // design-tokens-allow: : '2.5rem' — drag-handle geometry, matches the canonical DragHandle definition in responsiveBottomSheet.tsx — non-tokenized affordance per the original allowlist reason
-                    height: '0.25rem', // design-tokens-allow: : '0.25rem' — drag-handle geometry, matches the canonical DragHandle definition in responsiveBottomSheet.tsx — non-tokenized affordance per the original allowlist reason
-                    borderRadius: '9999px', // design-tokens-allow: : '9999px' — drag-handle geometry, matches the canonical DragHandle definition in responsiveBottomSheet.tsx — non-tokenized affordance per the original allowlist reason
+                    width: theme.other.overlay.dragHandle.width,
+                    height: theme.other.overlay.dragHandle.height,
+                    borderRadius: 'var(--mantine-radius-pill)',
                     backgroundColor: 'var(--mantine-color-gray-3)',
                   }}
                 />

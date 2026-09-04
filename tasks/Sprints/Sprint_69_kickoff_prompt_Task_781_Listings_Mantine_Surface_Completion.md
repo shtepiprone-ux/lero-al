@@ -660,3 +660,121 @@ Execute `tasks/Sprints/Sprint_69_kickoff_prompt_Task_781_Listings_Mantine_Surfac
 `.claude/skills/execute-task/SKILL.md`. Work the four phases in order; do not begin a phase before the
 previous one's gates pass. Report per §14. Strongest allowed status:
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+---
+
+# 781R2 — residual closure (binding, filed 2026-09-04)
+
+**State:** `KICKOFF FILED` · **Priority:** P2 · **QA profile:** Q3 · **Sprint:** 69
+**Executor:** fresh Sonnet via `.claude/skills/execute-task/SKILL.md`. Strongest permitted result is
+`IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`. No self-approval, no mutating Git. D69-3 frontend exception: no
+review ledger.
+
+**Read only this section.** Everything above is the original 781 implementation kickoff, retained as history and
+already delivered. It is context, not scope.
+
+## 1. Why this exists
+
+781 was committed at `PARTIALLY VERIFIED` under **D69-11** (owner override: commit authorized, findings left open,
+assigned to 782). The 2026-09-04 review traced every finding to its evidence. Six closed outright in 782
+(F4·F7·F8·F9·F10·F11) plus F13 later. **Four remain open, and none of them is unwritten code** — the code for F5
+and F12 is already committed. What is missing is the ability to *execute* the proofs.
+
+| Finding | Sev | Actual state | What it needs |
+|---|---|---|---|
+| **F3** | P1 | code DONE, render proof unverified | a rendered capture of the real action-row stories |
+| **F5** | P2 | code DONE (locator retargeted, `[data-testid="listings-count-text"]` committed), probe never run | the route probe executed |
+| **F6** | P2 | PARTIAL — Δ4/Δ5 re-cited, no rendered before/after | a rendered capture |
+| **F12** | P3 | code DONE (`sortSaveViolations` wired into `hardFail`), probe never run | the route probe executed |
+
+Also open from 782's own ledger: **R8** and **R13** (BLOCKED on the probe), **R9** (PARTIAL, same capture blocker),
+**R14/AC14** (Phase 5 differential — see §4, which re-scopes it).
+
+## 2. Mechanism facts — verified at source before this kickoff was written
+
+Do not re-derive these; do not assume around them.
+
+1. **`screenshots:assert` cannot target one story.** `scripts/check-stories-rendered.mjs` accepts exactly
+   `--check`, `--fast`, `--mantine-only`. There is no story filter. A full run is the only mode it has.
+2. **The route probe is owner-native and cannot be run by the executor.**
+   `scripts/task772-listings-overflow-probe.mjs` requires `next start` (it **fails closed** if it detects a
+   `<nextjs-portal>`, i.e. it refuses a dev server), a `BASE_URL`, a **service-role Supabase read** for real seed
+   data, and `TASK772_AUTH_STORAGE_STATE` for authenticated cells. No seed script exists in `package.json`.
+3. **The pre-782 baseline `B` is permanently unavailable.** Reconstructing it requires checking out a pre-782
+   commit — mutating Git, owner-only — and a retrospective capture labelled as a historical baseline is exactly
+   what **D69-19** forbade on Task 784. It must be disclosed, never rebuilt.
+4. **A dedicated Playwright capture against `storybook-static` is the proven route for targeted rendered proof.**
+   `scripts/task784-d69-19-browser-evidence.mjs` did this end-to-end this sprint: static-file server on an
+   OS-assigned port, per-check named records, expectations read from `theme.ts` at runtime, `results.json` +
+   screenshots retained. **Reuse that shape.** Do not extend `check-stories-rendered.mjs`.
+
+## 3. Scope
+
+**Included:** a new evidence script for F3/F6; retained artifacts for it; the F5/F12 owner-native precondition
+check and handoff; the record corrections in §5; session log and backlog updates.
+
+**Excluded:** any product-code change (F5/F12's code is already committed and correct); editing
+`check-stories-rendered.mjs`; reconstructing baseline `B`; provisioning a database; any change to
+`/listings` behaviour, routes, queries, or translations; the five inert `styles`-prop consumers (separate task);
+anything in Sprint 69's other tasks.
+
+## 4. Requirements
+
+| ID | Requirement | Priority | Verified by |
+|---|---|---|---|
+| **R16** | A dedicated Playwright script captures rendered proof for **F3**: `ListingsShellView` renders the real `SaveSearchButton` and the real action row (not `filtersSlot={null}`/`saveSearchSlot={null}` stubs), `ListingsActionRow` renders the real production component, and `SaveSearchButton`'s `Default`/`OpenModal`/`Pending` states each render. | P1 | AC16 |
+| **R17** | The same script captures **F6**'s two deltas as *current-state* measurements with the source rule cited: chip height (`theme.ts` `Button.styles.root.minHeight`) and empty-state vertical padding (`py="xl"` → `theme.spacing.xl`). Measured at desktop and mobile. | P2 | AC17 |
+| **R18** | **R14/AC14 is re-scoped and the reason recorded.** The historical `P \ B = ∅` is declared permanently unavailable (§2.3), never reconstructed. In its place: one full `screenshots:assert` run on the current tree, with every FAIL classified by check name and every AMBIGUOUS left as owner-triage. A count alone does not satisfy this. | P1 | AC18 |
+| **R19** | **F5/F12/R8/R13 are prepared, not claimed.** Verify the probe's preconditions are satisfiable and document them precisely; emit the exact owner-native command block. Do **not** mark F5, F12, R8 or R13 closed — the executor cannot run them. | P2 | AC19 |
+| **R20** | **F1 and F2 are formally closed as unrecoverable.** The 2026-09-03 review was never persisted (no `docs/reviews/` artifact, no `docs/sessions/evidence/task781/`); only F3–F12 reached 782's kickoff §3.4. Record this as a permanent evidence gap, not as a closure. | P3 | AC20 |
+| **R21** | `docs/sessions/evidence/task781/` is created and holds every artifact this task produces, ending the anomaly that 781 is the only Sprint 69 task without one. | P3 | AC21 |
+
+## 5. Acceptance criteria
+
+- **AC16** — `results.json` records one named passing check per F3 sub-claim, each asserting a real production
+  component is present in the DOM (assert on the component's own testid/role, never on a stub's absence alone),
+  plus a screenshot per check.
+- **AC17** — both deltas recorded as `{measured, sourceRule, viewport}` with the value read from the rendered DOM
+  and the rule quoted from `theme.ts`. No expected value hardcoded in the script.
+- **AC18** — a retained full-run transcript with its real `EXIT_CODE` (per Note 18 §5a: the wrapper's exit code is
+  not the command's), plus a table of FAIL counts grouped by check name and the AMBIGUOUS list. If a run crashes
+  environmentally, record the crash and retry once; a second crash is reported, not worked around.
+- **AC19** — a precondition table (server mode, `BASE_URL`, Supabase service-role access, auth storage state) each
+  marked satisfiable/not, and a copy-pasteable PowerShell block. F5/F12/R8/R13 remain `OPEN — owner-native`.
+- **AC20/AC21** — the session log states the F1/F2 gap in those terms; the evidence directory exists and is populated.
+
+## 6. Negative-flow applicability
+
+| Branch | Applicable | Reason |
+|---|---|---|
+| Story renders but component is a stub | **Yes** | the exact F3 defect — assert the real component, not stub absence |
+| `screenshots:assert` crashes mid-run | **Yes** | AC18's retry-once-then-report path; B crashed at exit 127 before |
+| Probe preconditions unmet | **Yes** | AC19 must record "not satisfiable" honestly rather than skip |
+| Wrapper exit code masks the real one | **Yes** | Note 18 §5a — read `EXIT_CODE` from inside the log |
+| Data / auth / RLS | No | no data or permission surface is touched |
+
+## 7. Verification plan — Windows-native PowerShell only
+
+```powershell
+node.exe -p process.platform      # must print win32
+npm.cmd run build-storybook
+node scripts/task781r2-residual-evidence.mjs
+npm.cmd run screenshots:assert
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:stories
+npm.cmd run build
+```
+
+Record the actual command, working directory, and real exit code for each. `npm run build` exit 0 is the non-Q0
+hard gate.
+
+## 8. Completion report contract
+
+Files changed · requirement IDs completed · commands run with actual results · the F3/F6 evidence records ·
+the `screenshots:assert` classification table · the F5/F12 precondition table and owner command block ·
+assumptions · deviations · known limitations · what remains open and why.
+
+**The task is complete when F3 and F6 have rendered proof and R18/R19/R20/R21 are recorded — not when F5 and F12
+close.** Those two close only after the owner runs the probe. Reporting them closed without that run is the
+specific failure this task exists to correct.

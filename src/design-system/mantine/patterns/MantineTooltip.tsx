@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Tooltip, Box } from '@mantine/core'
+import { Tooltip, Box, useMantineTheme } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
 
 export interface MantineTooltipProps {
@@ -56,6 +56,7 @@ export function MantineTooltip({
   position = 'top',
   title,
 }: MantineTooltipProps) {
+  const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
 
   if (isMobile) {
@@ -89,8 +90,16 @@ export function MantineTooltip({
       // long/localized (sq/en/uk/it) and clipped/overflowed the viewport at it@680
       // under nowrap. multiline + maw wraps long content within a sane bubble width
       // instead — short labels still render compactly. Documented divergence in §6k.
+      // Task 784 Revision 3 (D69-18): §25.2/§25.4's own documented 260px wrap width and 14px
+      // horizontal padding are restored via MantineTooltip-exclusive theme.other.tooltip
+      // contracts — Revision 2's reuse of theme.other.boxSize.compactTrigger (280px,
+      // RangeDatePicker's own role) was a same-value/different-owner substitution the D69-18
+      // discipline forbids. Mantine's own [data-multiline] rule only sets white-space:normal
+      // with no default max-width (verified against
+      // node_modules/@mantine/core/styles/Tooltip.css), so a named width contract is required
+      // for "long labels still wrap" to hold at all.
       multiline
-      maw="16.25rem" // 260px — Sonnet-picked within the 240-320px kickoff range
+      maw={theme.other.tooltip.multilineWidth}
       withArrow
       radius="lg"
       color="gray.8"
@@ -98,7 +107,7 @@ export function MantineTooltip({
       fz="xs"
       fw={500}
       py="xs"
-      px="0.875rem" // TailAdmin §6k px-3.5 = 14px; no theme spacing token matches 14px exactly (xs=8/sm=12/md=16)
+      px={theme.other.tooltip.inlinePadding}
       style={{ boxShadow: TOOLTIP_SHADOW_MD }}
     >
       {children}

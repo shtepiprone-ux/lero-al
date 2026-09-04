@@ -58,7 +58,7 @@ export function MantineProgress({
   const hasVisibleLabelRow = !!label || resolvedValueLabel !== undefined
 
   return (
-    <Stack gap={6} w="100%">
+    <Stack gap="compact" w="100%">
       {hasVisibleLabelRow && (
         <Group justify="space-between" align="flex-start" wrap="wrap" gap="xs">
           {label && (

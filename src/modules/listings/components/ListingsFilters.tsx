@@ -79,7 +79,7 @@ function AccordionSection({
             />
           }
         >
-          <Text component="span" size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: '0.05em' }}>
+          <Text component="span" size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: theme.other.letterSpacing.filterHeading }}>
             {title}
           </Text>
         </Button>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Paper, Title, TextInput, Textarea, Button, Group, Text } from '@mantine/core'
+import { Stack, Paper, Title, TextInput, Textarea, Button, Group, Text, useMantineTheme } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 export interface FormField {
@@ -41,6 +41,7 @@ export function MantineFormSectionStack({
   onSubmit,
   onCancel,
 }: MantineFormSectionStackProps) {
+  const theme = useMantineTheme()
   const initialValues = sections.flatMap(s => s.fields).reduce(
     (acc, f) => ({ ...acc, [f.name]: '' }),
     {} as Record<string, string>
@@ -93,7 +94,7 @@ export function MantineFormSectionStack({
         <Group
           gap="sm"
           style={{ flexDirection: 'column' }}
-          styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row', alignItems: 'center' } } }}
         >
           {cancelLabel && (
             <Button
@@ -101,7 +102,7 @@ export function MantineFormSectionStack({
               color="gray"
               onClick={onCancel}
               fullWidth
-              styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+              styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
             >
               {cancelLabel}
             </Button>
@@ -110,7 +111,7 @@ export function MantineFormSectionStack({
             type="submit"
             color="brand"
             fullWidth
-            styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+            styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
           >
             {submitLabel}
           </Button>

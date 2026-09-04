@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Image, Stack, Divider, Title } from '@mantine/core';
+import { SimpleGrid, Image, Stack, Divider, Title, Group } from '@mantine/core';
 import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
+import { theme } from '@/design-system/mantine/theme';
 import { expect } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
@@ -76,7 +77,7 @@ function DemoImage({ src, alt }: { src?: string; alt: string }) {
     // `AppImage`, whose container class reserves frame height to avoid CLS even with no photo).
     return (
       <div className="h-[180px] flex items-center justify-center bg-muted">
-        <Maximize2 className="h-8 w-8 text-muted-foreground" />
+        <Maximize2 size={theme.other!.iconSize!.prominent} className="text-muted-foreground" />
       </div>
     );
   }
@@ -90,11 +91,12 @@ function DemoImage({ src, alt }: { src?: string; alt: string }) {
 // (floor uses `iconInCard: 'building'`, NOT layers). Do NOT drop, reorder, or swap icons —
 // this is the schema's authoritative, full card metric set.
 function demoFeatures(l: string) {
+  const iconSize = theme.other!.iconSize!.compact
   return [
-    { icon: <BedDouble className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_rooms') },
-    { icon: <Bath className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_bathrooms') },
-    { icon: <Maximize2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_area') },
-    { icon: <Building2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_floor') },
+    { icon: <BedDouble size={iconSize} />, value: storyT(l, 'storybook.mantine.listing_feature_rooms') },
+    { icon: <Bath size={iconSize} />, value: storyT(l, 'storybook.mantine.listing_feature_bathrooms') },
+    { icon: <Maximize2 size={iconSize} />, value: storyT(l, 'storybook.mantine.listing_feature_area') },
+    { icon: <Building2 size={iconSize} />, value: storyT(l, 'storybook.mantine.listing_feature_floor') },
   ];
 }
 
@@ -123,10 +125,10 @@ function DemoFooterActions({ locale, id, layout }: { locale: string; id: string;
   }
 
   return (
-    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
+    <Group gap="xs" justify="flex-end" wrap="nowrap" className="text-xs text-muted-foreground">
       {copyButton}
       {dateLabel}
-    </div>
+    </Group>
   );
 }
 

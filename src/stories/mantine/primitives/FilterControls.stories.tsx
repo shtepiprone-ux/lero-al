@@ -50,8 +50,8 @@ function RangeInputsDemo({ minPlaceholder, maxPlaceholder }: { minPlaceholder: s
 }
 
 function MultiToggleDemo({
-  getLabel, ariaLabel, className,
-}: { getLabel: (key: string) => string; ariaLabel: string; className?: string }) {
+  getLabel, ariaLabel, orientation,
+}: { getLabel: (key: string) => string; ariaLabel: string; orientation?: 'horizontal' | 'vertical' }) {
   const [selected, setSelected] = useState<string[]>(['good'])
   return (
     <FilterChoiceGroup
@@ -60,7 +60,7 @@ function MultiToggleDemo({
       selected={selected}
       getLabel={getLabel}
       ariaLabel={ariaLabel}
-      className={className}
+      orientation={orientation}
       onToggle={value =>
         setSelected(prev => (prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]))
       }
@@ -147,18 +147,20 @@ export const Default: Story = {
           </Stack>
 
           {/* FilterChoiceGroup mode="multiple" (vertical branch, Task 752R) — the same component
-              with the `className="flex-col gap-1.5"` override the live ListingsFilters.tsx
-              mobile-drawer call sites pass. No story previously exercised this branch (Task 752
-              note); this is the coverage gap that let the justify="flex-start" label-centering
-              regression ship. */}
+              with `orientation="vertical"`, the exact prop the live ListingsFilters.tsx
+              mobile-drawer call sites pass (Task 778's non-className path; Task 784 corrected
+              this story to match — it previously exercised the legacy className sniff, which no
+              current production call site uses). No story previously exercised this branch (Task
+              752 note); this is the coverage gap that let the justify="flex-start"
+              label-centering regression ship. */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              FilterChoiceGroup — vertical branch (mobile filters drawer, className=&quot;flex-col gap-1.5&quot;)
+              FilterChoiceGroup — vertical branch (mobile filters drawer, orientation=&quot;vertical&quot;)
             </Text>
             <MultiToggleDemo
               getLabel={getLabel}
               ariaLabel={`${storyT(locale, 'common.condition')} (vertical)`}
-              className="flex-col gap-1.5"
+              orientation="vertical"
             />
           </Stack>
 

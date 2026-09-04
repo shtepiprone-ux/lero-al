@@ -1,0 +1,41 @@
+Task 784 — forensic probe proving the pre-existing design-tokens-allow markers on
+MantineDialogDrawerPattern.tsx / responsiveBottomSheet.tsx's drag-handle geometry values were
+silently non-functional (suppressed the wrong detector category), not effective.
+
+Command (unpiped, single-line content probe against the exact pre-edit source text):
+
+  node -e "import('./scripts/check-design-tokens.mjs').then(async (mod) => {
+    const { scanContent } = mod;
+    const line = \"          height: '0.25rem', // design-tokens-allow: : '0.25rem' — canonical drag-handle geometry\";
+    const findings = scanContent(line, 'src/design-system/mantine/patterns/__probe__.tsx', {});
+    console.log('RESULT', JSON.stringify(findings));
+  });"
+
+Output:
+
+  RESULT [{"file":"...","line":1,"cat":"raw-inline-dimension","label":"raw inline style dimension","match":"height: '0.25rem'","area":"other"}]
+
+Root cause (confirmed by instrumenting scanContent's marker loop with a temporary debug print,
+reverted before final verification — file left byte-identical to its pre-debug state, confirmed
+via re-running scripts/__tests__/check-design-tokens.test.ts, 120/120 pass after removal):
+
+  rawMatches (before marker suppression) = [
+    { cat: 'length', match: ": '0.25rem'" },              <- matches the marker's rawValue exactly
+    { cat: 'raw-inline-dimension', match: "height: '0.25rem'" }  <- does NOT match the marker
+  ]
+  markers = [{ rawValue: ": '0.25rem'", hasReason: true }]
+
+The marker's rawValue (missing the "height"/"width" property-name prefix — the original author
+wrote "design-tokens-allow: : '0.25rem'" with a stray leading colon instead of
+"design-tokens-allow: height: '0.25rem'") coincidentally matches the unrelated 'length' category's
+match text (a separate DETECTION_PATTERNS entry: /:\s*['"][\d.]+(?:px|rem)['"]/g, which matches
+ANY colon-prefixed quoted px/rem value regardless of property name). It suppresses that finding,
+leaving the intended 'raw-inline-dimension' finding exposed the entire time — which is exactly
+what every global/scoped detector run before this session showed (raw-inline-dimension present,
+'length' and 'stale-marker' both absent for these 4 lines x 2 files).
+
+Fix applied (docs/sessions/2026-09-04-task784-zero-raw-design-dimensions-scope-mode.md §5): two
+markers per physical line — one with the corrected property-name-prefixed value (suppresses
+raw-inline-dimension) and one with the original bare-colon value (suppresses length) — verified
+via the same scanContent probe returning [] for both affected lines in both files, and by the
+final scoped detector run reporting zero findings at those 4 line locations.

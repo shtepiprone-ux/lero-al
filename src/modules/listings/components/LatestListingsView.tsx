@@ -1,23 +1,29 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Skeleton, Box, Text, SimpleGrid } from '@mantine/core'
+import { Skeleton, Box, Text, SimpleGrid, AspectRatio, useMantineTheme } from '@mantine/core'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import styles from './LatestListingsView.module.css'
 
 /** Skeleton row chrome for the loading grid — owned by the View (Task 665 container/View
- * split; moved out of LatestListings.tsx so the View never imports its container). */
+ * split; moved out of LatestListings.tsx so the View never imports its container).
+ * Task 784 Revision 3 (D69-18): full geometry restored via theme.other.listingSkeleton.latest —
+ * see FeaturedListingsView.tsx's `CardSkeleton` comment for the shared rationale/provenance. */
 function RowSkeleton() {
+  const theme = useMantineTheme()
+  const { latest } = theme.other.listingSkeleton
   return (
     <Box className={styles.skeletonRow}>
-      <Skeleton style={{ aspectRatio: '4 / 3' }} />
+      <AspectRatio ratio={theme.other.listingSkeleton.mediaRatio}>
+        <Skeleton />
+      </AspectRatio>
       <Box className={styles.skeletonBody}>
-        <Skeleton height={12} width={80} />
-        <Skeleton height={16} />
-        <Skeleton height={20} width={112} />
-        <Skeleton height={12} />
+        <Skeleton height={latest.lineHeights[0]} width={latest.firstLineWidth} />
+        <Skeleton height={latest.lineHeights[1]} />
+        <Skeleton height={latest.lineHeights[2]} width={latest.thirdLineWidth} />
+        <Skeleton height={latest.lineHeights[3]} />
       </Box>
     </Box>
   )
@@ -49,7 +55,7 @@ export function LatestListingsView({ listings, loading, rates, displayCurrency, 
 
   if (!listings.length) {
     return (
-      <Text ta="center" c="var(--muted-foreground)" py="2rem">{t('no_listings')}</Text>
+      <Text ta="center" c="var(--muted-foreground)" py="2xl">{t('no_listings')}</Text>
     )
   }
 

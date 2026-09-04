@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useState } from 'react'
-import { Menu, Box, Stack, Group, Text, UnstyledButton, Button } from '@mantine/core'
+import { Menu, Box, Stack, Group, Text, UnstyledButton, Button, useMantineTheme } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
 
 export interface NavMenuLink {
@@ -62,6 +62,7 @@ export interface MantineNavigationMenuProps {
  * MantinePopover/MantineDropdownMenu.
  */
 export function MantineNavigationMenu({ sections, ariaLabel }: MantineNavigationMenuProps) {
+  const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const activeSection = sections[activeSectionIndex]
@@ -80,7 +81,7 @@ export function MantineNavigationMenu({ sections, ariaLabel }: MantineNavigation
               key={i}
               variant="default"
               disabled={section.disabled}
-              mih="2.75rem"
+              mih={theme.other.touchTarget}
               onClick={() => { if (!section.disabled) openSection(i) }}
             >
               {section.label}
@@ -158,7 +159,7 @@ export function MantineNavigationMenu({ sections, ariaLabel }: MantineNavigation
                     closeDrawer()
                   }}
                   w="100%"
-                  mih="2.75rem"
+                  mih={theme.other.touchTarget}
                   py="sm"
                   px="md"
                   style={{ opacity: link.disabled ? 0.5 : 1 }}

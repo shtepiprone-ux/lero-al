@@ -1,6 +1,6 @@
 'use client'
 
-import { SimpleGrid, TextInput, Textarea, Select, Button, Group, Stack, Title } from '@mantine/core'
+import { SimpleGrid, TextInput, Textarea, Select, Button, Group, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 export interface TwoColField {
@@ -40,6 +40,7 @@ export function MantineTwoColumnForm({
   onSubmit,
   onCancel,
 }: MantineTwoColumnFormProps) {
+  const theme = useMantineTheme()
   const initialValues = fields.reduce(
     (acc, f) => ({ ...acc, [f.name]: '' }),
     {} as Record<string, string>
@@ -93,7 +94,7 @@ export function MantineTwoColumnForm({
         <Group
           gap="sm"
           style={{ flexDirection: 'column' }}
-          styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row', alignItems: 'center' } } }}
         >
           {cancelLabel && (
             <Button
@@ -101,7 +102,7 @@ export function MantineTwoColumnForm({
               color="gray"
               onClick={onCancel}
               fullWidth
-              styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+              styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
             >
               {cancelLabel}
             </Button>
@@ -110,7 +111,7 @@ export function MantineTwoColumnForm({
             type="submit"
             color="brand"
             fullWidth
-            styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+            styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
           >
             {submitLabel}
           </Button>

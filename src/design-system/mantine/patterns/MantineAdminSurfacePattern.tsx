@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon } from '@mantine/core'
+import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { MantineDataTableToCards, type TableColumn, type TableRow, type CardConfig } from './MantineDataTableToCards'
 import { MantinePagination } from './MantinePagination'
@@ -64,7 +64,8 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
   rowClassName,
   card,
 }: MantineAdminSurfacePatternProps<R>) {
-  const isMobile = useMediaQuery('(max-width: 40em)')
+  const theme = useMantineTheme()
+  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
 
   return (
     <Stack gap="md">
@@ -81,7 +82,7 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
         gap="sm"
         align="flex-end"
         style={{ flexDirection: 'column' }}
-        styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row' } } }}
+        styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { flexDirection: 'row' } } }}
       >
         <TextInput
           placeholder={searchPlaceholder}
@@ -101,7 +102,7 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
           color="brand"
           onClick={onAdd}
           fullWidth={isMobile}
-          styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+          styles={{ root: { [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' } } }}
         >
           {addLabel}
         </Button>

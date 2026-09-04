@@ -204,7 +204,7 @@ export function MantineListingCardPattern({
           )}
 
           {!!photoCount && photoCount > 0 && (
-            <Group gap={4} className={styles.photoCountList}>
+            <Group gap="tight" className={styles.photoCountList}>
               <Camera className={styles.cardIcon} />
               {photoCount}
             </Group>
@@ -213,7 +213,7 @@ export function MantineListingCardPattern({
 
         <Stack justify="space-between" gap={0} py="sm" pr="sm" className={styles.infoColumn} onClick={() => onClick?.(data.id)}>
           <Box>
-            <Group justify="space-between" align="flex-start" wrap="nowrap" gap={4} mb={4}>
+            <Group justify="space-between" align="flex-start" wrap="nowrap" gap="tight" mb="tight">
               {typeLabel && (
                 <Text size="xs" c="var(--muted-foreground)">
                   {typeLabel}
@@ -227,7 +227,7 @@ export function MantineListingCardPattern({
           </Box>
           <Box>
             <Box className={styles.priceWrapper}>
-              <Group justify="space-between" align="baseline" wrap="wrap" gap="0.125rem 0.75rem">
+              <Group justify="space-between" align="baseline" wrap="wrap" gap="var(--mantine-spacing-micro) var(--mantine-spacing-sm)">
                 <Group align="baseline" wrap="wrap" gap="xs">
                   <Text component="span" size="md" fw={700} c="brand" style={{ whiteSpace: 'nowrap' }}>
                     {data.price}
@@ -251,9 +251,9 @@ export function MantineListingCardPattern({
               )}
             </Box>
             {features && features.length > 0 && (
-              <Group gap="0.25rem 0.75rem" wrap="wrap" mt={6} className={styles.metaRow}>
+              <Group gap="var(--mantine-spacing-tight) var(--mantine-spacing-sm)" wrap="wrap" mt="compact" className={styles.metaRow}>
                 {features.map((f, i) => (
-                  <Group key={i} component="span" gap={4} wrap="nowrap">
+                  <Group key={i} component="span" gap="tight" wrap="nowrap">
                     {f.icon}
                     {f.value}
                   </Group>
@@ -284,9 +284,9 @@ export function MantineListingCardPattern({
               className would be silently defeated) reproducing the same asymmetric 4px/8px
               row/column gap via the CSS `gap` shorthand's two-value form.
             */}
-            <Group wrap="wrap" gap="0.25rem 0.5rem" mt={4} className={styles.metaRow}>
+            <Group wrap="wrap" gap="var(--mantine-spacing-tight) var(--mantine-spacing-xs)" mt="tight" className={styles.metaRow}>
               {data.location && (
-                <Group component="span" gap={4} wrap="nowrap" className={styles.locationRow}>
+                <Group component="span" gap="tight" wrap="nowrap" className={styles.locationRow}>
                   <MapPin className={styles.locationIcon} />
                   <Text component="span" inherit truncate className={styles.locationText}>
                     {data.location}
@@ -342,7 +342,7 @@ export function MantineListingCardPattern({
         )}
 
         {!!photoCount && photoCount > 0 && (
-          <Group gap={4} className={styles.photoCountGrid}>
+          <Group gap="tight" className={styles.photoCountGrid}>
             <Camera className={styles.cardIcon} />
             {photoCount}
           </Group>
@@ -351,7 +351,7 @@ export function MantineListingCardPattern({
         {favorite}
       </Card.Section>
 
-      <Stack gap={4} p="sm" onClick={() => onClick?.(data.id)}>
+      <Stack gap="tight" p="sm" onClick={() => onClick?.(data.id)}>
         {typeLabel && (
           <Text size="xs" c="dimmed">
             {typeLabel}
@@ -360,7 +360,7 @@ export function MantineListingCardPattern({
         <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
           {data.title}
         </Text>
-        <Group gap={4} wrap="nowrap">
+        <Group gap="tight" wrap="nowrap">
           <MapPin className={styles.locationIconGrid} />
           <Text size="xs" c="dimmed" truncate className={styles.locationText}>
             {data.location}
@@ -369,7 +369,7 @@ export function MantineListingCardPattern({
         {features && features.length > 0 && (
           <Group gap="sm" wrap="wrap" className={styles.metaRowBordered}>
             {features.map((f, i) => (
-              <Group key={i} component="span" gap={4} wrap="nowrap">
+              <Group key={i} component="span" gap="tight" wrap="nowrap">
                 {f.icon}
                 {f.value}
               </Group>
@@ -377,7 +377,7 @@ export function MantineListingCardPattern({
           </Group>
         )}
         {data.priceOld ? (
-          <Group gap={6} align="baseline" mt={4} wrap="wrap">
+          <Group gap="compact" align="baseline" mt="tight" wrap="wrap">
             <Text fw={700} size="md" c="brand">
               {data.price}
             </Text>
@@ -386,12 +386,12 @@ export function MantineListingCardPattern({
             </Text>
           </Group>
         ) : (
-          <Text fw={700} size="md" c="brand" mt={4}>
+          <Text fw={700} size="md" c="brand" mt="tight">
             {data.price}
           </Text>
         )}
         {(originalPriceStr || pricePerSqmStr) && (
-          <Group justify="space-between" gap={8} className={styles.priceMetaRow}>
+          <Group justify="space-between" gap="xs" className={styles.priceMetaRow}>
             <Box component="span">{originalPriceStr}</Box>
             {pricePerSqmStr && (
               <Box component="span" className={styles.priceMetaAuto}>{pricePerSqmStr}</Box>

@@ -70,7 +70,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           unclipped text instead of truncating — Task 781R, found via live measurement).
           `truncate="end"` (Mantine's own Text prop, not a Tailwind/CSS-module addition) makes
           that shrink degrade to a real ellipsis instead. */}
-      <Stack gap={2} miw={0}>
+      <Stack gap="micro" miw={0}>
         <Text fw={600} size="sm" c="gray.9" truncate="end" data-testid="listings-count-text">
           {total === 1 ? t('found_results_one') : t('found_results', { count: total })}
         </Text>

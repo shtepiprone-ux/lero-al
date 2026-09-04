@@ -1,0 +1,202 @@
+🔍  check:design-tokens — scanning 458 production src/**/*.{tsx,ts,css} files
+    + 80 canonical Mantine stories for Tailwind dimension utilities
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── UI  (8 findings) ──
+  src/components/ui/PasswordRequirementsHint.tsx  (8)
+    :24  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+    :28  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "lh="1rem""
+    :32  [raw-inline-dimension:raw inline style dimension]  "marginTop: 2"
+    :34  [raw-inline-dimension:raw inline style dimension]  "marginTop: 2"
+    :52  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :52  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={4}"
+    :56  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "lh="19.5px""
+    :58  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+
+  ── SHARED  (6 findings) ──
+  src/components/shared/FilterChoiceGroup.tsx  (1)
+    :106  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+  src/components/shared/HowItWorksSteps.tsx  (2)
+    :29  [raw-dimension-prop:raw numeric dimension/layout prop]  "mb={40}"
+    :32  [raw-dimension-prop:raw numeric dimension/layout prop]  "spacing={32}"
+  src/components/shared/LocationCombobox.tsx  (1)
+    :151  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={4}"
+  src/components/shared/PhoneField.tsx  (2)
+    :145  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+    :165  [raw-dimension-prop:raw numeric dimension/layout prop]  "dropdownMinWidth={240}"
+
+  ── LAYOUT  (1 finding) ──
+  src/components/layout/FooterView.tsx  (1)
+    :70  [raw-dimension-prop:raw numeric dimension/layout prop]  "spacing={40}"
+
+  ── ADMIN  (7 findings) ──
+  src/components/admin/AdminUserAvatar.tsx  (2)
+    :83  [raw-inline-dimension:raw inline style dimension]  "width: 256"
+    :83  [raw-inline-dimension:raw inline style dimension]  "height: 256"
+  src/components/admin/AdminUsersTable.tsx  (5)
+    :93  [raw-inline-dimension:raw inline style dimension]  "width: 40"
+    :146  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :147  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+    :162  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :163  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+
+  ── LISTING  (29 findings) ──
+  src/modules/listings/components/FavoriteButton.tsx  (1)
+    :179  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "radius="1.125rem""
+  src/modules/listings/components/FeaturedListingsView.tsx  (7)
+    :19  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={12}"
+    :19  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={80}"
+    :20  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={16}"
+    :21  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={16}"
+    :22  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={20}"
+    :22  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={128}"
+    :23  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={12}"
+  src/modules/listings/components/LatestListingsView.tsx  (6)
+    :17  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={12}"
+    :17  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={80}"
+    :18  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={16}"
+    :19  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={20}"
+    :19  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={112}"
+    :20  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={12}"
+  src/modules/listings/components/LightboxView.tsx  (6)
+    :99  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :100  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+    :120  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :121  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+    :142  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :143  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+  src/modules/listings/components/ListingContact.tsx  (1)
+    :310  [raw-inline-dimension:raw inline style dimension]  "paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)'"
+  src/modules/listings/components/ListingMobileCTA.tsx  (1)
+    :71  [raw-inline-dimension:raw inline style dimension]  "paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)'"
+  src/modules/listings/components/ListingsFilters.tsx  (1)
+    :82  [raw-inline-dimension:raw inline style dimension]  "letterSpacing: '0.05em'"
+  src/modules/listings/components/ListingsPageFrame.tsx  (1)
+    :54  [raw-dimension-prop:raw numeric dimension/layout prop]  "separatorMargin={6}"
+  src/modules/listings/components/ListingsShell.tsx  (2)
+    :15  [raw-dimension-prop:raw numeric dimension/layout prop]  "pt={4}"
+    :16  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={32}"
+  src/modules/listings/components/ListingsSortBar.tsx  (1)
+    :73  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+  src/modules/listings/components/SaveToCollectionButton.tsx  (2)
+    :151  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "radius="0.75rem""
+    :164  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "radius="1.125rem""
+
+  ── APP  (4 findings) ──
+  src/app/[locale]/layout.tsx  (1)
+    :51  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="calc(100vh - 4rem)""
+  src/app/[locale]/listings/[slug]/page.tsx  (2)
+    :125  [raw-inline-dimension:raw inline style dimension]  "width: 1200"
+    :126  [raw-inline-dimension:raw inline style dimension]  "height: 630"
+  src/app/[locale]/page.tsx  (1)
+    :38  [raw-dimension-prop:raw numeric dimension/layout prop]  "mb={40}"
+
+  ── MODULES  (14 findings) ──
+  src/modules/locations/components/PopularLocationsView.tsx  (1)
+    :93  [raw-dimension-prop:raw numeric dimension/layout prop]  "mb={2}"
+  src/modules/notifications/components/NotificationBellView.tsx  (5)
+    :36  [raw-dimension-prop:raw numeric dimension/layout prop]  "offset={4}"
+    :39  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mih="2.75rem""
+    :39  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "miw="2.75rem""
+    :46  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={320}"
+    :48  [raw-inline-dimension:raw inline style dimension]  "maxHeight: 480"
+  src/modules/notifications/components/NotificationCenter.tsx  (1)
+    :80  [raw-dimension-prop:raw numeric dimension/layout prop]  "py={32}"
+  src/modules/notifications/components/NotificationItem.tsx  (7)
+    :196  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "fz="1rem""
+    :197  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "lh="1.5rem""
+    :198  [raw-inline-dimension:raw inline style dimension]  "marginTop: '0.125rem'"
+    :222  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={2}"
+    :232  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "fz="0.625rem""
+    :235  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "mt="0.25rem""
+    :246  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={6}"
+
+  ── OTHER  (56 findings) ──
+  src/components/auth/CaptchaWidget.tsx  (2)
+    :35  [raw-dimension-prop:raw numeric dimension/layout prop]  "py={4}"
+    :35  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "lh="19.5px""
+  src/design-system/mantine/patterns/MantineAuthFormPattern.tsx  (1)
+    :74  [raw-inline-dimension:raw inline style dimension]  "maxWidth: 400"
+  src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx  (2)
+    :39  [raw-inline-dimension:raw inline style dimension]  "minHeight: 200"
+    :85  [raw-inline-dimension:raw inline style dimension]  "minHeight: 200"
+  src/design-system/mantine/patterns/MantineFilterSection.tsx  (1)
+    :42  [raw-inline-dimension:raw inline style dimension]  "letterSpacing: '0.05em'"
+  src/design-system/mantine/patterns/MantineListingCardPattern.tsx  (18)
+    :207  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :216  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :216  [raw-dimension-prop:raw numeric dimension/layout prop]  "mb={4}"
+    :230  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "gap="0.125rem 0.75rem""
+    :254  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={6}"
+    :254  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "gap="0.25rem 0.75rem""
+    :256  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :287  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={4}"
+    :287  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "gap="0.25rem 0.5rem""
+    :289  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :345  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :354  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :363  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :372  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :380  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+    :380  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={4}"
+    :389  [raw-dimension-prop:raw numeric dimension/layout prop]  "mt={4}"
+    :394  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={8}"
+  src/design-system/mantine/patterns/MantineListingContactPattern.tsx  (4)
+    :90  [raw-inline-dimension:raw inline style dimension]  "top: 80"
+    :96  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+    :97  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+    :115  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  (7)
+    :135  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :142  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :148  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :164  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+    :165  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+    :186  [raw-inline-dimension:raw inline style dimension]  "lineHeight: 1.6"
+    :202  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+  src/design-system/mantine/patterns/MantineNotificationPattern.tsx  (2)
+    :95  [raw-inline-dimension:raw inline style dimension]  "fontSize: 10"
+    :97  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={2}"
+  src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx  (1)
+    :43  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={4}"
+  src/design-system/mantine/patterns/MantinePagination.tsx  (2)
+    :293  [raw-inline-dimension:raw inline style dimension]  "left: -9999"
+    :293  [raw-inline-dimension:raw inline style dimension]  "top: -9999"
+  src/design-system/mantine/patterns/MantineProgress.tsx  (1)
+    :61  [raw-dimension-prop:raw numeric dimension/layout prop]  "gap={6}"
+  src/design-system/mantine/patterns/MantineTooltip.tsx  (2)
+    :93  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "maw="16.25rem""
+    :101  [raw-dimension-prop:raw unit-bearing dimension/layout prop]  "px="0.875rem""
+  src/hooks/useIsMobile.ts  (1)
+    :18  [raw-inline-dimension:raw inline style dimension]  "width: 1023"
+  src/lib/imageDelivery.ts  (11)
+    :20  [raw-inline-dimension:raw inline style dimension]  "width: 767"
+    :20  [raw-inline-dimension:raw inline style dimension]  "width: 1023"
+    :65  [raw-inline-dimension:raw inline style dimension]  "width: 1024"
+    :65  [raw-inline-dimension:raw inline style dimension]  "width: 640"
+    :66  [raw-inline-dimension:raw inline style dimension]  "width: 1280"
+    :66  [raw-inline-dimension:raw inline style dimension]  "width: 640"
+    :67  [raw-inline-dimension:raw inline style dimension]  "width: 1280"
+    :67  [raw-inline-dimension:raw inline style dimension]  "width: 1024"
+    :67  [raw-inline-dimension:raw inline style dimension]  "width: 640"
+    :68  [raw-inline-dimension:raw inline style dimension]  "width: 1024"
+    :68  [raw-inline-dimension:raw inline style dimension]  "width: 640"
+  src/stories/mantine/primitives/FilterControls.stories.tsx  (1)
+    :161  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="flex-col gap-1.5""
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 125 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    raw-dimension-prop   91
+    raw-inline-dimension 33
+    tailwind-dimension-utility 1
+
+❌  check:design-tokens STRICT — 125 raw style-value violation(s) + 0 stale-marker(s) found.
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT=1

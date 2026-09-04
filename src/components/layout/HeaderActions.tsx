@@ -28,8 +28,8 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
           component={Link}
           href={favoritesHref}
           variant="subtle"
-          mih="2.75rem"
-          miw="2.75rem"
+          mih={theme.other.touchTarget}
+          miw={theme.other.touchTarget}
           aria-label={t('favorites')}
         >
           <Heart size={theme.other.iconSize.roomy} />
@@ -37,8 +37,8 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
       ) : (
         <ActionIcon
           variant="subtle"
-          mih="2.75rem"
-          miw="2.75rem"
+          mih={theme.other.touchTarget}
+          miw={theme.other.touchTarget}
           aria-label={t('favorites')}
           onClick={() => onOpenAuth('login')}
         >

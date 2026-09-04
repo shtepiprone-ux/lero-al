@@ -20,6 +20,9 @@ import {
   parseInlineMarkers,
   REPORT_ONLY_CATEGORIES,
   extractCssCustomPropertyDefinitions,
+  loadMantineScopeManifest,
+  isMantineScopeFile,
+  filterFilesForScope,
 } from '../check-design-tokens.mjs'
 
 // Task 718: the REAL src/app/globals.css definitions, read once — used as the
@@ -863,5 +866,89 @@ describe('canonical Mantine stories — Tailwind dimension utilities', () => {
       'src/stories/legacy/__fixture__.stories.tsx',
       {},
     )).toHaveLength(0)
+  })
+})
+
+describe('§K — --scope=mantine membership (Task 784, R1/§3.2/§3.3)', () => {
+  // The real manifest — the same file the rest of the project already treats as the Mantine
+  // migration surface (Task 784 does not hand-maintain a second copy). Read once per-suite.
+  const manifest = loadMantineScopeManifest()
+
+  it('loadMantineScopeManifest reads the real scripts/mantine-migration-scope.json as a Set', () => {
+    expect(manifest instanceof Set).toBe(true)
+    expect(manifest.size).toBeGreaterThan(0)
+    // A known, currently-listed manifest entry (Sprint 69 Task 783 canonical filter-bar counter).
+    expect(manifest.has('src/modules/listings/components/ListingsFilterBar.tsx')).toBe(true)
+  })
+
+  it('§3.2 kind 1 — includes an exact manifest entry', () => {
+    expect(isMantineScopeFile('src/components/layout/HeaderView.tsx', manifest)).toBe(true)
+  })
+
+  it('§3.2 kind 2 — includes a production source under src/design-system/mantine/**, manifest-listed or not', () => {
+    expect(isMantineScopeFile('src/design-system/mantine/theme.ts', manifest)).toBe(true)
+    expect(isMantineScopeFile('src/design-system/mantine/patterns/MantineListingCardPattern.tsx', manifest)).toBe(true)
+  })
+
+  it('§3.2 kind 3a — includes a canonical Mantine primitive story', () => {
+    expect(isMantineScopeFile('src/stories/mantine/primitives/HeaderView.stories.tsx', manifest)).toBe(true)
+  })
+
+  it('§3.2 kind 3b — includes a canonical Mantine pattern story', () => {
+    expect(isMantineScopeFile('src/stories/patterns/mantine/ListingCardPattern.stories.tsx', manifest)).toBe(true)
+  })
+
+  it('excludes a representative legacy source not in any of the three §3.2 kinds', () => {
+    expect(isMantineScopeFile('src/components/admin/AdminUsersTable.tsx', manifest)).toBe(false)
+    expect(isMantineScopeFile('src/lib/imageDelivery.ts', manifest)).toBe(false)
+    expect(isMantineScopeFile('src/stories/legacy/__fixture__.stories.tsx', manifest)).toBe(false)
+  })
+
+  it('a near-miss manifest path (no exact entry) is NOT included by fuzzy/prefix matching — membership is exact', () => {
+    // src/modules/listings/components/ListingsShell.tsx is a real, similarly-named sibling of the
+    // manifest-listed ListingsShellView.tsx (Task 784 §3.2 — "path-derived, not hand-maintained" —
+    // membership must never fuzzy-match a near-identical filename).
+    expect(isMantineScopeFile('src/modules/listings/components/ListingsShell.tsx', manifest)).toBe(false)
+    expect(manifest.has('src/modules/listings/components/ListingsShellView.tsx')).toBe(true)
+  })
+
+  it('filterFilesForScope leaves the default (unscoped) file list byte-for-byte unchanged — R4 regression', () => {
+    const files = [
+      'src/components/admin/AdminUsersTable.tsx',
+      'src/design-system/mantine/theme.ts',
+      'src/stories/mantine/primitives/HeaderView.stories.tsx',
+      'src/lib/imageDelivery.ts',
+    ]
+    // A non-empty manifest is passed deliberately: the identity branch must be governed solely by
+    // `scopeMantine`, never by manifest content, proving default mode can never be narrowed.
+    expect(filterFilesForScope(files, false, manifest)).toEqual(files)
+    expect(filterFilesForScope(files, false, manifest)).toBe(files)
+  })
+
+  it('filterFilesForScope applies exact §3.2 membership when scopeMantine is true', () => {
+    const files = [
+      'src/components/admin/AdminUsersTable.tsx',          // excluded — legacy
+      'src/components/layout/HeaderView.tsx',               // included — manifest
+      'src/design-system/mantine/theme.ts',                 // included — design-system root
+      'src/stories/mantine/primitives/HeaderView.stories.tsx', // included — canonical story
+      'src/lib/imageDelivery.ts',                            // excluded — legacy
+    ]
+    expect(filterFilesForScope(files, true, manifest)).toEqual([
+      'src/components/layout/HeaderView.tsx',
+      'src/design-system/mantine/theme.ts',
+      'src/stories/mantine/primitives/HeaderView.stories.tsx',
+    ])
+  })
+
+  it('scoped mode applies the SAME detection categories as the default scan — a membership filter, not a reduced rule set', () => {
+    // Plant a raw-dimension-prop finding at a manifest-listed path and confirm scanContent (the
+    // exact function run() calls per selected file) reports it identically to the unscoped path —
+    // the scope mechanism only changes WHICH files are collected, never how a collected file is
+    // scanned (§3.3's "applies every existing detection category... never a parallel or reduced
+    // rule set").
+    const inScopePath = 'src/components/layout/HeaderView.tsx'
+    const findings = scanContent(`<Box gap={16} />`, inScopePath, {})
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'raw-dimension-prop', match: 'gap={16}' })
   })
 })

@@ -1,0 +1,129 @@
+
+> lero-al@0.1.0 lint
+> eslint
+
+
+C:\Claude_Code_Projects\lero-al\.artifacts\_to_delete\homepage-detailwind-census.mjs
+  105:3  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\.artifacts\measure-text.mjs
+  27:7  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\sortbar-audit.mjs
+  48:13  warning  'countText' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  57:15  warning  'cs' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\worstcase-audit.mjs
+  31:13  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task673-delta\capture-computed-styles.mjs
+   66:7   warning  'SITES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  157:22  warning  'sel' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\capture-computed-styles.mjs
+   23:37  warning  'readFileSync' is defined but never used                                     @typescript-eslint/no-unused-vars
+   99:10  warning  'readProps' is defined but never used                                        @typescript-eslint/no-unused-vars
+  100:3   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  131:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  149:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  163:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:31  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:66  warning  Expected an assignment or function call and instead saw an expression        @typescript-eslint/no-unused-expressions
+  181:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  189:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  200:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  226:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  249:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  269:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\compare-manifests.mjs
+  96:9  warning  'md5DeltaByStory' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task690-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\extract-candidate-rules.mjs
+  2:25  warning  'resolve' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task693-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task748-overlay\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task695\real-before-after-comparator.mjs
+  58:31  warning  'readdir' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\real-before-after-comparator.mjs
+  154:16  warning  'resolvePartAElementBefore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-round2\g1-gate-blindness-probe.mjs
+   92:9   warning  'overlayLostAfter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  100:11  warning  'baseId' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748\executor-comparator\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task763\capture-appimage-styles.mjs
+   63:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  106:9  warning  'root' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\compare-phase-c.mjs
+  110:9  warning  'postT0' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task765\capture-appimage-styles.mjs
+  65:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\AdminUsersTable.tsx
+  164:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\__tests__\AdminUsersTable.smoke.test.tsx
+   93:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   94:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   98:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  139:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  191:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  194:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  200:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantinePagination.tsx
+  238:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\__tests__\MantineListingCardPattern.smoke.test.tsx
+  138:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\lib\__tests__\visibility.test.ts
+    3:32  warning  'vi' is defined but never used                 @typescript-eslint/no-unused-vars
+    4:13  warning  'visibilityModule' is defined but never used   @typescript-eslint/no-unused-vars
+  184:11  warning  'original' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 72 problems (0 errors, 72 warnings)
+  0 errors and 21 warnings potentially fixable with the `--fix` option.
+
+EXIT=0

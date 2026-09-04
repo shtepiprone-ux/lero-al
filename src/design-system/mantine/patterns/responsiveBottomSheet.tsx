@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Drawer, Box, Text } from '@mantine/core'
+import { Drawer, Box, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 
 // ── Shared bottom-sheet Drawer styles ────────────────────────────────────────
@@ -48,7 +48,8 @@ export const bottomSheetDrawerStyles = {
  * SSR; no visible flash. Same documented trade-off as MantineDialogDrawerPattern.
  */
 export function useResponsiveDropdown() {
-  const isMobile = useMediaQuery('(max-width: 40em)')
+  const theme = useMantineTheme()
+  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false)
   return {
     isMobile: isMobile ?? false,
@@ -60,21 +61,26 @@ export function useResponsiveDropdown() {
 
 // ── Shared DragHandle ─────────────────────────────────────────────────────────
 // ONE definition — Batch C overlays consume this through ResponsiveBottomSheet;
-// never duplicate. Justified raw sizes: 2.5rem × 0.25rem P0 exemption.
+// never duplicate. Task 784 Revision 3 (D69-18): the decorative pill bar's width/height are
+// restored via the typed, provenance-cited theme.other.overlay.dragHandle contract (Revision
+// 2's outright removal is superseded — D69-16 is superseded). Radius keeps consuming the
+// EXISTING theme.radius.pill contract via var(--mantine-radius-pill) — no new role for a value
+// that already has a canonical source.
 export function DragHandle() {
+  const theme = useMantineTheme()
   return (
     <Box
       style={{
         display: 'flex',
         justifyContent: 'center',
-        paddingBottom: '0.5rem', // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+        paddingBottom: 'var(--mantine-spacing-xs)', // 0.5rem/8px — matches theme.spacing.xs exactly
       }}
     >
       <Box
         style={{
-          width: '2.5rem', // design-tokens-allow: : '2.5rem' — canonical drag-handle geometry — non-tokenized affordance per the original allowlist reason, no project token represents this fixed swipe-affordance size
-          height: '0.25rem', // design-tokens-allow: : '0.25rem' — canonical drag-handle geometry — non-tokenized affordance per the original allowlist reason, no project token represents this fixed swipe-affordance size
-          borderRadius: '9999px', // design-tokens-allow: : '9999px' — canonical drag-handle geometry — non-tokenized affordance per the original allowlist reason, no project token represents this fixed swipe-affordance size
+          width: theme.other.overlay.dragHandle.width,
+          height: theme.other.overlay.dragHandle.height,
+          borderRadius: 'var(--mantine-radius-pill)',
           backgroundColor: 'var(--mantine-color-gray-3)',
         }}
       />

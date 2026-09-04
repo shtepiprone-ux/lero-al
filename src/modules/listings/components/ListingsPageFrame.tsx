@@ -51,7 +51,7 @@ export function ListingsPageFrame({
             component="nav"
             aria-label={breadcrumbAriaLabel}
             separator="/"
-            separatorMargin={6}
+            separatorMargin="compact"
             styles={{
               // Mantine's own `.breadcrumb` slot forces `white-space: nowrap` (compiled
               // `node_modules/@mantine/core/styles.css` `.m_f678d540`) — fine for the short

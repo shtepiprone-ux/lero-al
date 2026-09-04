@@ -169,10 +169,10 @@ export const Default: Story = {
             },
             hasPhone: true,
             hasWhatsapp: true,
-            favorite: <DemoFavorite l={l} />,
             inquiryTrigger: <DemoInquiryTrigger l={l} />,
             reportTrigger: <DemoReportTrigger l={l} />,
           }}
+          favorite={<DemoFavorite l={l} />}
         />
       </div>
     );

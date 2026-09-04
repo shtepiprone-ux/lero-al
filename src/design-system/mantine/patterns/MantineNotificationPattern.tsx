@@ -92,9 +92,9 @@ export function MantineNotificationPattern({
             <Paper key={i} shadow="xs" p="sm" radius="md" withBorder style={{ borderLeftColor: `var(--mantine-color-${VARIANT_COLORS[item.variant]}-6)`, borderLeftWidth: 4 }}>
               <Group gap="sm" align="flex-start">
                 <ThemeIcon color={VARIANT_COLORS[item.variant]} variant="light" size="sm" radius="xl">
-                  <span style={{ fontSize: 10 }}>✓</span>
+                  <span style={{ fontSize: 'var(--mantine-font-size-micro)' }}>✓</span>
                 </ThemeIcon>
-                <Stack gap={2} style={{ flex: 1 }}>
+                <Stack gap="micro" style={{ flex: 1 }}>
                   <Group gap="xs">
                     <Text size="sm" fw={600}>{item.title}</Text>
                     <Badge color={VARIANT_COLORS[item.variant]} variant="light" size="xs">{item.variant}</Badge>

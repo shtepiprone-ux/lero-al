@@ -36,7 +36,7 @@ export function MantineEmptyLoadingErrorState({
   const theme = useMantineTheme()
   if (state === 'loading') {
     return (
-      <Center py="xl" style={{ minHeight: 200 }}>
+      <Center py="xl" style={{ minHeight: theme.other.layout.emptyStateMinBlockSize }}>
         <Stack align="center" gap="md">
           <Loader color="brand" size="lg" />
           {title && (
@@ -68,7 +68,7 @@ export function MantineEmptyLoadingErrorState({
               styles={{
                 root: {
                   width: '100%',
-                  '@media (min-width: 40em)': { width: 'auto' },
+                  [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' },
                 },
               }}
             >
@@ -82,7 +82,7 @@ export function MantineEmptyLoadingErrorState({
 
   // empty state
   return (
-    <Center py="xl" style={{ minHeight: 200 }}>
+    <Center py="xl" style={{ minHeight: theme.other.layout.emptyStateMinBlockSize }}>
       <Stack align="center" gap="md" maw={theme.other.boxSize.emptyState}>
         <ThemeIcon size="hero" radius="xl" color="gray" variant="light">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -106,7 +106,7 @@ export function MantineEmptyLoadingErrorState({
             styles={{
               root: {
                 width: '100%',
-                '@media (min-width: 40em)': { width: 'auto' },
+                [`@media (min-width: ${theme.other.mobileGate})`]: { width: 'auto' },
               },
             }}
           >

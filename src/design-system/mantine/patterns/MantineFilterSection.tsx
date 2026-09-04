@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Box, Group, Text } from '@mantine/core'
+import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 
 export interface MantineFilterSectionProps {
   /** Section label. Rendered as the uppercase micro-heading. */
@@ -33,13 +33,14 @@ export interface MantineFilterSectionProps {
  * decision; do not re-litigate it or revert to `dimmed`.
  */
 export function MantineFilterSection({ label, action, withDivider, children }: MantineFilterSectionProps) {
+  const theme = useMantineTheme()
   return (
     <Box
       p="lg"
       style={withDivider ? { borderTop: '1px solid var(--mantine-color-gray-3)' } : undefined}
     >
       <Group justify="space-between" mb="sm">
-        <Text size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: '0.05em' }}>
+        <Text size="xs" fw={600} tt="uppercase" c="gray.5" style={{ letterSpacing: theme.other.letterSpacing.filterHeading }}>
           {label}
         </Text>
         {action}

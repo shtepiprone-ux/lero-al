@@ -1,0 +1,13 @@
+﻿🔍  check:design-tokens --scope=mantine — scanning 73 of 458 production src/**/*.{tsx,ts,css} files
+    (§3.2 union: scripts/mantine-migration-scope.json ∪ src/design-system/mantine/** ∪ canonical Mantine stories)
+    + 80 canonical Mantine stories for Tailwind dimension utilities
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+
+✅  check:design-tokens — 0 violations found.
+EXIT_CODE=0

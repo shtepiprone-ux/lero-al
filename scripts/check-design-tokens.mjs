@@ -67,6 +67,14 @@
  *   node scripts/check-design-tokens.mjs --report    — same (explicit)
  *   node scripts/check-design-tokens.mjs --strict    — exit 1 on violation (NOT in CI yet)
  *   node scripts/check-design-tokens.mjs --update-allowlist — seed/refresh allowlist stubs
+ *   node scripts/check-design-tokens.mjs --strict --scope=mantine — restrict the scan to the
+ *     current Mantine union (Task 784, §3.2): every path listed in
+ *     scripts/mantine-migration-scope.json, every production source under
+ *     src/design-system/mantine/**, and every canonical Mantine story under
+ *     src/stories/mantine/** / src/stories/patterns/mantine/**. Purely additive — it filters
+ *     WHICH files are scanned; every detection category, marker check, and strict/report
+ *     exit-code rule is identical to the default (unscoped) run. Omitting --scope leaves the
+ *     default global scan byte-for-byte unchanged.
  *   npm run check:design-tokens
  *   npx vitest run scripts/__tests__/check-design-tokens.test.ts — detector unit tests
  *
@@ -92,11 +100,13 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const ALLOWLIST_PATH = resolve(__dirname, 'design-tokens-allowlist.json');
+const MANTINE_SCOPE_MANIFEST_PATH = resolve(__dirname, 'mantine-migration-scope.json');
 
 // ── CLI flags ─────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const STRICT_MODE = args.includes('--strict');
 const UPDATE_ALLOWLIST = args.includes('--update-allowlist');
+const SCOPE_MANTINE = args.includes('--scope=mantine');
 // --report is the default; --strict overrides the exit code
 const REPORT_ONLY = !STRICT_MODE || args.includes('--report');
 
@@ -112,6 +122,51 @@ const SKIP_FILES = new Set([
 const SKIP_SUFFIXES = ['.stories.tsx', '.test.tsx', '.test.ts'];
 const TEST_SUFFIXES = ['.test.tsx', '.test.ts'];
 const CANONICAL_MANTINE_STORY_PATH = /^src\/stories\/(?:mantine|patterns\/mantine)\//;
+// Task 784, §3.2 — the second named scope root: every production source under this directory,
+// regardless of manifest membership.
+const MANTINE_DESIGN_SYSTEM_ROOT = 'src/design-system/mantine/';
+
+// ── --scope=mantine membership (Task 784, R1) ─────────────────────────────────
+//
+// Reads scripts/mantine-migration-scope.json (the SAME manifest the rest of the project already
+// treats as the Mantine migration surface — Task 784 does not hand-maintain a second copy) and
+// returns it as a Set of exact repo-relative paths (POSIX separators, matching relPath's own
+// normalization elsewhere in this file).
+export function loadMantineScopeManifest() {
+  if (!existsSync(MANTINE_SCOPE_MANIFEST_PATH)) return new Set();
+  try {
+    const list = JSON.parse(readFileSync(MANTINE_SCOPE_MANIFEST_PATH, 'utf8'));
+    return new Set(list);
+  } catch {
+    console.error('⚠️  mantine-migration-scope.json is not valid JSON.');
+    process.exit(1);
+  }
+}
+
+// §3.2 exact membership — a path-derived union of exactly three kinds, never a fourth:
+//   1. an exact manifest entry (scripts/mantine-migration-scope.json);
+//   2. any production source under src/design-system/mantine/** (whole-directory root, not
+//      manifest-gated — a design-system file need not be manifest-listed to be in scope);
+//   3. any canonical Mantine story (the SAME CANONICAL_MANTINE_STORY_PATH regex the default scan
+//      already uses to select canonical-story-only findings — no second story-path definition).
+// No transitive-import expansion, no non-Mantine story, no legacy source: a path outside these
+// three exact kinds is never in scope, however close its relationship to an in-scope file.
+export function isMantineScopeFile(relPath, manifestSet) {
+  if (manifestSet.has(relPath)) return true;
+  if (relPath.startsWith(MANTINE_DESIGN_SYSTEM_ROOT)) return true;
+  if (CANONICAL_MANTINE_STORY_PATH.test(relPath)) return true;
+  return false;
+}
+
+// Applies the §3.2 filter to an already-collected file list ONLY when scopeMantine is true — the
+// identity branch (scopeMantine === false) returns `files` completely untouched, by construction,
+// so the default global scan can never be narrowed by this function regardless of manifest
+// content (Task 784 R4 — proven directly by a unit test passing a non-empty manifest here and
+// asserting the untouched-files return, not inferred from reading the branch).
+export function filterFilesForScope(files, scopeMantine, manifestSet) {
+  if (!scopeMantine) return files;
+  return files.filter((relPath) => isMantineScopeFile(relPath, manifestSet));
+}
 
 // ── Detection patterns ────────────────────────────────────────────────────────
 //
@@ -971,15 +1026,34 @@ function run() {
     : new Set();
 
   const srcDir = join(ROOT, 'src');
-  const allFiles = collectFiles(srcDir, ['.tsx', '.ts', '.css']);
+  const mantineScopeManifest = SCOPE_MANTINE ? loadMantineScopeManifest() : new Set();
+  const collectedFiles = collectFiles(srcDir, ['.tsx', '.ts', '.css']);
   const allStoryFiles = collectFiles(srcDir, ['.stories.tsx'], true);
+  // canonicalMantineStoryFiles is already exactly §3.2 union member #3 (the
+  // CANONICAL_MANTINE_STORY_PATH test below is byte-identical to isMantineScopeFile's own story
+  // check) — every canonical Mantine story is in scope regardless of --scope=mantine, so this list
+  // is never additionally filtered.
   const canonicalMantineStoryFiles = allStoryFiles.filter((filePath) =>
     CANONICAL_MANTINE_STORY_PATH.test(relative(ROOT, filePath).replace(/\\/g, '/'))
   );
+  // filterFilesForScope's predicate expects relPath strings; collectedFiles holds absolute paths
+  // keyed 1:1 to their own relPath, so filter the relPath projection and re-derive the absolute
+  // list from the surviving relPaths (both sides use the identical relative()/replace() call, so
+  // the derivation is exact — no separate path-matching logic).
+  const collectedRelPaths = collectedFiles.map((filePath) => relative(ROOT, filePath).replace(/\\/g, '/'));
+  const scopedRelPaths = new Set(filterFilesForScope(collectedRelPaths, SCOPE_MANTINE, mantineScopeManifest));
+  const allFiles = collectedFiles.filter((filePath, i) => scopedRelPaths.has(collectedRelPaths[i]));
 
-  console.log(`🔍  check:design-tokens — scanning ${allFiles.length} production src/**/*.{tsx,ts,css} files`);
-  console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
-  console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
+  if (SCOPE_MANTINE) {
+    console.log(`🔍  check:design-tokens --scope=mantine — scanning ${allFiles.length} of ${collectedFiles.length} production src/**/*.{tsx,ts,css} files`);
+    console.log(`    (§3.2 union: scripts/mantine-migration-scope.json ∪ src/design-system/mantine/** ∪ canonical Mantine stories)`);
+    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
+    console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
+  } else {
+    console.log(`🔍  check:design-tokens — scanning ${allFiles.length} production src/**/*.{tsx,ts,css} files`);
+    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
+    console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
+  }
   console.log('');
 
   if (staleWarnings.length > 0) {

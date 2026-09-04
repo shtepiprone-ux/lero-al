@@ -1,0 +1,412 @@
+{
+  "capturedAt": "2026-09-04T12:37:34.729Z",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al\\storybook-static",
+  "expected": {
+    "listingContactStickyOffsetPx": 80,
+    "tooltipInlinePaddingRem": "0.875rem",
+    "tooltipMultilineWidthRem": "16.25rem",
+    "authFormMaxWidthPx": 400,
+    "emptyStateMinBlockSizePx": 200,
+    "footerGridGapPx": 40,
+    "dragHandleWidthRem": "2.5rem",
+    "dragHandleHeightRem": "0.25rem",
+    "breakpointLgEm": "64em",
+    "breakpointXs2Em": "30em",
+    "breakpointMdEm": "48em",
+    "breakpointXlEm": "80em"
+  },
+  "checks": [
+    {
+      "name": "listing-contact-desktop-sticky",
+      "pass": true,
+      "style": {
+        "position": "sticky",
+        "top": "80px",
+        "rect": {
+          "x": 848,
+          "y": 80,
+          "width": 416,
+          "height": 378,
+          "top": 80,
+          "right": 1264,
+          "bottom": 458,
+          "left": 848
+        }
+      },
+      "expectedTopPx": 80
+    },
+    {
+      "name": "listing-contact-below-lg-normal-flow",
+      "pass": true,
+      "style": {
+        "position": "static"
+      },
+      "note": "768px is < breakpoints.lg (1024px) — sticky must not apply here"
+    },
+    {
+      "name": "tooltip-long-uk-label",
+      "pass": true,
+      "tooltipStyle": {
+        "paddingLeft": "14px",
+        "paddingRight": "14px",
+        "maxWidth": "260px",
+        "width": "260px",
+        "whiteSpace": "normal"
+      },
+      "expectedPaddingPx": 14,
+      "expectedMaxWidthPx": 260
+    },
+    {
+      "name": "listing-skeletons-loading",
+      "pass": true,
+      "mediaRect": {
+        "width": 392.65625,
+        "height": 294.484375
+      },
+      "skeletonElementCount": 14
+    },
+    {
+      "name": "auth-desktop-max-width",
+      "pass": true,
+      "renderedWidth": 400,
+      "expectedMaxWidthPx": 400
+    },
+    {
+      "name": "auth-mobile-full-width",
+      "pass": true,
+      "renderedWidth": 295
+    },
+    {
+      "name": "empty-loading-error-min-block-size",
+      "pass": true,
+      "heights": [
+        200,
+        200
+      ],
+      "expectedMinPx": 200
+    },
+    {
+      "name": "footer-grid-gap-375",
+      "pass": true,
+      "gap": {
+        "columnGap": "40px",
+        "rowGap": "40px"
+      },
+      "expectedPx": 40
+    },
+    {
+      "name": "footer-grid-gap-768",
+      "pass": true,
+      "gap": {
+        "columnGap": "40px",
+        "rowGap": "40px"
+      },
+      "expectedPx": 40
+    },
+    {
+      "name": "footer-grid-gap-1280",
+      "pass": true,
+      "gap": {
+        "columnGap": "40px",
+        "rowGap": "40px"
+      },
+      "expectedPx": 40
+    },
+    {
+      "name": "overlay-dialog-drawer-pattern-drag-handle",
+      "pass": true,
+      "handle": {
+        "found": true,
+        "width": 40,
+        "height": 4,
+        "borderRadius": "9999px"
+      },
+      "expectedWidthPx": 40,
+      "expectedHeightPx": 4,
+      "closedOnEscape": true
+    },
+    {
+      "name": "overlay-dropdown-menu-drag-handle",
+      "pass": true,
+      "handle": {
+        "found": true,
+        "width": 40,
+        "height": 4,
+        "borderRadius": "9999px"
+      },
+      "expectedWidthPx": 40,
+      "expectedHeightPx": 4,
+      "closedOnEscape": true
+    },
+    {
+      "name": "pagination-hidden-probe",
+      "pass": true,
+      "probe": {
+        "found": true,
+        "rect": {
+          "width": 44,
+          "height": 44
+        },
+        "visibility": "hidden",
+        "pointerEvents": "none",
+        "position": "fixed",
+        "hasLeftTopStyle": false
+      }
+    },
+    {
+      "name": "filter-controls-renders",
+      "pass": true,
+      "nav": {
+        "ok": true,
+        "httpStatus": 200,
+        "readiness": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "name": "count-button-renders",
+      "pass": true,
+      "nav": {
+        "ok": true,
+        "httpStatus": 200,
+        "readiness": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "name": "cta-row-direction-375",
+      "pass": true,
+      "callDirection": "column",
+      "shareDirection": "column",
+      "expectedDirection": "column",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-479",
+      "pass": true,
+      "callDirection": "column",
+      "shareDirection": "column",
+      "expectedDirection": "column",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-480",
+      "pass": true,
+      "callDirection": "row",
+      "shareDirection": "row",
+      "expectedDirection": "row",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-720",
+      "pass": true,
+      "callDirection": "row",
+      "shareDirection": "row",
+      "expectedDirection": "row",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-767",
+      "pass": true,
+      "callDirection": "row",
+      "shareDirection": "row",
+      "expectedDirection": "row",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-768",
+      "pass": true,
+      "callDirection": "column",
+      "shareDirection": "column",
+      "expectedDirection": "column",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-1023",
+      "pass": true,
+      "callDirection": "column",
+      "shareDirection": "column",
+      "expectedDirection": "column",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-1024",
+      "pass": true,
+      "callDirection": "column",
+      "shareDirection": "column",
+      "expectedDirection": "column",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-direction-1280",
+      "pass": true,
+      "callDirection": "row",
+      "shareDirection": "row",
+      "expectedDirection": "row",
+      "xs2Px": 480,
+      "mdPx": 768,
+      "xlPx": 1280
+    },
+    {
+      "name": "cta-row-label-single-line-it-1024",
+      "pass": true,
+      "spans": [
+        {
+          "text": "Chiama",
+          "height": 14,
+          "lineHeight": 14
+        },
+        {
+          "text": "WhatsApp",
+          "height": 14,
+          "lineHeight": 14
+        }
+      ]
+    },
+    {
+      "name": "cta-row-label-single-line-it-1280",
+      "pass": true,
+      "spans": [
+        {
+          "text": "Chiama",
+          "height": 14,
+          "lineHeight": 14
+        },
+        {
+          "text": "WhatsApp",
+          "height": 14,
+          "lineHeight": 14
+        }
+      ]
+    },
+    {
+      "name": "cta-row-label-single-line-uk-1024",
+      "pass": true,
+      "spans": [
+        {
+          "text": "Зателефонувати",
+          "height": 14,
+          "lineHeight": 14
+        },
+        {
+          "text": "WhatsApp",
+          "height": 14,
+          "lineHeight": 14
+        }
+      ]
+    },
+    {
+      "name": "cta-row-label-single-line-uk-1280",
+      "pass": true,
+      "spans": [
+        {
+          "text": "Зателефонувати",
+          "height": 14,
+          "lineHeight": 14
+        },
+        {
+          "text": "WhatsApp",
+          "height": 14,
+          "lineHeight": 14
+        }
+      ]
+    },
+    {
+      "name": "grid-stack-boundary-767",
+      "pass": true,
+      "stacked": true,
+      "expectedStacked": true,
+      "mdPx": 768
+    },
+    {
+      "name": "grid-stack-boundary-768",
+      "pass": true,
+      "stacked": false,
+      "expectedStacked": false,
+      "mdPx": 768
+    },
+    {
+      "name": "favorite-placement-375",
+      "pass": true,
+      "measured": {
+        "visible": true,
+        "heartRight": 359,
+        "contentRight": 359,
+        "heartCentreY": 540,
+        "badgeCentreY": 540
+      },
+      "centredOk": true,
+      "note": "favorite right edge aligns with the content column right edge (±2px) AND shares a centre line with the badge group (±2px, D69-27)"
+    },
+    {
+      "name": "favorite-placement-767",
+      "pass": true,
+      "measured": {
+        "visible": true,
+        "heartRight": 751,
+        "contentRight": 751,
+        "heartCentreY": 625,
+        "badgeCentreY": 625
+      },
+      "centredOk": true,
+      "note": "favorite right edge aligns with the content column right edge (±2px) AND shares a centre line with the badge group (±2px, D69-27)"
+    },
+    {
+      "name": "favorite-placement-768",
+      "pass": true,
+      "measured": {
+        "visible": true,
+        "heartRight": 486.65625,
+        "contentRight": 486.65625,
+        "heartCentreY": 705,
+        "badgeCentreY": 705
+      },
+      "centredOk": true,
+      "note": "favorite right edge aligns with the content column right edge (±2px) AND shares a centre line with the badge group (±2px, D69-27)"
+    },
+    {
+      "name": "favorite-placement-1024",
+      "pass": true,
+      "measured": {
+        "visible": true,
+        "heartRight": 657.328125,
+        "contentRight": 657.328125,
+        "heartCentreY": 705,
+        "badgeCentreY": 705
+      },
+      "centredOk": true,
+      "note": "favorite right edge aligns with the content column right edge (±2px) AND shares a centre line with the badge group (±2px, D69-27)"
+    },
+    {
+      "name": "favorite-placement-1280",
+      "pass": true,
+      "measured": {
+        "visible": true,
+        "heartRight": 828,
+        "contentRight": 828,
+        "heartCentreY": 705,
+        "badgeCentreY": 705
+      },
+      "centredOk": true,
+      "note": "favorite right edge aligns with the content column right edge (±2px) AND shares a centre line with the badge group (±2px, D69-27)"
+    }
+  ]
+}

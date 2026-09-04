@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
-import { Menu, Box, Stack, Group, Text, UnstyledButton, Divider } from '@mantine/core'
+import { Menu, Box, Stack, Group, Text, UnstyledButton, Divider, useMantineTheme } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
 
 export interface DropdownMenuItemDef {
@@ -67,6 +67,7 @@ export function MantineDropdownMenu({
   title,
   iconOnlyTrigger = false,
 }: MantineDropdownMenuProps) {
+  const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
 
   return (
@@ -136,7 +137,7 @@ export function MantineDropdownMenu({
                     }}
                     disabled={item.disabled}
                     w="100%"
-                    mih="2.75rem"
+                    mih={theme.other.touchTarget}
                     py="sm"
                     px="md"
                     style={{ opacity: item.disabled ? 0.5 : 1 }}

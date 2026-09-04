@@ -185,3 +185,33 @@ describe('MantinePagination — never-wraps CSS invariant (Rule 1)', () => {
       .forEach((control) => expect(control).not.toHaveAttribute('aria-current'))
   })
 })
+
+describe('MantinePagination — hidden measuring probe (Task 784 Revision 3, D69-18 §13 pagination row)', () => {
+  // Proves the probe stays non-announced, non-interactive, and never visible after Task 784
+  // replaced its off-screen `left:-9999,top:-9999` coordinates with `position:'fixed'` (no
+  // coordinates). Measurability itself (a non-zero `getBoundingClientRect()` width) is a
+  // structural CSS-spec guarantee of `visibility:hidden` — unlike `display:none`, a
+  // `visibility:hidden` element is still laid out and participates in layout/measurement; jsdom
+  // does not implement real layout, so that specific property is not independently jsdom-testable
+  // and is not asserted here — it is a property of the CSS itself, not of this component's logic.
+  it('the probe renders aria-hidden, non-focusable, and pointer-events:none once mounted', async () => {
+    const { container, findByText } = render(withProvider(<MantinePagination total={100} value={1} onChange={() => {}} />))
+    // `mounted` flips via a useEffect (Rule 4, SSR-safe) — wait for the probe's own text node.
+    await findByText('100')
+    const probe = container.querySelector('[aria-hidden="true"]') as HTMLElement
+    expect(probe).toBeTruthy()
+    expect(probe).toHaveAttribute('tabindex', '-1')
+    const cs = getComputedStyle(probe)
+    expect(cs.pointerEvents).toBe('none')
+    expect(cs.visibility).toBe('hidden')
+    expect(cs.position).toBe('fixed')
+  })
+
+  it('the probe carries no off-screen coordinate (left/top) — only visibility/pointer-events/position hide it', async () => {
+    const { container, findByText } = render(withProvider(<MantinePagination total={100} value={1} onChange={() => {}} />))
+    await findByText('100')
+    const probe = container.querySelector('[aria-hidden="true"]') as HTMLElement
+    expect(probe.style.left).toBe('')
+    expect(probe.style.top).toBe('')
+  })
+})

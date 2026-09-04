@@ -90,7 +90,7 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
               <Box pos="absolute" inset={0} className={CITY_GRADIENTS[i % CITY_GRADIENTS.length]} />
             )}
             <Box pos="relative" className={styles.content}>
-              <Box mb={2}>
+              <Box mb="micro">
                 <MapPin size={iconSize.compact} style={{ opacity: 0.7 }} aria-hidden />
               </Box>
               <Text fw={600} size="sm" lh={1.25} truncate>

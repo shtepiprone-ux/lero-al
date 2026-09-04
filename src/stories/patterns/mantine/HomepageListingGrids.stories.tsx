@@ -10,7 +10,7 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack } from '@mantine/core'
+import { Stack, Box } from '@mantine/core'
 import { FeaturedListingsView } from '@/modules/listings/components/FeaturedListingsView'
 import { LatestListingsView } from '@/modules/listings/components/LatestListingsView'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
@@ -87,7 +87,7 @@ export const Default: Story = {
     const listings = makeCardListingFixtures(locale)
     const favoriteIds = new Set([listings[0]!.id])
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
         <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
           <Stack gap="xl">
             <FeaturedListingsView
@@ -107,7 +107,7 @@ export const Default: Story = {
             />
           </Stack>
         </AuthContext.Provider>
-      </div>
+      </Box>
     )
   },
 
@@ -126,7 +126,7 @@ export const Loading: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
         <Stack gap="xl">
           <FeaturedListingsView
             listings={[]}
@@ -144,7 +144,7 @@ export const Loading: Story = {
             favoriteIds={new Set()}
           />
         </Stack>
-      </div>
+      </Box>
     )
   },
 

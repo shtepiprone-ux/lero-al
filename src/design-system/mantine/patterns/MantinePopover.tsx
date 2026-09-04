@@ -142,7 +142,7 @@ export function MantinePopover({
         /* Desktop: alignSelf:flex-start (default) prevents a Stack align="stretch" parent from
            over-stretching the trigger — trigger renders at natural content width.
            fullWidthTrigger=true (Task 558, additive): alignSelf:stretch instead, so the Box (and
-           the trigger inside it, when the trigger itself is width:100%) fills the parent width. */
+           the trigger inside it, when the trigger itself is set to fill its own width) fills the parent width. */
         <Box style={{ alignSelf: fullWidthTrigger ? 'stretch' : 'flex-start' }}>
           <Popover
             opened={desktopOpened}

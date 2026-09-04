@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text, ActionIcon } from '@mantine/core'
+import { Stack, Text, ActionIcon, useMantineTheme } from '@mantine/core'
 import { Bell } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { HeaderActions } from '@/components/layout/HeaderActions'
@@ -26,13 +26,14 @@ export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const theme = useMantineTheme()
 
     // Placeholder standing in for the real NotificationBell (which owns its own hooks and is
     // dynamic ssr:false in the app) — the story only proves the slot is rendered, never hook-calls
     // the real bell (Sprint 44 plan STOP-AND-ASK #1).
     const bellPlaceholder = (
-      <ActionIcon variant="subtle" mih="2.75rem" miw="2.75rem" aria-label={t('header_actions_bell_slot_aria')}>
-        <Bell className="size-5" />
+      <ActionIcon variant="subtle" mih={theme.other.touchTarget} miw={theme.other.touchTarget} aria-label={t('header_actions_bell_slot_aria')}>
+        <Bell size={theme.other.iconSize.roomy} />
       </ActionIcon>
     )
 

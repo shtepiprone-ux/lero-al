@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea } from '@mantine/core'
+import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
 // useLayoutEffect on the client (cards only mount client-side after the mobile
@@ -264,7 +264,8 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
   card,
   tableHeader,
 }: MantineDataTableToCardsProps<R>) {
-  const isMobile = useMediaQuery('(max-width: 40em)')
+  const theme = useMantineTheme()
+  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
 
   if (rows.length === 0) {
     return (
@@ -364,7 +365,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
                     wrap="nowrap"
                     align="center"
                     py="xs"
-                    mih="2.75rem"
+                    mih={theme.other.touchTarget}
                     style={
                       idx < columns.length - 1
                         ? { borderBottom: '1px solid var(--mantine-color-gray-2)' }

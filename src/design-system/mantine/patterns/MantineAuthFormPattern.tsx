@@ -1,6 +1,6 @@
 'use client'
 
-import { Stack, TextInput, PasswordInput, Button, Text, Anchor, Paper, Title, Divider } from '@mantine/core'
+import { Stack, TextInput, PasswordInput, Button, Text, Anchor, Paper, Title, Divider, useMantineTheme } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 export type AuthMode = 'login' | 'register'
@@ -45,6 +45,7 @@ export function MantineAuthFormPattern({
   onSwitchMode,
   nameLabel,
 }: MantineAuthFormPatternProps) {
+  const theme = useMantineTheme()
   const form = useForm({
     initialValues: {
       name: '',
@@ -61,19 +62,20 @@ export function MantineAuthFormPattern({
   })
 
   return (
+    // Task 784 Revision 5 (D69-20): the prior `styles={{root:{'@media...':{...}}}}` block emitted
+    // no CSS (Mantine resolves `styles` keys as properties/selectors, never as `@media` at-rules —
+    // see docs/sessions/evidence/task784/d69-19-browser/styles-prop-media-query-defect-proof.md),
+    // a pre-existing defect (confirmed present at `HEAD`, predating Task 784). Fixed via Mantine's
+    // native responsive Box style props (`w`/`maw`), which do emit real `@media` rules. `sm` is
+    // byte-identical to theme.other.mobileGate ('40em'); the cap value is sourced only from
+    // theme.other.layout.authFormMaxWidth.
     <Paper
       shadow="sm"
       p="xl"
       radius="md"
       withBorder
-      style={{ width: '100%', maxWidth: '100%' }}
-      styles={{
-        root: {
-          '@media (min-width: 40em)': {
-            maxWidth: 400,
-          },
-        },
-      }}
+      w="100%"
+      maw={{ base: '100%', sm: theme.other.layout.authFormMaxWidth }}
     >
       <Stack gap="md">
         <Title order={2} size="h3" ta="center">

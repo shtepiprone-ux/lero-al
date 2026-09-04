@@ -1,0 +1,20 @@
+﻿✅ listing-contact-desktop-sticky: {"pass":true,"style":{"position":"sticky","top":"80px","rect":{"x":848,"y":80,"width":416,"height":488,"top":80,"right":1264,"bottom":568,"left":848}},"expectedTopPx":80}
+✅ listing-contact-below-lg-normal-flow: {"pass":true,"style":{"position":"static"},"note":"768px is < breakpoints.lg (1024px) — sticky must not apply here"}
+✅ tooltip-long-uk-label: {"pass":true,"tooltipStyle":{"paddingLeft":"14px","paddingRight":"14px","maxWidth":"260px","width":"260px","whiteSpace":"normal"},"expectedPaddingPx":14,"expectedMaxWidthPx":260}
+✅ listing-skeletons-loading: {"pass":true,"mediaRect":{"width":392.65625,"height":294.484375},"skeletonElementCount":14}
+✅ auth-desktop-max-width: {"pass":true,"renderedWidth":400,"expectedMaxWidthPx":400}
+✅ auth-mobile-full-width: {"pass":true,"renderedWidth":295}
+✅ empty-loading-error-min-block-size: {"pass":true,"heights":[200,200],"expectedMinPx":200}
+✅ footer-grid-gap-375: {"pass":true,"gap":{"columnGap":"40px","rowGap":"40px"},"expectedPx":40}
+✅ footer-grid-gap-768: {"pass":true,"gap":{"columnGap":"40px","rowGap":"40px"},"expectedPx":40}
+✅ footer-grid-gap-1280: {"pass":true,"gap":{"columnGap":"40px","rowGap":"40px"},"expectedPx":40}
+✅ overlay-dialog-drawer-pattern-drag-handle: {"pass":true,"handle":{"found":true,"width":40,"height":4,"borderRadius":"9999px"},"expectedWidthPx":40,"expectedHeightPx":4,"closedOnEscape":true}
+✅ overlay-dropdown-menu-drag-handle: {"pass":true,"handle":{"found":true,"width":40,"height":4,"borderRadius":"9999px"},"expectedWidthPx":40,"expectedHeightPx":4,"closedOnEscape":true}
+✅ pagination-hidden-probe: {"pass":true,"probe":{"found":true,"rect":{"width":44,"height":44},"visibility":"hidden","pointerEvents":"none","position":"fixed","hasLeftTopStyle":false}}
+✅ filter-controls-renders: {"pass":true,"nav":{"ok":true,"httpStatus":200,"readiness":{"ok":true}}}
+✅ count-button-renders: {"pass":true,"nav":{"ok":true,"httpStatus":200,"readiness":{"ok":true}}}
+
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task784\d69-19-browser\results.json
+
+✅ task784-d69-19-browser-evidence: all checks passed.
+EXIT_CODE=0

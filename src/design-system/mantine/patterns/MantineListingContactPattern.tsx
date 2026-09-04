@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, ThemeIcon, useMantineTheme } from '@mantine/core'
+import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, Box, ThemeIcon, useMantineTheme } from '@mantine/core'
 import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
 
 export interface MantineListingContactAgent {
@@ -51,8 +51,6 @@ export interface MantineListingContactPatternProps {
   onWhatsApp?: () => void
   onShare?: () => void
   onLogin?: () => void
-  /** Real `FavoriteButton` (app) / demo heart (story) — positioned node, hook-free split. */
-  favorite?: ReactNode
   /** Real inquiry-dialog trigger (app) / demo trigger (story) — positioned node. */
   inquiryTrigger?: ReactNode
   /** Real report-dialog trigger (app) / demo trigger (story) — positioned node. */
@@ -61,12 +59,14 @@ export interface MantineListingContactPatternProps {
 
 /**
  * Canonical listing-detail contact-card pattern (Task 616 D2) — ALL Mantine, its own story.
- * Content mirrors `ListingContact.tsx`'s desktop sticky sidebar; `favorite`/`inquiryTrigger`/
- * `reportTrigger` are passed as positioned nodes (Task 605 hook-free split) so this pattern
- * never imports the real stateful dialogs/actions. Preserves the Task 615 CTA fix
- * (`Flex direction={{base:'column',sm:'row'}}` + per-button `flex:1 minWidth:0` + wrapping
- * `<span>` so long uk/it labels wrap instead of overflowing) and the sticky positioning
- * (`position:'sticky', top:80`).
+ * Content mirrors `ListingContact.tsx`'s desktop sticky sidebar; `inquiryTrigger`/`reportTrigger`
+ * are passed as positioned nodes (Task 605 hook-free split) so this pattern never imports the
+ * real stateful dialogs/actions. Preserves the Task 615 CTA fix (per-button `flex:1 minWidth:0`
+ * + wrapping `<span>` so long uk/it labels wrap instead of overflowing) and the sticky positioning.
+ * Task 784 D69-25 (owner instruction, 2026-09-04): favorite moved out of this card entirely —
+ * `MantineListingDetailPattern` now owns it directly, always in its badges row, at every
+ * breakpoint (previously split between here and the badges row by viewport; see that
+ * component's own comment for the current placement contract).
  */
 export function MantineListingContactPattern({
   state = 'normal',
@@ -79,7 +79,6 @@ export function MantineListingContactPattern({
   onWhatsApp,
   onShare,
   onLogin,
-  favorite,
   inquiryTrigger,
   reportTrigger,
 }: MantineListingContactPatternProps) {
@@ -87,14 +86,27 @@ export function MantineListingContactPattern({
   const dimmed = state === 'ownerDeleted' || state === 'guestCta' || state === 'ownerUnavailable'
 
   return (
-    <Paper withBorder p="lg" style={{ position: 'sticky', top: 80 }}>
+    // Task 784 Revision 5 (D69-20): the Revision 3 `styles={{root:{'@media...':{...}}}}` block
+    // emitted no CSS (Mantine resolves `styles` keys as properties/selectors, never as
+    // `@media` at-rules — see docs/sessions/evidence/task784/d69-19-browser/
+    // styles-prop-media-query-defect-proof.md), silently reverting this Paper to always-static and
+    // regressing the pre-Task-784 `HEAD` behavior (`style={{position:'sticky', top:80}}`, working
+    // but ungated). Fixed via Mantine's native responsive Box style props (`pos`/`top`), which do
+    // emit real `@media` rules keyed off `theme.breakpoints.lg` — position `static` below the
+    // gate, `sticky` at `lg`, offset sourced only from theme.other.layout.listingContactStickyOffset.
+    <Paper
+      withBorder
+      p="lg"
+      pos={{ base: 'static', lg: 'sticky' }}
+      top={{ lg: theme.other.layout.listingContactStickyOffset }}
+    >
       <Stack gap="md">
         <Group gap="sm" wrap="nowrap" style={dimmed ? { opacity: 0.5 } : undefined}>
           <Avatar src={state === 'ownerDeleted' ? null : agent.avatarUrl} radius="xl" size="lg" color="brand">
             {state === 'ownerDeleted' ? <UserX size={theme.other.iconSize.roomy} /> : agent.initials}
           </Avatar>
-          <Stack gap={2} style={{ flex: 1, minWidth: 0 }}>
-            <Group gap={6} wrap="nowrap">
+          <Stack gap="micro" style={{ flex: 1, minWidth: 0 }}>
+            <Group gap="compact" wrap="nowrap">
               <Text fw={600} size="sm" truncate>
                 {agent.name}
               </Text>
@@ -112,7 +124,7 @@ export function MantineListingContactPattern({
 
         <Divider />
 
-        <Stack gap={2}>
+        <Stack gap="micro">
           <Text fw={700} size="xl" c="brand">
             {price.price}
           </Text>
@@ -148,8 +160,13 @@ export function MantineListingContactPattern({
           </Button>
         )}
 
+        {/* Task 784 D69-22 (owner instruction, 2026-09-04): row from xs2 (480px) while the panel
+            is full-width (D69-21's Grid fix stacks it below md=768px). At md and above the panel
+            becomes a narrow Grid sidebar (~245-330px) — row there re-wraps the longest uk label
+            (measured), so direction reverts to column until the sidebar is wide enough again,
+            confirmed only from xl (1280px, 416px sidebar) in both it and uk. */}
         {state === 'normal' && (hasPhone || hasWhatsapp) && (
-          <Flex direction={{ base: 'column', sm: 'row' }} gap="sm">
+          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
             {hasPhone && (
               <Button
                 color="brand"
@@ -175,34 +192,27 @@ export function MantineListingContactPattern({
           </Flex>
         )}
 
-        {state === 'normal' && inquiryTrigger}
-
-        {/* Share is the single real CTA in this row — full-width alone (P0 mobile gate,
-            Task 724). A fixed-width sibling icon in the same row made `flex:1` mathematically
-            unable to satisfy the gate, which compares against the Group's FULL content width,
-            not "remaining space after the icon" (measured deficit 46px, R8-geometry-probe). */}
+        {/* Task 784 D69-24 (owner instruction, 2026-09-04): "Send message" and "Share" share one
+            row now, same mechanism and breakpoint gate as the Call/WhatsApp row above (D69-22).
+            Share's prior "full-width alone" note (Task 724, R8-geometry-probe) was about a
+            FIXED-WIDTH icon sibling, whose deficit math doesn't apply to a same-shaped sibling
+            Button here — `inquiryTrigger` is an opaque consumer-supplied node that sets its own
+            `fullWidth` internally (hook-free split, Task 605); wrapping it in a `flex:1,
+            minWidth:0` container lets that internal `fullWidth` fill the container's share of the
+            row instead of the whole panel, same as Share's own `flex:1` below. */}
         {state === 'normal' && (
-          <Button
-            variant="default"
-            onClick={onShare}
-            leftSection={<Share2 size={theme.other.iconSize.standard} />}
-            fullWidth
-          >
-            {labels.share}
-          </Button>
-        )}
-
-        {/* Favorite (icon-only ActionIcon — not a `.mantine-Button-root`, so clause 11's
-            full-width check never applies to it) gets its own compact row, same `Group
-            justify="flex-end"` container this pattern used for `reportTrigger` alone before
-            Task 724 (no new chrome). 724R review F6: no TailAdmin reference row exists for this
-            exact favorite-icon placement — clause-16a stop, documented in the 724R session log
-            V7/AV7; not a blocker since no new visual chrome (color/spacing/radius/shadow) is
-            introduced, only the pre-existing Group primitive. */}
-        {state === 'normal' && favorite && (
-          <Group justify="flex-end">
-            {favorite}
-          </Group>
+          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
+            <Box style={{ flex: 1, minWidth: 0 }}>{inquiryTrigger}</Box>
+            <Button
+              variant="default"
+              onClick={onShare}
+              leftSection={<Share2 size={theme.other.iconSize.standard} />}
+              style={{ flex: 1, minWidth: 0 }}
+              styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
+            >
+              <span style={{ minWidth: 0, display: 'block' }}>{labels.share}</span>
+            </Button>
+          </Flex>
         )}
 
         {/* Report listing — real full-width fix (724R V2 route a), same Mantine mechanism as

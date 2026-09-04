@@ -141,14 +141,14 @@ export function LocationCombobox({
             fz="xs"
             fw={500}
             c="brand.7"
-            mih="2.75rem"
+            mih={theme.other.touchTarget}
             style={{ width: 'fit-content' }}
             onClick={() => setShowAdd(v => !v)}
           >
             + {tc('add_location')}
           </Anchor>
           {showAdd && (
-            <MantineAddItemPanel mt={4}>
+            <MantineAddItemPanel mt="tight">
               <Text size="xs" fw={600}>{tc('new_location')}</Text>
               <TextInput
                 value={addName}

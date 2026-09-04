@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Stack, Text, ActionIcon, Button } from '@mantine/core';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Stack, Text, Button } from '@mantine/core';
+import { MessageCircle } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingContactPattern, type MantineListingContactLabels } from '@/design-system/mantine/patterns';
 
@@ -36,15 +36,8 @@ function makeLabels(l: string): MantineListingContactLabels {
 }
 
 // Demo positioned nodes — plain Mantine primitives standing in for the real stateful
-// FavoriteButton / ListingInquiryDialog trigger / ListingReportDialog trigger.
-function DemoFavorite({ l }: { l: string }) {
-  return (
-    <ActionIcon variant="default" size="lg" radius="xl" aria-label={storyT(l, 'storybook.mantine.card_favorite_aria_add')}>
-      <Heart size={18} />
-    </ActionIcon>
-  );
-}
-
+// ListingInquiryDialog trigger / ListingReportDialog trigger. Favorite is no longer rendered by
+// this card (Task 784 D69-25) — it moved to `MantineListingDetailPattern`'s badges row.
 function DemoInquiryTrigger({ l }: { l: string }) {
   return (
     <Button variant="outline" fullWidth leftSection={<MessageCircle size={18} />}>
@@ -89,7 +82,6 @@ export const Default: Story = {
             labels={labels}
             hasPhone
             hasWhatsapp
-            favorite={<DemoFavorite l={l} />}
             inquiryTrigger={<DemoInquiryTrigger l={l} />}
             reportTrigger={<DemoReportTrigger l={l} />}
           />

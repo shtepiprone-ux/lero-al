@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text, useMantineTheme } from '@mantine/core'
+import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 import { cn } from '@/lib/utils'
 import type { FooterLink } from '@/types/database'
 import styles from './FooterView.module.css'
@@ -64,11 +65,10 @@ export function FooterView({
   copyright,
   locale,
 }: FooterViewProps) {
-  const theme = useMantineTheme()
   return (
     <Box component="footer" className={cn('site-footer', styles.footer)}>
       <Box className={cn('container-wide', styles.container)}>
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={theme.other.layout.footerGridGap}>
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={theme.other!.layout!.footerGridGap}>
 
           {/* Brand */}
           <Stack gap="md">

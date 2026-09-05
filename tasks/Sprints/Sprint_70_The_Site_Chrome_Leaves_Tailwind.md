@@ -50,11 +50,14 @@ Deleting the component without those two is how every mobile page keeps 56px of 
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **787** | Global header Mantine migration, mobile bottom-bar removal, and guest gating of "Add listing" / "Favorites" | **P1** | **Q3** | 🔁 **REVISION 1 REQUIRED** (orchestrator review 2026-09-05) — implementation `VERIFIED` (R1·R3–R8, AC9 live, owner visual QA accepted **D70-2**); returned on a false reference census, one live fail-closed reference and stale state records. Revision brief → kickoff §10. → [`Sprint_70_kickoff_prompt_Task_787_…`](Sprint_70_kickoff_prompt_Task_787_Header_Mantine_Global_And_Mobile_Nav_Consolidation.md) |
+| **787** | Global header Mantine migration, mobile bottom-bar removal, and guest gating of "Add listing" / "Favorites" | **P1** | **Q3** | ✅ **ARCHIVED** 2026-09-05 — `APPROVED WITH NOTES` after Revision 1, committed and pushed (`1b72b26e2`). Original review note: — implementation `VERIFIED` (R1·R3–R8, AC9 live, owner visual QA accepted **D70-2**); returned on a false reference census, one live fail-closed reference and stale state records. Revision brief → kickoff §10. → [`Sprint_70_kickoff_prompt_Task_787_…`](Sprint_70_kickoff_prompt_Task_787_Header_Mantine_Global_And_Mobile_Nav_Consolidation.md) |
+| **788** | Delete the unconsumed `src/components/layout` primitive barrel — `FilterBar` · `PageShell` · `Section` · `PageHeader` + `index.ts` + 4 stories | **P2** | **Q1** | 📋 **KICKOFF FILED** (2026-09-05) — awaiting dispatch to Sonnet. → [`Sprint_70_kickoff_prompt_Task_788_…`](Sprint_70_kickoff_prompt_Task_788_Delete_The_Unconsumed_Layout_Primitive_Barrel.md) |
 
 ## Execution order
 
-Single task; the kickoff's §4 scope boundary is the gating, not a phase list. If the executor finds the three
+**787 → 788.** 787 is archived; 788 is independent of it and of 789. 788 deletes only files with a proven-zero consumer set, so it gates nothing and is gated by nothing — but it must land **before** 789, because 789 migrates a live bar in `ListingsTab.tsx` that carries a local constant named `FilterBar`, and doing that while a real `FilterBar` component still exists invites exactly the same-name confusion this sprint just measured.
+
+Task 787's own note, retained: single task; the kickoff's §4 scope boundary is the gating, not a phase list. If the executor finds the three
 requirements cannot land in one commit-sized change, it records that as a design blocker and stops — it does
 **not** split the task itself, because requirements 2 and 3 are entangled (deleting `MobileBottomNavView` is
 *how* requirement 3 is satisfied on mobile) and a partial landing leaves the guest FAB shipping.

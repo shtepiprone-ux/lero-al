@@ -218,7 +218,14 @@ List confirmed findings before any summary. Every finding must include:
 - precise location;
 - observed behavior and expected behavior;
 - evidence and impact;
-- required correction and verification method.
+- a clear, concrete resolution and its verification method.
+
+Root-cause analysis may support a finding, but it never substitutes for a resolution. For every confirmed finding,
+state `Resolution:` with the specific change required, its target, and the resulting behavior; then state
+`Verification:` with the exact test, command, or observable evidence that will prove the resolution. Vague
+directions such as "fix this", "investigate", or a restatement of the cause are not resolutions. If the reviewer
+cannot select a safe implementation without an owner decision, name the exact decision, the concrete options, and
+what each option must change and verify. Never leave a finding as causes or symptoms alone.
 
 Use `NEEDS VERIFICATION` for a plausible issue that the available evidence cannot confirm. Do not convert style preferences into blocking findings or hide a functional defect as a note.
 

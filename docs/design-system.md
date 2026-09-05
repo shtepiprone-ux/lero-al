@@ -142,7 +142,7 @@ Every visual element belongs to exactly one tier. This determines where it may b
 | Tier | Definition | Lives in | Responsive ownership |
 |---|---|---|---|
 | **1. Primitive UI** | Atomic, domain-agnostic (Button, Input, Combobox, Dialog, Sheet, DropdownMenu, Card, Badge, Tabs, Table primitive). | `src/components/ui/*` | The primitive. Consumers do NOT restyle its internals. Single-source (`ui-rules.md §0`): one Button, one Combobox. |
-| **2. Global layout primitive** | App-wide structural shells: **PageShell, PageHeader, Section, FilterBar**, plus admin specialisations **AdminPageShell, AdminTable, AdminCardList**. | `src/components/layout/*`, `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
+| **2. Global layout primitive** | Admin specialisations **AdminPageShell, AdminTable, AdminCardList**. The public half of this tier — **PageShell, PageHeader, Section, FilterBar** — was deleted (Task 788, 2026-09-05): zero production consumers, kept alive only by their own closed-loop Storybook stories. See §11.1/§12a and §18 for the retired prescriptive fragments this leaves behind. | `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
 | **3. Data-surface primitive** | Tabular/list/grid surfaces: AdminTable, AdminCardList, listing grid, card list. | `src/components/admin/*`, `src/modules/*/components` | Owns the table↔card switch (§10) and column visibility. |
 | **4. Domain component** | Feature-specific composition (ListingCard, ListingsFilters, CabinetShell, AdminListingsTable). | `src/modules/*`, feature folders | Composes tiers 1–3. May choose a `tableAt` decision and pass a `cardRow`, but may NOT invent a new container/spacing/table style. |
 
@@ -194,12 +194,10 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 
 ## §11 — Filters / search / tabs / actions — one global pattern
 
-1. **FilterBar** — one global layout primitive for filter chips + search + reset. Canonical outer fragment: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`; on `<lg:` collapses overflow filters into a Sheet ("Filters" trigger). Active-filter count badge + a single global Reset. No per-route custom accordion/overlay filter (the `ListingsFilters` custom accordion is a migration target).
-
-   **Alignment rule (Task 362, 2026-06-02):** The outer container uses `sm:items-start` (not `items-center`). When the filter cluster wraps to multiple chip rows, the search/badge/reset top-align with the first chip row — preventing the "scatter" caused by `items-center` vertically centering shorter elements against a tall multi-row chip cluster. The filter cluster itself uses `flex-wrap items-start gap-2` so all chip rows align consistently from the top edge.
-2. **Search** — canonical search input (Input primitive) inside the FilterBar; `min-w-0 flex-1` so it shrinks, never pushes the row.
+1. **FilterBar §11.1 — RETIRED (Task 788, 2026-09-05).** `src/components/layout/FilterBar.tsx` and its canonical outer fragment (`flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`) are deleted — zero production consumers. The live hand-rolled filter bar in `src/modules/cabinet/components/ListingsTab.tsx` is a separate component reserved for its own migration (Task 789) and does not inherit this fragment.
+2. **Search** — canonical search input (Input primitive); `min-w-0 flex-1` so it shrinks, never pushes the row.
 3. **Tabs** — the shadcn **Tabs** primitive only. Local tab clones (`CabinetShell`, `AdminCurrencyTabs`) are migration targets.
-4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (PageHeader, AdminPageShell). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
+4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (AdminPageShell). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers); `PageHeader` was removed (Task 788, 2026-09-05; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
 
 ---
 
@@ -225,9 +223,9 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 
 ### Mobile stacking / full-width
 - At 320 / 375 / 390 / 480 / 560px (i.e. `<sm:`), primary and secondary action buttons in DS primitives are **full-width or stacked in a column** unless a documented exception applies.
-- `PageHeader` action slot uses `max-sm:w-full [&>*]:max-sm:w-full`; the row goes inline at `sm:` (640px). The `ActionBar` primitive was removed (Task 358, 2026-06-02); page-level action clusters use a plain flex-wrap div with the canonical stacking fragment in the action slot.
+- `PageHeader` was removed (Task 788, 2026-09-05; zero product consumers) — its `max-sm:w-full [&>*]:max-sm:w-full` action-slot fragment retired with it. The `ActionBar` primitive was removed earlier (Task 358, 2026-06-02); page-level action clusters use a plain flex-wrap div with the canonical stacking fragment in the action slot.
 - `AdminPageShell` actions container: `flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:shrink-0 max-sm:w-full [&>*]:max-sm:w-full`.
-- `FilterBar` outer row: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full`.
+- `FilterBar` was removed (Task 788, 2026-09-05; zero product consumers) — its `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full` outer-row fragment retired with it.
 
 ### Filter chips / filter pills
 - Filter chips used as tappable controls MUST use `size="xl"` (44px) — NOT `size="sm"` (28px).
@@ -462,6 +460,7 @@ This contract is **never** migrated in a single task. Migration is phased; each 
 
 - **Phase 1 — Global Design System Foundation.** Create/normalize global containers + the layout primitives (PageShell, PageHeader, Section, FilterBar, ActionBar) if missing; document spacing/container/typography. **NO route migration.** Proves the primitives only.
   > **Execution note (owner decision 2026-06-01, Task 344):** Phase 1 is NOT executed as one kickoff. **Task 343 (all-five-primitives-at-once) is FROZEN / rejected for implementation** — too large, loop-prone, low-verifiability. Phase 1 is delivered as a **graduated DS-1..DS-4 queue, one small slice at a time, owner-approved between each**: **DS-1 PageShell + Section** (`Task 345`) → **DS-2 PageHeader** → **DS-3 ActionBar** → **DS-4 FilterBar**. DS-5 hardens Storybook proof; **no route migration (Phase 2+) begins until the full primitive foundation is shipped, reviewed, and owner-approved.** Full queue + diagnosis: `docs/sessions/2026-06-01-task-344-design-system-implementation-path.md`.
+  > **Superseded (Task 788, 2026-09-05):** this Phase 1 list is historical only. Building on the already-recorded Task 343 freeze above, the public half it named — PageShell, PageHeader, Section, FilterBar — was never adopted (zero production consumers, kept alive only by a closed Storybook loop) and has now been deleted. `ActionBar` was separately removed by Task 358. Current UI work uses the Mantine path (`docs/mantine-responsive-design-system.md`), not this queue.
 - **Phase 2 — Public Site Critical Responsive Migration.** Home, listing grid/search, listing detail, public header/footer, auth entry points.
 - **Phase 3 — Cabinet/Auth Responsive Migration.** Login/register/reset, cabinet/profile, favorites, create/edit listing.
 - **Phase 4 — Admin Data Surfaces Migration.** Listings (done — reference), users, tickets, support, sales, reports.
@@ -1633,7 +1632,6 @@ At every viewport **below 640px**, ALL of the following MUST span the **full ava
 |---|---|---|
 | Text `Button` (all label-bearing sizes) | `max-sm:w-full` (already in primitive, §12b) | Icon-only sizes exempt — see §26.4 |
 | `TabsList` / Tabs triggers | `max-sm:flex max-sm:w-full` (already in primitive, §12b) | |
-| `FilterBar` controls / triggers | `[&>*]:max-sm:w-full` on container (§11, §12a) | |
 | `SelectTrigger` | `max-sm:w-full` | Inherited from primitive |
 | `Combobox` button-variant trigger | `max-sm:w-full` | |
 | `PhoneField` | `max-sm:w-full` | |

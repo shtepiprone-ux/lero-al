@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, and 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion — mobile bottom bar removed; full regeneration deferred to avoid sweeping in unreviewed drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, and 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,10 +8,10 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 242 |
-| Storybook stories | 47 |
+| Total cataloged components | 238 |
+| Storybook stories | 43 |
 | Locale-aware (useTranslations) | 107 |
-| Client components ('use client') | 156 |
+| Client components ('use client') | 155 |
 | With arbitrary Tailwind values | 36 |
 | Components with 2xl responsive step | 12 |
 | Components flagged for review | 51 |
@@ -83,19 +83,15 @@ See `docs/component-risk-register.md` for risk register.
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (10)
+## Layout Components (`src/components/layout/`) (6)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `FilterBar` | APPROVED | ✅ | — | —  |
 | `FooterView` | APPROVED | — | — | HUGE_DESKTOP  |
 | `Header` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `HeaderActions` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 | `HeaderView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `MobileNavDrawer` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
-| `PageHeader` | APPROVED | ✅ | — | —  |
-| `PageShell` | APPROVED | ✅ | — | —  |
-| `Section` | APPROVED | ✅ | — | —  |
 | `UserMenu` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 
 ## Admin Shared Components (`src/components/admin/`) (35)

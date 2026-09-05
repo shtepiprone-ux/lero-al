@@ -83,45 +83,11 @@ Story IDs are Storybook-generated from `title` + export name (lowercase kebab-ca
 | `primitives-badge--default` | Badge/Default | — | all | MEDIUM |
 | `primitives-skeleton--listing-card` | Skeleton/ListingCard | — | all | LOW |
 
-### Layout Primitive Stories (DS-1..DS-4 — added Task 350; canonical presets added Task 350-Fix)
+### Layout Primitive Stories — REMOVED (Task 788, 2026-09-05)
 
-> All 14 design-system.md §3 canonical widths now have Storybook presets (Task 350-Fix added
-> `canonical560`, `canonical680`, `canonical810`, `canonical960`, `canonical1200` to `preview.tsx`).
-> Manual browser-resize is no longer required for any of the 14 widths.
-
-| Story ID | Label | Key viewport(s) | Locale override | Priority |
-|---|---|---|---|---|
-| `layout-pageshell--wide-default` | PageShell/WideDefault | desktop-1440 (+ toolbar for all) | all | **CRITICAL** |
-| `layout-pageshell--wide-at375` | PageShell/WideAt375 | mobile-375 | all | HIGH |
-| `layout-pageshell--wide-at768` | PageShell/WideAt768 | tablet-768 | all | HIGH |
-| `layout-pageshell--desktop-at1024` | PageShell/DesktopAt1024 | desktop-1024 | all | HIGH |
-| `layout-pageshell--narrow-ultrawide` | PageShell/NarrowUltrawide | huge-2560 | all | **CRITICAL** |
-| `layout-pageshell--long-ukrainian-mobile320` | PageShell/UkMobile320 | mobile-320 | uk | HIGH |
-| `layout-section--with-title-and-description` | Section/Default | desktop-1440 | all | HIGH |
-| `layout-section--long-uk-title-mobile320` | Section/UkMobile320 | mobile-320 | uk | HIGH |
-| `layout-section--title-at375` | Section/TitleAt375 | mobile-375 | uk | HIGH |
-| `layout-section--title-at768` | Section/TitleAt768 | tablet-768 | all | MEDIUM |
-| `layout-section--title-at2560` | Section/TitleAt2560 | huge-2560 | all | **CRITICAL** |
-| `layout-pageheader--default` | PageHeader/Default | desktop-1440 | all | HIGH |
-| `layout-pageheader--with-actions` | PageHeader/WithActions | desktop-1440 | all | HIGH |
-| `layout-pageheader--locale-stress` | PageHeader/LocaleStress | mobile-320 | uk | **CRITICAL** |
-| `layout-filterbar--default` | FilterBar/Default | desktop-1440 | all | HIGH |
-| `layout-filterbar--desktop-lg-boundary1024` | FilterBar/LgBoundary1024 | desktop-1024 | all | **CRITICAL** |
-| `layout-filterbar--many-filters10-plus-at768` | FilterBar/ManyAt768 | tablet-768 | all | HIGH |
-| `layout-filterbar--many-filters10-plus-at390` | FilterBar/ManyAt390 | mobile-390 | all | HIGH |
-| `layout-filterbar--uk-long-labels320` | FilterBar/UkLong320 | mobile-320 | uk | **CRITICAL** |
-| `layout-filterbar--stacked-at480` | FilterBar/StackedAt480 | mobile-480 | all | HIGH |
-| `layout-pageshell--wide-at560` | PageShell/WideAt560 | canonical-560 | all | HIGH |
-| `layout-pageshell--wide-at680` | PageShell/WideAt680 | canonical-680 | all | HIGH |
-| `layout-pageshell--wide-at810` | PageShell/WideAt810 | canonical-810 | all | HIGH |
-| `layout-pageshell--wide-at960` | PageShell/WideAt960 | canonical-960 | all | HIGH |
-| `layout-pageshell--wide-at1200` | PageShell/WideAt1200 | canonical-1200 | all | HIGH |
-| `layout-filterbar--stacked-at560` | FilterBar/StackedAt560 | canonical-560 | all | HIGH |
-| `layout-filterbar--stacked-at680` | FilterBar/StackedAt680 | canonical-680 | uk | HIGH |
-| `layout-filterbar--shared-row-at810` | FilterBar/SharedRowAt810 | canonical-810 | all | **CRITICAL** |
-| `layout-filterbar--shared-row-at960` | FilterBar/SharedRowAt960 | canonical-960 | all | HIGH |
-| `layout-filterbar--inline-at1200` | FilterBar/InlineAt1200 | canonical-1200 | all | **CRITICAL** |
-| `layout-pageheader--with-count-badge` | PageHeader/WithCountBadge | desktop-1440 | all | HIGH |
+PageShell, PageHeader, Section and FilterBar, and their DS-1..DS-4 stories, are deleted — zero
+production consumers, kept alive only by their own closed-loop Storybook stories. The 31 target
+rows this subsection listed no longer have a story to capture.
 
 ### DS Rendered QA Stories (Task 354-Fix — required direct stories, 2026-06-01)
 
@@ -141,25 +107,6 @@ Each cell requires actual rendered inspection (OWNER QA REQUIRED until visually 
 | `admin-statuschangehistory--uk-mobile390` | StatusChangeHistory/Uk_Mobile390 | mobile-390 | uk | HIGH |
 | `admin-statuschangehistory--it-mobile320` | StatusChangeHistory/It_Mobile320 | mobile-320 | it | HIGH |
 | `admin-statuschangehistory--raw-key-stress` | StatusChangeHistory/RawKeyStress | desktop1280 | en | **CRITICAL** |
-
-#### FilterBar — active vs available + mobile (filter-state contract)
-
-| Story ID | Label | Key viewport(s) | Locale | Priority |
-|---|---|---|---|---|
-| `layout-filterbar--zero-active-mobile390` | FilterBar/ZeroActive_Mobile390 | mobile-390 | en | **CRITICAL** |
-| `layout-filterbar--two-active-mobile390` | FilterBar/TwoActive_Mobile390 | mobile-390 | en | **CRITICAL** |
-| `layout-filterbar--many-available-two-active-mobile390` | FilterBar/ManyAvailableTwoActive_Mobile390 | mobile-390 | en | **CRITICAL** |
-| `layout-filterbar--uk-zero-active-mobile320` | FilterBar/Uk_ZeroActive_Mobile320 | mobile-320 | uk | **CRITICAL** |
-| `layout-filterbar--uk-two-active-mobile320` | FilterBar/Uk_TwoActive_Mobile320 | mobile-320 | uk | **CRITICAL** |
-| `layout-filterbar--uk-sheet-open-mobile390` | FilterBar/Uk_SheetOpen_Mobile390 | mobile-390 | uk | **CRITICAL** |
-
-#### PageHeader — locale action + mobile full-width
-
-| Story ID | Label | Key viewport(s) | Locale | Priority |
-|---|---|---|---|---|
-| `layout-pageheader--long-uk-title-mobile320` | PageHeader/LongUkTitleMobile320 | mobile-320 | uk | **CRITICAL** |
-| `layout-pageheader--long-sq-title-mobile320` | PageHeader/LongSqTitleMobile320 | mobile-320 | sq | HIGH |
-| `layout-pageheader--long-it-title-mobile320` | PageHeader/LongItTitleMobile320 | mobile-320 | it | HIGH |
 
 #### StatusChangeControl — sq/it locale stress (admin)
 
@@ -185,7 +132,7 @@ Each cell requires actual rendered inspection (OWNER QA REQUIRED until visually 
 | `system-emptystate--ukrainian-locale` | EmptyState/Ukrainian | — | uk only | HIGH |
 | `system-adminlayout--admin-toolbar` | Admin/Toolbar | desktop-1280 | all | MEDIUM |
 
-**Total targets (fast-check matrix):** ~145 screenshots (inc. Layout primitives)
+**Total targets (fast-check matrix):** ~145 screenshots — stale pending recount (Task 788, 2026-09-05, removed the Layout primitives share of this estimate; no full recomputation performed in this task)
 **Total targets (full matrix, all viewports):** ~500 screenshots (inc. 5 new canonical presets × all stories)
 
 ---

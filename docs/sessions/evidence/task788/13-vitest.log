@@ -1,0 +1,252 @@
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (27 tests | 1 failed) 69ms
+     × matches the real globals.css measured count (257) — Task 695 re-derivation 40ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 1 failed) 30ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 13ms
+ ❯ src/design-system/mantine/__tests__/theme.d69-18.test.tsx (55 tests | 1 failed) 164ms
+     × src/components/layout/FooterView.tsx resolves theme.other.layout.footerGridGap 11ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 3126ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 148ms
+     × archived listing renders the archived badge + dimmed card 168ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the real globals.css measured count (257) — Task 695 re-derivation
+AssertionError: expected 296 to be 257 // Object.is equality
+
+- Expected
++ Received
+
+- 257
++ 296
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:208:24
+    206|     // (NotificationCenter's 390px threshold retargeted to the canonic…
+    207|     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    208|     expect(owned.size).toBe(257)
+       |                        ^
+    209|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    210|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/design-system/mantine/__tests__/theme.d69-18.test.tsx > D69-18 §13 consumers — each resolves its named contract (mechanical source check) > src/components/layout/FooterView.tsx resolves theme.other.layout.footerGridGap
+AssertionError: expected 'import Link from \'next/link\'\nimpor…' to contain 'theme.other.layout.footerGridGap'
+
+- Expected
++ Received
+
+- theme.other.layout.footerGridGap
++ import Link from 'next/link'
++ import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text } from '@mantine/core'
++ import { theme } from '@/design-system/mantine/theme'
++ import { cn } from '@/lib/utils'
++ import type { FooterLink } from '@/types/database'
++ import styles from './FooterView.module.css'
++
++ // Resolve a link URL: internal paths get the locale prefix; external used as-is.
++ function resolveHref(url: string, locale: string): string {
++   if (!url) return `/${locale}`
++   if (url.startsWith('http://') || url.startsWith('https://')) return url
++   return `/${locale}${url.startsWith('/') ? url : '/' + url}`
++ }
++
++ function isExternal(url: string): boolean {
++   return url.startsWith('http://') || url.startsWith('https://')
++ }
++
++ function FooterLink_({ link, locale }: { link: FooterLink; locale: string }) {
++   const ext = isExternal(link.url)
++   return (
++     <Anchor
++       unstyled
++       component={Link}
++       href={resolveHref(link.url, locale)}
++       className={styles.footerLink}
++       {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
++     >
++       {link.label}
++     </Anchor>
++   )
++ }
++
++ export interface FooterViewProps {
++   brand: string
++   tld: string
++   tagline: string
++   navTitle: string
++   infoTitle: string
++   socialTitle: string
++   navLinks: FooterLink[]
++   infoLinks: FooterLink[]
++   socialLinks: FooterLink[]
++   copyright: string
++   locale: string
++ }
++
++ /**
++  * Presentational footer built from Mantine layout primitives (Box/Stack/Group/Flex/SimpleGrid)
++  * and Mantine content primitives (Anchor/Text, both `unstyled`). Prop-driven and hook-free — all
++  * data resolution (DB values, fallbacks, i18n) happens in the `Footer` container. Visual values
++  * live in `FooterView.module.css` (consuming `globals.css` variables) or as Mantine style props —
++  * zero raw Tailwind utility classes (Task 673, D28 mechanism-only de-hybrid).
++  */
++ export function FooterView({
++   brand,
++   tld,
++   tagline,
++   navTitle,
++   infoTitle,
++   socialTitle,
++   navLinks,
++   infoLinks,
++   socialLinks,
++   copyright,
++   locale,
++ }: FooterViewProps) {
++   return (
++     <Box component="footer" className={cn('site-footer', styles.footer)}>
++       <Box className={cn('container-wide', styles.container)}>
++         <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={theme.other!.layout!.footerGridGap}>
++
++           {/* Brand */}
++           <Stack gap="md">
++             <Anchor unstyled component={Link} href={`/${locale}`} className={styles.brandLink}>
++               <Text unstyled component="span" className={styles.textPrimary}>{brand}</Text>
++               <Text unstyled component="span" className={styles.textForeground}>{tld}</Text>
++             </Anchor>
++             <Text unstyled className={styles.tagline}>{tagline}</Text>
++           </Stack>
++
++           {/* Navigation */}
++           <Stack gap="md">
++             <Text unstyled className={styles.sectionHeading}>
++               {navTitle}
++             </Text>
++             <Box component="nav" className={styles.linkList} aria-label={navTitle}>
++               {navLinks.map(link => (
++                 <FooterLink_ key={link.id} link={link} locale={locale} />
++               ))}
++             </Box>
++           </Stack>
++
++           {/* Information */}
++           <Stack gap="md">
++             <Text unstyled className={styles.sectionHeading}>
++               {infoTitle}
++             </Text>
++             <Box component="nav" className={styles.linkList} aria-label={infoTitle}>
++               {infoLinks.map(link => (
++                 <FooterLink_ key={link.id} link={link} locale={locale} />
++               ))}
++             </Box>
++           </Stack>
++         </SimpleGrid>
++
++         {/* Bottom bar */}
++         <Flex
++           direction={{ base: 'column', sm: 'row' }}
++           align="center"
++           justify="space-between"
++           gap="sm"
++           mt="3xl"
++           pt="xl"
++           className={styles.bottomBar}
++         >
++           <Text unstyled className={styles.copyright}>{copyright}</Text>
++           <Group align="center" gap="lg">
++             <Text unstyled component="span" className={styles.socialLabel} visibleFrom="sm">{socialTitle}:</Text>
++             {socialLinks.map(link => (
++               <Anchor
++                 unstyled
++                 key={link.id}
++                 href={link.url}
++                 target="_blank"
++                 rel="noopener noreferrer"
++                 className={styles.socialLink}
++               >
++                 {link.label}
++               </Anchor>
++             ))}
++           </Group>
++         </Flex>
++       </Box>
++     </Box>
++   )
++ }
++
+
+ ❯ src/design-system/mantine/__tests__/theme.d69-18.test.tsx:278:24
+    276|       const source = readSource(file)
+    277|       for (const needle of mustContain) {
+    278|         expect(source).toContain(needle)
+       |                        ^
+    279|       }
+    280|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  4 failed | 80 passed (84)
+      Tests  5 failed | 1528 passed (1533)
+   Start at  11:16:03
+   Duration  73.42s (transform 36.03s, setup 29.34s, import 361.60s, tests 151.80s, environment 470.92s)
+
+EXIT_CODE=1

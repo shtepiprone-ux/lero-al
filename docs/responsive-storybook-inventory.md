@@ -9,7 +9,10 @@
 
 **Discovery method:** `Glob('src/**/*.stories.tsx')` + `Glob('src/stories/**/*.{tsx,ts}')` run on the live repository tree — no manual cherry-picking.
 
-### Discovered story files (43 total)
+### Discovered story files (43 at 2026-06-08; **39 current** — the 4 Layout stories below were
+deleted 2026-09-05, Task 788: zero production consumers. Counts elsewhere in this section/§2/§3/§4
+are the original Task 412 discovery run and are not re-run by this task; only the Layout entries
+are struck below.)
 
 #### Primitives (14 story files)
 | File | In ASSERT_STORIES? | Type |
@@ -61,13 +64,7 @@
 | `src/components/admin/AdminUsersTable.stories.tsx` | ✅ `admin-adminuserstable--default` | Product-rendering story |
 | `src/components/admin/AdminUserProfile.stories.tsx` | ✅ `admin-adminuserprofile--default` | Product-rendering story |
 
-#### Layout (4 story files)
-| File | In ASSERT_STORIES? | Type |
-|---|---|---|
-| `src/components/layout/FilterBar.stories.tsx` | ✅ `layout-filterbar--default` | Product-rendering story |
-| `src/components/layout/PageHeader.stories.tsx` | ✅ `layout-pageheader--default` | Product-rendering story |
-| `src/components/layout/PageShell.stories.tsx` | ✅ `layout-pageshell--default` | Product-rendering story |
-| `src/components/layout/Section.stories.tsx` | ✅ `layout-section--with-title-and-description` | Product-rendering story |
+#### Layout (0 story files — was 4; all deleted, Task 788, 2026-09-05, zero production consumers)
 
 #### System (5 story files)
 | File | In ASSERT_STORIES? | Type |
@@ -86,8 +83,9 @@
 | `src/stories/fixtures/admin.fixtures.ts` | Admin fixture data — not a story |
 | `src/stories/StoryListingCard.tsx` | Story render helper component — not a story |
 
-### ASSERT_STORIES count: 45 story IDs (some files contribute 2 IDs)
-All 43 story files have at least one ID in `ASSERT_STORIES`. No story file is silently omitted.
+### ASSERT_STORIES count: 45 story IDs at 2026-06-08 (some files contribute 2 IDs); **41 current**
+(4 Layout IDs removed, Task 788, 2026-09-05). All 39 current story files have at least one ID in
+`ASSERT_STORIES`. No story file is silently omitted.
 Story files contributing 2 IDs: `AdminUserAvatar` (view-placeholder + edit-mode), `AdminSidebar` (desktop + mobile-drawer-open).
 
 ### Multi-export stories not individually listed in ASSERT_STORIES
@@ -151,10 +149,10 @@ Legend for "Needs fix?":
 | `AdminListingsTable.stories.tsx` | `admin-adminlistingstable--default` + multi (--filtered-pending, --locale-stress, --tablet) | Admin | AdminListingsTable (reference `tableAtLg` implementation, sort, search, filter) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation (Task 306-Fix). Machine PASS. All columns/row-actions preserved. §10, §25.1 |
 | `AdminUsersTable.stories.tsx` | `admin-adminuserstable--default` + multi (--locale-stress, --location-requests, --tablet, --verified-tab) | Admin | AdminUsersTable (user management table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. tableAt decision needed. Verify column set + row actions + pagination at 768–1023. `tableAtLg` target. §10, §25.1 |
 | `AdminUserProfile.stories.tsx` | `admin-adminuserprofile--default` + multi (--create-mode, --locale-stress, --tablet) | Admin | AdminUserProfile (user detail form, avatar, role selector, status) | sq/en/uk/it | HIGH | OPEN DECISION | `detailLayout` or `formLayout` pattern. Machine PASS. Action buttons full-width at `<640` NOT machine-checked. Manual QA: §26.1. §10 (detailLayout), §12, §26.1 |
-| `FilterBar.stories.tsx` | `layout-filterbar--default` + multi | Layout | FilterBar (filter chips, search input, reset, sheet variant) | sq/en/uk/it | HIGH | NO | FilterBar fixed in Sprint 32/33 (Tasks 362/376). `[&>*]:max-sm:w-full` on chips + `sm:items-start`. Machine PASS. §11, §12a, §26.1 |
-| `PageHeader.stories.tsx` | `layout-pageheader--default` + multi | Layout | PageHeader (title + count badge + actions slot, all locales) | sq/en/uk/it | HIGH | NO | Task 354-Fix fixed action stacking. Machine PASS. §9, §12b, §26.1 |
-| `PageShell.stories.tsx` | `layout-pageshell--default` + multi | Layout | PageShell (public page wrapper, header/footer, container) | sq/en/uk/it | HIGH | NO | DS-1 migration (Task 345). Machine PASS. §8, §4 |
-| `Section.stories.tsx` | `layout-section--with-title-and-description` + multi | Layout | Section (content section: title, description, children) | sq/en/uk/it | MEDIUM | NO | DS-1 migration. Heading wraps in uk. Machine PASS. §5, §6 |
+| ~~`FilterBar.stories.tsx`~~ | ~~`layout-filterbar--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
+| ~~`PageHeader.stories.tsx`~~ | ~~`layout-pageheader--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
+| ~~`PageShell.stories.tsx`~~ | ~~`layout-pageshell--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
+| ~~`Section.stories.tsx`~~ | ~~`layout-section--with-title-and-description`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
 | `AdminLayout.stories.tsx` | `system-adminlayout--admin-toolbar` | System | AdminLayout (admin shell demo: sidebar + main area + toolbar) | sq/en/uk/it | HIGH | OPEN DECISION | Shell demo; action buttons in toolbar NOT machine-checked for full-width. Manual QA: toolbar at mobile. §9, §26.1 |
 | `Containers.stories.tsx` | `system-containers--container-wide` + multi | System | Containers (container-wide, container-admin, content-container) | sq/en/uk/it | HIGH | NO | Container max-width at 1408/1792px. Machine PASS. Wide-desktop visual QA: no stretch at 2560. §4 |
 | `EmptyState.stories.tsx` | `system-emptystate--no-listings` + multi | System | EmptyState (no listings, Ukrainian locale stress, mobile) | sq/en/uk/it | MEDIUM | NO | CTA button full-width — Task 372 fixed. Machine PASS. §6, §12b |
@@ -170,9 +168,9 @@ Legend for "Needs fix?":
 | Primitives | 14 | 14 | 14 | 0 | 5 (command, dialog, dropdown-menu, popover, select) |
 | Shared | 1 | 1 | 1 | 0 | 1 (combobox) |
 | Admin | 19 | 21 | 18 | 3 (currencies, property-types, companies) | 14 |
-| Layout | 4 | 4 | 4 | 0 | 0 |
+| Layout | ~~4~~ 0 (deleted, Task 788, 2026-09-05) | ~~4~~ 0 | ~~4~~ 0 | 0 | 0 |
 | System | 5 | 5 | 5 | 0 | 1 (adminlayout) |
-| **Total** | **43** | **45** | **42** | **3** | **21** |
+| **Total (current)** | **39** | **41** | **38** | **3** | **21** |
 
 **Notes:**
 - "Machine PASS (Task 411)" = no failure detected by assertions (a)/(b)/(c) in `screenshots:assert`
@@ -183,8 +181,10 @@ Legend for "Needs fix?":
 
 ## §4 — GAP stories (cannot be fully evaluated)
 
-No story file was found to be completely unevaluable. All 43 story files rendered successfully
-in Task 411 (45 IDs, 44 PASS, 1 infra flake at `admin-adminmobileheader--default × uk × huge-1920`).
+No story file was found to be completely unevaluable. At the time of the Task 411 run all 43 story
+files (45 IDs, 44 PASS, 1 infra flake at `admin-adminmobileheader--default × uk × huge-1920`)
+rendered successfully; of those, **39 files / 41 IDs / 40 PASS** are current — the 4 removed
+(Task 788, 2026-09-05) carried no flake.
 
 **Infra flake record (not a layout defect):**
 - Story: `admin-adminmobileheader--default`

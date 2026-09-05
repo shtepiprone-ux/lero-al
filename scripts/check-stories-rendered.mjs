@@ -159,11 +159,8 @@ const ASSERT_STORIES = [
   { id: 'admin-adminlistingstable--default',       label: 'AdminListingsTable/Default',       anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
   { id: 'admin-adminuserstable--default',          label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },
   { id: 'admin-adminuserprofile--default',         label: 'AdminUserProfile/Default',         anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
-  // ── Layout (4) ──
-  { id: 'layout-filterbar--default',               label: 'FilterBar/Default',                anchors: [{ type: 'testid', value: 'filter-bar', label: 'filter-bar' }] },
-  { id: 'layout-pageheader--default',              label: 'PageHeader/Default',               anchors: [{ type: 'testid', value: 'page-header', label: 'page-header' }] },
-  { id: 'layout-pageshell--default',               label: 'PageShell/Default',                anchors: [{ type: 'testid', value: 'page-shell', label: 'page-shell' }] },
-  { id: 'layout-section--with-title-and-description', label: 'Section/WithTitleAndDesc',      anchors: [{ type: 'testid', value: 'section', label: 'section' }] },
+  // ── Layout (0) — FilterBar/PageHeader/PageShell/Section deleted (Task 788, 2026-09-05):
+  // zero production consumers, stories removed with the components ──
   // ── System (7) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7);
   // Featured/Latest/Similar added (Task 665 §16 R14 — these 3 rebuilt System/* stories previously
   // had no rendered-proof at all; anchored on '.listing-card', rendered by the real ListingCard

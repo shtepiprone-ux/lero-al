@@ -439,7 +439,9 @@ All user-facing story fixture fields must be locale-safe:
 ### Global category coverage
 All five Storybook categories are required sweep scope:
 - **Admin**: AdminCardList, AdminPageShell, AdminTable, StatusChangeControl, StatusChangeHistory
-- **Layout**: FilterBar, PageHeader, PageShell, Section
+- **Layout**: no story-bearing members remain (FilterBar, PageHeader, PageShell, Section deleted —
+  Task 788, 2026-09-05, zero production consumers; the surviving `src/components/layout/*` files
+  have no stories)
 - **Shared**: Combobox
 - **Primitives**: Badge, Button, Checkbox, Command, Dialog, DropdownMenu, Input, PasswordInput, PasswordRequirementsHint, Popover, Select, Sheet, Skeleton, Tabs
 - **System**: AdminLayout, Containers, EmptyState, FeaturedListings, LatestListings, RecentlyViewedSection, SimilarListings

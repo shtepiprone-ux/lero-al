@@ -165,9 +165,8 @@ const PER_STORY_TOKENS = {
   'admin-admintable': ['User', 'Agent', 'Moderator', 'Admin', 'Administrator'],
   // AdminCardList: same fixture role data surfaced in card-mode subtitle.
   'admin-admincardlist': ['User', 'Agent', 'Moderator', 'Admin', 'Administrator'],
-  // FilterBar: "Studio" is an Albanian loanword for property type (sq:"Studio" = en:"Studio").
-  // Only visible at desktop-1280 where property-type chips are rendered inline.
-  'layout-filterbar': ['Studio'],
+  // layout-filterbar entry removed (Task 788, 2026-09-05): src/components/layout/FilterBar.tsx
+  // and its story deleted, zero production consumers — the allowlist key can no longer match.
   // StatusChangeHistory: actorName fixture + RawKeyStress humanizes snake_case → Title Case by design.
   'admin-statuschangehistory': ['Admin', 'Moderator', 'Administrator', 'In Progress', 'Resolved'],
   // StatusChangeControl/WorkflowWithHistory: actorName fixture + status label t() fallbacks.

@@ -542,14 +542,11 @@ Applies to: `xs`, `sm`, `default`, `lg`, `xl`, `tab`.
 - ❌ Action buttons that are `< 44px` tall at mobile
 - ❌ Horizontal page overflow from any tab list, chip row, or action cluster
 
-### FilterBar canonical alignment (Task 362, 2026-06-02)
-FilterBar outer container: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`
-
-Use `sm:items-start` (NOT `sm:items-center`). When the inline filter cluster has many chips wrapping to multiple rows, `items-center` causes the search input to appear vertically centered against the tall cluster — the "scatter" bug. `items-start` top-aligns all row children consistently.
-
-FilterBar filter cluster: `flex flex-wrap items-start gap-2` — chip rows top-align. Consumer's `filters` prop should use `items-start` too for consistency.
-
-FilterBar Sheet body: NO own `p-*` on the inner filter area div — SheetContent's `p-6` (Task 361) provides the indentation.
+### FilterBar canonical alignment — RETIRED (Task 788, 2026-09-05)
+`src/components/layout/FilterBar.tsx` and its story are deleted — zero production consumers. The
+outer-container, filter-cluster and Sheet-body fragments this section prescribed no longer bind
+anything. The live hand-rolled filter bar in `src/modules/cabinet/components/ListingsTab.tsx` is a
+separate component reserved for its own migration (Task 789) and does not inherit these fragments.
 
 ### Threshold
 The breakpoint is **`sm` (640px)**, NOT `md` (768px). All page-level action clusters and tab lists use `sm:` / `max-sm:`, not `md:` / `max-md:`.

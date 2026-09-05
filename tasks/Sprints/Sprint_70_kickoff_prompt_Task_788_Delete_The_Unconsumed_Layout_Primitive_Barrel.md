@@ -1,6 +1,6 @@
 # Task 788 — delete the unconsumed `src/components/layout` primitive barrel
 
-**Sprint:** 70 · **Priority:** P2 · **QA profile:** **Q1** · **Filed:** 2026-09-05 · **State:** `KICKOFF FILED`
+**Sprint:** 70 · **Priority:** P2 · **QA profile:** **Q1** · **Filed:** 2026-09-05 · **State:** `REVISION 1 REQUIRED` (orchestrator review 2026-09-05 — see §14)
 
 **Executor:** fresh Sonnet via `.claude/skills/execute-task/SKILL.md`. Strongest permitted result is
 `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`. No self-approval, no mutating Git. Frontend exception: **no review
@@ -284,3 +284,118 @@ open. Status must be `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY 
 | Is the QA profile justified rather than assumed? | Yes — §11 derives Q1 from the no-rendered-surface proof and orders a stop if that proof fails |
 | Does the task invent an owner decision? | No — the tier-2 future is raised as an explicit open question and left to the owner |
 | Does it touch the live cabinet bar? | No — explicitly out of scope, reserved as 789 |
+
+---
+
+## 14. Revision 1 — orchestrator review verdict (2026-09-05)
+
+**Decision: `NEEDS REVISION`.** Reviewed against the real diff, all 13 retained transcripts, the two AC6 HTML
+responses, and an independent re-run of the reference census.
+
+Read this before touching anything. **The deletion is correct and is not being redone.** R1, R3, R4, R5, R6 and R7
+are `VERIFIED`; AC1, AC3, AC4, AC5, AC6, AC7 and AC8 are `VERIFIED`. Revision 1 exists because the census contains
+one false classification, and the `Files Changed` table is two rows short.
+
+### 14.1 Closed by the review — do NOT redo any of this
+
+| Item | Evidence the reviewer inspected |
+|---|---|
+| The nine deletions | `git status` shows 9 `D` entries; an independent grep of `src/` finds no import of any of the four — only the `ListingsTab.tsx:170` local constant, correctly named and excluded |
+| **The three references this kickoff's own §3.3 missed** | `check-stories-rendered.mjs:159-163` (4 dead `ASSERT_STORIES` anchors), `check-locale-leak.mjs:168` (orphaned `'layout-filterbar': ['Studio']` key in a **live** gate), `storybook-governance.md:442` (required sweep-scope list). All three are real, all three are correctly fixed. See §14.3 — these are defects in this kickoff, not in the execution |
+| AC3 counters | 238 / 43 / 107 / 155 / 36 / 51 and heading `(6)` — recomputed independently by the reviewer, matches §3.4's derivation exactly |
+| AC4 | `design-system.md:145` keeps `AdminPageShell`/`AdminTable`/`AdminCardList` and dates the public-half deletion; §11.1 `RETIRED`; `:226`/`:228` fragments retired; `:463` `Superseded` citing the pre-existing Task 343 freeze. `:166`/`:399` left descriptive, as this kickoff classified them |
+| AC5 | grep for `layout-pageshell\|layout-pageheader\|layout-filterbar\|layout-section` in the matrix → **0** |
+| AC6 | `10-ac6-server-requests.log` plus the two retained HTML bodies; the reviewer independently confirmed `site-header` and `site-footer` present in both, 200/200 on port 3789 |
+| AC7 / AC8 | scoped design-tokens 0/0; unscoped exit 1 with only the scanned-file count moving 455→450 and zero violation-line deltas; `check:stories` 135/0; `check:story-coverage` 26/26; `governance:components` green |
+| Transcript hygiene | 13 logs, UTF-8 no-BOM, 0 NUL, 0 U+FFFD, `EXIT_CODE` in-file. The Task 787 `Tee-Object`/UTF-16 trap was avoided |
+| The five red vitest tests | **Not caused by this task, and proved so rather than argued.** `FooterView.tsx` is byte-identical in `HEAD` and the worktree; its last change is `34faa47a9` (the Task 784 outage hotfix). `globals.css` last changed in `1b72b26e2` (787); `MantineListingCardPattern.tsx` in `7dd23e90b` (784). Filed as Task **790** — see §14.3 |
+
+### 14.2 Required corrections
+
+**R1.1 · `P1` · `docs/ui-rules.md:545-552` — a live prescriptive section for the deleted component.**
+
+The census row in session-log §2 groups ten files into one line and asserts *"none are this component"*. That is
+false for `docs/ui-rules.md`, which carries:
+
+```
+### FilterBar canonical alignment (Task 362, 2026-06-02)
+FilterBar outer container: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`
+… FilterBar filter cluster … Consumer's `filters` prop …
+FilterBar Sheet body: NO own `p-*` on the inner filter area div …
+```
+
+Four prescriptive rules naming the deleted component's outer container, filter cluster, its `filters` prop and its
+`Sheet` body. The enclosing heading is `## §15a — MOBILE CONTROL & TAB STACKING CONTRACT`, an active section, not a
+retired one; `docs/rule-index.md` lists `ui-rules.md` as a live pre-read at `:41`, `:56` and `:203`; and the `Sheet`
+rule is unmistakably about this component, whose own `FilterBar.tsx:3` comment recorded that it owned the Sheet
+open-state. This is the same defect class R4 closed in `design-system.md`, in the legacy-path document.
+
+- **Resolution:** retire the section in place using the treatment already applied in `design-system.md` §11.1/§12a —
+  replace the four prescriptive lines with a dated `RETIRED (Task 788, 2026-09-05)` note that names the deletion and
+  states the fragments no longer bind. Leave the rest of §15a untouched. Then give `ui-rules.md` its own census row
+  marked `live — fixed` and remove it from the ten-file blanket row.
+- **Verification:** `grep -n "FilterBar outer container:" docs/ui-rules.md` → 0 matches; `grep -n "### FilterBar
+  canonical alignment" docs/ui-rules.md` → the heading carrying a `RETIRED` marker; session-log §2 shows a per-file
+  row for `ui-rules.md`.
+
+**The other nine files in that blanket row are genuinely clean** — the reviewer re-ran the census independently and
+only `ui-rules.md` and `docs/critical-flow-registry.md` still match, the latter being Task-605 prose in the
+`ListingCard` row. Do not re-audit the other eight; do correct the row so it no longer asserts a negative it did not
+check per file.
+
+**R1.2 · `P3` · session log §4 `Files Changed` — two rows short.**
+
+The table lists 17 paths; `git status` holds 19. Missing: this session log itself, and
+`docs/sessions/evidence/task788/` (13 transcripts + the 2 AC6 HTML bodies). `docs/backlog.md` is already listed.
+
+- **Resolution:** add the two rows.
+- **Verification:** the set of unique paths in §4 equals the set from `git --no-optional-locks status --short`.
+
+### 14.3 Recorded by this revision
+
+- **Two defects in this kickoff, charged to the orchestrator, not the executor.** §3.3 asserted `0` entries in
+  `docs/storybook-governance.md` — measured with a backticked pattern that cannot match the file's unbackticked
+  prose list; and §3.3 never grepped `scripts/*.mjs` for the four component names at all, only three JSON registries
+  by path. Two of the three missed references followed directly. **The pattern was narrower than the claim it was
+  supporting** — the eighth recorded instance of "a kickoff's own measured facts are not exempt", and the reason
+  §3.5's order to re-run the census at execution is what saved this task.
+- **Task 790 reserved (P1), filed before this verdict was written.** The full `npm run test` suite is red — 5
+  failures across 4 files, all older than 788. The named one: `theme.d69-18.test.tsx:257-259` expects
+  `FooterView.tsx` to contain the literal `theme.other.layout.footerGridGap`, while the Task 784 hotfix wrote
+  `theme.other!.layout!.footerGridGap`; the sibling runtime assertion at `:134` still passes, so the contract is
+  intact and only the mechanical source check is wrong. Root cause of the blindness: **no verification plan in this
+  project runs the full suite** — 787 ran `vitest run src/components/layout/__tests__` only, and its review accepted
+  that. 790 decides, per failure, whether the test or the source is wrong, and whether the full suite joins the
+  standing gate set. **Out of scope for 788.**
+- **`NOTE`** — the chat summary said *"All required gates pass with exit 0"* without mentioning `13-vitest.log`'s
+  exit 1. The session log discloses it fully and asks for attribution review, so the record is honest; future
+  summaries should name every non-zero exit alongside the log that holds it.
+- **`NOTE`** — `docs/responsive-storybook-inventory.md` was corrected although §3.4 never named it. Classified as
+  **in scope by consequence of R2**, not a scope violation; the §7 dated machine dump was correctly left historical.
+
+### 14.4 Verification plan for Revision 1 — Windows-native PowerShell only
+
+Two text edits, no product code, no deletion. Do **not** re-run the full gate set.
+
+```powershell
+node.exe -p process.platform          # win32
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+```
+
+Capture with `& cmd.exe /c "<command> 2>&1"` and write with
+`[System.IO.File]::WriteAllLines(path, lines, (New-Object System.Text.UTF8Encoding($false)))`, appending
+`EXIT_CODE=$LASTEXITCODE` inside the file. Never pipe a native command through `Tee-Object` — it writes UTF-16LE,
+which `check:file-integrity` rejects as NUL bytes. Retain both transcripts under `docs/sessions/evidence/task788/`.
+
+### 14.5 Completion report contract for Revision 1
+
+Files changed · the corrected `ui-rules.md` section quoted before and after · the corrected §2 census row for
+`ui-rules.md` · the completed §4 table · the two command exit codes · anything left open. Strongest permitted result
+remains `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`.
+
+### 14.6 Explicitly out of scope for Revision 1
+
+`src/**` entirely · the nine deletions and every already-corrected document · the eight other files in the blanket
+census row · Task **790**'s red suite · `docs/backlog.md`, the sprint Tasks table and this kickoff's `State` header
+(orchestrator-owned).

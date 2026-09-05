@@ -1,0 +1,7 @@
+COMMAND: npm run start (PORT=3789), then curl requests
+GET /sq -> STATUS:200
+GET /sq/listings -> STATUS:200
+site-header present in /sq: yes
+site-footer present in /sq: yes
+site-header present in /sq/listings: yes
+site-footer present in /sq/listings: yes

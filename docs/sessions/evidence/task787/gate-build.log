@@ -1,0 +1,89 @@
+COMMAND:  npm.cmd run build
+CWD:      C:\Claude_Code_Projects\lero-al
+PLATFORM: win32
+NODE:     v22.22.3
+RUN_AT:   2026-09-05T09:46:16
+------------------------------------------------------------
+[... 9 earlier lines trimmed ...]
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 43s
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/40) ...
+   Generating static pages (10/40) 
+   Generating static pages (20/40) 
+   Generating static pages (30/40) 
+ ✓ Generating static pages (40/40)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                      379 B         185 kB
+├ ƒ /_not-found                          1.16 kB         186 kB
+├ ƒ /[locale]                            7.63 kB         621 kB
+├ ƒ /[locale]/[slug]                       377 B         185 kB
+├ ƒ /[locale]/auth/confirm-email         2.18 kB         192 kB
+├ ƒ /[locale]/auth/login                   322 B         276 kB
+├ ƒ /[locale]/auth/register                321 B         276 kB
+├ ƒ /[locale]/auth/reset-password        8.51 kB         296 kB
+├ ƒ /[locale]/auth/verified              3.91 kB         258 kB
+├ ƒ /[locale]/cabinet                     141 kB         766 kB
+├ ƒ /[locale]/ci/click-shield-modal      3.58 kB         268 kB
+├ ƒ /[locale]/contact                    4.89 kB         231 kB
+├ ƒ /[locale]/favorites                  10.7 kB         578 kB
+├ ƒ /[locale]/listings                   14.2 kB         627 kB
+├ ƒ /[locale]/listings/[slug]              386 B         582 kB
+├ ƒ /[locale]/listings/[slug]/edit       2.37 kB         252 kB
+├ ƒ /[locale]/listings/create            2.37 kB         252 kB
+├ ƒ /admin                               5.02 kB         373 kB
+├ ƒ /admin/companies                     5.34 kB         305 kB
+├ ƒ /admin/currency                       8.2 kB         300 kB
+├ ƒ /admin/email-templates               11.2 kB         254 kB
+├ ƒ /admin/footer                        7.93 kB         233 kB
+├ ƒ /admin/inquiries                       379 B         185 kB
+├ ƒ /admin/inquiries/sales                 336 B         370 kB
+├ ƒ /admin/inquiries/support               338 B         370 kB
+├ ƒ /admin/legal                           379 B         185 kB
+├ ƒ /admin/listings                      9.89 kB         423 kB
+├ ƒ /admin/listings/[id]/preview           385 B         582 kB
+├ ƒ /admin/locations                      8.1 kB         262 kB
+├ ƒ /admin/pages                         11.6 kB         265 kB
+├ ƒ /admin/permissions                   8.94 kB         220 kB
+├ ƒ /admin/popular-locations             7.41 kB         261 kB
+├ ƒ /admin/property-types                5.66 kB         293 kB
+├ ƒ /admin/reports                       20.4 kB         288 kB
+├ ƒ /admin/settings                      5.12 kB         222 kB
+├ ƒ /admin/support                       6.83 kB         410 kB
+├ ƒ /admin/users                         5.26 kB         485 kB
+├ ƒ /admin/users/[id]                      388 B         601 kB
+├ ƒ /admin/users/new                       388 B         601 kB
+├ ƒ /api/auth-email-hook                   378 B         185 kB
+├ ƒ /api/auth/me                           378 B         185 kB
+├ ƒ /api/cron/inactivity                   377 B         185 kB
+├ ƒ /api/cron/listings-expiry              378 B         185 kB
+├ ƒ /api/cron/price-alerts                 379 B         185 kB
+├ ƒ /api/cron/saved-searches               377 B         185 kB
+├ ○ /api/exchange-rate                     379 B         185 kB          1h      1y
+├ ƒ /api/listings                          377 B         185 kB
+├ ƒ /api/listings/[slug]/view              379 B         185 kB
+├ ƒ /api/presence                          379 B         185 kB
+├ ƒ /api/property-types                    379 B         185 kB
+├ ƒ /api/upload-avatar                     378 B         185 kB
+├ ƒ /api/upload-company-logo               378 B         185 kB
+├ ƒ /api/upload-popular-location-photo     378 B         185 kB
+├ ƒ /auth/callback                         378 B         185 kB
+└ ƒ /auth/confirm                          378 B         185 kB
++ First Load JS shared by all             184 kB
+  ├ chunks/3434-5c18ab21796bca80.js       126 kB
+  ├ chunks/4bd1b696-ad216e4073dcea52.js  54.4 kB
+  └ other shared chunks (total)          4.37 kB
+
+
+ƒ Middleware                              165 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+------------------------------------------------------------
+EXIT_CODE=0

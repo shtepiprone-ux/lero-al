@@ -27,7 +27,6 @@ Last generated: 2026-07-24
 | `AdminUserAvatar` | src/components/admin/AdminUserAvatar.tsx | ARBITRARY_TW |
 | `AdminUserProfile` | src/components/admin/AdminUserProfile.tsx | ARBITRARY_TW |
 | `HeaderView` | src/components/layout/HeaderView.tsx | ARBITRARY_TW |
-| `MobileBottomNav` | src/components/layout/MobileBottomNav.tsx | ARBITRARY_TW |
 | `Combobox` | src/components/shared/Combobox.tsx | RAW_BUTTON, VIEWPORT_JS |
 | `DatePicker` | src/components/shared/DatePicker.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `HeroSearchClient` | src/components/shared/HeroSearchClient.tsx | ARBITRARY_TW |
@@ -138,7 +137,6 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `ListingsTab` | cabinet-feature | MEDIUM |
 | `LocaleSwitcher` | shared-ui | HIGH |
 | `LocationCombobox` | shared-ui | HIGH |
-| `MobileBottomNav` | layout | HIGH |
 | `MobileNavDrawer` | layout | HIGH |
 | `MultiToggleField` | listings-feature | MEDIUM |
 | `NotificationBellView` | notifications-feature | MEDIUM |
@@ -216,7 +214,6 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `ListingsStatusTabs` | listings-feature | Translatable text — check 320px wrapping |
 | `LocaleSwitcher` | shared-ui | Translatable text — check 320px wrapping |
 | `LocationCombobox` | shared-ui | Translatable text — check 320px wrapping |
-| `MobileBottomNav` | layout | Translatable text — check 320px wrapping |
 | `MobileNavDrawer` | layout | Translatable text — check 320px wrapping |
 | `MultiToggleField` | listings-feature | Translatable text — check 320px wrapping |
 | `NotificationBellView` | notifications-feature | Translatable text — check 320px wrapping |
@@ -306,7 +303,6 @@ Components with arbitrary Tailwind values `[value]`:
 | `ListingDetailView` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingsShell` | listings-feature | Static analysis detected `[value]` in className |
 | `loading` | page | Static analysis detected `[value]` in className |
-| `MobileBottomNav` | layout | Static analysis detected `[value]` in className |
 | `navigation-menu` | canonical-primitive | Static analysis detected `[value]` in className |
 | `NotificationCenter` | notifications-feature | Static analysis detected `[value]` in className |
 | `NumInputField` | listings-feature | Static analysis detected `[value]` in className |
@@ -343,7 +339,6 @@ Shared/layout/admin components without stories — highest visibility components
 | `HowItWorksSteps` | shared-ui | HIGH — locale-aware, no story |
 | `LocaleSwitcher` | shared-ui | HIGH — locale-aware, no story |
 | `LocationCombobox` | shared-ui | HIGH — locale-aware, no story |
-| `MobileBottomNav` | layout | HIGH — locale-aware, no story |
 | `MobileNavDrawer` | layout | HIGH — locale-aware, no story |
 | `PhoneField` | shared-ui | HIGH — locale-aware, no story |
 | `PropertyTypeCombobox` | shared-ui | HIGH — locale-aware, no story |

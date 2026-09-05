@@ -8,7 +8,6 @@ import { resolveSession } from '@/lib/auth/server'
 import { AuthProvider } from '@/modules/auth/context/AuthContext'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
 import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
 import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
@@ -47,12 +46,13 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={initialUser}>
         <>
           <Header />
-          {/* Task 770 — pb base was @theme inline --space-14 (§22.1) */}
-          <Box component="main" mih="calc(100vh - 4rem)" pb={{ base: 'var(--homepage-runtime-space-14)', md: 0 }}>
+          {/* Task 787 — the fixed mobile bottom bar is deleted (burger-menu-only mobile nav), so
+              <main> no longer reserves 56px of bottom clearance for it (was --homepage-runtime-space-14,
+              Task 770). */}
+          <Box component="main" mih="calc(100vh - 4rem)">
             {children}
           </Box>
           <Footer />
-          <MobileBottomNav />
           <WebVitalsReporter />
           <PerformanceStoreInit />
           <PerfDevOverlay />

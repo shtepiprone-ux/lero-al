@@ -1408,7 +1408,6 @@ Full audit from `app/layout.tsx` → `app/[locale]/layout.tsx` → listing detai
 | `TooltipProvider` | — | — | — | — | **ABSENT** — not used |
 | `Header` | `components/layout/Header.tsx` | Yes | Yes (above fold, always visible) | No (interactive client component, renders immediately) | NECESSARY |
 | `Footer` | `components/layout/Footer.tsx` | **No** (RSC) | No (below fold) | None | Clean |
-| `MobileBottomNav` | `components/layout/MobileBottomNav.tsx` | Yes | No (fixed bottom, no layout impact) | No | Clean |
 | `WebVitalsReporter` | `components/shared/WebVitalsReporter.tsx` | Yes | No (renders null) | No | Clean, leaf |
 | `PerformanceStoreInit` | `components/shared/PerformanceStoreInit.tsx` | Yes | No (renders null) | No | Clean, leaf |
 | `PerfDevOverlay` | `components/shared/PerfDevOverlay.tsx` | Yes | No (production-stripped) | No | Dev-only |

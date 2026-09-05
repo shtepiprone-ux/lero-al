@@ -1,0 +1,18 @@
+COMMAND:  npx.cmd vitest run src\components\layout\__tests__
+CWD:      C:\Claude_Code_Projects\lero-al
+PLATFORM: win32
+NODE:     v22.22.3
+RUN_AT:   2026-09-05T09:44:43
+------------------------------------------------------------
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/components/layout/__tests__/header-hydration-id-parity.test.tsx (3 tests) 385ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  09:44:39
+   Duration  3.95s (transform 449ms, setup 78ms, import 2.72s, tests 385ms, environment 653ms)
+
+------------------------------------------------------------
+EXIT_CODE=0

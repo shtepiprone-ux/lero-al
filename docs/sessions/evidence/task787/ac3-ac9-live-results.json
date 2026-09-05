@@ -1,0 +1,63 @@
+{
+  "capturedAt": "2026-09-05T07:13:22.947Z",
+  "baseUrl": "http://localhost:3000",
+  "beforeReservationPx": 56,
+  "routes": [
+    {
+      "path": "/sq",
+      "httpStatus": 200,
+      "measured": {
+        "documentScrollHeight": 4035,
+        "bodyScrollHeight": 4035,
+        "mainPaddingBottom": "0px",
+        "mainRect": {
+          "x": 0,
+          "y": 97,
+          "width": 375,
+          "height": 3290.34375,
+          "top": 97,
+          "right": 375,
+          "bottom": 3387.34375,
+          "left": 0
+        },
+        "footerPaddingBottom": "0px",
+        "footerRect": {
+          "top": 3387.34375,
+          "bottom": 4035.34375
+        },
+        "bottomNavPresent": false,
+        "tailBelowFooter": -0.34375
+      },
+      "pass": true,
+      "deltaFromBeforePx": 56
+    },
+    {
+      "path": "/sq/listings",
+      "httpStatus": 200,
+      "measured": {
+        "documentScrollHeight": 1915,
+        "bodyScrollHeight": 1915,
+        "mainPaddingBottom": "0px",
+        "mainRect": {
+          "x": 0,
+          "y": 97,
+          "width": 375,
+          "height": 1169.546875,
+          "top": 97,
+          "right": 375,
+          "bottom": 1266.546875,
+          "left": 0
+        },
+        "footerPaddingBottom": "0px",
+        "footerRect": {
+          "top": 1266.546875,
+          "bottom": 1914.546875
+        },
+        "bottomNavPresent": false,
+        "tailBelowFooter": 0.453125
+      },
+      "pass": true,
+      "deltaFromBeforePx": 56
+    }
+  ]
+}

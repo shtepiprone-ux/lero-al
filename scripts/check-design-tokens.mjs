@@ -567,17 +567,24 @@ function findShorthandCssLiterals(line, spec) {
 //               .next/static/css/e55fe1d775976885.css) — DISTINCT from this
 //               repo's --spacing-N named tokens in globals.css. Consumed via
 //               calc(var(--spacing) * N), Tailwind's own compiled form of
-//               gap-0.5/w-48 etc. (MobileBottomNavView.module.css,
-//               HeroSearchView.module.css — the 3 real sites that forced this
-//               entry onto the list; measured, not guessed, per A2).
+//               gap-0.5/w-48 etc. — historically forced onto the list by
+//               `MobileBottomNavView.module.css` and `HeroSearchView.module.css`
+//               (measured, not guessed, per A2); `MobileBottomNavView.module.css`
+//               was deleted (Task 787, 2026-09-04, mobile bottom bar removal) and
+//               Task 762 Revision 1 replaced every remaining `calc(var(--spacing) * N)`
+//               call with its own literal computed value (D762-1) — this exact-name
+//               entry currently has no live `var(--spacing)` call site in `src/`, kept
+//               defensively rather than removed (no functional harm; a future
+//               reintroduction would still resolve correctly).
 //   --default-transition-timing-function   Tailwind v4's own base easing
 //               variable — defined at node_modules/tailwindcss/theme.css:493
 //               and node_modules/tailwindcss/index.css:502, present in
 //               .next/static/css/e55fe1d775976885.css. Consumed as the
 //               fallback arm of a nested var(--tw-ease, var(--default-...))
-//               at MobileBottomNavView.module.css:92 (transition-timing-function,
-//               Tailwind's compiled `transition-transform` output) — the one
-//               real site that forced this entry onto the list, per A2.
+//               — the one real site that forced this entry onto the list, per A2,
+//               was `MobileBottomNavView.module.css:92`, deleted by Task 787
+//               (2026-09-04, mobile bottom bar removal); no live call site
+//               remains in `src/`, kept defensively rather than removed.
 const EXTERNAL_VAR_PREFIXES = ['--tw-', '--mantine-'];
 const EXTERNAL_VAR_EXACT_NAMES = new Set(['--spacing', '--default-transition-timing-function']);
 

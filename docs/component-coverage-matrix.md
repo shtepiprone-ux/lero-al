@@ -130,7 +130,6 @@ Components without Storybook stories (future coverage targets):
 | `LocationCombobox` | shared-ui | Locale-sensitive |
 | `Map` | shared-ui | — |
 | `MapWrapper` | shared-ui | — |
-| `MobileBottomNav` | layout | Locale-sensitive |
 | `MobileNavDrawer` | layout | Locale-sensitive |
 | `PerfDevOverlay` | shared-ui | — |
 | `PerformanceStoreInit` | shared-ui | — |

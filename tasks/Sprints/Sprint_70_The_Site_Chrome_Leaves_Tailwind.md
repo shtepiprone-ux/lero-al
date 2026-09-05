@@ -50,7 +50,7 @@ Deleting the component without those two is how every mobile page keeps 56px of 
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **787** | Global header Mantine migration, mobile bottom-bar removal, and guest gating of "Add listing" / "Favorites" | **P1** | **Q3** | 📋 **KICKOFF FILED** (2026-09-04) — awaiting dispatch to Sonnet. → [`Sprint_70_kickoff_prompt_Task_787_…`](Sprint_70_kickoff_prompt_Task_787_Header_Mantine_Global_And_Mobile_Nav_Consolidation.md) |
+| **787** | Global header Mantine migration, mobile bottom-bar removal, and guest gating of "Add listing" / "Favorites" | **P1** | **Q3** | 🔁 **REVISION 1 REQUIRED** (orchestrator review 2026-09-05) — implementation `VERIFIED` (R1·R3–R8, AC9 live, owner visual QA accepted **D70-2**); returned on a false reference census, one live fail-closed reference and stale state records. Revision brief → kickoff §10. → [`Sprint_70_kickoff_prompt_Task_787_…`](Sprint_70_kickoff_prompt_Task_787_Header_Mantine_Global_And_Mobile_Nav_Consolidation.md) |
 
 ## Execution order
 
@@ -79,6 +79,15 @@ browser checks passed too. **Any task in this sprint that edits a Server Compone
 carry a real `next start` request to at least one `/[locale]` route as an acceptance criterion** (787's AC9).
 This holds until Task **786**'s detector exists; when it lands, this decision is superseded by that gate, not
 by a green build.
+
+**D70-2 — the owner's visual matrix is the visual criterion, and Task 787's is accepted (2026-09-05).**
+`screenshots:assert` is retired (owner decision 2026-09-03), so for every changed visible artifact in this sprint
+the visual criterion stays `NOT VERIFIABLE` until the owner records an accepted/returned result per tuple; an
+automated screenshot never substitutes for it. For **787** the owner reviewed the full matrix — header and drawer,
+guest and authenticated, `en` and `uk`, at 375 / 768 / 1280, plus the 375 clearance cell — on the live server and
+in Storybook, and recorded `accepted` on 2026-09-05, explicitly confirming that Favorites sits flush beside the
+burger rather than centred, that guests see neither Favorites nor "Add listing" at any width, and that long `uk`
+strings do not break the bar at 375.
 
 ## Exit criteria
 

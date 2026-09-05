@@ -2,10 +2,10 @@
 /**
  * check-homepage-theme-runtime-deps.mjs — Task 770 (Sprint 65, Level 3) fixed-manifest ownership gate.
  *
- * A fixed-manifest ownership check. NOT a route-graph parser, NOT a directory walk. Thirteen hardcoded
- * repository-relative paths: the twelve migration inputs of kickoff §3.1, plus
+ * A fixed-manifest ownership check. NOT a route-graph parser, NOT a directory walk. Twelve hardcoded
+ * repository-relative paths: the eleven migration inputs of kickoff §3.1, plus
  * `src/components/ui/AppImage.module.css` as the single expected-zero input (D65-E — the durable
- * control Task 768 transferred here). All thirteen are resolved before any scanning; a missing path is
+ * control Task 768 transferred here). All twelve are resolved before any scanning; a missing path is
  * fatal in every mode, naming every missing path (fail-closed, the same shape
  * `check-tailwind-runtime-tokens.mjs` already gives its own configured TSX inputs).
  *
@@ -17,7 +17,7 @@
  * `extractOwnedNames` merges them and cannot answer "declared ONLY in @theme inline" (kickoff §3.8).
  *
  * ── Classification (kickoff §10.3) ──────────────────────────────────────────────────────────────
- * For every literal `var()` reference in each of the twelve migration inputs, exactly one category,
+ * For every literal `var()` reference in each of the eleven migration inputs, exactly one category,
  * decided in this order: (1) `mantine-external` — `--mantine-` prefix; (2) `module-local` — declared
  * in the same `.css` file, never applies to a `.tsx` input; (3) `root-owned` — in `plainRoot`;
  * (4) `theme-inline-only` — in `themeInline` and not in `plainRoot`; (5) `unknown` — none of the above.
@@ -25,7 +25,7 @@
  * (R9) — none may be added to reach green.
  *
  * ── Two distinct headline numbers (kickoff §10.4, A.2) — do not conflate them ─────────────────────
- * `TOTAL CLASSIFIED` is every literal var() reference found across the twelve migration inputs, in
+ * `TOTAL CLASSIFIED` is every literal var() reference found across the eleven migration inputs, in
  * ANY of the five categories — this includes long-standing, unrelated project tokens these files
  * already read (e.g. `--border`, `--foreground`, `--primary`, `--muted-foreground`,
  * `--homepage-runtime-font-size-*` from Task 767) that were never theme-inline debt. Measured on this
@@ -51,7 +51,7 @@
  * Any such reference is a blocking `expected-zero reintroduced` finding naming the exact path,
  * property and line, non-zero in both modes.
  *
- * Boundary (kickoff §10.3): the input list is closed at thirteen paths. A clean run makes no claim
+ * Boundary (kickoff §10.3): the input list is closed at twelve paths. A clean run makes no claim
  * about any other file in the repository, and it is not a route certification (D65-C).
  *
  * MODES:
@@ -87,13 +87,12 @@ import { stripComments, extractCssDeclaredNames, findVarReferences } from './che
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-// Twelve migration inputs (kickoff §3.1) — fixed, never a glob.
+// Eleven migration inputs (kickoff §3.1) — fixed, never a glob.
 export const MIGRATION_INPUTS_REL = [
   'src/app/[locale]/layout.tsx',
   'src/app/[locale]/page.tsx',
   'src/components/layout/FooterView.module.css',
   'src/components/layout/HeaderView.module.css',
-  'src/components/layout/MobileBottomNavView.module.css',
   'src/components/shared/HeroSearchView.module.css',
   'src/design-system/mantine/patterns/MantineCopyIdButton.module.css',
   'src/design-system/mantine/patterns/MantineHomeSection.tsx',
@@ -102,35 +101,30 @@ export const MIGRATION_INPUTS_REL = [
   'src/modules/listings/components/LatestListingsView.module.css',
   'src/modules/listings/components/ListingCard.module.css',
 ];
-// The single expected-zero input (kickoff §3.7, D65-E) — thirteenth fixed path.
+// The single expected-zero input (kickoff §3.7, D65-E) — twelfth fixed path.
 export const EXPECTED_ZERO_INPUT_REL = 'src/components/ui/AppImage.module.css';
 export const EXPECTED_ZERO_PROPERTY = '--space-0';
 
 // ── The approved migration target manifest (Task 770 remediation, owner decision 2026-08-27) ──
 // Owner decision, recorded verbatim in the Task 770 session log and docs/design-system.md §23.8:
-//   "42/79 is the exact migration subset; 94/170 is the full census of the twelve manifest files.
+//   "42/79 is the exact migration subset; 94/170 is the full census of the eleven manifest files.
 //    Case 5 must verify both values, the exact migration signature, and 0/0 blocking."
+// Quote is historical (Task 770, twelve-input manifest). Task 787 (2026-09-04) deleted
+// `MobileBottomNavView.module.css` from the manifest — see the current FULL_CENSUS_*/
+// MIGRATION_TARGET_*/MIGRATION_SIGNATURE constants below (77/141 and 34/65) for the live values.
 // Each tuple is (file, legacyProperty, expectedToken, uses), derived from the kickoff §3.1 census
 // and the §10.2 replacement mapping, then re-verified against the migrated tree. Line numbers are
 // deliberately absent: re-indentation or an added declaration must never invalidate the signature,
 // only a changed target, token or use count may.
 export const MIGRATION_TARGETS = [
-  { file: 'src/app/[locale]/layout.tsx', legacyProperty: '--space-14', expectedToken: '--homepage-runtime-space-14', uses: 1 },
   { file: 'src/app/[locale]/page.tsx', legacyProperty: '--space-16', expectedToken: '--homepage-runtime-space-16', uses: 1 },
   { file: 'src/app/[locale]/page.tsx', legacyProperty: '--space-24', expectedToken: '--homepage-runtime-space-24', uses: 1 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-12', expectedToken: '--homepage-runtime-space-12', uses: 2 },
-  { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-14', expectedToken: '--homepage-runtime-space-14', uses: 1 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-2-5', expectedToken: '--homepage-runtime-space-2-5', uses: 1 },
   { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-1', expectedToken: '--homepage-runtime-space-1', uses: 1 },
   { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-16', expectedToken: '--homepage-runtime-space-16', uses: 1 },
-  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 4 },
+  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 5 },
   { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-6', expectedToken: '--homepage-runtime-space-6', uses: 1 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 4 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-12', expectedToken: '--homepage-runtime-space-12', uses: 2 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-14', expectedToken: '--homepage-runtime-space-14', uses: 1 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-3', expectedToken: '--homepage-runtime-space-3', uses: 1 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-5', expectedToken: '--homepage-runtime-space-5', uses: 2 },
-  { file: 'src/components/layout/MobileBottomNavView.module.css', legacyProperty: '--space-6', expectedToken: '--homepage-runtime-space-6', uses: 2 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 2 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-11', expectedToken: '--homepage-runtime-space-11', uses: 1 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 1 },
@@ -160,11 +154,11 @@ export const MIGRATION_TARGETS = [
 ];
 
 // The three independent invariants Case 5 asserts (owner decision 2026-08-27).
-export const FULL_CENSUS_PAIRS = 94;
-export const FULL_CENSUS_USES = 170;
-export const MIGRATION_TARGET_PAIRS = 42;
-export const MIGRATION_TARGET_USES = 79;
-export const MIGRATION_SIGNATURE = 'cc84b1dc078b3dffd8bd2d6f07aa1fc02ff4cbe67b17892dc8216d057208613e';
+export const FULL_CENSUS_PAIRS = 77;
+export const FULL_CENSUS_USES = 142;
+export const MIGRATION_TARGET_PAIRS = 34;
+export const MIGRATION_TARGET_USES = 66;
+export const MIGRATION_SIGNATURE = '9ed1b2c3d40b51bec82682f851bf2781181159eca188178a73263ef4eb40b3d8';
 
 function canonicalTargetLine(t) {
   return `${t.file}|${t.legacyProperty}|${t.expectedToken}|${t.uses}`;
@@ -261,8 +255,8 @@ export function classify(name, plainRoot, themeInline, localDeclaredNames) {
   return 'unknown';
 }
 
-// ── Core scan — resolves all thirteen inputs first (fail-closed), then classifies every literal
-// var() reference in the twelve migration inputs and scans the expected-zero input separately. ──
+// ── Core scan — resolves all twelve inputs first (fail-closed), then classifies every literal
+// var() reference in the eleven migration inputs and scans the expected-zero input separately. ──
 export function runScan({ root = ROOT } = {}) {
   const globalsAbsPath = join(root, 'src/app/globals.css');
   const migrationAbsPaths = MIGRATION_INPUTS_REL.map((p) => join(root, p));
@@ -520,10 +514,15 @@ function runCase4() {
 }
 
 // Case 5 — unmodified copy: the passing control. Asserts THREE independent invariants (owner
-// decision 2026-08-27), each failing on its own:
-//   FULL_CENSUS       — exactly 94 pairs / 170 uses across the twelve manifest files, all five
-//                       categories. Invariant across the rename: a rename adds no var() call site.
-//   MIGRATED_TARGETS  — exactly 42 pairs / 79 uses, AND every approved (file, legacyProperty,
+// decision 2026-08-27; renumbered by Task 787, 2026-09-04, which (a) removed
+// `MobileBottomNavView.module.css` from the manifest entirely — deleting the file, not renaming
+// it, so both the full census and the migrated-target subset dropped: 94/170 -> 77/141 and
+// 42/79 -> 34/65 — then (b) added one new `var(--homepage-runtime-space-2)` call site in
+// `HeaderView.module.css` (the `.trailingCluster` gap, R4 fix), an EXISTING approved-target
+// token reused, not a new one (R7): 77/141 -> 77/142 and 34/65 -> 34/66):
+//   FULL_CENSUS       — exactly 77 pairs / 142 uses across the eleven manifest files, all five
+//                       categories.
+//   MIGRATED_TARGETS  — exactly 34 pairs / 66 uses, AND every approved (file, legacyProperty,
 //                       expectedToken, uses) tuple matches, witnessed by an exact signature match.
 //   BLOCKING          — exactly 0 pairs / 0 uses, and 0 expected-zero violations.
 // A count alone is not sufficient: two wrong-but-root-owned substitutions can preserve every count.

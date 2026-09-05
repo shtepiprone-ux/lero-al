@@ -20,10 +20,18 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
 
   return (
     <>
-      {/* Favorites — visible at ALL breakpoints (owner decision 2026-07-11, Task 583; icon-only,
-          clause-11 exempt), mirrors the hamburger's canonical icon-only ActionIcon reference
+      {/* Notifications — authenticated only (container passes undefined for guests); rendered
+          BEFORE Favorites so the two sit adjacent to each other and to the hamburger that follows
+          in HeaderView's rightCluster (owner mobile top-bar contract, Task 787: "сповіщення +
+          Обране", grouped beside the burger, Favorites nearest it). */}
+      {notificationSlot}
+
+      {/* Favorites — authenticated only (Task 787, owner "скрізь" decision 2026-09-04: guests never
+          see Add listing or Favorites, mobile or desktop). The prior guest branch that opened the
+          auth sheet from a Favorites heart is removed; guests reach login/register only. Icon-only,
+          clause-11 exempt, mirrors the hamburger's canonical icon-only ActionIcon reference
           (variant + 2.75rem/44px min touch target). */}
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <ActionIcon
           component={Link}
           href={favoritesHref}
@@ -34,19 +42,7 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
         >
           <Heart size={theme.other.iconSize.roomy} />
         </ActionIcon>
-      ) : (
-        <ActionIcon
-          variant="subtle"
-          mih={theme.other.touchTarget}
-          miw={theme.other.touchTarget}
-          aria-label={t('favorites')}
-          onClick={() => onOpenAuth('login')}
-        >
-          <Heart size={theme.other.iconSize.roomy} />
-        </ActionIcon>
       )}
-
-      {notificationSlot}
 
       {!isAuthenticated && (
         <Group gap="xs" visibleFrom="md">

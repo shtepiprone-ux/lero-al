@@ -1,0 +1,22 @@
+COMMAND:  npm.cmd run check:homepage-theme-runtime-deps -- --verify-gate
+CWD:      C:\Claude_Code_Projects\lero-al
+PLATFORM: win32
+NODE:     v22.22.3
+RUN_AT:   2026-09-05T09:44:25
+------------------------------------------------------------
+
+> lero-al@0.1.0 check:homepage-theme-runtime-deps
+> node scripts/check-homepage-theme-runtime-deps.mjs --verify-gate
+
+🔬  check:homepage-theme-runtime-deps self-test (--verify-gate) — 6 outcomes asserted (kickoff §10.4 + owner decision 2026-08-27)
+
+✅  Case 1 (CSS theme-inline-only plant) — expected exit 1, got exit 1 — reported src/components/shared/HeroSearchView.module.css:132 --space-2 [theme-inline-only]
+✅  Case 2 (TSX theme-inline-only plant) — expected exit 1, got exit 1 — reported src/design-system/mantine/patterns/MantineHomeSection.tsx:45 --home-section-py-base [theme-inline-only]
+✅  Case 3 (missing configured migration input is fatal) — expected exit 1, got exit 1 — fatal names the missing path: missing configured input(s): src/components/layout/HeaderView.module.css
+✅  Case 4 (expected-zero reintroduced, D65-E) — expected exit 1, got exit 1 — reported src/components/ui/AppImage.module.css:143 --space-0
+✅  Case 5 (unmodified copy — three invariants asserted) — expected exit 0, got exit 0 — FULL_CENSUS=77/142; MIGRATED_TARGETS=34/66; BLOCKING=0/0; expected-zero=0; signature=9ed1b2c3d40b51bec82682f851bf2781181159eca188178a73263ef4eb40b3d8
+✅  Case 6 (wrong-but-root-owned token substitution) — expected exit 1, got exit 1 — migration signature mismatch — src/components/layout/HeaderView.module.css  --homepage-runtime-space-2  expected 5 use(s), found 4  (approved migration of --space-2); blocking stayed 0/0 and expected-zero stayed 0 (the substitute is legitimately root-owned), so ONLY the signature caught it; observed fd089fa8bfa7bb7913d8aeb48a7a61213c53c002855d0200dd96b75649f03bc7
+
+✅  6/6 verify-gate assertions behaved as expected.
+------------------------------------------------------------
+EXIT_CODE=0

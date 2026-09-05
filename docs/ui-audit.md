@@ -26,7 +26,6 @@ Status: AUDIT-ONLY — no code was changed
 | Container | `app/admin/page.tsx` | Admin dashboard | `p-6 lg:p-8 max-w-6xl mx-auto` | Non-canonical max-width | LOW | LOW | LOW | MEDIUM | Admin container standard | LOW |
 | Navigation | `components/layout/Header.tsx` | Mobile drawer | shadcn `Sheet` component | — | MEDIUM | OK | LOW | LOW | Canonical | — |
 | Navigation | `components/admin/AdminSidebar.tsx` | Mobile drawer | Custom overlay `div` (not Sheet) | Duplicate drawer impl | HIGH | MEDIUM | LOW | LOW | Unify to Sheet or custom | HIGH |
-| Navigation | `components/layout/MobileBottomNav.tsx` | Bottom nav | Fixed bottom bar with pb-safe | — | LOW | OK | LOW | LOW | Canonical | — |
 | Filter | `components/shared/FiltersPanel.tsx` | Homepage filter drawer | shadcn `Sheet` | — | MEDIUM | OK | LOW | LOW | Canonical | — |
 | Filter | `modules/listings/components/ListingsShell.tsx` | Listings filter drawer | Custom overlay `div` (not Sheet) | Duplicate drawer impl | HIGH | MEDIUM | LOW | LOW | Unify to Sheet | HIGH |
 | Grid | `modules/listings/components/ListingsShell.tsx` | Listings grid | `xl:grid-cols-3` — no 2xl column step | No huge-desktop scaling | LOW | LOW | LOW | HIGH | Add `2xl:grid-cols-4` | MEDIUM |

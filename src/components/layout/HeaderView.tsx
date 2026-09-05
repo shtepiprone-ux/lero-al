@@ -139,57 +139,71 @@ export function HeaderView({
               clause 11 — unchanged from how the removed combobox trigger was exempted). */}
           <LocaleSwitcher onSwitch={onSwitchLocale} />
 
-          {/* Favorites + notification-bell slot + guest login/register — HeaderActions primitive
-              (Task 575). NotificationBell stays container-owned (own hooks, dynamic ssr:false)
-              and is passed as a slot — never hook-called inside the primitive. */}
-          <HeaderActions
-            isAuthenticated={isAuthenticated}
-            favoritesHref={`/${locale}/favorites`}
-            onOpenAuth={onOpenAuth}
-            notificationSlot={notificationSlot}
-          />
+          {/* Trailing cluster — Task 787 (owner mobile top-bar contract, 2026-09-04): notifications,
+              Favorites and the burger must sit GROUPED beside each other, Favorites nearest the
+              burger, below `md`. Below the `.bar`'s own 390px wrap point `.rightCluster` is
+              `width:100%; justify-content:space-between` (Task 590, unchanged) so it can spread a
+              two-item row (locale switcher vs. everything else) full-width for breathing room; with
+              the individual controls as DIRECT `.rightCluster` children that same space-between
+              spread every control evenly (measured ~37px gaps at 375px, not the ~8px `gap` token),
+              scattering Favorites away from the burger. Wrapping notifications/Favorites/UserMenu/
+              burger/drawer in ONE inner group turns them into a single flex item, so
+              `.rightCluster`'s space-between spreads only [locale switcher] vs. [this cluster] and
+              the cluster's own `.trailingCluster` gap (same `--homepage-runtime-space-2` token as
+              `.rightCluster`, R7: no new token) keeps its members tightly adjacent at every width. */}
+          <Group unstyled className={styles.trailingCluster}>
+            {/* Favorites + notification-bell slot + guest login/register — HeaderActions primitive
+                (Task 575). NotificationBell stays container-owned (own hooks, dynamic ssr:false)
+                and is passed as a slot — never hook-called inside the primitive. */}
+            <HeaderActions
+              isAuthenticated={isAuthenticated}
+              favoritesHref={`/${locale}/favorites`}
+              onOpenAuth={onOpenAuth}
+              notificationSlot={notificationSlot}
+            />
 
-          {/* User menu — desktop, authenticated only (guest login/register live in HeaderActions).
-              `visibleFrom="md"` replaces `hidden md:flex`; `display:flex` is explicit in the module
-              since `unstyled` removes Group's own `display:flex` default (see the container-row
-              comment above). */}
-          {user && (
-            <Group unstyled visibleFrom="md" className={styles.userMenuSlot}>
-              <UserMenu
-                user={user}
-                locale={locale}
-                onNavigate={onNavigate}
-                onOpenAdmin={onOpenAdmin}
-                onLogout={onLogout}
-              />
-            </Group>
-          )}
+            {/* User menu — desktop, authenticated only (guest login/register live in HeaderActions).
+                `visibleFrom="md"` replaces `hidden md:flex`; `display:flex` is explicit in the module
+                since `unstyled` removes Group's own `display:flex` default (see the container-row
+                comment above). */}
+            {user && (
+              <Group unstyled visibleFrom="md" className={styles.userMenuSlot}>
+                <UserMenu
+                  user={user}
+                  locale={locale}
+                  onNavigate={onNavigate}
+                  onOpenAdmin={onOpenAdmin}
+                  onLogout={onLogout}
+                />
+              </Group>
+            )}
 
-          {/* Mobile hamburger — icon-only trigger (clause-11 documented exemption), mirrors the
-              canonical icon-only ActionIcon reference in DropdownMenu.stories.tsx block 3
-              (variant="default", 2.75rem/44px min touch target). `size={20}` replaces the prior
-              `h-5 w-5` Tailwind className (Task 706 §5.2): lucide's own `size` prop writes the SVG
-              `width`/`height` attributes directly (20/20) and was measured to produce the identical
-              20px computed box as the CSS class it replaces — "prop before module" (§3.7). */}
-          <ActionIcon
-            variant="default"
-            aria-label={tc('aria_open_menu')}
-            hiddenFrom="md"
-            mih={theme.other.touchTarget}
-            miw={theme.other.touchTarget}
-            onClick={onOpenMobile}
-          >
-            <Menu size={theme.other.iconSize.roomy} />
-          </ActionIcon>
-          <MobileNavDrawer
-            opened={mobileOpen}
-            onClose={onCloseMobile}
-            user={user}
-            locale={locale}
-            onNavigate={onNavigate}
-            onOpenAuth={onOpenAuth}
-            onLogout={onLogout}
-          />
+            {/* Mobile hamburger — icon-only trigger (clause-11 documented exemption), mirrors the
+                canonical icon-only ActionIcon reference in DropdownMenu.stories.tsx block 3
+                (variant="default", 2.75rem/44px min touch target). `size={20}` replaces the prior
+                `h-5 w-5` Tailwind className (Task 706 §5.2): lucide's own `size` prop writes the SVG
+                `width`/`height` attributes directly (20/20) and was measured to produce the identical
+                20px computed box as the CSS class it replaces — "prop before module" (§3.7). */}
+            <ActionIcon
+              variant="default"
+              aria-label={tc('aria_open_menu')}
+              hiddenFrom="md"
+              mih={theme.other.touchTarget}
+              miw={theme.other.touchTarget}
+              onClick={onOpenMobile}
+            >
+              <Menu size={theme.other.iconSize.roomy} />
+            </ActionIcon>
+            <MobileNavDrawer
+              opened={mobileOpen}
+              onClose={onCloseMobile}
+              user={user}
+              locale={locale}
+              onNavigate={onNavigate}
+              onOpenAuth={onOpenAuth}
+              onLogout={onLogout}
+            />
+          </Group>
         </Group>
       </Group>
 

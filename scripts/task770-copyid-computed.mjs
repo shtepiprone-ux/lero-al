@@ -79,14 +79,16 @@ const MEASURED_KEYS = ['color', 'boxShadow', 'iconColor'];
 // the ambiguous two-control selector) is retained as failed-run evidence rather than overwritten.
 const EVIDENCE_SUBDIR = 'docs/sessions/evidence/task770/ac3-final';
 
-// globals.css + the twelve manifest inputs — the content identity this evidence is about.
+// globals.css + the eleven manifest inputs — the content identity this evidence is about.
+// Task 787 (2026-09-04) deleted `MobileBottomNavView.module.css`; removed from this list in
+// Revision 1 (2026-09-05) — it was still resolved by sourceIdentity() below, which fails closed
+// (`die(...)`) on any missing path, so the stale entry broke every run of this script.
 const IDENTITY_FILES = [
   'src/app/globals.css',
   'src/app/[locale]/layout.tsx',
   'src/app/[locale]/page.tsx',
   'src/components/layout/FooterView.module.css',
   'src/components/layout/HeaderView.module.css',
-  'src/components/layout/MobileBottomNavView.module.css',
   'src/components/shared/HeroSearchView.module.css',
   'src/design-system/mantine/patterns/MantineCopyIdButton.module.css',
   'src/design-system/mantine/patterns/MantineHomeSection.tsx',

@@ -45,16 +45,6 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/components/layout/MobileBottomNav.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Mobile bottom nav item label (below icon). Canonical micro-label size for nav tabs.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Short translated nav labels. Tested with Ukrainian at 320px — no overflow in bottom nav."
-    },
-    {
-      "rule": "arbitrary-font-size",
       "file": "src/components/shared/PerfDevOverlay.tsx",
       "pattern": "text-[10px]",
       "reason": "Dev-only performance overlay. Only rendered in development mode, never ships to production.",

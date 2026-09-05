@@ -1,0 +1,69 @@
+COMMAND:  npm.cmd run build-storybook
+CWD:      C:\Claude_Code_Projects\lero-al
+PLATFORM: win32
+NODE:     v22.22.3
+RUN_AT:   2026-09-05T09:45:10
+------------------------------------------------------------
+[... 8009 earlier lines trimmed ...]
+│  Vite storybook-static/vite-inject-mocker-entry.js
+│  28.53 kB │ gzip:   9.94 kB
+│  Vite storybook-static/assets/AdminTable.stories-IPASLV5S.js
+│  28.97 kB │ gzip:   7.79 kB
+│  Vite storybook-static/assets/ListingContact-Bwb9atzE.js
+│  29.08 kB │ gzip:   9.44 kB
+│  Vite storybook-static/assets/navigation-menu.stories-BH30Smuv.js
+│  29.66 kB │ gzip:   9.47 kB
+│  Vite storybook-static/assets/Color-23OOGO2C-CeVVDCkv.js
+│  30.35 kB │ gzip:  11.49 kB
+│  Vite storybook-static/assets/select-CZWUythP.js
+│  33.03 kB │ gzip:  12.10 kB
+│  Vite storybook-static/assets/WithTooltip-65CFNBJE-BPxPa3Vl.js
+│  33.20 kB │ gzip:  11.68 kB
+│  Vite storybook-static/assets/ListingDetailView.stories-DgKmiPBC.js
+│  33.55 kB │ gzip:  10.94 kB
+│  Vite storybook-static/assets/AuthSheet.stories-Dumi09zi.js
+│  37.34 kB │ gzip:  12.14 kB
+│  Vite storybook-static/assets/command.stories-UxVsxqNS.js
+│  47.53 kB │ gzip:  15.04 kB
+│  Vite storybook-static/assets/syntaxhighlighter-W7WJGI2T-D7S4cy8w.js
+│  78.59 kB │ gzip:  27.54 kB
+│  Vite storybook-static/assets/PhoneField-D8LOVxpy.js
+│  131.73 kB │ gzip:  34.47 kB
+│  Vite storybook-static/assets/AdminUserProfile.stories-vv8sElb3.js
+│  144.90 kB │ gzip:  41.35 kB
+│  Vite storybook-static/assets/leaflet-src-CUno6e_b.js
+│  150.06 kB │ gzip:  43.59 kB
+│  Vite storybook-static/assets/BaseEmail-BJnJGa17.js
+│  173.73 kB │ gzip:  32.45 kB
+│  Vite storybook-static/assets/ListingFormShellView.stories-ETLWbJcS.js
+│  176.21 kB │ gzip:  46.58 kB
+│  Vite storybook-static/assets/react-18-D4Id1lwI.js
+│  179.93 kB │ gzip:  56.48 kB
+│  Vite storybook-static/assets/server.browser-C2zE3hxP.js
+│  183.73 kB │ gzip:  56.94 kB
+│  Vite storybook-static/assets/warnDeprecatedPackage-BUuXqJlL.js
+│  221.04 kB │ gzip:  58.09 kB
+│  Vite storybook-static/assets/RangeDatePicker-CGo4aX4b.js
+│  253.63 kB │ gzip:  74.84 kB
+│  Vite storybook-static/assets/reportListing-DP8C144c.js
+│  448.17 kB │ gzip: 151.47 kB
+│  Vite storybook-static/assets/DocsRenderer-LL677BLK-DYl0w7AE.js
+│  833.37 kB │ gzip: 266.38 kB
+│  Vite storybook-static/assets/iframe-B1Pw8f_W.js
+│  1,953.83 kB │ gzip: 556.56 kB
+│
+▲  Vite
+│  (!) Some chunks are larger than 500 kB after minification. Consider:
+│  - Using dynamic import() to code-split the application
+│  - Use build.rollupOptions.output.manualChunks to improve chunking:
+│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  - Adjust chunk size limit for this warning via
+│  build.chunkSizeWarningLimit.
+│  Vite ✓ built in 21.85s
+│
+◇  Output directory: C:/Claude_Code_Projects/lero-al/storybook-static
+│
+└  Storybook build completed successfully
+
+------------------------------------------------------------
+EXIT_CODE=0

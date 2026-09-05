@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion; full regeneration deferred to avoid sweeping in unreviewed Task 669/675 drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, and 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion — mobile bottom bar removed; full regeneration deferred to avoid sweeping in unreviewed drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,13 +8,13 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 244 |
+| Total cataloged components | 242 |
 | Storybook stories | 47 |
-| Locale-aware (useTranslations) | 108 |
-| Client components ('use client') | 158 |
-| With arbitrary Tailwind values | 37 |
+| Locale-aware (useTranslations) | 107 |
+| Client components ('use client') | 156 |
+| With arbitrary Tailwind values | 36 |
 | Components with 2xl responsive step | 12 |
-| Components flagged for review | 52 |
+| Components flagged for review | 51 |
 
 ## Canonical UI Primitives (`src/components/ui/`) (33)
 
@@ -83,7 +83,7 @@ See `docs/component-risk-register.md` for risk register.
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (12)
+## Layout Components (`src/components/layout/`) (10)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -92,8 +92,6 @@ See `docs/component-risk-register.md` for risk register.
 | `Header` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `HeaderActions` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 | `HeaderView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
-| `MobileBottomNav` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `MobileBottomNavView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileNavDrawer` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 | `PageHeader` | APPROVED | ✅ | — | —  |
 | `PageShell` | APPROVED | ✅ | — | —  |

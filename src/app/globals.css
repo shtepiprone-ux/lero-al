@@ -138,7 +138,7 @@
   --space-10:  2.5rem;     /* 40px */
   --space-11:  2.75rem;    /* 44px — touch-target floor (§12a) */
   --space-12:  3rem;       /* 48px */
-  --space-14:  3.5rem;     /* 56px — bottom-nav height */
+  --space-14:  3.5rem;     /* 56px — no longer bottom-nav height (mobile bottom bar deleted, Task 787); retained spacing step */
   --space-16:  4rem;       /* 64px */
   --space-20:  5rem;       /* 80px */
   --space-24:  6rem;       /* 96px */
@@ -377,7 +377,7 @@
   --homepage-runtime-space-8: 2rem; /* was @theme inline --space-8 (§22.1) */
   --homepage-runtime-space-11: 2.75rem; /* was @theme inline --space-11 — 44px touch-target floor (§12a/§22.1) */
   --homepage-runtime-space-12: 3rem; /* was @theme inline --space-12 (§22.1) */
-  --homepage-runtime-space-14: 3.5rem; /* was @theme inline --space-14 — bottom-nav height (§22.1) */
+  --homepage-runtime-space-14: 3.5rem; /* was @theme inline --space-14 (§22.1); no longer bottom-nav height (mobile bottom bar deleted, Task 787) */
   --homepage-runtime-space-16: 4rem; /* was @theme inline --space-16 (§22.1) */
   --homepage-runtime-space-20: 5rem; /* was @theme inline --space-20 (§22.1) */
   --homepage-runtime-space-24: 6rem; /* was @theme inline --space-24 (§22.1) */

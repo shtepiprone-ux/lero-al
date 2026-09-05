@@ -126,3 +126,13 @@
   align-items: center;
   gap: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1); gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
 }
+
+/* Trailing cluster — Task 787 (notifications + Favorites + UserMenu slot + burger + drawer),
+   a single flex item inside .rightCluster so its members stay adjacent regardless of
+   .rightCluster's own <390px `justify-content: space-between` spread (see the JSX comment).
+   Same gap token as .rightCluster/.userMenuSlot — no new token (R7). */
+.trailingCluster {
+  display: flex;
+  align-items: center;
+  gap: var(--homepage-runtime-space-2);
+}

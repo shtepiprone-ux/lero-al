@@ -453,7 +453,6 @@ UI governance docs.
 |---|---|---|---|---|---|---|---|---|
 | `src/components/layout/Header.tsx` | Public site header | Tailwind + shadcn | P0 risk: mobile nav behavior | No story | MIGRATE TO MANTINE | MantineAppShellFoundation | Phase 3 | Complex: auth state + locale switching |
 | `src/components/layout/Footer.tsx` | Public site footer | Tailwind Grid | Low risk | No story | MIGRATE TO MANTINE | Mantine Grid/Stack | Phase 4 | — |
-| `src/components/layout/MobileBottomNav.tsx` | Mobile bottom navigation | Tailwind fixed bar | P0 risk: touch targets | No story | MIGRATE TO MANTINE | Mantine fixed Group | Phase 3 | — |
 | `src/components/layout/AdminShell.tsx` | Admin app shell | Tailwind sidebar | P0 risk: mobile sidebar | No story | MIGRATE TO MANTINE | MantineAppShellFoundation | Phase 3 | — |
 
 ### Admin components — `src/components/admin/`
@@ -552,9 +551,9 @@ UI governance docs.
 
 | Metric | Notes |
 |---|---|
-| Classification rows in §9 | 77 representative rows (not file count) |
+| Classification rows in §9 | 76 representative rows (not file count) — Task 787 (2026-09-04) removed the `MobileBottomNav.tsx` row (file deleted, mobile bottom bar removal) |
 | REPLACE WITH MANTINE | 17 rows — Phase 1 Mantine pattern components (complete) |
-| MIGRATE TO MANTINE | 34 rows — existing Tailwind/shadcn surfaces, Phases 2–4 |
+| MIGRATE TO MANTINE | 33 rows — existing Tailwind/shadcn surfaces, Phases 2–4 |
 | WRAP TEMPORARILY | 0 |
 | KEEP TEMPORARILY AS LEGACY | 20 rows — layouts, CSS, legacy stories, dev overlay |
 | DELETE AFTER MIGRATION | 0 |

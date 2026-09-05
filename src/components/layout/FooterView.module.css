@@ -32,12 +32,8 @@
 .footer {
   border-top: 1px solid var(--border); /* design-tokens-allow: border-top: 1px — hairline border-width, no §22.1 spacing token targets border-width (HeaderView.module.css:37 precedent, Task 715) */
   background-color: var(--surface-2);
-  padding-bottom: var(--homepage-runtime-space-14); /* Task 770 — was @theme inline --space-14 (§22.1); pb-14 — measured 56px @375, I2; --space-14 = 3.5rem (§22.1) */
-}
-@media (min-width: 48rem) {
-  .footer {
-    padding-bottom: 0; /* md:pb-0 — measured 0px @800, I2 */
-  }
+  /* Task 787 — the fixed mobile bottom bar this footer used to clear (pb-14, 56px) is deleted;
+     the footer no longer reserves any bottom clearance. */
 }
 
 /* Site #3 — <Box> (container-wide class preserved verbatim outside this module) */

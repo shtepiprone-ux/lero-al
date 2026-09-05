@@ -1,0 +1,195 @@
+{
+  "capturedAt": "2026-09-04T20:08:22.994Z",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al\\storybook-static",
+  "mdGatePx": 768,
+  "gapPx": 8,
+  "checks": [
+    {
+      "name": "ac4-mobile-top-bar-375",
+      "pass": true,
+      "ac": "AC4",
+      "width": 375,
+      "measured": {
+        "headerWidth": 343,
+        "logoRect": {
+          "x": 32,
+          "y": 269,
+          "width": 72.484375,
+          "height": 28,
+          "top": 269,
+          "right": 104.484375,
+          "bottom": 297,
+          "left": 32
+        },
+        "burgerRect": {
+          "x": 299,
+          "y": 305,
+          "width": 44,
+          "height": 44,
+          "top": 305,
+          "right": 343,
+          "bottom": 349,
+          "left": 299
+        },
+        "burgerVisible": true,
+        "favoritesRect": {
+          "x": 247,
+          "y": 305,
+          "width": 44,
+          "height": 44,
+          "top": 305,
+          "right": 291,
+          "bottom": 349,
+          "left": 247
+        },
+        "bellRect": {
+          "x": 195,
+          "y": 305,
+          "width": 44,
+          "height": 44,
+          "top": 305,
+          "right": 239,
+          "bottom": 349,
+          "left": 195
+        }
+      },
+      "favoriteToBurgerGap": 8,
+      "gapPx": 8,
+      "bellLeftOfFavorites": true,
+      "logoIsRowStart": true,
+      "favoritesNotCentered": true,
+      "gapWithinTolerance": true
+    },
+    {
+      "name": "ac4-mobile-top-bar-768",
+      "pass": true,
+      "ac": "AC4",
+      "width": 768,
+      "measured": {
+        "headerWidth": 670,
+        "logoRect": {
+          "x": 73,
+          "y": 244,
+          "width": 72.484375,
+          "height": 28,
+          "top": 244,
+          "right": 145.484375,
+          "bottom": 272,
+          "left": 73
+        },
+        "burgerRect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "burgerVisible": false,
+        "favoritesRect": {
+          "x": 476.515625,
+          "y": 236,
+          "width": 44,
+          "height": 44,
+          "top": 236,
+          "right": 520.515625,
+          "bottom": 280,
+          "left": 476.515625
+        },
+        "bellRect": {
+          "x": 424.515625,
+          "y": 236,
+          "width": 44,
+          "height": 44,
+          "top": 236,
+          "right": 468.515625,
+          "bottom": 280,
+          "left": 424.515625
+        }
+      },
+      "note": "burger is hiddenFrom=\"md\" (theme.breakpoints.md=768px, inclusive) — AC4 gap geometry N/A at this width; desktop nav/UserMenu render instead. Verified via measurement, not assumed."
+    },
+    {
+      "name": "ac5-guest-header-375",
+      "pass": true,
+      "ac": "AC5",
+      "width": 375,
+      "measured": {
+        "hasAddListing": false,
+        "hasFavorites": false,
+        "hasLoginText": true,
+        "hasRegisterText": true
+      },
+      "loginRegisterExpectedHere": false,
+      "note": "login/register not expected directly in the closed header below md (pre-existing HeaderActions visibleFrom=\"md\" design, unchanged) — reachable via the drawer, checked separately"
+    },
+    {
+      "name": "ac5-guest-header-1280",
+      "pass": true,
+      "ac": "AC5",
+      "width": 1280,
+      "measured": {
+        "hasAddListing": false,
+        "hasFavorites": false,
+        "hasLoginText": true,
+        "hasRegisterText": true
+      },
+      "loginRegisterExpectedHere": true
+    },
+    {
+      "name": "ac5-guest-drawer-375",
+      "pass": true,
+      "ac": "AC5",
+      "width": 375,
+      "measured": {
+        "hasAddListing": false,
+        "hasFavorites": false,
+        "hasLoginText": true,
+        "hasRegisterText": true
+      }
+    },
+    {
+      "name": "ac5-guest-drawer-1280",
+      "pass": true,
+      "ac": "AC5",
+      "width": 1280,
+      "measured": {
+        "hasAddListing": false,
+        "hasFavorites": false,
+        "hasLoginText": true,
+        "hasRegisterText": true
+      }
+    },
+    {
+      "name": "ac8-authenticated-drawer-destinations",
+      "pass": true,
+      "ac": "AC8",
+      "measured": {
+        "links": [
+          "https://storybook.js.org/docs/writing-stories/decorators",
+          "https://storybook.js.org/docs/builders/webpack",
+          "https://storybook.js.org/docs/builders/vite",
+          "https://storybook.js.org/docs/configure/environment-variables",
+          "/en",
+          "/en/listings",
+          "/en/cabinet",
+          "/en/cabinet?tab=listings",
+          "/en/favorites",
+          "/en/listings/create"
+        ],
+        "hasLogout": true
+      },
+      "expectedHrefs": [
+        "/en",
+        "/en/listings",
+        "/en/cabinet",
+        "/en/cabinet?tab=listings",
+        "/en/favorites",
+        "/en/listings/create"
+      ],
+      "missing": []
+    }
+  ]
+}

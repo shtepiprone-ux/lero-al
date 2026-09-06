@@ -382,3 +382,373 @@ inside it and Task 791's seam is untouched.
 
 **Task path:** `tasks/Sprints/Sprint_71_kickoff_prompt_Task_793_ListingContact_Canonical_Mantine_Card.md`
 **QA profile:** `Q3` · **Owner decisions required before dispatch:** none. **Executable.**
+
+---
+
+## 16. Orchestrator review — `NEEDS REVISION` (2026-09-06)
+
+**One requirement has no evidence of any kind, and it can be closed without the owner and without a database.**
+Everything else is verified. This is a narrow return, not a rejection.
+
+### 16.1 Verified by the reviewer at source — do not redo
+
+| Claim | Reviewer's own result |
+|---|---|
+| R3 — the card is canonical | `ListingContact.tsx`: **0** `@/components/ui/*` imports, **0** `className` occurrences, **0** references to the deleted bar. Was 2 / 75 / 1 |
+| R5 — the clearance is gone | The only surviving `listingContactBarClearance` hits are **three explanatory comments** in the evidence script. See §16.4 — my AC5 was the defect, not this |
+| R10 — the RSC boundary | `ListingShareButton.tsx` is `'use client'`; `ListingDetailView.tsx:215` passes it **string props only** (`listingTitle`, `listingUrl`). No function crosses the boundary — the P0 class from Task 791 is not repeated |
+| R2 mechanism | `ListingDetailView.tsx:426-427` passes `favorite={favoriteSlot}` and `share={shareSlot}` into the pattern's badges row |
+| Evidence freshness | Sources 10:27-10:52, every artifact 10:52-10:53. Post-dates the diff — the failure this task's predecessor was returned for twice does not recur |
+| Files Changed honesty | The session log **does** name `scripts/task612-qa-listinggallery-lightbox-portal.mjs` (`:53`) and classifies it correctly as an ad-hoc non-CI script. Only the chat summary omitted it |
+
+**The harness was strengthened, not weakened — checked because that is the classic failure mode here.** The full
+diff to the Task 612 script is a comment plus **one selector line**; its verdict logic is untouched. And in
+`task791-detail-evidence.mjs` the executor replaced a probe that could no longer run with a **stronger**
+unconditional assertion — `dialogCoversViewport` is asserted on every cell, and covering the whole viewport subsumes
+covering wherever the card happens to be. The reasoning is also right: Task 612's scroll-lock means a probe point
+outside the viewport proves nothing. This is the correct engineering answer to a migration that moved a node.
+
+### 16.2 Blocking finding
+
+**F1 · P2 · [R11, R4, AC12] · `contactDisabled` has no standalone proof, and R11 has no rendered proof at all.**
+
+*Observed:* the executor added a third capability to the canonical pattern — `contactDisabled`, carrying the owner's
+archived/expired rule — and `grep -n "contactDisabled\|archived\|disabled" src/stories/patterns/mantine/ListingContactPattern.stories.tsx`
+returns **nothing**. E-A and E-B got story states; the capability that implements a P0 owner instruction did not.
+*Expected:* §10 phase 1 — a canonical extend is proven standalone **before** the consumer composes it; AC12 —
+rendered proof for archived, expired and sold.
+*Why the executor's explanation only covers half:* the seeded DB has one active listing, which explains the missing
+**live-route** proof. It does not explain the missing **story** proof — a story state is hand-written fixture data
+and needs no database. The sold/rented arm is the sharpest gap: the executor's own design note says they
+deliberately did **not** use the pattern's `closedListing` state because it would have removed Call/WhatsApp from
+sold listings. That is a real and correct catch — and it is exactly the kind of claim that must be shown rendered,
+not argued.
+*Resolution:*
+1. Add a `contactDisabled` section to `Patterns/Mantine/ListingContactPattern` showing Call / WhatsApp /
+   Send-message **disabled** while share stays enabled.
+2. Add a section proving the untouched `closedListing` (sold/rented) path still renders Call and WhatsApp
+   **enabled** with only Send-message disabled — this is the regression the design note claims to have avoided.
+3. Add an `archived` state to `Patterns/Mantine/ListingDetailView`, whose fixture is hand-written
+   (`ListingDetailView.stories.tsx` already declares `status` in `baseListing`).
+*Verification:* the three states render in `build-storybook`, and the owner reviews them in the §13 matrix. Live-route
+proof for archived stays owed and is recorded as a limitation until the DB has a non-active listing — do **not**
+seed production data to satisfy it.
+
+### 16.3 Non-blocking
+
+- **P3 — the Task 612 script now proves strictly less on mobile, and nothing says so.** Its pre-existing verdict
+  line `&& (data.contactCardVisibleInViewport ? data.contactCardCoveredByDialog : true)` skips the contact-occlusion
+  assertion when the card is not in the viewport. Before this task the mobile contact surface was `position: fixed`
+  and therefore always in the viewport, so the assertion always ran; now the card is in flow and below the fold, so
+  on mobile it silently stops asserting. The executor compensated for exactly this in
+  `task791-detail-evidence.mjs` and did not port that compensation here. It is an ad-hoc non-CI probe (confirmed: no
+  `package.json` script, no `.github/` reference), which is why this is P3 — but it is the artifact
+  `docs/critical-flow-registry.md` names for that flow. *Resolution:* port the unconditional `dialogCoversViewport`
+  assertion into its verdict, or record the coverage decrease in the registry row. Either closes it.
+- **NOTE** — `scripts/task791-detail-evidence.mjs` carries CRLF line endings; `.gitattributes` normalises on commit
+  (`* text=auto eol=lf`) and `check:file-integrity` passed. No action.
+- **NOTE** — declining to regenerate `catalog:components` (which would have reset ~30 unrelated components' review
+  status) and hand-editing the affected rows instead was the right call. A diff that resets unrelated governance
+  state to satisfy one task is worse than the staleness it fixes.
+
+### 16.4 Task-design defect — mine
+
+**AC5 and AC9 contradict each other about the same grep.** AC5 demanded
+`grep -rn "listingContactBarClearance" src/ scripts/` return **nothing**; AC9 permits historical prose for the same
+census. The three surviving hits are comments in the evidence script explaining that the token was deleted — which
+AC9 allows and AC5 forbids. **AC9 is the correct formulation; AC5 is amended to match it.** Not an executor defect,
+and not a reason to touch those comments.
+
+### 16.5 Revision 1 verification plan
+
+```powershell
+npm.cmd run check:stories
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+```
+
+Expected: every command exit 0, and the three new story sections present in the built Storybook. Return the exit
+codes and the section names. **Do not re-run the live evidence script** — nothing it measures changed.
+
+Non-command step, after the block: open `Patterns/Mantine/ListingContactPattern` and confirm the three states
+render as described in F1's resolution.
+
+---
+
+## 17. Revision 1 amendment — two owner-reported defects, verified at source (2026-09-06)
+
+The owner reviewed the rendered result and reported two defects. **Both are real, both are reproduced at source
+below, and one of them reverses a design decision this task shipped deliberately.** The verdict stays
+`NEEDS REVISION`; F1 is unchanged and F2/F3/F4 are added to the same revision.
+
+### 17.1 F2 · P1 · The sold/rented design note is itself the defect — `contactDisabled` must include CLOSED
+
+*Owner instruction, verbatim (2026-09-06):*
+> На сторінці оголошення, яке має статус 'Здано'/'Продано' я все ще бачу активні кнопки подзвонити та написати у
+> WhatsApp, хоча ці кнопки мають бути заблоковані(деактивовані).
+
+*Observed at source* — `src/modules/listings/components/ListingContact.tsx:93`:
+
+```ts
+const contactLifecycleDisabled = listingArchived || listingExpired
+```
+
+and `:212` `contactDisabled={contactLifecycleDisabled}`. The executor's own comment at `:91-92` states the intent
+explicitly: *"Distinct from `listingClosed` (sold/rented), whose Call/WhatsApp stay ACTIVE today — only
+Send-message is disabled — unchanged (kickoff §3.5b)."*
+
+*Status of that decision:* **superseded by the owner.** The executor read the existing behaviour correctly and
+preserved it correctly under the kickoff as written — this is not an implementation error. It is a requirement the
+kickoff got wrong. §3.5b and R11 said archived/expired; the owner has now ruled that CLOSED (sold/rented) carries
+the same contact lockout. **R11 is hereby extended:** Call, WhatsApp and Send-message are disabled for
+`archived`, `expired`, `sold` and `rented`. Share stays enabled in all four. Favorite stays disabled in all four
+(already true — `ListingDetailView.tsx:197`).
+
+*Resolution:* extend the lifecycle predicate to cover CLOSED and give it a label. All four `action_disabled_*`
+keys already exist in all four locales (`messages/uk.json:205-208`) — no new i18n keys are needed for F2.
+`closedLabel` at `:99` already resolves `action_disabled_sold` / `action_disabled_rented`; fold it into
+`contactDisabledLabel` rather than leaving two parallel label variables.
+
+*Do not lose:* `state='closedListing'` renders the sold/rented headline block at
+`MantineListingContactPattern.tsx:181`. That state stays. `contactDisabled` is orthogonal to it by construction
+(`:198-214` gate the buttons on `contactDisabled`, not on `state`) — so the correct fix composes them, and does
+**not** replace one with the other. F1's story requirement #2 changes accordingly: the `closedListing` section must
+now prove Call and WhatsApp **disabled**, not enabled.
+
+### 17.2 F3 · P1 · `status_banner_pending` renders as a raw i18n key — two statuses have no banner copy
+
+*Owner-observed:* the literal string `listing.status_banner_pending` rendered in place of a message.
+
+*Reproduced at source.* `ListingDetailView.tsx:407-411` renders the banner whenever
+`!isListingVisible(listing.status)`. Per `VISIBILITY_DB_STATUSES` (`listingSemanticLayer.ts:95-100`) that predicate
+is true for **six** statuses — `inactive`, `pending`, `expired`, `archived`, `sold`, `rented`. `messages/*.json`
+defines banner copy for **four**:
+
+| Status | Reaches the banner | `status_banner_*` key | `STYLES[status]` |
+|---|---|---|---|
+| `sold` · `rented` · `archived` · `expired` | yes | present (4 locales) | present |
+| `pending` | yes | **missing — renders the raw key** | **`undefined`** |
+| `inactive` | yes | **missing — renders the raw key** | **`undefined`** |
+
+*Root cause — a cast that lies to the compiler.* `:408` reads
+`status={listing.status as 'sold' | 'rented' | 'archived' | 'expired'}`. `ListingStatus` has seven members
+(`src/types/database.ts:43`); the cast narrows it to four with no runtime check, so TypeScript could not see either
+gap. **F4 below is the second gap the same cast conceals.**
+
+*Pre-existing, not introduced here.* `git log -S "status_banner_"` attributes the block to Task 237. It is in scope
+for this revision because the owner reported it against this task's rendered output and because the fix is adjacent
+to F2's, not because 793 caused it.
+
+*Resolution — one of these two, executor's choice, stated in the completion report:*
+1. **Narrow the render condition** so the banner only renders for the four statuses that have copy, and let the
+   HIDDEN statuses (`pending`, `inactive`) fall through to the existing `previewBanner` path that already handles
+   the unpublished case; **or**
+2. **Add `status_banner_pending` and `status_banner_inactive`** to all four locale files plus `STYLES` entries in
+   `ListingStatusBanner.tsx`.
+
+Whichever is chosen, **the cast at `:408` must be replaced by a real narrowing** — a typed predicate or a lookup
+whose failure is visible to `tsc`. A fix that leaves the cast in place fixes today's two statuses and leaves the
+next status addition to fail the same way.
+
+### 17.3 F4 · P2 · The same cast leaves `ListingStatusBanner` unstyled for the same two statuses
+
+`ListingStatusBanner.tsx:10-15` indexes `STYLES` by the same four-member union. For `pending` and `inactive`,
+`STYLES[status]` is `undefined`, and `cn('listing-status-banner …', undefined)` emits the banner with **no border,
+background or text colour** — an unstyled block, not a coloured alert. Closed by whichever branch of F3 is taken;
+listed separately so that branch 2 is not implemented without its `STYLES` rows.
+
+### 17.4 What this changes about the review, honestly
+
+§16.2 called the executor's sold/rented design note *"a real and correct catch"*. It was correct as an observation
+about existing behaviour and correct against the kickoff I wrote — and it preserved a behaviour the owner considers
+a defect. That is the argument for F1 restated in the sharpest possible terms: **a claim defended in prose and
+never rendered is a claim nobody can review.** Had the `closedListing` state existed as a story, the owner would
+have seen live Call/WhatsApp buttons on a sold listing during the §13 matrix and caught this before implementation,
+not after. F1 stays P2 and stays blocking.
+
+### 17.5 Revision 1 scope — consolidated
+
+| # | Finding | Priority | Files |
+|---|---|---|---|
+| F1 | Three story states: `contactDisabled`, `closedListing`, `ListingDetailView` `archived` | P2 | `ListingContactPattern.stories.tsx`, `ListingDetailView.stories.tsx` |
+| F2 | Extend the lifecycle lockout to `sold`/`rented`; merge the two label variables | P1 | `ListingContact.tsx` |
+| F3 | Banner copy gap for `pending`/`inactive` + replace the four-member cast | P1 | `ListingDetailView.tsx`, `messages/*.json` **or** render condition |
+| F4 | `STYLES` rows, if F3 branch 2 is taken | P2 | `ListingStatusBanner.tsx` |
+| P3 | Task 612 script mobile assertion (§16.3) | P3 | `task612-qa-…mjs` **or** `critical-flow-registry.md` |
+
+**AC13 (new):** the `closedListing` story section shows Call, WhatsApp and Send-message disabled with Share
+enabled. **AC14 (new):** no route reachable through `ListingDetailView` renders a raw `listing.*` i18n key for any
+of the seven `ListingStatus` members, and this is shown by narrowing rather than asserted.
+
+### 17.6 Revision 1 verification plan — paste-ready
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:stories
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run build-storybook
+```
+
+Status-copy census — every status that can reach the banner must have copy in every locale:
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+Get-ChildItem messages\*.json | ForEach-Object {
+  $n = $_.Name
+  'sold','rented','archived','expired','pending','inactive' | ForEach-Object {
+    $k = "status_banner_$_"
+    $hit = Select-String -Path "messages\$n" -Pattern $k -SimpleMatch -Quiet
+    "{0,-10} {1,-26} {2}" -f $n, $k, $(if ($hit) { 'OK' } else { 'MISSING' })
+  }
+}
+```
+
+Contact-lockout census — the predicate must name all four lifecycle statuses:
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+Select-String -Path src\modules\listings\components\ListingContact.tsx -Pattern 'contactLifecycleDisabled\s*=' -Context 0,1
+Select-String -Path src\modules\listings\components\ListingDetailView.tsx -Pattern "as 'sold' \| 'rented'"
+```
+
+Expected: every command exit 0; the census prints `OK` on every row **or** the render condition no longer admits
+`pending`/`inactive`; the second census shows the predicate covering closed listings and **no** four-member cast
+surviving.
+
+Non-command step, after the blocks: open `Patterns/Mantine/ListingContactPattern` and
+`Patterns/Mantine/ListingDetailView` and confirm the four sections from F1 and F2 render as described.
+
+---
+
+## 18. Orchestrator review — Revision 1 — `APPROVED WITH NOTES` (2026-09-06)
+
+**All five returned findings are closed, and each was verified by the reviewer reading the shipped source — not by
+reading the completion report.** The one non-green gate is a bounded, arithmetically-reconciled exception, accepted
+below with a constraint attached.
+
+### 18.1 Findings — verified closed at source
+
+| # | Claim | Reviewer's own result |
+|---|---|---|
+| **F1** | Three story states | `ListingContactPattern.stories.tsx:147-198` — a `contactDisabled` section (`state="normal"` + `contactDisabled`) and a `closedListing` section (`state="closedListing"` + `contactDisabled`) both present. `ListingDetailView.stories.tsx:210` — `ArchivedListing` export, `status: 'archived'`, and correctly `isGuest: false` + a real `listingId` so the disabled favorite actually renders rather than being omitted by the guest gate. **Closed** |
+| **F2** | Lockout extended to CLOSED | `ListingContact.tsx:97` — `listingArchived \|\| listingExpired \|\| listingClosed`. `:182` `inquiryNode` now keys off the single predicate; `:225` feeds it to `contactDisabled`. The two label variables are merged into one `contactDisabledLabel` (`:100-106`) resolving all four `action_disabled_*` keys. **Closed** |
+| **F3** | Real narrowing, not a cast | `listingSemanticHelpers.ts:65` — `isListingNonActiveStatus(status): status is Exclude<ListingStatus, 'active'>`, derived from `isListingVisible` so it cannot drift from `VISIBILITY_DB_STATUSES`. `ListingDetailView.tsx` call site carries **no cast**. Exported through `domain/index.ts:39`. Locale census: **24/24 `OK`** — all six statuses × all four locales. **Closed** |
+| **F4** | `STYLES` widened | `ListingStatusBanner.tsx` — `Props['status']` is now `Exclude<ListingStatus, 'active'>` and `STYLES` has six rows. `pending`/`inactive` reuse `--status-warning`, whose own doc comment names those two statuses. **Closed** |
+| **P3** | Task 612 mobile assertion | `:166` — `&& data.dialogCoversViewport`, unconditional, outside the `contactCardVisibleInViewport` ternary. The fail-open branch survives but no longer decides the cell alone. **Closed** |
+
+**The F3 fix is better than what was asked for.** The brief permitted either narrowing the render condition or
+adding the copy; the executor did both, and derived the predicate from the semantic layer rather than hand-listing
+six members. A seventh status added to `ListingStatus` now fails `tsc` at `STYLES` instead of rendering a raw key
+in production. That is the difference between fixing two statuses and closing the class.
+
+### 18.2 The one non-green gate — accepted, bounded, pinned
+
+`check:locale-leak:mantine-only` exits **1** with **131** leaks. Accepted, because the attribution is arithmetic
+rather than asserted:
+
+- Pre-Revision-1 count: **107**. Post: **131**. Delta: **exactly 24**.
+- The session log's R5 table gives `Patterns/Mantine/ListingDetailView/Public Listing` = **24** and the new
+  `Patterns/Mantine/ListingDetailView/Archived Listing` = **24**, same family (Leaflet chrome + the `Elira Hoxha`
+  fixture name), and the per-export census sums to 131 exactly.
+- `131 − 24 = 107` — the pre-revision total, unchanged. **Every leak in the delta is one required new story export
+  reproducing Task 798's already-filed family on a component that already leaked it three times over.**
+
+Zero leak lines trace to F2, F3 or F4 — the new `status_banner_*` values are real translations in all four locales,
+and the new story sections use `storyT()`.
+
+**Constraint attached to this acceptance:** 131 is now the pinned baseline. Any later count above 131 that is not
+explained by a new `ListingDetailView` story export is a regression, not an inheritance, and must not be waved
+through by citing this paragraph. Task **798** owns bringing it to 0.
+
+### 18.3 Notes — non-blocking, no revision
+
+- **N1 · The session log's §1 R-table is stale against its own Revision 1.** Row **R6** still reads *"`listingClosed`
+  still renders a disabled Send-message placeholder with `closedLabel`, Call/WhatsApp remain active (unchanged)"*
+  and row **R11** still reads `contactLifecycleDisabled = listingArchived || listingExpired`. Both describe
+  Revision 0 and are contradicted by `ListingContact.tsx:97`. Appending a Revision 1 section rather than rewriting
+  the table is the right instinct for an append-only evidence log — but a reader grepping `R11` gets the superseded
+  answer with nothing marking it superseded. *Resolution (fold into the next task in this file, do not reopen 793):*
+  add `— SUPERSEDED by Revision 1 F2, see §Revision 1` to those two rows.
+- **N2 · Both new contact story sections pass the same `listing_detail_closed_label`.** The `contactDisabled`
+  section exists to prove the **archived/expired** tooltip; it currently displays the sold/rented copy. The disabled
+  state renders correctly — only the label string is the wrong one of the four, in the story whose purpose is to
+  show that label. Cosmetic, story-only, no production path affected.
+- **N3 · R11's live-route proof stays owed and stays out of scope.** This sandbox's seeded DB has one `active`
+  listing. The `ArchivedListing` story is the accepted substitute, which is what the return asked for. **Do not seed
+  production-shaped data to close this.** It closes when the environment has a non-active fixture.
+- **NOTE** — the executor declining to re-execute a replayed completion report, and saying so plainly rather than
+  redoing finished work or assuming the reviewer's role, was correct. A duplicate delivery is not a new instruction.
+
+### 18.4 Owner verification — paste-ready
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+```
+
+Status-copy census — must print `OK` on all 24 rows:
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+Get-ChildItem messages\*.json | ForEach-Object {
+  $n = $_.Name
+  'sold','rented','archived','expired','pending','inactive' | ForEach-Object {
+    $k = "status_banner_$_"
+    $hit = Select-String -Path "messages\$n" -Pattern "`"$k`"" -SimpleMatch -Quiet
+    "{0,-10} {1,-26} {2}" -f $n, $k, $(if ($hit) { 'OK' } else { 'MISSING' })
+  }
+}
+```
+
+Lockout and cast census — must show all four statuses in the predicate and **no** surviving four-member cast:
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+Select-String -Path src\modules\listings\components\ListingContact.tsx -Pattern 'contactLifecycleDisabled\s*='
+Select-String -Path src\modules\listings\components\ListingDetailView.tsx -Pattern "as 'sold' \| 'rented'"
+Select-String -Path src\modules\listings\domain\listingSemanticHelpers.ts -Pattern 'isListingNonActiveStatus'
+```
+
+Leak baseline — the count must be **131**, not merely non-zero:
+
+```powershell
+cd C:\Claude_Code_Projects\lero-al
+npm.cmd run check:locale-leak:mantine-only
+```
+
+**Visual step, in the Storybook you have running (rebuild it first — the sections are new):**
+
+1. `Patterns/Mantine/ListingContactPattern` → the **contactDisabled** section: Call, WhatsApp and Send-message all
+   greyed and unclickable; the save/favorite trigger still present.
+2. Same story → the **closedListing** section: the sold/rented headline block **and** Call/WhatsApp/Send-message
+   disabled together. This is the F2 fix — before Revision 1 those two buttons were live here.
+3. `Patterns/Mantine/ListingDetailView` → **Archived Listing**: the status banner renders real Albanian/Ukrainian
+   copy (no `listing.status_banner_*` raw key), the contact card is visible with contacts disabled, favorite is
+   disabled in the badges row, and **Share is still enabled**.
+4. `Patterns/Mantine/ListingDetailView` → **Staff Preview Unpublished** (`status: 'pending'`): this is the F3/F4
+   regression case — the banner must show real copy on an amber background, not the raw key on an unstyled block.
+
+Expected: every command exit 0 except the leak check, which exits 1 with exactly **131**.
+
+### 18.5 Scope of this verdict — stated fail-closed
+
+The reviewer verified **F1, F2, F3, F4 and P3 by reading the shipped source on the owner's machine**, and verified
+the locale-leak attribution **arithmetically** against the session log's own per-export census. That is real
+evidence and it is why the verdict is `APPROVED WITH NOTES` rather than `PARTIALLY VERIFIED`.
+
+What the reviewer did **not** do is run the gates. Per **D71-1** and the standing Windows-native evidence rule,
+gate output produced anywhere but the owner's own PowerShell is an environment screen, not repository evidence.
+**Task 793 archives when the §18.4 block comes back clean from the owner's machine** — every command exit 0 except
+`check:locale-leak:mantine-only`, which must exit 1 at **exactly 131**. A different leak count, a failing command,
+or a visual step that does not match §18.4's four descriptions **reverts this verdict to `NEEDS REVISION`** and
+reopens as Revision 2. Nothing about this paragraph is a formality: 131 is a specific falsifiable number, and the
+four visual descriptions are specific falsifiable renders.

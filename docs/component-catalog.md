@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, and 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, and 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton` — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,13 +8,13 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 238 |
+| Total cataloged components | 239 |
 | Storybook stories | 43 |
-| Locale-aware (useTranslations) | 107 |
-| Client components ('use client') | 155 |
+| Locale-aware (useTranslations) | 108 |
+| Client components ('use client') | 156 |
 | With arbitrary Tailwind values | 36 |
 | Components with 2xl responsive step | 12 |
-| Components flagged for review | 51 |
+| Components flagged for review | 50 |
 
 ## Canonical UI Primitives (`src/components/ui/`) (33)
 
@@ -155,7 +155,7 @@ See `docs/component-risk-register.md` for risk register.
 | `queries.ts` | APPROVED | ✅ | — | —  |
 | `SavedSearchesTab` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 
-## Listings Feature Components (72)
+## Listings Feature Components (73)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -185,7 +185,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingBackButton` | APPROVED | — | — | —  |
 | `ListingCard` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `listingConstants.ts` | APPROVED | ✅ | — | —  |
-| `ListingContact` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `ListingContact` | APPROVED | — | 🌐 | LOCALIZATION — Task 793: leaves Tailwind onto `MantineListingContactPattern`, GOVERNANCE_VIOLATION cleared (zero `@/components/ui/*` imports) |
 | `ListingDetailView` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION — Task 791: Mantine-migrated, TAILWIND_ENTROPY cleared (one unavoidable `className="hidden"` remains, see Task 791 session log) |
 | `ListingFeatureIcon` | APPROVED | — | — | —  |
 | `ListingFormLoader` | APPROVED | — | — | PRIMITIVE_CHECK  |
@@ -195,6 +195,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingInquiryDialog` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ListingMobileCTA` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `ListingReportDialog` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `ListingShareButton` | APPROVED | — | 🌐 | LOCALIZATION — Task 793: new, badges-row share slot (`MantineListingDetailPattern`) |
 | `listingSelect.ts` | APPROVED | ✅ | — | —  |
 | `listingSemanticLayer.ts` | APPROVED | ✅ | — | —  |
 | `ListingsFilterBar` | APPROVED | — | 🌐 | LOCALIZATION  |

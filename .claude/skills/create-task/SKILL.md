@@ -210,6 +210,7 @@ for an edit made under owner authorisation. Naming checks in a sentence instead 
 Do not publish the first draft. Check all of the following and revise the task if any answer is no:
 
 - A fresh Sonnet session can execute it without hidden chat context.
+- **The response ends with the owner-run commit handoff.** A kickoff is not delivered until the owner has a paste-ready `powershell` block staging **every** artifact this task design created or changed — the kickoff file, the sprint file, `docs/backlog.md`, `docs/backlog-reserved.md`, and anything else the same edit touched — with the commit message. Reconcile it against read-only `git status --short` first. Handing over a kickoff and leaving the owner to assemble the staging list is an incomplete delivery, not a stylistic choice.
 - Every command the owner or executor must run appears inside a paste-ready fenced `powershell` block, with substitutable values as assignments — never named in prose, never carrying a `<placeholder>`.
 - Every primary requirement has at least one binary acceptance criterion and one verification method.
 - Scope protects existing behavior and names what must not change.
@@ -291,6 +292,8 @@ and any owner decision still needed. Put `FACTS`, `INFERENCES`, `UNKNOWNS`, and 
 write `None` for an empty category rather than omitting it.
 
 ## Owner-run Git handoff
+
+> **This is a publication gate, not a closing courtesy** — it is checked in "Quality gate before publication" above. Every kickoff response ends with this block.
 
 After saving and verifying the task artifact, emit an owner-run commit handoff when this task design changed task or
 documentation artifacts. List every changed path explicitly, then provide only:

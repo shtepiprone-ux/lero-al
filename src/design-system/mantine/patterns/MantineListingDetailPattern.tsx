@@ -30,6 +30,10 @@ export interface MantineListingDetailData {
   price: string
   priceOld?: string
   originalPriceLabel?: string
+  /** Task 791 E4 — rendered together with `originalPriceLabel` under the price group when both
+   * are set. Was declared-but-unread before this task (`originalPriceLabel` had no paired
+   * value prop); `ListingDetailView.tsx`'s converted-currency disclosure needs both. */
+  originalPrice?: string
   pricePerSqm?: string
   views: number
   viewsLabel: string
@@ -41,18 +45,44 @@ export interface MantineListingDetailData {
 export interface MantineListingDetailPatternProps {
   data: MantineListingDetailData
   images: MantineListingGalleryImage[]
-  galleryLabels: MantineListingGalleryPatternProps['labels']
+  /** Required unless `gallerySlot` is supplied — a Server Component consumer that always supplies
+   * `gallerySlot` (Task 791 F2 fix) must be able to omit this without constructing a value that
+   * would otherwise cross the Server/Client boundary carrying a function (`labels.counter`),
+   * which React rejects at render time ("Functions cannot be passed directly to Client
+   * Components"). See the Sprint 71 kickoff §3.4/E1 and the Task 791 Revision 1 F2 finding. */
+  galleryLabels?: MantineListingGalleryPatternProps['labels']
   badges?: ListingDetailBadge[]
   features: ListingFeature[]
   descriptionTitle: string
   amenitiesTitle: string
   amenities?: ListingAmenity[]
-  contact: MantineListingContactPatternProps
+  /** Required unless `contactSlot` is supplied (Task 791 E2). */
+  contact?: MantineListingContactPatternProps
   /** Real `FavoriteButton` (app) / demo heart (story) — positioned node, hook-free split (Task
    * 605). Task 784 D69-25 (owner instruction, 2026-09-04): always rendered in the badges row,
    * right-aligned to the content column's own right edge, at every breakpoint — no longer split
    * with `MantineListingContactPattern` by viewport. */
   favorite?: ReactNode
+  /** Task 791 E1 — when supplied, rendered in place of `MantineListingGalleryPattern`. The
+   * production consumer's LCP static-frame/interactive-island swap (`ListingDetailView.tsx`)
+   * cannot be reproduced by this pattern's own client-only gallery without deleting that
+   * mechanism — see the Sprint 71 kickoff §3.4. */
+  gallerySlot?: ReactNode
+  /** Task 791 E2 — when supplied, rendered in the sidebar `Grid.Col` in place of
+   * `MantineListingContactPattern`. `ListingContact.tsx` has five measured divergences from this
+   * pattern's contact card (kickoff §3.5) and takes function props that cannot cross the
+   * Server/Client boundary of a Server Component consumer — see kickoff §3.3. */
+  contactSlot?: ReactNode
+  /** Task 791 E3 — appended to the end of the left column's `Stack`, inside the same `gap="lg"`
+   * rhythm as the cards above it (map / report row / recently-viewed / similar-listings for the
+   * detail route). */
+  contentFooter?: ReactNode
+  /** Task 791 E5 — the breakpoint the sidebar column splits from `{ base: 12 }` full-width down
+   * to `{ md: 8/4 }` (unchanged default, `Patterns/Mantine/ListingDetailPattern`'s own story) or
+   * `{ lg: 8/4 }` (`ListingDetailView.tsx`'s production requirement — `ListingContact`'s sidebar
+   * is `hidden lg:block`, so splitting at `md` would render an empty column between 768-1023px;
+   * kickoff §3.6). @default 'md' */
+  sidebarFrom?: 'md' | 'lg'
 }
 
 /**
@@ -93,13 +123,23 @@ export function MantineListingDetailPattern({
   amenities = [],
   contact,
   favorite,
+  gallerySlot,
+  contactSlot,
+  contentFooter,
+  sidebarFrom = 'md',
 }: MantineListingDetailPatternProps) {
   const theme = useMantineTheme()
+  const leftSpan = sidebarFrom === 'lg' ? { base: 12, lg: 8 } : { base: 12, md: 8 }
+  const leftPr = sidebarFrom === 'lg' ? { base: 0, lg: 'lg' } : { base: 0, md: 'lg' }
+  const leftMb = sidebarFrom === 'lg' ? { base: 'lg', lg: 0 } : { base: 'lg', md: 0 }
+  const rightSpan = sidebarFrom === 'lg' ? { base: 12, lg: 4 } : { base: 12, md: 4 }
   return (
     <Grid gutter={0}>
-      <Grid.Col span={{ base: 12, md: 8 }} pr={{ base: 0, md: 'lg' }} mb={{ base: 'lg', md: 0 }}>
+      <Grid.Col span={leftSpan} pr={leftPr} mb={leftMb}>
         <Stack gap="lg">
-          <MantineListingGalleryPattern images={images} title={data.title} labels={galleryLabels} />
+          {/* `galleryLabels!` — this branch only runs when `gallerySlot` is absent, and every
+              consumer that omits `gallerySlot` (this pattern's own story) supplies `galleryLabels`. */}
+          {gallerySlot ?? <MantineListingGalleryPattern images={images} title={data.title} labels={galleryLabels!} />}
 
           <Stack gap="sm">
             {/* Task 784 D69-25 (owner instruction, 2026-09-04): favorite lives here — always,
@@ -158,6 +198,12 @@ export function MantineListingDetailPattern({
                 </Text>
               )}
             </Group>
+
+            {data.originalPriceLabel && data.originalPrice && (
+              <Text size="xs" c="dimmed">
+                {data.originalPriceLabel}: {data.originalPrice}
+              </Text>
+            )}
 
             <Group gap="md" wrap="wrap">
               {data.location && (
@@ -241,11 +287,13 @@ export function MantineListingDetailPattern({
               </Stack>
             </Paper>
           )}
+
+          {contentFooter}
         </Stack>
       </Grid.Col>
 
-      <Grid.Col span={{ base: 12, md: 4 }}>
-        <MantineListingContactPattern {...contact} />
+      <Grid.Col span={rightSpan}>
+        {contactSlot ?? (contact && <MantineListingContactPattern {...contact} />)}
       </Grid.Col>
     </Grid>
   )

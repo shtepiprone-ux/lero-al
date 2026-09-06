@@ -3,9 +3,17 @@ import Link from 'next/link'
 import { Box, Breadcrumbs, Anchor, Text } from '@mantine/core'
 import styles from './ListingsPageFrame.module.css'
 
+export interface ListingsPageFrameIntermediateCrumb {
+  label: string
+  href: string
+}
+
 export interface ListingsPageFrameProps {
   homeHref: string
   homeLabel: string
+  /** Task 791 E6 — rendered as links between the home anchor and `currentLabel`. Default `[]`
+   * renders byte-identical to before this prop existed (`/listings` has none). */
+  intermediate?: ListingsPageFrameIntermediateCrumb[]
   currentLabel: string
   breadcrumbAriaLabel: string
   children: ReactNode
@@ -25,6 +33,7 @@ export interface ListingsPageFrameProps {
 export function ListingsPageFrame({
   homeHref,
   homeLabel,
+  intermediate = [],
   currentLabel,
   breadcrumbAriaLabel,
   children,
@@ -65,6 +74,11 @@ export function ListingsPageFrame({
             <Anchor component={Link} href={homeHref} size="sm" c="gray.5" className={styles.homeLink}>
               {homeLabel}
             </Anchor>
+            {intermediate.map((item, i) => (
+              <Anchor key={i} component={Link} href={item.href} size="sm" c="gray.5" className={styles.homeLink}>
+                {item.label}
+              </Anchor>
+            ))}
             <Text size="sm" c="gray.8">
               {currentLabel}
             </Text>

@@ -209,6 +209,17 @@ visual criterion is `NOT VERIFIABLE`; do not replace that missing owner decision
 
 When a task claims a new validation or regression gate, verify that it asserts observable behavior. Q4 gate claims require planted-violation failure proof. Do not accept a test that only mirrors an implementation detail, is weakened to pass, or fails to exercise the changed flow.
 
+## Owner-runnable commands are a block, never prose (owner instruction, 2026-09-06)
+
+Every command the owner is expected to run goes in **one fenced `powershell` block**, paste-ready, from the project
+root, one command per line, using `node.exe` / `npm.cmd` / `npx.cmd`, with any substitutable value declared as an
+assignment at the top of the block (`$slug = "..."`) rather than a `<placeholder>` inside a command. State the
+expected result and the output to return immediately after the block. Non-command steps (open a story, sign in as
+staff) go in a numbered list underneath, never mixed in.
+
+This covers the verification plan, every finding's `Verification:`, every revision brief, and any verification owed
+for an edit made under owner authorisation. Naming checks in a sentence instead of printing them is a defect.
+
 ## Findings
 
 List confirmed findings before any summary. Every finding must include:
@@ -258,7 +269,7 @@ Use these headings in order:
 10. `Required next actions`
 11. `Reviewer self-check`
 
-In the self-check, confirm that evidence, not summaries, supports every requirement; the final task has one active
+In the self-check, confirm that every command the owner must run was printed as a paste-ready `powershell` block rather than named in prose — including verification owed for any edit the reviewer made itself; that evidence, not summaries, supports every requirement; the final task has one active
 route; and the retained rule ledger and executable contract are current. Confirm each checkpoint has a producer,
 persisted result, comparator, and failure path, including valid zero/empty inputs, task-created artifacts, and dirty
 worktree integrity. Confirm no owner exception is invented and no current instruction contradicts the final route.

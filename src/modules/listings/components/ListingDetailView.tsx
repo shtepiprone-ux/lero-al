@@ -3,12 +3,21 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
-import { MapPin, Eye, CalendarDays, Info } from 'lucide-react'
+import { Info } from 'lucide-react'
+import { Alert, Anchor, Box, Group, Paper, Skeleton, SimpleGrid, Stack, Text, Title } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import {
+  MantineListingDetailPattern,
+  type MantineListingDetailData,
+  type ListingDetailBadge,
+  type ListingFeature,
+  type ListingAmenity,
+} from '@/design-system/mantine/patterns'
+import { ListingsPageFrame } from '@/modules/listings/components/ListingsPageFrame'
 import { GalleryStaticFrame } from '@/modules/listings/components/GalleryStaticFrame'
 import { GalleryIsland } from '@/modules/listings/components/GalleryIsland'
 import { SimilarListings } from '@/modules/listings/components/SimilarListings'
 import { MapWrapper } from '@/components/shared/MapWrapper'
-import { Badge } from '@/components/ui/badge'
 import { ListingBackButton } from '@/modules/listings/components/ListingBackButton'
 import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
@@ -20,7 +29,6 @@ import { isListingVisible } from '@/modules/listings/domain'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
-import { cn } from '@/lib/utils'
 import type { Listing, ListingImage, ListingStatus, Location, PublicUserProfile } from '@/types/database'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
@@ -32,22 +40,31 @@ const LazyListingContact = dynamic(
 )
 
 // ── Similar listings Suspense fallback ────────────────────────────────────────
+// Skeleton wraps real (invisible, `&nbsp;`) content instead of taking explicit height/width
+// props — Mantine's own documented sizing mechanism, and the only way to size a placeholder
+// here without a raw numeric dimension (`--scope=mantine` design-tokens gate, R9).
 export function SimilarListingsSkeleton() {
   return (
-    <div>
-      <div className="h-7 w-48 rounded-lg bg-muted animate-pulse mb-5" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <Stack gap="lg">
+      <Skeleton radius="md">
+        <Title order={2} size="h4">&nbsp;</Title>
+      </Skeleton>
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="rounded-2xl border overflow-hidden">
-            <div className="aspect-[4/3] bg-muted animate-pulse" />
-            <div className="p-3 space-y-2">
-              <div className="h-4 w-full bg-muted rounded animate-pulse" />
-              <div className="h-5 w-32 bg-muted rounded animate-pulse" />
-            </div>
-          </div>
+          <Paper key={i} withBorder radius="lg" style={{ overflow: 'hidden' }}>
+            <Skeleton radius={0} style={{ aspectRatio: '4 / 3' }} />
+            <Stack gap="xs" p="sm">
+              <Skeleton radius="sm">
+                <Text size="sm">&nbsp;</Text>
+              </Skeleton>
+              <Skeleton radius="sm">
+                <Text size="md" fw={600}>&nbsp;</Text>
+              </Skeleton>
+            </Stack>
+          </Paper>
         ))}
-      </div>
-    </div>
+      </SimpleGrid>
+    </Stack>
   )
 }
 
@@ -116,6 +133,11 @@ export interface ListingDetailViewBodyProps extends ListingDetailViewProps {
  * doing live Supabase queries — cannot run). `ListingDetailView` (below) is the
  * production entry point; it resolves translations and passes the real async
  * sections as `similarListingsSlot`/`recentlyViewedSlot`.
+ *
+ * Task 791 — this view composes the canonical `MantineListingDetailPattern` +
+ * `ListingsPageFrame`; the gallery and contact card are passed through as slots
+ * (`gallerySlot`/`contactSlot`) so the LCP static-frame/island swap and the
+ * Server-Component boundary survive untouched (Sprint 71 kickoff §3.3/§3.4).
  */
 export function ListingDetailViewBody({
   listing,
@@ -161,9 +183,56 @@ export function ListingDetailViewBody({
   // Preview mode never allows the inquiry trigger (Note 14 — keep inert).
   const effectiveCanSendInquiry = isStaffPreview ? false : canSendInquiry
 
-  return (
-    <div data-testid="listing-detail-view" className="pb-44 md:pb-20 lg:pb-8">
-      {/* ── LCP image preload — native RSC <link>, hoisted to <head> by React 19 / Next.js. */}
+  const badges: ListingDetailBadge[] = [
+    ...(isNew ? [{ label: t('new'), tone: 'new' as const }] : []),
+    ...(listing.is_premium ? [{ label: t('premium'), tone: 'premium' as const }] : []),
+    ...(isPriceReduced ? [{ label: t('price_reduced'), tone: 'reduced' as const }] : []),
+    { label: t(listing.listing_type), tone: 'type' as const },
+    { label: t(`property_type_${listing.property_type}`), tone: 'type' as const },
+  ]
+
+  const mappedFeatures: ListingFeature[] = features.map(f => ({
+    // `theme.other!.iconSize!.compact` (14px) — the same rung the pattern's own story uses for
+    // these icons (`BedDouble size={14}` etc., ListingDetailPattern.stories.tsx), referenced
+    // through the theme scale instead of a bare literal (--scope=mantine design-tokens gate).
+    icon: <ListingFeatureIcon name={f.icon} size={theme.other!.iconSize!.compact} />,
+    label: t(f.labelKey),
+    value: f.value,
+  }))
+
+  const mappedAmenities: ListingAmenity[] = detailAttrs.map(a => ({
+    label: t(a.labelKey),
+    value: t(a.valueKey),
+  }))
+
+  const detailData: MantineListingDetailData = {
+    title: listing.title,
+    location: listing.location?.name_al,
+    price: formattedPrice,
+    priceOld: isPriceReduced ? formatPrice(displayPriceOld!, displayCurrencyCode, locale) : undefined,
+    originalPriceLabel: originalPriceStr ? t('original_price') : undefined,
+    originalPrice: originalPriceStr ?? undefined,
+    pricePerSqm: pricePerSqm ? `${formatPrice(pricePerSqm, displayCurrencyCode, locale)} ${t('per_sqm')}` : undefined,
+    views: listing.views_count,
+    viewsLabel: t('views'),
+    date: relativeTimeStr,
+    publicId: String(listing.public_id),
+    description: listing.description ?? undefined,
+  }
+
+  // `galleryLabels` is NOT constructed here — `gallerySlot` is always supplied in this consumer
+  // (Task 791 F2 fix), and `MantineListingDetailPattern`'s internal gallery/lightbox never
+  // renders. Building this object would still cross the Server→Client boundary as a serialized
+  // prop even though unused, and its `counter` member is a function — React rejects that at
+  // render time ("Functions cannot be passed directly to Client Components"). `galleryLabels` is
+  // optional on the pattern for exactly this reason (kickoff §16.2 F2 reopened by Revision 1).
+
+  // ── Gallery — LCP-optimised RSC + lazy interactive shell, passed as a slot (Task 791 E1) ────
+  // Byte-identical DOM ids/order/hidden-state to the pre-migration markup (R4). The preload
+  // <link> is included here too so it stays with the rest of the gallery subtree; React 19
+  // hoists it to <head> regardless of nesting depth.
+  const gallerySlot = (
+    <>
       {galleryPreload && (
         <link
           rel="preload"
@@ -174,7 +243,93 @@ export function ListingDetailViewBody({
           fetchPriority="high" // eslint-disable-line no-restricted-syntax -- fetchPriority on <link rel="preload"> is intentional; governance rule targets <img> bypass only
         />
       )}
+      <div id="gallery-wrapper-static">
+        <GalleryStaticFrame coverUrl={coverImage?.url ?? null} title={listing.title} />
+        {/* `theme.other!.iconSize!.roomy` (20px) reused as the exact pre-migration `h-5` height —
+            no dedicated "spacer" scale exists, and this is the closest measured theme constant
+            at that exact value (--scope=mantine design-tokens gate forbids a bare literal). */}
+        {images.length > 1 && (
+          <Box id="gallery-btn-placeholder" mt="sm" h={theme.other!.iconSize!.roomy} aria-hidden="true" />
+        )}
+      </div>
+      {/* `hidden` is the literal Tailwind class name `ListingGallery.tsx`'s useEffect toggles via
+          `classList.remove('hidden')` (out of scope for Task 791, owned by 794) to reveal this
+          shell after hydration. This is the one unavoidable `className` in this file — replacing
+          it with a Mantine/CSS-module class would silently break the LCP static-frame/island
+          swap (R4), since `ListingGallery.tsx` looks up the class by its literal name. Recorded
+          as a TASK SPECIFICATION CONTRADICTION between R1 (zero className) and R4 (preserve the
+          swap) in the Task 791 completion report for Opus. */}
+      <div id="gallery-interactive-shell" className="hidden">
+        <GalleryIsland images={images} title={listing.title} />
+      </div>
+    </>
+  )
 
+  // ── Contact sidebar — passed as a slot (Task 791 E2), rendered exactly as before ────────────
+  const contactSlot = (
+    <LazyListingContact
+      owner={owner}
+      isGuest={isGuest}
+      listingTitle={listing.title}
+      listingUrl={listingUrl}
+      price={displayPrice}
+      currency={displayCurrencyCode}
+      originalPrice={originalPriceStr ?? undefined}
+      originalPriceLabel={t('original_price')}
+      listingStatus={listing.status as ListingStatus}
+      listingId={effectiveListingId}
+      isFavorited={effectiveIsFavorited}
+      canReport={effectiveCanReport}
+      inquiryListingId={listing.id}
+      contactListingId={listing.id}
+      canSendInquiry={effectiveCanSendInquiry}
+      inquirerName={inquirerName}
+      inquirerEmail={inquirerEmail}
+    />
+  )
+
+  // ── Left-column continuation — passed as a slot (Task 791 E3) ───────────────────────────────
+  const contentFooter = (
+    <>
+      {listing.lat && listing.lng && (
+        <Paper withBorder radius="lg" p="lg">
+          <Stack gap="md">
+            <Title order={2} size="h4">
+              {t('location_label')}
+            </Title>
+            <MapWrapper lat={listing.lat} lng={listing.lng} title={listing.title} />
+          </Stack>
+        </Paper>
+      )}
+
+      {/* Report — authenticated non-owner only (always inert in staff preview) */}
+      {effectiveCanReport && (
+        <Group justify="flex-end">
+          <ListingReportDialog listingId={listing.id} />
+        </Group>
+      )}
+
+      {/* Recently viewed — suppressed in staff preview */}
+      {!isStaffPreview && recentlyViewedSlot}
+
+      {/* Similar listings — Server Component streamed below the fold. */}
+      <Box id="similar-listings">{similarListingsSlot}</Box>
+    </>
+  )
+
+  return (
+    <Box
+      data-testid="listing-detail-view"
+      pb={{
+        // Task 791 (owner decision D71-4) — `theme.other.layout.listingContactBarClearance`:
+        // clearance reserved for ListingContact's `lg:hidden fixed` mobile bar (base = its tall
+        // form, md = its short form). `lg` is not clearance — the bar is hidden there — so it
+        // consumes the ordinary `2xl` spacing token instead of a third layout member.
+        base: theme.other!.layout!.listingContactBarClearance!.base,
+        md: theme.other!.layout!.listingContactBarClearance!.md,
+        lg: '2xl',
+      }}
+    >
       {/* View/recently-viewed tracking is suppressed in staff preview — does not
           inflate view counts or pollute the staff member's recently-viewed list. */}
       {!isStaffPreview && (
@@ -184,202 +339,69 @@ export function ListingDetailViewBody({
         </>
       )}
 
-      {/* Breadcrumbs */}
-      <div className="bg-muted/40 border-b">
-        <div className="container-wide py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap" aria-label={tc('aria_breadcrumb')}>
-            <Link href={`/${locale}`} className="hover:text-foreground transition-colors">{tNav('home')}</Link>
-            <span>/</span>
-            <Link href={`/${locale}/listings`} className="hover:text-foreground transition-colors">{t('all_listings')}</Link>
-            {listing.location && (<><span>/</span><Link href={`/${locale}/listings?location_id=${listing.location.id}`} className="hover:text-foreground transition-colors">{listing.location.name_al}</Link></>)}
-            <span>/</span>
-            <span className="text-foreground truncate max-w-xs">{listing.title}</span>
-          </nav>
-        </div>
-      </div>
+      <ListingsPageFrame
+        homeHref={`/${locale}`}
+        homeLabel={tNav('home')}
+        intermediate={[
+          { label: t('all_listings'), href: `/${locale}/listings` },
+          ...(listing.location
+            ? [{ label: listing.location.name_al, href: `/${locale}/listings?location_id=${listing.location.id}` }]
+            : []),
+        ]}
+        currentLabel={listing.title}
+        breadcrumbAriaLabel={tc('aria_breadcrumb')}
+      >
+        <Stack gap="md">
+          <Box>
+            <ListingBackButton locale={locale} label={t('back_to_listings')} />
+          </Box>
 
-      <div className="container-wide pt-4 pb-6">
-        <div className="mb-5">
-          <ListingBackButton locale={locale} label={t('back_to_listings')} />
-        </div>
-
-        {/* Staff-only preview banner — always above the content grid */}
-        {isStaffPreview && previewBanner && (
-          <div
-            className={cn(
-              'flex items-start gap-3 rounded-2xl border px-5 py-4 mb-6',
-              previewBanner === 'unpublished'
-                ? 'bg-status-warning/10 border-status-warning/30 text-status-warning'
-                : 'bg-status-info/10 border-status-info/30 text-status-info',
-            )}
-          >
-            <Info className="h-5 w-5 shrink-0 mt-0.5" />
-            <div className="flex flex-col gap-2 min-w-0 flex-1">
-              <p className="text-sm font-medium leading-snug whitespace-normal break-words">
-                {previewBanner === 'unpublished' ? t('preview_banner_unpublished') : t('preview_banner_published')}
-              </p>
-              {previewBanner === 'published' && (
-                <Link
-                  href={`/${locale}/listings/${listing.slug}`}
-                  target="_blank"
-                  className="inline-flex items-center min-h-11 text-sm font-medium underline underline-offset-2 hover:opacity-80 transition-opacity w-fit whitespace-normal break-words"
-                >
-                  {t('preview_open_public')}
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-
-        {!isListingVisible(listing.status as ListingStatus) && (
-          <ListingStatusBanner
-            status={listing.status as 'sold' | 'rented' | 'archived' | 'expired'}
-            message={t(`status_banner_${listing.status}`)}
-            similarLabel={t('similar_listings')}
-          />
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-
-          {/* ── Left column ── */}
-          <div className="flex flex-col gap-8 min-w-0">
-
-            {/* ── Gallery — LCP-optimised RSC + lazy interactive shell ───────── */}
-            <div id="gallery-wrapper-static">
-              <GalleryStaticFrame coverUrl={coverImage?.url ?? null} title={listing.title} />
-              {images.length > 1 && (
-                <div id="gallery-btn-placeholder" className="mt-3 h-5" aria-hidden="true" />
-              )}
-            </div>
-            <div id="gallery-interactive-shell" className="hidden">
-              <GalleryIsland images={images} title={listing.title} />
-            </div>
-
-            {/* Title + price + badges */}
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-wrap gap-2">
-                {isNew && <Badge className="bg-badge-new text-primary-foreground">{t('new')}</Badge>}
-                {listing.is_premium && <Badge className="bg-badge-premium text-primary-foreground">{t('premium')}</Badge>}
-                {isPriceReduced && <Badge className="bg-badge-reduced text-primary-foreground">{t('price_reduced')}</Badge>}
-                <Badge variant="outline">{t(listing.listing_type)}</Badge>
-                <Badge variant="outline">{t(`property_type_${listing.property_type}`)}</Badge>
-              </div>
-
-              <div className="flex items-start justify-between gap-3">
-                <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{listing.title}</h1>
-              </div>
-
-              <div className="flex flex-col gap-0.5">
-                <div className="flex items-baseline gap-3 flex-wrap">
-                  <span className="text-3xl font-bold text-primary">{formattedPrice}</span>
-                  {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(displayPriceOld!, displayCurrencyCode, locale)}</span>}
-                  {pricePerSqm && <span className="text-sm text-muted-foreground whitespace-nowrap">{formatPrice(pricePerSqm, displayCurrencyCode, locale)} {t('per_sqm')}</span>}
-                </div>
-                {originalPriceStr && (
-                  <span className="text-xs text-muted-foreground">{t('original_price')}: {originalPriceStr}</span>
+          {/* Staff-only preview banner — always above the content grid */}
+          {isStaffPreview && previewBanner && (
+            // `theme.other!` — always set by createTheme() (theme.ts); same non-null pattern
+            // PopularLocationsView.tsx uses for Server-Component theme reads.
+            <Alert
+              variant="light"
+              color={previewBanner === 'unpublished' ? 'yellow' : 'blueLight'}
+              icon={<Info size={theme.other!.iconSize!.standard} />}
+            >
+              <Stack gap="xs">
+                <Text size="sm" fw={500}>
+                  {previewBanner === 'unpublished' ? t('preview_banner_unpublished') : t('preview_banner_published')}
+                </Text>
+                {previewBanner === 'published' && (
+                  <Anchor component={Link} href={`/${locale}/listings/${listing.slug}`} target="_blank" size="sm" fw={500}>
+                    {t('preview_open_public')}
+                  </Anchor>
                 )}
-              </div>
+              </Stack>
+            </Alert>
+          )}
 
-              <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
-                {listing.location && (
-                  <span className="flex items-center gap-1"><MapPin className="h-4 w-4" />{listing.location.name_al}</span>
-                )}
-                <span className="flex items-center gap-1"><Eye className="h-4 w-4" />{listing.views_count} {t('views')}</span>
-                <span className="flex items-center gap-1">
-                  <CalendarDays className="h-4 w-4" />
-                  <span>{relativeTimeStr}</span>
-                </span>
-                <span className="font-mono text-xs text-muted-foreground/70">ID: #{listing.public_id}</span>
-              </div>
-            </div>
+          {!isListingVisible(listing.status as ListingStatus) && (
+            <ListingStatusBanner
+              status={listing.status as 'sold' | 'rented' | 'archived' | 'expired'}
+              message={t(`status_banner_${listing.status}`)}
+              similarLabel={t('similar_listings')}
+            />
+          )}
 
-            {/* Key features grid */}
-            {features.length > 0 && (
-              <div className="rounded-2xl border bg-card shadow-sm p-5">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {features.map(f => (
-                    <div key={f.key} className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
-                        {t(f.labelKey)}
-                      </span>
-                      <span className="font-semibold text-sm">{f.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Description */}
-            {listing.description && (
-              <div className="rounded-2xl border bg-card shadow-sm p-5">
-                <h2 className="font-bold text-lg mb-3">{t('description_label')}</h2>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{listing.description}</p>
-              </div>
-            )}
-
-            {/* Additional details */}
-            {detailAttrs.length > 0 && (
-              <div className="rounded-2xl border bg-card shadow-sm p-5">
-                <h2 className="font-bold text-lg mb-4">{t('amenities_label')}</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {detailAttrs.map(a => (
-                    <div key={a.labelKey} className="flex flex-col gap-0.5">
-                      <span className="text-xs text-muted-foreground">{t(a.labelKey)}</span>
-                      <span className="text-sm font-medium">{t(a.valueKey)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Map */}
-            {listing.lat && listing.lng && (
-              <div className="rounded-2xl border bg-card shadow-sm p-5">
-                <h2 className="font-bold text-lg mb-4">{t('location_label')}</h2>
-                <MapWrapper lat={listing.lat} lng={listing.lng} title={listing.title} />
-              </div>
-            )}
-
-            {/* Report — authenticated non-owner only (always inert in staff preview) */}
-            {effectiveCanReport && (
-              <div className="flex justify-end">
-                <ListingReportDialog listingId={listing.id} />
-              </div>
-            )}
-
-            {/* Recently viewed — suppressed in staff preview */}
-            {!isStaffPreview && recentlyViewedSlot}
-
-            {/* Similar listings — Server Component streamed below the fold. */}
-            <div id="similar-listings">
-              {similarListingsSlot}
-            </div>
-          </div>
-
-          {/* ── Right column: contact sidebar — always rendered ── */}
-          <LazyListingContact
-            owner={owner}
-            isGuest={isGuest}
-            listingTitle={listing.title}
-            listingUrl={listingUrl}
-            price={displayPrice}
-            currency={displayCurrencyCode}
-            originalPrice={originalPriceStr ?? undefined}
-            originalPriceLabel={t('original_price')}
-            listingStatus={listing.status as ListingStatus}
-            listingId={effectiveListingId}
-            isFavorited={effectiveIsFavorited}
-            canReport={effectiveCanReport}
-            inquiryListingId={listing.id}
-            contactListingId={listing.id}
-            canSendInquiry={effectiveCanSendInquiry}
-            inquirerName={inquirerName}
-            inquirerEmail={inquirerEmail}
+          <MantineListingDetailPattern
+            data={detailData}
+            images={images.map(img => ({ url: img.url }))}
+            badges={badges}
+            features={mappedFeatures}
+            descriptionTitle={t('description_label')}
+            amenitiesTitle={t('amenities_label')}
+            amenities={mappedAmenities}
+            gallerySlot={gallerySlot}
+            contactSlot={contactSlot}
+            contentFooter={contentFooter}
+            sidebarFrom="lg"
           />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </ListingsPageFrame>
+    </Box>
   )
 }
 

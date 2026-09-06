@@ -1,0 +1,34 @@
+﻿
+> lero-al@0.1.0 start
+> next start
+
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.20.252:3000
+
+ ✓ Starting...
+ ✓ Ready in 1252ms
+npm.cmd :  ⨯ Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". Or maybe you meant to call this function rather than return it.
+At line:1 char:302
++ ... tch {} } }; npm.cmd run start *> C:\Claude_Code_Projects\lero-al\docs ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( ⨯ Error: Funct...than return it.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  {close: ..., prev: ..., next: "Tjetra", counter: function counter, photoCountSuffix: ...}
+                                                   ^^^^^^^^^^^^^^^^
+    at stringify (<anonymous>) {
+  digest: '2558616980'
+}
+ ⨯ Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". Or maybe you meant to call this function rather than return it.
+  {close: ..., prev: ..., next: "Next", counter: function counter, photoCountSuffix: ...}
+                                                 ^^^^^^^^^^^^^^^^
+    at stringify (<anonymous>) {
+  digest: '665684180'
+}
+ ⨯ Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". Or maybe you meant to call this function rather than return it.
+  {close: ..., prev: ..., next: "Next", counter: function counter, photoCountSuffix: ...}
+                                                 ^^^^^^^^^^^^^^^^
+    at stringify (<anonymous>) {
+  digest: '665684180'
+}

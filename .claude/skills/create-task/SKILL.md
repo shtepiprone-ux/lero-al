@@ -194,11 +194,23 @@ source map and canonical UI decision record are mandatory task artifacts.
 
 For a critical flow, name the registry entry and require automated regression evidence. For changed tests or gates, require assertions of observable behavior rather than implementation detail.
 
+## Owner-runnable commands are a block, never prose (owner instruction, 2026-09-06)
+
+Every command the owner is expected to run goes in **one fenced `powershell` block**, paste-ready, from the project
+root, one command per line, using `node.exe` / `npm.cmd` / `npx.cmd`, with any substitutable value declared as an
+assignment at the top of the block (`$slug = "..."`) rather than a `<placeholder>` inside a command. State the
+expected result and the output to return immediately after the block. Non-command steps (open a story, sign in as
+staff) go in a numbered list underneath, never mixed in.
+
+This covers the verification plan, every finding's `Verification:`, every revision brief, and any verification owed
+for an edit made under owner authorisation. Naming checks in a sentence instead of printing them is a defect.
+
 ## Quality gate before publication
 
 Do not publish the first draft. Check all of the following and revise the task if any answer is no:
 
 - A fresh Sonnet session can execute it without hidden chat context.
+- Every command the owner or executor must run appears inside a paste-ready fenced `powershell` block, with substitutable values as assignments — never named in prose, never carrying a `<placeholder>`.
 - Every primary requirement has at least one binary acceptance criterion and one verification method.
 - Scope protects existing behavior and names what must not change.
 - For UI work, all publication checks in `references/ui-task-design.md` pass: current/legacy boundary, QA profile,

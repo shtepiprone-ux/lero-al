@@ -24,5 +24,6 @@
   "src/modules/listings/components/ActiveFilterChips.tsx",
   "src/modules/listings/components/ListingsSortBar.tsx",
   "src/modules/listings/components/SaveSearchButton.tsx",
-  "src/modules/listings/components/ListingsShellView.tsx"
+  "src/modules/listings/components/ListingsShellView.tsx",
+  "src/modules/listings/components/ListingDetailView.tsx"
 ]

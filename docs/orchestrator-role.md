@@ -236,6 +236,30 @@ owner-native handoff for every unrun check:
 Do not invent a command. If the task does not name a runnable check, say so and create a corrective task rather than
 presenting a speculative command.
 
+## Owner-runnable commands are a block, never prose (owner instruction, 2026-09-06)
+
+**Any** time the owner is expected to run something, the output carries **one fenced `powershell` block** that he can
+select and paste without editing a character. This binds task design, review verdicts, revision briefs, findings,
+reproductions, and — the case that produced this rule — **verification owed for an edit the orchestrator itself
+made under owner authorisation**.
+
+The block:
+
+1. runs from the project root and needs no editing;
+2. lists every command in the order it must run, one per line, nothing else on the line;
+3. uses `node.exe` / `npm.cmd` / `npx.cmd`;
+4. puts any variable the owner would otherwise have to substitute at the top **as an assignment**, never as a
+   `<placeholder>` inside a command — e.g. `$slug = "11-mr7ucly4"`, then `… /uk/listings/$slug`;
+5. is followed immediately by the expected result per command and what output to return.
+
+Forbidden, and each of these has actually been shipped to the owner: naming checks in a sentence
+("verify natively: typecheck, lint, build"); a bulleted list of command names without the commands; a command
+containing `<something>` the owner must fill in by hand; splitting one runnable sequence across paragraphs.
+
+Two commands are still two lines in the same block — do not decide for the owner that something is "obvious enough"
+to describe instead of print. If a step genuinely cannot be a command (open a URL, look at a story, sign in as
+staff), it goes in a separate numbered list **under** the block, never mixed into it.
+
 ## UI review routing
 
 New or migrated UI:

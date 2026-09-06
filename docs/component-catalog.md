@@ -186,7 +186,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingCard` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `listingConstants.ts` | APPROVED | ✅ | — | —  |
 | `ListingContact` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
-| `ListingDetailView` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `ListingDetailView` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION — Task 791: Mantine-migrated, TAILWIND_ENTROPY cleared (one unavoidable `className="hidden"` remains, see Task 791 session log) |
 | `ListingFeatureIcon` | APPROVED | — | — | —  |
 | `ListingFormLoader` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `ListingFormShell` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |

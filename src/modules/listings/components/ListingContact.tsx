@@ -306,7 +306,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
 
       {/* Mobile fixed bottom bar — suppressed for archived listings (no active contact CTA on archived) */}
       {!listingArchived && <div
-        className="listing-contact-mobile lg:hidden fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 pt-3"
+        className="listing-contact-mobile lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 pt-3"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
       >
         <div className="flex flex-col gap-2 max-w-lg mx-auto">

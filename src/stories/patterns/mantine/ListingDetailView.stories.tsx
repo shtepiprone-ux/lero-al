@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations, useLocale } from 'next-intl'
+import { Paper, Text } from '@mantine/core'
 import {
   ListingDetailViewBody,
   type ListingDetailViewListing,
   type ListingDetailViewBodyProps,
-} from './ListingDetailView'
+} from '@/modules/listings/components/ListingDetailView'
 import type { DetailFeature, DetailAttribute } from '@/modules/listings/domain/presentationEngine'
 import type { PublicUserProfile, ListingImage } from '@/types/database'
 import { storyT } from '@/stories/_storyI18n'
@@ -13,6 +14,9 @@ import { storyT } from '@/stories/_storyI18n'
 // Task 237: rendered-evidence harness for the shared ListingDetailView/Body
 // presentational layout (preview banners, gallery/title/price/features/contact/
 // map layout, full-width mobile, locale wrapping). No Supabase access.
+// Task 791 — retitled to the canonical Mantine scope (Patterns/Mantine/ListingDetailView) and
+// moved here so it counts for check:story-coverage's manifest gate; the three states and the
+// fixture below are unchanged.
 
 const baseListing: ListingDetailViewListing = {
   id: 'story-listing-1',
@@ -103,9 +107,9 @@ const detailAttrs: DetailAttribute[] = [
  */
 function OmittedSlot({ text }: { text: string }) {
   return (
-    <div className="rounded-2xl border border-dashed bg-muted/30 p-5 text-sm text-muted-foreground">
-      {text}
-    </div>
+    <Paper withBorder radius="lg" p="lg" bg="gray.0" style={{ borderStyle: 'dashed' }}>
+      <Text size="sm" c="dimmed">{text}</Text>
+    </Paper>
   )
 }
 
@@ -136,7 +140,7 @@ function ListingDetailViewStory(
 }
 
 const meta: Meta<typeof ListingDetailViewStory> = {
-  title: 'Listings/ListingDetailView',
+  title: 'Patterns/Mantine/ListingDetailView',
   component: ListingDetailViewStory,
   tags: ['autodocs'],
   args: {
@@ -197,4 +201,3 @@ export const StaffPreviewPublished: Story = {
   },
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
-

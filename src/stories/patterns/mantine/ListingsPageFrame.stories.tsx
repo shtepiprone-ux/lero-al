@@ -40,6 +40,21 @@ export const Default: Story = {
           >
             <Text>{storyT(l, 'storybook.mantine.listings_page_frame_body')}</Text>
           </ListingsPageFrame>
+
+          {/* ── Task 791 E6 — intermediate crumbs ── */}
+          <Title order={6}>{storyT(l, 'storybook.mantine.listings_page_frame_section_intermediate')}</Title>
+          <ListingsPageFrame
+            homeHref="/en"
+            homeLabel={storyT(l, 'storybook.mantine.listings_page_frame_home')}
+            intermediate={[
+              { label: storyT(l, 'storybook.mantine.listings_page_frame_intermediate_1'), href: '/en/listings' },
+              { label: storyT(l, 'storybook.mantine.listings_page_frame_intermediate_2'), href: '/en/listings?location_id=1' },
+            ]}
+            currentLabel={storyT(l, 'storybook.mantine.listings_page_frame_current_long')}
+            breadcrumbAriaLabel={storyT(l, 'storybook.mantine.listings_page_frame_aria')}
+          >
+            <Text>{storyT(l, 'storybook.mantine.listings_page_frame_body')}</Text>
+          </ListingsPageFrame>
         </Stack>
       </Box>
     );

@@ -138,6 +138,12 @@ declare module '@mantine/core' {
       emptyStateMinBlockSize: number
       listingContactStickyOffset: number
       footerGridGap: number
+      /** Task 791 (owner decision D71-4) — bottom clearance reserved for ListingContact's
+       *  `lg:hidden fixed` mobile contact bar. base = the pre-migration `pb-44` (11rem = 176px),
+       *  the bar's tall form (WhatsApp on its own row below the price row, `sm:hidden`);
+       *  md = the pre-migration `md:pb-20` (5rem = 80px), the short form (WA + Phone inline).
+       *  Owned together with the bar: Task 793 deletes both or neither. */
+      listingContactBarClearance: { base: number; md: number }
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -484,6 +490,7 @@ export const theme = createTheme({
       emptyStateMinBlockSize: 200,
       listingContactStickyOffset: 80,
       footerGridGap: 40,
+      listingContactBarClearance: { base: 176, md: 80 },
     },
     overlay: {
       dragHandle: {

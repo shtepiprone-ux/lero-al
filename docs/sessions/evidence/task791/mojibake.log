@@ -1,0 +1,11 @@
+﻿
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 3891 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 1 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  src/modules/listings/components/ListingDetailView.stories.tsx
+
+check:mojibake: 0 artifacts in 3891 files
+EXIT_CODE=0

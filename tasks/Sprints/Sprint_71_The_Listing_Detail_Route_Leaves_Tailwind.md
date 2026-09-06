@@ -1,6 +1,6 @@
 # Sprint 71 — the listing-detail route leaves Tailwind, and the canonical patterns finally get a consumer
 
-**Opened:** 2026-09-05 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Active tasks:** 1
+**Opened:** 2026-09-05 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 · **Active tasks:** 1
 
 > **Opened by owner instruction, 2026-09-05.** The owner audited the production graphs (not only Stories) and
 > reported: Homepage and `/[locale]/listings` are Mantine; `/[locale]/listings/[slug]` and the
@@ -50,17 +50,16 @@ gaps surface — 791's evidence pass already found five (§3.7 of its kickoff) b
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **791** | `ListingDetailView` leaves Tailwind and composes the canonical Mantine detail pattern + `ListingsPageFrame`, with the LCP gallery and the contact card preserved as slots | **P1** | **Q3** | 🟡 **KICKOFF FILED** 2026-09-05 → [`Sprint_71_kickoff_prompt_Task_791_…`](Sprint_71_kickoff_prompt_Task_791_ListingDetailView_Canonical_Mantine_Composition.md) |
+| **791** | `ListingDetailView` leaves Tailwind and composes the canonical Mantine detail pattern + `ListingsPageFrame` | **P1** | **Q3** | 🗄️ **APPROVED WITH NOTES — ARCHIVED** 2026-09-06 (verdict → kickoff **§21**). All gates green and fresh on the owner's native run; evidence script 12/12. R13 withdrawn and reverted by owner instruction. Residual visual cells wait on **799**, carried as P3. Spawned **797 · 798 · 799 · 800**. |
 | **792** | Detail-route chrome: `ListingBackButton`, `ListingStatusBanner`, `[slug]/loading.tsx`, `SimilarListingsView` / `RecentlyViewedGridView` section wrappers | P2 | Q2 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
-| **793** | `ListingContact` → `MantineListingContactPattern`, **plus the stale 56px clearance** left by Task 787 | **P1** | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
+| **793** | `ListingContact` → `MantineListingContactPattern`, the in-flow mobile card, and **the deletion of the fixed bottom bar** | **P1** | Q3 | 🟡 **KICKOFF FILED — EXECUTABLE** 2026-09-05. Both owner decisions closed: favorite moves beside the badges (**D69-25** honoured), and the fixed mobile bar is **deleted** — the in-flow canonical card becomes the only contact surface below `lg`. This retires **Task 466**'s consolidation, and deletes Task 791's `listingContactBarClearance` together with its **six** live consumers (incl. the evidence script's regex). → [`Sprint_71_kickoff_prompt_Task_793_…`](Sprint_71_kickoff_prompt_Task_793_ListingContact_Canonical_Mantine_Card.md) |
 | **794** | Gallery + lightbox: `GalleryStaticFrame` / `ListingGallery` / `LightboxView` inner composition, LCP mechanism preserved | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **795** | The three legacy dialogs: `ListingInquiryDialog`, `ListingReportDialog`, `SaveToCollectionButton` | P2 | Q4 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **796** | `create` / `[slug]/edit`: `ListingFormShellView`, 5 steps, 10 field components, `ImageUpload`, cancel dialog | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 
 ## Execution order
 
-**791 → 792 → 793 → 794 → 795 → 796**, and the order is by *what the next slice needs to already be true*, not by
-size:
+**791 → 793 → 792 → 794 → 795 → 796.** **Re-ordered 2026-09-05** (was 791 → 792 → 793): the owner's visual review of 791 left a **measured ~42px dead tail** at the page bottom below `md` — `ListingContact.tsx:309` was corrected to `bottom-0` under owner authorisation, but the clearance token it pairs with cannot be re-derived from one state's measurement, and 793 owns it. 793 is P1 and now carries a live defect; 792 is P2 and carries none. The original reasoning is unchanged for everything else — the order is by *what the next slice needs to already be true*, not by size:
 
 1. **791 first** because it establishes the route's grid, gutters and breadcrumb frame. Every later slice renders
    inside that frame; migrating a child before its container is how a component ends up tuned against a layout
@@ -99,6 +98,26 @@ owner records accepted/returned per story × state × locale × viewport tuple.
 new pattern prop (791's `gallerySlot` / `contactSlot` / `contentFooter`), that child stays legacy **by design**
 and is named with the reserved number that owns it. A review must not read a slotted legacy child as an
 incomplete migration, and a task must not opportunistically migrate one.
+
+**D71-4 — a raw pixel is never acceptable; a missing token is created, not marked (owner decision, 2026-09-05).**
+Verbatim: *"Щоб не було сирих px, треба завжди використовувати токени (якщо нема токена — створити)."* Filed after
+Task 791's review found `pb={{ base: 176, md: 80, lg: 32 }}` sitting in a `--scope=mantine` file at
+`0 violations, exit 0` — the detector's arms match `prop={number}` and CSS property names, and match neither
+(→ **797**). Three consequences bind every task in this sprint:
+
+1. **A `design-tokens-allow` marker is not a resolution.** It is an admission that a value has no owner. Where a
+   raw value would otherwise survive, the token is added — to `theme.other.layout` for a one-off named geometry
+   (the Task 784 D69-18 convention, each member citing its source), or to the spacing scale where it is genuinely a
+   spacing step.
+2. **The gate is not the proof.** `check:design-tokens` exiting 0 is necessary and not sufficient: it cannot see
+   responsive object props. Every task must prove tokenization by **source grep at the consumer** plus a **grepped
+   definition line** — the "a documented token is not an implemented token" rule, applied in both directions.
+3. **Tokenize by contract, not by number.** Two values that happen to be equal are not one token: Task 791's 80px
+   `md` clearance and the existing `listingContactStickyOffset: 80` are different contracts and stay separate.
+
+This does **not** retroactively reopen landed work. `ListingsPageFrame.module.css`'s marked 10px breadcrumb-band
+padding (Task 775, D775-A) stands as approved; it is superseded as a *precedent for new work*, not as a defect. Any
+task that re-touches such a site converts it then.
 
 ## Findings filed by this sprint's evidence pass (2026-09-05) — not 791's scope
 

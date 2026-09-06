@@ -1,0 +1,21 @@
+✅ ac10-clearance-390: {"pass":true,"width":390,"breakpointLabel":"base","expectedPx":176,"measured":{"paddingBottom":"176px"},"measuredPx":176}
+✅ ac10-clearance-768: {"pass":true,"width":768,"breakpointLabel":"md","expectedPx":80,"measured":{"paddingBottom":"80px"},"measuredPx":80}
+✅ ac10-clearance-1280: {"pass":true,"width":1280,"breakpointLabel":"lg","expectedPx":32,"measured":{"paddingBottom":"32px"},"measuredPx":32}
+✅ ac6-sidebar-768: {"pass":true,"width":768,"expectStacked":true,"stacked":true,"sideBySide":false,"measured":{"colCount":2,"leftRect":{"top":169,"left":24,"width":720,"height":1333.609375},"rightRect":{"top":1522.609375,"left":24,"width":720,"height":0},"contactVisible":false}}
+✅ ac6-sidebar-1023: {"pass":true,"width":1023,"expectStacked":true,"stacked":true,"sideBySide":false,"measured":{"colCount":2,"leftRect":{"top":169,"left":24,"width":975,"height":1333.609375},"rightRect":{"top":1522.609375,"left":24,"width":975,"height":0},"contactVisible":false}}
+✅ ac6-sidebar-1024: {"pass":true,"width":1024,"expectStacked":false,"stacked":false,"sideBySide":true,"measured":{"colCount":2,"leftRect":{"top":169,"left":32,"width":639.984375,"height":1333.609375},"rightRect":{"top":169,"left":671.984375,"width":319.984375,"height":1333.609375},"contactVisible":true}}
+✅ ac14-overflow-320-uk: {"pass":true,"width":320,"measured":{"scrollWidth":320,"clientWidth":320,"navOverflow":false,"badgeCount":3,"clippedBadges":0}}
+✅ ac12-stacking-390-sq: {"pass":true,"width":390,"locale":"sq","probe":{"headerProbeInsideDialog":true,"headerProbeTag":"DIV","contactProbeInsideDialog":null}}
+✅ ac12-stacking-390-uk: {"pass":true,"width":390,"locale":"uk","probe":{"headerProbeInsideDialog":true,"headerProbeTag":"DIV","contactProbeInsideDialog":null}}
+✅ ac12-stacking-1280-sq: {"pass":true,"width":1280,"locale":"sq","probe":{"headerProbeInsideDialog":true,"headerProbeTag":"DIV","contactProbeInsideDialog":true,"contactProbeTag":"IMG","contactProbePoint":{"cx":1045,"cy":189}}}
+✅ ac12-stacking-1280-uk: {"pass":true,"width":1280,"locale":"uk","probe":{"headerProbeInsideDialog":true,"headerProbeTag":"DIV","contactProbeInsideDialog":true,"contactProbeTag":"IMG","contactProbePoint":{"cx":1045,"cy":189}}}
+✅ r13-h1-live-639: {"pass":true,"width":639,"expectedPx":32,"measured":{"fontSize":"32px"},"measuredPx":32}
+✅ r13-h1-live-640: {"pass":true,"width":640,"expectedPx":36,"measured":{"fontSize":"36px"},"measuredPx":36}
+✅ ac3-breadcrumb-dom: {"pass":true,"liveOk":true,"storyOk":true,"structuralMatch":true,"liveNav":{"anchorCount":1,"outerHTMLLength":936,"skeleton":"<nav aria-label=\"\" class=\"\" style=\"\"><a class=\"\" data-size=\"\" data-underline=\"\" href=\"\" style=\"\"></a><div class=\"\" style=\"\"></div><p class=\"\" data-size=\"\" style=\"\"></p></nav>"},"storyNav":{"anchorCount":1,"outerHTMLLength":931,"skeleton":"<nav aria-label=\"\" class=\"\" style=\"\"><a class=\"\" data-size=\"\" data-underline=\"\" href=\"\" style=\"\"></a><div class=\"\" style=\"\"></div><p class=\"\" data-size=\"\" style=\"\"></p></nav>"}}
+✅ r13-h1-story-639: {"pass":true,"width":639,"expectedPx":32,"measured":{"fontSize":"32px"},"measuredPx":32}
+✅ r13-h1-story-640: {"pass":true,"width":640,"expectedPx":36,"measured":{"fontSize":"36px"},"measuredPx":36}
+
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task791\results.json
+
+✅ task791-detail-evidence: all checks passed.
+EXIT_CODE=0

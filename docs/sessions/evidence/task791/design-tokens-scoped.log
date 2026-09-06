@@ -1,0 +1,40 @@
+﻿🔍  check:design-tokens --scope=mantine — scanning 73 of 450 production src/**/*.{tsx,ts,css} files
+    (§3.2 union: scripts/mantine-migration-scope.json ∪ src/design-system/mantine/** ∪ canonical Mantine stories)
+    + 80 canonical Mantine stories for Tailwind dimension utilities
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── LISTING  (7 findings) ──
+  src/modules/listings/components/ListingDetailView.tsx  (7)
+    :46  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={28}"
+    :46  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={192}"
+    :52  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={16}"
+    :53  [raw-dimension-prop:raw numeric dimension/layout prop]  "height={20}"
+    :53  [raw-dimension-prop:raw numeric dimension/layout prop]  "width={128}"
+    :186  [raw-dimension-prop:raw numeric dimension/layout prop]  "size={14}"
+    :241  [raw-dimension-prop:raw numeric dimension/layout prop]  "h={20}"
+
+  ── OTHER  (1 finding) ──
+  src/stories/patterns/mantine/ListingDetailView.stories.tsx  (1)
+    :109  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="rounded-2xl border border-dashed bg-muted/30 p-5 text-sm text-muted-foreground""
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 8 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    raw-dimension-prop   7
+    tailwind-dimension-utility 1
+
+node : ❌  check:design-tokens STRICT — 8 raw style-value violation(s) + 0 stale-marker(s) found.
+At line:1 char:302
++ ... tch {} } }; node scripts/check-design-tokens.mjs --strict --scope=man ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:design...arker(s) found.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT_CODE=1

@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ActionIcon, Button, Paper, Stack, Text } from '@mantine/core';
-import { Heart, MessageCircle, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react';
+import { Heart, MessageCircle, Share2, FolderOpen, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
 import {
   MantineListingDetailPattern,
@@ -17,7 +17,7 @@ const meta: Meta<typeof MantineListingDetailPattern> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    docs: { description: { component: 'Complete listing-detail surface (Task 616 D3, ALL-Mantine rebuild) — composes the D1 gallery pattern (photo -> Mantine lightbox) + a Mantine info block (badges/price/meta/key-features card/description card/amenities card) + the D2 sticky contact card. Fixture cited to presentationEngine.ts getDetailFeatures/getDetailAttributes. Task 791 added gallerySlot/contactSlot/contentFooter/originalPrice/sidebarFrom (E1-E5) — sections below the first (unlabeled, byte-identical to the pre-Task-791 story) demonstrate each extend. Viewport and locale switched via Storybook toolbar.' } },
+    docs: { description: { component: 'Complete listing-detail surface (Task 616 D3, ALL-Mantine rebuild) — composes the D1 gallery pattern (photo -> Mantine lightbox) + a Mantine info block (badges/price/meta/key-features card/description card/amenities card) + the D2 sticky contact card. Fixture cited to presentationEngine.ts getDetailFeatures/getDetailAttributes. Task 791 added gallerySlot/contactSlot/contentFooter/originalPrice/sidebarFrom (E1-E5) — sections below the first (unlabeled, byte-identical to the pre-Task-791 story) demonstrate each extend. Task 793 added the `share` slot immediately right of `favorite` in the badges row, at every breakpoint (owner instruction, 2026-09-06). Viewport and locale switched via Storybook toolbar.' } },
   },
 };
 export default meta;
@@ -32,11 +32,22 @@ const DEMO_IMAGES = [
 ];
 
 // Demo positioned nodes — plain Mantine primitives standing in for the real stateful
-// FavoriteButton / ListingInquiryDialog trigger / ListingReportDialog trigger (Task 605 split).
+// FavoriteButton / ListingShareButton / ListingInquiryDialog trigger / ListingReportDialog
+// trigger / SaveToCollectionButton (Task 605 split).
 function DemoFavorite({ l }: { l: string }) {
   return (
     <ActionIcon variant="default" size="lg" radius="xl" aria-label={storyT(l, 'storybook.mantine.card_favorite_aria_add')}>
       <Heart size={18} />
+    </ActionIcon>
+  );
+}
+
+// Task 793 (owner instruction, 2026-09-06) — share joined favorite in the badges row, same
+// positioned-node idiom, standing in for the real `ListingShareButton`.
+function DemoShare({ l }: { l: string }) {
+  return (
+    <ActionIcon variant="subtle" size="lg" radius="xl" aria-label={storyT(l, 'storybook.mantine.listing_detail_share')}>
+      <Share2 size={18} />
     </ActionIcon>
   );
 }
@@ -53,6 +64,15 @@ function DemoReportTrigger({ l }: { l: string }) {
   return (
     <Button variant="subtle" size="xs" color="gray" fullWidth>
       {storyT(l, 'storybook.mantine.listing_detail_report')}
+    </Button>
+  );
+}
+
+// Task 793 E-A demo trigger — stands in for the real `SaveToCollectionButton`.
+function DemoSaveTrigger({ l }: { l: string }) {
+  return (
+    <Button variant="default" fullWidth leftSection={<FolderOpen size={18} />}>
+      {storyT(l, 'storybook.mantine.listing_detail_save_to_collection')}
     </Button>
   );
 }
@@ -110,7 +130,6 @@ function demoContact(l: string): MantineListingContactPatternProps {
       verified: storyT(l, 'storybook.mantine.listing_detail_verified_label'),
       call: storyT(l, 'storybook.mantine.listing_contact_call'),
       whatsapp: storyT(l, 'storybook.mantine.listing_contact_wa'),
-      share: storyT(l, 'storybook.mantine.listing_detail_share'),
       inquiry: storyT(l, 'storybook.mantine.listing_detail_inquiry'),
       report: storyT(l, 'storybook.mantine.listing_detail_report'),
       loginCta: storyT(l, 'storybook.mantine.listing_detail_login_cta'),
@@ -124,6 +143,7 @@ function demoContact(l: string): MantineListingContactPatternProps {
     hasPhone: true,
     hasWhatsapp: true,
     inquiryTrigger: <DemoInquiryTrigger l={l} />,
+    saveTrigger: <DemoSaveTrigger l={l} />,
     reportTrigger: <DemoReportTrigger l={l} />,
   };
 }
@@ -161,6 +181,7 @@ function buildBaseProps(l: string) {
     amenities: demoAmenities(l),
     contact: demoContact(l),
     favorite: <DemoFavorite l={l} />,
+    share: <DemoShare l={l} />,
   };
 }
 
@@ -204,6 +225,7 @@ export const Default: Story = {
             amenities={base.amenities}
             contact={base.contact}
             favorite={base.favorite}
+            share={base.share}
           />
         </div>
 
@@ -225,6 +247,7 @@ export const Default: Story = {
             amenities={base.amenities}
             contact={base.contact}
             favorite={base.favorite}
+            share={base.share}
             gallerySlot={<SlotDemoCard text={storyT(l, 'storybook.mantine.listing_detail_gallery_slot_demo')} />}
           />
         </div>
@@ -246,6 +269,7 @@ export const Default: Story = {
             amenitiesTitle={base.amenitiesTitle}
             amenities={base.amenities}
             favorite={base.favorite}
+            share={base.share}
             contactSlot={<SlotDemoCard text={storyT(l, 'storybook.mantine.listing_detail_contact_slot_demo')} />}
           />
         </div>
@@ -268,6 +292,7 @@ export const Default: Story = {
             amenities={base.amenities}
             contact={base.contact}
             favorite={base.favorite}
+            share={base.share}
             contentFooter={<SlotDemoCard text={storyT(l, 'storybook.mantine.listing_detail_content_footer_demo')} />}
           />
         </div>
@@ -290,6 +315,7 @@ export const Default: Story = {
             amenities={base.amenities}
             contact={base.contact}
             favorite={base.favorite}
+            share={base.share}
           />
         </div>
 
@@ -311,6 +337,7 @@ export const Default: Story = {
             amenities={base.amenities}
             contact={base.contact}
             favorite={base.favorite}
+            share={base.share}
             sidebarFrom="lg"
           />
         </div>

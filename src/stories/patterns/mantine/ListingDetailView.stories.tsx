@@ -201,3 +201,18 @@ export const StaffPreviewPublished: Story = {
   },
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
+
+// ── Archived listing, public route (Task 793 F1, review §16.2/§17.5) ─────────
+// R11: the contact card renders with Call/WhatsApp/Send-message disabled (via `contactSlot`'s
+// `ListingContact`) and the status banner shown; favorite (badges row) disabled; share stays
+// enabled. `isGuest: false` + a real `listingId` so `favoriteSlot` actually renders (disabled),
+// not just omitted.
+export const ArchivedListing: Story = {
+  args: {
+    listing: { ...baseListing, status: 'archived' },
+    isGuest: false,
+    listingId: 'story-listing-1',
+    isInitiallyFavorited: false,
+  },
+  globals: { viewport: { value: 'desktop1280', isRotated: false } },
+}

@@ -36,6 +36,7 @@ export {
   isListingHidden,
   isListingArchived,
   isListingClosed,
+  isListingNonActiveStatus,
   isListingEditableStatus,
   isListingReadonlyStatus,
 } from './listingSemanticHelpers'

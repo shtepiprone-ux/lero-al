@@ -1,8 +1,12 @@
 import { Info } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import type { ListingStatus } from '@/types/database'
 
+// Task 793 F3 — widened from 4 to all 6 non-active statuses (`isListingVisible` returns true
+// only for `active`, so `ListingDetailView.tsx` renders this banner for every other status;
+// `pending`/`inactive` had no entry here and rendered a raw i18n key, owner-reported 2026-09-06).
 interface Props {
-  status: 'sold' | 'rented' | 'archived' | 'expired'
+  status: Exclude<ListingStatus, 'active'>
   message: string
   similarLabel: string
 }
@@ -12,6 +16,10 @@ const STYLES: Record<Props['status'], string> = {
   rented:   'bg-status-rented/10 border-status-rented/30 text-status-rented',
   archived: 'bg-muted border-border text-muted-foreground',
   expired:  'bg-status-warning/10 border-status-warning/30 text-status-warning',
+  // `--status-warning`'s own doc comment (globals.css) names its intended usage as
+  // "amber — inactive, pending" — reused verbatim rather than inventing a new token.
+  pending:  'bg-status-warning/10 border-status-warning/30 text-status-warning',
+  inactive: 'bg-status-warning/10 border-status-warning/30 text-status-warning',
 }
 
 export function ListingStatusBanner({ status, message, similarLabel }: Props) {

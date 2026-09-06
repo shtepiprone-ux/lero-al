@@ -56,6 +56,16 @@ export function isListingClosed(status: ListingStatus): boolean {
   return getListingVisibilityGroup(status) === 'CLOSED'
 }
 
+/**
+ * Type-predicate form of `!isListingVisible(status)` — narrows `ListingStatus` to its six
+ * non-active members. Task 793 F3: replaces a hand-written 4-member literal-union cast at the
+ * sole caller (`ListingStatusBanner`'s `status` prop) with a check `tsc` can verify against
+ * `ListingStatus`'s real member count, so a status the banner doesn't yet cover fails visibly.
+ */
+export function isListingNonActiveStatus(status: ListingStatus): status is Exclude<ListingStatus, 'active'> {
+  return !isListingVisible(status)
+}
+
 // ── Editability helpers ───────────────────────────────────────────────────────
 
 /**

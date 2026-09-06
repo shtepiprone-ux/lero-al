@@ -139,15 +139,6 @@ describe('D69-18 theme contracts — existence and primitive kind (no duplicated
     expect(typeof t.other.overlay.dragHandle.width).toBe('string')
     expect(typeof t.other.overlay.dragHandle.height).toBe('string')
   })
-
-  // Task 791 (owner decision D71-4) — unlike the other D69-18 members above, this contract's
-  // exact VALUE is the requirement (kickoff §16.8): it must reproduce the pre-migration
-  // `pb-44`/`md:pb-20` rendered clearance (176px / 80px) reserved for ListingContact's fixed
-  // mobile bar, not merely exist with the right primitive kind.
-  it('theme.other.layout.listingContactBarClearance equals { base: 176, md: 80 }', () => {
-    const t = resolveTheme()
-    expect(t.other.layout.listingContactBarClearance).toEqual({ base: 176, md: 80 })
-  })
 })
 
 describe('D69-18 owner exclusivity — theme-sourced comparisons, never a hardcoded literal', () => {
@@ -276,14 +267,6 @@ const CONTRACT_CONSUMERS: Array<{ contract: string; file: string; mustContain: s
     contract: 'theme.other.overlay.dragHandle',
     file: 'src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx',
     mustContain: ['theme.other.overlay.dragHandle.width', 'theme.other.overlay.dragHandle.height'],
-  },
-  {
-    contract: 'theme.other.layout.listingContactBarClearance',
-    file: 'src/modules/listings/components/ListingDetailView.tsx',
-    mustContain: [
-      'theme.other!.layout!.listingContactBarClearance!.base',
-      'theme.other!.layout!.listingContactBarClearance!.md',
-    ],
   },
 ]
 

@@ -61,8 +61,15 @@ export interface MantineListingDetailPatternProps {
   /** Real `FavoriteButton` (app) / demo heart (story) — positioned node, hook-free split (Task
    * 605). Task 784 D69-25 (owner instruction, 2026-09-04): always rendered in the badges row,
    * right-aligned to the content column's own right edge, at every breakpoint — no longer split
-   * with `MantineListingContactPattern` by viewport. */
+   * with `MantineListingContactPattern` by viewport. Task 793 (owner instruction, 2026-09-06)
+   * added `share` immediately to its right, in the same group — see that prop's doc. */
   favorite?: ReactNode
+  /** Real `ListingShareButton` (app) / demo icon (story) — positioned node, same idiom as
+   * `favorite`. Task 793 (owner instruction, 2026-09-06): "перенести [Поділитись] праворуч від
+   * [Додати в обране] біля badge глобально по всіх breakpoints" — share renders immediately to
+   * the right of favorite, in the same badges-row group, at every breakpoint. Previously owned by
+   * `MantineListingContactPattern`, which no longer renders a share button. */
+  share?: ReactNode
   /** Task 791 E1 — when supplied, rendered in place of `MantineListingGalleryPattern`. The
    * production consumer's LCP static-frame/interactive-island swap (`ListingDetailView.tsx`)
    * cannot be reproduced by this pattern's own client-only gallery without deleting that
@@ -123,6 +130,7 @@ export function MantineListingDetailPattern({
   amenities = [],
   contact,
   favorite,
+  share,
   gallerySlot,
   contactSlot,
   contentFooter,
@@ -158,7 +166,7 @@ export function MantineListingDetailPattern({
                 icon's, which reads as the heart sitting low. Centring makes the two blocks share a
                 centre line at every width, including the 320px case where the badges wrap to two
                 rows and the icon centres against the whole block. */}
-            {(badges.length > 0 || favorite) && (
+            {(badges.length > 0 || favorite || share) && (
               <Group justify="space-between" wrap="nowrap" align="center">
                 <Group gap="xs" wrap="wrap">
                   {badges.map((b, i) => (
@@ -171,9 +179,10 @@ export function MantineListingDetailPattern({
                     </Badge>
                   ))}
                 </Group>
-                {favorite && (
-                  <Group gap={0} style={{ flexShrink: 0 }}>
+                {(favorite || share) && (
+                  <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
                     {favorite}
+                    {share}
                   </Group>
                 )}
               </Group>

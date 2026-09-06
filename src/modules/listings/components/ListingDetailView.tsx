@@ -25,10 +25,12 @@ import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyVie
 import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listings/components/RecentlyViewedSection'
 import { formatPrice } from '@/lib/formatters'
 import type { DetailFeature, DetailAttribute } from '@/modules/listings/domain/presentationEngine'
-import { isListingVisible } from '@/modules/listings/domain'
+import { isListingClosed, isListingArchived, isListingNonActiveStatus } from '@/modules/listings/domain'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
+import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
+import { ListingShareButton } from '@/modules/listings/components/ListingShareButton'
 import type { Listing, ListingImage, ListingStatus, Location, PublicUserProfile } from '@/types/database'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
@@ -183,6 +185,35 @@ export function ListingDetailViewBody({
   // Preview mode never allows the inquiry trigger (Note 14 — keep inert).
   const effectiveCanSendInquiry = isStaffPreview ? false : canSendInquiry
 
+  // ── Favorite + share — badges-row slots (Task 793, D69-25 + owner 2026-09-06) ────────────────
+  // R11 (owner instruction, 2026-09-06): archived/expired listings keep the contact card visible
+  // with disabled contact CTAs and a disabled favorite; share stays enabled. `listingClosed`
+  // (sold/rented) already disabled favorite before this task (ListingContact.tsx's prior
+  // `disabled={listingClosed}`) — preserved here unchanged, just re-homed to this slot.
+  const listingStatusValue = listing.status as ListingStatus
+  const listingClosedForBadges = isListingClosed(listingStatusValue)
+  const listingArchivedForBadges = isListingArchived(listingStatusValue)
+  const listingExpiredForBadges = listingStatusValue === 'expired'
+  const favoriteDisabled = listingClosedForBadges || listingArchivedForBadges || listingExpiredForBadges
+  const favoriteDisabledLabel = listingClosedForBadges
+    ? t(`action_disabled_${listingStatusValue}` as 'action_disabled_sold' | 'action_disabled_rented')
+    : listingArchivedForBadges
+      ? t('action_disabled_archived')
+      : listingExpiredForBadges
+        ? t('action_disabled_expired')
+        : undefined
+
+  const favoriteSlot = effectiveListingId ? (
+    <FavoriteButton
+      listingId={effectiveListingId}
+      isFavorited={effectiveIsFavorited}
+      disabled={favoriteDisabled}
+      disabledLabel={favoriteDisabledLabel}
+    />
+  ) : undefined
+
+  const shareSlot = <ListingShareButton listingTitle={listing.title} listingUrl={listingUrl} />
+
   const badges: ListingDetailBadge[] = [
     ...(isNew ? [{ label: t('new'), tone: 'new' as const }] : []),
     ...(listing.is_premium ? [{ label: t('premium'), tone: 'premium' as const }] : []),
@@ -265,20 +296,20 @@ export function ListingDetailViewBody({
     </>
   )
 
-  // ── Contact sidebar — passed as a slot (Task 791 E2), rendered exactly as before ────────────
+  // ── Contact sidebar — passed as a slot (Task 791 E2). Task 793 removed `listingUrl`/
+  // `isFavorited` — favorite and share left this card for the badges row (`favoriteSlot`/
+  // `shareSlot` below), so `ListingContact` no longer needs either. ─────────────────────────────
   const contactSlot = (
     <LazyListingContact
       owner={owner}
       isGuest={isGuest}
       listingTitle={listing.title}
-      listingUrl={listingUrl}
       price={displayPrice}
       currency={displayCurrencyCode}
       originalPrice={originalPriceStr ?? undefined}
       originalPriceLabel={t('original_price')}
       listingStatus={listing.status as ListingStatus}
       listingId={effectiveListingId}
-      isFavorited={effectiveIsFavorited}
       canReport={effectiveCanReport}
       inquiryListingId={listing.id}
       contactListingId={listing.id}
@@ -320,15 +351,10 @@ export function ListingDetailViewBody({
   return (
     <Box
       data-testid="listing-detail-view"
-      pb={{
-        // Task 791 (owner decision D71-4) — `theme.other.layout.listingContactBarClearance`:
-        // clearance reserved for ListingContact's `lg:hidden fixed` mobile bar (base = its tall
-        // form, md = its short form). `lg` is not clearance — the bar is hidden there — so it
-        // consumes the ordinary `2xl` spacing token instead of a third layout member.
-        base: theme.other!.layout!.listingContactBarClearance!.base,
-        md: theme.other!.layout!.listingContactBarClearance!.md,
-        lg: '2xl',
-      }}
+      // Task 793 — the fixed mobile contact bar this padding used to clear is deleted; the
+      // contact card now renders in normal flow at every width, so the page bottom takes the
+      // same ordinary spacing token at every breakpoint (no more reserved clearance).
+      pb="2xl"
     >
       {/* View/recently-viewed tracking is suppressed in staff preview — does not
           inflate view counts or pollute the staff member's recently-viewed list. */}
@@ -378,9 +404,13 @@ export function ListingDetailViewBody({
             </Alert>
           )}
 
-          {!isListingVisible(listing.status as ListingStatus) && (
+          {/* Task 793 F3 — `isListingNonActiveStatus` is a real type predicate (narrows
+              `ListingStatus` to its 6 non-active members), replacing a hand-written 4-member
+              cast that silently admitted `pending`/`inactive` and rendered a raw i18n key for
+              both (owner-reported 2026-09-06). */}
+          {isListingNonActiveStatus(listing.status) && (
             <ListingStatusBanner
-              status={listing.status as 'sold' | 'rented' | 'archived' | 'expired'}
+              status={listing.status}
               message={t(`status_banner_${listing.status}`)}
               similarLabel={t('similar_listings')}
             />
@@ -397,6 +427,8 @@ export function ListingDetailViewBody({
             gallerySlot={gallerySlot}
             contactSlot={contactSlot}
             contentFooter={contentFooter}
+            favorite={favoriteSlot}
+            share={shareSlot}
             sidebarFrom="lg"
           />
         </Stack>

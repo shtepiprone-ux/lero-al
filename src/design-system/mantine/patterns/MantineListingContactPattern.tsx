@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, Box, ThemeIcon, useMantineTheme } from '@mantine/core'
-import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
+import { Phone, MessageCircle, CheckCircle, UserX, LogIn, Loader2 } from 'lucide-react'
 
 export interface MantineListingContactAgent {
   name: string
@@ -26,7 +26,6 @@ export interface MantineListingContactLabels {
   verified: string
   call: string
   whatsapp: string
-  share: string
   inquiry: string
   report: string
   loginCta: string
@@ -48,11 +47,30 @@ export interface MantineListingContactPatternProps {
   hasWhatsapp?: boolean
   onCall?: () => void
   onWhatsApp?: () => void
-  onShare?: () => void
   onLogin?: () => void
-  /** Real inquiry-dialog trigger (app) / demo trigger (story) — positioned node. */
+  /** Task 793 E-B — disables Call/WhatsApp and swaps their icon for a spinner while the
+   * click-time contact RPC (`getListingOwnerContact`, Task 266) resolves. Transient, independent
+   * of listing lifecycle — see `contactDisabled` for the permanent archived/expired case. */
+  loading?: boolean
+  /** Task 793 R11 + F2 (owner instructions, 2026-09-06) — disables Call/WhatsApp/Send-message
+   * permanently for archived, expired **and** closed (sold/rented) listings (no spinner, unlike
+   * `loading`). Orthogonal to `state`: for `closedListing` this composes with the headline block
+   * (both render) rather than replacing it — F2 superseded the original kickoff's §3.5b split,
+   * under which sold/rented kept Call/WhatsApp active. */
+  contactDisabled?: boolean
+  /** Shown as each disabled Call/WhatsApp button's `title` when `contactDisabled` is true. */
+  contactDisabledLabel?: string
+  /** Real inquiry-dialog trigger (app) / demo trigger (story) — positioned node. Rendered only in
+   * the `normal` state, matching the pre-migration gate (`ListingContact.tsx`'s `showInquiryTrigger`). */
   inquiryTrigger?: ReactNode
-  /** Real report-dialog trigger (app) / demo trigger (story) — positioned node. */
+  /** Task 793 E-A — `SaveToCollectionButton` (app) / demo trigger (story), same positioned-node
+   * idiom as `inquiryTrigger`. Rendered whenever supplied, independent of `state` — pre-migration
+   * `ListingContact.tsx` showed this control regardless of the card's owner-account state, gated
+   * only on the listing having an id. */
+  saveTrigger?: ReactNode
+  /** Real report-dialog trigger (app) / demo trigger (story) — positioned node. Rendered whenever
+   * supplied, independent of `state` (same "always regardless of state" contract as `saveTrigger`
+   * — pre-migration `ListingContact.tsx` showed Report regardless of owner-account state). */
   reportTrigger?: ReactNode
 }
 
@@ -66,6 +84,10 @@ export interface MantineListingContactPatternProps {
  * `MantineListingDetailPattern` now owns it directly, always in its badges row, at every
  * breakpoint (previously split between here and the badges row by viewport; see that
  * component's own comment for the current placement contract).
+ * Task 793 (owner instruction, 2026-09-06): share followed favorite out of this card into the
+ * same badges row — this pattern no longer renders a share button or takes `onShare`/`labels.share`.
+ * Renders in normal document flow at every width below `lg` (no consumer-side wrapper needed) —
+ * `ListingContact.tsx` deleted its own fixed mobile bar and now renders this pattern unconditionally.
  */
 export function MantineListingContactPattern({
   state = 'normal',
@@ -76,9 +98,12 @@ export function MantineListingContactPattern({
   hasWhatsapp = true,
   onCall,
   onWhatsApp,
-  onShare,
   onLogin,
+  loading = false,
+  contactDisabled = false,
+  contactDisabledLabel,
   inquiryTrigger,
+  saveTrigger,
   reportTrigger,
 }: MantineListingContactPatternProps) {
   const theme = useMantineTheme()
@@ -94,6 +119,7 @@ export function MantineListingContactPattern({
     // emit real `@media` rules keyed off `theme.breakpoints.lg` — position `static` below the
     // gate, `sticky` at `lg`, offset sourced only from theme.other.layout.listingContactStickyOffset.
     <Paper
+      data-testid="listing-contact-card"
       withBorder
       p="lg"
       pos={{ base: 'static', lg: 'sticky' }}
@@ -163,14 +189,20 @@ export function MantineListingContactPattern({
             is full-width (D69-21's Grid fix stacks it below md=768px). At md and above the panel
             becomes a narrow Grid sidebar (~245-330px) — row there re-wraps the longest uk label
             (measured), so direction reverts to column until the sidebar is wide enough again,
-            confirmed only from xl (1280px, 416px sidebar) in both it and uk. */}
-        {state === 'normal' && (hasPhone || hasWhatsapp) && (
+            confirmed only from xl (1280px, 416px sidebar) in both it and uk.
+            Task 793 F2 (owner instruction, 2026-09-06): also renders for `closedListing` (sold/
+            rented) — composed with, not replaced by, the headline block above — so Call/WhatsApp
+            show disabled (via `contactDisabled`) instead of disappearing outright. */}
+        {(state === 'normal' || state === 'closedListing') && (hasPhone || hasWhatsapp) && (
           <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
             {hasPhone && (
               <Button
                 color="brand"
                 onClick={onCall}
-                leftSection={<Phone size={theme.other.iconSize.comfortable} />}
+                disabled={loading || contactDisabled}
+                title={contactDisabled ? contactDisabledLabel : undefined}
+                aria-disabled={contactDisabled || undefined}
+                leftSection={loading ? <Loader2 size={theme.other.iconSize.comfortable} className="animate-spin" /> : <Phone size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
@@ -181,7 +213,10 @@ export function MantineListingContactPattern({
               <Button
                 color="green"
                 onClick={onWhatsApp}
-                leftSection={<MessageCircle size={theme.other.iconSize.comfortable} />}
+                disabled={loading || contactDisabled}
+                title={contactDisabled ? contactDisabledLabel : undefined}
+                aria-disabled={contactDisabled || undefined}
+                leftSection={loading ? <Loader2 size={theme.other.iconSize.comfortable} className="animate-spin" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
@@ -191,37 +226,32 @@ export function MantineListingContactPattern({
           </Flex>
         )}
 
-        {/* Task 784 D69-24 (owner instruction, 2026-09-04): "Send message" and "Share" share one
-            row now, same mechanism and breakpoint gate as the Call/WhatsApp row above (D69-22).
-            Share's prior "full-width alone" note (Task 724, R8-geometry-probe) was about a
-            FIXED-WIDTH icon sibling, whose deficit math doesn't apply to a same-shaped sibling
-            Button here — `inquiryTrigger` is an opaque consumer-supplied node that sets its own
-            `fullWidth` internally (hook-free split, Task 605); wrapping it in a `flex:1,
-            minWidth:0` container lets that internal `fullWidth` fill the container's share of the
-            row instead of the whole panel, same as Share's own `flex:1` below. */}
-        {state === 'normal' && (
+        {/* Send-message trigger — `inquiryTrigger` is an opaque consumer-supplied node that sets
+            its own `fullWidth` internally (hook-free split, Task 605); wrapping it in a
+            `flex:1, minWidth:0` container lets that fill the row. Task 793 (D69-24's share
+            partner) removed Share from this row — it moved to `MantineListingDetailPattern`'s
+            badges row (kickoff §3.4) — so the row now holds only the send-message trigger.
+            F2 — also renders for `closedListing`, same composition rule as the Call/WhatsApp
+            row above (the consumer supplies a disabled "Send message" button for that case). */}
+        {(state === 'normal' || state === 'closedListing') && (
           <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
             <Box style={{ flex: 1, minWidth: 0 }}>{inquiryTrigger}</Box>
-            <Button
-              variant="default"
-              onClick={onShare}
-              leftSection={<Share2 size={theme.other.iconSize.standard} />}
-              style={{ flex: 1, minWidth: 0 }}
-              styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
-            >
-              <span style={{ minWidth: 0, display: 'block' }}>{labels.share}</span>
-            </Button>
           </Flex>
         )}
 
-        {/* Report listing — real full-width fix (724R V2 route a), same Mantine mechanism as
-            Share above (docs/mantine-responsive-design-system.md:622,
-            MantineResponsiveActionFooter.tsx:47-78): the consumer-supplied `reportTrigger` node
-            sets its own `fullWidth`, same as `inquiryTrigger`'s established convention in this
-            file's story. Pre-724 baseline already gave Report its own row
-            (`Group justify="flex-end"`); this restores that row and only changes the child's
-            width behavior — no new chrome. */}
-        {state === 'normal' && reportTrigger && (
+        {/* Task 793 E-A — SaveToCollection, same Flex/Box idiom as the send-message row above.
+            Rendered whenever supplied, independent of `state` (see the prop doc). */}
+        {saveTrigger && (
+          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
+            <Box style={{ flex: 1, minWidth: 0 }}>{saveTrigger}</Box>
+          </Flex>
+        )}
+
+        {/* Report listing — real full-width fix (724R V2 route a): the consumer-supplied
+            `reportTrigger` node sets its own `fullWidth`, same as `inquiryTrigger`'s established
+            convention. Rendered whenever supplied, independent of `state` (see the prop doc) —
+            pre-724 baseline gave Report its own row (`Group justify="flex-end"`), preserved here. */}
+        {reportTrigger && (
           <Group justify="flex-end">
             {reportTrigger}
           </Group>

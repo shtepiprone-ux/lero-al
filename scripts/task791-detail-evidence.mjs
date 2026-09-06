@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * task791-detail-evidence.mjs — Task 791 rendered-geometry evidence (Revision 1 + Revision 2).
+ * task791-detail-evidence.mjs — Task 791 rendered-geometry evidence (Revision 1 + Revision 2),
+ * carried forward and updated by Task 793 (kickoff §3.5/R5/R9).
  *
  * Revision 1 (F2, kickoff §16.2): AC3 (breadcrumb DOM), AC6 (sidebar column widths), AC10 (bottom
  * clearance), AC12 (lightbox stacking) and AC14 (320/uk overflow). Same static-file-server +
@@ -11,10 +12,17 @@
  * breakpoint gate — on both the live route and the canonical `Patterns/Mantine/ListingDetailPattern`
  * story.
  *
+ * Task 793: the fixed mobile contact bar is deleted, and `listingContactBarClearance` (the token
+ * the old AC10 check read) is deleted with it. The old three-breakpoint clearance check is replaced
+ * by an AC5 check — the page's `pb` is now the ordinary `2xl` token at every width — and the
+ * `.listing-contact` selector AC6/AC12 read is replaced by `[data-testid="listing-contact-card"]`,
+ * a stable hook on the canonical pattern's own root (the old class lived on a wrapper `<div>` this
+ * task deleted).
+ *
  * Two targets:
  *   - LIVE_BASE_URL (default http://localhost:3000) — a real `next start` server, requested with
- *     a real seeded listing slug (LISTING_SLUG, default 11-mr7ucly4). Owns AC6/AC10/AC12/AC14, the
- *     live half of AC3.
+ *     a real seeded listing slug (LISTING_SLUG, default 11-mr7ucly4). Owns AC3 (live half), AC5,
+ *     AC6, AC12, AC14.
  *   - a static server over storybook-static (--dir, default ./storybook-static) — owns the
  *     Patterns/Mantine/ListingsPageFrame Default half of AC3. Rebuild with
  *     `npm run build-storybook` whenever ListingsPageFrame.tsx, MantineListingDetailPattern.tsx or
@@ -42,23 +50,16 @@ const storybookStaticDir = dirFlagIdx !== -1 && args[dirFlagIdx + 1]
 const LIVE_BASE_URL = process.env.LIVE_BASE_URL || 'http://localhost:3000';
 const LISTING_SLUG = process.env.LISTING_SLUG || '11-mr7ucly4';
 
-// Expected clearance values — NOT hardcoded as the pass/fail source: read from theme.other.layout
-// at request time via a tiny inline eval inside the browser page against the SAME theme.ts import
-// the app itself uses would require a bundler; instead the three EXPECTED values are read from the
-// consumer's own theme import path once, mechanically, via source regex — never duplicated as a
-// bare literal comparison target without a citation.
+// Expected bottom-padding value — NOT hardcoded as the pass/fail source: read from theme.ts's own
+// spacing scale via source regex (never duplicated as a bare literal comparison target without a
+// citation). Task 793 deleted `listingContactBarClearance` — the fixed mobile bar it reserved
+// space for is gone, so the page now takes the SAME ordinary `2xl` token at every breakpoint
+// (`ListingDetailView.tsx`'s `pb="2xl"`), not a base/md/lg-specific reservation.
 import { readFileSync } from 'node:fs';
 const themeSrc = readFileSync(join(ROOT, 'src/design-system/mantine/theme.ts'), 'utf8');
-function readThemeNumber(pattern, label) {
-  const m = themeSrc.match(pattern);
-  if (!m) throw new Error(`task791-detail-evidence: could not find ${label} in theme.ts`);
-  return Number(m[1]);
-}
-const EXPECTED_BASE_PX = readThemeNumber(/listingContactBarClearance:\s*\{\s*base:\s*(\d+)/, 'listingContactBarClearance.base');
-const EXPECTED_MD_PX = readThemeNumber(/listingContactBarClearance:\s*\{\s*base:\s*\d+,\s*md:\s*(\d+)/, 'listingContactBarClearance.md');
 const spacing2xlMatch = themeSrc.match(/'2xl':\s*'([\d.]+)rem'/);
 if (!spacing2xlMatch) throw new Error('task791-detail-evidence: could not find spacing[\'2xl\'] in theme.ts');
-const EXPECTED_LG_PX = Math.round(parseFloat(spacing2xlMatch[1]) * 16);
+const EXPECTED_PB_PX = Math.round(parseFloat(spacing2xlMatch[1]) * 16);
 
 const smBreakpointMatch = themeSrc.match(/sm:\s*'([\d.]+)em',\s*\/\/\s*(\d+)px/);
 if (!smBreakpointMatch) throw new Error('task791-detail-evidence: could not find breakpoints.sm in theme.ts');
@@ -131,7 +132,7 @@ async function main() {
     liveBaseUrl: LIVE_BASE_URL,
     listingSlug: LISTING_SLUG,
     storybookStaticDir,
-    expected: { basePx: EXPECTED_BASE_PX, mdPx: EXPECTED_MD_PX, lgPx: EXPECTED_LG_PX },
+    expected: { pbPx: EXPECTED_PB_PX },
     checks: [],
   };
   let hardFail = false;
@@ -143,19 +144,17 @@ async function main() {
 
   const browser = await chromium.launch({ headless: true });
 
-  // ── AC10 — bottom clearance at 390/768/1280, sq locale ──────────────────────────────────────
-  for (const [width, expectedPx, breakpointLabel] of [
-    [390, EXPECTED_BASE_PX, 'base'],
-    [768, EXPECTED_MD_PX, 'md'],
-    [1280, EXPECTED_LG_PX, 'lg'],
-  ]) {
+  // ── AC5 (Task 793) — ordinary bottom padding at 320/390/768/1280, sq locale ─────────────────
+  // The fixed mobile bar is deleted and `listingContactBarClearance` with it — the page now takes
+  // the same ordinary `2xl` spacing token at every width (no more base/md-specific reservation).
+  for (const width of [320, 390, 768, 1280]) {
     const context = await browser.newContext({ viewport: { width, height: 900 } });
     const page = await context.newPage();
     const url = `${LIVE_BASE_URL}/sq/listings/${LISTING_SLUG}`;
     const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => null);
-    const name = `ac10-clearance-${width}`;
+    const name = `ac5-bottom-padding-${width}`;
     if (!response?.ok()) {
-      record(name, { pass: false, breakpointLabel, failReason: `navigation failed (status ${response?.status()})` });
+      record(name, { pass: false, failReason: `navigation failed (status ${response?.status()})` });
       await context.close();
       continue;
     }
@@ -165,9 +164,9 @@ async function main() {
       return { paddingBottom: getComputedStyle(el).paddingBottom };
     });
     const measuredPx = measured ? Math.round(parseFloat(measured.paddingBottom)) : null;
-    const pass = measuredPx === expectedPx;
+    const pass = measuredPx === EXPECTED_PB_PX;
     await page.screenshot({ path: join(EVIDENCE_DIR, `${name}.png`), fullPage: false }).catch(() => {});
-    record(name, { pass, width, breakpointLabel, expectedPx, measured, measuredPx });
+    record(name, { pass, width, expectedPx: EXPECTED_PB_PX, measured, measuredPx });
     await context.close();
   }
 
@@ -188,7 +187,7 @@ async function main() {
       if (cols.length < 2) return { colCount: cols.length };
       const left = cols[0].getBoundingClientRect();
       const right = cols[1].getBoundingClientRect();
-      const contactEl = document.querySelector('.listing-contact');
+      const contactEl = document.querySelector('[data-testid="listing-contact-card"]');
       const contactVisible = contactEl ? getComputedStyle(contactEl).display !== 'none' : false;
       return {
         colCount: cols.length,
@@ -275,12 +274,26 @@ async function main() {
     const probe = await page.evaluate((viewportWidth) => {
       const isInsideDialog = (el) => !!el && !!el.closest('[role="dialog"]');
       const headerProbe = document.elementFromPoint(Math.floor(viewportWidth / 2), 10);
+      const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
+      const dialogRect = dialog ? dialog.getBoundingClientRect() : null;
       const result = {
         headerProbeInsideDialog: isInsideDialog(headerProbe),
         headerProbeTag: headerProbe ? headerProbe.tagName : null,
+        // Task 793: the contact card can be off-screen below the fold at mobile widths (see the
+        // N/A branch below) — this independently proves the scrim covers the FULL viewport
+        // regardless of where the card happens to be scrolled to.
+        dialogCoversViewport: !!dialogRect && dialogRect.width >= window.innerWidth - 1 && dialogRect.height >= window.innerHeight - 1,
       };
-      const contactEl = document.querySelector('.listing-contact');
-      if (contactEl && getComputedStyle(contactEl).display !== 'none') {
+      const contactEl = document.querySelector('[data-testid="listing-contact-card"]');
+      // Task 793: below `lg` the card renders in normal document flow (R1), not `position:fixed`/
+      // `sticky` — it can legitimately sit outside the CURRENT viewport (scrolled below the fold)
+      // when the gallery trigger near the top of the page is clicked. The fullScreen Modal's
+      // scroll-lock (Task 612) means the viewport cannot be scrolled to reach it once open, so a
+      // probe point outside the current viewport proves nothing about stacking — same N/A
+      // treatment as the pre-existing "not rendered" branch below.
+      const viewportHeight = window.innerHeight;
+      const isOnScreen = (r) => r.bottom > 0 && r.top < viewportHeight && r.right > 0 && r.left < viewportWidth;
+      if (contactEl && getComputedStyle(contactEl).display !== 'none' && isOnScreen(contactEl.getBoundingClientRect())) {
         const r = contactEl.getBoundingClientRect();
         const cx = Math.floor(r.left + r.width / 2);
         const cy = Math.floor(r.top + Math.min(20, r.height / 2));
@@ -289,12 +302,13 @@ async function main() {
         result.contactProbeTag = contactProbe ? contactProbe.tagName : null;
         result.contactProbePoint = { cx, cy };
       } else {
-        result.contactProbeInsideDialog = null; // sidebar not rendered at this width — N/A
+        result.contactProbeInsideDialog = null; // not rendered, hidden, or off-screen at this width — N/A
       }
       return result;
     }, width);
 
     const pass = probe.headerProbeInsideDialog === true
+      && probe.dialogCoversViewport === true
       && (probe.contactProbeInsideDialog === true || probe.contactProbeInsideDialog === null);
     await page.screenshot({ path: join(EVIDENCE_DIR, `${name}.png`), fullPage: false }).catch(() => {});
     record(name, { pass, width, locale, probe });

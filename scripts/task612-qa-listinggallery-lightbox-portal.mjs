@@ -4,9 +4,19 @@
  *
  * Verifies, on the REAL `/[locale]/listings/[slug]` page driven by a live `next dev` server,
  * that the `ListingGallery` lightbox — once portaled to `document.body` — genuinely paints ABOVE
- * the site header (`.site-header`) and the sticky agent contact card (`.listing-contact` on
- * desktop / `.listing-mobile-cta` below `lg`), instead of being trapped behind them by an
- * ancestor stacking context.
+ * the site header (`.site-header`) and the agent contact card, instead of being trapped behind
+ * them by an ancestor stacking context.
+ *
+ * Task 793: the contact card's fixed mobile bar (and its `.listing-contact`/`.listing-mobile-cta`
+ * wrapper classes) is deleted — the canonical `MantineListingContactPattern` now renders in flow
+ * at every width, identified by `[data-testid="listing-contact-card"]`.
+ *
+ * Task 793 P3 (review §16.3/§17.5): the card being in flow means it can legitimately sit below
+ * the fold at mobile widths, so the contact-occlusion point-sample above it silently stops
+ * asserting there (pre-793 the card was `position:fixed` and therefore always in the viewport).
+ * `dialogCoversViewport` restores full coverage — it is an unconditional assertion that the
+ * scrim covers the whole viewport regardless of where the card is scrolled to, which subsumes
+ * covering wherever the card happens to be.
  *
  * For each cell this checks:
  *   1. The `[role="dialog"]` lightbox node's parent is `document.body` (portal proof).
@@ -55,7 +65,7 @@ function evalLightboxStacking() {
   const pageOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 2;
 
   const header = document.querySelector('.site-header');
-  const contactCard = document.querySelector('.listing-contact') || document.querySelector('.listing-mobile-cta');
+  const contactCard = document.querySelector('[data-testid="listing-contact-card"]');
 
   function topmostAt(x, y) {
     const el = document.elementFromPoint(x, y);
@@ -72,6 +82,17 @@ function evalLightboxStacking() {
     ? topmostAt(contactRect.left + contactRect.width / 2, Math.max(1, Math.min(window.innerHeight - 1, contactRect.top + 10)))
     : null;
 
+  // Task 793 P3 (review §16.3/§17.5) — below `lg` the contact card renders in normal document
+  // flow, not `position:fixed`, so it can legitimately sit below the fold when the gallery
+  // trigger near the top of the page is opened; the point-sample above then skips (N/A), same as
+  // `task791-detail-evidence.mjs`'s existing compensation. `dialogCoversViewport` is an
+  // UNCONDITIONAL, always-checked assertion that the scrim covers the full viewport regardless of
+  // where the card happens to be scrolled to — covering the whole viewport subsumes covering
+  // wherever the card is, so this restores full coverage on mobile without depending on the
+  // card's scroll position.
+  const dialogRect = dialog.getBoundingClientRect();
+  const dialogCoversViewport = dialogRect.width >= window.innerWidth - 1 && dialogRect.height >= window.innerHeight - 1;
+
   return {
     dialogFound: true,
     isBodyChild,
@@ -81,6 +102,7 @@ function evalLightboxStacking() {
     contactCardFound: !!contactCard,
     contactCardVisibleInViewport: !!contactVisible,
     contactCardCoveredByDialog: contactPoint ? contactPoint.isDialogOrDescendant : null,
+    dialogCoversViewport,
   };
 }
 /* eslint-enable no-undef */
@@ -140,13 +162,14 @@ async function main() {
           && data.isBodyChild
           && !data.pageOverflow
           && (data.headerFound ? data.headerCoveredByDialog : true)
-          && (data.contactCardVisibleInViewport ? data.contactCardCoveredByDialog : true);
+          && (data.contactCardVisibleInViewport ? data.contactCardCoveredByDialog : true)
+          && data.dialogCoversViewport;
 
         if (isMandatoryShot) {
           await page.screenshot({ path: screenshotPath, fullPage: false });
         }
 
-        console.log(`  ${cell.pass ? '✓' : 'X'} ${locale} x ${viewport.name} bodyChild=${data.isBodyChild} headerCovered=${data.headerCoveredByDialog} contactVisible=${data.contactCardVisibleInViewport} contactCovered=${data.contactCardCoveredByDialog} pageOverflow=${data.pageOverflow}`);
+        console.log(`  ${cell.pass ? '✓' : 'X'} ${locale} x ${viewport.name} bodyChild=${data.isBodyChild} headerCovered=${data.headerCoveredByDialog} contactVisible=${data.contactCardVisibleInViewport} contactCovered=${data.contactCardCoveredByDialog} dialogCoversViewport=${data.dialogCoversViewport} pageOverflow=${data.pageOverflow}`);
 
         // Close for the next viewport in this page (Esc — matches real user closing behavior).
         await page.keyboard.press('Escape');

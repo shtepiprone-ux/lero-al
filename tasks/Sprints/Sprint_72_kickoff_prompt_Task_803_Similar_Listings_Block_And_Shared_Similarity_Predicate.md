@@ -1,6 +1,6 @@
 # Task 803 — the similar-listings block becomes a real entry point into search
 
-**Sprint:** 72 · **Priority:** P2 · **QA profile:** **Q4** · **Filed:** 2026-09-09 · **State:** `KICKOFF FILED`
+**Sprint:** 72 · **Priority:** P2 · **QA profile:** **Q4** · **Filed:** 2026-09-09 · **State:** `NEEDS REVISION` (Revision 1 brief in §16, added 2026-09-09 by owner instruction)
 
 **Executor:** fresh Sonnet via `.claude/skills/execute-task/SKILL.md`. Strongest permitted result is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval, no mutating Git. Frontend exception (D69-3): **no
@@ -413,3 +413,271 @@ known limitations · anything left open. Status: `IMPLEMENTED - AWAITING ORCHEST
 | Does it silently change Task 792's work? | No — §3.3 records the heading `CONFLICT` and resolves it in favour of 792's `size="h4"`; §8 forbids editing `RecentlyViewedGridView`. |
 | Is the scroll shape decided or assumed? | Decided — **D72-5**, owner, 2026-09-09, after live review. The kickoff's original reversible default is superseded and §5 says so; only the `.2` peek fraction remains a stated assumption. |
 | Can it start before 792 is reviewed? | No — stated in the header and in the sprint's precondition 1. |
+
+---
+
+## 16. Revision 1 — owner-directed, 2026-09-09 (post-review)
+
+**Re-entry mode: `remediation`.** Origin: the implementation review of 2026-09-09, findings **F1** (`P1`) and
+**F3** (`P2`). Owner instruction, 2026-09-09: *"онови kickoff, щоб Sonnet зробила null-захист для
+`purchase_conditions` та скрипт заміру computed-стилів"* — those two, and only those two, are in this revision.
+
+Strongest permitted result is still `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval, no mutating Git.
+
+### 16.1 Already closed — preserve, do not redo, do not re-capture
+
+`FACT` — verified in review round 1 and round 2. Treat every one of these as **frozen**:
+
+| Closed | Evidence that closed it — keep the artifact |
+|---|---|
+| AC1, AC2, AC4, AC5, AC8, AC9, AC10 | `similarity.test.ts` · `ladder.test.ts` · the byte-unchanged `ListingDetailView.buildSimilarListingsHref.test.ts` · `i-story-coverage.txt` · `i-design-tokens-strict-mantine.txt` |
+| AC6 + R6, **fully** | `ac6-planted-violation-FAIL.txt` (4/6 genuine FAIL) · `ac6-reverted-PASS.txt` (6/6) · `i-check-listing-visibility.txt` — gate PASSED, 0 violations, 632 files, 0 stale allowlist entries |
+| The critical-flow row `docs/critical-flow-registry.md:70` | Both halves of its declared command run and green |
+| `npm run test` at the Task 790 baseline | Owner run, 2026-09-09 22:43 — `4 failed \| 84 passed` files, `5 failed \| 1560 passed` tests |
+
+**The AC6 plant does not need re-proving in this revision**, because `buildSimilarityRungQuery` is not edited by it
+(R11 touches only the `Props` interface in the same file). Prove that rather than assert it: AC11 requires
+`git diff` to show no hunk inside `buildSimilarityRungQuery`.
+
+**Superseded transcripts — mark them, do not delete them.** `i-lint.txt` (18:13) and `i-full-test-suite.txt` (18:15)
+were captured **before** `SimilarListings.tsx`'s final write (18:24:38) and are stale for the reviewed diff; the
+owner's 2026-09-09 22:38–22:44 runs are the final artifacts for lint / typecheck / full suite / build. The session
+log's validation table must label the two old files `SUPERSEDED` and cite the owner runs instead. This is the defect
+that produced review finding F5, which was **withdrawn as a reviewer error** — the code was always clean; the
+artifact was stale. Do not "fix" the two unused `eslint-disable` directives: fresh lint reports 0 errors and
+**72** warnings with neither touched file named.
+
+### 16.2 Explicitly NOT in this revision
+
+Open review findings deliberately left open, so a green Revision 1 is never mistaken for a closed review:
+
+- **F4 (`P2`)** — `applySimilarityEntries` is exported, tested, and never called in production;
+  `buildSimilarityRungQuery` carries a duplicated `switch (entry.op)`. Not in scope here. Do not refactor it —
+  doing so would invalidate 16.1's frozen AC6 artifacts and require a re-plant this revision does not budget for.
+- **F6 (`P3`)** — the header `Group` uses `gap="sm" wrap="wrap"` where `FeaturedListingsView.tsx:54-58` uses
+  `justify="space-between" wrap="nowrap"`. Owner ruling pending in the visual matrix. Do not change it.
+- **F7 (`P3`)** — `rooms` renders `.eq` here while `filterEngine.ts:263-271` reads `rooms=5` as "5 or more" and
+  ignores `rooms>5`. Deferred to **804**. Only the one-line comment in 16.3d is in scope.
+- The `OWNER VISUAL QA REQUIRED` matrix (§13) is unchanged and still owed by the owner.
+
+### 16.3 R11 [`P0`, closes F1] — `purchase_conditions` must not be able to throw
+
+### 16.3a The measured defect
+
+`FACT` — `src/modules/listings/domain/similarity.ts:83` reads `listing.purchase_conditions.length` and `:86` reads
+`.join(',')` with **no guard**. Every other field in `buildSimilarityEntries` is guarded — `!= null` for
+`location_id`/`rooms`/`area_gross`/`floor`/`year_built`, truthiness for `condition`/`heating`/`wall_type`/
+`market_type`/`offer_type`. This is the only unguarded dereference in the function.
+
+`FACT` — `src/types/database.ts:267` declares `purchase_conditions: string[]` (non-nullable), which is why
+`npx tsc --noEmit` is clean. That file is hand-maintained, and the repository's own runtime reads of the same column
+do not trust it:
+
+- `src/app/[locale]/listings/[slug]/edit/page.tsx:104` — `(listing.purchase_conditions as string[] | null) ?? undefined`
+- `src/modules/listings/domain/filterEngine.ts:443` — `(fv.purchase_conditions?.length ?? 0)`
+
+`INFERENCE` — the call path is `ListingDetailView.tsx:513` → `SimilarListings` (`async` Server Component) →
+`buildSimilarityEntries`. A `NULL` in that column therefore throws `TypeError: Cannot read properties of null
+(reading 'length')` **inside a `ƒ` route**, which is the Task **784** / **791** failure class: `tsc` types it
+impossible, `next build` never executes a dynamic route, `eslint` has no such rule, `check:hydration` measures a
+short console window, and Storybook renders the View as a client component and never calls this function at all.
+D71-1 exists because of exactly this.
+
+`UNKNOWN` — whether a production row currently holds `NULL`. Not resolvable from the repository, and it is not the
+deciding question: the guard costs one line and removes the class.
+
+### 16.3b Required change — exactly three edits
+
+1. `similarity.ts` — widen the input field:
+   `purchase_conditions: string[] | null | undefined` in `SimilarityListingInput` (currently `:39`).
+2. `similarity.ts` — guard **once**, at the single read site, before the tier-B block that uses it:
+   read into a local (`const purchaseConditions = listing.purchase_conditions ?? []`) and use that local for both
+   `.length` and `.join(',')`. Do not sprinkle `?.` at each use; one normalisation, one place.
+3. `SimilarListings.tsx` — widen `Props.purchaseConditions` to `string[] | null | undefined` so the prop type
+   matches what the route can actually deliver.
+
+### 16.3c Preserve — non-negotiable
+
+- **`src/types/database.ts` is out of scope.** Do not change `:267`. Whether the generated/declared type is wrong
+  is a separate question and changing it ripples through unrelated consumers.
+- **`buildSimilarListingsHref` (`ListingDetailView.tsx:89-106`) keeps its literal `purchase_conditions: []`.** It
+  stays valid under the widened type; changing it to `null` is a gratuitous edit.
+- **`ListingDetailView.buildSimilarListingsHref.test.ts` stays byte-unchanged** — AC2 still binds.
+- **`buildSimilarityRungQuery` is not edited** (see 16.1).
+- Emitted entries for a non-empty array are byte-identical to today: `op:'overlaps'`, `column:'purchase_conditions'`,
+  `value` the array itself, `urlValue` the comma join. `.overlaps()` was reviewed and **accepted** — it matches
+  `filterEngine.ts:325` and `propertyTypeSchema.ts:137` for the same column. Do not change the operator.
+
+### 16.3d One comment, and only one (F7)
+
+Add a single line comment on the `rooms` entry in `buildSimilarityEntries` recording that `/listings` reads
+`rooms=5` as "5 or more" (`filterEngine.ts:263-271`) and ignores `rooms>5`, so this predicate is narrower than the
+URL it renders, and that reconciling the two is Task **804**. Comment only — no behaviour change.
+
+### 16.4 R12 [`P0`, closes F3] — the computed-style probe AC7 actually asked for
+
+### 16.4a Why the existing evidence does not close AC7
+
+`FACT` — AC7's own text: *"the card row computes to `display:flex; overflow-x:auto` at **every** tested width —
+320, 390, 768, 1024 and 1440 — with `display:grid` appearing at none of them. **State the computed value per width;
+a screenshot alone does not close this.**" No such artifact exists. Revision 0 marked AC7 `✅` on a source reading
+of `SimilarListingsView.module.css` and deferred the sweep to the owner's visual matrix — which measures a
+different property. `docs/orchestrator-procedures.md` → "Evidence-first preflight" keeps source rules, computed CSS,
+geometry and rendered pixels as separate layers; a declaration does not prove a computed value.
+
+The source reading is *strong* — the reviewer independently confirmed `.row`'s `display`/`overflow-x` are
+unconditional, the four media queries touch only `flex-basis`, and **no rule anywhere in `src/**/*.css` targets
+`.similar-listings`**. That is why this is `P2` and not `P1`. It is still not the measurement.
+
+### 16.4b Deliverable
+
+New `scripts/task803-similar-row-computed.mjs`. **Evidence tooling, not a gate:** no `package.json` script entry,
+nothing in CI depends on it — the same disposition as the four existing task-numbered probes.
+
+`FACT` — the convention to follow is `scripts/task775-listings-frame-route-probe.mjs` (read it before writing):
+`import { chromium } from 'playwright'` (`playwright ^1.60.0`, `package.json:158`), `BASE_URL` from env defaulting
+to `http://127.0.0.1:3000`, top-level `probeHash`/`gitCommit` via `execFileSync('git', …)` with `cwd: ROOT` and no
+shell, one immutable run directory per invocation, `writeFile(..., { flag: 'wx' })` so evidence is never silently
+overwritten, `process.exit(1)` on a hard fail and `process.exit(2)` on usage error or an unhandled throw.
+
+**Usage:** `node scripts/task803-similar-row-computed.mjs <slug> <runId>`, validating `runId` against
+`/^[A-Za-z0-9][A-Za-z0-9._-]*$/` exactly as task775 does.
+**Output:** `docs/sessions/evidence/task803/runs/<runId>/similar-row-computed.json`.
+
+### 16.4c Matrix and measurements
+
+Locale **`uk`** only — it is §13's mandatory locale and carries the longest heading. Widths **320, 390, 768, 1024,
+1440** — AC7's exact set, not the Q3 canon; do not widen it.
+
+Per cell, record:
+
+| Field | Source |
+|---|---|
+| `httpStatus`, `ok`, `fallbackMarkerPresent` | the response, plus a body check for `NEXT_HTTP_ERROR_FALLBACK` — a 200 over a 404 body is the measured Task 792 hazard |
+| `rowDisplay`, `rowOverflowX` | `getComputedStyle` of the row node |
+| `rowScrollWidth`, `rowClientWidth`, `rowOverflows` | the row node's `scrollWidth`/`clientWidth` |
+| `cardCount` | element children of the row node |
+| `cardFlexBasis`, `cardFlexShrink`, `cardRectWidth` | first card node — computed, plus `getBoundingClientRect().width` |
+| `docScrollWidth`, `docClientWidth`, `pageOverflows` | `document.documentElement` — closes §11's "no page-level horizontal overflow at 320/390" row |
+
+`FACT` — the class names are hash-suffixed (`body-uk.txt` shows `SimilarListingsView_row__RKk0t` and
+`SimilarListingsView_card__nEGhc`, and the hash changes per build), so both lookups **must** be substring
+attribute selectors: `.similar-listings [class*="SimilarListingsView_row"]` and, within it,
+`[class*="SimilarListingsView_card"]`. A literal hashed class is not a valid selector here.
+
+### 16.4d Fail-closed contract — and the one branch that must NOT fail
+
+Hard-fail the cell (and the run, exit 1) on: a non-OK response · `NEXT_HTTP_ERROR_FALLBACK` present · `.similar-listings`
+absent · the row node absent · a zero-area row bounding rect · `rowDisplay !== 'flex'` · `rowOverflowX` not one of
+`auto`/`scroll` · `rowDisplay === 'grid'` at any width · `pageOverflows === true` at 320 or 390.
+
+**`cardCount < 2` is NOT a failure.** The dev DB is sparse — review round 1 measured a live block with exactly one
+card — and a single card cannot make the row overflow, so `rowOverflows === false` there is correct, not a defect.
+Record `overflowAssertionApplicable: cardCount >= 2` per cell and skip the overflow judgement when it is false. A
+probe that fails closed on valid sparse data is a broken probe; a probe that silently passes a *populated* row that
+does not overflow is worse. Both arms must be implemented and both must be visible in the JSON.
+
+`$slug` is an argument precisely because the kickoff's original slug is dead: `shitet-gazonjere-ne-pogradec-mtu8u1lg`
+no longer resolves in this dev DB (measured in Revision 0). Use
+`shitje-apartamenti-tek-rruga-rinia-ne-krye-mtud87k3`, which rendered cleanly in review round 1; if it 404s,
+re-derive a live slug from `/uk/listings` and record which slug was used and why in the session log.
+
+### 16.5 Acceptance criteria
+
+- **AC11 [R11]** — Given `buildSimilarityEntries` called with `purchase_conditions: null` and again with
+  `undefined`, then it returns without throwing and emits **no** `purchase_conditions` entry; given a non-empty
+  array, the emitted entry is unchanged from Revision 0 (`op:'overlaps'`, `urlValue` the comma join). Asserted in
+  `similarity.test.ts`, which grows from **16** to **18** cases. Additionally: `git diff` shows **no hunk inside
+  `buildSimilarityRungQuery`**, and `src/types/database.ts` and
+  `ListingDetailView.buildSimilarListingsHref.test.ts` are absent from `git status --porcelain`.
+- **AC12 [R12]** — Given `node scripts/task803-similar-row-computed.mjs <slug> <runId>` against a running
+  `npm run start`, then it exits 0 having written one JSON with exactly **5** cells (uk × 320/390/768/1024/1440),
+  each carrying `rowDisplay: "flex"` and `rowOverflowX` in `auto`/`scroll`; the string `"grid"` appears in **no**
+  `rowDisplay` field; `pageOverflows` is `false` at 320 and 390; and every cell carries
+  `overflowAssertionApplicable` plus a `cardCount`. Quote the five `rowDisplay`/`rowOverflowX`/`cardFlexBasis`
+  triples in the session log — one line per width. **That quotation is what closes AC7**; §13's owner matrix
+  remains separately owed.
+- **AC13 [R11+R12]** — Given the §16.6 verification block, then every command exits as stated there, `npm run test`
+  is back at exactly the Task 790 baseline (4 files / 5 tests), and `npm run build` exits 0.
+
+### 16.6 Verification plan — Revision 1
+
+Run block ① after the code change, block ② after the probe script exists. Retain every transcript under
+`docs/sessions/evidence/task803/` with `EXIT_CODE=` written **inside** the file; the §13 transcript rule
+(no `Tee-Object` — Windows PowerShell 5.1 writes UTF-16LE, which `check:file-integrity` rejects as NUL bytes) is
+unchanged and still binds.
+
+**① Code change:**
+
+```powershell
+node.exe -p process.platform
+npx.cmd tsc --noEmit
+npm.cmd run lint
+npx.cmd vitest run src/modules/listings/domain/__tests__/similarity.test.ts src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingDetailView.buildSimilarListingsHref.test.ts
+npm.cmd run test
+npm.cmd run build
+```
+
+Expected: `win32` · `tsc` 0 errors · lint **0 errors, 72 warnings**, with neither `SimilarListings.tsx` nor
+`similarity.ts` named · the three suites **31 passed** (18 + 6 + 7), with the two new null/undefined cases visible
+by name in the list · `buildSimilarListingsHref` 3/3 · `npm run test` 4 files / 5 tests failed (Task 790 baseline,
+name each) · `build` exit 0 with `ƒ /[locale]/listings/[slug]` present. Return each exit code read from inside its
+retained transcript, and the similarity-suite test list.
+
+**② Probe:**
+
+```powershell
+$slug = "shitje-apartamenti-tek-rruga-rinia-ne-krye-mtud87k3"
+$runId = "task803-rev1"
+$ev = "$PWD\docs\sessions\evidence\task803"
+node.exe -p process.platform
+Start-Process cmd.exe -ArgumentList "/c npm.cmd run start > `"$ev\start-rev1.txt`" 2>&1" -WindowStyle Hidden
+Start-Sleep -Seconds 20
+node.exe scripts\task803-similar-row-computed.mjs $slug $runId
+Get-Content "$ev\runs\$runId\similar-row-computed.json"
+Get-Content "$ev\start-rev1.txt"
+Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force
+```
+
+Expected: `win32` · the probe exits **0** · the JSON holds 5 cells, all `rowDisplay: "flex"`, no `"grid"`,
+`pageOverflows: false` at 320/390 · `start-rev1.txt` contains no `⨯ Error`. Return the JSON in full.
+
+**③ Two-armed proof that the probe can actually fail (`docs/qa-profiles.md` Q4: a gate claim needs a
+planted-violation failure).** Temporarily add `display: grid;` to `.row` in `SimilarListingsView.module.css`, then:
+
+```powershell
+$slug = "shitje-apartamenti-tek-rruga-rinia-ne-krye-mtud87k3"
+$ev = "$PWD\docs\sessions\evidence\task803"
+npm.cmd run build
+Start-Process cmd.exe -ArgumentList "/c npm.cmd run start > `"$ev\start-rev1-plant.txt`" 2>&1" -WindowStyle Hidden
+Start-Sleep -Seconds 20
+node.exe scripts\task803-similar-row-computed.mjs $slug task803-rev1-planted
+Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force
+```
+
+Expected: the probe exits **1**, naming `rowDisplay: "grid"` as the `failReason` on every cell. Then revert the CSS
+line, prove the revert with `git hash-object src/modules/listings/components/SimilarListingsView.module.css` matching
+its pre-plant value, re-run block ② into a fresh `runId`, and quote both outcomes. A probe whose failing arm was
+never fired is not evidence that it measures anything.
+
+### 16.7 Completion report — Revision 1 additions
+
+On top of §14: the three R11 edits with before/after lines · the two new test case names and the 16→18 count ·
+the `git diff` proof that `buildSimilarityRungQuery` has no hunk · the probe's full JSON · the five
+`rowDisplay`/`rowOverflowX`/`cardFlexBasis` lines quoted per width · the §16.6③ planted/reverted probe outputs and
+the `git hash-object` revert proof · the session-log validation table updated to mark `i-lint.txt` and
+`i-full-test-suite.txt` `SUPERSEDED` and cite the owner's 22:38–22:44 runs · confirmation that F4/F6/F7 were left
+untouched. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+
+### 16.8 Revision quality gate
+
+| Question | Required answer |
+|---|---|
+| Can the guard be added in more than one place? | No — 16.3b fixes one normalisation site and 16.3c names every file that must not move. |
+| Does the revision invalidate the frozen AC6 proof? | No — `buildSimilarityRungQuery` is untouched, and AC11 requires `git diff` to show it. |
+| Can the probe pass without measuring anything? | No — 16.6③ requires a planted `display:grid` to make it exit 1, and the revert to be proven by `git hash-object`. |
+| Does the probe fail on valid sparse data? | No — `cardCount < 2` sets `overflowAssertionApplicable:false`; 16.4d requires both arms in the JSON. |
+| Does it invent a command, script convention or selector? | No — task775 is the cited convention, `playwright` is `package.json:158`, and the substring selectors are read from `body-uk.txt`. |
+| Does it quietly close the open review? | No — 16.2 lists F4/F6/F7 and the owner visual matrix as still open. |
+| Is a new story required? | No — R11 is non-visible domain logic and R12 is a script. Neither creates nor changes a visible artifact, so the UI-hierarchy/story gate does not apply; §13's owner matrix still covers the visible change from Revision 0. |

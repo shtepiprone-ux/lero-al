@@ -1,5 +1,7 @@
 import { Info } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { Alert, Anchor, Stack, Text } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 import type { ListingStatus } from '@/types/database'
 
 // Task 793 F3 — widened from 4 to all 6 non-active statuses (`isListingVisible` returns true
@@ -9,37 +11,43 @@ interface Props {
   status: Exclude<ListingStatus, 'active'>
   message: string
   similarLabel: string
+  /** Task 792 — pre-filtered `/{locale}/listings` search, computed by the caller from the
+   * current listing's `listing_type`/`property_type`/`location_id` (filterEngine.ts:181-183).
+   * Replaces the pre-migration `href="#similar-listings"` in-page anchor, which scrolled the
+   * reader down the same dead listing instead of taking them anywhere (owner-reported 2026-09-06). */
+  href: string
 }
 
-const STYLES: Record<Props['status'], string> = {
-  sold:     'bg-status-info/10 border-status-info/30 text-status-info',
-  rented:   'bg-status-rented/10 border-status-rented/30 text-status-rented',
-  archived: 'bg-muted border-border text-muted-foreground',
-  expired:  'bg-status-warning/10 border-status-warning/30 text-status-warning',
-  // `--status-warning`'s own doc comment (globals.css) names its intended usage as
-  // "amber — inactive, pending" — reused verbatim rather than inventing a new token.
-  pending:  'bg-status-warning/10 border-status-warning/30 text-status-warning',
-  inactive: 'bg-status-warning/10 border-status-warning/30 text-status-warning',
+// Task 792 — colour provenance preserved from the pre-migration `STYLES` Tailwind record, mapped
+// onto the SAME Mantine colours ListingCard.tsx's Task 617 status-badge migration already
+// established for this exact 6-status family: sold→blueLight (--status-info), rented→purple
+// (--status-rented), archived→gray (--muted/--border neutral), expired→yellow (--status-warning).
+// `pending`/`inactive` reuse `--status-warning` (yellow) verbatim — the same deliberate reuse this
+// file's STYLES record already documented, not re-decided here. No new colour, no new token.
+const COLORS: Record<Props['status'], string> = {
+  sold: 'blueLight',
+  rented: 'purple',
+  archived: 'gray',
+  expired: 'yellow',
+  pending: 'yellow',
+  inactive: 'yellow',
 }
 
-export function ListingStatusBanner({ status, message, similarLabel }: Props) {
+export function ListingStatusBanner({ status, message, similarLabel, href }: Props) {
   return (
-    <div
-      className={cn(
-        'listing-status-banner flex items-start gap-3 rounded-2xl border px-5 py-4 mb-6',
-        STYLES[status],
-      )}
+    <Alert
+      color={COLORS[status]}
+      icon={<Info size={theme.other!.iconSize!.roomy} />}
+      mb="xl"
     >
-      <Info className="h-5 w-5 shrink-0 mt-0.5" />
-      <div className="flex flex-col gap-1 min-w-0">
-        <p className="text-sm font-medium leading-snug">{message}</p>
-        <a
-          href="#similar-listings"
-          className="text-xs underline underline-offset-2 opacity-80 hover:opacity-100 transition-opacity w-fit"
-        >
+      <Stack gap="xs">
+        <Text size="sm" fw={500}>
+          {message}
+        </Text>
+        <Anchor component={Link} href={href} size="xs" underline="always" fw={500}>
           {similarLabel}
-        </a>
-      </div>
-    </div>
+        </Anchor>
+      </Stack>
+    </Alert>
   )
 }

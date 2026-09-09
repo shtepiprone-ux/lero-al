@@ -70,6 +70,26 @@ export function SimilarListingsSkeleton() {
   )
 }
 
+// Task 792 R5 — pre-filtered `/{locale}/listings` search built from the current listing's own
+// `listing_type`/`property_type`/`location_id`, replacing the pre-migration in-page
+// `#similar-listings` anchor (the target existed — `ListingDetailViewBody` below still renders it
+// at `similarListingsSlot` — but scrolling a reader down the SAME dead listing was semantically
+// wrong for a sold/archived/expired/etc. listing, owner-reported 2026-09-06). Param names are the
+// canonical `filterEngine.ts:181-183` ones — `type`, not `listing_type`. Omitted values are absent
+// from the query string rather than empty (R5): `listingType`/`propertyType` are always present on
+// `Listing` (non-nullable columns), so only `locationId` can be omitted. Exported for
+// `ListingDetailView.buildSimilarListingsHref.test.ts` (Task 792 Revision 1, F2).
+export function buildSimilarListingsHref(
+  locale: string,
+  params: { listingType: string; propertyType: string; locationId: number | null | undefined },
+): string {
+  const sp = new URLSearchParams()
+  if (params.listingType) sp.set('type', params.listingType)
+  if (params.propertyType) sp.set('property_type', params.propertyType)
+  if (params.locationId) sp.set('location_id', String(params.locationId))
+  return `/${locale}/listings?${sp.toString()}`
+}
+
 export type PreviewBanner = 'unpublished' | 'published' | null
 
 export interface ListingDetailViewListing extends Listing {
@@ -413,6 +433,11 @@ export function ListingDetailViewBody({
               status={listing.status}
               message={t(`status_banner_${listing.status}`)}
               similarLabel={t('similar_listings')}
+              href={buildSimilarListingsHref(locale, {
+                listingType: listing.listing_type,
+                propertyType: listing.property_type,
+                locationId: listing.location?.id ?? null,
+              })}
             />
           )}
 

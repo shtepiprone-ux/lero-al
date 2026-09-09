@@ -2,8 +2,10 @@
 
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
+import { Group, Text, Title } from '@mantine/core'
 import { ListingCard, type CardListingData } from './ListingCard'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
+import styles from './RecentlyViewedGridView.module.css'
 
 export interface RecentlyViewedGridViewProps {
   listings: CardListingData[]
@@ -22,12 +24,18 @@ export interface RecentlyViewedGridViewProps {
 /**
  * Presentational recently-viewed grid (Task 665 container/View split).
  *
- * Mobile (base): horizontal scroll, fixed-width cards (w-48).
+ * Mobile (base): horizontal scroll, fixed-width cards (`.card` / `RecentlyViewedGridView.module.css`).
  * sm+: responsive CSS grid (2 → 3 → 4 columns).
  *
  * Receives everything via props — no auth, no exchange-rate hook, no DB access, no server
  * actions. `RecentlyViewedGrid` (the container) owns the `useAuth`/`useExchangeRate` hooks
  * and renders this View.
+ *
+ * Task 792 — off Tailwind onto Mantine. Heading reuses `Title order={2} size="h4"`, the same
+ * sizing contract `SimilarListingsView.tsx` reuses from `ListingDetailView.tsx`'s
+ * `SimilarListingsSkeleton` for the identical `text-xl font-bold` pair. The horizontal-scroll/grid
+ * switch (behaviour, not chrome — R4) moves to `RecentlyViewedGridView.module.css`, since no single
+ * Mantine layout primitive expresses "flex-scroll below a breakpoint, grid above it".
  */
 export function RecentlyViewedGridView({ listings, rates, displayCurrency, showEmptyState = false, clearSlot }: RecentlyViewedGridViewProps) {
   const t = useTranslations('listing')
@@ -36,28 +44,30 @@ export function RecentlyViewedGridView({ listings, rates, displayCurrency, showE
     if (!showEmptyState) return null
     return (
       <div data-testid="recently-viewed-section" className="recently-viewed">
-        <h2 className="text-xl font-bold mb-4">{t('recently_viewed_title')}</h2>
-        <p className="text-sm text-muted-foreground">{t('recently_viewed_empty')}</p>
+        <Title order={2} size="h4" mb="md">
+          {t('recently_viewed_title')}
+        </Title>
+        <Text size="sm" c="dimmed">
+          {t('recently_viewed_empty')}
+        </Text>
       </div>
     )
   }
 
   return (
     <div data-testid="recently-viewed-section" className="recently-viewed">
-      {/* Flat flex-wrap: title + clear button on same row; only wraps left-aligned when title fills the row.
-          Same fix family as FilterBar (Task 389 / Task 392). */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
-        <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
+      {/* Flat wrap: title + clear button on same row; only wraps left-aligned when title fills the
+          row. Same fix family as FilterBar (Task 389 / Task 392). */}
+      <Group gap="sm" wrap="wrap" align="center" mb="md">
+        <Title order={2} size="h4">
+          {t('recently_viewed_title')}
+        </Title>
         {clearSlot}
-      </div>
+      </Group>
 
-      {/*
-        Mobile: horizontal flex scroll (w-48 fixed cards, no-scrollbar).
-        sm+: grid overrides flex display; cards fill column width.
-      */}
-      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4 sm:[&>*]:h-full">
+      <div className={styles.grid}>
         {listings.map(listing => (
-          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink flex flex-col">
+          <div key={listing.id} className={styles.card}>
             <ListingCard listing={listing} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
           </div>
         ))}

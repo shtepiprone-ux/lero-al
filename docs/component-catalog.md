@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, and 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton` — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton`, and 2026-09-09 for Task 792's `ListingBackButton`/`ListingStatusBanner`/`SimilarListingsView`/`RecentlyViewedGridView` migration (+4 Storybook stories) — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -9,7 +9,7 @@ See `docs/component-risk-register.md` for risk register.
 | Metric | Count |
 |---|---|
 | Total cataloged components | 239 |
-| Storybook stories | 43 |
+| Storybook stories | 47 |
 | Locale-aware (useTranslations) | 108 |
 | Client components ('use client') | 156 |
 | With arbitrary Tailwind values | 36 |
@@ -182,7 +182,7 @@ See `docs/component-risk-register.md` for risk register.
 | `LatestListings` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `LatestListingsView` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `LightboxView` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
-| `ListingBackButton` | APPROVED | — | — | —  |
+| `ListingBackButton` | APPROVED | ✅ | — | Task 792: leaves Tailwind onto Mantine `Button` |
 | `ListingCard` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `listingConstants.ts` | APPROVED | ✅ | — | —  |
 | `ListingContact` | APPROVED | — | 🌐 | LOCALIZATION — Task 793: leaves Tailwind onto `MantineListingContactPattern`, GOVERNANCE_VIOLATION cleared (zero `@/components/ui/*` imports) |
@@ -204,7 +204,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingsShell` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `ListingsSortBar` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ListingsStatusTabs` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
-| `ListingStatusBanner` | APPROVED | — | — | —  |
+| `ListingStatusBanner` | APPROVED | ✅ | — | Task 792: leaves Tailwind onto Mantine `Alert`; "similar listings" now navigates to a pre-filtered `/{locale}/listings` search instead of an in-page anchor |
 | `listingTransitionEngine.test.ts` | APPROVED | ✅ | — | —  |
 | `listingTransitionEngine.ts` | APPROVED | ✅ | — | —  |
 | `MultiToggleField` | APPROVED | — | 🌐 | LOCALIZATION  |
@@ -212,7 +212,7 @@ See `docs/component-risk-register.md` for risk register.
 | `propertyTypeSchema.ts` | APPROVED | ✅ | — | —  |
 | `recentlyViewedConstants.ts` | APPROVED | ✅ | — | —  |
 | `RecentlyViewedGrid` | APPROVED | — | — | —  |
-| `RecentlyViewedGridView` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
+| `RecentlyViewedGridView` | APPROVED | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP — Task 792: leaves Tailwind; horizontal-scroll/grid switch moved to `RecentlyViewedGridView.module.css` |
 | `RecentlyViewedSection` | APPROVED | — | — | HUGE_DESKTOP  |
 | `RecentlyViewedTracker` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `reportListing.ts` | APPROVED | ✅ | — | —  |
@@ -220,7 +220,7 @@ See `docs/component-risk-register.md` for risk register.
 | `SaveSearchButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SaveToCollectionButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SimilarListings` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `SimilarListingsView` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `SimilarListingsView` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 792: leaves Tailwind onto Mantine `Title`/`SimpleGrid` |
 | `StepBasicInfo` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepDetails` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepLocation` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |

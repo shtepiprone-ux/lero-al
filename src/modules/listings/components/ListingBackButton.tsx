@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 
 const RESTORE_KEY = 'listings_restore'
 
@@ -33,11 +34,11 @@ export function ListingBackButton({ locale, label }: Props) {
 
   return (
     <Button
-      variant="ghost"
+      variant="transparent"
+      size="xs"
       onClick={handleBack}
-      className="gap-1 text-xs text-muted-foreground hover:text-foreground h-auto p-0"
+      leftSection={<ArrowLeft size={theme.other!.iconSize!.badge} />}
     >
-      <ArrowLeft className="h-3 w-3 shrink-0" />
       {label}
     </Button>
   )

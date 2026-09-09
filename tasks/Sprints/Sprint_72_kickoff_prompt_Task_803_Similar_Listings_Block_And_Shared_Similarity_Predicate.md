@@ -141,18 +141,18 @@ binds: manual checking alone cannot close it.
 | **R4** | The header carries `ViewAllLink` **only when a 9th row was returned**, with `label={t('view_all')}` and `href` built by R1 from the **settled** predicate. | P0 | AC4 |
 | **R5** | Relaxation ladder: at most **4** Supabase round trips, tiers dropped in the fixed order of §10.3, stopping at the first tier that returns at least one row. | P0 | AC5 |
 | **R6** | `applyPublicVisibility`, `.neq('id', currentId)`, `property_type` and `listing_type` are present in **every** rung. Proven by an automated test that iterates every rung, plus a planted-violation failure record. | P0 | AC6 |
-| **R7** | The card row uses the horizontal-scroll/grid switch, reusing the §3.4 contract; the `.similar-listings` wrapper, the `data-testid` set and the speculation-rules script (first 2 URLs, `Save-Data` skip) are preserved verbatim. | P0 | AC7 |
+| **R7** | The card row scrolls horizontally at **every** width (D72-5), with a partial next card visible so the scroll is discoverable; the `.similar-listings` wrapper, the `data-testid` set and the speculation-rules script (first 2 URLs, `Save-Data` skip) are preserved verbatim. | P0 | AC7 |
 | **R8** | `listing_type` reaches the container as a new prop and narrows the query. A rental is never shown as similar to a sale listing. | P0 | AC8 |
 | **R9** | The canonical story `Mantine/Primitives/SimilarListingsView` is **extended** (not replaced) to cover: 8 items with the view-all control, fewer than 8 without it, and the empty branch. It keeps its static import of the real component and its manifest entry. | P0 | AC9 |
 | **R10** | No new i18n string, no new theme value, token, `design-tokens-allow` marker or allowlist entry; `check:design-tokens --strict --scope=mantine` stays 0. | P1 | AC10 |
 
 ## 5. Assumptions and open questions
 
-- **`OWNER DECISION — stated default, reversible.`** The owner asked for "8 listings with horizontal scroll". Two
-  readings: scroll at every width, or the project's existing scroll-below-`sm`/grid-above contract (§3.4). **Default
-  taken: reuse the existing contract**, because it is an established in-repo pattern and eight cards in a 4-column
-  grid is two clean rows on desktop. If the owner wants a true carousel at all widths, that is a one-file change to
-  the CSS module and a re-review, not a redesign.
+- **`OWNER DECISION — settled 2026-09-09 (D72-5).`** The row scrolls horizontally at **every** width — a true
+  carousel, not the project's existing scroll-below-`sm`/grid-above contract. The owner ruled on this after seeing
+  the live route. §3.4's file is therefore the **mechanical** reference (how gaps, card width and scrollbar hiding
+  are expressed without a raw literal), not the responsive shape to copy. `SimpleGrid` leaves the View entirely.
+  Do not change `RecentlyViewedGridView` to match — it keeps its own breakpointed contract (§8).
 - **`ASSUMPTION (reversible, stated)` — tier C's numeric derivations.** `area_min`/`area_max` = `area_gross` ±25%;
   `rooms` = the listing's exact value; `floor_min`/`floor_max` = the listing's exact floor;
   `year_built_min`/`max` = ±5 years. Each is emitted only when its column is non-null. These are similarity
@@ -235,11 +235,32 @@ The **settled** predicate — the one belonging to the attempt that produced the
 built from. Building the href from attempt 1 while displaying attempt 3's rows is precisely the defect D72-1
 forbids.
 
-### 10.4 Layout (R7)
+### 10.4 Layout (R7, D72-5)
 
-New `SimilarListingsView.module.css`, modelled on §3.4's file. Do not import `RecentlyViewedGridView.module.css`
-across components and do not edit it. Breakpoint literals in `em`, matching `theme.ts`; spacing and card width
-composed from `var(--mantine-*)`; no bare numeric literal (D71-4).
+New `SimilarListingsView.module.css`. Do not import `RecentlyViewedGridView.module.css` across components and do not
+edit it — read it only for the mechanics (gap from `var(--mantine-spacing-*)`, `scrollbar-width:none` plus the
+`::-webkit-scrollbar` rule, `flex-shrink:0` on the card).
+
+The row is `display:flex; overflow-x:auto` with **no** grid breakpoint. `SimpleGrid` is removed from the View.
+
+Card width is a **percentage-based flex-basis**, not a fixed token width, so the row adapts without a raw px value
+(D71-4 — a percentage is not a px/rem/em literal, the same reasoning Task 792 applied to `h="100%"`):
+
+| Width | Cards fully visible | Basis |
+|---|---|---|
+| base | 1 + a peek | `calc(100% / 1.2)` |
+| `40em`+ | 2 + a peek | `calc(100% / 2.2)` |
+| `48em`+ | 3 + a peek | `calc(100% / 3.2)` |
+| `64em`+ | 4 + a peek | `calc(100% / 4.2)` |
+
+`ASSUMPTION (reversible, stated)` — the `.2` peek is the affordance that tells a user the row scrolls; without it a
+full-width row of exactly N cards reads as a static grid and D72-5's intent is lost. The fractions are a starting
+point for the owner's visual review, not a measured product rule.
+
+The media queries here change only the flex-basis, never `display`. Add `scroll-snap-type: x proximity` on the row
+and `scroll-snap-align: start` on the card. Keyboard and trackpad scrolling must work; do not add arrow buttons —
+no canonical carousel-control contract exists in this repo, and inventing one is exactly what §4's R10 and the
+canonical-first gate forbid.
 
 ### 10.5 Preservation
 
@@ -286,8 +307,9 @@ settled parameters -> that page's result set contains the 8 that were visible.
   remove the visibility predicate from one rung, record the test failing, restore it, record the test passing. Quote
   both outputs.
 - **AC7 [R7]** — Given the rendered block, then `.similar-listings` is present, the speculation-rules script carries
-  exactly the first 2 of the **rendered** URLs and is absent under `Save-Data: on`, and the card row is
-  `display:flex; overflow-x:auto` below `40em` and `display:grid` at/above it.
+  exactly the first 2 of the **rendered** URLs and is absent under `Save-Data: on`, and the card row computes to
+  `display:flex; overflow-x:auto` at **every** tested width — 320, 390, 768, 1024 and 1440 — with `display:grid`
+  appearing at none of them. State the computed value per width; a screenshot alone does not close this.
 - **AC8 [R8]** — Given a `sale` listing, then no rendered card and no href parameter set can include a `rent`
   listing; `type=sale` is present in every rung's URL.
 - **AC9 [R9]** — Given `npm run check:story-coverage`, then `SimilarListingsView` remains covered, the story still
@@ -362,7 +384,7 @@ switcher has never resized the preview, so it is not a review instrument):
 
 | Surface | State | Locale | Viewport |
 |---|---|---|---|
-| Similar-listings block | 8 cards + view-all control | uk, sq | 320, 390, 768, 1024, 1440 |
+| Similar-listings block | 8 cards + view-all control, row scrolls **and a next card peeks** at every width | uk, sq | 320, 390, 768, 1024, 1440 |
 | Similar-listings block | fewer than 8, no control | uk | 320, 1440 |
 | Similar-listings block | empty (block absent) | uk | 390 |
 | View-all control | click through | uk, sq | 390 |
@@ -389,4 +411,5 @@ known limitations · anything left open. Status: `IMPLEMENTED - AWAITING ORCHEST
 | Is the story gate satisfied? | Yes — R9 **extends** the canonical story Task 792 created; no new permanent story is invented, and the manifest entry already exists. |
 | Is the round-trip cost bounded? | Yes — D72-4 caps at 4 attempts and §10.3 groups rungs into tiers to fit it. |
 | Does it silently change Task 792's work? | No — §3.3 records the heading `CONFLICT` and resolves it in favour of 792's `size="h4"`; §8 forbids editing `RecentlyViewedGridView`. |
+| Is the scroll shape decided or assumed? | Decided — **D72-5**, owner, 2026-09-09, after live review. The kickoff's original reversible default is superseded and §5 says so; only the `.2` peek fraction remains a stated assumption. |
 | Can it start before 792 is reviewed? | No — stated in the header and in the sprint's precondition 1. |

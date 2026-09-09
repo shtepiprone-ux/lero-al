@@ -65,6 +65,11 @@ and extends 803's single similarity map by one row per new parameter; it must no
 - **D72-4 — a round trip is not free.** The relaxation ladder runs on a hot below-the-fold route. It is capped at
   four queries total; rungs are grouped into tiers to fit that cap, never evaluated one parameter at a time.
 
+- **D72-5 — the card row scrolls horizontally at every width.** Owner decision, 2026-09-09, taken after seeing the
+  live route: not the project's existing scroll-below-`sm`/grid-above contract, but a true carousel on desktop too.
+  This overrides the reversible default the kickoff was filed with. `RecentlyViewedGridView` keeps its own
+  breakpointed contract and is not changed to match.
+
 ## Exit criteria
 
 1. 803 and 804 both `APPROVED` / `APPROVED WITH NOTES`.

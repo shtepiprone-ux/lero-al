@@ -289,3 +289,61 @@ npm run governance:screenshots
 
 `.screenshots/responsive/YYYY-MM-DD/` — gitignored, local only.
 See `docs/responsive-screenshot-governance.md §5` for file naming conventions.
+
+---
+
+### Production-build hygiene — `next start` evidence is worthless without these three checks (2026-09-09)
+
+Every `Q1`-`Q4` task that produces live-route evidence runs `next build` + `next start`. Three failures were
+measured on Task **792**'s verification, each of which produced a **404 that looked like a code defect and was not**.
+Check all three before believing any live-route result.
+
+**1. `next dev --turbopack` and `next build` cannot share one `.next/`.**
+`npm run dev` uses `--turbopack` (see `package.json`); `npm run build` uses webpack. Running the build over a
+turbopack `.next/` crashes partway through with
+`Cannot find module '../chunks/ssr/[turbopack]_runtime.js'` required from `.next/server/pages/_document.js`, leaving
+a half-written directory. Always delete the directory first:
+
+```powershell
+Remove-Item -Recurse -Force .next
+npm.cmd run build
+```
+
+**2. `.next/BUILD_ID` is the only proof the build finished.** A `next build` that prints its banner and returns
+without a route table has aborted, and `next start` will then serve 404 for every app route. A compile-success line
+is not enough — `next build` can print `Compiled successfully` and still die during `Collecting page data`.
+
+```powershell
+Test-Path .next\BUILD_ID
+```
+
+`False` means there is no build to serve; nothing downstream is evidence. Corroborating signals when diagnosing:
+`.next/routes-manifest.json` at a few hundred bytes is a dev stub, not a production manifest (a real one for this
+project is ~9 KB).
+
+**3. Only one `next start` may own port 3000.** A second `Start-Process ... npm run start` cannot bind, dies
+silently in its hidden window, and the browser keeps talking to the **stale** server — including one started over a
+broken build. Kill first, then prove the port is free, and prove what answered:
+
+```powershell
+Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force
+Start-Sleep -Seconds 3
+Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue | Select-Object OwningProcess
+```
+
+Empty output means the port is free. A printed `OwningProcess` means a server is still up; do not start another one.
+
+**Closing the loop — a status code is not a render.** Next.js commits the HTTP status with the streamed shell,
+before the server component tree resolves, so a `notFound()` route returns **`StatusCode 200`** carrying the 404
+body. Measured on Task 792: `docs/sessions/evidence/task792/r1-body-sq.txt` is a 200 response whose flight payload
+contains `6:E{"digest":"NEXT_HTTP_ERROR_FALLBACK;404"}`. Assert on the body, never on the status:
+
+```powershell
+$body = (Invoke-WebRequest "http://localhost:3000/uk/listings/$slug" -UseBasicParsing).Content
+$body -match 'NEXT_HTTP_ERROR_FALLBACK'
+$body -match 'data-testid="listing-detail-view"'
+```
+
+The first must be `False` and the second `True`. A seeded slug that resolved for an earlier task is not proof it
+still resolves: `11-mr7ucly4` was carried from Task 791's session log into 792's kickoff and had stopped resolving,
+which is how a 404 was recorded as a passing AC.

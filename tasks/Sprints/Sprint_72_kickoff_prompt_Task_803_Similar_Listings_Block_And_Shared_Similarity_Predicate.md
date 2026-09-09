@@ -435,9 +435,11 @@ Strongest permitted result is still `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 | The critical-flow row `docs/critical-flow-registry.md:70` | Both halves of its declared command run and green |
 | `npm run test` at the Task 790 baseline | Owner run, 2026-09-09 22:43 — `4 failed \| 84 passed` files, `5 failed \| 1560 passed` tests |
 
-**The AC6 plant does not need re-proving in this revision**, because `buildSimilarityRungQuery` is not edited by it
-(R11 touches only the `Props` interface in the same file). Prove that rather than assert it: AC11 requires
-`git diff` to show no hunk inside `buildSimilarityRungQuery`.
+**The AC6 plant MUST be re-proven in this revision.** ⚠️ This paragraph was reversed on 2026-09-09 when the owner
+folded **F4** into the revision (§16.5): F4 rewrites `buildSimilarityRungQuery`'s body, so
+`ac6-planted-violation-FAIL.txt` / `ac6-reverted-PASS.txt` describe a function that no longer exists. Keep both
+files, mark them `SUPERSEDED`, and produce `ac6-rev1-*` per §16.9④. A plant proof for a replaced function is not
+evidence. Everything else in the table above stays frozen.
 
 **Superseded transcripts — mark them, do not delete them.** `i-lint.txt` (18:13) and `i-full-test-suite.txt` (18:15)
 were captured **before** `SimilarListings.tsx`'s final write (18:24:38) and are stale for the reviewed diff; the
@@ -449,16 +451,15 @@ artifact was stale. Do not "fix" the two unused `eslint-disable` directives: fre
 
 ### 16.2 Explicitly NOT in this revision
 
-Open review findings deliberately left open, so a green Revision 1 is never mistaken for a closed review:
+**Revision 1 was extended on 2026-09-09 by owner instruction** — F4 and F6 are now IN scope as §16.5 and §16.6,
+and the two review `NOTE`s as §16.7. What remains out:
 
-- **F4 (`P2`)** — `applySimilarityEntries` is exported, tested, and never called in production;
-  `buildSimilarityRungQuery` carries a duplicated `switch (entry.op)`. Not in scope here. Do not refactor it —
-  doing so would invalidate 16.1's frozen AC6 artifacts and require a re-plant this revision does not budget for.
-- **F6 (`P3`)** — the header `Group` uses `gap="sm" wrap="wrap"` where `FeaturedListingsView.tsx:54-58` uses
-  `justify="space-between" wrap="nowrap"`. Owner ruling pending in the visual matrix. Do not change it.
 - **F7 (`P3`)** — `rooms` renders `.eq` here while `filterEngine.ts:263-271` reads `rooms=5` as "5 or more" and
-  ignores `rooms>5`. Deferred to **804**. Only the one-line comment in 16.3d is in scope.
-- The `OWNER VISUAL QA REQUIRED` matrix (§13) is unchanged and still owed by the owner.
+  ignores `rooms>5`. The behavioural fix belongs to **804**, which owns the filter surface; `filterEngine.ts` is
+  out of scope for 803 per §8. **In scope here: only the one-line comment in §16.3d.** 804's registry row in
+  `docs/backlog.md` now carries this so it cannot be lost.
+- The `OWNER VISUAL QA REQUIRED` matrix (§13) is unchanged and still owed by the **owner**, not by Sonnet. §16.6
+  changes what its header row will show — the owner reviews the new shape, not the Revision 0 one.
 
 ### 16.3 R11 [`P0`, closes F1] — `purchase_conditions` must not be able to throw
 
@@ -582,13 +583,117 @@ no longer resolves in this dev DB (measured in Revision 0). Use
 `shitje-apartamenti-tek-rruga-rinia-ne-krye-mtud87k3`, which rendered cleanly in review round 1; if it 404s,
 re-derive a live slug from `/uk/listings` and record which slug was used and why in the session log.
 
-### 16.5 Acceptance criteria
+### 16.5 R13 [`P0`, closes F4] — one applier, not two
+
+`FACT` — `similarity.ts:145` exports `applySimilarityEntries`, and `grep -rn "applySimilarityEntries" src/` returns
+only its own definition, its own doc comment, and `similarity.test.ts`. **Production never calls it.** The Supabase
+dispatch that actually runs is a second, byte-equivalent `switch (entry.op)` inside
+`SimilarListings.tsx:buildSimilarityRungQuery`. R1 says "exactly two consumers render it"; there are three, and the
+tested one is dead.
+
+The entries themselves cannot drift — both consumers read the same `SimilarityEntry[]` — which is why this is `P2`
+and not `P1`. What drifts is the **op dispatch**: a sixth member added to `SimilarityOp` lands in one switch,
+silently no-ops in the other, and `similarity.test.ts` stays green. That is the exact class of defect D72-3 exists
+to prevent.
+
+**Required change.** In `buildSimilarityRungQuery`, delete the inline `switch` loop and call the shared applier:
+
+- keep the core exactly where it is — `applyPublicVisibility(baseQuery() as any)`, then `.eq('property_type', …)`,
+  `.eq('listing_type', …)`, `.neq('id', …)` — **outside** the ladder, per §10.2/D72-2. Do not move the core into
+  `similarity.ts`; D72-2 is why it lives in the caller.
+- replace the loop with `q = applySimilarityEntries(q, entriesForAttempt(entries, attempt))`, import
+  `applySimilarityEntries` alongside the existing `similarity.ts` imports, and drop `entriesForAttempt` from the
+  function body only if it becomes unused there.
+- order is load-bearing: the core predicates are applied first, then the tier entries, exactly as today. The rung
+  tests assert membership, not order, so preserve order by construction rather than by test.
+- if the `// eslint-disable-next-line @typescript-eslint/no-explicit-any` above `let q: any` becomes an unused
+  directive after the change, remove it — `npm run lint` must stay at **0 errors, 72 warnings** with neither
+  touched file named.
+
+**Because this rewrites the plant's target function, §16.9④ re-proves AC6.** That is not optional cleanup: an
+untested production dispatch replaced by a tested shared one is only an improvement once the guard has been shown
+to still fail closed on the new code.
+
+### 16.6 R14 [`P0`, closes F6] — the header row adopts the site's section-header shape (**D72-6**)
+
+#### 16.6a The conflict, and the owner's ruling
+
+`FACT` — the two existing `ViewAllLink` section headers do not agree:
+
+| Consumer | Composition | Below 40em |
+|---|---|---|
+| `FeaturedListingsView.tsx:54-58` + `.headerRow` in its CSS module | `justify="space-between" wrap="nowrap"` | **column**, `align-items: flex-start` |
+| `page.tsx:57` ("Latest listings") | `Group justify="space-between" align="center" wrap="nowrap"` | row, no stacking |
+| `SimilarListingsView.tsx:42` (Revision 0) | `Group gap="sm" wrap="wrap" align="center"` — **no `justify`**, so `flex-start` | row + wrap |
+
+`FACT` — `justify="space-between"` is the one property both existing consumers share and Revision 0 omits. The live
+RSC payload confirms the omission reached production: `--group-justify:flex-start` in `body-uk.txt`.
+
+`CONFLICT — resolved.` The two consumers disagree on stacking, and the difference is visible exactly on §13's
+mandatory `uk@320` cell, so it was not Sonnet's to guess. **Owner decision D72-6, 2026-09-09: the Featured shape —
+the row stacks to a column below 640px, and becomes a space-between row at and above it.** Record D72-6 alongside
+D72-1…D72-5; do not re-open it.
+
+#### 16.6b Required change — Mantine props, not a copied CSS module
+
+Replace `SimilarListingsView.tsx:42`'s `<Group gap="sm" wrap="wrap" align="center" mb="lg">` with:
+
+```tsx
+<Flex direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }} justify="space-between" gap="sm" mb="lg">
+```
+
+`Group` is swapped for `Flex` because `Group` has no responsive `direction`. Import `Flex` from `@mantine/core` and
+drop `Group` from that import if it becomes unused.
+
+`FACT` — this is the repo's own current mechanism for this exact problem, and it is why the fix is **not** a copied
+CSS module. `MantinePageHeaderWithActions.tsx:55-66` documents the migration in-source: the nested
+`styles={{ root: { '@media …' } }}` object *"was not emitted by Mantine"*, and it was replaced with
+*"Flex's native `w`/`direction`/`align` responsive props, gated at `sm`"* — `align={{ base: 'stretch', sm: 'center' }}`
+verbatim. `AuthSheet.tsx:518` uses the identical pair. `FeaturedListingsView.module.css`'s `.headerRow` is the
+**older** CSS-module expression of the same intent (its own header comment says so); do not copy it into
+`SimilarListingsView.module.css` and do not import it cross-component — §8 forbids that pattern, and duplicating a
+visual contract into a feature-local module is the finding the canonical-first gate exists to raise.
+
+`INFERENCE` — `stretch` and Featured's `flex-start` produce the same button at base width, because `ViewAllLink`
+itself sets `w={{ base: '100%', sm: 'auto' }}` (`ViewAllLink.tsx:18`) and an explicit width overrides
+`align-items`. `stretch` is chosen because it is the shipped `Flex` precedent, not because the two differ.
+
+#### 16.6c Preserve
+
+- `Title order={2} size="h4"` is unchanged — §3.3's `CONFLICT` resolved in favour of Task 792's sizing, and D72-6
+  does not reopen it.
+- `ViewAllLink` is consumed unmodified. No local button, no copied class chain, no `styles` override.
+- `mb="lg"` and `gap="sm"` are unchanged.
+- `SimilarListingsView.module.css` gains **no** header rule. The card row's `.row`/`.card` are untouched by R14.
+- The conditional `{viewAllHref && viewAllLabel && …}` gate is unchanged — R4 still decides whether the control
+  exists at all.
+
+#### 16.6d Story and visual consequence
+
+`FACT` — `Mantine/Primitives/SimilarListingsView` already covers this: `Default` renders 8 fixtures **with**
+`viewAllHref`/`viewAllLabel`, `FewerThanEight` without. Both states re-render through the changed header
+automatically. **No new story, no manifest change, no `check:story-coverage` delta** — the count stays 32/32.
+§13's owner matrix rows are unchanged in wording but now describe the D72-6 shape; the mandatory `uk@320` header
+row is the cell that ruled this decision and is the cell that confirms it.
+
+### 16.7 R15 [`P3`] — the two review `NOTE`s
+
+1. `similarity.test.ts:113` cites `SimilarListings.regression.test.ts`, a file that has never existed. The real
+   files are `SimilarListings.visibility.test.ts` and `SimilarListings.ladder.test.ts`. Fix the comment to name
+   them.
+2. The session log's AC1 evidence line claims a grep finds "no second listing-field-to-URL-parameter mapping in
+   `src/modules/listings/components/`". `ListingDetailView.tsx:410` builds
+   `` `/${locale}/listings?location_id=${listing.location.id}` `` for the location breadcrumb. It is pre-existing,
+   is not a similarity mapping, and is correctly out of scope — but the sentence as written is not what the grep
+   shows. Restate it precisely: no second **similarity** field-to-parameter mapping, and name the breadcrumb as the
+   one unrelated hit.
+
+### 16.8 Acceptance criteria
 
 - **AC11 [R11]** — Given `buildSimilarityEntries` called with `purchase_conditions: null` and again with
   `undefined`, then it returns without throwing and emits **no** `purchase_conditions` entry; given a non-empty
   array, the emitted entry is unchanged from Revision 0 (`op:'overlaps'`, `urlValue` the comma join). Asserted in
-  `similarity.test.ts`, which grows from **16** to **18** cases. Additionally: `git diff` shows **no hunk inside
-  `buildSimilarityRungQuery`**, and `src/types/database.ts` and
+  `similarity.test.ts`, which grows from **16** to **18** cases. Additionally `src/types/database.ts` and
   `ListingDetailView.buildSimilarListingsHref.test.ts` are absent from `git status --porcelain`.
 - **AC12 [R12]** — Given `node scripts/task803-similar-row-computed.mjs <slug> <runId>` against a running
   `npm run start`, then it exits 0 having written one JSON with exactly **5** cells (uk × 320/390/768/1024/1440),
@@ -597,10 +702,24 @@ re-derive a live slug from `/uk/listings` and record which slug was used and why
   `overflowAssertionApplicable` plus a `cardCount`. Quote the five `rowDisplay`/`rowOverflowX`/`cardFlexBasis`
   triples in the session log — one line per width. **That quotation is what closes AC7**; §13's owner matrix
   remains separately owed.
-- **AC13 [R11+R12]** — Given the §16.6 verification block, then every command exits as stated there, `npm run test`
-  is back at exactly the Task 790 baseline (4 files / 5 tests), and `npm run build` exits 0.
+- **AC14 [R13]** — Given `grep -rn "applySimilarityEntries" src/`, then `SimilarListings.tsx` appears among the
+  hits: the shared applier is called by production, not only by its own test. `buildSimilarityRungQuery` contains
+  **no** `switch (entry.op)` and no `case 'overlaps'`. The core four (`applyPublicVisibility`, `property_type`,
+  `listing_type`, `neq('id')`) are still applied in `buildSimilarityRungQuery`, outside the ladder — proven by
+  `SimilarListings.visibility.test.ts` staying 6/6 **and** by the §16.9④ re-plant failing 4/6 and recovering 6/6
+  against the rewritten function.
+- **AC15 [R14]** — Given the rendered header, then it is a Mantine `Flex` with
+  `direction={{ base: 'column', sm: 'row' }}`, `align={{ base: 'stretch', sm: 'center' }}` and
+  `justify="space-between"`; `SimilarListingsView.module.css` contains **no** header rule; `FeaturedListingsView.module.css`
+  is absent from `git status --porcelain`; and `check:story-coverage` still reports 32/32 with no manifest change.
+  The D72-6 shape is confirmed by the owner on §13's `uk@320` row — it is not self-certified.
+- **AC16 [R15]** — Given `grep -rn "SimilarListings.regression.test.ts" src/`, then there are **0** hits; and the
+  session log's AC1 evidence line names the `ListingDetailView.tsx:410` breadcrumb as the one unrelated hit instead
+  of claiming none exists.
+- **AC13 [R11+R12+R13+R14]** — Given the §16.9 verification blocks, then every command exits as stated there,
+  `npm run test` is back at exactly the Task 790 baseline (4 files / 5 tests), and `npm run build` exits 0.
 
-### 16.6 Verification plan — Revision 1
+### 16.9 Verification plan — Revision 1
 
 Run block ① after the code change, block ② after the probe script exists. Retain every transcript under
 `docs/sessions/evidence/task803/` with `EXIT_CODE=` written **inside** the file; the §13 transcript rule
@@ -661,23 +780,51 @@ line, prove the revert with `git hash-object src/modules/listings/components/Sim
 its pre-plant value, re-run block ② into a fresh `runId`, and quote both outcomes. A probe whose failing arm was
 never fired is not evidence that it measures anything.
 
-### 16.7 Completion report — Revision 1 additions
+**④ AC6 re-plant — mandatory, because R13 rewrites the plant's target function.** Change
+`buildSimilarityRungQuery`'s `let q: any = applyPublicVisibility(baseQuery() as any)` to
+`let q: any = baseQuery()`, then:
+
+```powershell
+$ev = "$PWD\docs\sessions\evidence\task803"
+node.exe -p process.platform
+& cmd.exe /c "npx.cmd vitest run src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts 2>&1" | Out-String -Stream | Set-Content -Encoding utf8 "$ev\ac6-rev1-planted-violation-FAIL.txt"
+```
+
+Revert the line, then:
+
+```powershell
+$ev = "$PWD\docs\sessions\evidence\task803"
+& cmd.exe /c "npx.cmd vitest run src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts 2>&1" | Out-String -Stream | Set-Content -Encoding utf8 "$ev\ac6-rev1-reverted-PASS.txt"
+git --no-optional-locks diff --stat src/modules/listings/components/SimilarListings.tsx
+```
+
+Expected: the first file shows `4 failed | 2 passed (6)` with the same `expected false to be true` on the
+`status`/`active` assertion; the second `6 passed (6)`; and the `diff --stat` afterwards shows only the R11/R13
+changes, no residue of the plant. Return both files. Mark the Revision 0 `ac6-planted-violation-FAIL.txt` /
+`ac6-reverted-PASS.txt` `SUPERSEDED` in the session log — keep the files, they are the record for Revision 0's code.
+
+### 16.10 Completion report — Revision 1 additions
 
 On top of §14: the three R11 edits with before/after lines · the two new test case names and the 16→18 count ·
 the `git diff` proof that `buildSimilarityRungQuery` has no hunk · the probe's full JSON · the five
-`rowDisplay`/`rowOverflowX`/`cardFlexBasis` lines quoted per width · the §16.6③ planted/reverted probe outputs and
+`rowDisplay`/`rowOverflowX`/`cardFlexBasis` lines quoted per width · the §16.9③ planted/reverted probe outputs and
 the `git hash-object` revert proof · the session-log validation table updated to mark `i-lint.txt` and
-`i-full-test-suite.txt` `SUPERSEDED` and cite the owner's 22:38–22:44 runs · confirmation that F4/F6/F7 were left
-untouched. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+`i-full-test-suite.txt` `SUPERSEDED` and cite the owner's 22:38–22:44 runs · the F4 grep proof (`applySimilarityEntries` now hit in `SimilarListings.tsx`) and the §16.9④
+planted/reverted AC6 pair · the header `Flex` before/after with the D72-6 citation · confirmation that
+`FeaturedListingsView.module.css`, `page.tsx` and `filterEngine.ts` were **not** touched, and that F7's behavioural
+half stayed with 804. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
-### 16.8 Revision quality gate
+### 16.11 Revision quality gate
 
 | Question | Required answer |
 |---|---|
 | Can the guard be added in more than one place? | No — 16.3b fixes one normalisation site and 16.3c names every file that must not move. |
-| Does the revision invalidate the frozen AC6 proof? | No — `buildSimilarityRungQuery` is untouched, and AC11 requires `git diff` to show it. |
+| Does the revision invalidate the frozen AC6 proof? | **Yes, deliberately** — R13 rewrites `buildSimilarityRungQuery`, so §16.9④ re-plants against the new body and the Revision 0 pair is marked `SUPERSEDED`, not reused. |
+| Is D72-6 an owner decision or a task-authored one? | Owner, 2026-09-09, taken after §16.6a put both conflicting shipped shapes in front of him. The kickoff records the ruling; it does not make it. |
+| Does R14 duplicate a visual contract into a feature-local module? | No — `Flex` responsive props, the mechanism `MantinePageHeaderWithActions.tsx:55-66` adopted for this exact Mantine limitation. §16.6c forbids the CSS-module copy and the cross-component import. |
+| Does R13 move the core into the shared module? | No — D72-2 keeps `applyPublicVisibility` + the three core predicates in the caller, outside the ladder; only the tier dispatch is shared. |
 | Can the probe pass without measuring anything? | No — 16.6③ requires a planted `display:grid` to make it exit 1, and the revert to be proven by `git hash-object`. |
 | Does the probe fail on valid sparse data? | No — `cardCount < 2` sets `overflowAssertionApplicable:false`; 16.4d requires both arms in the JSON. |
 | Does it invent a command, script convention or selector? | No — task775 is the cited convention, `playwright` is `package.json:158`, and the substring selectors are read from `body-uk.txt`. |
-| Does it quietly close the open review? | No — 16.2 lists F4/F6/F7 and the owner visual matrix as still open. |
+| Does it quietly close the open review? | No — §16.2 records that only F7's behavioural half (→ **804**) and the owner's own visual matrix remain outside this revision. |
 | Is a new story required? | No — R11 is non-visible domain logic and R12 is a script. Neither creates nor changes a visible artifact, so the UI-hierarchy/story gate does not apply; §13's owner matrix still covers the visible change from Revision 0. |

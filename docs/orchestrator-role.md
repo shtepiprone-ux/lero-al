@@ -40,6 +40,7 @@ in order:
 1. `.claude/skills/create-task/SKILL.md`
 2. `docs/orchestrator-role.md`
 3. `docs/orchestrator-procedures.md`
+4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
 
 The router's injected workflow text does not satisfy this gate. The first substantive task-design response must begin
 with this exact receipt:
@@ -59,6 +60,7 @@ open these three files in the current session, in order:
 1. `.claude/skills/review-task/SKILL.md`
 2. `docs/orchestrator-role.md`
 3. `docs/orchestrator-procedures.md`
+4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
 
 The router's injected workflow text does not satisfy this gate. The first substantive review response must begin
 with this exact receipt:

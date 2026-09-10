@@ -218,3 +218,27 @@ history or make it larger; mark `BACKLOG LIMIT BREACH` for Opus to validate and 
 Read-only Git inspection is allowed. Do not run, emit, suggest, or ask the owner to run mutating Git commands,
 including any form of `git push`. Only Opus may emit an owner-run push command, and only after an `APPROVED` or
 `APPROVED WITH NOTES` review under `docs/orchestrator-procedures.md`.
+
+## STOP — clause 16d component census (blocking, owner rule 2026-09-10)
+
+`docs/agent-contract.md` **16d**. Before writing any product code for a visible surface, list **every component the in-scope surface renders**, including
+every popup, dialog, drawer, popover, toast and menu it opens. For each one, record three facts:
+
+1. its `className` count and whether it imports from `@/components/ui/*`;
+2. whether it appears in `scripts/mantine-migration-scope.json`;
+3. whether a canonical Mantine Story imports **it** — not its parent.
+
+A component with no manifest entry and no Story of its own is unmigrated, and it is **in scope**. "Separate slice",
+"pre-existing", "only a child" and "the kickoff excluded it" are not exemptions, and a green
+`check:story-coverage` is not evidence — that gate only inspects components already enrolled, so it reports green
+for exactly this omission.
+
+**You must refuse the task if it contains such an exclusion.** Report `BLOCKED — CLAUSE 16d`, naming each component and its three facts. Do not implement the narrowed scope and note the rest as a limitation — 809 did exactly that and the owner rejected the result.
+
+This produced Task 809: `/favorites` shipped with `CollectionsSection`, `SaveToCollectionButton` and
+`FavoritesTypeFilter` untouched — 53 `className` and two shadcn `Dialog`s — while coverage read 34/34 green and the
+kickoff, the implementation and the review all passed it through.
+
+## Golden Rules — receipt-enforced, non-negotiable
+
+Read [`docs/golden-rules.md`](../../../docs/golden-rules.md) before acting, and emit every receipt it requires for the step you are performing. **A response missing a required receipt is void**: the owner rejects it unread and you restart that step. GR-1 (surface census), GR-3 (a composition Story is not a component Story) and GR-6 (the owner-run git block) are the three this repo has actually broken.

@@ -45,6 +45,7 @@ the first user prompt. It applies the executor evidence protocol to normal Sonne
 
 For every task:
 
+0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-1…GR-6, receipt-enforced, non-negotiable. A response missing a required receipt is void.**
 1. Read `docs/agent-contract.md`.
 2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
 3. Use `docs/qa-profiles.md` to choose validation depth.
@@ -66,6 +67,7 @@ current session:
 1. `.claude/skills/create-task/SKILL.md`
 2. `docs/orchestrator-role.md`
 3. `docs/orchestrator-procedures.md`
+4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
 
 The first substantive task-design response must begin with exactly:
 
@@ -85,6 +87,7 @@ current session:
 1. `.claude/skills/review-task/SKILL.md`
 2. `docs/orchestrator-role.md`
 3. `docs/orchestrator-procedures.md`
+4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
 
 The first substantive review response must begin with exactly:
 
@@ -175,6 +178,7 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 
 ## Documentation map
 
+- `docs/golden-rules.md` - **GR-1…GR-6, receipt-enforced, non-negotiable.** Read first, every task.
 - `docs/agent-contract.md` - short P0 invariants.
 - `docs/orchestrator-role.md` - Opus role, git policy, review expectations.
 - `docs/orchestrator-procedures.md` - task design and implementation review procedures.

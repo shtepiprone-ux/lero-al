@@ -58,6 +58,7 @@ the current session, in order:
 1. `.claude/skills/create-task/SKILL.md`
 2. `docs/orchestrator-role.md`
 3. `docs/orchestrator-procedures.md`
+4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
 
 The router's injected skill text, a previous-session read, a summary, or a remembered workflow does not satisfy this
 gate. The first substantive task-design response must begin with exactly:
@@ -314,3 +315,27 @@ Also inspect `.git/index.lock` before the handoff. If active Git processes exist
 not emit a handoff. If no Git process is active, delete only the exact project-local `.git/index.lock`, confirm it is
 gone, re-run read-only `git status --short`, and reconcile paths again. Do not delete another `.git` file or run Git
 recovery commands.
+
+## STOP — clause 16d component census (blocking, owner rule 2026-09-10)
+
+`docs/agent-contract.md` **16d**. Before publishing any kickoff that touches a visible surface, list **every component the in-scope surface renders**, including
+every popup, dialog, drawer, popover, toast and menu it opens. For each one, record three facts:
+
+1. its `className` count and whether it imports from `@/components/ui/*`;
+2. whether it appears in `scripts/mantine-migration-scope.json`;
+3. whether a canonical Mantine Story imports **it** — not its parent.
+
+A component with no manifest entry and no Story of its own is unmigrated, and it is **in scope**. "Separate slice",
+"pre-existing", "only a child" and "the kickoff excluded it" are not exemptions, and a green
+`check:story-coverage` is not evidence — that gate only inspects components already enrolled, so it reports green
+for exactly this omission.
+
+**You may not write the exclusion.** If a rendered component is unmigrated, put it in scope with its Story and manifest registration, or publish `BLOCKED — CLAUSE 16d` and take the owner decision. Do not split it into a "later task" on your own authority — that is the exact move that produced 809.
+
+This produced Task 809: `/favorites` shipped with `CollectionsSection`, `SaveToCollectionButton` and
+`FavoritesTypeFilter` untouched — 53 `className` and two shadcn `Dialog`s — while coverage read 34/34 green and the
+kickoff, the implementation and the review all passed it through.
+
+## Golden Rules — receipt-enforced, non-negotiable
+
+Read [`docs/golden-rules.md`](../../../docs/golden-rules.md) before acting, and emit every receipt it requires for the step you are performing. **A response missing a required receipt is void**: the owner rejects it unread and you restart that step. GR-1 (surface census), GR-3 (a composition Story is not a component Story) and GR-6 (the owner-run git block) are the three this repo has actually broken.

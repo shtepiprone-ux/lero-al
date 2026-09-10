@@ -166,9 +166,12 @@ track-swap-plus-empty-states-but-keep-the-shadcn-buttons.
   full-page states, `py-20`/`h-16` for the filtered one) is incidental hand-tuning, not a designed hierarchy, and
   collapses to one canonical state pattern. If the owner's visual pass disagrees, that is a one-line prop, not a
   re-migration. Say so in the report.
-- **Out of scope:** `ListingCard.tsx`'s composition · `MantineListingCardPattern` · the track · `CollectionsSection`,
-  `FavoritesTypeFilter`, `ListingsPagination`, `SaveToCollectionButton`'s own internals · `useFavoritesRealtime` ·
-  the `/favorites` route file · Tasks 808's files.
+- **Out of scope:** `ListingCard.tsx`'s composition · `MantineListingCardPattern` · the track · `ListingsPagination`
+  (already enrolled, already has its own canonical Story) · `useFavoritesRealtime` · the `/favorites` route file
+  (→ **811**) · Task 808's files.
+- ~~`CollectionsSection`, `FavoritesTypeFilter`, `SaveToCollectionButton`'s own internals~~ — **THIS EXCLUSION WAS A
+  BREACH OF `docs/agent-contract.md` CLAUSE 16c AND IS REVOKED (owner rejection, 2026-09-10).** It is kept
+  struck-through because it is the defect. All three are now Revision 1's primary scope — see §21.
 
 ## 6. Pre-read rule bundle
 
@@ -411,3 +414,133 @@ transcript paths · assumptions · deviations · limitations. Status: `IMPLEMENT
 | Does the probe assert something the gates cannot? | Yes — cross-surface card-width parity and the Suspense placeholder delta. Neither `tsc`, `lint`, `check:design-tokens` nor `check:story-coverage` can see either, and the planted arm restores the exact ladder this task deletes. |
 | Does it touch Task 808? | No. 808 owns `ListingDetailView.tsx`; this task edits only `RecentlyViewedSection.tsx`'s skeleton. If both are in flight, they do not overlap. |
 | Are the `npm test` expectations honest? | Yes — five deterministic failures are the Task 790 baseline, and the non-deterministic group is named in advance so a 9-failure run is not misreported as a regression. |
+
+---
+
+# Task 809 — Revision 1
+
+`NEEDS REVISION`, **owner rejection 2026-09-10**, on sight, from the Storybook screenshots. The verdict is not a
+quality judgement of the executor's work: Revision 0 obeyed the kickoff it was given, and the kickoff was in breach
+of `docs/agent-contract.md` clause **16c**. This revision is the correction of that breach.
+
+## 21. The clause-16d census — transitive, run 2026-09-10, every node classified
+
+`FACT` — walked from `FavoritesShell.tsx` through every component it renders, and everything those render, to depth
+4. **Fifteen nodes.** `d` = depth, `cn` = `className` count, `man` = present in `scripts/mantine-migration-scope.json`
+(34 entries today), "own Story" = a canonical Story that imports **this** component, not its parent.
+
+| # | Component | d | via | lines | cn | shadcn | man | own Story | Tier |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | `FavoritesShell` | 0 | — | 206 | 0 | — | YES | `FavoritesShell.stories.tsx` | ✅ done (Rev 0) |
+| 2 | `MantineListingCardTrack` | 1 | FavoritesShell | 170 | 5 | — | YES | `ListingCardTrack.stories.tsx` | ✅ |
+| 3 | `ListingCard` | 1 | FavoritesShell | 338 | 8 | `AppImage` | YES | `ListingCard.stories.tsx` | ✅ |
+| 4 | `ListingsPagination` | 1 | FavoritesShell | 45 | 0 | — | YES | `ListingsPagination.stories.tsx` | ✅ |
+| 5 | **`MantineEmptyLoadingErrorState`** | 1 | FavoritesShell | 156 | 0 | — | **no** | `EmptyLoadingErrorState.stories.tsx` | **1 — enrol** |
+| 6 | **`CollectionsSection`** | 1 | FavoritesShell | 249 | **28** | `button`,`dialog`,`input` | **no** | **NONE** | **1 — migrate** |
+| 7 | **`SaveToCollectionButton`** | 1 | FavoritesShell | 246 | **20** | `button`,`dialog`,`input` | **no** | **NONE** (composition only) | **1 — migrate** |
+| 8 | **`FavoritesTypeFilter`** | 1 | FavoritesShell | 63 | **5** | `button` | **no** | **NONE** | **1 — migrate** |
+| 9 | `ui/button` | 2 | FavoritesTypeFilter, CollectionsSection, SaveToCollectionButton | 66 | 1 | — | no | NONE | **2 — stop importing** |
+| 10 | `ui/input` | 2 | CollectionsSection, SaveToCollectionButton | 30 | 1 | — | no | NONE | **2 — stop importing** |
+| 11 | `ui/dialog` | 2 | CollectionsSection, SaveToCollectionButton | 176 | **11** | `button` | no | NONE | **2 — stop importing** |
+| 12 | `AppImage` | 2 | ListingCard | 161 | 2 | — | no | **NONE** | 3 — **file it** |
+| 13 | `ListingFeatureIcon` | 2 | ListingCard | 27 | 1 | — | no | **NONE** | 3 — **file it** |
+| 14 | `FavoriteButton` | 2 | ListingCard | 184 | 0 | — | no | composition only | 3 — **file it** |
+| 15 | `MantinePagination` | 2 | ListingsPagination | 302 | 0 | — | no | `Pagination.stories.tsx` | 3 — has its own Story |
+
+`FACT` — **53 `className` and two shadcn `Dialog`s** sit on `/favorites` across rows 6-8, against the 21 `className`
+Revision 0 removed from `FavoritesShell.tsx`. The migration removed less than it left.
+
+`FACT` — **row 5 is the sharpest one, and Revision 0 is what exposed it.** `MantineEmptyLoadingErrorState` is the
+pattern this task *extended*, it has a canonical Story, and it is **not in the manifest** — so
+`check:story-coverage`'s 34/34 never checked it either. Two independent instances of the same blind spot inside one
+task. Feeds **812**.
+
+`FACT` — **the overlay census is complete, and its absences are verified, not assumed.** Exactly **two** overlays
+exist on this surface, both shadcn: `CollectionsSection.tsx:174` (`<Dialog open={createOpen}>`, create-collection)
+and `SaveToCollectionButton.tsx:172` (`<Dialog open={open}>`, save-to-collection). A grep for
+`Popover|Menu|Drawer|Tooltip|Modal|Sheet|AlertDialog` across all four surface files returns **zero** hits. The only
+other overlay-ish surface is `toast()` from `@/lib/toast` (R16). **Owner instruction, 2026-09-10: «обов'язково
+включаючи всі компоненти, попапи, діалогові вікна на сторінці» — both dialogs become canonical Mantine, and the page
+ends with zero `@/components/ui/dialog` imports (AC19).**
+
+`FACT` — **tier 3 is filed, not waved past.** `AppImage`, `ListingFeatureIcon` and `FavoriteButton` (rows 12-14) are
+rendered here, owned elsewhere, and have no Story of their own. Filed as **813** in the same response that produced
+this census, per 16d tier 3. They are out of 809's scope and **in** its census — that distinction is the rule.
+
+`FACT` — the owner's screenshots show the consequence: in `FavoritesShell/Populated` the "Collections" block renders
+its own bespoke empty state and its own "New collection" button, directly above the canonical
+`MantineEmptyLoadingErrorState` this task did migrate. Two empty-state designs on one page.
+
+**Root cause is this kickoff's.** §5 and §8 declared rows 6-8 out of scope. `agent-contract` **16c** forbids
+declaring a *Story* out of scope; this declared the *components* out of scope and arrived at the same forbidden
+place. Closed by clause **16d**, whose three-tier boundary is what the `Tier` column above applies. The exclusion is
+struck through in §5, not deleted — it is the defect.
+
+## 22. Re-entry mode — `remediation`
+
+Revision 0's diff stays. **Nothing verified in it is re-done:** the track grid (`cardWidthDiff: 0` at six of seven
+widths), the 0px skeleton delta, the `actionHref`/`icon` extension, the `'3-col-xl'` retirement, the
+`FavoritesShell` story and its manifest entry, and every green gate. Preserve `docs/sessions/evidence/task809/runs/`
+and its transcripts; Revision 1 writes to new `rev1-*` run ids and transcript names.
+
+## 23. Requirements — Revision 1
+
+| ID | Requirement | Priority | Verified by |
+|---|---|---|---|
+| **R11** | `CollectionsSection.tsx` renders entirely through canonical Mantine: **0** `className`, **0** `@/components/ui/*` imports. Its dialog becomes the canonical Mantine dialog source; its empty state becomes `MantineEmptyLoadingErrorState`; its "New collection" control becomes the canonical button. | **P0** | AC11 |
+| **R12** | `SaveToCollectionButton.tsx` — same contract: 0 `className`, 0 shadcn imports, canonical dialog, canonical inputs. | **P0** | AC12 |
+| **R13** | `FavoritesTypeFilter.tsx` — same contract. Its chips/toggles use the canonical Mantine control; if the repo has no canonical chip-row, that is `create canonical`, not a local one. | **P0** | AC13 |
+| **R14** | **Each of the three gains its own canonical Mantine Story and its own manifest entry.** A state per branch: `CollectionsSection` empty / populated / dialog-open; `SaveToCollectionButton` closed / dialog-open / saving; `FavoritesTypeFilter` each selected state. `check:story-coverage` goes **34 → 38 covered / 0 unproven** — the three migrated components **plus** `MantineEmptyLoadingErrorState`, which row 5 shows has a Story but no manifest row. | **P0** | AC14 |
+| **R15** | The two shadcn `Dialog`s are replaced by the canonical Mantine dialog source. **Inspect `MantineDialogDrawerPattern` and `MantineModal` first** (`src/design-system/mantine/patterns/`) — if one fits, `reuse`; if one is close, `extend`; only a proven absence permits `create canonical`. Record the search. | **P0** | AC15 |
+| **R16** | `toast` from `@/lib/toast` — trace what it renders. If it is not the canonical Mantine notification source, that is a **finding to report**, not a silent swap: it is used well beyond `/favorites`. | P2 | AC16 |
+| **R18** | **Tier 2 boundary.** `src/modules/listings/` stops importing `@/components/ui/button`, `/input`, `/dialog` entirely. The three primitive **files** are NOT migrated here — they are consumed repo-wide; name the separate task instead. | **P0** | AC19 |
+| **R17** | Everything Revision 0 verified still holds, re-measured once: card-width parity, the 0px skeleton delta, `actionHref`, `'3-col-xl'` zero consumers. | P1 | AC17 |
+
+## 24. Acceptance criteria — Revision 1
+
+- **AC11-AC13** — for each of the three files: `grep -c 'className=' <file>` returns **0** and
+  `grep -c '@/components/ui/' <file>` returns **0**. Quote all six numbers.
+- **AC14** — `check:story-coverage` reports **38 covered / 0 unproven**, and each new Story statically imports its
+  real production component. Quote the manifest diff.
+- **AC15** — `grep -rn "@/components/ui/dialog" src/modules/listings/` returns **zero** hits, and the canonical
+  dialog decision (`reuse` / `extend` / `create canonical`) is recorded with the paths searched.
+- **AC16** — the `toast` trace is stated with its verdict; no silent replacement.
+- **AC17** — the Revision 0 measurements reproduce.
+- **AC19 [R18]** — `grep -rn "@/components/ui/\(button\|input\|dialog\)" src/modules/listings/` returns **zero** hits, and `src/components/ui/{button,input,dialog}.tsx` are absent from `git status --porcelain`.
+- **AC18 [clause 16d]** — the §21 census is re-run against the **shipped** surface and every tier-1 node in
+  §21 has a manifest entry and a Story of its own, every tier-2 import is gone, and every tier-3 node is listed with
+  its status and its filed task number. A node passed over silently fails this criterion.
+  **This is the criterion the reviewer runs first.**
+
+## 25. Verification plan — Revision 1
+
+Every gate from §13 re-runs, into `rev1-*` transcripts, plus:
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+Select-String -Path src\modules\listings\components\CollectionsSection.tsx -Pattern 'className=|@/components/ui/' | Measure-Object
+Select-String -Path src\modules\listings\components\SaveToCollectionButton.tsx -Pattern 'className=|@/components/ui/' | Measure-Object
+Select-String -Path src\modules\listings\components\FavoritesTypeFilter.tsx -Pattern 'className=|@/components/ui/' | Measure-Object
+Select-String -Path src\modules\listings -Pattern '@/components/ui/dialog' -Recurse
+npm.cmd run check:story-coverage
+node.exe scripts\check-design-tokens.mjs --strict --scope=mantine
+npm.cmd run build
+```
+
+Expected: `win32`; the first three counts **0**; the dialog search returns **nothing**; coverage **38 / 0**;
+design-tokens 0; build exit 0. Return every count and exit code.
+
+**`OWNER VISUAL QA REQUIRED`** — the three new Stories at every state, uk and sq, 390 / 1440, **and** the live
+`/favorites` page with a collection dialog open and the save-to-collection dialog open. The owner rejected Revision 0
+from the Storybook screenshots; Revision 1 is not submitted until those Stories exist for him to reject or accept.
+
+## 26. Revision 1 quality gate
+
+| Question | Required answer |
+|---|---|
+| May any of the three be deferred to a later task? | **No.** Clause **16d**. If one genuinely cannot land, the task stops as `BLOCKED — CLAUSE 16d` and the owner decides — the executor does not narrow it, and the reviewer does not approve around it. |
+| Is a green `check:story-coverage` evidence that this is done? | **No, and that is why 812 exists.** It cannot see an unenrolled component. AC18's census is the evidence. |
+| Is `FavoritesShell.stories.tsx` proof for these three? | **No.** A composition Story is not a component Story. Each needs its own. |
+| May a local dialog/chip be written because none exists? | Only after an evidenced search proves absence — then it is `create canonical`, registered in the shared library with its own Story, per 16b. |
+| Is Revision 0 being re-done? | No. §22 preserves it; R17 re-measures it once. |

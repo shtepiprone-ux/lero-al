@@ -1257,3 +1257,211 @@ AC31's measured rects attached. A source-only claim that the theme was edited is
 git add "tasks/Sprints/Sprint_74_kickoff_prompt_Task_809_Favorites_And_The_Last_Two_Tailwind_Card_Surfaces.md" "tasks/Sprints/Sprint_74_One_Card_Width_For_The_Whole_Site.md" "docs/backlog.md"
 git commit -m "docs(Task809): Revision 4 - Button label top-pinned by theme height:auto vs Mantine inner height:100%; theme-level fix, canonical Story assertion, TypeFilterNoMatches fixture"
 ```
+
+---
+
+# Task 809 — Revision 5
+
+`NEEDS REVISION` from the Opus review of Revision 4, 2026-09-10. **This revision contains no design work and no product
+fix.** Revision 4's implementation is verified correct against the real diff and accepted by the owner on screen; what
+it owes is measurement. Every requirement below closes an evidence gap that Revision 4's own report named or that the
+review found. Read §55-§66 first — this section does not restate the root cause.
+
+## 67. What is settled and must not be re-opened
+
+Recorded here because re-litigating a closed boundary is how a revision turns into a rework.
+
+| Settled | Status |
+|---|---|
+| The root cause and the fix (`theme.ts` root `display`/`alignItems`/`justifyContent`, `inner` `width`/`height`) | **Verified against the diff.** Do not change, re-tune, or "improve" it. If a measurement below fails, report it — do not re-design the fix on your own authority. |
+| Label/root centre equality on the three Favorites CTAs at `en` | **Verified** — 206.09 = 206.09, 604.11, 882.20, against a pre-fix delta of exactly 14px. Not re-measured. |
+| The two-armed proof | **Fired and accepted** — planted → `play` threw `delta=14` + `sb-show-errordisplay`; reverted → `theme.ts` blob `509bece6a…` identical, and that hash reconciles with `git diff`'s own index line. Not re-run. |
+| The sweep's existence, shape and 40px dense step | **Accepted.** 58 widths × 4 states × 7 assertion kinds, 1431 findings, 0 failing, and the first run's 71 false positives were found in the script and fixed rather than absorbed. The step's justification (half the narrowest uncovered breakpoint gap) is the correct criterion. |
+| R33/§51's keyboard-activation and dialog open-close checks verified once per state rather than at all 58 widths | **Accepted as a documented coverage boundary**, not a finding. The reasoning — binary interaction behaviour, not responsive layout — stands. Do not widen it. |
+| `check:story-coverage` 38/0, `check:stories` 0 violations, `build-storybook` exit 0, `build` exit 0 with `✓ Checking validity of types` | **Closed by the owner's own native run, `win32`.** Do not re-run them for evidence; re-run only if you change code. |
+
+## 68. Requirements — Revision 5
+
+| ID | Requirement | Priority | Verified by |
+|---|---|---|---|
+| **R39** | The regression sweep renders every supported locale, not only `en`. `scripts/task809-favorites-regression-sweep.mjs:216` and `:232` hardcode `globals=locale:en`; all 1431 retained findings are therefore English, and `sq`, `uk` and `it` have never been rendered by it. | **P1** | AC37 |
+| **R40** | The wrap-growth interaction is measured at least once. `height: 'auto'` (Task 502) exists so a long label can wrap and grow the root; Revision 4 changed how `inner` sizes itself inside that grown root and **no wrapped label was rendered**. Measure it where wrapping actually occurs — a `justify="flex-start"` chip row at 320 in the longest locale — not in the Favorites CTAs, whose longest label (`uk` `empty_cta` = "Переглянути оголошення", 22 chars) does not wrap at 320. | **P1** | AC38 |
+| **R41** | AC33/AC34's named `justify`/`fullWidth` consumers are measured beyond the single one Revision 4 covered. `MobileNavDrawer`'s Logout was the right first choice and is **not** re-measured; the unmeasured ones include shapes it does not represent — `leftSection` (a second flex item inside `inner`) and `size="md"` (a different `--button-height` against the newly pinned `alignItems`). | **P1** | AC39 |
+| **R42** | Every evidence-producing command result is Windows-native, or is declared `MISSING EVIDENCE` per command with the exact native command the owner must run. Revision 4's own session log states the deviation (*"Evidence capture used Bash, not native Windows PowerShell"*); `orchestrator-role.md` → Windows-native validation rule makes such output an environment screen, not repository evidence. | **P1** | AC40 |
+| **R43** | `FavoritesShell.stories.tsx`'s `TypeFilterNoMatches` fixture describes a state the server can actually produce. | P3 | AC41 |
+| **R44** | The session log's segment count is internally consistent. | P3 | AC41 |
+
+## 69. Verified context — measured this session, not quoted
+
+`FACT` — `scripts/task809-favorites-regression-sweep.mjs:216`:
+the `url` template literal ends in `&globals=locale:en`, and `:232` repeats the same literal
+for the populated state. `FACT` — `rev4-full-2/sweep-result.json`'s findings carry exactly the keys
+`width, story, kind, ok, detail`; there is no locale dimension in the artifact at all.
+
+`FACT`, measured from `messages/{en,uk,sq,it}.json` → `favorites` — the three CTA labels are short in every locale:
+`empty_cta` 15/22/17/15 chars, `error_retry` 9/16/13/7, `filter_all` 3/3/9/5. At 320px the CTA is ~256px of content
+box at 14px type, so **none of them wraps**. R40 is therefore written against a chip row, not the CTAs; requiring a
+wrapped Favorites CTA would be an unsatisfiable acceptance criterion of exactly the kind
+`orchestrator-procedures.md` → "Recurring orchestrator failure modes" names.
+
+`FACT` — canonical Stories that render the R41 consumers, measured by `grep -rl` across `src/stories`:
+
+| Consumer | Line | Story of its own |
+|---|---|---|
+| `MobileNavDrawer.tsx` | `:100` `fullWidth`, `:111`/`:128` `justify="flex-start"` | `Mantine/Primitives/MobileNavDrawer` — **already measured in Revision 4, not re-done** |
+| `FiltersPanel.tsx` | `:115` `fullWidth` + `leftSection`, `:139`/`:148` `justify="flex-start"` | `src/stories/mantine/primitives/FiltersPanelShell.stories.tsx` |
+| `ListingsFilters.tsx` | `:186` `justify="flex-start"` | `src/stories/patterns/mantine/ListingsFilters.stories.tsx` |
+| `MantineAuthFormPattern.tsx` | `:107` `fullWidth size="md"` | `src/stories/patterns/mantine/AuthFormPattern.stories.tsx` |
+| `FilterChoiceGroup` via `FilterControls` | `FilterControls.stories.tsx:105` — `variant="light" justify="flex-start"` | `Mantine/Primitives/FilterControls` — **this is R40's wrap cell** |
+| `AdminUsersTable.tsx` | `:483` `fullWidth={isMobile}` | **none** — `grep -rl AdminUsersTable src/stories` returns nothing |
+| `NotificationCenter.tsx` | `:68` `justify="flex-start"` | **none** — `NotificationBellView`/`NotificationPattern` are different components |
+
+Before measuring through any story above, confirm it **statically imports the component that renders that line**. If
+it renders a stand-in instead, that is a GR-3 finding to report — not something to work around.
+
+## 70. Assumptions and open questions
+
+- **The two consumers with no Story of their own (`AdminUsersTable`, `NotificationCenter`) are not this task's to
+  enrol.** Neither is rendered by `/favorites`, so neither is in 809's clause-16d census, and
+  `create-task`'s permanent-Storybook-creation gate is explicit that markup existing only to satisfy a measurement is
+  a **probe, not a permanent artifact**. R41 therefore permits exactly two dispositions for them, and no third:
+  a reversible probe in an existing story, restored byte-identical with its pre-probe `git hash-object` value and its
+  absence from `git status --porcelain` quoted; or `MISSING EVIDENCE` with the exact owner-native step. **Do not add a
+  permanent Story for either.**
+- **`UNKNOWN`, and R40 is what resolves it** — whether any Button label wraps at 320px in `uk`/`sq` at all. If none
+  does, that is the measured answer and it closes AC38; it is not a failure and not licence to invent a fixture whose
+  only purpose is to force a wrap.
+- **Out of scope, unchanged:** the fix itself, the Favorites CTAs' `en` measurements, the two-armed proof, the sweep's
+  step and shape, R33's interaction boundary, and everything in §67.
+
+## 71. Pre-read rule bundle
+
+`docs/golden-rules.md` · `docs/orchestrator-role.md` → "Windows-native validation rule" (R42 depends on it) ·
+`docs/agent-contract.md` clauses **9, 11, 13, 16b** · `docs/qa-profiles.md` · `.claude/skills/create-task/SKILL.md` →
+"Permanent Storybook story creation gate" (R41's probe/restore rule) · this kickoff §55-§70 ·
+`scripts/task809-favorites-regression-sweep.mjs` in full before editing it.
+
+## 72. Scope
+
+`scripts/task809-favorites-regression-sweep.mjs` — locale parameterisation only (R39) · the four consumer
+measurements, run through existing stories, adding no permanent story markup (R40, R41) ·
+`src/stories/mantine/primitives/FavoritesShell.stories.tsx` — the `TypeFilterNoMatches` fixture (R43) ·
+`docs/sessions/2026-09-10-task809-…md` (R44 and the new evidence) · `docs/backlog.md`.
+
+## 73. Out of scope
+
+`src/design-system/mantine/theme.ts` — **do not touch it.** If a measurement below fails, the finding is the
+deliverable; a second fix on top of a verified one, without a review, is how this task reached five revisions ·
+`MantineEmptyLoadingErrorState.tsx` · `FavoritesShell.tsx` · `ListingCardPattern.*` · any new permanent Story · the
+27 shadcn imports outside the FavoritesShell tree (→ **814**) · `ListingsPageFrame` (→ **811**) · the coverage
+detector (→ **812**) · the tier-3 components (→ **813**).
+
+## 74. Positive and negative flows
+
+**Positive:** the sweep runs unchanged in shape at four locales and reports the same zero failures; the four
+additional consumers measure as `MobileNavDrawer` did; the fixture describes a producible state.
+
+| Negative flow | Applicable | Why |
+|---|---|---|
+| A locale's longer label changes a measured width or centre | Yes | This is the point of R39 — a differing cell is a **finding to report**, not a tolerance to widen |
+| A label wraps to two lines and the root grows past 44px | Yes | R40's target: the centre must still hold and the root must be taller than 44px, which is what proves wrap-growth survived |
+| No label wraps at 320 in any locale | Yes | A valid measured outcome for AC38 — state it with the heights that show it |
+| A story renders a stand-in instead of the real consumer | Yes | Report as a GR-3 finding; do not measure the stand-in and call it the consumer |
+| Native PowerShell unreachable from the executor session | Yes | R42's declared path — per-command `MISSING EVIDENCE` plus the owner-native command, never Bash output presented as a result |
+| The sweep's own selectors mis-target under a non-`en` locale | Yes | Revision 4's first run failed exactly this way on DOM order; assert on `href`/`data-*`, never on label text or index |
+
+## 75. Acceptance criteria
+
+- **AC37 [R39]** — Given the sweep re-run as `rev4-full-3` with the locale taken from a parameter rather than the
+  `locale:en` literal, then its retained `sweep-result.json` carries a `locale` field on every finding, covers `sq`,
+  `en`, `uk` and `it` across at least the 21-width boundary matrix for all four Favorites states, and its summary
+  states the failing count per locale. Quote the summary. A failing cell is named individually, not absorbed.
+- **AC38 [R40]** — Given `Mantine/Primitives/FilterControls`' `justify="flex-start"` story rendered at 320px in `uk`
+  and `sq`, then for every rendered `.mantine-Button-root`: `|labelCentreY − rootCentreY| ≤ 1px`, and the label's left
+  edge is within 1px of the root's content-box left edge. Additionally report, for each, the root's rendered height
+  and whether its label occupies one line or two. If at least one wraps, quote that root's height as the wrap-growth
+  witness; if none wraps at 320, state that with the measured heights — either outcome closes this criterion.
+- **AC39 [R41]** — Given `Mantine/Primitives/FiltersPanelShell`, `Patterns/Mantine/ListingsFilters` and
+  `Patterns/Mantine/AuthFormPattern` rendered at 320 and 1440, then for each `fullWidth` button the rendered width is
+  within 1px of its parent's content-box width, and for each `justify="flex-start"` button the label's left edge is
+  within 1px of the root's content-box left edge. Quote one pair per consumer, and confirm in the same line that the
+  story statically imports the real component. For `AdminUsersTable.tsx:483` and `NotificationCenter.tsx:68`, record
+  either a reversible-probe measurement with the pre-probe `git hash-object` value and the path's absence from
+  `git status --porcelain` afterwards, or `MISSING EVIDENCE` with the exact owner-native command — no permanent story.
+- **AC40 [R42]** — Given each evidence-producing command in §76, then its transcript records the platform, Node
+  version, working directory, exact command and real exit code, and the platform reads `win32`; any command that
+  could not run natively is listed as `MISSING EVIDENCE` with the owner-native command and the output to return. No
+  Bash-produced result is presented as a repository result.
+- **AC41 [R43, R44]** — Given `Mantine/Primitives/FavoritesShell → Type Filter No Matches` at 320 and 768, then the
+  `SegmentedControl` renders with the active `typeFilter` matching none of its counted types, so no segment shows a
+  non-zero count while the page reports no results; and the session log states one segment count that matches what
+  renders. State the fixture and the count.
+
+**GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.** Every geometric criterion carries
+an explicit ±1px tolerance; AC38 is satisfiable by either outcome of the wrap question; AC39's hash equality is a
+restoration witness for a file the executor itself planted and reverted.
+
+## 76. QA profile and verification plan
+
+**Profile: `Q3 Full Visual Matrix`**, unchanged. No product code changes in this revision, but the evidence being
+completed is the visual matrix itself.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+npm.cmd run lint
+node.exe scripts\check-design-tokens.mjs --strict --scope=mantine
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run check:stories
+npm.cmd run build-storybook
+```
+
+Expected: `win32` · the Node version recorded in every transcript · lint 0 errors on touched files · design-tokens
+`0/0/0` · file-integrity and mojibake clean · `check:stories` 0 violations · `build-storybook` exit 0.
+`npm run build`, `npm run typecheck` and `npm run check:story-coverage` are **not** re-run — the owner closed them
+natively on Revision 4 and this revision changes no production source. `npm run test` is re-run only if R43's fixture
+edit touches a file a test reads; say which, or say it does not.
+
+Then serve `storybook-static/` and drive it with Playwright for AC37-AC39 and AC41, following the conventions the
+sweep already uses. Retain everything under `docs/sessions/evidence/task809/rev5-*`, except AC37's sweep output which
+keeps the sweep's own naming (`rev4-sweep/rev4-full-3/`) so the run series stays contiguous. Preserve `rev4-full-2`
+— it is the superseded-but-cited artifact for the `en` cells.
+
+**`OWNER VISUAL QA REQUIRED`** — narrow, because the design is already accepted and only the untested locales remain:
+
+| Surface | State | Locale | Viewport |
+|---|---|---|---|
+| `Patterns/Mantine/EmptyLoadingErrorState` | `Default`, all three actions | uk, sq | 320 |
+| `Mantine/Primitives/FavoritesShell` | `Empty`, `Type Filter No Matches`, `Error` | uk, sq | 320 |
+| `Mantine/Primitives/FilterControls` | the `justify="flex-start"` story | uk | 320 |
+
+Task **799** is still open — set the width with the browser window or a URL viewport parameter, never the toolbar.
+
+## 77. Completion report contract
+
+Files changed · requirement IDs completed · AC37's per-locale summary quoted · AC38's per-button centre/left pairs
+plus heights and the one-line/two-line answer · AC39's one pair per consumer with the static-import confirmation, and
+the chosen disposition for the two story-less consumers · AC40's platform/Node/cwd/exit-code transcript set, with
+every unrun command listed as `MISSING EVIDENCE` and its owner-native command · AC41's fixture and segment count ·
+assumptions · deviations · limitations. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
+or `BLOCKED`. **A Bash-produced result presented as a repository result makes the report `BLOCKED`, not
+`PARTIALLY IMPLEMENTED`** — that is R42's whole point.
+
+## 78. Task quality gate
+
+| Question | Required answer |
+|---|---|
+| Does this revision change product code? | **No.** §73 forbids it. The fix is verified; this is the measurement it owes. |
+| Is any acceptance criterion unsatisfiable? | No. AC38 was written after measuring the actual label lengths in all four locales — a wrapped *Favorites CTA* is impossible at 320, so the wrap cell was moved to a chip row and both outcomes close the criterion. |
+| Does R41 authorise new Storybook markup? | **No.** Two dispositions only: reversible probe with restoration evidence, or `MISSING EVIDENCE`. The permanent-story gate is quoted in §70. |
+| Why is the owner not simply asked to accept it? | He already accepted it visually — at `GB English`. Three of four locales, and the wrap case the fixed line exists for, have never been rendered. |
+| What happens if a non-`en` cell fails? | It is reported as a finding against the fix, and the fix is **not** edited in this revision. §73. |
+
+## 79. Git handoff — task design (owner-run, do not execute)
+
+```powershell
+git add "tasks/Sprints/Sprint_74_kickoff_prompt_Task_809_Favorites_And_The_Last_Two_Tailwind_Card_Surfaces.md" "docs/backlog.md"
+git commit -m "docs(Task809): Revision 5 - close Revision 4's evidence gaps (locale dimension, wrap-growth cell, R36 consumers, Windows-native transcripts, fixture semantics); no product code in scope"
+```

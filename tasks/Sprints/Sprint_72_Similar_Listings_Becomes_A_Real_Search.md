@@ -37,7 +37,7 @@ Nothing fits, so this sprint is opened per `create-task/SKILL.md` -> "Sprint ass
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **803** | The similar-listings block becomes a real entry point into search | P2 | **Q4** | `KICKOFF FILED` 2026-09-09 |
+| **803** | The similar-listings block becomes a real entry point into search | P2 | **Q4** | `NEEDS REVISION` 2026-09-10 — Revision 2 kickoff §17 filed |
 | **804** | The filter surface can express what a listing is | P2 | TBD at kickoff | `RESERVED` |
 
 **Execution order: 803 -> 804.** 803 ships with the parameters the engine accepts today. 804 adds the missing ones

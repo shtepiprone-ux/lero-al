@@ -828,3 +828,193 @@ half stayed with 804. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PAR
 | Does it invent a command, script convention or selector? | No — task775 is the cited convention, `playwright` is `package.json:158`, and the substring selectors are read from `body-uk.txt`. |
 | Does it quietly close the open review? | No — §16.2 records that only F7's behavioural half (→ **804**) and the owner's own visual matrix remain outside this revision. |
 | Is a new story required? | No — R11 is non-visible domain logic and R12 is a script. Neither creates nor changes a visible artifact, so the UI-hierarchy/story gate does not apply; §13's owner matrix still covers the visible change from Revision 0. |
+
+## 17. Revision 2 — orchestrator-directed, 2026-09-10 (post-review of Revision 1)
+
+**Re-entry mode: `remediation`. Documentation and evidence only — no product code, no test, no script changes.**
+Origin: the implementation review of 2026-09-10, decision `NEEDS REVISION`, findings **F8** (`P2`), **F9**, **F10**,
+**F11** (all `P3`). Strongest permitted result is still `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No
+self-approval, no mutating Git.
+
+### 17.1 Frozen — do not touch, do not re-run, do not re-capture
+
+`FACT` — verified against the real diff in the 2026-09-10 review. Every one of these is **closed**:
+
+| Closed | Status |
+|---|---|
+| **AC11 / R11** | `similarity.ts:39` widened, `:83` guarded once, `SimilarListings.tsx:30` widened, `similarity.test.ts` at 18 cases with both AC11 names, `database.ts` + `buildSimilarListingsHref.test.ts` absent from porcelain |
+| **AC14 / R13** | `buildSimilarityRungQuery` calls `applySimilarityEntries`; no `switch (entry.op)`, no `case 'overlaps'`; core four still in the caller; §16.9④ re-plant 4 failed/2 passed → reverted 6/6 |
+| **AC16 / R15** | 0 hits for `SimilarListings.regression.test.ts` in `src/`; AC1 line names `ListingDetailView.tsx:410` |
+| **AC15 / R14 — code half** | `Flex direction={{base:'column',sm:'row'}} align={{base:'stretch',sm:'center'}} justify="space-between"`, `Group` dropped, no header rule in the CSS module, `check:story-coverage` 32/32, `FeaturedListingsView.module.css`/`page.tsx`/`filterEngine.ts` absent from porcelain |
+| **AC7 — computed-style half** | closed by `runs/task803-rev2-clean` (see §17.3) |
+| **AC13** | `rev1-tsc-final.txt` 0 · `rev1-similarity-suites-final.txt` 31/31 · `rev1-buildSimilarListingsHref.txt` 3/3 · `rev1-full-test-suite.txt` 4 files / 5 tests = the Task 790 baseline +2 · `rev1-build-final.txt` exit 0 with `ƒ /[locale]/listings/[slug]` |
+
+**Every file under `src/` and `scripts/` is out of scope in Revision 2.** In particular
+`scripts/task803-similar-row-computed.mjs` must stay at blob `cb42864ef632415aab7a6e77486f741cb3fc27a2`; if that
+hash changes for any reason, both probe arms have to be re-fired and §17.3's evidence is void.
+
+**The `OWNER VISUAL QA REQUIRED` matrix (§13) is unchanged and remains owed by the owner, not by Sonnet.** It is not
+part of this revision and cannot be closed by it.
+
+### 17.2 What the review found, in one paragraph
+
+Revision 1's probe evidence was produced by **two different versions** of the probe script. `runs/task803-rev1` and
+`runs/task803-rev1-planted` both record `probeHash: "28a109b5ea42de2c54bb6f3b61cb6bc417e27adc"`, and the planted
+cells read `"failReason": "rowDisplay: grid; rowDisplay: grid"` — the *duplicated* form. The shipped script hashes to
+`cb42864ef632415aab7a6e77486f741cb3fc27a2`, which appears only on `runs/task803-rev1-reverted`. The session log's
+deviation bullet states the simplification was made *"before the planted-violation run was captured"*; the artifacts
+disprove it, and `git cat-file -p 28a109b5…` returns `fatal: Not a valid object name`, so the version that produced
+the only failing-arm evidence is unrecoverable. Under §16.9③ — *"A probe whose failing arm was never fired is not
+evidence that it measures anything"* — the shipped probe had no fired failing arm. The owner re-fired both arms
+natively on 2026-09-10; §17.3 is the record Sonnet must fold in. Nothing in the product code was implicated.
+
+### 17.3 R16 [`P2`, closes F8] — the probe evidence record becomes true
+
+`FACT` — owner-run in native Windows PowerShell, 2026-09-10 05:41–05:47 UTC, `node.exe -p process.platform` →
+`win32`, from `C:\Claude_Code_Projects\lero-al`. Results, all read from the retained artifacts:
+
+| Artifact | Result |
+|---|---|
+| `git hash-object scripts\task803-similar-row-computed.mjs` | `cb42864ef632415aab7a6e77486f741cb3fc27a2` (before and unchanged throughout) |
+| `git hash-object` of `SimilarListingsView.module.css` | `5486641b37c23c9297835f1ff2bad8a80fbf8461` before the plant **and** after the revert — identical |
+| `runs/task803-rev2-planted/similar-row-computed.json` | `probeHash cb42864e…`, `capturedAt 2026-09-10T05:44:29.832Z`, 5 cells all `"rowDisplay": "grid"` with `"failReason": "rowDisplay: grid"` (single, not duplicated); `PLANTED_EXIT_CODE=1` |
+| `runs/task803-rev2-clean/similar-row-computed.json` | `probeHash cb42864e…`, `capturedAt 2026-09-10T05:46:04.306Z`, 5 cells `"rowDisplay": "flex"` / `"rowOverflowX": "auto"`, no `"grid"`, `pageOverflows:false` at 320 and 390, `overflowAssertionApplicable:false` with `cardCount:1`; `CLEAN_EXIT_CODE=0` |
+| `start-rev2-plant.txt` / `start-rev2-clean.txt` | 0 occurrences of `⨯ Error` |
+| `npm run check:file-integrity` / `check:mojibake` | 66 files clean · 0 artifacts in 4033 files |
+| `gitCommit` on both runs | `e67a4bbc63bdbe3b0aab165f2c128ab01e019336` |
+
+**Required edits — session log only, no re-runs:**
+
+1. Mark `runs/task803-rev1` and `runs/task803-rev1-planted` **`SUPERSEDED`** in the R12 section and the validation
+   table. **Keep the directories** — they are the record for probe blob `28a109b5…`. `runs/task803-rev1-reverted`
+   stays valid but is superseded as the *cited* clean arm by `task803-rev2-clean`, which pairs with a fired failing
+   arm from the same blob.
+2. Cite `runs/task803-rev2-planted` + `runs/task803-rev2-clean` as **the** two-armed proof, attributed to the owner's
+   2026-09-10 native run — do not write it as Sonnet's own.
+3. Replace the R12 `failReason` quotation with the artifact's verbatim string, and quote the rev2 planted string
+   verbatim as well.
+4. Rewrite the first *Deviations and limitations — Revision 1* bullet. It must state that the fail-reason
+   simplification landed **after** `task803-rev1-planted` was captured — evidenced by that run's `probeHash`
+   `28a109b5…` and its duplicated `failReason` — that the pre-simplification blob is unrecoverable
+   (`git cat-file -p 28a109b5…` → `fatal: Not a valid object name`), and that this is why the arms were re-fired.
+   Do not soften it to a wording change; the previous bullet asserted the opposite of the artifact.
+5. Add the CSS `git hash-object` before/after identity (`5486641b…`) to the R12 evidence.
+
+### 17.4 R17 [`P3`, closes F9] — the final lint artifact, and its encoding
+
+`FACT` — `rev1-lint.txt` was captured 2026-09-09 21:11:31 UTC; `SimilarListings.tsx`'s final write is 21:19:58 UTC
+(the §16.9④ plant/revert pair). `tsc`, the three suites and `build` were all re-taken after that write; lint was not.
+
+`FACT` — the owner's 2026-09-10 re-run wrote `docs/sessions/evidence/task803/rev2-lint.txt`:
+`72 problems (0 errors, 72 warnings)`, `EXIT_CODE=0`, neither `SimilarListings.tsx` nor `similarity.ts` named.
+
+`FACT` — that file's eslint summary glyph is stored as `Ô£û`, i.e. `✖` (U+2716, UTF-8 `E2 9C 96`) decoded through
+the console OEM code page. Cause: PowerShell decodes a native command's stdout with `[Console]::OutputEncoding`,
+which is not UTF-8 by default. `check:mojibake` does not currently flag this sequence, so the file passes the gate
+while still being wrong.
+
+**Required:** re-capture the transcript with the console encoding set first (§17.8 block), then cite `rev2-lint.txt`
+as the final lint artifact in the validation table and mark `rev1-lint.txt` **`SUPERSEDED`** with the timestamp
+reason above. Do not "fix" any of the 72 warnings — the expected result is unchanged: **0 errors, 72 warnings**.
+
+### 17.5 R18 [`P3`, closes F10] — the `Files Changed` table matches the worktree
+
+`FACT` — `git --no-optional-locks status --short` currently carries fourteen entries; the session log's
+`Files Changed` table lists nine. Missing: `scripts/task803-similar-row-computed.mjs` (new in Revision 1) and
+`docs/sessions/2026-09-09-task803-similar-listings-block-and-shared-similarity-predicate.md` (the log itself).
+
+**Required:** add both rows with their reason, and reconcile the table against a fresh `git status --short` so that
+every path appears exactly once. `docs/sessions/evidence/task803/` is an evidence directory, not a source artifact —
+name it once in the table as the evidence root rather than enumerating its files.
+
+### 17.6 R19 [`P3`, closes F11] — the owner-authored gate transcript
+
+`FACT` — `i-check-listing-visibility.txt` is the **owner's** Revision 0 transcript for the
+`docs/critical-flow-registry.md:70` gate. Revision 1 rewrote it in place at 21:26:40 UTC to strip CP1252 mojibake and
+retained no pre-image, so "content otherwise byte-identical" cannot be checked by a reviewer.
+
+**Required:** re-run the gate natively into a new transcript (§17.8 block) and cite it alongside the owner's file.
+Do not delete, rename or further edit `i-check-listing-visibility.txt`. Record in the session log that the
+Revision 1 in-place re-encode had no retained pre-image and that the new transcript is what closes the gate for
+review purposes.
+
+### 17.7 Acceptance criteria
+
+- **AC17 [R16]** — Given the session log's R12 section and validation table, then `runs/task803-rev1` and
+  `runs/task803-rev1-planted` are both labelled `SUPERSEDED`, `runs/task803-rev2-planted` and
+  `runs/task803-rev2-clean` are cited as the two-armed proof with their `probeHash cb42864e…` stated, the quoted
+  `failReason` strings are verbatim from the JSON, and the deviation bullet states the simplification landed
+  **after** the rev1 planted capture. Given `git status --porcelain`, then no file under `src/` or `scripts/`
+  differs from its state at the start of Revision 2, and
+  `git hash-object scripts/task803-similar-row-computed.mjs` still returns `cb42864ef632415aab7a6e77486f741cb3fc27a2`.
+- **AC18 [R17]** — Given `rev2-lint.txt` after the §17.8 re-capture, then it contains the literal `✖` (not `Ô£û`),
+  reports **0 errors, 72 warnings**, carries `EXIT_CODE=0` inside the file, names neither touched file, and is cited
+  in the validation table with `rev1-lint.txt` marked `SUPERSEDED`.
+- **AC19 [R18]** — Given the session log's `Files Changed` table and `git --no-optional-locks status --short`, then
+  every status path is represented exactly once, including `scripts/task803-similar-row-computed.mjs`, the session
+  log itself, and `docs/sessions/evidence/task803/` as the evidence root.
+- **AC20 [R19]** — Given `rev2-check-listing-visibility.txt`, then the gate PASSES with 0 violations and 0 stale
+  allowlist entries, `EXIT_CODE=0` is inside the file, and the session log records both it and the fact that the
+  Revision 1 re-encode of the owner's transcript kept no pre-image.
+- **AC21 [R16+R17+R18+R19]** — Given the §17.8 block, then `npm run build` exits 0 with
+  `ƒ /[locale]/listings/[slug]` present in `rev2-build.txt`, and `check:file-integrity` / `check:mojibake` both exit
+  0 **after** every new transcript has been written. `docs/backlog.md` stays at or below **80** physical lines
+  (it is **79** now) and its Task 803 state is updated to Revision 2.
+
+### 17.8 Verification plan — Revision 2
+
+Run this once, after the session-log edits. `[Console]::OutputEncoding` is set first — that is what fixes AC18.
+
+```powershell
+$ev = "$PWD\docs\sessions\evidence\task803"
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+git --no-optional-locks hash-object scripts\task803-similar-row-computed.mjs
+$lint = & cmd.exe /c "npm.cmd run lint 2>&1"
+$lint += "EXIT_CODE=$LASTEXITCODE"
+[System.IO.File]::WriteAllLines("$ev\rev2-lint.txt", $lint, $utf8)
+$vis = & cmd.exe /c "npm.cmd run check:listing-visibility 2>&1"
+$vis += "EXIT_CODE=$LASTEXITCODE"
+[System.IO.File]::WriteAllLines("$ev\rev2-check-listing-visibility.txt", $vis, $utf8)
+$build = & cmd.exe /c "npm.cmd run build 2>&1"
+$build += "EXIT_CODE=$LASTEXITCODE"
+[System.IO.File]::WriteAllLines("$ev\rev2-build.txt", $build, $utf8)
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks status --short
+(Get-Content docs\backlog.md).Count
+```
+
+Expected, per command: `win32` · the probe hash is still `cb42864ef632415aab7a6e77486f741cb3fc27a2` · `rev2-lint.txt`
+shows `✖ 72 problems (0 errors, 72 warnings)` and `EXIT_CODE=0` · `rev2-check-listing-visibility.txt` shows the gate
+PASSED, 0 violations, 0 stale allowlist entries, `EXIT_CODE=0` · `rev2-build.txt` contains `✓ Compiled successfully`
+and `ƒ /[locale]/listings/[slug]`, `EXIT_CODE=0` · both hygiene gates exit 0 · `git status --short` shows no `src/`
+or `scripts/` path that was not already modified before Revision 2 began · the backlog line count is `≤ 80`.
+Return each exit code read from **inside** its transcript, the lint summary line, the visibility gate's verdict line,
+the build's route line, the full `git status --short`, and the line count.
+
+The §13 transcript rule still binds: no `Tee-Object`, `EXIT_CODE=` written inside each file, everything retained
+under `docs/sessions/evidence/task803/`.
+
+### 17.9 Completion report — Revision 2 additions
+
+On top of §14 and §16.10: the before/after text of the corrected deviation bullet · the exact `SUPERSEDED` labels
+added and where · the two rev2 probe artifacts cited with their `probeHash` · `rev2-lint.txt`'s summary line with the
+`✖` glyph intact · the visibility gate verdict · the reconciled `Files Changed` table against the fresh
+`git status --short` · the backlog line count before and after, taken from `git show HEAD:docs/backlog.md | wc -l`
+for the baseline, never from the post-edit file · confirmation that no `src/` or `scripts/` path was touched and that
+the probe blob is unchanged. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`.
+
+### 17.10 Revision quality gate
+
+| Question | Required answer |
+|---|---|
+| Does Revision 2 change product behaviour? | No — session log, backlog and new transcripts only. §17.1 freezes `src/` and `scripts/` entirely. |
+| Can Sonnet close F8 by re-running the probe itself? | It does not need to: the owner already fired both arms with the shipped blob on 2026-09-10. Sonnet records that evidence; re-running would create a third pair and a new supersession problem. |
+| Is the probe script allowed to change? | No. If its `git hash-object` moves off `cb42864e…`, §17.3's evidence is void and both arms must be re-fired before any completion report. |
+| Why re-capture a lint result that already passed? | The stored glyph is mojibake and the artifact is the record a reviewer reads. The *result* is not in question and must not change: 0 errors, 72 warnings. |
+| Does this revision close the owner visual matrix? | No. §13 is unchanged, still owed by the owner, and AC15's visual half stays open independently of Revision 2. |
+| Does it re-open anything frozen in §16.1 or §17.1? | No. No frozen transcript is re-run, and no closed AC is re-verified. |
+| Is any owner exception invented here? | No. The only owner input is the 2026-09-10 native run quoted in §17.3, whose artifacts are on disk. |

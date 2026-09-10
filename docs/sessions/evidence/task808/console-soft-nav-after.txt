@@ -1,0 +1,5 @@
+[0] (log) %c[LCP] 1560ms — GOOD color:#22c55e;font-weight:bold | desktop 1280×720 | route: /uk/listings
+[1] (warning) [Perf] LCP is an image on "/uk/listings" — hero text should own LCP. Check image priority or competing above-fold images.
+[2] (log) [Fast Refresh] rebuilding
+[3] (log) [Fast Refresh] done in 289ms
+[4] (log) %c[Vercel Speed Insights]%c [vitals] color: rgb(120, 120, 120) color: inherit {speed: 4g, metrics: Array(4), scriptVersion: 0.1.3, sdkName: @vercel/speed-insights/next, sdkVersion: 2.0.0} /_vercel/speed-insights/vitals

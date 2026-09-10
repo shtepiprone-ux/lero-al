@@ -138,7 +138,18 @@ belongs to this sprint's own composition work (784/793 moved `favorite` + `share
 
 ### 3.4 Two hypotheses already tested and REFUTED — do not spend time on them again
 
-1. **"Mantine `Group` turns static JSX children into an unkeyed array."** `FACT` — refuted at source:
+1. **"Mantine `Group` turns static JSX children into an unkeyed array."** ~~`FACT` — refuted at source~~ —
+   **THIS REFUTATION WAS WRONG. Corrected by Task 808's own R1 reproduction and re-verified by the reviewer at
+   source, 2026-09-10.** `Children.toArray` assigns a positional key *and*, in the same pass, stamps a
+   "still needs a real key" sentinel on any child that had `key == null` and had never been validated:
+   `node_modules/react/cjs/react.development.js:388-391` — `null == invokeCallback.key && invokeCallback._store &&
+   !invokeCallback._store.validated && (escapedPrefix._store.validated = 2)`. The reconciler then warns on exactly
+   that sentinel: `node_modules/react-dom/cjs/react-dom-client.development.js:26042-26049` —
+   `warnForMissingKey` fires when `2 === child._store.validated`. So a `Group` **can** produce this warning from
+   static children whose elements were created as standalone consts. The paragraph below read
+   `filter-falsy-children.mjs` and stopped there; it never read `mapIntoArray`. **The original text is kept
+   struck-through, not deleted, because a kickoff fact that survived into an executor's pre-read is exactly the
+   failure this project keeps recording.** The refutation as written was:
    `node_modules/@mantine/core/esm/components/Group/Group.mjs:62` calls `filterFalsyChildren(children)`, and
    `node_modules/@mantine/core/esm/components/Group/filter-falsy-children/filter-falsy-children.mjs` is
    `Children.toArray(children).filter(Boolean)`. `Children.toArray` **assigns keys**. A `Group` cannot produce this

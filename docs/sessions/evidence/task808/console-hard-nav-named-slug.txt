@@ -1,0 +1,4 @@
+[0] log: [Client Instrumentation Hook] Slow execution detected: 20ms (Note: Code download overhead is not included in this measurement)
+[1] info: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2] log: %c[PERF] Initial tier: high color:#22c55e;font-weight:bold (source: hardware — 20 cores, 32GB memory, 1280px viewport)
+[3] log: %c[Vercel Speed Insights]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit

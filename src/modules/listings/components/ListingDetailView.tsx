@@ -246,6 +246,7 @@ export function ListingDetailViewBody({
 
   const favoriteSlot = effectiveListingId ? (
     <FavoriteButton
+      key="favorite"
       listingId={effectiveListingId}
       isFavorited={effectiveIsFavorited}
       disabled={favoriteDisabled}
@@ -253,7 +254,7 @@ export function ListingDetailViewBody({
     />
   ) : undefined
 
-  const shareSlot = <ListingShareButton listingTitle={listing.title} listingUrl={listingUrl} />
+  const shareSlot = <ListingShareButton key="share" listingTitle={listing.title} listingUrl={listingUrl} />
 
   const badges: ListingDetailBadge[] = [
     ...(isNew ? [{ label: t('new'), tone: 'new' as const }] : []),

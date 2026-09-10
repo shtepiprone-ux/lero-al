@@ -207,7 +207,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingStatusBanner` | APPROVED | ✅ | — | Task 792: leaves Tailwind onto Mantine `Alert`; "similar listings" now navigates to a pre-filtered `/{locale}/listings` search instead of an in-page anchor |
 | `listingTransitionEngine.test.ts` | APPROVED | ✅ | — | —  |
 | `listingTransitionEngine.ts` | APPROVED | ✅ | — | —  |
-| `MantineListingCardTrack` | APPROVED | ✅ | — | Task 806: canonical `grid`/`rail` listing-card track (`src/design-system/mantine/patterns/`), `--listing-card-min` token, no consumer yet (Task 807)  |
+| `MantineListingCardTrack` | APPROVED | ✅ | — | Task 806: canonical `grid`/`rail` listing-card track (`src/design-system/mantine/patterns/`), `--listing-card-min` token. Task 807: consumed by all eight in-scope surfaces — `FeaturedListingsView`, `LatestListingsView`, `ListingsShellView` (grid mode), `RecentlyViewedGridView`, `SimilarListingsView`, `SimilarListingsSkeleton` (rail mode)  |
 | `MultiToggleField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `NumInputField` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `propertyTypeSchema.ts` | APPROVED | ✅ | — | —  |

@@ -2,7 +2,7 @@ import { Flex, Title } from '@mantine/core'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
-import styles from './SimilarListingsView.module.css'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 
 export interface SimilarListingsViewProps {
   /** Pre-translated heading — the container is a Server Component, so it passes
@@ -29,9 +29,12 @@ export interface SimilarListingsViewProps {
  * for this identical heading (sized so the Suspense placeholder matches the real content, no
  * layout shift) — not a new value (Task 803 kickoff §3.3 CONFLICT, resolved in favour of this).
  *
- * Task 803 (D72-5) — `SimpleGrid` is removed; the row is a horizontal scroll at every width
- * (`SimilarListingsView.module.css`), and the header gains a `ViewAllLink` (reused, not
- * recreated — `@/components/shared/ViewAllLink`) when the container signals more results exist.
+ * Task 803 (D72-5) — `SimpleGrid` is removed; the row is a horizontal scroll at every width, and
+ * the header gains a `ViewAllLink` (reused, not recreated — `@/components/shared/ViewAllLink`)
+ * when the container signals more results exist.
+ *
+ * Task 807 — the row's own `.row`/`.card` rules (`SimilarListingsView.module.css`) are replaced by
+ * the shared canonical `MantineListingCardTrack` in `rail` mode; the CSS module is deleted.
  *
  * Task 803 Revision 1 (R14/D72-6) — the header is a `Flex` with `direction={{ base: 'column',
  * sm: 'row' }}`, `align={{ base: 'stretch', sm: 'center' }}`, `justify="space-between"`: the
@@ -53,13 +56,11 @@ export function SimilarListingsView({ heading, listings, rates, displayCurrency,
           <ViewAllLink href={viewAllHref} label={viewAllLabel} />
         )}
       </Flex>
-      <div className={styles.row}>
+      <MantineListingCardTrack mode="rail">
         {listings.map(l => (
-          <div key={l.id} className={styles.card}>
-            <ListingCard listing={l} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
-          </div>
+          <ListingCard key={l.id} listing={l} layoutContext="card-track-rail" displayCurrency={displayCurrency} rates={rates} />
         ))}
-      </div>
+      </MantineListingCardTrack>
     </>
   )
 }

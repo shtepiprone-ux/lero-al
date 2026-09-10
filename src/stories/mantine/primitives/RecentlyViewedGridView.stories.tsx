@@ -8,8 +8,8 @@ import type { ExchangeRates } from '@/lib/getExchangeRate'
 /**
  * Task 792 — canonical story for the real production `RecentlyViewedGridView`. Statically imports
  * the real component (clause 16c) — no demo stand-in — plus the real `ClearRecentlyViewedButton`
- * as the `clearSlot`. Covers both required branches (R6): `Populated` (the horizontal-scroll/grid
- * switch, `RecentlyViewedGridView.module.css`) and `Empty` (the `showEmptyState` branch).
+ * as the `clearSlot`. Covers both required branches (R6): `Populated` (Task 807 — renders through
+ * the shared `MantineListingCardTrack` `rail` mode) and `Empty` (the `showEmptyState` branch).
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/RecentlyViewedGridView',

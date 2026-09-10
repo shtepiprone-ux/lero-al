@@ -1,12 +1,13 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Skeleton, Title, Box, Text, SimpleGrid, Group, AspectRatio, useMantineTheme } from '@mantine/core'
+import { Skeleton, Title, Box, Text, Group, AspectRatio, useMantineTheme } from '@mantine/core'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import styles from './FeaturedListingsView.module.css'
 
 /** Skeleton card chrome for the loading grid — owned by the View (Task 665 container/View
@@ -69,9 +70,9 @@ export function FeaturedListingsView({ listings, loading, rates, displayCurrency
     return (
       <>
         {header}
-        <SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="md" className="featured-listings">
+        <MantineListingCardTrack mode="rail" className="featured-listings">
           {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}
-        </SimpleGrid>
+        </MantineListingCardTrack>
       </>
     )
   }
@@ -88,11 +89,11 @@ export function FeaturedListingsView({ listings, loading, rates, displayCurrency
   return (
     <>
       {header}
-      <SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="md">
+      <MantineListingCardTrack mode="rail">
         {listings.map((listing, index) => (
-          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} displayCurrency={displayCurrency} rates={rates} isFavorited={favoriteIds.has(listing.id)} />
+          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} displayCurrency={displayCurrency} rates={rates} isFavorited={favoriteIds.has(listing.id)} layoutContext="card-track-rail" />
         ))}
-      </SimpleGrid>
+      </MantineListingCardTrack>
     </>
   )
 }

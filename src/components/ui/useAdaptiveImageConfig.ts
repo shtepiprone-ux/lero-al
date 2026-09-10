@@ -41,9 +41,12 @@ export function usePriorityImageCount(): number {
 }
 
 // ── Layout context normalization ──────────────────────────────────────────────
-// Omitting layoutContext on variant="listing" is valid and safe. It means the
-// default 3-column responsive grid. Only pass an explicit context when the card
-// renders in a different known layout (sidebar, 4-col, 3-col-xl).
+// Omitting layoutContext on variant="listing" is valid and safe — it falls back to the legacy
+// 'default' vw-based sizing. Task 807: every card rendered through the shared
+// `MantineListingCardTrack` now passes an explicit 'card-track-grid'/'card-track-rail' context;
+// this fallback only still matters for the two non-track consumers named in imageDelivery.ts's
+// `ListingLayoutContext` comment (ListingCard.stories.tsx's Default story and
+// ListingsShellView's horizontal list variant).
 const DEFAULT_LISTING_LAYOUT_CONTEXT: ListingLayoutContext = 'default'
 
 // ── Adaptation hook ───────────────────────────────────────────────────────────

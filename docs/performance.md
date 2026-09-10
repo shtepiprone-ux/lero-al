@@ -530,10 +530,15 @@ Pass an explicit context only when the card renders in a different known grid:
 
 | Context | When to use |
 |---------|-------------|
-| `'default'` | Homepage grids, any 3-col lg layout (default — no prop needed) |
-| `'sidebar'` | `/listings` page with filter sidebar |
-| `'4-col'` | Similar listings section |
-| `'3-col-xl'` | Favorites page (3-col starts at xl, not lg) |
+| `'default'` | Fallback only — non-track consumers (`ListingCard.stories.tsx` `Default` story, `ListingsShellView`'s horizontal list variant) |
+| `'card-track-grid'` | Any card rendered through `MantineListingCardTrack mode="grid"` — `/listings` search results |
+| `'card-track-rail'` | Any card rendered through `MantineListingCardTrack mode="rail"` — Featured, Latest, Recently viewed, Similar listings |
+| `'3-col-xl'` | Favorites page (3-col starts at xl, not lg) — legacy Tailwind grid, not yet migrated to the track (Task 809) |
+
+Task 807 (Sprint 74) replaced the per-surface `'sidebar'`/`'4-col'` contexts with the two
+`card-track-*` contexts above, derived from the shared `MantineListingCardTrack`'s own measured
+px geometry instead of a `vw` fraction — see `src/lib/imageDelivery.ts`'s `ListingLayoutContext`
+comment for the full rationale.
 
 Incompatible combinations (e.g. `priority` on avatar/strip variants) still warn in dev.
 

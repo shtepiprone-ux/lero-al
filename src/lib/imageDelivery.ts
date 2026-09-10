@@ -54,18 +54,54 @@ export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
 //
 // To add a new context: add the variant name here and its sizes string to
 // LISTING_LAYOUT_SIZES. Never pass raw sizes strings from components.
+//
+// Task 807 (D74-1..D74-4) — every card surface driven by the shared `MantineListingCardTrack`
+// (`src/design-system/mantine/patterns/MantineListingCardTrack.tsx`) now passes one of the two
+// `card-track-*` contexts below, derived from the track's OWN measured px geometry (Task 806
+// §3.1/807 §10.3) instead of a `vw` fraction, since a `vw` fraction cannot describe an
+// `auto-fill`/container-relative column at all (the column count is a function of the
+// *container*, not the viewport — `ListingsShellView` proves it: the sidebar narrows the
+// container at a fixed viewport width). `'default'` and `'3-col-xl'` are kept, UNCHANGED, for
+// two consumers Task 807 does not touch: `FavoritesShell.tsx:209` and
+// `ListingCard.stories.tsx`'s `FavoritesComposition` story (both out of this task's §7/§8 scope —
+// `FavoritesShell` is Task 809, a legacy-Tailwind de-migration, not a track swap) and the
+// `ListingCard.stories.tsx` `Default` story / `ListingsShellView`'s own horizontal list variant,
+// which fall back to `'default'` (`DEFAULT_LISTING_LAYOUT_CONTEXT`,
+// `useAdaptiveImageConfig.ts:47`) and are not track consumers. Kickoff §10.3's own instruction:
+// "If any consumer outside §7 references a removed context name, stop and report — do not widen
+// the diff." `'sidebar'` and `'4-col'` are removed — every one of their consumers
+// (`ListingsShellView`, `RecentlyViewedGridView`, `SimilarListingsView`) is migrated in this same
+// diff to a `card-track-*` context.
 
 export type ListingLayoutContext =
-  | 'default'   // 3-col at lg (1024px), no sidebar — FeaturedListings homepage
-  | '3-col-xl'  // 3-col at xl (1280px), no sidebar — FavoritesShell
-  | 'sidebar'   // 3-col at xl, w-72 sidebar at lg  — ListingsShell
-  | '4-col'     // 4-col at lg (1024px), no sidebar — SimilarListings
+  | 'default'         // 3-col at lg (1024px), no sidebar — FALLBACK ONLY (non-track consumers: ListingCard.stories.tsx Default, ListingsShellView's horizontal list variant)
+  | '3-col-xl'        // 3-col at xl (1280px), no sidebar — FavoritesShell (Task 809, out of scope)
+  | 'card-track-grid' // MantineListingCardTrack mode="grid" — /listings search results (ListingsShellView)
+  | 'card-track-rail' // MantineListingCardTrack mode="rail" — Featured, Latest, Recently viewed, Similar
 
 export const LISTING_LAYOUT_SIZES: Record<ListingLayoutContext, string> = {
   'default':  '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
   '3-col-xl': '(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw',
-  'sidebar':  '(min-width: 1280px) 28vw, (min-width: 1024px) 34vw, (min-width: 640px) 50vw, 100vw',
-  '4-col':    '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw',
+  // Grid column is `minmax(280px, 1fr)` inside `repeat(auto-fill, …)`, inside `.container-wide`
+  // (`globals.css:710-720`) — a container-relative arithmetic no `vw` fraction can express (§3.3).
+  // MEASURED on the real `/listings` route (Task 807 session log §13, `runs/clean-1`, real
+  // production data, not the Task 806 standalone story): card width == container width below
+  // 640px (320→288px, 390→358px — both exactly `viewport − 32px`, `.container-wide`'s <640px
+  // gutter), then 768→352px (2 col), 1024→309.33px (3 col), 1440→316px (4 col, `.container-wide`'s
+  // 1408px cap binding). `calc(100vw - 32px)` reproduces the <640px case exactly (confirmed
+  // 320/390). `360px` is a safe upper bound for the ≥640px steps (max measured 352px @768) — the
+  // `sizes` attribute only takes a `<length>`, so the exact per-column-count container arithmetic
+  // cannot be expressed; a single ≥640px value close to the measured max avoids under-fetching
+  // without moving to the next `srcsetEntries` step (400w covers every measured cell here).
+  'card-track-grid': '(min-width: 640px) 360px, calc(100vw - 32px)',
+  // Rail card is `min(var(--listing-card-min), 82%)` of the TRACK'S OWN CONTAINER, not the
+  // viewport — `sizes` only accepts a `<length>` (no bare `%`), so `vw` is the closest available
+  // unit, and MUST account for the page gutter or it overstates the card at narrow widths. MEASURED
+  // (Task 807 session log §13, `runs/clean-1`): 320→236.16px = 0.82×(320−32); 390/768/1024/1440→
+  // 280px (clamp maxed out at ≥390, confirmed across Featured/Latest/Similar on 3 different
+  // routes — AC6). `calc(82vw - 26px)` reproduces the 320 case (0.82×32≈26.24, rounded to the
+  // nearest px) and the clamp crossover (`0.82×(vw−32)=280` ⇒ `vw≈374`) sets the breakpoint.
+  'card-track-rail': '(min-width: 374px) 280px, calc(82vw - 26px)',
 }
 
 // ── Priority budget ───────────────────────────────────────────────────────────

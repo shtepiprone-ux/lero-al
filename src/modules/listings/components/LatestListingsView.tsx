@@ -1,10 +1,11 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Skeleton, Box, Text, SimpleGrid, AspectRatio, useMantineTheme } from '@mantine/core'
+import { Skeleton, Box, Text, AspectRatio, useMantineTheme } from '@mantine/core'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import styles from './LatestListingsView.module.css'
 
 /** Skeleton row chrome for the loading grid — owned by the View (Task 665 container/View
@@ -47,9 +48,9 @@ export function LatestListingsView({ listings, loading, rates, displayCurrency, 
 
   if (loading) {
     return (
-      <SimpleGrid cols={{ base: 1, md: 2, xxl: 3 }} spacing="sm" className="latest-listings">
+      <MantineListingCardTrack mode="rail" className="latest-listings">
         {Array.from({ length: 4 }).map((_, i) => <RowSkeleton key={i} />)}
-      </SimpleGrid>
+      </MantineListingCardTrack>
     )
   }
 
@@ -60,10 +61,10 @@ export function LatestListingsView({ listings, loading, rates, displayCurrency, 
   }
 
   return (
-    <SimpleGrid cols={{ base: 1, md: 2, xxl: 3 }} spacing="sm">
+    <MantineListingCardTrack mode="rail">
       {listings.map((listing, index) => (
-        <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'latest')} displayCurrency={displayCurrency} rates={rates} isFavorited={favoriteIds.has(listing.id)} />
+        <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'latest')} displayCurrency={displayCurrency} rates={rates} isFavorited={favoriteIds.has(listing.id)} layoutContext="card-track-rail" />
       ))}
-    </SimpleGrid>
+    </MantineListingCardTrack>
   )
 }

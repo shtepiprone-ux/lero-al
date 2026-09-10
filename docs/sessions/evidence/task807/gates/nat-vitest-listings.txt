@@ -1,0 +1,48 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 610ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 41ms
+     × archived listing renders the archived badge + dimmed card 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 27 passed (28)
+      Tests  2 failed | 593 passed (595)
+   Start at  09:49:21
+   Duration  8.43s (transform 3.51s, setup 4.89s, import 26.26s, tests 5.04s, environment 64.55s)
+
+EXIT_CODE=1

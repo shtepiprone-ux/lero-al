@@ -29,11 +29,12 @@ interface AppImageProps {
   children?: React.ReactNode
   /**
    * Grid context for the `listing` variant only.
-   * Controls the `sizes` attribute to match the card's real grid column width.
+   * Controls the `sizes` attribute to match the card's real track geometry.
    * Ignored for all other variants.
-   * Omitting is safe — defaults to 'default' 3-col responsive grid.
-   * Pass an explicit context when the card renders in a different layout:
-   *   'sidebar' | '4-col' | '3-col-xl'
+   * Omitting is safe — defaults to the legacy 'default' vw-based sizing (non-track consumers only).
+   * Task 807: pass 'card-track-grid' or 'card-track-rail' for any card rendered through
+   * `MantineListingCardTrack`; 'default' | '3-col-xl' remain for the two consumers that are not
+   * migrated yet (see imageDelivery.ts's `ListingLayoutContext` comment).
    * To add a new grid context: extend ListingLayoutContext in imageDelivery.ts.
    */
   layoutContext?: ListingLayoutContext

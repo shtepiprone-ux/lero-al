@@ -1,0 +1,560 @@
+{
+  "runId": "clean-1",
+  "locale": "uk",
+  "baseUrl": "http://localhost:3000",
+  "capturedAt": "2026-09-10T07:55:30.350Z",
+  "probeHash": "9bfb3b6f3bdd0cba88983a85f468feac2cacfc8e",
+  "gitCommit": "a8148a4b4a86f7ab47322376e69d18e8f9b1101e",
+  "slugs": {
+    "slugA": "11-mr7ucly4",
+    "slugB": "apartament-ne-lungomare-mtuf41kg",
+    "slugC": "2-garazhde-mtueqmyb"
+  },
+  "cells": [
+    {
+      "path": "/",
+      "width": 320,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 320,
+      "docClientWidth": 320,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 288,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 288,
+          "trackClientWidth": 288,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 236.15625,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        },
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 288,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 1749,
+          "trackClientWidth": 288,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 236.15625,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "home"
+    },
+    {
+      "path": "/listings",
+      "width": 320,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 320,
+      "docClientWidth": 320,
+      "pageOverflows": false,
+      "rails": [],
+      "grids": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 288,
+          "display": "grid",
+          "gridTemplateColumns": "288px",
+          "overflowX": "visible",
+          "columnCount": 1,
+          "trackScrollWidth": 288,
+          "trackClientWidth": 288,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "auto",
+          "firstChildRectWidth": 288,
+          "imgFound": true,
+          "imgSizes": "(min-width: 768px) 392px, calc(100vw - 32px)",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "route": "listings"
+    },
+    {
+      "path": "/listings/2-garazhde-mtueqmyb",
+      "width": 320,
+      "warmupPaths": [
+        "/listings/11-mr7ucly4",
+        "/listings/apartament-ne-lungomare-mtuf41kg"
+      ],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 320,
+      "docClientWidth": 320,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 288,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 288,
+          "trackClientWidth": 288,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 236.15625,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1788977470/1f937a00-8a83-4b89-924b-f079aa062c31/listings/1-apartament-me-qera-ne-lungomare_f3l78o.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "detail"
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 358,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 358,
+          "trackClientWidth": 358,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        },
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 358,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 2056,
+          "trackClientWidth": 358,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "home"
+    },
+    {
+      "path": "/listings",
+      "width": 390,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "pageOverflows": false,
+      "rails": [],
+      "grids": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 358,
+          "display": "grid",
+          "gridTemplateColumns": "358px",
+          "overflowX": "visible",
+          "columnCount": 1,
+          "trackScrollWidth": 358,
+          "trackClientWidth": 358,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "auto",
+          "firstChildRectWidth": 358,
+          "imgFound": true,
+          "imgSizes": "(min-width: 768px) 392px, calc(100vw - 32px)",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "route": "listings"
+    },
+    {
+      "path": "/listings/2-garazhde-mtueqmyb",
+      "width": 390,
+      "warmupPaths": [
+        "/listings/11-mr7ucly4",
+        "/listings/apartament-ne-lungomare-mtuf41kg"
+      ],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 358,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 358,
+          "trackClientWidth": 358,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1788977470/1f937a00-8a83-4b89-924b-f079aa062c31/listings/1-apartament-me-qera-ne-lungomare_f3l78o.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "detail"
+    },
+    {
+      "path": "/",
+      "width": 768,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 720,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 720,
+          "trackClientWidth": 720,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        },
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 720,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 2056,
+          "trackClientWidth": 720,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "home"
+    },
+    {
+      "path": "/listings",
+      "width": 768,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "pageOverflows": false,
+      "rails": [],
+      "grids": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 720,
+          "display": "grid",
+          "gridTemplateColumns": "352px 352px",
+          "overflowX": "visible",
+          "columnCount": 2,
+          "trackScrollWidth": 720,
+          "trackClientWidth": 720,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "auto",
+          "firstChildRectWidth": 352,
+          "imgFound": true,
+          "imgSizes": "(min-width: 768px) 392px, calc(100vw - 32px)",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "route": "listings"
+    },
+    {
+      "path": "/listings/2-garazhde-mtueqmyb",
+      "width": 768,
+      "warmupPaths": [
+        "/listings/11-mr7ucly4",
+        "/listings/apartament-ne-lungomare-mtuf41kg"
+      ],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 768,
+      "docClientWidth": 768,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 720,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 720,
+          "trackClientWidth": 720,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1788977470/1f937a00-8a83-4b89-924b-f079aa062c31/listings/1-apartament-me-qera-ne-lungomare_f3l78o.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "detail"
+    },
+    {
+      "path": "/",
+      "width": 1024,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1024,
+      "docClientWidth": 1024,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 960,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 960,
+          "trackClientWidth": 960,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        },
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 960,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 2056,
+          "trackClientWidth": 960,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "home"
+    },
+    {
+      "path": "/listings",
+      "width": 1024,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1024,
+      "docClientWidth": 1024,
+      "pageOverflows": false,
+      "rails": [],
+      "grids": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 960,
+          "display": "grid",
+          "gridTemplateColumns": "309.328px 309.328px 309.344px",
+          "overflowX": "visible",
+          "columnCount": 3,
+          "trackScrollWidth": 960,
+          "trackClientWidth": 960,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "auto",
+          "firstChildRectWidth": 309.328125,
+          "imgFound": true,
+          "imgSizes": "(min-width: 768px) 392px, calc(100vw - 32px)",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "route": "listings"
+    },
+    {
+      "path": "/listings/2-garazhde-mtueqmyb",
+      "width": 1024,
+      "warmupPaths": [
+        "/listings/11-mr7ucly4",
+        "/listings/apartament-ne-lungomare-mtuf41kg"
+      ],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1024,
+      "docClientWidth": 1024,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 619.984375,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 620,
+          "trackClientWidth": 620,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1788977470/1f937a00-8a83-4b89-924b-f079aa062c31/listings/1-apartament-me-qera-ne-lungomare_f3l78o.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "detail"
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 1344,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 1344,
+          "trackClientWidth": 1344,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        },
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 1344,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 2056,
+          "trackClientWidth": 1344,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "home"
+    },
+    {
+      "path": "/listings",
+      "width": 1440,
+      "warmupPaths": [],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "pageOverflows": false,
+      "rails": [],
+      "grids": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 1312,
+          "display": "grid",
+          "gridTemplateColumns": "316px 316px 316px 316px",
+          "overflowX": "visible",
+          "columnCount": 4,
+          "trackScrollWidth": 1312,
+          "trackClientWidth": 1312,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "auto",
+          "firstChildRectWidth": 316,
+          "imgFound": true,
+          "imgSizes": "(min-width: 768px) 392px, calc(100vw - 32px)",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1783258906/1f937a00-8a83-4b89-924b-f079aa062c31/listings/photo_2026-07-05_15-40-00_wrw3xv.jpg"
+        }
+      ],
+      "route": "listings"
+    },
+    {
+      "path": "/listings/2-garazhde-mtueqmyb",
+      "width": 1440,
+      "warmupPaths": [
+        "/listings/11-mr7ucly4",
+        "/listings/apartament-ne-lungomare-mtuf41kg"
+      ],
+      "httpStatus": 200,
+      "ok": true,
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440,
+      "pageOverflows": false,
+      "rails": [
+        {
+          "rootRectZeroArea": false,
+          "rootRectWidth": 854.65625,
+          "display": "flex",
+          "gridTemplateColumns": "none",
+          "overflowX": "auto",
+          "columnCount": null,
+          "trackScrollWidth": 855,
+          "trackClientWidth": 855,
+          "firstChildFound": true,
+          "firstChildFlexBasis": "min(280px, 82%)",
+          "firstChildRectWidth": 280,
+          "imgFound": true,
+          "imgSizes": "(min-width: 342px) 280px, 82vw",
+          "imgCurrentSrc": "https://res.cloudinary.com/die7okukn/image/upload/w_400,h_300,c_fill,g_auto,f_auto,q_auto/v1788977470/1f937a00-8a83-4b89-924b-f079aa062c31/listings/1-apartament-me-qera-ne-lungomare_f3l78o.jpg"
+        }
+      ],
+      "grids": [],
+      "route": "detail"
+    }
+  ]
+}

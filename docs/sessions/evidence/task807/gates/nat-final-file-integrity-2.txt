@@ -1,0 +1,27 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 59 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+❌  check:file-integrity FAILED — 5 corrupt / invalid file(s):
+
+  docs/sessions/evidence/task807/gates/sample-slugs.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task807/gates/server-pid-2.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task807/gates/server-pid-3.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task807/gates/server-pid-4.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task807/gates/server-pid.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

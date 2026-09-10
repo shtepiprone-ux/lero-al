@@ -2,8 +2,9 @@
 
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Box, Button, Center, Group, Loader, SimpleGrid, Stack, Text, ThemeIcon, useMantineTheme } from '@mantine/core'
+import { Box, Button, Center, Group, Loader, Stack, Text, ThemeIcon, useMantineTheme } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { ListingsActionRow } from '@/modules/listings/components/ListingsActionRow'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
@@ -124,21 +125,23 @@ export function ListingsShellView({
         ) : (
           <>
             {view === 'grid' ? (
-              <SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="lg" pt="lg">
-                {listings.map(listing => (
-                  <ListingCard
-                    key={listing.id}
-                    listing={listing}
-                    variant="vertical"
-                    onBeforeNavigate={onBeforeNavigate}
-                    displayCurrency={displayCurrency}
-                    rates={rates}
-                    isFavorited={favoriteIds.has(listing.id)}
-                    onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
-                    layoutContext="sidebar"
-                  />
-                ))}
-              </SimpleGrid>
+              <Box pt="lg">
+                <MantineListingCardTrack mode="grid">
+                  {listings.map(listing => (
+                    <ListingCard
+                      key={listing.id}
+                      listing={listing}
+                      variant="vertical"
+                      onBeforeNavigate={onBeforeNavigate}
+                      displayCurrency={displayCurrency}
+                      rates={rates}
+                      isFavorited={favoriteIds.has(listing.id)}
+                      onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+                      layoutContext="card-track-grid"
+                    />
+                  ))}
+                </MantineListingCardTrack>
+              </Box>
             ) : (
               <Stack gap="sm" pt="lg">
                 {listings.map(listing => (

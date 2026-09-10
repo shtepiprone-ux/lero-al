@@ -4,7 +4,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
 import { Info } from 'lucide-react'
-import { Alert, Anchor, Box, Group, Paper, Skeleton, SimpleGrid, Stack, Text, Title } from '@mantine/core'
+import { Alert, Anchor, Box, Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import {
   MantineListingDetailPattern,
@@ -13,6 +13,7 @@ import {
   type ListingFeature,
   type ListingAmenity,
 } from '@/design-system/mantine/patterns'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { ListingsPageFrame } from '@/modules/listings/components/ListingsPageFrame'
 import { GalleryStaticFrame } from '@/modules/listings/components/GalleryStaticFrame'
 import { GalleryIsland } from '@/modules/listings/components/GalleryIsland'
@@ -46,13 +47,17 @@ const LazyListingContact = dynamic(
 // Skeleton wraps real (invisible, `&nbsp;`) content instead of taking explicit height/width
 // props — Mantine's own documented sizing mechanism, and the only way to size a placeholder
 // here without a raw numeric dimension (`--scope=mantine` design-tokens gate, R9).
+//
+// Task 807 (§3.2 #8) — the placeholder now renders through the SAME `MantineListingCardTrack`
+// `rail` mode as the real `SimilarListingsView` content it stands in for, so the block no longer
+// visibly re-lays-out (a 4-up grid swapping to a rail) when the Suspense boundary resolves.
 export function SimilarListingsSkeleton() {
   return (
     <Stack gap="lg">
       <Skeleton radius="md">
         <Title order={2} size="h4">&nbsp;</Title>
       </Skeleton>
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
+      <MantineListingCardTrack mode="rail">
         {Array.from({ length: 4 }).map((_, i) => (
           <Paper key={i} withBorder radius="lg" style={{ overflow: 'hidden' }}>
             <Skeleton radius={0} style={{ aspectRatio: '4 / 3' }} />
@@ -66,7 +71,7 @@ export function SimilarListingsSkeleton() {
             </Stack>
           </Paper>
         ))}
-      </SimpleGrid>
+      </MantineListingCardTrack>
     </Stack>
   )
 }

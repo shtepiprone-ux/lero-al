@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Group, Text, Title } from '@mantine/core'
 import { ListingCard, type CardListingData } from './ListingCard'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
-import styles from './RecentlyViewedGridView.module.css'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 
 export interface RecentlyViewedGridViewProps {
   listings: CardListingData[]
@@ -24,8 +24,9 @@ export interface RecentlyViewedGridViewProps {
 /**
  * Presentational recently-viewed grid (Task 665 container/View split).
  *
- * Mobile (base): horizontal scroll, fixed-width cards (`.card` / `RecentlyViewedGridView.module.css`).
- * sm+: responsive CSS grid (2 → 3 → 4 columns).
+ * Task 807 (D74-4) — the shared canonical `MantineListingCardTrack` in `rail` mode replaces this
+ * component's own breakpointed scroll/grid switch. `RecentlyViewedGridView.module.css` is deleted
+ * (Task 806/807) — the track owns 100% of the card width contract now.
  *
  * Receives everything via props — no auth, no exchange-rate hook, no DB access, no server
  * actions. `RecentlyViewedGrid` (the container) owns the `useAuth`/`useExchangeRate` hooks
@@ -33,9 +34,7 @@ export interface RecentlyViewedGridViewProps {
  *
  * Task 792 — off Tailwind onto Mantine. Heading reuses `Title order={2} size="h4"`, the same
  * sizing contract `SimilarListingsView.tsx` reuses from `ListingDetailView.tsx`'s
- * `SimilarListingsSkeleton` for the identical `text-xl font-bold` pair. The horizontal-scroll/grid
- * switch (behaviour, not chrome — R4) moves to `RecentlyViewedGridView.module.css`, since no single
- * Mantine layout primitive expresses "flex-scroll below a breakpoint, grid above it".
+ * `SimilarListingsSkeleton` for the identical `text-xl font-bold` pair.
  */
 export function RecentlyViewedGridView({ listings, rates, displayCurrency, showEmptyState = false, clearSlot }: RecentlyViewedGridViewProps) {
   const t = useTranslations('listing')
@@ -65,13 +64,11 @@ export function RecentlyViewedGridView({ listings, rates, displayCurrency, showE
         {clearSlot}
       </Group>
 
-      <div className={styles.grid}>
+      <MantineListingCardTrack mode="rail">
         {listings.map(listing => (
-          <div key={listing.id} className={styles.card}>
-            <ListingCard listing={listing} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
-          </div>
+          <ListingCard key={listing.id} listing={listing} layoutContext="card-track-rail" displayCurrency={displayCurrency} rates={rates} />
         ))}
-      </div>
+      </MantineListingCardTrack>
     </div>
   )
 }

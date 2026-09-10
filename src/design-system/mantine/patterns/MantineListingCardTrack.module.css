@@ -1,0 +1,31 @@
+/*
+ * Task 806 (D74-1) — the shared listing-card track. This file contains no CSS media-query rule at
+ * all: D74-1 makes the column count the browser's own `auto-fill` arithmetic instead of a
+ * hand-authored breakpoint ladder, so both modes below are driven by a single custom property,
+ * `var(--listing-card-min)` (globals.css `:root`), with no responsive branch of any kind.
+ *
+ * The rail's `min(var(--listing-card-min), 82%)` clamp exists only to keep a peek of the next card
+ * visible at a narrow (320px) container (Sprint 74 kickoff §3.4) — it is a clamp, not a breakpoint;
+ * it is evaluated continuously at every width, never toggled by a media condition.
+ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--listing-card-min), 1fr));
+  gap: var(--mantine-spacing-md);
+}
+
+.rail {
+  display: flex;
+  gap: var(--mantine-spacing-md);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail > * {
+  flex: 0 0 min(var(--listing-card-min), 82%);
+  scroll-snap-align: start;
+}

@@ -30,5 +30,6 @@
   "src/modules/listings/components/ListingBackButton.tsx",
   "src/modules/listings/components/ListingStatusBanner.tsx",
   "src/modules/listings/components/SimilarListingsView.tsx",
-  "src/modules/listings/components/RecentlyViewedGridView.tsx"
+  "src/modules/listings/components/RecentlyViewedGridView.tsx",
+  "src/design-system/mantine/patterns/MantineListingCardTrack.tsx"
 ]

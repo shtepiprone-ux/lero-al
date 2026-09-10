@@ -42,6 +42,8 @@ an `auto-fill` track at all.
   visible peek of the next card; `/listings` search results stay a single full-width column. Rejected: two-up
   everywhere, and rails everywhere including search results.
 
+> **MEASURED 2026-09-10 (Task 806, `runs/reverted-clean-1`) — one cell of the table below was wrong, and the correction is instructive.** The grid ladder is exact: 320 → 1 column, 390 → 1, 768 → 2, 1024 → 3, 1440 → 4. The rail is exact from 390 upward (280px). At **320 the rail's card measures 262.4px, not 236px**: the 236px figure was computed against a ~288px *inner* container (assuming ~16px page gutters), while the standalone story has no page chrome, so its container is the full 320px and `82% × 320 = 262.4`. The mechanism is confirmed; only the assumed container width was off. On a real page with gutters the 236px figure will hold — Task 807's rendered evidence is what settles that.
+
 `INFERENCE` (stated, to be measured in 806) — with D74-2 both halves of D74-3 fall out of the same expression with
 **no media query**: a `min(var(--listing-card-min), 82%)` rail item is 236px at a 288px container (52px peek) and
 280px from ~342px upward; an `auto-fill minmax(280px, 1fr)` grid is one full-width column below ~576px container and
@@ -64,7 +66,7 @@ two above it. The sprint's whole responsive behaviour is therefore two CSS rules
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **806** | The canonical listing-card track — one width, two modes, no breakpoints | P1 | **Q3** | `KICKOFF FILED` 2026-09-10 |
+| **806** | The canonical listing-card track — one width, two modes, no breakpoints | P1 | **Q3** | 🗄️ **APPROVED WITH NOTES — ARCHIVED** 2026-09-10 (verdict → session log §15). Native `win32` gates all 0; `runs/nat-clean-1` measures grid 1/1/2/3/4 and rail 262.39/280/280/280/280 at 320/390/768/1024/1440. Owner accepted visually. Notes P3: N1 no retained gate transcripts in the executor session (closed by the owner's native run), N2 the `css-var-resolvability` count moved 296→297 via this diff's one new `:root` token, N3 `clean-run-1..4` are debug artifacts. |
 | **807** | Every card surface adopts the track, and the image `sizes` follow it | P1 | **Q3** | `RESERVED` |
 
 **Execution order: 806 → 807.** 806 creates the shared source and its canonical story and changes **nothing**

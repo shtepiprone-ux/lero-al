@@ -387,6 +387,11 @@
   --homepage-runtime-section-py-lg: 5rem; /* was @theme inline --home-section-py-lg */
   --homepage-runtime-listing-card-shadow: 0 8px 24px oklch(0.700 0.162 65 / 0.2); /* was @theme inline --shadow-listing-card-elevation-lg */
 
+  /* Task 806 (D74-2, owner decision 2026-09-10) — the one number that sizes every listing card on the
+     site. Grids consume it as an auto-fill minimum track, rails as a fixed item width; the column count
+     is the browser's arithmetic, never a hand-authored breakpoint ladder (D74-1). */
+  --listing-card-min: 17.5rem; /* 280px at a 16px root */
+
   /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
   /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
      Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this

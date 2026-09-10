@@ -8,8 +8,8 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 239 |
-| Storybook stories | 47 |
+| Total cataloged components | 240 |
+| Storybook stories | 48 |
 | Locale-aware (useTranslations) | 108 |
 | Client components ('use client') | 156 |
 | With arbitrary Tailwind values | 36 |
@@ -155,7 +155,7 @@ See `docs/component-risk-register.md` for risk register.
 | `queries.ts` | APPROVED | ✅ | — | —  |
 | `SavedSearchesTab` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 
-## Listings Feature Components (73)
+## Listings Feature Components (74)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -207,6 +207,7 @@ See `docs/component-risk-register.md` for risk register.
 | `ListingStatusBanner` | APPROVED | ✅ | — | Task 792: leaves Tailwind onto Mantine `Alert`; "similar listings" now navigates to a pre-filtered `/{locale}/listings` search instead of an in-page anchor |
 | `listingTransitionEngine.test.ts` | APPROVED | ✅ | — | —  |
 | `listingTransitionEngine.ts` | APPROVED | ✅ | — | —  |
+| `MantineListingCardTrack` | APPROVED | ✅ | — | Task 806: canonical `grid`/`rail` listing-card track (`src/design-system/mantine/patterns/`), `--listing-card-min` token, no consumer yet (Task 807)  |
 | `MultiToggleField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `NumInputField` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `propertyTypeSchema.ts` | APPROVED | ✅ | — | —  |

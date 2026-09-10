@@ -1,0 +1,95 @@
+{
+  "runId": "clean-run-3",
+  "locale": "uk",
+  "baseUrl": "http://127.0.0.1:6006",
+  "capturedAt": "2026-09-10T07:02:45.588Z",
+  "probeHash": "7543b70e8a39c471c634963de15c4d8a9ee09e86",
+  "gitCommit": "3d6999ef98d924ef25cdc8d6b6535474ffd53da2",
+  "documentedContract": {
+    "minPx": 280,
+    "gapPx": 16,
+    "railClampPct": 0.82
+  },
+  "cells": [
+    {
+      "mode": "grid",
+      "storyId": "patterns-mantine-listingcardtrack--grid",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "grid",
+      "storyId": "patterns-mantine-listingcardtrack--grid",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "grid",
+      "storyId": "patterns-mantine-listingcardtrack--grid",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "grid",
+      "storyId": "patterns-mantine-listingcardtrack--grid",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "grid",
+      "storyId": "patterns-mantine-listingcardtrack--grid",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "rail",
+      "storyId": "patterns-mantine-listingcardtrack--rail",
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "rail",
+      "storyId": "patterns-mantine-listingcardtrack--rail",
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "rail",
+      "storyId": "patterns-mantine-listingcardtrack--rail",
+      "width": 768,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "rail",
+      "storyId": "patterns-mantine-listingcardtrack--rail",
+      "width": 1024,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "mode": "rail",
+      "storyId": "patterns-mantine-listingcardtrack--rail",
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "failReason": "navigation/evaluation error: page.evaluate: ReferenceError: findTrackRoot is not defined\n    at evalCell (eval at evaluate (:302:30), <anonymous>:3:16)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    }
+  ]
+}

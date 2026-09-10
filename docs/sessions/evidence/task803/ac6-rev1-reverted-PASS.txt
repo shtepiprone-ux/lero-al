@@ -1,0 +1,9 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  23:20:04
+   Duration  3.14s (transform 470ms, setup 93ms, import 2.16s, tests 4ms, environment 748ms)
+

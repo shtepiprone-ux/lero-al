@@ -1,0 +1,234 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stdout | src/modules/listings/domain/__tests__/_scratch803.report.test.ts > scratch report — not a real assertion
+=== FULL_LISTING entries ===
+[
+  {
+    "tier": "A",
+    "param": "location_id",
+    "op": "eq",
+    "column": "location_id",
+    "value": 5,
+    "urlValue": "5"
+  },
+  {
+    "tier": "B",
+    "param": "condition",
+    "op": "in",
+    "column": "condition",
+    "value": [
+      "good"
+    ],
+    "urlValue": "good"
+  },
+  {
+    "tier": "B",
+    "param": "heating",
+    "op": "in",
+    "column": "heating",
+    "value": [
+      "central"
+    ],
+    "urlValue": "central"
+  },
+  {
+    "tier": "B",
+    "param": "wall_type",
+    "op": "in",
+    "column": "wall_type",
+    "value": [
+      "brick"
+    ],
+    "urlValue": "brick"
+  },
+  {
+    "tier": "B",
+    "param": "market_type",
+    "op": "eq",
+    "column": "market_type",
+    "value": "primary",
+    "urlValue": "primary"
+  },
+  {
+    "tier": "B",
+    "param": "offer_type",
+    "op": "in",
+    "column": "offer_type",
+    "value": [
+      "developer"
+    ],
+    "urlValue": "developer"
+  },
+  {
+    "tier": "B",
+    "param": "purchase_conditions",
+    "op": "overlaps",
+    "column": "purchase_conditions",
+    "value": [
+      "cash",
+      "mortgage"
+    ],
+    "urlValue": "cash,mortgage"
+  },
+  {
+    "tier": "C",
+    "param": "rooms",
+    "op": "eq",
+    "column": "rooms",
+    "value": 3,
+    "urlValue": "3"
+  },
+  {
+    "tier": "C",
+    "param": "area_min",
+    "op": "gte",
+    "column": "area_gross",
+    "value": 75,
+    "urlValue": "75"
+  },
+  {
+    "tier": "C",
+    "param": "area_max",
+    "op": "lte",
+    "column": "area_gross",
+    "value": 125,
+    "urlValue": "125"
+  },
+  {
+    "tier": "C",
+    "param": "floor_min",
+    "op": "gte",
+    "column": "floor",
+    "value": 4,
+    "urlValue": "4"
+  },
+  {
+    "tier": "C",
+    "param": "floor_max",
+    "op": "lte",
+    "column": "floor",
+    "value": 4,
+    "urlValue": "4"
+  },
+  {
+    "tier": "C",
+    "param": "year_built_min",
+    "op": "gte",
+    "column": "year_built",
+    "value": 2005,
+    "urlValue": "2005"
+  },
+  {
+    "tier": "C",
+    "param": "year_built_max",
+    "op": "lte",
+    "column": "year_built",
+    "value": 2015,
+    "urlValue": "2015"
+  }
+]
+count: 14
+=== THREE_NULL (condition, floor, year_built nulled) entries ===
+[
+  {
+    "tier": "A",
+    "param": "location_id",
+    "op": "eq",
+    "column": "location_id",
+    "value": 5,
+    "urlValue": "5"
+  },
+  {
+    "tier": "B",
+    "param": "heating",
+    "op": "in",
+    "column": "heating",
+    "value": [
+      "central"
+    ],
+    "urlValue": "central"
+  },
+  {
+    "tier": "B",
+    "param": "wall_type",
+    "op": "in",
+    "column": "wall_type",
+    "value": [
+      "brick"
+    ],
+    "urlValue": "brick"
+  },
+  {
+    "tier": "B",
+    "param": "market_type",
+    "op": "eq",
+    "column": "market_type",
+    "value": "primary",
+    "urlValue": "primary"
+  },
+  {
+    "tier": "B",
+    "param": "offer_type",
+    "op": "in",
+    "column": "offer_type",
+    "value": [
+      "developer"
+    ],
+    "urlValue": "developer"
+  },
+  {
+    "tier": "B",
+    "param": "purchase_conditions",
+    "op": "overlaps",
+    "column": "purchase_conditions",
+    "value": [
+      "cash",
+      "mortgage"
+    ],
+    "urlValue": "cash,mortgage"
+  },
+  {
+    "tier": "C",
+    "param": "rooms",
+    "op": "eq",
+    "column": "rooms",
+    "value": 3,
+    "urlValue": "3"
+  },
+  {
+    "tier": "C",
+    "param": "area_min",
+    "op": "gte",
+    "column": "area_gross",
+    "value": 75,
+    "urlValue": "75"
+  },
+  {
+    "tier": "C",
+    "param": "area_max",
+    "op": "lte",
+    "column": "area_gross",
+    "value": 125,
+    "urlValue": "125"
+  }
+]
+count: 9
+=== Attempt 1: 14 entries ===
+location_id(A/eq), condition(B/in), heating(B/in), wall_type(B/in), market_type(B/eq), offer_type(B/in), purchase_conditions(B/overlaps), rooms(C/eq), area_min(C/gte), area_max(C/lte), floor_min(C/gte), floor_max(C/lte), year_built_min(C/gte), year_built_max(C/lte)
+=== Attempt 2: 8 entries ===
+location_id(A/eq), rooms(C/eq), area_min(C/gte), area_max(C/lte), floor_min(C/gte), floor_max(C/lte), year_built_min(C/gte), year_built_max(C/lte)
+=== Attempt 3: 1 entries ===
+location_id(A/eq)
+=== Attempt 4: 0 entries ===
+(none - core only)
+=== Settled href for attempt 3 (relaxed case, AC5) ===
+/uk/listings?type=sale&property_type=apartment&location_id=5
+
+ ✓ src/modules/listings/domain/__tests__/_scratch803.report.test.ts > scratch report — not a real assertion 2ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  20:31:32
+   Duration  985ms (transform 36ms, setup 91ms, import 21ms, tests 3ms, environment 742ms)
+

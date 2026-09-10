@@ -220,7 +220,7 @@ See `docs/component-risk-register.md` for risk register.
 | `SaveSearchButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SaveToCollectionButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SimilarListings` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `SimilarListingsView` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 792: leaves Tailwind onto Mantine `Title`/`SimpleGrid` |
+| `SimilarListingsView` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 792: leaves Tailwind onto Mantine `Title`/`SimpleGrid`; Task 803: 8-item horizontal-scroll row (D72-5, `SimpleGrid` removed) + `ViewAllLink` header control |
 | `StepBasicInfo` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepDetails` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepLocation` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |

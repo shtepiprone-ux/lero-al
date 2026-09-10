@@ -26,6 +26,7 @@ import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listing
 import { formatPrice } from '@/lib/formatters'
 import type { DetailFeature, DetailAttribute } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived, isListingNonActiveStatus } from '@/modules/listings/domain'
+import { buildSimilarityEntries, buildSimilarityHref } from '@/modules/listings/domain/similarity'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
@@ -78,16 +79,31 @@ export function SimilarListingsSkeleton() {
 // canonical `filterEngine.ts:181-183` ones — `type`, not `listing_type`. Omitted values are absent
 // from the query string rather than empty (R5): `listingType`/`propertyType` are always present on
 // `Listing` (non-nullable columns), so only `locationId` can be omitted. Exported for
-// `ListingDetailView.buildSimilarListingsHref.test.ts` (Task 792 Revision 1, F2).
+// `ListingDetailView.buildSimilarListingsHref.test.ts` (Task 792 Revision 1, F2) — that test is
+// unchanged by Task 803 (R2/AC2).
+//
+// Task 803 R2/D72-3 — thin caller of `similarity.ts`'s URL renderer. `location_id` is expressed
+// through R1's single shared structure (`buildSimilarityEntries`) instead of a second,
+// hand-maintained field-to-param mapping, so this function can never disagree with the
+// similar-listings block's own query (D72-1).
 export function buildSimilarListingsHref(
   locale: string,
   params: { listingType: string; propertyType: string; locationId: number | null | undefined },
 ): string {
-  const sp = new URLSearchParams()
-  if (params.listingType) sp.set('type', params.listingType)
-  if (params.propertyType) sp.set('property_type', params.propertyType)
-  if (params.locationId) sp.set('location_id', String(params.locationId))
-  return `/${locale}/listings?${sp.toString()}`
+  const entries = buildSimilarityEntries({
+    location_id: params.locationId ?? null,
+    condition: null,
+    heating: null,
+    wall_type: null,
+    market_type: null,
+    offer_type: null,
+    purchase_conditions: [],
+    rooms: null,
+    area_gross: null,
+    floor: null,
+    year_built: null,
+  })
+  return buildSimilarityHref(locale, { listingType: params.listingType, propertyType: params.propertyType }, entries)
 }
 
 export type PreviewBanner = 'unpublished' | 'published' | null
@@ -487,7 +503,18 @@ export async function ListingDetailView(props: ListingDetailViewProps) {
           <SimilarListings
             currentId={listing.id}
             propertyType={listing.property_type}
+            listingType={listing.listing_type}
             locationId={listing.location?.id ?? null}
+            condition={listing.condition}
+            heating={listing.heating}
+            wallType={listing.wall_type}
+            marketType={listing.market_type}
+            offerType={listing.offer_type}
+            purchaseConditions={listing.purchase_conditions}
+            rooms={listing.rooms}
+            areaGross={listing.area_gross}
+            floor={listing.floor}
+            yearBuilt={listing.year_built}
           />
         </Suspense>
       }

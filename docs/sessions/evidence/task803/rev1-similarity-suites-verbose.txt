@@ -1,0 +1,41 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > emits one entry per non-null field, tier-tagged, for a fully populated listing 2ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > omits every field whose source column is null/empty 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > derives area_min/area_max at ±25%, rounded 1ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > derives year_built_min/year_built_max at ±5 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > derives floor_min/floor_max as the exact floor 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > uses the exact rooms value 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > joins multiple purchase_conditions into one comma-separated urlValue 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > does not throw and omits the purchase_conditions entry when the column is null (R11/AC11) 1ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityEntries > does not throw and omits the purchase_conditions entry when the column is undefined (R11/AC11) 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > entriesForAttempt > attempt 1 returns every tier 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > entriesForAttempt > attempt 2 drops tier B only 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > entriesForAttempt > attempt 3 keeps tier A only 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > entriesForAttempt > attempt 4 returns no entries (core only, reproduces pre-803 behaviour) 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > applySimilarityEntries > chains one builder call per entry, in order, with the correct op/column/value 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > applySimilarityEntries > applies no calls for an empty entry list 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityHref > places type/property_type first, then the entries in order — AC2 parity 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityHref > omits a tier param entirely when the entry list does not carry it (relaxed case) 0ms
+ ✓ src/modules/listings/domain/__tests__/similarity.test.ts > buildSimilarityHref > never carries an amenity param when attempt 3 (tier A only) settled 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 1 contains the visibility predicate, neq(id), property_type and listing_type 2ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 2 contains the visibility predicate, neq(id), property_type and listing_type 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 3 contains the visibility predicate, neq(id), property_type and listing_type 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 4 contains the visibility predicate, neq(id), property_type and listing_type 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 1 also carries the full tiered predicate (A+B+C) 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 4 carries the core predicate only — no similarity tier 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > runSimilarityLadder (AC5) > stops at attempt 1 when the first rung already returns rows — 1 round trip 2ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > runSimilarityLadder (AC5) > a listing whose full predicate matches nothing but whose property_type matches others settles at attempt 4, running exactly 4 round trips 1ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > runSimilarityLadder (AC5) > never exceeds 4 round trips even when every rung is empty (block renders nothing) 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > resolveSimilarListingsPresentation (AC3/AC4) > AC3 — caps the DOM to exactly 8 cards when 9 rows were fetched 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > resolveSimilarListingsPresentation (AC3/AC4) > AC4 — a 9th row present renders the view-all control, href equal to the settled predicate's URL (asserted, not eyeballed) 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > resolveSimilarListingsPresentation (AC3/AC4) > AC4 — 8 or fewer rows renders no view-all control (href undefined) 0ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts > resolveSimilarListingsPresentation (AC3/AC4) > AC4 — the href never carries an amenity/numeric param when attempt 3 (tier A only) settled 0ms
+
+ Test Files  3 passed (3)
+      Tests  31 passed (31)
+   Start at  23:12:06
+   Duration  3.27s (transform 959ms, setup 297ms, import 4.45s, tests 18ms, environment 2.49s)
+
+EXIT_CODE=0

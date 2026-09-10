@@ -1,0 +1,39 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts (6 tests | 4 failed) 9ms
+     × rung 1 contains the visibility predicate, neq(id), property_type and listing_type 5ms
+     × rung 2 contains the visibility predicate, neq(id), property_type and listing_type 1ms
+     × rung 3 contains the visibility predicate, neq(id), property_type and listing_type 0ms
+     × rung 4 contains the visibility predicate, neq(id), property_type and listing_type 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 1 contains the visibility predicate, neq(id), property_type and listing_type
+ FAIL  src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 2 contains the visibility predicate, neq(id), property_type and listing_type
+ FAIL  src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 3 contains the visibility predicate, neq(id), property_type and listing_type
+ FAIL  src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts > buildSimilarityRungQuery — public-visibility invariant across all 4 rungs (AC6) > rung 4 contains the visibility predicate, neq(id), property_type and listing_type
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts:52:93
+     50|     // applyPublicVisibility: single-status eligible set → .eq('status…
+     51|     // (see visibility.ts:120-127 — asserting the SHAPE it composes, n…
+     52|     expect(calls.some(c => c.op === 'eq' && c.column === 'status' && c…
+       |                                                                                             ^
+     53|     expect(calls.some(c => c.op === 'gte' && c.column === 'expires_at'…
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 2 passed (6)
+   Start at  23:19:50
+   Duration  3.23s (transform 461ms, setup 90ms, import 2.14s, tests 9ms, environment 758ms)
+

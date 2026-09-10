@@ -45,6 +45,55 @@ simply the first JSX expression in `ListingDetailViewBody`'s body (`favoriteSlot
 *"somewhere in `ListingDetailViewBody`"*, **not** as a confirmed culprit. Every element created in that function is
 a candidate.
 
+### 3.1a Second reproduction — owner, 2026-09-10, AFTER Task 807 landed. This one carries a code frame.
+
+`FACT` — verbatim from the owner's dev overlay, supplied during Task 810's review:
+
+```
+Console Error
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `@mantine/core/Box`. It was passed a child from ListingDetailViewBody.
+See https://react.dev/link/warning-keys for more information.
+
+    at ListingDetailViewBody (src\modules\listings\components\ListingDetailView.tsx:256:21)
+    at ListingDetailView (src\modules\listings\components\ListingDetailView.tsx:501:5)
+    at ListingPage (src\app\[locale]\listings\[slug]\page.tsx:247:5)
+
+Code Frame
+  254 |   ) : undefined
+  255 |
+> 256 |   const shareSlot = <ListingShareButton listingTitle={listing.title} listingUrl={listingUrl} />
+      |                     ^
+  257 |
+  258 |   const badges: ListingDetailBadge[] = [
+
+Next.js version: 15.5.18 (Turbopack)
+```
+
+Three things this adds over §3.1, and one thing it does not:
+
+1. `FACT` — **the warning is still live at `HEAD` after Task 807.** §3.1 was captured before 807's commit
+   (`03ff9d280`), which edited `ListingDetailView.tsx`. The defect survived that diff.
+
+2. `FACT` — **§3.3's line numbers are stale and must be re-measured before use.** 807 shifted the file:
+   `favoriteSlot` is now at **:247** (was :243), `shareSlot` at **:256** (was :251), `badges` at **:258**, and
+   `ListingDetailView` at **:501** (was :496). Read the current file; do not cite §3.3's column 1 as-is. The
+   *candidate set* is unchanged — only the coordinates moved.
+
+3. `FACT` — **this overlay has a code frame and §3.1's did not.** The caret sits on `shareSlot`'s
+   `<ListingShareButton …>`, at column 21 — the element-creation expression, not the statement.
+
+4. `UNKNOWN` — **whether `shareSlot` is the culprit.** React's code frame for a key warning points at the creation
+   site of the element it believes lacks a key, which is a materially stronger signal than §3.1's bare
+   `:243` frame (that one was the overlay pointing at the owner component, and §3.1 already says to read it as
+   "somewhere in `ListingDetailViewBody`"). But R1 still decides this, not this note: **reproduce it, print it, and
+   name the array.** Two live facts keep this open — `shareSlot` and `favoriteSlot` are passed as *separate named
+   props* (`share=`, `favorite=`) and land in the same `<Group>` in `MantineListingDetailPattern`, and §3.4 already
+   refuted `Group` as an unkeyed-array producer at source. Something between those two facts is wrong, and finding
+   which is the task. Do **not** open with a speculative `key` on `shareSlot`; a fix that silences the warning
+   without naming the array is exactly the outcome R3's guard exists to prevent.
+
 ### 3.2 This is not Task 803
 
 `FACT` — `git --no-optional-locks diff -U0 src/modules/listings/components/ListingDetailView.tsx` at the time of

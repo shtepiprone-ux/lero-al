@@ -330,6 +330,12 @@ right control disappears.
   `flex-basis` expression above 480px are unchanged from Task 807's approved state, and `imageDelivery.ts` is absent
   from `git status --porcelain`.
 
+  **Corrected by Revision 1 (task-design defect, found by the review of 2026-09-10).** The phrase “the rail's
+  `flex-basis` expression above 480px” contradicts R9's own body, which authorises the rail basis to change under
+  D74-6. Read AC9 as: the `.grid` rule and the **base** `.rail > *` rule are byte-unchanged, `imageDelivery.ts` is
+  absent from `git status --porcelain`, and the `:not(:only-child)` ladder is the authorised change. Revision 0
+  satisfied this; the criterion, not the implementation, was wrong.
+
 ## 13. QA profile and verification plan
 
 **Profile: `Q3 Full Visual Matrix`.** New interactive behaviour on a canonical primitive consumed by every listing
@@ -412,3 +418,320 @@ Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 | Is the two-line clamp new work? | No — it already exists at `MantineListingCardPattern.tsx:224`/`:360`. AC5 asks for proof, and for a fix only if the proof fails. |
 | Where do the controls live? | In the track, so all four rails get them at once. A consumer-level control would be the duplication the canonical-first gate exists to prevent. |
 | Does it fix the `key` warning? | No — that is Task **808**, filed 2026-09-10 and still open. Do not touch it here. |
+
+---
+
+# Task 810 — Revision 1
+
+Filed by the orchestrator review of **2026-09-10**, verdict `NEEDS REVISION`. Revision 0 is `IMPLEMENTED`; this
+section is the only thing to execute. Read §1-§15 above for the original contract — every requirement there still
+binds unless a row below supersedes it.
+
+## 16. Revision 1 — re-entry, decisions, and what must not be re-done
+
+### 16.0 Re-entry mode — `remediation`, not `from-scratch`
+
+`FACT` — Revision 0's diff is in the worktree, uncommitted, and is the starting point. Do not revert it, do not
+re-implement from `HEAD`, and do not re-run the Revision 0 evidence.
+
+**Preserved artifacts — overwriting any of these destroys the only copy:**
+
+- `docs/sessions/evidence/task810/runs/baseline-1/` · `runs/planted-1/` · `runs/reverted-1/`
+- every `docs/sessions/evidence/task810/transcripts/*.txt` from Revision 0
+
+The probe writes with `flag: 'wx'` and refuses an existing run directory, so a collision fails loudly rather than
+silently. Revision 1 evidence goes to **new** run ids (`rev1-*`) and **new** transcript names (`transcripts/rev1-*.txt`).
+Revision 0's artifacts stay in place and are marked superseded in the session log, never deleted.
+
+### 16.1 Verified in Revision 0 — do NOT redo, do NOT re-measure
+
+`FACT`, each read from the retained artifact, not from the completion report:
+
+| Closed | Evidence the reviewer inspected |
+|---|---|
+| **AC1** (R1) | `scrollbarWidthComputed: "thin"` at all 9 widths; `webkitScrollbarHeightRest: "4px"` → `webkitScrollbarHeightHover: "8px"` after a real `.hover()` |
+| **AC2** (R2) | `controlCount: 0` on the non-overflowing rail at all 9 widths, `1` (next only) at `scrollLeft:0`, prev-only at the end at 1024/1440 — and the comparator is proven able to fail by `planted-1`'s 9 hard-fail lines |
+| **AC6** (R6) | `firstChildWidth` 288/358/448 at 320/390/480 (= clientWidth), 280 at 481 and above. The D74-5 boundary is exact |
+| **AC9** (R9) | `.grid` byte-unchanged in the diff; base `.rail > *` unchanged; `imageDelivery.ts` absent from `git status --porcelain` |
+| **R8 gate half** | `check:design-tokens --strict --scope=mantine` 0/0/0 · `check:story-coverage` 33/33 · `check:stories` 0 · `git diff package.json` empty · 2 keys × 4 locales, real translations, no other key touched · every consumed `--*` definition grepped and present in `globals.css` |
+| **Two-armed proof** | `planted-1` exit 1 (9 reasons), `reverted-1` exit 0, identical `probeHash` on both arms, revert blob `6942fbd18…` corroborated by the diff's own index line |
+| **R4 mechanism** | The `height: auto` fix is correct. `ListingCard.module.css` is inside `@layer utilities`; the track module is unlayered, so the track rule wins on layer **and** on specificity. Keep the rule |
+
+The scrollbar, the control presence logic, the D74-5 media query, the i18n keys and the `'use client'` boundary are
+all accepted. **Do not touch them except where a row in §16.3 says so.**
+
+### 16.2 Owner decisions taken on this review — 2026-09-10
+
+`OWNER DECISION — D74-7.` **`offset = 36`.** The engineered value Revision 0 shipped is confirmed and is no longer
+`CANONICAL STYLE DECISION REQUIRED`. Rejected alternative: the reference site's own `30`, which leaves a measured
+0.64px peek at this site's real 1344px container. The CSS comment must cite **D74-7** in place of the phrase
+"an ENGINEERED constant … Flagged for the owner in the completion report".
+
+`OWNER DECISION — D74-8.` **A control click scrolls a whole snap-aligned page.**
+`delta = floor(clientWidth / (cardWidth + gap)) × (cardWidth + gap)`, floored at one card. AC3 stands as originally
+written and is **not** rewritten; the implementation moves to meet it. Rejected alternatives: card-granular paging,
+and keeping Revision 0's behaviour with AC3 relaxed.
+
+`OWNER DECISION — D74-9.` **The D74-6 count ladder keys on the CONTAINER, not the viewport.** `@media` becomes
+`@container` against a `container-type: inline-size` wrapper, at the same `theme.ts` rung values (30/48/64/80em).
+Rejected alternatives: re-derived non-token thresholds, and any per-surface rung override (that is the per-surface
+ladder D74-1 exists to delete).
+
+### 16.3 Requirements — Revision 1
+
+| ID | Requirement | Priority | Verified by |
+|---|---|---|---|
+| **R10** | **D74-9.** The rail's count ladder is a container query, not a media query. The card's width is decided by the width of the track it sits in, so the same card renders at the same width on every surface at one viewport. | **P0** | AC10 |
+| **R11** | The probe measures a **detail route** as well as `/`, at every width, with the same cell shape and the same hard-fail set. A missing rail on either path hard-fails. | **P0** | AC11 |
+| **R12** | The probe measures **`grid` mode** on `/{locale}/listings`, and a second two-armed proof fires the equal-height comparator. | **P0** | AC12 |
+| **R13** | **D74-8.** A control click scrolls a whole snap-aligned page, and the probe asserts AC3's arithmetic per cell. | **P0** | AC13 |
+| **R14** | The probe proves the control is actually **hit-testable** — that the stacking fix works, not merely that the handler runs. | P1 | AC14 |
+| **R15** | The measured width set gains **750, 1010, 1920, 2560**. | P1 | AC15 |
+| **R16** | The probe asserts the **selected rung** against D74-9's own arithmetic, per rail, per surface — the check that would have caught R10's defect. | P1 | AC16 |
+| **R17** | Documentation is corrected: the provenance table, the `'use client'` scope, the R4 justification, the story note, and the three new decision citations. | P1 | AC17 |
+
+### 16.4 Implementation requirements
+
+#### 16.4.1 R10 — the ladder becomes a container query (D74-9)
+
+`FACT` — the defect, and how it was found. The owner opened `/uk/listings/11-mr7ucly4` at a ~1411px viewport and
+reported that the rail shows **no controls**. It shows five fully-visible cards of ≈159px. The detail route's
+content column is ≈856px while the viewport is ≈1411px, so `@media (min-width: 80em)` selects the `n=5` rung
+(18.56%) — a rung derived for the homepage's **1344px** container — and applies it to a container barely more than
+half that size. The rail then does not overflow, so by D74-6's own correct rule no control and no peek render. The
+controls are not broken; the width that feeds them is.
+
+`FACT` — the same viewport therefore renders a 249px card on the homepage and a 159px card on the detail route.
+That is a direct contradiction of this sprint's goal sentence and of **D74-2**.
+
+Required change, and nothing more:
+
+- `.wrapper` gains `container-type: inline-size`. It already exists and already establishes the positioning context
+  for the controls; it becomes the query container too. Give it a container name only if a nested track ever needs
+  to skip a level — it does not today, so do not add one.
+- Every `@media (min-width: …em)` rung in the **D74-6 ladder** becomes `@container (min-width: …em)`. The rung
+  values are unchanged: 30em / 48em / 64em / 80em, each still cited to `theme.ts:322-326`.
+- **`grid` mode renders no wrapper** (§10.1, and the TSX early-returns before it). The grid is untouched by this
+  change — AC9 still holds byte-for-byte.
+- **D74-5's `@media (max-width: 30em)` stays a media query.** It is a *viewport* rule by the owner's own wording
+  ("from 320px up to and including 480px" — that is a screen size, not a container size). Do not convert it. Say so
+  in the source comment so the next reader does not read the mixture as an oversight.
+
+`INFERENCE` — derived widths under D74-9, to be confirmed by measurement, not copied into the code as constants:
+at containers 288 / 358 / 448 / 592 / 720 / 824 / 856 / 960 / 1344 the card lands at ≈184 / 229 / 280 / 243 / 280 /
+242 / 251 / 280 / 249px — every one at or below `--listing-card-min`, and the detail rail moves from 159px to
+≈251px. Where the cap binds (280px) the peek is still positive because the container is not an exact multiple of
+the 296px pitch. **Measure all of it; report the real numbers, and if any rung lands above 280px or at a peek of
+0, report that rather than tuning a percentage to hide it.**
+
+#### 16.4.2 R11 — the probe visits a detail route
+
+`FACT` — Revision 0's probe has exactly one navigation target. `measureHomeSections` goes to `${BASE_URL}/${LOCALE}`
+and every one of the 27 cells across the three runs records `path: "/"`. `GRID_SELECTOR` is declared at `:37` and
+referenced nowhere in the file.
+
+- Take the detail slug from `process.env.DETAIL_SLUG`, defaulting to `11-mr7ucly4` (the slug in the owner's own
+  reproduction and in `docs/sessions/2026-09-10-task810-the-rail-becomes-usable.md` §6). Exit **2** with a usage
+  error if the page 404s — a missing fixture is a usage failure, not a product verdict.
+- Emit one cell per `(width, path)` pair. Keep `path` in the cell so the JSON stays self-describing.
+- The existing `no rail track found` hard-fail must apply to the detail path exactly as it does to `/`. Do not add
+  a "skip if absent" branch; that is the fail-open this revision exists to close.
+- `if (!r) continue` in the hard-fail loop is a fail-open — a null section silently passes. Make a null section a
+  hard-fail.
+
+#### 16.4.3 R12 — grid mode is measured, and its comparator is fired
+
+- Add a `/{locale}/listings` cell that measures the `GRID_SELECTOR` track with the same shape: `cardHeights`,
+  `equalHeights`, `firstChildWidth`, `childCount`. Controls, peek and scrollbar fields are `null` for a grid — assert
+  `controlCount === 0` there and hard-fail on anything else.
+- Apply the `unequal card heights` hard-fail to grid cells.
+- **Second two-armed proof.** Plant: delete `.rail > a,\n.grid > a { height: auto }` from
+  `MantineListingCardTrack.module.css`. Rebuild, probe into `rev1-heights-planted`, show exit **1** naming a grid
+  cell (and, if the seeded rail data varies, a rail cell too). Revert, prove the revert with
+  `git hash-object` matching the pre-plant value, probe into `rev1-heights-reverted`, show exit **0**. Both arms
+  must be fired by the same final probe blob — quote `probeHash` from both JSONs.
+- `FACT` — this matters because Revision 0's rail proof is content-homogeneous: `rail1`'s seven cards share one
+  height at every width, so `equalHeights: true` there is compatible with a rule that does nothing. The comparator
+  has never fired. AC4 asks for the varying case.
+
+#### 16.4.4 R13 — paging (D74-8)
+
+In `scrollByPage`, replace
+
+```
+const onePeek = cardWidth + gapPx
+const delta = Math.max(el.clientWidth - onePeek, cardWidth || el.clientWidth)
+```
+
+with a whole snap-aligned page: `pitch = cardWidth + gapPx`, `delta = Math.max(Math.floor(el.clientWidth / pitch) * pitch, pitch)`.
+
+`FACT` — the current form under-scrolls because it subtracts a whole card and `scroll-snap-type: x proximity` then
+re-snaps the landing point. Measured, per `baseline-1`: 480 → 200 where AC3 wants 399; 640 → 259 vs 517; 768 → 454
+vs 682; 872 → 515 vs 773. The new form lands on a snap point by construction, so nothing re-snaps it, and at the
+872 cell it yields exactly `3 × 257.70 = 773.11` = `clientWidth − peek`.
+
+Probe assertion: hard-fail when `|delta − (clientWidth − peekPx)| > 2`, **unless** `after === scrollWidth − clientWidth`
+(a legitimate end-clamp, which is what the 1024 and 1440 cells already are). State that exemption in the failure
+message so a future reader is not left guessing.
+
+#### 16.4.5 R14 — the control must be hit-testable, not merely clickable
+
+`FACT` — Revision 0's probe clicks with `el.evaluate(el => el.click())`, a raw DOM dispatch that bypasses hit-testing.
+Keep it: the documented sticky-header actionability race is real and the reasoning is sound. But it means the
+`z-index: var(--z-dropdown)` stacking fix — added because a real click hit-tested a card title instead of the
+control — is proven by **nothing** in the retained evidence. The session log itself asks the reviewer to verify it,
+and the reviewer cannot.
+
+Add a cheap, independent assertion beside the click: read the control's `getBoundingClientRect()` centre, call
+`document.elementFromPoint(cx, cy)`, and hard-fail unless the control `.contains()` the returned node. Record the
+returned node's tag and class in the cell so a failure is diagnosable. This measures the stacking outcome without
+depending on Playwright scrolling anything into view.
+
+#### 16.4.6 R15 / R16 — widths and the rung assertion
+
+- `WIDTHS` becomes `320, 390, 480, 481, 640, 750, 768, 872, 1010, 1024, 1440, 1920, 2560`. 750 and 1010 sit inside
+  the two cap-binding windows Revision 0 flagged as untested; 1920 and 2560 are `docs/qa-profiles.md`'s canonical Q3
+  viewports and were never measured.
+- **R16 — assert the rung, not just the outcome.** For each measured rail, read the container width, derive the
+  intended `n` from D74-9's thresholds, compute `expected = min(280, (100/n − 36/n²)% × container)`, and hard-fail
+  when `|firstChildWidth − expected| > 1`. Record `container`, `rungN`, `expected` and `firstChildWidth` in the cell.
+  This is the check that would have caught R10's defect on the first run: under the viewport ladder the detail rail
+  measures 159px where the container-derived expectation is ≈251px.
+
+#### 16.4.7 R17 — documentation corrections
+
+1. **Provenance table** (`docs/sessions/…task810….md` §9): add `--radius-pill` (`globals.css:333`, quoted) for the
+   scrollbar thumb's `border-radius`, and `radius="xl"` for the `ActionIcon` (a Mantine radius key, not a literal).
+   Both are canonical; both were simply missing from the table AC8 requires to be complete.
+2. **`'use client'` scope** — three places say "`rail` mode is a client component": the TSX doc block,
+   `docs/component-catalog.md`'s new sentence, and session log §13. `'use client'` is a module directive, so `grid`
+   mode is a client component too and `/[locale]/listings` now ships this module's JS. Correct all three sentences.
+   Splitting `RailControls` into its own `'use client'` module to keep the track server-capable is **permitted but
+   not required** — if you do it, say so and re-run the build; if you do not, the corrected sentence is the fix.
+3. **R4 justification** — the CSS comment credits specificity alone. Add the decisive reason: `ListingCard.module.css`
+   wraps its rules in `@layer utilities` (`:37`, `:113`) and this module is unlayered, so an unlayered declaration
+   wins the cascade regardless of specificity.
+4. **`RailNoOverflow`** — two cards at the `n=1` rung overflow a 320px canvas, so the story renders a control there
+   and its name reads as a contradiction during the owner's 320px pass. Pin its `globals.viewport`, or state the
+   intended viewport in `docs.description`.
+5. **Decision citations** — the CSS must cite **D74-7** for `offset=36`, **D74-8** for the paging rule (in the TSX
+   comment), and **D74-9** for the container ladder, each in place of the Revision 0 prose that flags them as open.
+
+### 16.5 Scope — Revision 1
+
+`src/design-system/mantine/patterns/MantineListingCardTrack.module.css` (R10, R17) ·
+`src/design-system/mantine/patterns/MantineListingCardTrack.tsx` (R13, R17; R17.2's optional module split) ·
+`scripts/task810-rail-controls-probe.mjs` (R11, R12, R13, R14, R15, R16) ·
+`src/stories/patterns/mantine/ListingCardTrack.stories.tsx` (R17.4 only) ·
+`docs/component-catalog.md` (R17.2) · `docs/sessions/2026-09-10-task810-the-rail-becomes-usable.md` (a
+`## Revision 1` section — do not rewrite the Revision 0 sections, mark superseded artifacts) · `docs/backlog.md` state.
+
+### 16.6 Out of scope — Revision 1
+
+Everything in §8 still applies, and additionally: the scrollbar rules · the control presence logic and its
+tolerance · the D74-5 media query (it stays a media query — R10) · the i18n keys · `--listing-card-min`'s value ·
+the `offset` value (D74-7 closed it) · `theme.ts`'s breakpoint values · `.grid`'s own rule · Revision 0's retained
+evidence.
+
+## 17. Acceptance criteria — Revision 1
+
+- **AC10 [R10]** — Given `/{locale}/listings/$slug` at a 1440px viewport, then the Recently-viewed rail's card width
+  is within 1px of `min(280, f_n × container)` for the rung its **container** selects, and is within 5px of the
+  homepage's rail card width at the same viewport. State both containers and both card widths. Given `git diff`,
+  then the D74-6 ladder contains no `@media` rule and the D74-5 rule still does.
+- **AC11 [R11]** — Given the probe run, then every width produces a cell for `/` **and** a cell for the detail route,
+  each with at least one rail; given a deliberately wrong `DETAIL_SLUG`, then the probe exits **2** with a usage error.
+- **AC12 [R12]** — Given the probe run, then a `/{locale}/listings` grid cell records `cardHeights`, `equalHeights`
+  and `controlCount: 0`; given the planted removal of `height: auto`, then the probe exits **1** naming a grid cell;
+  given the revert, then `git hash-object` matches the pre-plant value and the probe exits **0**, both arms carrying
+  the same `probeHash`.
+- **AC13 [R13]** — Given a click on the next control at each width, then `|delta − (clientWidth − peekPx)| ≤ 2`, or
+  the scroll ended at `scrollWidth − clientWidth`. Quote the per-cell arithmetic for all widths.
+- **AC14 [R14]** — Given each rendered control, then `document.elementFromPoint` at its centre returns a node the
+  control contains. State the returned tag/class per cell.
+- **AC15 [R15]** — Given the probe run, then cells exist at 320/390/480/481/640/750/768/872/1010/1024/1440/1920/2560.
+- **AC16 [R16]** — Given every measured rail on both surfaces, then `firstChildWidth` is within 1px of the
+  container-derived expectation, and `container`/`rungN`/`expected` are recorded per rail.
+- **AC17 [R17]** — Given the session log and `docs/component-catalog.md`, then the provenance table carries
+  `--radius-pill` and `radius="xl"` with grepped definitions, no document says `rail` mode alone is a client
+  component, the R4 comment names the `@layer` reason, and the CSS/TSX cite D74-7, D74-8 and D74-9.
+
+## 18. Verification plan — Revision 1
+
+Every gate from §13 is re-run because source changed; transcripts go to **new** names.
+
+```powershell
+$env:BASE_URL = "http://localhost:3000"
+$env:DETAIL_SLUG = "11-mr7ucly4"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+node.exe scripts\check-design-tokens.mjs --strict --scope=mantine
+npx.cmd vitest run src/design-system src/modules/listings
+npm.cmd run test
+npm.cmd run build-storybook
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+```
+
+Expected: `win32` · typecheck 0 · lint 0 errors, no touched file named · `check:stories` pass · `check:story-coverage`
+**33 covered / 0 unproven** · design-tokens **0 violations, 0 stale markers, 0 missing-reason** · `npm run test` at
+the Task 790 baseline (5 failures / 4 files), each named and proven pre-existing · `build-storybook` and `build`
+exit 0 with `ƒ /[locale]/listings/[slug]` still present · both hygiene gates 0. Read every exit code from **inside**
+its retained transcript.
+
+Then the rendered evidence and the second two-armed proof:
+
+```powershell
+$env:BASE_URL = "http://localhost:3000"
+$env:DETAIL_SLUG = "11-mr7ucly4"
+git.exe hash-object src\design-system\mantine\patterns\MantineListingCardTrack.module.css
+npm.cmd run build
+Start-Process -FilePath "npm.cmd" -ArgumentList "run","start" -NoNewWindow
+Start-Sleep -Seconds 15
+node.exe scripts\task810-rail-controls-probe.mjs rev1-baseline
+node.exe scripts\task810-rail-controls-probe.mjs rev1-heights-planted
+node.exe scripts\task810-rail-controls-probe.mjs rev1-heights-reverted
+git.exe hash-object src\design-system\mantine\patterns\MantineListingCardTrack.module.css
+git.exe hash-object scripts\task810-rail-controls-probe.mjs
+```
+
+Expected: `rev1-baseline` exit **0**; `rev1-heights-planted` exit **1** naming a grid cell (run it with
+`height: auto` removed, and rebuild before probing); `rev1-heights-reverted` exit **0**; the first and last
+`hash-object` of the CSS identical; one `probeHash` across all three runs. Return all three JSONs and every hash.
+
+**Transcript rule — unchanged from §13.** No `Tee-Object`. `[Console]::OutputEncoding` set before the first capture,
+capture with `& cmd.exe /c "<command> 2>&1"`, write with `[System.IO.File]::WriteAllLines(path, lines, (New-Object
+System.Text.UTF8Encoding($false)))`, append `EXIT_CODE=$LASTEXITCODE` **inside** each file, everything retained under
+`docs/sessions/evidence/task810/transcripts/rev1-*.txt`. **All evidence in native Windows PowerShell.**
+
+**`OWNER VISUAL QA REQUIRED` — unchanged from §13, plus one new mandatory row** (it is the row that caught R10):
+
+| Surface | State | Locale | Viewport |
+|---|---|---|---|
+| **Detail route, Recently viewed / Similar** | **card width matches the homepage's rail card at the same moment; controls present when more cards exist than fit** | **uk** | **1440, 1024** |
+
+## 19. Completion report contract — Revision 1
+
+Everything §14 requires, plus: the container width and card width for **every** rail on **both** surfaces at every
+width, with the rung and the derived expectation beside each · the homepage-vs-detail card-width comparison at 1440
+and 1024 (AC10) · the grid cell's heights · the second two-armed pair with both `hash-object` values and the shared
+`probeHash` · the per-cell AC13 arithmetic · the AC14 hit-test results · confirmation that Revision 0's run
+directories and transcripts are untouched and marked superseded, not deleted · which of R17.2's two options was
+taken. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval.
+
+## 20. Revision 1 quality gate
+
+| Question | Required answer |
+|---|---|
+| Does R10 re-open the width standard? | No. It makes D74-2 **true** for the first time — one card width across surfaces at one viewport, which the viewport ladder silently broke. `--listing-card-min` and `.grid` are untouched. |
+| Is a container query a new dependency or a new token? | No. `container-type: inline-size` is a CSS property on a wrapper that already exists, and the rung values stay `theme.ts`'s own 30/48/64/80em. |
+| Why does D74-5 stay a media query? | Because the owner stated it in screen terms ("from 320px through 480px inclusive"). Converting it would silently change a rule the owner decided. R10 says so in the source. |
+| Is `offset` still an open decision? | No — **D74-7** closed it at 36. Revision 1 removes the `CANONICAL STYLE DECISION REQUIRED` flag from the code and the log. |
+| Is AC3 being relaxed to fit the implementation? | No — **D74-8** moves the implementation to meet AC3. The opposite was offered to the owner and rejected. |
+| Does this task fix the `key` warning? | No. That is Task **808**, and the owner's 2026-09-10 reproduction has been folded into **its** kickoff, not this one. |
+| Can the new gates fail? | Yes, and each names how: R12 fires a real planted arm; R16 was derived **from** a live defect and reproduces it numerically; R14 replaces an assertion that could not fail with one that can. |

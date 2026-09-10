@@ -360,10 +360,28 @@ changed only by an explicit owner decision recorded before the verdict.
 ### Owner-native validation handoff
 
 When sandbox execution, a missing native binary, or a timeout prevents a task-required check, list the exact command
-under `Missing evidence and limitations` and repeat it under `Required next actions`. Use the command verified in the
-task or repository; on Windows PowerShell prefer `npm.cmd` / `npx.cmd` for Node commands. Include the expected exit
-result, report, screenshot, or output to return. Missing validation is not a "low risk" result and cannot support an
-approval decision.
+under `Problems and verdict` and repeat it under `Next actions — owner`. Use the command verified in the task or
+repository; on Windows PowerShell prefer `npm.cmd` / `npx.cmd` for Node commands. Include the expected exit result,
+report, screenshot, or output to return. Missing validation is not a "low risk" result and cannot support an approval
+decision.
+
+### Final review response — concise operational handoff
+
+The final chat response must contain only these four headings, in order:
+
+1. `Problems and verdict` — state the verdict and list only confirmed quality defects, contradictions, missing
+   required evidence, or material scope/status mismatches. Each problem includes severity, location, concise
+   evidence, impact, correction, and verification. If no problem exists, write `APPROVED — No problems found.`
+2. `Next actions — Sonnet` — only concrete executor remediation or outstanding evidence, with verification; otherwise
+   `None.`
+3. `Next actions — owner` — only owner decisions, manual checks, and owner-native validation; otherwise `None.`
+4. `Git handoff` — explicit-path `git add`, `git commit`, and verified `git push` commands only after `APPROVED` or
+   `APPROVED WITH NOTES`; otherwise `None — no Git handoff for <DECISION>.`
+
+Do not praise the implementation; replay the executor report; list passing checks, requirements, or validation
+coverage; describe the review process; or add a "what I verified" / self-check section. Keep the detailed evidence
+in the required review record or session log, and bring it into chat only to substantiate a problem or required
+action. This presentation rule does not relax any evidence, ledger, or approval gate above.
 
 ### Windows-native execution gate
 

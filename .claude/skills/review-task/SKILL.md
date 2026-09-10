@@ -256,22 +256,22 @@ Never use optimistic wording to disguise a non-approved verdict.
 
 ## Required review output
 
-Use these headings in order:
+The final chat response is an **operational handoff**, not a review transcript. Use only these headings, in this
+order:
 
-1. `Decision` — state the decision without persuasion or reassurance.
-2. `Facts and contradictions` — cite the evidence for every material conclusion and explicitly refute disproven claims.
-3. `Inferences and unverified claims` — separate deductions from unknowns; neither may support approval.
-4. `Blocking findings`
-5. `Non-blocking findings`
-6. `Requirement coverage`
-7. `Validation evidence`
-8. `Missing evidence and limitations`
-9. `Owner-native validation handoff` - list every unrun task-required check as exact Windows PowerShell commands, or
-   state `None` when all required checks were actually run.
-10. `Required next actions`
-11. `Reviewer self-check`
+1. `Problems and verdict` — begin with the one allowed decision. List only confirmed quality defects, contradictions,
+   missing required evidence, or material scope/status mismatches. Give each item its severity, location, a concise
+   evidence statement, impact, and required correction. If there are none, write `APPROVED — No problems found.` Do
+   not describe what was done well, repeat the executor's report, enumerate passing checks, summarize requirement
+   coverage, or narrate the review process.
+2. `Next actions — Sonnet` — list only concrete remediation or evidence work still owed by the executor, including
+   verification. Write `None.` for an approved task with no executor action.
+3. `Next actions — owner` — list only decisions, manual checks, or owner-native validation still owed. Put every
+   owner-run command in one paste-ready `powershell` block as required above, followed by its expected result and
+   the output to return. Write `None.` when no owner action is needed.
+4. `Git handoff` — include the explicit-path owner-run `git add`, `git commit`, and verified `git push` commands only
+   for `APPROVED` or `APPROVED WITH NOTES`; otherwise write `None — no Git handoff for <DECISION>.`
 
-In the self-check, confirm that every command the owner must run was printed as a paste-ready `powershell` block rather than named in prose — including verification owed for any edit the reviewer made itself; that evidence, not summaries, supports every requirement; the final task has one active
-route; and the retained rule ledger and executable contract are current. Confirm each checkpoint has a producer,
-persisted result, comparator, and failure path, including valid zero/empty inputs, task-created artifacts, and dirty
-worktree integrity. Confirm no owner exception is invented and no current instruction contradicts the final route.
+Keep detailed requirement coverage, command transcripts, evidence tables, and reviewer self-checks in the required
+review record or session log. Surface an evidence detail in chat only when it directly explains a problem or an
+action. Never add praise, a "what I verified" section, a positive-results inventory, or a long explanatory preface.

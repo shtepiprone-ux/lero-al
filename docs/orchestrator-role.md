@@ -181,6 +181,22 @@ Use `docs/orchestrator-procedures.md` for the full review protocol.
 
 Review the actual diff and files, not the executor's summary.
 
+### Final review response — owner rule
+
+The final chat response is a short operational handoff, not an evidence transcript. Follow the four-heading contract
+in `.claude/skills/review-task/SKILL.md` exactly:
+
+1. `Problems and verdict` — only confirmed defects, contradictions, missing required evidence, or material
+   scope/status mismatches. If none exist, say `APPROVED — No problems found.` Do not praise the implementation,
+   list passing checks, repeat the executor report, or explain the review process.
+2. `Next actions — Sonnet` — only remediation or evidence the executor still owes; otherwise `None.`
+3. `Next actions — owner` — only owner decisions, manual checks, or native validation still owed; otherwise `None.`
+4. `Git handoff` — explicit-path commit and verified push commands only after `APPROVED` or `APPROVED WITH NOTES`;
+   otherwise `None — no Git handoff for <DECISION>.`
+
+Keep detailed evidence, coverage, and reviewer self-checks in the review record/session log. Include a detail in
+chat only when it directly justifies a problem or required action.
+
 The executor's completion report is useful only as an index to:
 
 - touched files;
@@ -224,8 +240,8 @@ frontend work only when the owner explicitly asks for one.
 ## Owner-native validation handoff
 
 When a required validation cannot run in the agent environment, Opus must treat it as missing evidence, not as a
-low-risk exception. In `Missing evidence and limitations` and `Required next actions`, provide a copy-pasteable
-owner-native handoff for every unrun check:
+low-risk exception. In `Problems and verdict` and `Next actions — owner`, provide a copy-pasteable owner-native
+handoff for every unrun check:
 
 1. State the exact blocked command and concrete reason it could not run.
 2. Give the exact command to run from the project root, using the task's verified command and explicit test paths or

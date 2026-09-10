@@ -1,0 +1,1929 @@
+{
+  "runId": "rev1-heights-reverted",
+  "locale": "uk",
+  "baseUrl": "http://localhost:3002",
+  "detailSlug": "11-mr7ucly4",
+  "capturedAt": "2026-09-10T14:14:52.641Z",
+  "probeHash": "3100f50a927994d93aef207b0e75b7b0523885e5",
+  "gitCommit": "2ae7a860760673534901905055a81db48abe673d",
+  "cells": [
+    {
+      "width": 320,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 288,
+          "clientWidth": 288,
+          "scrollWidth": 288,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            387.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 288,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 288,
+          "clientWidth": 288,
+          "scrollWidth": 1386,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            373.765625,
+            373.765625,
+            373.765625,
+            373.765625,
+            373.765625,
+            373.765625,
+            373.765625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 184.3125,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 87.6875,
+          "peekCardWidth": 184.3125,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 184.32
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 200,
+        "delta": 200,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 200.3125,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 320,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 1,
+          "childCount": 7,
+          "cardHeights": [
+            387.515625,
+            403.515625,
+            403.515625,
+            403.515625,
+            423.53125,
+            403.515625,
+            403.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 320,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 288,
+          "clientWidth": 288,
+          "scrollWidth": 385,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            345.765625,
+            345.765625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 184.3125,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 87.6875,
+          "peekCardWidth": 184.3125,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 184.32
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 97,
+        "delta": 97,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 200.3125,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 358,
+          "clientWidth": 358,
+          "scrollWidth": 358,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            440.015625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 358,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 358,
+          "clientWidth": 358,
+          "scrollWidth": 1700,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            379.359375,
+            379.359375,
+            379.359375,
+            379.359375,
+            379.359375,
+            379.359375,
+            379.359375
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 229.109375,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 112.890625,
+          "peekCardWidth": 229.109375,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 229.12
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 245,
+        "delta": 245,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 245.109375,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 390,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 1,
+          "childCount": 7,
+          "cardHeights": [
+            440.015625,
+            456.015625,
+            456.015625,
+            456.015625,
+            456.015625,
+            456.015625,
+            456.015625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 390,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 358,
+          "clientWidth": 358,
+          "scrollWidth": 474,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            359.34375,
+            359.34375
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 229.109375,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 112.890625,
+          "peekCardWidth": 229.109375,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 229.12
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 116,
+        "delta": 116,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 245.109375,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 480,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 448,
+          "clientWidth": 448,
+          "scrollWidth": 448,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            507.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 448,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 448,
+          "clientWidth": 448,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 152,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 296,
+        "delta": 296,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 296,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 480,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 1,
+          "childCount": 7,
+          "cardHeights": [
+            507.515625,
+            523.515625,
+            523.515625,
+            523.515625,
+            523.515625,
+            523.515625,
+            523.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 480,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 448,
+          "clientWidth": 448,
+          "scrollWidth": 576,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            397.515625,
+            397.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 152,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 128,
+        "delta": 128,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 296,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 481,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 449,
+          "clientWidth": 449,
+          "scrollWidth": 449,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 449,
+          "clientWidth": 449,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 153,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 296,
+        "delta": 296,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 296,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 481,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 1,
+          "childCount": 7,
+          "cardHeights": [
+            508.265625,
+            524.265625,
+            524.265625,
+            524.265625,
+            524.265625,
+            524.265625,
+            524.265625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 481,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 449,
+          "clientWidth": 449,
+          "scrollWidth": 576,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            397.515625,
+            397.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 153,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 1,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 127,
+        "delta": 127,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 296,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 640,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 592,
+          "clientWidth": 592,
+          "scrollWidth": 592,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 592,
+          "clientWidth": 592,
+          "scrollWidth": 1795,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            389.5625,
+            389.5625,
+            389.5625,
+            389.5625,
+            389.5625,
+            389.5625,
+            389.5625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 242.71875,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 74.5625,
+          "peekCardWidth": 242.71875,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 2,
+          "rungExpected": 242.72
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 517,
+        "delta": 517,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 517.4375,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 640,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 2,
+          "childCount": 7,
+          "cardHeights": [
+            403.515625,
+            403.515625,
+            403.515625,
+            403.515625,
+            423.53125,
+            423.53125,
+            403.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 640,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 592,
+          "clientWidth": 592,
+          "scrollWidth": 592,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            369.546875,
+            369.546875
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 242.71875,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 2,
+          "rungExpected": 242.72
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 750,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 702,
+          "clientWidth": 702,
+          "scrollWidth": 702,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 702,
+          "clientWidth": 702,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 110,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 2,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 592,
+        "delta": 592,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 592,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 750,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 2,
+          "childCount": 7,
+          "cardHeights": [
+            444.765625,
+            444.765625,
+            444.765625,
+            444.765625,
+            444.765625,
+            444.765625,
+            444.765625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 750,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 702,
+          "clientWidth": 702,
+          "scrollWidth": 702,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            397.515625,
+            397.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 2,
+          "rungExpected": 280
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 768,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 720,
+          "clientWidth": 720,
+          "scrollWidth": 720,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 720,
+          "clientWidth": 720,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 128,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 2,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 592,
+        "delta": 592,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 592,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 768,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 2,
+          "childCount": 7,
+          "cardHeights": [
+            451.515625,
+            451.515625,
+            451.515625,
+            451.515625,
+            451.515625,
+            451.515625,
+            451.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 768,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 720,
+          "clientWidth": 720,
+          "scrollWidth": 720,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            397.515625,
+            397.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 2,
+          "rungExpected": 280
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 872,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 824,
+          "clientWidth": 824,
+          "scrollWidth": 824,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 824,
+          "clientWidth": 824,
+          "scrollWidth": 1788,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            388.796875,
+            388.796875,
+            388.796875,
+            388.796875,
+            388.796875,
+            388.796875,
+            388.796875
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 241.703125,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 50.890625,
+          "peekCardWidth": 241.703125,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 3,
+          "rungExpected": 241.70666666666668
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 773,
+        "delta": 773,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 773.109375,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 872,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 2,
+          "childCount": 7,
+          "cardHeights": [
+            490.515625,
+            490.515625,
+            490.515625,
+            490.515625,
+            490.515625,
+            490.515625,
+            490.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 872,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 824,
+          "clientWidth": 824,
+          "scrollWidth": 824,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            368.78125,
+            368.78125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 241.703125,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 3,
+          "rungExpected": 241.70666666666668
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 1010,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 962,
+          "clientWidth": 962,
+          "scrollWidth": 962,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 962,
+          "clientWidth": 962,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 74,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 3,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 888,
+        "delta": 888,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 888,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 1010,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 3,
+          "childCount": 7,
+          "cardHeights": [
+            420.015625,
+            420.015625,
+            420.015625,
+            420.015625,
+            420.015625,
+            420.015625,
+            420.015625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 1010,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 962,
+          "clientWidth": 962,
+          "scrollWidth": 962,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            397.515625,
+            397.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 3,
+          "rungExpected": 280
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 1024,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 960,
+          "clientWidth": 960,
+          "scrollWidth": 960,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 960,
+          "clientWidth": 960,
+          "scrollWidth": 2056,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125,
+            417.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 72,
+          "peekCardWidth": 280,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 3,
+          "rungExpected": 280
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 888,
+        "delta": 888,
+        "controlsAfter": [
+          "Попередні оголошення",
+          "Наступні оголошення"
+        ],
+        "expectedDelta": 888,
+        "isEndClamp": false
+      }
+    },
+    {
+      "width": 1024,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 3,
+          "childCount": 7,
+          "cardHeights": [
+            419.515625,
+            419.515625,
+            419.515625,
+            419.515625,
+            419.515625,
+            419.515625,
+            419.5
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 1024,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 619.984375,
+          "clientWidth": 620,
+          "scrollWidth": 620,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            378.15625,
+            378.15625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 254.1875,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 2,
+          "rungExpected": 254.19359375
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 1344,
+          "clientWidth": 1344,
+          "scrollWidth": 1344,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 1344,
+          "clientWidth": 1344,
+          "scrollWidth": 1842,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            394.609375,
+            394.609375,
+            394.609375,
+            394.609375,
+            394.609375,
+            394.609375,
+            394.609375
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 249.4375,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 16.8125,
+          "peekCardWidth": 249.4375,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 5,
+          "rungExpected": 249.44639999999998
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 498,
+        "delta": 498,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 1327.1875,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 1440,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 4,
+          "childCount": 7,
+          "cardHeights": [
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 1440,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 854.65625,
+          "clientWidth": 855,
+          "scrollWidth": 855,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            375.53125,
+            375.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 250.6875,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 3,
+          "rungExpected": 250.69916666666666
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 1920,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 1312,
+          "clientWidth": 1312,
+          "scrollWidth": 1312,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 1312,
+          "clientWidth": 1312,
+          "scrollWidth": 1801,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 243.5,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 14.5,
+          "peekCardWidth": 243.5,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 5,
+          "rungExpected": 243.50719999999998
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 489,
+        "delta": 489,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 1297.5,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 1920,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 4,
+          "childCount": 7,
+          "cardHeights": [
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 1920,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 854.65625,
+          "clientWidth": 855,
+          "scrollWidth": 855,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            375.53125,
+            375.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 250.6875,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 3,
+          "rungExpected": 250.69916666666666
+        }
+      ],
+      "grids": []
+    },
+    {
+      "width": 2560,
+      "path": "/",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 1312,
+          "clientWidth": 1312,
+          "scrollWidth": 1312,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 1,
+          "cardHeights": [
+            381.515625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 280,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null
+        },
+        {
+          "containerWidth": 1312,
+          "clientWidth": 1312,
+          "scrollWidth": 1801,
+          "overflows": true,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 7,
+          "cardHeights": [
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625,
+            390.15625
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 243.5,
+          "controlCount": 1,
+          "controlLabels": [
+            "Наступні оголошення"
+          ],
+          "hitTests": [
+            {
+              "label": "Наступні оголошення",
+              "inViewport": true,
+              "hit": true,
+              "atTag": "svg",
+              "atCls": {}
+            }
+          ],
+          "peekPx": 14.5,
+          "peekCardWidth": 243.5,
+          "webkitScrollbarHeightHover": "12px",
+          "rungN": 5,
+          "rungExpected": 243.50719999999998
+        }
+      ],
+      "grids": [],
+      "clickTest": {
+        "before": 0,
+        "after": 489,
+        "delta": 489,
+        "controlsAfter": [
+          "Попередні оголошення"
+        ],
+        "expectedDelta": 1297.5,
+        "isEndClamp": true
+      }
+    },
+    {
+      "width": 2560,
+      "path": "/listings",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [],
+      "grids": [
+        {
+          "columnCount": 4,
+          "childCount": 7,
+          "cardHeights": [
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625,
+            424.515625
+          ],
+          "equalHeights": true,
+          "controlCount": 0
+        }
+      ],
+      "pathTag": "listings-grid"
+    },
+    {
+      "width": 2560,
+      "path": "/listings/11-mr7ucly4",
+      "httpStatus": 200,
+      "ok": true,
+      "rails": [
+        {
+          "containerWidth": 854.65625,
+          "clientWidth": 855,
+          "scrollWidth": 855,
+          "overflows": false,
+          "scrollbarWidthComputed": "thin",
+          "webkitScrollbarHeightRest": "4px",
+          "childCount": 2,
+          "cardHeights": [
+            375.53125,
+            375.53125
+          ],
+          "equalHeights": true,
+          "firstChildWidth": 250.6875,
+          "controlCount": 0,
+          "controlLabels": [],
+          "hitTests": [],
+          "peekPx": null,
+          "peekCardWidth": null,
+          "rungN": 3,
+          "rungExpected": 250.69916666666666
+        }
+      ],
+      "grids": []
+    }
+  ],
+  "homeVsDetail": [
+    {
+      "width": 320,
+      "homeContainer": 288,
+      "homeCardWidth": 184.3125,
+      "detailContainer": 288,
+      "detailCardWidth": 184.3125,
+      "diff": 0
+    },
+    {
+      "width": 390,
+      "homeContainer": 358,
+      "homeCardWidth": 229.109375,
+      "detailContainer": 358,
+      "detailCardWidth": 229.109375,
+      "diff": 0
+    },
+    {
+      "width": 480,
+      "homeContainer": 448,
+      "homeCardWidth": 280,
+      "detailContainer": 448,
+      "detailCardWidth": 280,
+      "diff": 0
+    },
+    {
+      "width": 481,
+      "homeContainer": 449,
+      "homeCardWidth": 280,
+      "detailContainer": 449,
+      "detailCardWidth": 280,
+      "diff": 0
+    },
+    {
+      "width": 640,
+      "homeContainer": 592,
+      "homeCardWidth": 242.71875,
+      "detailContainer": 592,
+      "detailCardWidth": 242.71875,
+      "diff": 0
+    },
+    {
+      "width": 750,
+      "homeContainer": 702,
+      "homeCardWidth": 280,
+      "detailContainer": 702,
+      "detailCardWidth": 280,
+      "diff": 0
+    },
+    {
+      "width": 768,
+      "homeContainer": 720,
+      "homeCardWidth": 280,
+      "detailContainer": 720,
+      "detailCardWidth": 280,
+      "diff": 0
+    },
+    {
+      "width": 872,
+      "homeContainer": 824,
+      "homeCardWidth": 241.703125,
+      "detailContainer": 824,
+      "detailCardWidth": 241.703125,
+      "diff": 0
+    },
+    {
+      "width": 1010,
+      "homeContainer": 962,
+      "homeCardWidth": 280,
+      "detailContainer": 962,
+      "detailCardWidth": 280,
+      "diff": 0
+    },
+    {
+      "width": 1024,
+      "homeContainer": 960,
+      "homeCardWidth": 280,
+      "detailContainer": 619.984375,
+      "detailCardWidth": 254.1875,
+      "diff": 25.8125
+    },
+    {
+      "width": 1440,
+      "homeContainer": 1344,
+      "homeCardWidth": 249.4375,
+      "detailContainer": 854.65625,
+      "detailCardWidth": 250.6875,
+      "diff": 1.25
+    },
+    {
+      "width": 1920,
+      "homeContainer": 1312,
+      "homeCardWidth": 243.5,
+      "detailContainer": 854.65625,
+      "detailCardWidth": 250.6875,
+      "diff": 7.1875
+    },
+    {
+      "width": 2560,
+      "homeContainer": 1312,
+      "homeCardWidth": 243.5,
+      "detailContainer": 854.65625,
+      "detailCardWidth": 250.6875,
+      "diff": 7.1875
+    }
+  ],
+  "hardFail": false,
+  "hardFailReasons": []
+}

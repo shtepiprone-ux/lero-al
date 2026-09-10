@@ -167,6 +167,75 @@ export const RailSingleItem: Story = {
   },
 };
 
+// Task 810 (R1/R2) — a rail sized so it does NOT overflow its own toolbar viewport: zero controls,
+// zero scrollbar thumb (kickoff §3.3 case 2 — nothing beyond the edge, nothing to peek at). Two
+// items only, deliberately fewer than `Rail`'s eight.
+export const RailNoOverflow: Story = {
+  // Revision 1 (R17.4) — 2 cards overflow the `n=1` rung's own width at mobile canvases (the D74-6
+  // ladder only gets to a container wide enough for 2 fixed-width cards from the `xs2` rung, ≥480px,
+  // per-track — Task 810 Revision 1's D74-9), so this story's own NAME would contradict what a
+  // 320px owner pass sees. Pinned to `desktop1440`, where 2 cards' combined width plus one gap sits
+  // well inside a 1344px track and the "no overflow" state is unambiguous.
+  globals: { viewport: { value: 'desktop1440', isRotated: false } },
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+        <MantineListingCardTrack mode="rail">{fixtureCards(l, 2)}</MantineListingCardTrack>
+      </AuthContext.Provider>
+    );
+  },
+};
+
+// Task 810 (R4/R5) — a long title beside a short one, same section: both cards must render at the
+// SAME height (equal-height proof), and the long title must clamp to two lines with an ellipsis
+// (the existing `lineClamp={2}`, MantineListingCardPattern.tsx:224/:360 — R5 asks for proof, not a
+// second clamp). Titles are literal per-locale fixture strings, not `storyT()` keys (Task 810 R8 —
+// "the only new i18n strings are the two control aria-labels"): deterministic story-only content,
+// same convention as `FIXTURE_USER.name` above, never routed through production i18n.
+const MIXED_TITLE_LOCALE_TEXT: Record<string, { short: string; long: string }> = {
+  en: { short: 'Studio', long: 'Spacious three-bedroom apartment with a panoramic sea view and private parking near the city center' },
+  sq: { short: 'Studio', long: 'Apartament i gjerë me tre dhoma gjumi, pamje panoramike nga deti dhe parking privat pranë qendrës së qytetit' },
+  uk: { short: 'Студія', long: 'Простора трикімнатна квартира з панорамним видом на море та приватним паркінгом біля центру міста' },
+  it: { short: 'Monolocale', long: 'Ampio appartamento con tre camere da letto, vista panoramica sul mare e parcheggio privato vicino al centro città' },
+};
+
+function makeMixedTitleListing(l: string, id: string, title: string): CardListingData {
+  return { ...makeFixtureListing(l, id), title };
+}
+
+export const RailMixedTitleLengths: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    const text = MIXED_TITLE_LOCALE_TEXT[l] ?? MIXED_TITLE_LOCALE_TEXT.en;
+    return (
+      <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+        <MantineListingCardTrack mode="rail">
+          <ListingCard key="mixed-short" listing={makeMixedTitleListing(l, 'story-mixed-short', text.short)} variant="vertical" rates={FIXTURE_RATES} />
+          <ListingCard key="mixed-long" listing={makeMixedTitleListing(l, 'story-mixed-long', text.long)} variant="vertical" rates={FIXTURE_RATES} />
+          {fixtureCards(l, 2)}
+        </MantineListingCardTrack>
+      </AuthContext.Provider>
+    );
+  },
+};
+
+export const GridMixedTitleLengths: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    const text = MIXED_TITLE_LOCALE_TEXT[l] ?? MIXED_TITLE_LOCALE_TEXT.en;
+    return (
+      <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+        <MantineListingCardTrack mode="grid">
+          <ListingCard key="mixed-short" listing={makeMixedTitleListing(l, 'story-mixed-short-grid', text.short)} variant="vertical" rates={FIXTURE_RATES} />
+          <ListingCard key="mixed-long" listing={makeMixedTitleListing(l, 'story-mixed-long-grid', text.long)} variant="vertical" rates={FIXTURE_RATES} />
+          {fixtureCards(l, 2)}
+        </MantineListingCardTrack>
+      </AuthContext.Provider>
+    );
+  },
+};
+
 // Zero children — the track renders nothing visible and must not reserve height or throw.
 export const Empty: Story = {
   render: () => <MantineListingCardTrack mode="grid">{null}</MantineListingCardTrack>,

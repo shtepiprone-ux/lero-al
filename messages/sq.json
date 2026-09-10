@@ -469,6 +469,8 @@
     "aria_open_search": "Hap kërkimin",
     "aria_prev_page": "Faqja paraparë",
     "aria_next_page": "Faqja tjetër",
+    "aria_scroll_prev": "Njoftimet e mëparshme",
+    "aria_scroll_next": "Njoftimet e ardhshme",
     "phone_helper": "Vendosni vetëm numrin kombëtar — kodi i shtetit është zgjedhur.",
     "notify_email_toggle": "Njoftim me email",
     "aria_remove_favorite": "Hiq nga të preferuarat",

@@ -94,6 +94,27 @@ Three things this adds over §3.1, and one thing it does not:
    which is the task. Do **not** open with a speculative `key` on `shareSlot`; a fix that silences the warning
    without naming the array is exactly the outcome R3's guard exists to prevent.
 
+### 3.1b This is not Task 810 either — measured 2026-09-10, at the end of 810's Revision 1
+
+`FACT` — the owner re-reported the identical overlay (same `:256:21` / `:501:5` / `:247:5` frames, same code frame on
+`shareSlot`) while Task **810** Revision 1 sat uncommitted in the worktree, and read it as "Sonnet broke something".
+It is not. Three measurements refute that reading:
+
+1. `git --no-optional-locks status --short -- src/modules/listings/components/ListingDetailView.tsx
+   src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` returns **empty**. Neither file is in Task
+   810's diff, in either revision.
+2. `git --no-optional-locks log --oneline -2 -- src/modules/listings/components/ListingDetailView.tsx` names
+   **`03ff9d280` (Task 807)** and **`3d6999ef9` (Task 803)**. Nothing since.
+3. §3.1's capture predates Task 810 entirely — it was taken before 810's kickoff was written, with the pre-807 line
+   numbers. The same warning, at the same component, before and after 810's diff.
+
+`INFERENCE` — Task 810 *is* visible on this route (its track renders the similar-listings rail, and Revision 1 made
+the module `'use client'`), which is why the coincidence is tempting. But the warning's owner component is
+`ListingDetailViewBody`, its array renderer is a `@mantine/core/Box`, and 810 changed neither the elements
+`ListingDetailViewBody` creates nor how the detail pattern renders them. **Do not spend a single step of R1 on the
+card track.** If the reproduction nevertheless implicates it, that is a finding worth reporting loudly — but start
+from §3.3's candidate set.
+
 ### 3.2 This is not Task 803
 
 `FACT` — `git --no-optional-locks diff -U0 src/modules/listings/components/ListingDetailView.tsx` at the time of

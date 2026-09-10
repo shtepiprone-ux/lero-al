@@ -469,6 +469,8 @@
     "aria_open_search": "Open search",
     "aria_prev_page": "Previous page",
     "aria_next_page": "Next page",
+    "aria_scroll_prev": "Previous listings",
+    "aria_scroll_next": "Next listings",
     "phone_helper": "Enter the national number only — the country code is already selected.",
     "notify_email_toggle": "Toggle email notifications",
     "aria_remove_favorite": "Remove from favorites",

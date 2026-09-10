@@ -1,12 +1,9 @@
 /*
- * Task 806 (D74-1) — the shared listing-card track. This file contains no CSS media-query rule at
- * all: D74-1 makes the column count the browser's own `auto-fill` arithmetic instead of a
- * hand-authored breakpoint ladder, so both modes below are driven by a single custom property,
- * `var(--listing-card-min)` (globals.css `:root`), with no responsive branch of any kind.
- *
- * The rail's `min(var(--listing-card-min), 82%)` clamp exists only to keep a peek of the next card
- * visible at a narrow (320px) container (Sprint 74 kickoff §3.4) — it is a clamp, not a breakpoint;
- * it is evaluated continuously at every width, never toggled by a media condition.
+ * Task 806 (D74-1) — the shared listing-card track. Both modes are driven by a single custom
+ * property, `var(--listing-card-min)` (globals.css `:root`), and D74-1 forbids any OTHER media
+ * query in this file — Task 810 records the two owner-approved exceptions (D74-5, D74-6) at their
+ * own rules below, each with its own source comment. The `.grid` rule stays byte-unchanged by Task
+ * 810 (kickoff R9/AC9) — zero media queries, the browser's own `auto-fill` arithmetic.
  */
 
 .grid {
@@ -15,17 +12,218 @@
   gap: var(--mantine-spacing-md);
 }
 
+/*
+ * Task 810 — positioning context for the rail's prev/next controls (R1-R3). The controls are
+ * absolutely positioned against THIS wrapper, not the scroller (`.rail`) itself, so they never
+ * become flex items of the scroller and never affect its scroll geometry. `grid` mode renders no
+ * wrapper at all (MantineListingCardTrack.tsx only wraps `mode==='rail'`).
+ *
+ * `container-type: inline-size` (D74-9, Revision 1) — this wrapper is ALSO the D74-6 ladder's query
+ * container. Revision 0 keyed the ladder on the *viewport* (`@media`), which is wrong: two rails at
+ * the same viewport but different container widths (e.g. the homepage's 1344px rail vs the detail
+ * route's ≈856px content column at 1440px) landed on the SAME rung and rendered two different card
+ * widths for the same site-wide token — a direct contradiction of D74-2, reproduced live by the
+ * owner at `/uk/listings/11-mr7ucly4` (a 159px card against the homepage's 249px at the same
+ * viewport). `container-type` makes the ladder answer "how wide is THIS track", not "how wide is
+ * the screen", which is what D74-2's "one card width across surfaces" actually requires.
+ */
+.wrapper {
+  position: relative;
+  container-type: inline-size;
+}
+
 .rail {
   display: flex;
   gap: var(--mantine-spacing-md);
   overflow-x: auto;
-  scrollbar-width: none;
   scroll-snap-type: x proximity;
+
+  /*
+   * Task 810 (R1) — the native scrollbar is STYLED, not replaced: no `@mantine/carousel`
+   * dependency, no `ScrollArea` swap (kickoff §3.2 FACT table — "the native scrollbar is styled,
+   * not replaced"). `scrollbar-width: thin` is the standard property (Firefox, and Chromium 121+);
+   * it has no per-state numeric form, so it stays constant — the "thicker on hover" requirement is
+   * expressed only through the `::-webkit-scrollbar` rules below, which the probe's own engine
+   * (Chromium) renders and can measure via `getComputedStyle(el, '::-webkit-scrollbar')`. Thumb/
+   * track colours reuse the SAME tokens the project's own global scrollbar rule already consumes
+   * (`globals.css` `::-webkit-scrollbar-thumb`/`-track`, `@apply bg-border`/`bg-muted`):
+   * `--border` (globals.css:470, `--neutral-200`) / `--muted` (globals.css:438, `--neutral-100`).
+   */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--muted);
 }
 .rail::-webkit-scrollbar {
-  display: none;
+  height: calc(var(--mantine-spacing-xs) / 2); /* 4px at rest */
 }
+.rail::-webkit-scrollbar-track {
+  background-color: var(--muted);
+}
+.rail::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: var(--radius-pill);
+}
+.rail:hover::-webkit-scrollbar,
+.rail:focus-within::-webkit-scrollbar {
+  /* Owner instruction, mid-Revision-1 (2026-09-10, reference screenshot: rozetka.com.ua "Схожі
+     товари") — 12px on hover/focus, big enough to grab and drag the thumb with the mouse, not just
+     a visual hint. theme.ts:350 `sm: '0.75rem', // 12px`. */
+  height: var(--mantine-spacing-sm);
+}
+
 .rail > * {
   flex: 0 0 min(var(--listing-card-min), 82%);
   scroll-snap-align: start;
+}
+
+/*
+ * Task 810 (R4) — the track's own equal-height guarantee, for both modes. `ListingCard.module.css`'s
+ * `.cardVertical` sets `height: 100%` on this direct child (a plain `<a>` wrapper — out of this
+ * task's scope, kickoff §8: "ListingCard.tsx's own composition"). Per CSS Flexbox/Grid, an item's
+ * own block-size must COMPUTE to `auto` for the container's default `align-items: stretch` to
+ * equalize it against its siblings; a `100%` value opts the item OUT of stretch even though it
+ * later RESOLVES to `auto` here (`.rail`/`.grid` have no definite height of their own) — the
+ * computed value, not the resolved one, gates stretch. Measured live
+ * (`docs/sessions/evidence/task810/`): two rail siblings with the same image aspect ratio and a
+ * 12px `.priceMetaRow` present on only one (an optional price-per-sqm line — real content
+ * variance, not a title-length difference) rendered 381.5px vs 397.5px before this rule; 417.5px
+ * (equal) for all four after.
+ *
+ * Two independent reasons this rule wins, not specificity alone (Revision 1, R17.3):
+ * `ListingCard.module.css` wraps `.cardVertical` in `@layer utilities` (`:37`/`:45`), while this
+ * module is UNLAYERED — an unlayered declaration always outranks a layered one regardless of
+ * specificity or source order (CSS Cascade Layers). `a` also raises specificity above `.cardVertical`
+ * alone, so the rule would still win even if both files were on the same layer — per the kickoff's
+ * own canonical decision record: "the rule goes in the pattern or the track — never in a consumer."
+ */
+.rail > a,
+.grid > a {
+  height: auto;
+}
+
+/*
+ * D74-5 (owner decision 2026-09-10) — a rail holding exactly ONE card stretches it to the full
+ * track width from 320px through 480px inclusive; above 480px it falls back to the plain
+ * `min(var(--listing-card-min), 82%)` rule above, UNCHANGED (AC9). This stays a **media** query,
+ * not a container query (Revision 1, R10/D74-9's own instruction): the owner stated the rule in
+ * screen terms — "from 320px up to and including 480px" is a viewport size, not a track size —
+ * and D74-9 only re-keys the count ladder below, which is a genuinely per-container concern.
+ * `:only-child` is the precise selector — no JS needed.
+ */
+@media (max-width: 30em) { /* xs2, theme.ts:322 — 480px */
+  .rail > *:only-child {
+    flex-basis: 100%;
+  }
+}
+
+/*
+ * D74-6 (owner decision 2026-09-10) — count ladder for a rail holding MORE cards than fit. The
+ * card's flex-basis is a FRACTION of the track (never a fixed px), so the peek — the sliver of the
+ * next card — cannot degenerate to 0 the way a fixed 280px card could (kickoff §3.3: an 872px
+ * container fit exactly three 280px cards with nothing left over). Not applied to `:only-child` —
+ * a lone card has nothing to peek at (§3.3 case 2) and keeps the plain clamp above (AC9).
+ *
+ * Mechanism measured on the owner's cited reference (kickoff §3.4a): fraction = 100%/n - offset/n²,
+ * where n = the rung's "fully visible" card count — this guarantees the reserved peek is always
+ * offset/n percent of the track, never the leftover after a whole number of fixed-width cards.
+ *
+ * `offset = 36` — **D74-7** (owner decision, 2026-09-10): confirmed, no longer an open question.
+ * Rejected: the reference's own measured 30, which leaves only a ~0.64px peek at this site's real
+ * 1344px homepage container — too thin to trust against sub-pixel rounding once the flex `gap`
+ * between cards is subtracted from the nominal reserve. 36 clears roughly a gap's width of real
+ * peek at every rung this task measured live against this exact track.
+ *
+ * **D74-9** (owner decision, 2026-09-10) — the ladder keys on the CONTAINER (`@container`), not the
+ * viewport (`@media`). Revision 0 used `@media`, and the SAME viewport produced two different card
+ * widths on two different routes because their containers differ (a real, owner-reproduced defect:
+ * a 1411px viewport rendered a 249px card on the homepage — container 1344px — and a 159px card on
+ * a listing-detail route — container ≈856px — because both hit the same `n=5` rung under a
+ * viewport-keyed query). `@container` makes the rung answer "how wide is THIS track", closing that
+ * contradiction; the rung THRESHOLD values are unchanged (still `theme.ts`'s own 30/48/64/80em),
+ * only the query TYPE changed. Requires `.wrapper { container-type: inline-size }` above.
+ *
+ * Rungs (n, fraction, source breakpoint): 1×64% (<480, no query needed — this is the default),
+ * 2×41% (≥480, xs2), 3×29.3333% (≥768, md), 4×22.75% (≥1024, lg), 5×18.56% (≥1280, xl). This
+ * deliberately re-admits a responsive query into this file — the SECOND and only other exception
+ * to D74-1, alongside D74-5 above (which stays `@media` — see its own comment).
+ */
+.rail > *:not(:only-child) {
+  flex-basis: min(var(--listing-card-min), 64%); /* n=1, <480px */
+}
+@container (min-width: 30em) { /* xs2, theme.ts:322 — 480px */
+  .rail > *:not(:only-child) {
+    flex-basis: min(var(--listing-card-min), 41%); /* n=2 */
+  }
+}
+@container (min-width: 48em) { /* md, theme.ts:324 — 768px */
+  .rail > *:not(:only-child) {
+    flex-basis: min(var(--listing-card-min), 29.3333%); /* n=3 */
+  }
+}
+@container (min-width: 64em) { /* lg, theme.ts:325 — 1024px */
+  .rail > *:not(:only-child) {
+    flex-basis: min(var(--listing-card-min), 22.75%); /* n=4 */
+  }
+}
+@container (min-width: 80em) { /* xl, theme.ts:326 — 1280px */
+  .rail > *:not(:only-child) {
+    flex-basis: min(var(--listing-card-min), 18.56%); /* n=5 */
+  }
+}
+
+/*
+ * Task 810 (R1-R3) — prev/next control chrome. Position/size come from the shared spacing scale
+ * and the `ActionIcon` component's own theme-driven sizing (no repo override in `theme.ts`'s
+ * `components.ActionIcon` — confirmed absent, so Mantine's own default variant/colour CSS applies,
+ * consumed with zero literal values here); elevation reuses the existing `--shadow-sm` token
+ * (globals.css:229) so the control reads above the track content it floats over.
+ *
+ * `z-index: var(--z-dropdown)` (globals.css:257, `10`) — measured necessary, not decorative: DOM
+ * order alone (the controls render after `.rail` inside `.wrapper`) is not sufficient, because
+ * `MantineListingCardPattern.module.css`'s `.imageActions` sets `z-index: 1` on a card-internal
+ * overlay slot and `.rail` itself establishes no stacking context of its own (no `position`, and
+ * `overflow-x: auto` alone does not create one) — that `z-index: 1` therefore competes directly
+ * against this sibling rather than staying scoped to its own card, and without an explicit
+ * z-index here Playwright's real click hit-tested a card title instead of the control
+ * (reproduced live, `docs/sessions/evidence/task810/`). `--z-dropdown` is the lowest named rung
+ * above that value on the existing scale (`--z-base:0` would not clear it).
+ */
+.control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: var(--z-dropdown);
+  box-shadow: var(--shadow-sm);
+}
+/*
+ * Owner instruction, mid-Revision-1 (2026-09-10): the control must be static on click — no press
+ * animation. `ActionIcon` carries Mantine's own `mantine-active` class
+ * (`theme.activeClassName`, `default-theme.mjs:27`), which sets
+ * `.mantine-active:active { transform: translateY(0.0625rem) }` (`@mantine/core/styles.css:74`,
+ * UNLAYERED, same as this module) — on THIS control that doesn't just add a bounce, it REPLACES
+ * the centring `translateY(-50%)` above (a single `transform` declaration can hold only one
+ * value), so the button VISUALLY RELOCATES on every real mousedown. That was reproduced as a
+ * functional bug, not merely cosmetic: a real `page.mouse.down()`/`up()` pair at the button's
+ * on-screen centre found `elementFromPoint` at that same fixed coordinate switching from the
+ * button's own `<svg>` to the CARD'S IMAGE underneath during `:active` (measured — the button's
+ * top moved from 428.28px to 451.28px under `mousedown`), so the stationary mouse's `mouseup`
+ * landed on the image instead of the button and the click was silently swallowed — exactly the
+ * intermittent "sometimes nothing happens" the owner reported.
+ *
+ * FIRST attempt at this fix used a bare `.control.mantine-active:active` selector and did not
+ * work: this file is a CSS Module, and CSS Modules scope EVERY bare class token it sees,
+ * including `.mantine-active` — it silently compiled to
+ * `.MantineListingCardTrack_control__xxx.MantineListingCardTrack_mantine-active__yyy:active`,
+ * a selector matching a class no element actually carries, so the override never fired at all
+ * (confirmed by reading the compiled rule back out of `document.styleSheets` in a live probe).
+ * `:global(.mantine-active)` is required to reference Mantine's real, unscoped global class name.
+ * With that fix, specificity `(0,3,0)` still safely outranks Mantine's own `(0,2,0)`.
+ */
+.control:global(.mantine-active):active {
+  transform: translateY(-50%);
+}
+.controlPrev {
+  left: var(--mantine-spacing-xs);
+}
+.controlNext {
+  right: var(--mantine-spacing-xs);
 }

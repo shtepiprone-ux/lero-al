@@ -469,6 +469,8 @@
     "aria_open_search": "Відкрити пошук",
     "aria_prev_page": "Попередня сторінка",
     "aria_next_page": "Наступна сторінка",
+    "aria_scroll_prev": "Попередні оголошення",
+    "aria_scroll_next": "Наступні оголошення",
     "phone_helper": "Введіть лише національний номер — код країни вже вибрано.",
     "notify_email_toggle": "Увімкнути email-сповіщення",
     "aria_remove_favorite": "Видалити з обраних",

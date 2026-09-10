@@ -469,6 +469,8 @@
     "aria_open_search": "Apri ricerca",
     "aria_prev_page": "Pagina precedente",
     "aria_next_page": "Pagina successiva",
+    "aria_scroll_prev": "Annunci precedenti",
+    "aria_scroll_next": "Annunci successivi",
     "phone_helper": "Inserisci solo il numero nazionale — il prefisso paese è già selezionato.",
     "notify_email_toggle": "Attiva notifiche email",
     "aria_remove_favorite": "Rimuovi dai preferiti",

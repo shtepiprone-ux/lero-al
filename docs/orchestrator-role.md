@@ -102,6 +102,8 @@ emit `git push <verified-remote> <verified-branch>` for the owner. It must verif
 read-only before emitting that command, and it must not run any of these commands. A task-design handoff and every
 non-approved review are never authorization to emit a push command.
 
+**ALWAYS-DO, owner rule 2026-09-10.** The commit + push handoff is part of an approved verdict, not a follow-up. It is emitted in the same response, reconciled against `git status --short`. If that command cannot be run in the current environment, state that in one line and emit the handoff anyway from the inspected paths, asking the owner to check the status himself — deferring the block to a later turn is the failure this rule exists to stop; it happened three times in one session before it was written down.
+
 Allowed emission format:
 
 ```powershell

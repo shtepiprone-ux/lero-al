@@ -133,6 +133,8 @@ NOTES` implementation review, it must emit the corresponding owner-run **commit 
 implementation and review artifacts. Sonnet has no approval authority and must not emit, suggest, or run mutating git
 commands, including any form of `git push`.
 
+**ALWAYS-DO (owner rule, 2026-09-10 — the owner had to ask for this three times in one session):** every review that returns `APPROVED` or `APPROVED WITH NOTES` MUST end with the owner-run **commit + push** handoff for the approved work, in the same response as the verdict. An approval without the commands is an unfinished review, not a stylistic choice. **A tooling failure is never an excuse to defer it:** if read-only `git status` cannot be run (bridge timeout, sandbox, anything), say so in one line, emit the handoff built from the paths the review actually inspected, and ask the owner to eyeball `git status` before pasting — never postpone the block to a later turn. The same applies to a `NEEDS REVISION` verdict in reverse: it must contain **no** commit or push command at all.
+
 **ALWAYS-DO (owner rule):** every task-design response that creates or edits a task/docs artifact MUST end with the
 explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a task-creation
 response without those commit commands, and never append `git push`. A verified-remote `git push` handoff is mandatory

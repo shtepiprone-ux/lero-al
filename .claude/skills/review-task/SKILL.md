@@ -252,6 +252,8 @@ Return exactly one decision:
 
 Never use optimistic wording to disguise a non-approved verdict.
 
+**An `APPROVED` / `APPROVED WITH NOTES` decision is not delivered until the same response carries the owner-run commit + push block** (owner rule, 2026-09-10). Reconcile it against `git status --short`; if that cannot be run, say so in one line and emit the block from the paths this review inspected, asking the owner to verify the status before pasting. Never promise the handoff for a later turn.
+
 ## Required review output
 
 Use these headings in order:

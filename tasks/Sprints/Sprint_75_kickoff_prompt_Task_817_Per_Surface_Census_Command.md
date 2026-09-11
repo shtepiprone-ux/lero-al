@@ -484,3 +484,197 @@ git commit -m "docs(Task817): kickoff filed - per-surface census command for GR-
 ```
 
 No `git push` — a task-design handoff is never authorization for one.
+
+---
+
+## 17. Revision 1 — 2026-09-11 (Opus implementation review: `NEEDS REVISION`)
+
+Task 817 state: **`NEEDS REVISION`**. Revision 0 landed a working command, a real two-armed plant and a real
+differential arm; those results are **not** re-done. Three defects block approval, and one of them has already been
+written into `docs/golden-rules.md`, which is the file that may least afford an overstated claim.
+
+### 17.1 Re-entry mode and preserved artifacts
+
+**Re-entry mode: `remediation`.** Do not rebuild the script, re-derive the baseline, re-run the plant, or re-capture
+any Revision 0 transcript that a requirement below does not name.
+
+**Forbidden re-runs — these are the only record of a state that no longer exists:**
+
+| Artifact | Why it is irreplaceable |
+|---|---|
+| `docs/sessions/evidence/task817/13.1-baseline.txt` | the pre-code baseline AC12 compares against |
+| `docs/sessions/evidence/task817/AC9-AC10-plant-arm1.txt` | the planted state: the census blocking on `CollectionsSection` while `check:rendered-scope:report` names it 0 times and `check:story-coverage` exits 0 at 36 covered / 0 unproven |
+| `docs/sessions/evidence/task817/AC9-AC10-plant-arm2-restore.txt` | the single restore witness (before hash, after hash `9fdc9303c89d98d5e82f28e5ededb16f803924a3`, empty porcelain) |
+| `docs/sessions/evidence/task817/AC5-allowlist-probe-part1-with-probe.txt` / `part2-restored.txt` | the tier-2 invalid-entry probe and its restore witness |
+| `docs/sessions/evidence/task817/AC1-AC2-AC3-AC4-AC7-favoritesshell-clean.txt` | **the defective output F1 and F2 rest on.** Deleting it destroys the proof that both defects were real. |
+
+Every Revision 1 transcript is written under `docs/sessions/evidence/task817/` with an `R1_` prefix, BOM-free, using
+`[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))` or PowerShell 7's `-Encoding utf8NoBOM`.
+
+**Verified in the review and carried forward untouched:** R1's exit-2 paths (AC11a/AC11b), R2's transitive walk and
+tier-2/tier-3 recursion stop, R3's six excluded non-rendered imports, R4's tier classification and the reused R10
+tier-2 rejection, R6's `GR-1 CENSUS BLOCKED` / zero-`GR-1 CENSUS COMPLETE` behaviour, R9's proven no-behaviour-change
+on both existing gates (38/0 exit 0; 27 / 3 / 27), R10's `package.json` entry and npm-wrapper parity, R11's plant and
+differential arm, R13's non-enforcement wording. None of these is reopened.
+
+### 17.2 Confirmed defects
+
+1. **`story:` is false for any component whose canonical Mantine Story imports it through a barrel — and the census
+   unwraps barrels on the render side but not on the story side.** `buildCanonicalStoryImportIndex`
+   (`scripts/check-surface-census.mjs:284-288`) resolves each story's `moduleSpecifier` and discards the imported
+   binding names, so `unwrapBarrel` is never applied to a story import; meanwhile the render-side walk applies it
+   four times in this very run. Measured, from `AC1-AC2-AC3-AC4-AC7-favoritesshell-clean.txt` against the story
+   sources read in the review:
+
+   | Node | Census printed | Canonical story that does import it | Import form |
+   |---|---|---|---|
+   | `MantineListingCardPattern.tsx` | `story:no` | `src/stories/patterns/mantine/ListingCardPattern.stories.tsx:7` (`Patterns/Mantine/ListingCardPattern`) | barrel `@/design-system/mantine/patterns` |
+   | `MantineCopyIdButton.tsx` | `story:no` | `src/stories/mantine/primitives/CopyIdButton.stories.tsx:5` (`Mantine/Primitives/CopyIdButton`) | barrel |
+   | `MantineModal.tsx` | `story:no` | `src/stories/mantine/primitives/Modal.stories.tsx:5` (`Mantine/Primitives/Modal`) | barrel |
+   | `MantinePagination.tsx` | `story:no` | `src/stories/mantine/primitives/Pagination.stories.tsx:3` (`Mantine/Primitives/Pagination`) | barrel |
+   | `FavoriteButton.tsx` | `story:yes` | `ListingCardPattern.stories.tsx:8` | **direct path** |
+
+   The direct/barrel split is the whole mechanism, and `FavoriteButton` in the same story file is the control.
+   **Three consequences, in increasing order of cost:** ① four of fifteen rows in the flagship transcript state a
+   false fact; ② the census now contradicts a **quoted owner decision** — decision 1 (2026-09-11) classifies the
+   eleven-path cluster as *"shared design-system components **with canonical Stories**"*, and Task 816's kickoff will
+   read `story:no` for every one of them; ③ `docs/golden-rules.md`'s GR-3 row and `docs/storybook-governance.md`
+   §15.6 now both assert that the command checks "whether a canonical Mantine story imports that **exact path**",
+   which is a capability claim the implementation does not support for the import shape the design system actually
+   uses. A receipt-enforced file asserting a machine-check that does not hold is the GR-2 failure this sprint exists
+   to remove.
+
+   **Not currently a false FAIL, and the reason matters:** every enrolled (tier-1) node is direct-imported by its
+   story, because `check:story-coverage` already enforces that for manifest entries — so today the defect lands only
+   on unenrolled nodes, where the verdict is unchanged. The moment an enrolled component's story moves to the barrel,
+   this becomes a false block in the command GR-1 mandates for every task.
+
+   **The kickoff's own R5 wording invited it** — "a canonical Mantine story imports that **exact path**" reads as
+   module-resolution identity when GR-1's fact is "whether a canonical Mantine Story imports **it**". That is task
+   design's defect, not the executor's; R14 states the intended semantics unambiguously.
+
+2. **`ui-imports` is printed for every node but measured only for tier-1 nodes.** `node.uiImports` is initialised to
+   `0` at `scripts/check-surface-census.mjs:390`; `countUiImports` is called at `:398`, which is after the
+   `if (classification.tier !== 'tier1') continue;` at `:395`. Every tier-2 and tier-3 row therefore prints
+   `ui-imports:0` without the file ever being inspected — in the flagship transcript that is `AppImage.tsx` and all
+   six tier-3 nodes, seven of fifteen rows. `className` is not affected: it is computed at `:374`, before the tier
+   gate, which is why `AppImage.tsx` correctly reads `className:2`. GR-1's census fact ① is *"its `className` count
+   **and whether it imports from `@/components/ui/*`**"* — for **every** component the surface renders, with no
+   tier exemption. A column that prints an unmeasured `0` is precisely a number that reads as a claim about the set
+   the walk excluded.
+
+3. **An unreadable or unparseable surface file produces a one-node census that can print `GR-1 CENSUS COMPLETE`.**
+   `resolveSurface` (`:61-74`) checks existence, file-ness and extension but not parseability; `main` catches the
+   parse throw at `:375`, leaves `sourceFile` null, and `continue`s at `:394`. If that surface happens to be in the
+   manifest and story-imported, the run emits a green GR-1 receipt for a file it could not read. **R1's own text
+   names this**: *"A missing, **unreadable**, or non-`.tsx`/`.ts` `--surface` value exits **2** with a message naming
+   the path — never a silent pass."* The same hole exists one level down: a child whose file cannot be parsed is
+   recorded with `className:0`, `ui-imports:0` and no children, silently.
+
+4. **P3, documentation only.** `docs/storybook-governance.md:2511` describes a node as "a `.js`/`.tsx` production
+   file". `scripts/lib/import-resolver.mjs:39` probes `''`, `.tsx`, `.ts`, `/index.tsx`, `/index.ts` — never `.js`.
+
+### 17.3 Revision 1 requirements
+
+| ID | Requirement | P | Verified by |
+|---|---|---|---|
+| **R14** | `story:yes` means **a canonical Mantine Story imports that component**, through a direct path **or** through a single-hop `index.ts(x)` barrel re-export — the same resolution the render-side walk already performs. `buildCanonicalStoryImportIndex` keeps each story import's binding/imported-export name and applies `unwrapBarrel` to the resolved path exactly as the render walk does, adding both the barrel path and the unwrapped path to the index. A story that imports only the node's **parent** still yields `story:no` — that distinction is GR-3 and must not be weakened. The scope block gains one line stating that story imports are barrel-unwrapped single-hop, so the column's own resolution rule is printed alongside the result. | **P0** | AC16, AC17 |
+| **R15** | `ui-imports` is measured for **every** node whose file can be parsed, tier-2 and tier-3 included — move the `countUiImports` call above the tier-1 recursion gate, keeping the gate itself for recursion only. A node whose file could not be parsed prints `className:n/a  ui-imports:n/a`, never `0`. | **P1** | AC18 |
+| **R16** | An unreadable or unparseable `--surface` root exits **2** with a message naming the path, before any census is printed. A **child** node whose file cannot be parsed is retained in the table with `n/a` columns per R15 **and** is listed in the scope block under a new `Nodes whose source could not be parsed: <n>` counter; when that counter is non-zero the run is blocking (`GR-1 CENSUS BLOCKED`), because a node the census could not read is a node it cannot vouch for. | **P1** | AC19 |
+| **R17** | Every artifact this task wrote that states the `story:` rule is corrected in the same pass: `docs/golden-rules.md`'s **GR-3 row only**, and `docs/storybook-governance.md` §15.6 — both must describe barrel-unwrapped resolution rather than "that exact path", and §15.6's false-positive table gains no row claiming barrel imports are excluded, because after R14 they are not. §15.6's `.js` claim (defect 4) is corrected to the resolver's real extension list. GR-1's `Command` block, the GR-1 row's enforcement wording, and every other rule body stay untouched — R13 still binds, and nothing may claim GR-1 or GR-3 is enforced. | **P1** | AC20 |
+
+### 17.4 Revision 1 acceptance criteria
+
+- **AC16 [R14]** — Given the clean tree after R14, when `node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\FavoritesShell.tsx --report` runs, then
+  `MantineListingCardPattern.tsx`, `MantineCopyIdButton.tsx`, `MantineModal.tsx` and `MantinePagination.tsx` each
+  read `story:yes`, `FavoriteButton.tsx` still reads `story:yes`, and `ListingFeatureIcon.tsx` and
+  `src/components/ui/AppImage.tsx` still read `story:no`. Quote all seven rows. The last two are the control: if they
+  flip, the unwrap is over-matching.
+- **AC17 [R14]** — Given a temporary probe that points one canonical story's import of a component at the barrel
+  instead of its direct path — choose an **enrolled** component, name it, and state why you chose it — then that
+  node reads `story:yes` both before and after the probe. Restore the story byte-identically and retain **one**
+  witness transcript carrying its `git hash-object` before, the same value after, and an explicit
+  `git --no-optional-locks status --porcelain -- <that story path>` output. This is the arm that proves R14 actually
+  changed behaviour rather than that the tree happened to agree.
+- **AC18 [R15]** — Given the same clean-tree report, then `src/components/ui/AppImage.tsx` and all six tier-3 nodes
+  carry a `ui-imports` value produced by reading their own files. Quote those seven rows, and quote the
+  independently-measured legacy-import count for `src/components/ui/AppImage.tsx` from a separate command so the
+  column can be checked against something other than itself.
+- **AC19 [R16]** — Given a temporary probe that makes a `.tsx` file unparseable — apply it **to a copy at a scratch
+  path outside `src/`**, never to a production source file — and pass that path as `--surface`, then the command
+  exits **2** naming the path and prints no census. Delete the scratch file and show `git status --porcelain` does
+  not list it. Then state, with the code reference, how a child node with the same condition is handled after R16.
+- **AC20 [R17]** — Given `docs/golden-rules.md` and `docs/storybook-governance.md` §15.6 read after the change, then
+  neither says the command checks "that exact path"; both describe single-hop barrel unwrapping; §15.6 no longer
+  says `.js`; GR-1's `Command` block is byte-identical to its current content; and neither file claims GR-1 or GR-3
+  is enforced or blocking. Quote the two corrected sentences and the unchanged `Command` block.
+- **AC21 [R14-R17]** — Given the final tree, then §13.2's full gate block is re-run and retained with `R1_` names,
+  `npm run build` exits **0**, and `npm run check:story-coverage` and `npm run check:rendered-scope:report` still
+  reproduce the §13.1 baseline (`38 covered / 0 unproven`, exit 0; `27 / 3 / 27`). Assert the counts, never
+  `check:rendered-scope`'s exit code.
+
+**GR-4 AC AUDIT — 6 criteria (AC16-AC21); each states an observable property; absolutes: none.** AC16's and AC18's
+row values are reproductions of paths measured in this review against named story sources, not targets a correct
+implementation could violate; AC17's and AC19's byte-identity and porcelain claims are scoped to one named file in
+one named transcript; AC20's byte-identity is scoped to a block R13 forbids editing.
+
+### 17.5 Revision 1 verification plan
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$surface = "src\modules\listings\components\FavoritesShell.tsx"
+node.exe -p process.platform
+node.exe --version
+node.exe --check scripts\check-surface-census.mjs
+node.exe scripts\check-surface-census.mjs --surface $surface --report
+npm.cmd run typecheck
+npx.cmd eslint scripts/check-surface-census.mjs
+npm.cmd run check:story-coverage
+npm.cmd run check:rendered-scope:report
+npm.cmd run check:stories
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+```
+
+Expected: `win32` · the Node version · `--check` silent exit 0 · the report showing AC16's and AC18's rows,
+exit 0 · typecheck 0 · eslint 0 errors · `check:story-coverage` `38 covered / 0 unproven` exit 0 ·
+`check:rendered-scope:report` `27 / 3 / 27` exit 0 · `check:stories` 0 violations · `build` **exit 0** ·
+both hygiene gates clean. The AC17 story probe, the AC19 scratch-file probe and their restores are run separately and
+retained as their own witnesses.
+
+### 17.6 Revision 1 completion report contract
+
+Everything §14 requires that Revision 1 touched, plus: AC16's seven quoted rows · AC17's chosen enrolled component,
+why, and its single restore witness · AC18's seven rows and the independent legacy-import count · AC19's exit-2
+transcript, the scratch-path cleanup proof, and the child-node code reference · AC20's two corrected sentences and
+the `Command`-block byte-identity check · AC21's `R1_` transcript paths with their real exit codes · confirmation
+that the five §17.1 artifacts are unmodified (`git status --porcelain -- docs/sessions/evidence/task817/` naming no
+`M` on any of them).
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. `BLOCKED` is not available — every
+requirement here is executable from this file and no owner decision is outstanding. Do not self-approve.
+
+### 17.7 Revision 1 pre-read bundle
+
+`docs/golden-rules.md` **in full**, GR-1's `Command` block and GR-3's row included · `docs/agent-contract.md` clause
+**16d** tiers 1-3 and clause **9** · `scripts/check-surface-census.mjs` in full, `:284-291`, `:370-400` and
+`:426-455` especially · `scripts/check-rendered-scope.mjs:131-160` — the barrel unwrap R14 must mirror ·
+`scripts/lib/import-resolver.mjs` · `src/stories/patterns/mantine/ListingCardPattern.stories.tsx:1-12` — the direct
+vs barrel control §17.2 defect 1 rests on · `docs/storybook-governance.md` §15.6 ·
+`docs/sessions/2026-09-11-task817-per-surface-census-command.md` · §§13-17 of this kickoff.
+
+## 18. Git handoff — Revision 1 orchestration (owner-run, do not execute)
+
+Read-only `git status --short` could not be run from this session: the desktop bridge's Linux workspace does not
+start after the 2026-09-08 Windows update. This block is built from the paths this review wrote. Check `git status`
+before pasting.
+
+```powershell
+git add "tasks/Sprints/Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md" "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "docs/backlog.md"
+git commit -m "docs(Task817): review - NEEDS REVISION; R14-R17 filed for the barrel story resolution, unmeasured ui-imports and the unparseable-surface receipt"
+```
+
+Orchestration artifacts only — no `scripts/`, no `package.json`, no `docs/golden-rules.md`, no
+`docs/storybook-governance.md`, no `docs/sessions/`. No `git push`: `NEEDS REVISION` is not an approved
+implementation review.

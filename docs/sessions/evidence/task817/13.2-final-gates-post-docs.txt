@@ -1,0 +1,40 @@
+=== npm run check:file-integrity (final, after docs edits) ===
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 34 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 34 file(s) clean
+
+EXIT_CODE_file_integrity=0
+
+=== npm run check:mojibake (final, after docs edits) ===
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 4288 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 4288 files
+
+EXIT_CODE_mojibake=0
+
+=== npm run build (final) ===
+├ ƒ /api/upload-popular-location-photo     376 B         185 kB
+├ ƒ /auth/callback                         375 B         185 kB
+└ ƒ /auth/confirm                          376 B         185 kB
++ First Load JS shared by all             184 kB
+  ├ chunks/3434-39c26420d1b28400.js       126 kB
+  ├ chunks/4bd1b696-ad216e4073dcea52.js  54.4 kB
+  └ other shared chunks (total)           4.4 kB
+
+
+ƒ Middleware                              165 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+EXIT_CODE_build=0

@@ -1,0 +1,43 @@
+EXIT_CODE=1
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/modules/listings/components/FavoritesShell.tsx
+    Nodes visited: 15
+    Local import edges resolved (from tier-1 nodes): 53
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 37
+    Tier-3 nodes excluded from recursion, owner-filed (6): 813, 816
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 4
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as import specifiers in that node's own file resolving under src/components/ui/*.
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Canonical Mantine story files consulted: 90 (of 139 total *.stories.ts(x)).
+
+NODES (15):
+    src/modules/listings/components/FavoritesShell.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:(root surface)
+    src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  tier:tier1  manifest:yes  story:yes  className:5  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/CollectionsSection.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/FavoritesTypeFilter.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/ListingCard.tsx  tier:tier1  manifest:yes  story:yes  className:8  ui-imports:1  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/ListingsPagination.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/components/ui/AppImage.tsx  tier:tier2  manifest:no  story:no  className:2  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:3  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:28  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineModal.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/CollectionsSection.tsx
+    src/design-system/mantine/patterns/MantinePagination.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingsPagination.tsx
+    src/modules/listings/components/FavoriteButton.tsx  tier:tier3(owner=813)  manifest:no  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/modules/listings/components/ListingFeatureIcon.tsx  tier:tier3(owner=813)  manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+
+Barrel hops unwrapped (4):
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/modules/listings/components/CollectionsSection.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+
+FAIL  src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). Migrating the primitive file itself is a separate, repo-wide task.
+
+GR-1 CENSUS BLOCKED — src/components/ui/AppImage.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.

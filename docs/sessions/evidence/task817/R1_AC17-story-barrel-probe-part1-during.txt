@@ -1,0 +1,8 @@
+=== AC17: before-probe hash (recorded prior to this run) ===
+cc2838dad4beda4c86e32d09967428f4328da223
+
+=== AC17: hash-object DURING probe (barrel import active) ===
+2f3fc8c15a67ca2920ceb2454cb79ff56cddf3a3
+
+=== AC17: census DURING probe (MantineListingCardTrack.tsx row) — exit 0 ===
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  tier:tier1  manifest:yes  story:yes  className:5  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx

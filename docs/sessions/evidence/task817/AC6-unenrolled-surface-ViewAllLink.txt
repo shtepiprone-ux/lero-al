@@ -1,0 +1,23 @@
+EXIT_CODE=1
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/components/shared/ViewAllLink.tsx
+    Nodes visited: 1
+    Local import edges resolved (from tier-1 nodes): 0
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 0
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 0
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as import specifiers in that node's own file resolving under src/components/ui/*.
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Canonical Mantine story files consulted: 90 (of 139 total *.stories.ts(x)).
+
+NODES (1):
+    src/components/shared/ViewAllLink.tsx  tier:tier1  manifest:no  story:no  className:0  ui-imports:0  parent:(root surface)
+
+FAIL  src/components/shared/ViewAllLink.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+
+GR-1 CENSUS BLOCKED — src/components/shared/ViewAllLink.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.

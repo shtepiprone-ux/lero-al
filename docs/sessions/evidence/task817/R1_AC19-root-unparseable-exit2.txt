@@ -1,0 +1,2 @@
+EXIT_CODE=2
+FAIL  check:surface-census — --surface path could not be parsed: docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx (4 parse diagnostic(s), e.g. "Expression expected.")

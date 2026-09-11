@@ -1,0 +1,7 @@
+=== AC17: hash-object AFTER restore (expect equal to before-probe value cc2838dad4beda4c86e32d09967428f4328da223) ===
+cc2838dad4beda4c86e32d09967428f4328da223
+
+=== git status --porcelain -- that story path (expect empty) ===
+[]
+=== AC17: census AFTER restore (MantineListingCardTrack.tsx row) — exit 0 ===
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  tier:tier1  manifest:yes  story:yes  className:5  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx

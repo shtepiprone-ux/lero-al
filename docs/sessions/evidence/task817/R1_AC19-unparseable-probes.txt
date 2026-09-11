@@ -1,0 +1,32 @@
+EXIT_CODE=1
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: docs/sessions/evidence/task817/_scratch_parent_of_unparseable.tsx
+    Nodes visited: 2
+    Local import edges resolved (from tier-1 nodes): 1
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 0
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 0
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as RENDERED, non-type-only import bindings in that node's own file resolving
+    under src/components/ui/* (a co-located .module.css or hook sibling is never a rendered JSX tag).
+    story:yes means a canonical Mantine story imports the node directly OR through a single-hop index.ts(x)
+    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).
+    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): 1
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Canonical Mantine story files consulted: 90 (of 139 total *.stories.ts(x)).
+
+NODES (2):
+    docs/sessions/evidence/task817/_scratch_parent_of_unparseable.tsx  tier:tier1  manifest:no  story:no  className:0  ui-imports:0  parent:(root surface)
+    docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx  tier:tier1  manifest:no  story:no  className:n/a  ui-imports:n/a  parent:docs/sessions/evidence/task817/_scratch_parent_of_unparseable.tsx
+
+FAIL  docs/sessions/evidence/task817/_scratch_parent_of_unparseable.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx  [unparseable-source]
+  Fix: This node's file could not be read or parsed, so its className/ui-imports (and, for a tier-1 node, its children) cannot be measured. A node the census cannot read is a node it cannot vouch for — fix or investigate the file before this surface can pass.
+FAIL  docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+
+GR-1 CENSUS BLOCKED — docs/sessions/evidence/task817/_scratch_parent_of_unparseable.tsx, docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx, docs/sessions/evidence/task817/_scratch_unparseable_probe.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.

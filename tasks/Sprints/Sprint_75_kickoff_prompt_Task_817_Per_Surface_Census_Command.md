@@ -489,7 +489,9 @@ No `git push` — a task-design handoff is never authorization for one.
 
 ## 17. Revision 1 — 2026-09-11 (Opus implementation review: `NEEDS REVISION`)
 
-Task 817 state: **`NEEDS REVISION`**. Revision 0 landed a working command, a real two-armed plant and a real
+Task 817 state: **`APPROVED WITH NOTES`** (Opus, 2026-09-11, after this revision was implemented). **R14-R17 verified against the artifacts, not the report** — the four barrel-imported patterns read `story:yes` with `ListingFeatureIcon`/`AppImage` unflipped as controls; `ui-imports` is measured above the recursion gate for tier-2/tier-3 too, and the executor self-caught and disclosed an intermediate `AppImage ui-imports:2` miscount; the unparseable root exits 2 before any census prints and an unparseable child blocks with `n/a` columns, proven live; `docs/golden-rules.md`'s GR-3 row and §15.6 are corrected and GR-1's `Command` block is byte-identical. Archived in `docs/backlog-archive.md` 2026-09-11; three P3 notes carried to Tasks 816/818. GR-1 and GR-3 remain **not enforced** — Task **818** is the gate.
+
+The record below is retained as written when the verdict was `NEEDS REVISION`. Revision 0 landed a working command, a real two-armed plant and a real
 differential arm; those results are **not** re-done. Three defects block approval, and one of them has already been
 written into `docs/golden-rules.md`, which is the file that may least afford an overstated claim.
 

@@ -1,0 +1,8 @@
+=== node -p process.platform ===
+win32
+
+=== node --version ===
+v22.22.3
+
+=== node --check scripts\check-surface-census.mjs ===
+EXIT_CODE_check=0

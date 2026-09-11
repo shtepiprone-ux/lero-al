@@ -1,0 +1,2 @@
+EXIT_CODE=2
+FAIL  check:surface-census — --surface path does not exist or is not a file: src\does\not\exist.tsx

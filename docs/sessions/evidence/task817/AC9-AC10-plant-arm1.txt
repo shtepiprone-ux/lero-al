@@ -1,0 +1,167 @@
+=== ARM 1: hash-object AFTER removing FavoritesShell.tsx + CollectionsSection.tsx (expect DIFFERENT from baseline 9fdc9303c89d98d5e82f28e5ededb16f803924a3) ===
+9ec5ed54d9a4fa9488fbc383710e9844ab974335
+
+=== ARM 1: census of FavoritesShell.tsx with plant active — exit 1 ===
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/modules/listings/components/FavoritesShell.tsx
+    Nodes visited: 15
+    Local import edges resolved (from tier-1 nodes): 53
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 37
+    Tier-3 nodes excluded from recursion, owner-filed (6): 813, 816
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 4
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as import specifiers in that node's own file resolving under src/components/ui/*.
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Canonical Mantine story files consulted: 90 (of 139 total *.stories.ts(x)).
+
+NODES (15):
+    src/modules/listings/components/FavoritesShell.tsx  tier:tier1  manifest:no  story:yes  className:0  ui-imports:0  parent:(root surface)
+    src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  tier:tier1  manifest:yes  story:yes  className:5  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/CollectionsSection.tsx  tier:tier1  manifest:no  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/FavoritesTypeFilter.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/ListingCard.tsx  tier:tier1  manifest:yes  story:yes  className:8  ui-imports:1  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/ListingsPagination.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/FavoritesShell.tsx
+    src/components/ui/AppImage.tsx  tier:tier2  manifest:no  story:no  className:2  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:3  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:28  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineModal.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/CollectionsSection.tsx
+    src/design-system/mantine/patterns/MantinePagination.tsx  tier:tier3(owner=816)  manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingsPagination.tsx
+    src/modules/listings/components/FavoriteButton.tsx  tier:tier3(owner=813)  manifest:no  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/modules/listings/components/ListingFeatureIcon.tsx  tier:tier3(owner=813)  manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+
+Barrel hops unwrapped (4):
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/modules/listings/components/CollectionsSection.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+
+FAIL  src/modules/listings/components/FavoritesShell.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/modules/listings/components/CollectionsSection.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). Migrating the primitive file itself is a separate, repo-wide task.
+
+GR-1 CENSUS BLOCKED — src/modules/listings/components/FavoritesShell.tsx, src/modules/listings/components/CollectionsSection.tsx, src/components/ui/AppImage.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.
+
+=== ARM 1: npm run check:rendered-scope:report (expect ZERO CollectionsSection occurrences) ===
+
+> lero-al@0.1.0 check:rendered-scope:report
+> node scripts/check-rendered-scope.mjs --report
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812)
+    Enrolled roots walked: 36 (of 36 manifest entries)
+    Local import edges resolved: 232
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 144
+    Allowlisted edges (tier3, owner-filed): 26
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 25
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+  tier1-unenrolled (27):
+    src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx
+    src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx
+    src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRangeInputs.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRoomsRow.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/YearCombobox.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRangeInputs.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterChoiceGroup.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRoomsRow.tsx
+    src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingsActionRow.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryStaticFrame.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryIsland.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/SimilarListings.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/components/shared/MapWrapper.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ViewTracker.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedTracker.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingShareButton.tsx
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx
+    src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx
+  tier2-legacy-primitive (3):
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx
+    src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx
+  allowlisted (26):
+    src/components/layout/MobileNavDrawer.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/components/layout/UserMenu.tsx -> src/design-system/mantine/patterns/MantineDropdownMenu.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/components/shared/HeroSearchView.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/ListingFeatureIcon.tsx  [owner 813: Shared feature-icon renderer used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.]
+    src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/FavoriteButton.tsx  [owner 813: Shared favorite-toggle control used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/components/shared/LocationCombobox.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsPagination.tsx -> src/design-system/mantine/patterns/MantinePagination.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsFilters.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/SaveSearchButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingsShellView.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingDetailView.tsx -> src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingFeatureIcon.tsx  [owner 813: Shared feature-icon renderer used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/FavoriteButton.tsx  [owner 813: Shared favorite-toggle control used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.]
+    src/modules/listings/components/ListingContact.tsx -> src/design-system/mantine/patterns/MantineListingContactPattern.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+    src/modules/listings/components/SaveToCollectionButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [owner 816: Shared canonical Mantine design-system pattern with its own Story; owner decision 1 (2026-09-11, kickoff §14.6.2) classifies the whole pattern cluster as tier 3, owned by Task 816.]
+  barrel hops unwrapped (25):
+    src/components/layout/MobileNavDrawer.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/layout/UserMenu.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+    src/components/shared/HeroSearchView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineFilterSection.tsx
+    src/modules/locations/components/PopularLocationsView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineHomeSection.tsx
+    src/components/shared/LocationCombobox.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/components/shared/LocationCombobox.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineAddItemPanel.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineAddItemPanel.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/listings/components/ListingsFilters.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/ListingsSortBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsSortBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/SaveSearchButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/ListingsShellView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/listings/components/ListingDetailView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+    src/modules/listings/components/ListingContact.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+
+EXIT_CODE_rendered_scope_report=0
+CollectionsSection occurrence count in check:rendered-scope:report = 0
+=== ARM 1: npm run check:story-coverage (expect exit 0, 0 unproven) ===
+
+> lero-al@0.1.0 check:story-coverage
+> node scripts/check-story-coverage.mjs
+
+📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)
+    Canonical Mantine story files: 90 (of 139 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+    Manifest entries (migration scope): 36
+    ✅ 36 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+
+EXIT_CODE_story_coverage=0

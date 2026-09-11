@@ -95,7 +95,7 @@ that by enrolment: the manifest has no "shared" admission test, so the invalid p
 | **R7** | Decision 5 | A **parity check** fails when a `.tsx` under `src/design-system/mantine/patterns/` is not in the manifest, and passes when every one is. It is CI-safe — no server, no browser, no network, no write to a tracked file — wired into the `governance` job as a **blocking** step, and carries a self-test with a **planted failure** proving it can fail, in the shape the four existing `*:verify` steps use. The exit decision comes from one pure function the real run and the self-test both call. | **P0** | AC9, AC10, AC11 | Confirmed |
 | **R8** | Decision 5 | `npm run audit:design-system-patterns` exits **0** after this task, because the three invalid tier-3 premises no longer exist — not because the audit changed. `scripts/audit-design-system-patterns.mjs`'s logic is **not modified**; if the audit still fails, that is a finding to report, never a reason to edit it. | **P0** | AC12 | Confirmed |
 | **R9** | Sprint exit 2 | `docs/golden-rules.md`'s `Enforcement status` table, `docs/storybook-governance.md` and `docs/design-system-pattern-ownership.md` record the new rule and the parity check. No GR-n rule body, no `Command` block, no receipt string changes, and nothing claims an enforcement state the measurements do not support. | P1 | AC13 | Confirmed |
-| **R11** | Revision 1, §17.1 | `scripts/surface-census-baseline.json` carries **20 entries across 15 surfaces** whose node is now an enrolled, storied pattern and whose `reasonCode` is `tier1-unenrolled-or-unstoried`. `check-surface-census.mjs:544` emits that block only when `!(n.manifest && n.story)`, so none of the 20 can be produced again; `check-surface-census-changed.mjs:155` marks a baseline entry `stale` the first time its surface is censused, and `evaluateGateExitCode` (`:243`) turns one stale entry into exit 1. Resolve per the owner decision in §17.2 so that no future PR's diff inherits a red blocking gate it did not cause. | **P0** | AC15 | **BLOCKED on Task 813 — owner decision §17.6 select (A2), recorded verbatim in §17.7. Do not re-attempt until Task 813 is `APPROVED`; then re-run per §17.7 item 3.** |
+| **R11** | Revision 1, §17.1 | `scripts/surface-census-baseline.json` carries **20 entries across 15 surfaces** as measured 2026-09-11 (**18 across 13** once Task 813 lands — §17.6's arithmetic update; re-derive at execution) whose node is now an enrolled, storied pattern and whose `reasonCode` is `tier1-unenrolled-or-unstoried`. `check-surface-census.mjs:544` emits that block only when `!(n.manifest && n.story)`, so none of the 20 can be produced again; `check-surface-census-changed.mjs:155` marks a baseline entry `stale` the first time its surface is censused, and `evaluateGateExitCode` (`:243`) turns one stale entry into exit 1. Resolve per the owner decision in §17.2 so that no future PR's diff inherits a red blocking gate it did not cause. | **P0** | AC15 | **BLOCKED on Task 813 — owner decision §17.6 select (A2), recorded verbatim in §17.7. Do not re-attempt until Task 813 is `APPROVED`; then re-run per §17.7 item 3.** |
 | **R12** | Revision 1, §17.3 | `docs/sessions/2026-09-11-task820-one-rule-for-the-pattern-directory.md` §14 and the `Limitations` bullet state that `check:file-integrity --all` fails on **one** file, `docs/sessions/evidence/task778/plant-T6.txt`. Its own transcript (`Rev2_file-integrity_all.txt`) names **57** files across `task765/`, `task767/` and `task778/`. Correct both statements to the measured 57 and name the three evidence directories. Do not fix the 57 files — they stay out of scope. | P1 | AC16 | **VERIFIED — closed by Revision 3; session log line 215 and its Limitations bullet both read 57 / task765(24) / task767(1) / task778(32). Re-checked against the transcript this turn.** |
 | **R13** | Revision 2 of the review, §17.6 | `docs/sessions/2026-09-11-task820-one-rule-for-the-pattern-directory.md` is a GR-5 state artifact and currently contradicts reality on three counts: its `Status:` line still reads `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; its last `Assumptions, deviations, limitations` bullet still reads "No `CONFLICT`/`BLOCKED — OWNER DECISION REQUIRED` fired"; and it carries no Revision 3 record at all, while its `Files Changed` row for `scripts/surface-census-baseline.json` still describes only the Revision 1 no-op. Bring all three to the measured state and index the `Rev3_*` transcripts. | **P0** | AC17 | **Open — executor** |
 | **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs` and `scripts/audit-design-system-patterns.mjs` are **not modified**. Every existing gate and self-test passes with its counts explained by this task's changes and nothing else. | **P0** | AC14 | Confirmed |
@@ -219,7 +219,10 @@ is enrolled and storied — the rule decision 5 chose, enforcing itself.
 - **AC8 [R6]** — **Revision 1: superseded by AC15.** Revision 0 satisfied its literal text (gate exit 0, 8/8 arms,
   690 → 690 stated) while leaving the baseline factually false; a green diff-scoped run is not evidence that the
   ledger is true. Do not re-run this criterion as written.
-- **AC15 [R11]** — Given the final tree, then **zero** `scripts/surface-census-baseline.json` entries have a node
+- **AC15 [R11]** — *(count updated by review Revision 3 — see §17.6's arithmetic update: Task 813 already dropped 2
+  of the original 20, so the expected starting point is **18 entries across 13 surfaces** against a **676**-entry
+  baseline. Re-derive both at execution; never copy either figure.)* Given the final tree, then **zero**
+  `scripts/surface-census-baseline.json` entries have a node
   that is present in `scripts/mantine-migration-scope.json` **and** carry `reasonCode`
   `tier1-unenrolled-or-unstoried` — or, where the owner chose §17.2 option (B), that count is stated exactly, each
   of the 15 surfaces is named, and the deferred breakage is carried as its own numbered backlog task. Quote the
@@ -469,6 +472,21 @@ the five named scripts' empty `git diff --stat`; `audit-design-system-patterns.m
 `docs/golden-rules.md`. The owner-native commands for those are in the review response's `Next actions — owner`.
 
 ### 17.6 Revision 2 of the review — option (A) was run and hit a NEW tier-2 refusal (supersedes §17.2)
+
+**ARITHMETIC UPDATE, 2026-09-11 (review Revision 3, after Task 813's implementation).** Task 813's own
+`--update-baseline` run — `docs/sessions/evidence/task813/R7_03_surface-census-changed-update-baseline.txt`, read this
+turn — censused 16 surfaces and took `scripts/surface-census-baseline.json` from **690 to 676** entries: 15 stale
+dropped, 1 new tier-1 block baselined. **Two of §17.1's 20 entries were among the 15 dropped**:
+
+```
+src/app/[locale]/layout.tsx :: src/design-system/mantine/patterns/MantinePopover.tsx        :: tier1-unenrolled-or-unstoried
+src/app/[locale]/layout.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried
+```
+
+So once Task 813 is committed, §17.1's finding is **18 entries across 13 surfaces**, not 20 across 15, and the
+baseline this task reconciles starts at **676**, not 690. AC15 must be measured against that, not against the older
+figure — and it must be **re-derived at execution anyway**, because Task 813's own numbers are themselves a dated
+measurement. The other 13 entries dropped by 813 were `AppImage` tier-2 blocks, which were never part of §17.1's set.
 
 **ANSWERED 2026-09-11 — owner selected (A2). Verbatim text and the binding order in §17.7.**
 

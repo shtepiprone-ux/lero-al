@@ -2,11 +2,10 @@
 
 Sprint 75 · **P0** (raised from tier-3 filing by owner decision §17.6, 2026-09-11) · QA profile **Q4**
 
-**Status: `READY FOR SONNET` — §5.1 was answered 2026-09-11, select **(C)** and **(B1)**, recorded verbatim in §5.1
-below and in `tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md` per `agent-contract`
-16d. Destination: `src/design-system/media/`. A blocking media-directory parity check lands in this same task (R12).
-Scope is `AppImage` and its R1-proven co-located siblings only; `ListingFeatureIcon` and `FavoriteButton` moved to
-Task 821. Task 820's R11 resumes as soon as this task is `APPROVED`.**
+**Status: `NEEDS REVISION` — Revision 1 filed 2026-09-11 after the executor's first implementation. Read §5.3 first;
+it carries the owner decision that widened this scope and the three things still owed. Revision 0's implementation is
+**retained** — R1-R9, R12 and R13 are verified, the move is byte-identical, and nothing is to be rolled back.
+R14, R15 and R16 are the only work left.**
 
 ## 1. Mode and task type
 
@@ -171,7 +170,10 @@ another task and was not re-verified for this kickoff. R1 measures it.
 | **R7** | §3.3 | Both blocking baselines are brought to a true state in this change, each through its own `--update-baseline`, never by hand. `scripts/rendered-scope-baseline.json`: the 2 `AppImage` tier-2 edges are gone or re-keyed to the new path. `scripts/surface-census-baseline.json`: the 25 tier-2 blocks are gone. Report the before/after entry counts and list every entry added and removed. | **P0** | AC8 | Confirmed |
 | **R8** | §3.2 | No `next/image` is introduced anywhere, and `eslint.config.mjs`'s `IMAGE_RENDER_EXCEPTIONS` is updated to the new path so the single approved `no-img-element` disable still resolves. `npm run lint` exits 0 with no new exception added for any other file. | **P0** | AC9 | Confirmed |
 | **R9** | Q4 | The 12 route surfaces in §3.3 render identically. LCP behaviour on `/[locale]`, `/[locale]/listings` and `/[locale]/listings/[slug]` is unchanged — `priority`, `fetchPriority`, the `preload` hint and the `imageGuard` budget all still fire for the same images. | **P0** | AC10, AC11 | Confirmed |
-| **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs` and `scripts/check-pattern-enrolment.mjs` are **not modified** — decision §5.1 states "Do not weaken or alter the existing pattern-directory check". `TIER2_PREFIX` is not changed, widened, or made configurable — moving the file is the fix; editing the classifier is not. R12's check is a **new** script, never an arm added to an existing one. | **P0** | AC12 | Confirmed |
+| **R14** | Owner decision 2026-09-11, §5.3 | The three retarget edits the move forces are **in scope and required**, not deviations: `scripts/check-homepage-theme-runtime-deps.mjs` (its `EXPECTED_ZERO_INPUT_REL` constant, `:105`), `scripts/design-tokens-allowlist.json` (its path-keyed entry), and `docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts` (a real test importing the moved path). Each must be listed in the session log's `Files Changed` with the reason. **`npm run check:homepage-theme-runtime-deps` and `npm run check:homepage-theme-runtime-deps:verify-gate` must both be run and must both exit 0** — Revision 0 changed that gate's input constant and produced no transcript for either. | **P0** | AC18, AC19 | **Open — executor** |
+| **R15** | Review Revision 1 | The session log and completion report must state the measured census result, not "green". `npm run check:surface-census -- --surface` on **both** affected patterns exits **1** on the pre-existing `src/modules/listings/components/LightboxView.tsx [tier1-unenrolled-or-unstoried]` block; what this task removed is the `src/components/ui/AppImage.tsx [tier2-legacy-primitive]` block, and only that. Correct every sentence claiming both censuses are green. | **P0** | AC20 | **Open — executor** |
+| **R16** | Owner decision 2026-09-11, §5.3 | `check:design-tokens:strict` and `check:tailwind-runtime-tokens` may **not** be called pre-existing without a before/after proof, because this diff edits `scripts/design-tokens-allowlist.json` — an input the first gate reads. Produce the comparison from an **isolated snapshot of `HEAD`** (`git worktree add` a detached checkout, or a `git archive` export to a scratch directory) — **never `git stash`**, which mutates the live worktree this task's evidence depends on. Run both gates there and in the working tree, and diff the two outputs. Identical output → file two separate numbered tasks, one per gate. Different output → it is a Task 813 regression and is fixed **in this task**; it is not carried out as debt. | **P0** | AC21, AC22 | **Open — executor** |
+| **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs` and `scripts/check-pattern-enrolment.mjs` are **not modified** — decision §5.1 states "Do not weaken or alter the existing pattern-directory check", and the 2026-09-11 owner decision in §5.3 confirms R10 "remains in force for the six explicitly named governance scripts". `scripts/check-homepage-theme-runtime-deps.mjs` is **not** one of the six and its path-constant retarget is authorised by R14. `TIER2_PREFIX` is not changed, widened, or made configurable — moving the file is the fix; editing the classifier is not. R12's check is a **new** script, never an arm added to an existing one. | **P0** | AC12 | Confirmed |
 | **R11** | §5.1 decision | `docs/golden-rules.md`, `docs/design-system-pattern-ownership.md` and `docs/storybook-governance.md` record where the project's image primitive now lives and which gate governs it. No GR-n rule body, `Command` block or receipt string changes. | P1 | AC13 | Confirmed |
 | **R12** | §5.1 decision (C) | A **blocking, CI-safe, self-tested media-directory parity check** lands in this same task: every `.tsx` directly under `src/design-system/media/` must be a `scripts/mantine-migration-scope.json` entry, and a manifest entry under that directory whose file no longer exists fails as a ghost entry. It derives the directory listing **at runtime** — never a hard-coded name list — prints its scope boundary and its cannot-see sentence on every run, takes its exit decision from one pure function the real run and the self-test both call, and carries a planted-failure proof. Wired into the `governance` job with no `continue-on-error`, no `\|\| true`, no `exit 0` and no wrapper, in the same shape as the four existing `*:verify` steps. Story coverage stays enforced by the existing `check:story-coverage`; this check does not duplicate it. | **P0** | AC14, AC15, AC16 | Confirmed |
 | **R13** | §5.1 decision (B1) | This task is scoped to `AppImage` and its R1-proven co-located siblings only. `ListingFeatureIcon` and `FavoriteButton` are **out of scope** and are filed as **Task 821**; their two `scripts/rendered-scope-allowlist.json` entries stay in place and stay governed, and the `owner` field transfer from `"813"` to `"821"` belongs to Task 821, not here. This task must not touch `scripts/rendered-scope-allowlist.json`. The residual `owner: "813"` values in that file are a documented transitional snapshot under the owner amendment of 2026-09-11 (§5.1) — leaving them is required, not an oversight. | **P0** | AC17 | Confirmed |
@@ -229,7 +231,38 @@ further implementation work for `ListingFeatureIcon` or `FavoriteButton` is auth
   and must be replaced, not stretched.
 - **Out of scope:** any visual or behavioural change to `AppImage` · migrating any other `src/components/ui/*` file ·
   `PasswordRequirementsHint` (the other tier-2 edge, owner decision 1) · Task 820's own baseline reconciliation,
-  which re-runs after this task is approved · editing any gate's logic.
+  which re-runs after this task is approved · editing any gate's **logic** (a path-constant retarget is not logic —
+  see R14).
+
+### 5.3 `OWNER DECISION — RECORDED VERBATIM, 2026-09-11 (Revision 1 of the review)`
+
+> **Owner decision, 2026-09-11.** Retarget `check-homepage-theme-runtime-deps.mjs`, `scripts/design-tokens-allowlist.json`
+> and the related Task 763 assertion is a direct consequence of moving `AppImage`; they are in scope for Task 813.
+> The kickoff must list them and require a successful run of `check:homepage-theme-runtime-deps` and its self-test.
+> R10 remains in force for the six explicitly named governance scripts.
+>
+> Also:
+> - "Both censuses green" must be corrected: both exit 1 on the pre-existing `LightboxView` tier-1; only the tier-2
+>   `AppImage` block disappeared.
+> - Do not call `check:design-tokens:strict` and `check:tailwind-runtime-tokens` pre-existing until there is
+>   before/after proof. I choose an isolated comparison against a snapshot of `HEAD` / a temporary worktree rather
+>   than `git stash`.
+> - If the outputs are identical, file two separate tasks for those two blocking gates; if they differ, it is a Task
+>   813 regression and must be fixed in it, without carrying the debt out.
+
+**What this settles.** The three retarget edits are not deviations to be forgiven — they are requirements (R14), and
+the §7/§8 wording that excluded them was a kickoff defect, now corrected. Rollback is explicitly refused. What is
+owed is the measurement Revision 0 skipped: the `check:homepage-theme-runtime-deps` gate whose input constant this
+task moved (R14), the corrected census wording (R15), and the isolated before/after that decides whether the two red
+blocking gates are inherited or caused (R16).
+
+**Measured going in, so the executor is not re-deriving it blind** — `FACT`, read from Revision 0's own transcripts
+this turn: `I10_design-tokens-strict.txt` reports **56** violations with **0 stale markers** and **zero** findings in
+`src/design-system/media/` or any `AppImage*` file; `I11_tailwind-runtime-tokens.txt` reports **1** finding,
+`src/design-system/mantine/patterns/MantineListingCardTrack.module.css:209 --shadow-sm`, in a file neither Task 820
+nor Task 813 touched, with `baseline entries: 0`. Both gates are **blocking** in `.github/workflows/governance-pr.yml`
+(`:149`, `:152`). That evidence points towards "inherited", which is exactly why it must be proven rather than
+asserted: R16 decides it.
 
 ## 6. Pre-read rule bundle
 
@@ -250,7 +283,9 @@ this kickoff.
 - **Moved:** `src/components/ui/AppImage.tsx` and every co-located file R1 proves must move with it, to the §5.1
   destination.
 - **Edited:** every importer R1 found · `eslint.config.mjs` (`IMAGE_RENDER_EXCEPTIONS` path only) · `package.json` ·
-  `.github/workflows/governance-pr.yml` ·
+  `.github/workflows/governance-pr.yml` · **the three retarget files R14 names** — `scripts/check-homepage-theme-runtime-deps.mjs`
+  (`EXPECTED_ZERO_INPUT_REL` only), `scripts/design-tokens-allowlist.json` (the path key only) and
+  `docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts` (its import path only) ·
   `scripts/mantine-migration-scope.json` (+1) · `scripts/rendered-scope-baseline.json` and
   `scripts/surface-census-baseline.json` (each via its own `--update-baseline`) · `docs/golden-rules.md`,
   `docs/design-system-pattern-ownership.md`, `docs/storybook-governance.md`.
@@ -262,7 +297,10 @@ this kickoff.
 ## 8. Out of scope
 
 Everything in §5.2. In particular: **no change to `AppImage`'s rendered output**, and **no edit to any existing gate
-script** — R12 adds a new one, it never extends `check-pattern-enrolment.mjs` or any of R10's six. Also out of scope
+script's logic** — R12 adds a new one, and it never extends `check-pattern-enrolment.mjs` or any of R10's six.
+*Corrected in Revision 1:* the original wording said "no edit to any existing gate script", which wrongly excluded
+`check-homepage-theme-runtime-deps.mjs`'s path-constant retarget. Retargeting a constant that names a file this task
+moved is required (R14); changing a gate's logic remains forbidden. Also out of scope
 by decision §5.1 (B1): `ListingFeatureIcon`, `FavoriteButton`, and `scripts/rendered-scope-allowlist.json` in any
 form — those are **Task 821**. If clearing the tier-2 edge appears to require any of these, that is a
 `BLOCKED — OWNER DECISION REQUIRED`, not a small fix.
@@ -371,7 +409,30 @@ same images, the same blur-up, the same srcset and the same LCP timing as before
   both `owner: "813"` entries are byte-identical to their pre-task content, and no work on `ListingFeatureIcon` or
   `FavoriteButton` appears in this diff. Quote the empty diff.
 
-**GR-4 AC AUDIT — 17 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits" and
+- **AC18 [R14]** — Given the final tree, then the session log's `Files Changed` lists all three retarget files with
+  the reason "path constant / path key / import path follows the moved file", and each shows only that change. Quote
+  the three `git diff` hunks; any other changed line in those files is a defect.
+- **AC19 [R14]** — Given `npm run check:homepage-theme-runtime-deps` and
+  `npm run check:homepage-theme-runtime-deps:verify-gate` on the final tree, then **both exit 0**, and the gate's
+  output names `src/design-system/media/AppImage.module.css` as its expected-zero input. Quote both transcripts with
+  platform, Node version, cwd, exact command and actual exit code. A non-zero exit here is a defect of this task, not
+  a pre-existing condition.
+- **AC20 [R15]** — Given the corrected session log and completion report, then every sentence about the per-surface
+  census states that **both** runs exit 1 on the pre-existing `LightboxView [tier1-unenrolled-or-unstoried]` block and
+  that only the `AppImage [tier2-legacy-primitive]` block was removed. Quote the corrected sentences against
+  `R1_08_baseline_census-gallery.txt` (2 blocks, before) and `AC5_01_census-gallery-final.txt` (1 block, after).
+- **AC21 [R16]** — Given an isolated snapshot of `HEAD` created with `git worktree add --detach` or `git archive`
+  into a scratch directory outside this repository's working tree, then `npm run check:design-tokens:strict` and
+  `npm run check:tailwind-runtime-tokens` are run **there** and in the live working tree, and the four outputs are
+  retained. `git stash` is forbidden: it mutates the worktree this task's other evidence depends on. Quote the four
+  transcripts and the exact isolation command.
+- **AC22 [R16]** — Given AC21's four outputs, then the verdict is stated explicitly. Identical violation sets in both
+  environments → both gates are inherited, and this task files **two separate numbered tasks**, one per gate, naming
+  the exact violation set each owns. Any difference → it is this task's regression and is fixed **inside Task 813**;
+  it may not be carried out as debt, baselined, or handed to a follow-up. Quote the set comparison, not just the
+  totals.
+
+**GR-4 AC AUDIT — 22 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits" and
 AC12's / AC17's "empty diff" are this task's defined outcome, scoped to named paths this task deliberately does not
 otherwise change.**
 
@@ -425,6 +486,8 @@ npm.cmd run check:pattern-enrolment
 npm.cmd run check:pattern-enrolment:verify
 npm.cmd run check:media-enrolment
 npm.cmd run check:media-enrolment:verify
+npm.cmd run check:homepage-theme-runtime-deps
+npm.cmd run check:homepage-theme-runtime-deps:verify-gate
 npm.cmd run check:story-coverage
 npm.cmd run check:stories
 npm.cmd run build
@@ -437,6 +500,33 @@ Expected: typecheck 0 · lint 0 · the `components/ui/AppImage` search at **zero
 `check:story-coverage` exit 0 with the moved component covered · `check:stories` 0 violations · `build` **exit 0**,
 mandatory under `agent-contract` clause 9 · both hygiene gates clean. **Record every exit code inside its own
 transcript and the `git hash-object` of every changed file in this block.**
+
+### 13.2a The isolated before/after for the two red blocking gates (R16/AC21)
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$evidence = "docs\sessions\evidence\task813"
+$snapshot = "$env:TEMP\task813-head-snapshot"
+git --no-optional-locks worktree add --detach $snapshot HEAD
+Push-Location $snapshot
+npm.cmd ci
+npm.cmd run check:design-tokens:strict *>&1 | Out-File -Encoding utf8NoBOM "$snapshot\before-design-tokens.txt"
+npm.cmd run check:tailwind-runtime-tokens *>&1 | Out-File -Encoding utf8NoBOM "$snapshot\before-tailwind-tokens.txt"
+Pop-Location
+Copy-Item "$snapshot\before-design-tokens.txt" "$evidence\R16_01_design-tokens_BEFORE.txt"
+Copy-Item "$snapshot\before-tailwind-tokens.txt" "$evidence\R16_02_tailwind-tokens_BEFORE.txt"
+npm.cmd run check:design-tokens:strict *>&1 | Out-File -Encoding utf8NoBOM "$evidence\R16_03_design-tokens_AFTER.txt"
+npm.cmd run check:tailwind-runtime-tokens *>&1 | Out-File -Encoding utf8NoBOM "$evidence\R16_04_tailwind-tokens_AFTER.txt"
+git --no-optional-locks worktree remove $snapshot --force
+git --no-optional-locks worktree list
+git --no-optional-locks status --short
+```
+
+`git worktree add` and `git worktree remove` write only under `$env:TEMP` and `.git/worktrees`; they never touch this
+repository's working tree, which is why the owner chose this form over `git stash`. If `git worktree` is unavailable,
+use `git archive HEAD | tar -x -C $snapshot` instead and say so. Expected: both `BEFORE` runs complete against an
+unmodified `HEAD`; the final `worktree list` shows only the main worktree; `git status --short` is unchanged from
+before the block. Compare the **violation sets**, not the totals, and record the AC22 verdict.
 
 ### 13.3 Owner visual review
 
@@ -461,7 +551,8 @@ AC4's and AC9's zero-hit searches · AC5's two per-surface censuses · AC6's man
 coverage totals · AC8's two scope blocks with every baseline entry added and removed · AC10's two route tables ·
 AC11's six `OWNER VISUAL QA REQUIRED` tuples · AC12's empty diffs and the `TIER2_PREFIX` byte-identity check ·
 AC13's quoted rows · AC14's output · AC15's probe and its single witness · AC16's workflow hunk · AC17's empty
-allowlist diff · every command with its real exit code and transcript path · the `git hash-object` of every
+allowlist diff · AC18's three retarget hunks · AC19's two zero-exit transcripts · AC20's corrected census sentences ·
+AC21's four isolated transcripts and the isolation command · AC22's set comparison and explicit verdict · every command with its real exit code and transcript path · the `git hash-object` of every
 changed file · assumptions · deviations · limitations · unresolved issues.
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED — OWNER DECISION REQUIRED`.
@@ -478,4 +569,6 @@ Do not self-approve; Sonnet runs, emits and suggests no mutating git command.
 | Are the figures in §3 safe to copy? | **No** — R1/AC1 re-derives them, and §3.5 states what was never measured at all. |
 | Is the destination an executor choice? | **No** — decision §5.1 (C) fixes it at `src/design-system/media/` and refuses the Mantine-pattern directory by name. |
 | Does the new directory ship ungoverned? | **No** — R12 lands its parity check in this same task, blocking in CI with a planted-failure proof, reading the directory at runtime. That was the one cost of choosing a new namespace, and the decision closed it here rather than deferring it. |
+| Is the `check-homepage-theme-runtime-deps.mjs` edit a R10 violation? | **No** — it is not one of R10's six, and the 2026-09-11 owner decision (§5.3) puts the retarget in scope. What was missing was proof: R14/AC19 requires the gate and its self-test to exit 0. |
+| Are the two red gates pre-existing? | **Unproven, and that is the point.** This diff edits `scripts/design-tokens-allowlist.json`, an input the first gate reads. R16/AC21 decides it from an isolated `HEAD` snapshot, never `git stash`; AC22 binds both outcomes in advance so the answer cannot be chosen after seeing it. |
 | Does this task touch the allowlist? | **No** — R13/AC17, and the 2026-09-11 owner amendment in §5.1 makes the residual `owner: "813"` values a documented transitional snapshot. The field transfer is Task 821's first tracked-file change, after it verifies Task 820's commit. No further work on those two components is authorized under this task. |

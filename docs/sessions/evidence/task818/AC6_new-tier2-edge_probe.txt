@@ -1,0 +1,84 @@
+== AC6: plant a new tier-2 edge by deleting a real tier-2 entry from the baseline (redo — content-based empty-diff proof) ==
+hash-object before (pristine, 29 entries) = f18595c1f156da264fbb4ceb5ae10d60d22052c3
+target tier-2 key: src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx
+entries after reformat-via-update-baseline (28 — the deleted tier-2 key stays refused because the 28-entry state is now the prior baseline):
+28
+target key present after this pass = False
+hash-object of canonical 28-entry (Node-written) state = eedd0e9859d4bc140a9f1e1a6f5dfc2cd6f77cee
+
+== npm run check:rendered-scope (gate should name the tier-2 edge as new) ==
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 1
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  1 rendered edge(s) not in the baseline:
+At line:31 char:1
++ npm.cmd run check:rendered-scope *>> $transcript
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  1 rendere...n the baseline::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+  Fix (tier1-unenrolled): migrate, story and add the target to scripts/mantine-migration-scope.json — or,
+  if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json
+  with a reason and an owning task number.
+  Fix (tier2-legacy-primitive): stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+  Once the edge is a deliberately-owned exception (tier1 -> allowlist) or fixed, run: npm run check:rendered-scope:update-baseline
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1
+
+== npm run check:rendered-scope:update-baseline again (should REFUSE the tier-2 edge, and this time the file is already canonical so this proves a true no-op / empty diff) ==
+
+> lero-al@0.1.0 check:rendered-scope:update-baseline
+> node scripts/check-rendered-scope.mjs --update-baseline
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+Baseline updated -> scripts\rendered-scope-baseline.json
+    version: 1
+    entries written: 28
+npm.cmd : 
+At line:36 char:1
++ npm.cmd run check:rendered-scope:update-baseline *>> $transcript
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAIL  1 new tier2-legacy-primitive edge(s) refused — a baseline cannot exempt a new legacy-primitive import:
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+  Fix: stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+EXIT_CODE=1
+hash-object after second --update-baseline run = eedd0e9859d4bc140a9f1e1a6f5dfc2cd6f77cee
+EMPTY_DIFF (byte-identical, same canonical writer both times) = True
+== hash-object after restore ==
+f18595c1f156da264fbb4ceb5ae10d60d22052c3
+HASH_MATCH=True
+== git status --porcelain -- scripts/rendered-scope-baseline.json ==
+?? scripts/rendered-scope-baseline.json

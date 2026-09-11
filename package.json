@@ -70,6 +70,8 @@
     "check:story-coverage:update-exempt": "node scripts/check-story-coverage.mjs --update-exempt",
     "check:rendered-scope": "node scripts/check-rendered-scope.mjs",
     "check:rendered-scope:report": "node scripts/check-rendered-scope.mjs --report",
+    "check:rendered-scope:update-baseline": "node scripts/check-rendered-scope.mjs --update-baseline",
+    "check:rendered-scope:verify": "node scripts/check-rendered-scope.mjs --verify-gate",
     "check:surface-census": "node scripts/check-surface-census.mjs",
     "check:design-tokens": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",

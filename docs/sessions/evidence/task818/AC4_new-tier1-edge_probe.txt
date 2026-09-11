@@ -1,0 +1,49 @@
+== AC4: plant RecentlyViewedSection.tsx as a new manifest root (currently tier1-unenrolled per R0 listing) ==
+== hash-object before ==
+9fdc9303c89d98d5e82f28e5ededb16f803924a3
+== npm run check:rendered-scope with RecentlyViewedSection.tsx enrolled ==
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 39 (of 39 manifest entries)
+    Local import edges resolved: 259
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 159
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 30 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 2
+    Stale baseline entries (no matching measured edge): 1
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  2 rendered edge(s) not in the baseline:
+At line:17 char:1
++ npm.cmd run check:rendered-scope *>> $transcript
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  2 rendere...n the baseline::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/modules/listings/components/RecentlyViewedSection.tsx -> src/modules/listings/components/ClearRecentlyViewedButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/RecentlyViewedSection.tsx -> src/modules/listings/components/RecentlyViewedGrid.tsx  [tier1-unenrolled]
+  Fix (tier1-unenrolled): migrate, story and add the target to scripts/mantine-migration-scope.json — or,
+  if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json
+  with a reason and an owning task number.
+  Fix (tier2-legacy-primitive): stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+  Once the edge is a deliberately-owned exception (tier1 -> allowlist) or fixed, run: npm run check:rendered-scope:update-baseline
+FAIL  1 stale baseline entr(ies) — no matching rendered edge exists:
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx
+  Fix: run `npm run check:rendered-scope:update-baseline` to drop paid-off debt from the baseline.
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1
+== hash-object after restore ==
+9fdc9303c89d98d5e82f28e5ededb16f803924a3
+== git status --porcelain -- scripts/mantine-migration-scope.json ==
+HASH_MATCH=True

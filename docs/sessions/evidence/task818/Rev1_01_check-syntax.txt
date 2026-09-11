@@ -1,0 +1,11 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command ===
+node.exe --check scripts\check-rendered-scope.mjs
+=== output ===
+=== exit code ===
+0

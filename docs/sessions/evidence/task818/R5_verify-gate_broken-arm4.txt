@@ -1,0 +1,19 @@
+
+> lero-al@0.1.0 check:rendered-scope:verify
+> node scripts/check-rendered-scope.mjs --verify-gate
+
+check:rendered-scope gate self-test (--verify-gate, Task 818 R6)
+
+  PASS  Arm 1 — new tier1-unenrolled edge absent from baseline -> reported new
+  PASS  Arm 2 — new tier2-legacy-primitive edge -> gate reports new, --update-baseline refuses it
+  PASS  Arm 3 — baseline entry with no matching measured edge -> reported stale
+  FAIL  Arm 4 — unplanted tree vs. committed baseline -> clean (0 new, 1 stale)
+
+Self-test: 3 passed, 1 failed
+npm.cmd : FAIL  check:rendered-scope:verify — the gate self-test found a broken arm.
+At line:14 char:1
++ npm.cmd run check:rendered-scope:verify *> "$evidence\R5_verify-gate_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  check:ren...d a broken arm.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

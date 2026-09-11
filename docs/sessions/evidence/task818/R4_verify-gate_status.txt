@@ -1,0 +1,10 @@
+BEFORE:
+ M package.json
+ M scripts/check-rendered-scope.mjs
+?? docs/sessions/evidence/task818/
+?? scripts/rendered-scope-baseline.json
+AFTER:
+ M package.json
+ M scripts/check-rendered-scope.mjs
+?? docs/sessions/evidence/task818/
+?? scripts/rendered-scope-baseline.json

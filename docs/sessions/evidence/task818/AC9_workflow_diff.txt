@@ -1,0 +1,18 @@
+diff --git a/.github/workflows/governance-pr.yml b/.github/workflows/governance-pr.yml
+index 26ab3df30..6708e5424 100644
+--- a/.github/workflows/governance-pr.yml
++++ b/.github/workflows/governance-pr.yml
+@@ -118,9 +118,11 @@ jobs:
+       - name: Story coverage gate (fail-on-new; exemption allowlist)
+         run: npm run check:story-coverage
+ 
+-      - name: Rendered-but-unenrolled component scope gate (Task 812 — advisory, owner decision 3, 2026-09-11; not yet enforced, see docs/golden-rules.md GR-1)
++      - name: Rendered-but-unenrolled component scope gate (Task 818 — blocking, baselined fail-on-new)
+         run: npm run check:rendered-scope
+-        continue-on-error: true
++
++      - name: Rendered-scope gate self-test (verifies gate detects violations — CI-safe, Task 818)
++        run: npm run check:rendered-scope:verify
+ 
+       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
+         run: npm run check:design-tokens:strict

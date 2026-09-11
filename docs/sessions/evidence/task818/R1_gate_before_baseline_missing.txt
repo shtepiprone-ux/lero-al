@@ -1,0 +1,24 @@
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+npm.cmd : FAIL  Baseline file missing: scripts\rendered-scope-baseline.json
+At line:3 char:1
++ npm.cmd run check:rendered-scope *> "$evidence\R1_gate_before_baselin ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  Baseline ...e-baseline.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Run: npm run check:rendered-scope:update-baseline
+Docs: docs/storybook-governance.md §15.5, docs/golden-rules.md GR-1/GR-3.

@@ -1,0 +1,89 @@
+== AC5 arm 1: delete a real baseline entry (edge still exists) -> expect NEW ==
+== hash-object before ==
+f18595c1f156da264fbb4ceb5ae10d60d22052c3
+target key: src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx
+== npm run check:rendered-scope (arm 1) ==
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 1
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  1 rendered edge(s) not in the baseline:
+At line:21 char:1
++ npm.cmd run check:rendered-scope *>> $transcript
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  1 rendere...n the baseline::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx  [tier1-unenrolled]
+  Fix (tier1-unenrolled): migrate, story and add the target to scripts/mantine-migration-scope.json — or,
+  if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json
+  with a reason and an owning task number.
+  Fix (tier2-legacy-primitive): stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+  Once the edge is a deliberately-owned exception (tier1 -> allowlist) or fixed, run: npm run check:rendered-scope:update-baseline
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1
+== hash-object after restore (arm 1) ==
+f18595c1f156da264fbb4ceb5ae10d60d22052c3
+HASH_MATCH_ARM1=True
+
+== AC5 arm 2: baseline entry pointing at a non-existent edge -> expect STALE ==
+== hash-object before ==
+f18595c1f156da264fbb4ceb5ae10d60d22052c3
+ghost key: src/fake/task818/Ghost.tsx -> src/fake/task818/Phantom.tsx
+== npm run check:rendered-scope (arm 2) ==
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 29
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 1
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  1 stale baseline entr(ies) — no matching rendered edge exists:
+At line:22 char:1
++ npm.cmd run check:rendered-scope *>> $transcript
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  1 stale b...ed edge exists::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/fake/task818/Ghost.tsx -> src/fake/task818/Phantom.tsx
+  Fix: run `npm run check:rendered-scope:update-baseline` to drop paid-off debt from the baseline.
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1
+== hash-object after restore (arm 2) ==
+f18595c1f156da264fbb4ceb5ae10d60d22052c3
+HASH_MATCH_ARM2=True
+== git status --porcelain -- scripts/rendered-scope-baseline.json (final) ==
+?? scripts/rendered-scope-baseline.json

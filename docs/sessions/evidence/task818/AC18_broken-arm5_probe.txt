@@ -1,0 +1,48 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+
+== AC18: break Arm 5's expectation deliberately (evaluateGateExitCode always returns 0) ==
+hash-object before = 5042028f014d2e5e97d2524bc7972999e975f0c2
+=== command: npm.cmd run check:rendered-scope:verify (Arm 5 must now FAIL) ===
+
+> lero-al@0.1.0 check:rendered-scope:verify
+> node scripts/check-rendered-scope.mjs --verify-gate
+
+check:rendered-scope gate self-test (--verify-gate, Task 818 R6/R15) — running 5 arms
+
+  PASS  Arm 1 — new tier1-unenrolled edge absent from baseline -> reported new
+  PASS  Arm 2 — new tier2-legacy-primitive edge -> gate reports new, --update-baseline refuses it
+  PASS  Arm 3 — baseline entry with no matching measured edge -> reported stale
+  PASS  Arm 4 — unplanted tree vs. committed baseline -> clean (0 new, 0 stale)
+  FAIL  Arm 5 — exit-code wiring: a synthetic new edge drives evaluateGateExitCode to 1, the clean state to 0
+
+Arms run: 5
+Self-test: 4 passed, 1 failed
+FAIL  check:rendered-scope:verify — the gate self-test found a broken arm.
+exit code = 1
+== hash-object after restore (FIRST ATTEMPT — FAILED, see correction below) ==
+a8ca70f82674193f9df066cf2ea2552c1ba510ef
+HASH_MATCH = False
+ M scripts/check-rendered-scope.mjs
+
+== CORRECTION ==
+The first restore used PowerShell `Get-Content -Raw` to read the pre-break content into a variable,
+then `[IO.File]::WriteAllText` to write it back. On this BOM-less UTF-8 source file, Windows PowerShell
+5.1's `Get-Content -Raw` (no `-Encoding utf8` argument) decoded the bytes using the system codepage
+instead of UTF-8, corrupting every multi-byte character (em dashes, section signs, box-drawing comment
+dividers) into CP1252-of-UTF-8 mojibake before it was written back — this is exactly the failure
+`check:mojibake` caught (0 invalid-UTF-8 files, 7 `CP1252-of-UTF-8` artifacts) when re-run afterward.
+Corrected via a Node.js script (UTF-8-correct on both read and write): read the corrupted file as UTF-8,
+map each mojibake character back to its Windows-1252 byte value, decode that byte sequence as UTF-8 to
+recover the original text, write it back as UTF-8. Verified: `diff` against the corrupted version showed
+every changed line contained one of the corrupted marker characters and nothing else (zero logic
+changes); `node --check` passed; `npm run check:rendered-scope:verify` re-run and printed all 5 arms
+PASS again, exit 0; `npm run check:mojibake` and `npm run check:file-integrity` both clean afterward.
+
+== hash-object after the corrected restore ==
+5042028f014d2e5e97d2524bc7972999e975f0c2
+HASH_MATCH (corrected) = True

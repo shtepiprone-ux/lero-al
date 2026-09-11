@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "edges": {
+    "src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRangeInputs.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRoomsRow.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {
+      "tier": "tier2-legacy-primitive"
+    },
+    "src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx": {
+      "tier": "tier2-legacy-primitive"
+    },
+    "src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/components/shared/MapWrapper.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryIsland.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryStaticFrame.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingShareButton.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedTracker.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/SimilarListings.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ViewTracker.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterChoiceGroup.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRangeInputs.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRoomsRow.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/YearCombobox.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingsActionRow.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
+      "tier": "tier1-unenrolled"
+    },
+    "src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx": {
+      "tier": "tier2-legacy-primitive"
+    }
+  }
+}

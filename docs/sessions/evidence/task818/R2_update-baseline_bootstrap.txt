@@ -1,0 +1,19 @@
+
+> lero-al@0.1.0 check:rendered-scope:update-baseline
+> node scripts/check-rendered-scope.mjs --update-baseline
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 27
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 29 (deduped from 30 finding(s) — two bindings can resolve to the same edge)
+
+Bootstrap — no existing baseline found. Writing initial baseline -> scripts\rendered-scope-baseline.json
+    version: 1
+    entries written: 29
+PASS  check:rendered-scope:update-baseline — baseline written, no tier-2 refusals.

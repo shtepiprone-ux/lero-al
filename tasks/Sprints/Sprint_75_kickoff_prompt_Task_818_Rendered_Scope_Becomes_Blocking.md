@@ -386,3 +386,173 @@ git commit -m "docs(Task818): kickoff filed - versioned fail-on-new baseline, CI
 ```
 
 No `git push` — a task-design handoff is never authorization for one.
+
+---
+
+## 17. Revision 1 — 2026-09-11 (Opus implementation review: `NEEDS REVISION`)
+
+Task 818 state: **`NEEDS REVISION`**. The gate, the baseline, the CI change and the self-test are right and are **not
+re-done**. Three defects block approval: one is an evidence gap that `agent-contract` clause 9 makes blocking on its
+own, and two are holes in the ratchet and the reporting that this sprint exists to close.
+
+### 17.1 Re-entry mode and preserved artifacts
+
+**Re-entry mode: `remediation`.** Do not rebuild the comparator, regenerate the baseline, re-run the planted probes,
+or re-derive the frontier.
+
+**Forbidden re-runs — the only record of a state that no longer exists:**
+
+| Artifact | Why it is irreplaceable |
+|---|---|
+| `docs/sessions/evidence/task818/R0_*.txt` | the pre-code baseline: the frontier report, `check:story-coverage`, the 15-node census |
+| `docs/sessions/evidence/task818/R1_gate_before_baseline_missing.txt` | the gate's behaviour with **no** baseline file, which can never occur again once the file is committed |
+| `docs/sessions/evidence/task818/R2_update-baseline_bootstrap.txt` | the one-time bootstrap write — and the evidence §17.2 defect 2 rests on |
+| `docs/sessions/evidence/task818/AC4_*`, `AC5_*`, `AC6_*` | the three planted arms with their restore witnesses |
+| `docs/sessions/evidence/task818/R5_verify-gate_broken-arm4.txt`, `R6_ac8_broken-arm_restore_witness.txt` | the deliberately-broken self-test arm |
+
+**Verified in review and carried forward untouched:** the baseline file (29 entries — 26 tier-1 + 3 tier-2, sorted,
+`version: 1`, edge-keyed, matching the 27-printed-minus-one-duplicate arithmetic §3.1 predicted); `dedupeEdges`,
+`compareToBaseline` and `computeBaselineUpdate` as pure functions shared by the gate and the self-test; the CI hunk
+(`continue-on-error` removed, name corrected, `check:rendered-scope:verify` step added immediately after, no wrapper);
+the four `package.json` entries; `docs/golden-rules.md`'s GR-1/GR-3 rows and closing paragraph, which state the
+enrolled-subgraph/pre-enrolment split precisely and leave the `Command` block and receipt byte-identical; the
+unchanged allowlist (13 entries), manifest (38 entries) and `check:story-coverage` (38/0). None of this is reopened.
+
+### 17.2 Confirmed defects
+
+1. **`P1` — not one final-gate transcript records an exit code, and no transcript records the platform or Node
+   version.** Measured across `docs/sessions/evidence/task818/`: `EXIT_CODE` appears in exactly three files
+   (`AC4_*`, `AC5_*`, `AC6_*`); the `R0`-`R5` series carries `_exit.txt` sidecars; and **all thirteen `G*` files —
+   `G1_typecheck`, `G2_eslint`, `G3_check-rendered-scope`, `G4_…verify`, `G5_story-coverage`, `G6_check-stories`,
+   `G7_surface-census`, `G8`/`G11`/`G12_file-integrity`, `G9`/`G13_mojibake` and `G10_build` — carry none.** A grep
+   for `win32` or `v22.` across every transcript in the directory returns **zero** hits; `G2_eslint.txt` carries a
+   `C:\Claude_Code_Projects\lero-al\…` path, which is working-directory evidence and not the platform record.
+   `G10_build.txt` ends on `✓ Compiled successfully in 51s` — a build-phase string, not a process exit code, and
+   `orchestrator-procedures.md`'s 791 corollary is exactly that a success-shaped string is not proof the run
+   succeeded. `agent-contract` clause **9** makes a build transcript without its exit code blocking evidence, and
+   `orchestrator-role.md`'s Windows-native rule (P0) requires platform, Node version, working directory, command and
+   actual exit code on **every** retained transcript. Task 817 satisfied both (`R1_platform-and-check.txt`); this pass
+   did not. **The kickoff's §13.2 block is half the cause and that is mine:** §13.1 printed
+   `node.exe -p process.platform`, §13.2 did not, and §13.4 stated the rule in prose instead of printing the command —
+   the "naming checks in a sentence instead of printing them is a defect" rule, applied to its author. → **R12 / AC15**.
+2. **`P2` — the bootstrap path launders tier-2 debt, which is the exact thing R4 exists to prevent.**
+   `computeBaselineUpdate` (`scripts/check-rendered-scope.mjs:328-343`) refuses a tier-2 edge only when
+   `priorBaselineEdges !== null`; `main`'s `--update-baseline` branch (`:551-562`) sets `priorEdges = null` whenever
+   the file is absent. The bootstrap was correct and is done. What remains is a live bypass: delete the committed
+   `scripts/rendered-scope-baseline.json`, run `npm run check:rendered-scope:update-baseline`, and **any** number of
+   new tier-2 edges are written as pre-existing debt and the gate goes green. The allowlist's equivalent protection
+   (Task 812 R10) is unconditional — a `src/components/ui/*` path is refused whatever the history — and R4's must be
+   too. The executor disclosed this in the session log, which is the right conduct and changes nothing about the
+   hole. **AC6 did not cover it, and that is also mine.** → **R13 / AC16**.
+3. **`P2` — `--report` prints the frontier with no baseline context at all.** The `REPORT_ONLY` block exits at
+   `scripts/check-rendered-scope.mjs:541`, before the dedupe line at `:546` and the baseline block at `:596-603`. So
+   `npm run check:rendered-scope:report` still prints `tier1-unenrolled (27)` and `tier2-legacy-primitive (3)` exactly
+   as it did while the gate was red, with no baselined/new/stale counts, no distinct-edge count, and not the
+   tier-2-debt sentence. AC10 said *"Given **any** run"*, and Sprint 75's exit criterion 5 is that **the narrowing is
+   printed alongside the result** so a line can never be read as a claim about the excluded set. Report mode is the
+   mode a human reads when triaging. → **R14 / AC17**.
+4. **`P3` — the permanent self-test proves classification, not exit wiring.** Arms 1-3 (`:409-446`) call
+   `compareToBaseline`/`computeBaselineUpdate` directly and assert their return values; arm 4 runs the real walk but
+   only on the clean tree. A refactor that classified a new edge correctly and stopped exiting 1 would leave
+   `check:rendered-scope:verify` green. The end-to-end exit codes are proven only in this task's one-off `AC4`/`AC5`/
+   `AC6` transcripts. Not a defect in what shipped; a named gap in what the gate guards. → **R15 / AC18**.
+5. **`P3` — `AC6_new-tier2-edge_probe.txt:4` retains thinking-out-loud** inside a retained evidence transcript
+   (*"…should be 28, key absent since … -- wait this reformat pass treats the 28-entry state as PRIOR…"*). Evidence
+   files are cited by later sessions; a sentence that argues with itself is not a record. → **R16 / AC19**.
+
+### 17.3 Revision 1 requirements
+
+| ID | Requirement | P | Verified by |
+|---|---|---|---|
+| **R12** | Every retained transcript this revision writes records, in the file itself, the platform, the Node version, the working directory, the exact command and the **actual exit code** — the shape `orchestrator-role.md`'s Windows-native rule requires and Task 817's `R1_platform-and-check.txt` already demonstrates. The **whole** §17.5 gate block is re-run and retained with `R1_` names on the final tree; `npm run build` among them, with its exit code in the same file as its output. A separate sidecar is acceptable only if the main transcript names it. | **P0** | AC15 |
+| **R13** | `--update-baseline` refuses to bootstrap once a baseline is expected: when `scripts/rendered-scope-baseline.json` is absent, it exits non-zero, names the path, and says to restore it from version control rather than regenerate — because regenerating from nothing records any new tier-2 edge as pre-existing debt. If an escape hatch is wanted it is an explicit, separately-named flag that prints what it is about to record and is not reachable from `npm run check:rendered-scope:update-baseline`. The tier-2 refusal in `computeBaselineUpdate` is then unconditional for every reachable path. | **P1** | AC16 |
+| **R14** | `--report` prints the same baseline context the gate prints: the distinct-edge count with its dedupe note, the baseline version, baselined/new/stale counts, and the tier-2-debt-is-not-an-exemption sentence — then still exits 0 and still lists every tier. No other change to report mode. | **P1** | AC17 |
+| **R15** | `check:rendered-scope:verify` gains one arm that proves the **exit wiring**, not only the classification: with a synthetic new edge present the gate path must produce a non-zero result, and on the clean tree a zero one, exercised through the same code that sets the process exit status. Keep it CI-safe — no server, no browser, no write to a tracked file. State in the self-test's own output how many arms it runs, so a dropped arm is visible. | P2 | AC18 |
+| **R16** | `docs/sessions/evidence/task818/AC6_new-tier2-edge_probe.txt`'s line 4 is replaced by a single factual sentence describing what the probe does. No other line of any retained transcript changes, and the file's command output is untouched. | P3 | AC19 |
+
+### 17.4 Revision 1 acceptance criteria
+
+- **AC15 [R12]** — Given the final tree, then every `R1_`-named transcript of §17.5's block exists and each records
+  `win32`, the Node version, the working directory, its exact command and its real exit code; `npm run build`'s
+  transcript shows exit **0** in the same file as its output. Quote the build transcript's platform line, command
+  line and exit line, and list the transcript paths with their exit codes.
+- **AC16 [R13]** — Given the baseline file temporarily moved aside, when `npm run check:rendered-scope:update-baseline`
+  runs, then it exits non-zero, names the path and says to restore from version control, and **no** baseline file is
+  written. Restore the file and retain **one** witness transcript carrying its `git hash-object` before, the same
+  value after, and an explicit `git --no-optional-locks status --porcelain -- scripts/rendered-scope-baseline.json`
+  output. Then, with the baseline present, repeat AC6's tier-2 refusal to show that path still behaves — quote both.
+- **AC17 [R14]** — Given `npm run check:rendered-scope:report` on the clean tree, then its output contains the
+  distinct-edge count, the baseline version, `Baselined edges`, `New edges`, `Stale baseline entries` and the
+  tier-2-debt sentence, **and** still lists `tier1-unenrolled`, `tier2-legacy-primitive` and `allowlisted` in full,
+  and still exits 0. Quote the scope block and the exit code.
+- **AC18 [R15]** — Given `npm run check:rendered-scope:verify`, then it prints the number of arms it ran, every arm
+  passes, and at least one arm asserts a non-zero result for a synthetic new edge and a zero result for the clean
+  tree. Then break that new arm's expectation deliberately, show the self-test exits non-zero naming it, restore, and
+  show `git --no-optional-locks status --porcelain` unchanged in the same transcript.
+- **AC19 [R16]** — Given `docs/sessions/evidence/task818/AC6_new-tier2-edge_probe.txt` after the change, then line 4
+  is one factual sentence, the file contains no self-correcting aside, and every command-output line below it is
+  byte-identical to its pre-change content. Quote the old and new line and the `git diff --stat` for that file.
+
+**GR-4 AC AUDIT — 5 criteria (AC15-AC19); each states an observable property; absolutes: none.** AC19's
+"byte-identical" is scoped to the command-output region of one named file this requirement deliberately does not
+touch; AC16's "no baseline file is written" is an observable property of one named path in one named run.
+
+### 17.5 Revision 1 verification plan
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+Get-Location
+node.exe --check scripts\check-rendered-scope.mjs
+npm.cmd run typecheck
+npx.cmd eslint scripts/check-rendered-scope.mjs
+npm.cmd run check:rendered-scope
+npm.cmd run check:rendered-scope:report
+npm.cmd run check:rendered-scope:verify
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+```
+
+Expected: `win32` · the Node version · the project root · `--check` silent exit 0 · typecheck 0 · eslint 0 errors ·
+`check:rendered-scope` **exit 0** with `29` baselined / `0` new / `0` stale · `:report` exit 0 now carrying AC17's
+context · `:verify` exit 0 with its arm count · `check:story-coverage` `38 covered / 0 unproven` exit 0 ·
+`check:stories` 0 violations · `build` **exit 0** · both hygiene gates clean. **Record the exit code of every one of
+these in its own retained transcript** — that is R12, and its absence is why this revision exists. The AC16 and AC18
+probes are run and restored separately, each with its own single witness.
+
+### 17.6 Revision 1 completion report contract
+
+Everything §14 requires that Revision 1 touched, plus: AC15's transcript inventory witheach exit code and the build
+transcript's platform/command/exit lines quoted · AC16's refusal transcript, its single restore witness and the
+repeated tier-2 refusal · AC17's report-mode scope block · AC18's arm count, the broken-arm run and its restore
+witness · AC19's old and new line 4 with the file's `git diff --stat` · confirmation that the §17.1 artifacts are
+unmodified (`git status --porcelain -- docs/sessions/evidence/task818/` naming no `M` on any of them).
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. `BLOCKED` is not available — every
+requirement here is executable from this file and §5's owner note still does not gate anything. Do not self-approve.
+
+### 17.7 Revision 1 pre-read bundle
+
+`docs/orchestrator-role.md` → **Windows-native validation rule**, in full · `docs/agent-contract.md` clause **9** ·
+`docs/golden-rules.md` GR-2 · `scripts/check-rendered-scope.mjs` `:320-343` (the bootstrap branch), `:503-546` (the
+report block and where it exits), `:389-475` (the self-test), `:551-585` (`--update-baseline`) ·
+`docs/sessions/evidence/task817/R1_platform-and-check.txt` — the transcript shape R12 requires ·
+`docs/sessions/evidence/task818/AC6_new-tier2-edge_probe.txt` · §§13-17 of this kickoff.
+
+## 18. Git handoff — Revision 1 orchestration (owner-run, do not execute)
+
+Read-only `git status --short` could not be run from this session: the desktop bridge's Linux workspace does not
+start after the 2026-09-08 Windows update. Built from the paths this review wrote — check `git status` before pasting.
+
+```powershell
+git add "tasks/Sprints/Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md" "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "docs/backlog.md"
+git commit -m "docs(Task818): review - NEEDS REVISION; R12-R16 filed for the missing exit-code/platform evidence, the bootstrap tier-2 hole and report-mode context"
+```
+
+Orchestration artifacts only — no `scripts/`, no `package.json`, no `.github/`, no `docs/golden-rules.md`, no
+`docs/storybook-governance.md`, no `docs/sessions/`. No `git push`: `NEEDS REVISION` is not an approved
+implementation review.

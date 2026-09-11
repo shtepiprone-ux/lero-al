@@ -35,7 +35,7 @@ of the wrong proposition.
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
 | **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **FILED** 2026-09-11 by owner decision 1 — kickoff owed |
 | **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. GR-1's `Command` block is runnable; the blind spot is measured (planted de-enrolment: the census blocks on `CollectionsSection`, `check:rendered-scope` names it zero times). GR-1/GR-3 remain **not enforced** — gated on **818**. 3 P3 notes carried to 816/818. → [`Sprint_75_kickoff_prompt_Task_817_…`](Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md) |
-| **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 3 — kickoff owed |
+| **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **KICKOFF FILED** 2026-09-11 — route B (versioned edge-level fail-on-new baseline) is the single active route; §3.2 records why clearing the frontier is not it. Carries one non-blocking `STOP — OWNER DECISION REQUIRED` on **exit criterion 2** (§5) → [`Sprint_75_kickoff_prompt_Task_818_…`](Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md) |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
@@ -70,6 +70,14 @@ established the detector-plus-boundary pattern this sprint is meant to produce.
 1. Every task above is `APPROVED` / `APPROVED WITH NOTES` or explicitly deferred by a quoted owner decision.
 2. **`docs/golden-rules.md`'s enforcement table shows GR-1 and GR-3 as `enforced` by a named command**, not
    receipt-only — that is what 812 buys.
+   > **Qualified 2026-09-11 while filing 818's kickoff, and awaiting the owner.** 812 built the detector, 817 built
+   > GR-1's per-surface command, and 818 makes the detector blocking — but the blocking command enforces the
+   > **enrolled-subgraph** rule only. `check-surface-census.mjs` needs a `--surface` argument no CI job can supply,
+   > so GR-1's census of an **unenrolled** surface — the exact Task 809 case the rule was written for — stays a
+   > by-hand receipt after 818. The owner decides: (a) criterion 2 is met as qualified and this sprint may close on
+   > it; (b) a further task closes the pre-enrolment half (e.g. a `changed-files`-driven step running
+   > `check-surface-census.mjs` per changed surface); (c) the criterion is reworded. 818's kickoff §5 carries the
+   > same note; no task waits on the answer.
 3. Each landed detector carries a **two-armed plant**: a planted violation that makes it exit non-zero, and its
    removal that clears it, both with retained transcripts and restoration evidence.
 4. Each landed detector carries a **written false-positive boundary** — the class it deliberately does not flag, the

@@ -133,6 +133,12 @@ jobs:
       - name: Diff-mapped surface census gate self-test (verifies gate detects violations — CI-safe, Task 819)
         run: npm run check:surface-census:changed:verify
 
+      - name: Pattern-directory enrolment gate (Task 820 — blocking, one rule for the pattern directory)
+        run: npm run check:pattern-enrolment
+
+      - name: Pattern-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 820)
+        run: npm run check:pattern-enrolment:verify
+
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 

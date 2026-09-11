@@ -3,13 +3,15 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ActionIcon, Button, Paper, Stack, Text } from '@mantine/core';
 import { Heart, MessageCircle, Share2, FolderOpen, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import {
   MantineListingDetailPattern,
   type ListingDetailBadge,
   type ListingFeature,
   type ListingAmenity,
-  type MantineListingContactPatternProps,
-} from '@/design-system/mantine/patterns';
+} from '@/design-system/mantine/patterns/MantineListingDetailPattern';
+import type { MantineListingContactPatternProps } from '@/design-system/mantine/patterns';
 
 const meta: Meta<typeof MantineListingDetailPattern> = {
   title: 'Patterns/Mantine/ListingDetailPattern',

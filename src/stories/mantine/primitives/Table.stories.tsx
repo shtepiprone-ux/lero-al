@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Badge, Avatar, ActionIcon, Group, Text } from '@mantine/core'
 import { ShieldOff, ChevronRight } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
-import { MantineDataTableToCards, type CardConfig } from '@/design-system/mantine/patterns'
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineDataTableToCards, type CardConfig } from '@/design-system/mantine/patterns/MantineDataTableToCards'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta<typeof MantineDataTableToCards> = {

@@ -4,7 +4,10 @@ import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
 import { theme } from '@/design-system/mantine/theme';
 import { expect, within, userEvent } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineListingCardPattern, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns/MantineListingCardPattern';
+import { MantineCopyIdButton } from '@/design-system/mantine/patterns';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton';
 import { AuthContext } from '@/modules/auth/context/AuthContext';

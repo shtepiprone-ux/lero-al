@@ -1,0 +1,14 @@
+2efa43ef66ab38e5de96d78ddb424104ce9d3acc  .github/workflows/governance-pr.yml
+d0033a6392180dfcd8e6f7f594a6c8dc4cb5ba9a  docs/design-system-pattern-ownership.md
+a6e56d1f3812ebe6949e1dd0cd9963702508ecd7  docs/golden-rules.md
+72133df1c06a467d49485d6fa513a0be9e328bbb  docs/storybook-governance.md
+4d7a182cd7fd91422346df9fc392139c656e5c6e  messages/en.json
+25b5df18d827b48aaee47d7df95ba0a43c3f404c  messages/it.json
+267f006343efe238688338bb3462e591904e8030  messages/sq.json
+23e6f761328d5c6613001063872d00e5c6605391  messages/uk.json
+c58332a9e5cd79585a359b9519886b3b59bc3920  package.json
+aa44f6e940d0f541e8e64dcb8cfe7cfca84474c1  scripts/mantine-migration-scope.json
+bf09fd2f63b542faa14a63bfb44253203422b026  scripts/rendered-scope-allowlist.json
+edfbfd9520736d1d7826d0b1f8a6f7c1c831a4ee  scripts/check-pattern-enrolment.mjs
+ddc1d48f9fbb935cef9155356ec01636b257c7eb  src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx
+5fbb26aa5cc57f2e77c5775ca3f8108e79adf5a5  scripts/rendered-scope-baseline.json

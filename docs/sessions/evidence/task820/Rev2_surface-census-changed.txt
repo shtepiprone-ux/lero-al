@@ -1,0 +1,56 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 794403a8b9cd416786310703997b17303876b52f
+    Changed paths seen: 39
+    Excluded (39):
+      .github/workflows/governance-pr.yml  [outside-src]
+      docs/design-system-pattern-ownership.md  [outside-src]
+      docs/golden-rules.md  [outside-src]
+      docs/storybook-governance.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      package.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-allowlist.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      src/stories/mantine/primitives/Combobox.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/CopyIdButton.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/CountButton.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Drawer.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/DropdownMenu.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Modal.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/NavigationMenu.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Pagination.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Popover.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Progress.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/RangeDatePicker.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Select.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Table.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Tooltip.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AppShellFoundation.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AuthFormPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/DialogDrawerPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/FormSectionStack.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingCardPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingContactPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/NotificationPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ResponsiveActionFooter.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/TwoColumnForm.stories.tsx  [story-or-test-file]
+    Included surfaces (0):
+    Surfaces censused: 0
+    Blocks baselined (recorded debt, does not fail): 0
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 690
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

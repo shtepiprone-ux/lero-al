@@ -1,0 +1,52 @@
+
+> lero-al@0.1.0 check:story-coverage
+> node scripts/check-story-coverage.mjs
+
+📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)
+    Canonical Mantine story files: 90 (of 139 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+    Manifest entries (migration scope): 66
+    ✅ 38 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 28 enrolled but unproven (no canonical Mantine story imports them)
+
+npm.cmd : ❌  check:story-coverage FAILED — 28 manifest-enrolled component(s) have no canonical Mantine story importing them:
+At line:2 char:1
++ npm.cmd run check:story-coverage *>&1 | Out-File -FilePath "$evidence ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:story-...importing them::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+    src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+    src/design-system/mantine/patterns/MantineModal.tsx
+    src/design-system/mantine/patterns/MantinePagination.tsx
+    src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx
+    src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+    src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+    src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+    src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx
+    src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+    src/design-system/mantine/patterns/MantineNavigationMenu.tsx
+    src/design-system/mantine/patterns/MantineNotificationPattern.tsx
+    src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+    src/design-system/mantine/patterns/MantinePopover.tsx
+    src/design-system/mantine/patterns/MantineProgress.tsx
+    src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx
+    src/design-system/mantine/patterns/MantineSelect.tsx
+    src/design-system/mantine/patterns/MantineTooltip.tsx
+    src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+    src/design-system/mantine/patterns/responsiveBottomSheet.tsx
+
+  Fix: add (or restore) a canonical Mantine story — title starting with one of
+  [Mantine/Primitives/, Patterns/Mantine/] — that statically imports this exact component path.
+  A component NOT in scripts/mantine-migration-scope.json is out of scope and never blocks this gate.
+  Docs: docs/storybook-governance.md §15.
+EXIT_CODE=1

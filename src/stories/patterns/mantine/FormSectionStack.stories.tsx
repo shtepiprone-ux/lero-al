@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineFormSectionStack } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineFormSectionStack } from '@/design-system/mantine/patterns/MantineFormSectionStack';
 
 const meta: Meta<typeof MantineFormSectionStack> = {
   title: 'Patterns/Mantine/FormSectionStack',

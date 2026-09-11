@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineAppShellFoundation } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineAppShellFoundation } from '@/design-system/mantine/patterns/MantineAppShellFoundation';
 
 const meta: Meta<typeof MantineAppShellFoundation> = {
   title: 'Patterns/Mantine/AppShellFoundation',

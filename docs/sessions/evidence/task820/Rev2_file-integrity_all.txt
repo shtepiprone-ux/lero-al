@@ -1,0 +1,127 @@
+🔍  check:file-integrity — src/ + scripts/ + messages/ + docs/ (--all)
+    Checking 5027 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+❌  check:file-integrity FAILED — 57 corrupt / invalid file(s):
+
+  docs/sessions/evidence/task765/phase1-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase1-capture.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-capture.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-check-css-vars.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-check-design-tokens.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-check-stories.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase3-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4-p1-plant.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4-p2-plant.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4-p3-build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4-p3-plant.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4/p3prime-build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase4/p3prime-check-css-vars.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-check-css-vars.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-check-design-tokens.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-check-mojibake.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-check-stories.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase5-final-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/phase6-platform-attestation.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task765/platform-attestation.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task767/storybook-computed-styles.post-edit.json
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/S1-census-recheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/S2-baseline-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/S2-baseline-screenshots-assert.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/S2b-isolated-baseline-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/S2b-isolated-baseline-screenshots-assert.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V1-vitest-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V1-vitest.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V10-build-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V10-build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V2-check-stories-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V2-check-stories.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V3-check-story-coverage-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V3-check-story-coverage.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V4-governance-tailwind-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V4-governance-tailwind.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V5-design-tokens-strict-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V5-design-tokens-strict.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V6-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V7-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V7b-build-storybook-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V7c-isolated-postedit-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V8-post-edit-screenshots-assert.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V8b-post-edit-screenshots-assert-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V8c-isolated-postedit-screenshots-assert.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V9-locale-leak-final.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V9-locale-leak.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/V9b-check-i18n.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/plant-T2.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/plant-T3.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/plant-T4.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/plant-T5.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task778/plant-T6.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

@@ -1,0 +1,17 @@
+check:pattern-enrolment — one rule for the pattern directory (Task 820, Decision 5)
+    Scanned: every top-level *.tsx directly under src/design-system/mantine/patterns/
+    NOT scanned (stated, never implicit): index.ts (the barrel, not .tsx), any __tests__/
+    subdirectory, *.module.css, and any .tsx this directory does not itself contain — a pattern
+    added anywhere else is invisible to this check by construction.
+    Cannot see: a pattern file this script cannot read (permissions/symlink) — skipped, never
+    silently treated as compliant.
+
+    Pattern files found: 33
+    Manifest entries (total, all surfaces): 65
+
+FAIL  1 pattern-directory file(s) not enrolled in scripts\mantine-migration-scope.json:
+    src/design-system/mantine/patterns/MantineProgress.tsx
+  Fix: add the path to scripts/mantine-migration-scope.json and give it a canonical Mantine Story.
+
+Docs: docs/design-system-pattern-ownership.md §4 (decision 5), docs/golden-rules.md GR-1.
+PLANTED_EXIT_CODE=1

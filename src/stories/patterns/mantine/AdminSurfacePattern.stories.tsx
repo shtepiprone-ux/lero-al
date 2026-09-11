@@ -4,7 +4,10 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Avatar, Badge, ActionIcon, Group, Text } from '@mantine/core';
 import { ShieldOff, ChevronRight } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineAdminSurfacePattern } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage (scripts/check-story-coverage.mjs)
+// resolves import specifiers to concrete file paths and the manifest entry is the component file itself
+// (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s story header comment).
+import { MantineAdminSurfacePattern } from '@/design-system/mantine/patterns/MantineAdminSurfacePattern';
 import type { CardConfig } from '@/design-system/mantine/patterns';
 
 const meta: Meta<typeof MantineAdminSurfacePattern> = {

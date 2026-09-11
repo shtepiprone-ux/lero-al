@@ -1,0 +1,37 @@
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 66 (of 66 manifest entries)
+    Local import edges resolved: 296
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 180
+    Allowlisted edges (tier3, owner-filed): 4
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 30 (deduped from 31 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 29
+    New edges (not in baseline): 1
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  1 rendered edge(s) not in the baseline:
+At line:2 char:1
++ npm.cmd run check:rendered-scope *>&1 | Out-File -FilePath "$evidence ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  1 rendere...n the baseline::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx -> src/modules/listings/components/LightboxView.tsx  [tier1-unenrolled]
+  Fix (tier1-unenrolled): migrate, story and add the target to scripts/mantine-migration-scope.json — or,
+  if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json
+  with a reason and an owning task number.
+  Fix (tier2-legacy-primitive): stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+  Once the edge is a deliberately-owned exception (tier1 -> allowlist) or fixed, run: npm run check:rendered-scope:update-baseline
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

@@ -1,0 +1,9 @@
+map-changed-surfaces — PR-diff -> affected-surface mapper (Task 819)
+node.exe : FAIL  surface-limit-exceeded: 193 mapped surface(s) exceeds the limit of 60
+At line:4 char:1
++ node.exe scripts\map-changed-surfaces.mjs --base $BASE --head $HEAD - ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  surface-l...the limit of 60:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+1

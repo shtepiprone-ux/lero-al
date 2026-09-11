@@ -1,0 +1,31 @@
+R11 attempt (Rev3) — tier-2 refusal, restored to pre-run state
+
+BASE=02d975f945159df38c23a0caab43e1c7a96faa58
+HEAD=794403a8b9cd416786310703997b17303876b52f
+--max-changed-files 4991 --max-surfaces 193 (exact measured counts for this base..head window)
+
+Command run:
+  node scripts/check-surface-census-changed.mjs --base 02d975f945159df38c23a0caab43e1c7a96faa58 --head 794403a8b9cd416786310703997b17303876b52f --max-changed-files 4991 --max-surfaces 193 --update-baseline
+
+Result: exit 1. All 15 named surfaces from kickoff Sec17.1 were included (0 missing) and the write reached
+675 candidate entries, but the writer refused 2 NEW tier2-legacy-primitive blocks discovered only by this
+widened window (full transcript: Rev3_04_update-baseline.txt):
+
+  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+
+This is exactly the stop condition the owner named in the 2026-09-11 select-(A) decision: "If the widened
+measurement encounters a tier-2 refusal ... stop for a new owner decision; do not narrow the window,
+hand-edit the baseline, or defer the red gate."
+
+Per the script's own writer (computeBaselineUpdate), the file was partially written (675 entries, omitting
+the 2 refused tier-2 blocks) before the process exited 1. That partial write was NOT left in place: restored
+to its pre-run byte-identical content, verified by git hash-object.
+
+Pre-run hash:  bfa1076f3ba97fea44f708c14a226164a014df24  (Rev3_01_baseline-hash-before.txt)
+Post-restore hash: bfa1076f3ba97fea44f708c14a226164a014df24
+git status --short -- scripts/surface-census-baseline.json  (expect empty -> clean): ''
+
+No tracked file was left modified by this attempt. R11/AC15 stops here pending a new owner decision on the
+2 tier-2 edges (migrate AppImage first, defer these 2 patterns' enrolment, or something else -- not an
+executor's call, per kickoff Sec5's CONFLICT clause and this decision's own text).

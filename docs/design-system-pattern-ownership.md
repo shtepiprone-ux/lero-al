@@ -199,3 +199,32 @@ already in scope. The transferable paragraph — "when a check narrows its input
 alongside the result" — is written into `docs/orchestrator-procedures.md` → "Recurring orchestrator failure modes,"
 naming this sprint's four landed commands (`check:rendered-scope`, `check:surface-census`,
 `check:surface-census:changed`, `audit:design-system-patterns`) as its evidence.
+
+## 7. Task 820 implementation record (2026-09-11)
+
+Decision 5 (§4) is implemented. `scripts/mantine-migration-scope.json` gained the remaining 28 pattern paths
+(38 → 66); `scripts/rendered-scope-allowlist.json` had its eleven Task 816 tier-3 entries removed, leaving exactly
+the two Task 813 entries owned outside the design system (13 → 2); `responsiveBottomSheet.tsx` gained its canonical
+Story (`src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx`, title `Mantine/Primitives/
+ResponsiveBottomSheet`) before enrolment, per decision 5's own ordering requirement. `npm run
+audit:design-system-patterns` now exits 0 (33 enrolled / 0 tier-3 / 0 ungoverned) — the invalid "shared" premise for
+`MantineCopyIdButton`/`MantineListingCardPattern`/`MantineListingDetailPattern` no longer exists, because those three
+paths are enrolled directly rather than resting on the tier-3 allowlist's now-retired "shared" test. The census in §2
+is left as the dated 2026-09-11 pre-820 measurement it always was; it is not rewritten to the post-820 state.
+
+**A new CI-blocking gate, `scripts/check-pattern-enrolment.mjs` (`npm run check:pattern-enrolment`), now makes the
+rule self-enforcing**: it reads the `src/design-system/mantine/patterns/` directory listing (never a hard-coded name
+list) and fails when a `.tsx` file there is not a manifest entry, or when a manifest entry under that directory
+points at a file that no longer exists. See `docs/storybook-governance.md` §15.8 for the full mechanism, and
+`docs/golden-rules.md`'s GR-1 enforcement row for its place alongside `check:rendered-scope`/`check:surface-census:
+changed`.
+
+**A measured, not assumed, dependency.** Twenty-seven of the twenty-eight newly-enrolled patterns' own canonical
+Stories imported their component through the shared `@/design-system/mantine/patterns` barrel, which
+`check-story-coverage.mjs`'s resolver does not unwrap — every one of those 27 read as enrolled-but-unproven the
+moment it was enrolled, contradicting this task's own kickoff §3.1 assumption. Fixed by switching each story's own
+import to the direct component path (the convention already documented in `MantineAddItemPanel.stories.tsx`); see
+`docs/storybook-governance.md` §15.8 for the measurement and `docs/sessions/evidence/task820/` for the transcripts.
+Task 820 did not modify `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`,
+`scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, or `scripts/audit-design-system-
+patterns.mjs`.

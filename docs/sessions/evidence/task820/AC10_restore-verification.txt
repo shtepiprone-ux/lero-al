@@ -1,0 +1,6 @@
+=== hash after restore ===
+aa44f6e940d0f541e8e64dcb8cfe7cfca84474c1
+=== expected pre-probe hash ===
+aa44f6e940d0f541e8e64dcb8cfe7cfca84474c1
+=== git status --porcelain for this path ===
+ M scripts/mantine-migration-scope.json

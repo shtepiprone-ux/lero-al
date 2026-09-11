@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Center, Stack } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineAuthFormPattern } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineAuthFormPattern } from '@/design-system/mantine/patterns/MantineAuthFormPattern';
 
 const meta: Meta<typeof MantineAuthFormPattern> = {
   title: 'Patterns/Mantine/AuthFormPattern',

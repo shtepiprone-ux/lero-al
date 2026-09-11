@@ -1,0 +1,55 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+BASE=02d975f945159df38c23a0caab43e1c7a96faa58
+HEAD=794403a8b9cd416786310703997b17303876b52f
+--- git log -1 BASE ---
+02d975f945159df38c23a0caab43e1c7a96faa58 2026-06-04 15:27:06 +0200 fix(Task372-379,382): mobile full-width primitives, all-popups bottom-sheet, Tabs no-left-clip, Select full-width+h11, EU phone
+--- git log -1 HEAD ---
+794403a8b9cd416786310703997b17303876b52f 2026-09-11 18:57:09 +0200 docs(Task820): kickoff filed - enrol the 28, retire the 11 transitional entries, add the pattern-enrolment parity check
+--- git status --short (informational, uncommitted Task820 work not part of BASE..HEAD refs) ---
+M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M docs/design-system-pattern-ownership.md
+ M docs/golden-rules.md
+ M docs/storybook-governance.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package.json
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-allowlist.json
+ M scripts/rendered-scope-baseline.json
+ M src/stories/mantine/primitives/Combobox.stories.tsx
+ M src/stories/mantine/primitives/CopyIdButton.stories.tsx
+ M src/stories/mantine/primitives/CountButton.stories.tsx
+ M src/stories/mantine/primitives/Drawer.stories.tsx
+ M src/stories/mantine/primitives/DropdownMenu.stories.tsx
+ M src/stories/mantine/primitives/Modal.stories.tsx
+ M src/stories/mantine/primitives/NavigationMenu.stories.tsx
+ M src/stories/mantine/primitives/Pagination.stories.tsx
+ M src/stories/mantine/primitives/Popover.stories.tsx
+ M src/stories/mantine/primitives/Progress.stories.tsx
+ M src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+ M src/stories/mantine/primitives/Select.stories.tsx
+ M src/stories/mantine/primitives/Table.stories.tsx
+ M src/stories/mantine/primitives/Tooltip.stories.tsx
+ M src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx
+ M src/stories/patterns/mantine/AppShellFoundation.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+ M src/stories/patterns/mantine/DialogDrawerPattern.stories.tsx
+ M src/stories/patterns/mantine/FormSectionStack.stories.tsx
+ M src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+ M src/stories/patterns/mantine/NotificationPattern.stories.tsx
+ M src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+ M src/stories/patterns/mantine/ResponsiveActionFooter.stories.tsx
+ M src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+ M tasks/Sprints/Sprint_75_kickoff_prompt_Task_820_One_Rule_For_The_Pattern_Directory.md
+?? docs/sessions/2026-09-11-task820-one-rule-for-the-pattern-directory.md
+?? docs/sessions/evidence/task820/
+?? scripts/check-pattern-enrolment.mjs
+?? src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx

@@ -1,0 +1,10 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== cwd ===
+C:\Claude_Code_Projects\lero-al
+=== git status --short ===
+?? docs/sessions/evidence/task820/
+=== pattern file count ===
+33

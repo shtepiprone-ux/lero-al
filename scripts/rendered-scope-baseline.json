@@ -19,6 +19,9 @@
     "src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx": {
       "tier": "tier1-unenrolled"
     },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx -> src/modules/listings/components/LightboxView.tsx": {
+      "tier": "tier1-unenrolled"
+    },
     "src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx": {
       "tier": "tier1-unenrolled"
     },

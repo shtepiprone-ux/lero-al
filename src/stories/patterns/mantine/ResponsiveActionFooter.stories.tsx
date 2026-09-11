@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Box } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineResponsiveActionFooter } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineResponsiveActionFooter } from '@/design-system/mantine/patterns/MantineResponsiveActionFooter';
 
 const meta: Meta<typeof MantineResponsiveActionFooter> = {
   title: 'Patterns/Mantine/ResponsiveActionFooter',

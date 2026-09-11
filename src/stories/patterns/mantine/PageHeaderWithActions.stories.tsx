@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { storyT } from '@/stories/_storyI18n';
-import { MantinePageHeaderWithActions } from '@/design-system/mantine/patterns';
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantinePageHeaderWithActions } from '@/design-system/mantine/patterns/MantinePageHeaderWithActions';
 
 const meta: Meta<typeof MantinePageHeaderWithActions> = {
   title: 'Patterns/Mantine/PageHeaderWithActions',

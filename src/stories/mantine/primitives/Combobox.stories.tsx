@@ -2,7 +2,9 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
-import { MantineCombobox, type MantineComboboxOption } from '@/design-system/mantine/patterns'
+// Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
+// to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
+import { MantineCombobox, type MantineComboboxOption } from '@/design-system/mantine/patterns/MantineCombobox'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {

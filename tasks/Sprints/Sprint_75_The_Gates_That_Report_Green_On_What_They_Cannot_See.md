@@ -208,3 +208,18 @@ currently carries 820's uncommitted `13 → 2` edit whose `git hash-object` `bf0
 is 820's own AC6 evidence; editing the field earlier would force 820 to re-run it. This is the one place the
 decision's "in the same state update" is satisfied by the state records here and in `docs/backlog.md`, with the data
 file following in 821.
+
+> **Owner amendment, 2026-09-11 (Task 813 / Task 821 allowlist ownership).** Ownership of `ListingFeatureIcon` and
+> `FavoriteButton` transfers to Task 821 in the sprint/backlog/task-design state now. Their `owner` fields in
+> `scripts/rendered-scope-allowlist.json` remain `"813"` as a documented transitional snapshot until Task 820's final
+> approved commit preserves AC6. Task 821 must make the field-level `813 → 821` transfer as its first tracked-file
+> change after verifying that commit, then retain its own before/after hash and gate evidence. No further
+> implementation work for those two components remains authorized under Task 813.
+
+Binding consequences: ownership is transferred **here, in `docs/backlog.md`, and in both kickoffs, as of 2026-09-11**.
+The two `owner: "813"` values still present in `scripts/rendered-scope-allowlist.json` are a **documented transitional
+snapshot** — a reviewer who sees them must read them against this amendment and must not file a state mismatch. Task
+813 is forbidden from opening that file at all (R13/AC17) and carries no remaining authorization for either
+component. Task 821's first tracked-file write is the field edit itself, gated on verifying Task 820's committed blob
+still hashing to `bf09fd2f63b542faa14a63bfb44253203422b026`, and evidenced by its own AC6a before/after hashes plus a
+`check:rendered-scope` run immediately after the edit.

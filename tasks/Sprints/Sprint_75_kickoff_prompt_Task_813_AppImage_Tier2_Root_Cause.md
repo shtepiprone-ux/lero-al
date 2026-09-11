@@ -174,7 +174,7 @@ another task and was not re-verified for this kickoff. R1 measures it.
 | **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs` and `scripts/check-pattern-enrolment.mjs` are **not modified** — decision §5.1 states "Do not weaken or alter the existing pattern-directory check". `TIER2_PREFIX` is not changed, widened, or made configurable — moving the file is the fix; editing the classifier is not. R12's check is a **new** script, never an arm added to an existing one. | **P0** | AC12 | Confirmed |
 | **R11** | §5.1 decision | `docs/golden-rules.md`, `docs/design-system-pattern-ownership.md` and `docs/storybook-governance.md` record where the project's image primitive now lives and which gate governs it. No GR-n rule body, `Command` block or receipt string changes. | P1 | AC13 | Confirmed |
 | **R12** | §5.1 decision (C) | A **blocking, CI-safe, self-tested media-directory parity check** lands in this same task: every `.tsx` directly under `src/design-system/media/` must be a `scripts/mantine-migration-scope.json` entry, and a manifest entry under that directory whose file no longer exists fails as a ghost entry. It derives the directory listing **at runtime** — never a hard-coded name list — prints its scope boundary and its cannot-see sentence on every run, takes its exit decision from one pure function the real run and the self-test both call, and carries a planted-failure proof. Wired into the `governance` job with no `continue-on-error`, no `\|\| true`, no `exit 0` and no wrapper, in the same shape as the four existing `*:verify` steps. Story coverage stays enforced by the existing `check:story-coverage`; this check does not duplicate it. | **P0** | AC14, AC15, AC16 | Confirmed |
-| **R13** | §5.1 decision (B1) | This task is scoped to `AppImage` and its R1-proven co-located siblings only. `ListingFeatureIcon` and `FavoriteButton` are **out of scope** and are filed as **Task 821**; their two `scripts/rendered-scope-allowlist.json` entries stay in place and stay governed, and the `owner` field transfer from `"813"` to `"821"` belongs to Task 821, not here. This task must not touch `scripts/rendered-scope-allowlist.json`. | **P0** | AC17 | Confirmed |
+| **R13** | §5.1 decision (B1) | This task is scoped to `AppImage` and its R1-proven co-located siblings only. `ListingFeatureIcon` and `FavoriteButton` are **out of scope** and are filed as **Task 821**; their two `scripts/rendered-scope-allowlist.json` entries stay in place and stay governed, and the `owner` field transfer from `"813"` to `"821"` belongs to Task 821, not here. This task must not touch `scripts/rendered-scope-allowlist.json`. The residual `owner: "813"` values in that file are a documented transitional snapshot under the owner amendment of 2026-09-11 (§5.1) — leaving them is required, not an oversight. | **P0** | AC17 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -204,14 +204,22 @@ another task and was not re-verified for this kickoff. R1 measures it.
 3. **Story coverage is not duplicated.** `check:story-coverage` already fails for any enrolled component with no
    canonical Story importing its own path; R12's check asserts enrolment only, and its own output must say so.
 4. **The existing pattern-directory check is untouched** — R10, restated by the decision itself.
-5. **Scope narrows to the critical path** — R13. `ListingFeatureIcon` and `FavoriteButton` become **Task 821**. Their
-   two `scripts/rendered-scope-allowlist.json` entries stay in place and stay governed throughout; the `owner` field
-   changes from `"813"` to `"821"` **in Task 821**, not here.
-   `NOTE for the owner, mechanical` — that JSON currently carries Task 820's uncommitted `13 → 2` edit, and Task
-   820's evidence records its `git hash-object` as `bf09fd2f63b542faa14a63bfb44253203422b026` (AC6,
-   `Rev2_hash-object_primary-files.txt`). Editing the `owner` field before Task 820 is committed would invalidate
-   that recorded hash and force Task 820 to re-run AC6. Sequencing the field edit into Task 821 avoids it; that is
-   why R13 forbids this task from touching the file at all.
+5. **Scope narrows to the critical path** — R13. `ListingFeatureIcon` and `FavoriteButton` become **Task 821**, and
+   the owner amendment below settles exactly how and when their allowlist ownership follows.
+
+> **Owner amendment, 2026-09-11 (quoted verbatim; also recorded in the sprint file).** Ownership of
+> `ListingFeatureIcon` and `FavoriteButton` transfers to Task 821 in the sprint/backlog/task-design state now. Their
+> `owner` fields in `scripts/rendered-scope-allowlist.json` remain `"813"` as a documented transitional snapshot
+> until Task 820's final approved commit preserves AC6. Task 821 must make the field-level `813 → 821` transfer as
+> its first tracked-file change after verifying that commit, then retain its own before/after hash and gate
+> evidence. No further implementation work for those two components remains authorized under Task 813.
+
+**What the amendment binds here.** The two `owner: "813"` values still present in
+`scripts/rendered-scope-allowlist.json` are a **documented transitional snapshot**, not a live ownership claim and
+not a defect: ownership already sits with Task 821 in this file, the sprint file and `docs/backlog.md`. A reviewer
+who sees `"813"` in that JSON must read it against this amendment rather than filing a state mismatch. R13/AC17
+stands unchanged and is now doubly binding — this task touches neither component and never opens that file — and no
+further implementation work for `ListingFeatureIcon` or `FavoriteButton` is authorized under Task 813 at all.
 6. **Task 820 resumes on this task's approval alone**, not on Task 821's.
 
 ### 5.2 Other assumptions
@@ -470,4 +478,4 @@ Do not self-approve; Sonnet runs, emits and suggests no mutating git command.
 | Are the figures in §3 safe to copy? | **No** — R1/AC1 re-derives them, and §3.5 states what was never measured at all. |
 | Is the destination an executor choice? | **No** — decision §5.1 (C) fixes it at `src/design-system/media/` and refuses the Mantine-pattern directory by name. |
 | Does the new directory ship ungoverned? | **No** — R12 lands its parity check in this same task, blocking in CI with a planted-failure proof, reading the directory at runtime. That was the one cost of choosing a new namespace, and the decision closed it here rather than deferring it. |
-| Does this task touch the allowlist? | **No** — R13/AC17. `ListingFeatureIcon` and `FavoriteButton` are Task 821, and the `owner` field transfer goes with them, after Task 820's recorded hash for that file is committed. |
+| Does this task touch the allowlist? | **No** — R13/AC17, and the 2026-09-11 owner amendment in §5.1 makes the residual `owner: "813"` values a documented transitional snapshot. The field transfer is Task 821's first tracked-file change, after it verifies Task 820's commit. No further work on those two components is authorized under this task. |

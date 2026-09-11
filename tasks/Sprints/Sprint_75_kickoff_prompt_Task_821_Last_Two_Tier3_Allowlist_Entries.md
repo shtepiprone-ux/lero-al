@@ -22,6 +22,22 @@ Owner decision §5.1 on Task 813 (2026-09-11, quoted verbatim in
 > state update, and keep them governed by their explicit entries. Task 820 may resume immediately after the AppImage
 > half is approved; it does not wait for the two unrelated components.
 
+And the owner amendment that sequences the field-level transfer (2026-09-11, quoted verbatim; also recorded in
+`tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md` and in
+`tasks/Sprints/Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md` §5.1):
+
+> **Owner amendment, 2026-09-11.** Ownership of `ListingFeatureIcon` and `FavoriteButton` transfers to Task 821 in
+> the sprint/backlog/task-design state now. Their `owner` fields in `scripts/rendered-scope-allowlist.json` remain
+> `"813"` as a documented transitional snapshot until Task 820's final approved commit preserves AC6. Task 821 must
+> make the field-level `813 → 821` transfer as its first tracked-file change after verifying that commit, then
+> retain its own before/after hash and gate evidence. No further implementation work for those two components
+> remains authorized under Task 813.
+
+**What this binds.** Ownership is already this task's in every state artifact; only the JSON field lags, deliberately.
+The field edit is this task's **first tracked-file write** — not its first action: R1's census and R2's projection are
+read-only and still precede it, because measuring after a tracked file changes destroys the "before" number. R5 and
+AC6/AC6a below carry the verification, the ordering and the hash witness the amendment requires.
+
 ## 3. Verified context — measured 2026-09-11, re-measure at execution
 
 ### 3.1 What the two entries are
@@ -77,21 +93,22 @@ tier-2 edge and this task stops for an owner decision (§5's `CONFLICT`), exactl
 | **R2** | §3.3, Task 820 §3.2 precedent | **Measure the expanded frontier before modifying it.** With both paths enrolled in a scratch projection that does not write the tracked manifest, record how many new frontier edges appear, their tiers, and the `tier2-legacy-primitive` count explicitly. Report it before changing any tracked file. If that count is not zero, stop per §5. | **P0** | AC2 | Confirmed |
 | **R3** | 16d tier 3, GR-3 | Each component gets a canonical Mantine Story that **statically imports its own path** and renders the real production component — not a parent, not a stand-in. `ListingCardPattern.stories.tsx` consuming `FavoriteButton` inside a composition is explicitly not proof for it. Each `meta.title` satisfies `isCanonicalMantineTitle`. Import the component by its direct file path, never through a barrel — `check-story-coverage.mjs` does not unwrap barrels (Task 820 §2). | **P0** | AC3, AC4 | Confirmed |
 | **R4** | Decision §5.1 | Both paths are added to `scripts/mantine-migration-scope.json`. Report the before/after counts and the two added paths; no other entry changes. | **P0** | AC5 | Confirmed |
-| **R5** | Decision §5.1 | Both `scripts/rendered-scope-allowlist.json` entries change `owner` from `"813"` to `"821"` and **nothing else** — path and reason byte-identical. The entries stay in place: the decision says "keep them governed by their explicit entries". Removing them is not in scope and is not what enrolment implies here. | **P0** | AC6 | Confirmed |
+| **R5** | Decision §5.1 + owner amendment 2026-09-11 | Both `scripts/rendered-scope-allowlist.json` entries change `owner` from `"813"` to `"821"` and **nothing else** — path and reason byte-identical. The entries stay in place: the decision says "keep them governed by their explicit entries". Removing them is not in scope and is not what enrolment implies here. **Ordering, required by the amendment:** verify Task 820's final approved commit for that file first, then make this edit as the **first tracked-file change of this task**, before the Stories, the manifest and the baselines. Read-only measurement (R1, R2) precedes it; no other tracked file is written before it. | **P0** | AC6, AC6a | Confirmed |
 | **R6** | Task 820 §3.2 precedent | Both blocking baselines are brought to a true state in the same change, each through its own `--update-baseline`, never by hand. Neither writer's tier-2 refusal is bypassed. Report both before/after entry counts and list every entry added and removed. | **P0** | AC7 | Confirmed |
 | **R7** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs`, `scripts/check-pattern-enrolment.mjs` and `scripts/check-media-enrolment.mjs` (Task 813) are **not modified**. Every existing gate and self-test passes with its counts explained by this task's changes and nothing else. | **P0** | AC8 | Confirmed |
 | **R8** | §3.1 | Neither component's source is edited. If enrolling one would require changing it, that is the `CONFLICT` in §5, not a small fix. | **P0** | AC9 | Confirmed |
-| **R9** | GR-5 | `docs/backlog.md`'s Task 813 row stops naming these two components, and `docs/design-system-pattern-ownership.md` records that the allowlist's two remaining entries are now owned by Task 821 with their own Stories. | P1 | AC10 | Confirmed |
+| **R9** | GR-5 | `docs/backlog.md`'s Task 813 row stops naming these two components, and `docs/design-system-pattern-ownership.md` records that the allowlist's two remaining entries are now owned by Task 821 with their own Stories, and that the `owner: "813"` values were a documented transitional snapshot under the 2026-09-11 owner amendment, closed by this task's AC6. | P1 | AC10 | Confirmed |
 
 ## 5. Assumptions and open questions
 
-- **Sequencing, and it is not optional.** `scripts/rendered-scope-allowlist.json` currently carries Task 820's
-  uncommitted `13 → 2` edit, and Task 820's evidence records its `git hash-object` as
-  `bf09fd2f63b542faa14a63bfb44253203422b026` (`docs/sessions/evidence/task820/Rev2_hash-object_primary-files.txt`,
-  AC6). **Do not start this task while that edit is uncommitted** — changing the `owner` field first would
-  invalidate Task 820's recorded hash and force it to re-run AC6. Confirm with
-  `git --no-optional-locks log -1 --oneline -- scripts/rendered-scope-allowlist.json` that Task 820's commit is in
-  before touching the file, and record that check in the baseline transcript.
+- **Sequencing, and it is not optional — the owner amendment of 2026-09-11 makes it a requirement, not a caution.**
+  `scripts/rendered-scope-allowlist.json` carries Task 820's `13 → 2` edit, whose `git hash-object`
+  `bf09fd2f63b542faa14a63bfb44253203422b026` is Task 820's own AC6 evidence
+  (`docs/sessions/evidence/task820/Rev2_hash-object_primary-files.txt`). **Do not write to that file until Task
+  820's final approved commit for it exists, and do not read the working tree in its place** — the amendment says
+  the commit must preserve AC6, and only the committed blob proves that. Verify both the commit and the blob's hash
+  in §13.1, record them in the baseline transcript, and return `BLOCKED — OWNER DECISION REQUIRED` naming what you
+  found if the file is still uncommitted or the committed blob does not hash to `bf09fd2f…`.
 - **`ASSUMPTION` (reversible, stated)** — the two allowlist entries survive enrolment rather than being deleted,
   because the decision says "keep them governed by their explicit entries". `INFERENCE` from
   `check-rendered-scope.mjs`: an allowlist entry whose path produces no frontier edge becomes **stale** and fails.
@@ -142,9 +159,11 @@ Task 821 as owner, and both blocking baselines are true.
 
 ## 10. Implementation requirements
 
-1. **Order is load-bearing.** Confirm Task 820's allowlist commit landed → R1's census → R2's read-only projection →
-   Stories → manifest +2 → allowlist `owner` field → both baselines → docs. Enrolling before a Story exists makes
-   `check:story-coverage` red; measuring after the manifest changes destroys the "before" number.
+1. **Order is load-bearing, and the amendment fixes its first write.** Verify Task 820's committed blob (§5) →
+   R1's census → R2's read-only projection → **allowlist `owner` field — the first tracked-file change** → Stories →
+   manifest +2 → both baselines → docs. R1 and R2 are read-only and precede the write deliberately: measuring after
+   a tracked file changes destroys the "before" number. Enrolling before a Story exists makes `check:story-coverage`
+   red, which is why the manifest follows the Stories.
 2. **Never hand-edit a baseline.** Both are written by their own `--update-baseline`, which is also what keeps the
    tier-2 refusals intact.
 3. **Direct file imports in the Stories**, never the barrel — `check-story-coverage.mjs` resolves the specifier
@@ -190,6 +209,12 @@ Task 821 as owner, and both blocking baselines are true.
 - **AC6 [R5]** — Given `scripts/rendered-scope-allowlist.json` after the change, then it holds the same two entries
   with `owner: "821"`, and `path` and `reason` are byte-identical to their pre-task content. Quote the file and its
   `git diff` — the diff must show two changed lines and nothing else.
+- **AC6a [R5]** — `OWNER AMENDMENT EVIDENCE`. Given the amendment's ordering, then one transcript carries, in this
+  order: Task 820's verified commit for that path and that committed blob's `git hash-object`
+  (`bf09fd2f63b542faa14a63bfb44253203422b026`); the working-tree `git hash-object` **before** this task's edit; the
+  `git hash-object` **after** it; and `npm run check:rendered-scope` exiting 0 on the tree immediately after the
+  edit, proving both entries are still matched and neither went stale. Quote the transcript. The edit must also be
+  the first row of the session log's `Files Changed` ordering, with no other tracked path written before it.
 - **AC7 [R6]** — Given both baselines after their own `--update-baseline`, then `check:rendered-scope` and
   `check:surface-census:changed` both exit **0** with 0 new and 0 stale, and every entry added and removed is listed
   with its before/after count. Quote both scope blocks.
@@ -202,7 +227,7 @@ Task 821 as owner, and both blocking baselines are true.
   `FavoriteButton/Default` saved and unsaved at `390` and `1440` in `en`. Name the six tuples; no automated
   screenshot verdict substitutes for this review.
 
-**GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: AC8's and AC9's "empty diff" are scoped
+**GR-4 AC AUDIT — 11 criteria; each states an observable property; absolutes: AC8's and AC9's "empty diff" are scoped
 to named files this task deliberately does not change, and AC5's "+2" is this task's defined outcome.**
 
 ## 13. QA profile and verification plan
@@ -223,6 +248,8 @@ node.exe --version
 Get-Location
 git --no-optional-locks status --short
 git --no-optional-locks log -1 --oneline -- scripts/rendered-scope-allowlist.json
+git --no-optional-locks log -1 --format=%H -- scripts/rendered-scope-allowlist.json
+git --no-optional-locks hash-object scripts/rendered-scope-allowlist.json
 npm.cmd run check:rendered-scope
 npm.cmd run check:story-coverage
 npm.cmd run check:surface-census -- --surface src/modules/listings/components/ListingFeatureIcon.tsx
@@ -230,7 +257,8 @@ npm.cmd run check:surface-census -- --surface src/modules/listings/components/Fa
 ```
 
 Expected: `win32`; the Node version; the project root; the worktree state; **a commit touching the allowlist that is
-Task 820's** — if the file is still uncommitted, stop per §5's first bullet; the rendered-scope gate at exit 0; the
+Task 820's**, its full SHA, and the hash `bf09fd2f63b542faa14a63bfb44253203422b026` — if the file is still
+uncommitted or the hash differs, stop per §5's first bullet; the rendered-scope gate at exit 0; the
 coverage gate at exit 0; and each per-surface census with its current manifest/Story facts. **Return all of it, then
 do R2's projection and return that too, before changing any tracked file.**
 
@@ -276,7 +304,7 @@ not evidence; record it as `MISSING EVIDENCE` with the exact native command.
 Files changed · requirement IDs completed · §13.1's baseline including the allowlist commit check · **R2's
 pre-change frontier projection with its tier breakdown, the explicit tier-2 count, and both allowlist entries'
 projected state** · AC1's reconciled census · AC3's two titles and import lines · AC4's states · AC5's before/after
-counts · AC6's two-line diff · AC7's two scope blocks with every baseline delta listed · AC8's and AC9's empty diffs ·
+counts · AC6's two-line diff · AC6a's single ordering-and-hash witness · AC7's two scope blocks with every baseline delta listed · AC8's and AC9's empty diffs ·
 AC10's six `OWNER VISUAL QA REQUIRED` tuples · every command with its real exit code and transcript path · the
 `git hash-object` of every changed file · assumptions · deviations · limitations · unresolved issues.
 
@@ -293,4 +321,6 @@ mutating git command.
 | Is a composition Story acceptable for `FavoriteButton`? | **No** — GR-3 and 16d tier 3. `ListingCardPattern.stories.tsx` rendering it proves nothing about it. |
 | What could stop this task? | Either component importing `@/components/ui/*` — `--update-baseline` refuses the new tier-2 edge. Unmeasured today; R2 makes it the first thing checked. |
 | Do the allowlist entries stay or go? | **Stay**, with `owner: "821"` — the decision's own words. If R2's projection shows an entry going stale once enrolled, stop: that is a conflict between the decision and the gate, and it is the owner's to resolve. |
-| Can this task start immediately? | **No** — not until Task 820's allowlist edit is committed. §5's first bullet gives the exact check and the reason. |
+| Can this task start immediately? | **No** — not until Task 820's final approved commit for `scripts/rendered-scope-allowlist.json` exists and that committed blob still hashes to `bf09fd2f…`. §5's first bullet gives both checks; a working-tree read does not satisfy them. |
+| What is this task's first tracked-file write? | **The `owner` `813` → `821` field edit** — owner amendment 2026-09-11, evidenced by AC6a. R1's census and R2's projection are read-only and precede it. |
+| Why does the JSON still say `813` today? | It is a **documented transitional snapshot**, recorded in this kickoff, in Task 813 §5.1, in the sprint file and in `docs/backlog.md`. Ownership already sits with 821 in every state artifact; the field lags on purpose so Task 820's AC6 hash survives to its commit. |

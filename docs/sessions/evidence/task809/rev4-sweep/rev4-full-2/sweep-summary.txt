@@ -1,0 +1,5 @@
+Task 809 regression sweep — run rev4-full-2
+Widths sampled: 58 (boundary: 21, dense step 40px: 41, extra: 2560)
+Total assertions: 1431
+Failing: 0
+

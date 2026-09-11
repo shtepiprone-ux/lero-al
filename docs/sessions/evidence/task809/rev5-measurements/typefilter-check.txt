@@ -1,0 +1,3 @@
+320 {"segmentedControlFound":true,"segmentCount":3,"labels":["All 5","apartment 3","house 2"],"anyChecked":false,"checkedValue":null}
+768 {"segmentedControlFound":true,"segmentCount":3,"labels":["All 5","apartment 3","house 2"],"anyChecked":false,"checkedValue":null}
+EXIT_CODE=0

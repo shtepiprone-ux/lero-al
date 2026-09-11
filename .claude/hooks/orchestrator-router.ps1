@@ -27,12 +27,16 @@ function Test-AnyPattern {
 try {
   $event = [Console]::In.ReadToEnd() | ConvertFrom-Json -ErrorAction Stop
   $prompt = [string]$event.prompt
+  $model = if ($event.PSObject.Properties.Name -contains 'model') { [string]$event.model } else { '' }
   $agentType = if ($event.PSObject.Properties.Name -contains 'agent_type') { [string]$event.agent_type } else { '' }
 } catch {
   exit 0
 }
 
-if ($agentType -eq 'executor' -or [string]::IsNullOrWhiteSpace($prompt)) {
+# This router is exclusively for Opus orchestration. Sonnet receives execute-task
+# from sonnet-executor-bootstrap.ps1 and must never receive task-design/review context.
+# Fail closed when model metadata is missing so a non-Opus session cannot be misrouted.
+if ($agentType -eq 'executor' -or $model -notmatch '(?i)opus' -or [string]::IsNullOrWhiteSpace($prompt)) {
   exit 0
 }
 

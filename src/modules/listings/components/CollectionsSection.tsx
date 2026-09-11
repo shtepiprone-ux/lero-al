@@ -3,22 +3,18 @@
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderPlus, Folder, Pencil, Trash2 } from 'lucide-react'
+import { Group, Stack, SimpleGrid, Paper, Text, Title, Button, ActionIcon, ThemeIcon, TextInput, Flex, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog'
+import { MantineModal } from '@/design-system/mantine/patterns'
+import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import {
   createCollection,
   renameCollection,
   deleteCollection,
 } from '@/modules/listings/actions/collectionActions'
 import type { CollectionWithCount } from '@/types/database'
+
+const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 interface Props {
   initialCollections: CollectionWithCount[]
@@ -27,6 +23,7 @@ interface Props {
 export function CollectionsSection({ initialCollections }: Props) {
   const t = useTranslations('collections')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
   const [collections, setCollections] = useState<CollectionWithCount[]>(initialCollections)
   const [isPending, startTransition] = useTransition()
 
@@ -111,138 +108,138 @@ export function CollectionsSection({ initialCollections }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold">{t('title')}</h2>
+    <Stack gap="md">
+      <Group justify="space-between" gap="xs" wrap="nowrap">
+        <Title order={2} size="lg" fw={600}>{t('title')}</Title>
         <Button
           variant="outline"
           size="sm"
+          leftSection={<FolderPlus size={theme.other.iconSize.standard} />}
           onClick={() => { setCreateName(''); setCreateError(''); setCreateOpen(true) }}
-          className="gap-1.5 rounded-xl max-sm:w-auto"
         >
-          <FolderPlus className="h-4 w-4 shrink-0" />
           {t('new')}
         </Button>
-      </div>
+      </Group>
 
       {collections.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 gap-3 text-center border rounded-2xl bg-muted/30">
-          <Folder className="h-8 w-8 text-muted-foreground" />
-          <div>
-            <p className="text-sm font-medium">{t('no_collections')}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{t('no_collections_desc')}</p>
-          </div>
-        </div>
+        <MantineEmptyLoadingErrorState
+          state="empty"
+          title={t('no_collections')}
+          description={t('no_collections_desc')}
+          icon={<Folder size={theme.other.iconSize.decorative} />}
+        />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
+        <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }} spacing="sm">
           {collections.map(col => (
-            <div
-              key={col.id}
-              className="flex items-center gap-3 p-3 rounded-xl border bg-card"
-            >
-              <Folder className="h-5 w-5 text-muted-foreground shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium break-words">{col.name}</p>
-                <p className="text-xs text-muted-foreground">{t('item_count', { count: col.item_count })}</p>
-              </div>
-              <div className="flex gap-1 shrink-0">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  onClick={() => openRename(col)}
-                  aria-label={t('rename')}
-                  className="rounded-lg"
-                >
-                  <Pencil className="h-3.5 w-3.5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  onClick={() => openDelete(col)}
-                  aria-label={t('delete')}
-                  className="rounded-lg text-destructive hover:text-destructive"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-            </div>
+            <Paper key={col.id} withBorder radius="lg" p="sm">
+              <Group gap="sm" wrap="nowrap">
+                <ThemeIcon variant="light" color="gray" size="lg" radius="md">
+                  <Folder size={theme.other.iconSize.roomy} />
+                </ThemeIcon>
+                <Stack gap={0} style={{ flex: 1, minWidth: 0 }}>
+                  <Text size="sm" fw={500} truncate>{col.name}</Text>
+                  <Text size="xs" c="dimmed">{t('item_count', { count: col.item_count })}</Text>
+                </Stack>
+                <Group gap="tight" wrap="nowrap">
+                  <ActionIcon
+                    variant="subtle"
+                    color="gray"
+                    size="sm"
+                    radius="md"
+                    onClick={() => openRename(col)}
+                    aria-label={t('rename')}
+                  >
+                    <Pencil size={theme.other.iconSize.compact} />
+                  </ActionIcon>
+                  <ActionIcon
+                    variant="subtle"
+                    color="red"
+                    size="sm"
+                    radius="md"
+                    onClick={() => openDelete(col)}
+                    aria-label={t('delete')}
+                  >
+                    <Trash2 size={theme.other.iconSize.compact} />
+                  </ActionIcon>
+                </Group>
+              </Group>
+            </Paper>
           ))}
-        </div>
+        </SimpleGrid>
       )}
 
       {/* Create dialog */}
-      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>{t('new')}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-3 py-2">
-            <Input
-              value={createName}
-              onChange={e => { setCreateName(e.target.value); setCreateError('') }}
-              placeholder={t('name_placeholder')}
-              maxLength={100}
-              onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
-              autoFocus
-            />
-            {createError && <p className="text-xs text-destructive">{createError}</p>}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateOpen(false)} disabled={isPending}>
+      <MantineModal
+        opened={createOpen}
+        onClose={() => setCreateOpen(false)}
+        title={t('new')}
+        footer={
+          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
+            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setCreateOpen(false)} disabled={isPending}>
               {tc('cancel')}
             </Button>
-            <Button onClick={handleCreate} disabled={isPending || !createName.trim()}>
+            <Button w={FULL_BELOW_SM} onClick={handleCreate} disabled={isPending || !createName.trim()}>
               {t('create')}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </Flex>
+        }
+      >
+        <TextInput
+          value={createName}
+          onChange={e => { setCreateName(e.target.value); setCreateError('') }}
+          placeholder={t('name_placeholder')}
+          maxLength={100}
+          onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
+          error={createError || undefined}
+          autoFocus
+        />
+      </MantineModal>
 
       {/* Rename dialog */}
-      <Dialog open={renameOpen} onOpenChange={setRenameOpen}>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>{t('rename')}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-3 py-2">
-            <Input
-              value={renameName}
-              onChange={e => { setRenameName(e.target.value); setRenameError('') }}
-              placeholder={t('new_name_placeholder')}
-              maxLength={100}
-              onKeyDown={e => { if (e.key === 'Enter') handleRename() }}
-              autoFocus
-            />
-            {renameError && <p className="text-xs text-destructive">{renameError}</p>}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setRenameOpen(false)} disabled={isPending}>
+      <MantineModal
+        opened={renameOpen}
+        onClose={() => setRenameOpen(false)}
+        title={t('rename')}
+        footer={
+          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
+            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setRenameOpen(false)} disabled={isPending}>
               {tc('cancel')}
             </Button>
-            <Button onClick={handleRename} disabled={isPending || !renameName.trim()}>
+            <Button w={FULL_BELOW_SM} onClick={handleRename} disabled={isPending || !renameName.trim()}>
               {tc('save')}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </Flex>
+        }
+      >
+        <TextInput
+          value={renameName}
+          onChange={e => { setRenameName(e.target.value); setRenameError('') }}
+          placeholder={t('new_name_placeholder')}
+          maxLength={100}
+          onKeyDown={e => { if (e.key === 'Enter') handleRename() }}
+          error={renameError || undefined}
+          autoFocus
+        />
+      </MantineModal>
 
       {/* Delete confirm dialog */}
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>{t('delete')}</DialogTitle>
-          </DialogHeader>
-          <p className="text-sm text-muted-foreground py-2">{t('delete_confirm')}</p>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteOpen(false)} disabled={isPending}>
+      <MantineModal
+        opened={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        title={t('delete')}
+        footer={
+          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
+            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setDeleteOpen(false)} disabled={isPending}>
               {tc('cancel')}
             </Button>
-            <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
+            <Button color="red" w={FULL_BELOW_SM} onClick={handleDelete} disabled={isPending}>
               {t('delete')}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </Flex>
+        }
+      >
+        <Text size="sm" c="dimmed">{t('delete_confirm')}</Text>
+      </MantineModal>
+    </Stack>
   )
 }

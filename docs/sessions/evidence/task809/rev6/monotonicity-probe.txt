@@ -1,0 +1,103 @@
+width  contentBoxWidth  columnCount  firstCardWidth
+600    568              1            568
+620    588              2            286
+639    607              2            295.5
+640    576              2            280
+650    586              2            285
+663    599              2            291.5
+664    600              2            292
+700    636              2            310
+750    686              2            335
+767    703              2            343.5
+768    670              2            327
+769    671              2            327.5
+800    702              2            343
+900    802              2            393
+MONOTONIC: PASS
+[
+  {
+    "width": 600,
+    "contentBoxWidth": 568,
+    "columnCount": 1,
+    "firstChildWidth": 568
+  },
+  {
+    "width": 620,
+    "contentBoxWidth": 588,
+    "columnCount": 2,
+    "firstChildWidth": 286
+  },
+  {
+    "width": 639,
+    "contentBoxWidth": 607,
+    "columnCount": 2,
+    "firstChildWidth": 295.5
+  },
+  {
+    "width": 640,
+    "contentBoxWidth": 576,
+    "columnCount": 2,
+    "firstChildWidth": 280
+  },
+  {
+    "width": 650,
+    "contentBoxWidth": 586,
+    "columnCount": 2,
+    "firstChildWidth": 285
+  },
+  {
+    "width": 663,
+    "contentBoxWidth": 599,
+    "columnCount": 2,
+    "firstChildWidth": 291.5
+  },
+  {
+    "width": 664,
+    "contentBoxWidth": 600,
+    "columnCount": 2,
+    "firstChildWidth": 292
+  },
+  {
+    "width": 700,
+    "contentBoxWidth": 636,
+    "columnCount": 2,
+    "firstChildWidth": 310
+  },
+  {
+    "width": 750,
+    "contentBoxWidth": 686,
+    "columnCount": 2,
+    "firstChildWidth": 335
+  },
+  {
+    "width": 767,
+    "contentBoxWidth": 703,
+    "columnCount": 2,
+    "firstChildWidth": 343.5
+  },
+  {
+    "width": 768,
+    "contentBoxWidth": 670,
+    "columnCount": 2,
+    "firstChildWidth": 327
+  },
+  {
+    "width": 769,
+    "contentBoxWidth": 671,
+    "columnCount": 2,
+    "firstChildWidth": 327.5
+  },
+  {
+    "width": 800,
+    "contentBoxWidth": 702,
+    "columnCount": 2,
+    "firstChildWidth": 343
+  },
+  {
+    "width": 900,
+    "contentBoxWidth": 802,
+    "columnCount": 2,
+    "firstChildWidth": 393
+  }
+]
+EXIT_CODE=0

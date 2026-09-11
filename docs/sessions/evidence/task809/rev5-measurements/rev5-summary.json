@@ -1,0 +1,2383 @@
+{
+  "filtercontrols__w320__uk": {
+    "name": "filtercontrols",
+    "width": 320,
+    "locale": "uk",
+    "buttonCount": 21,
+    "centring": [
+      {
+        "text": "Нова будівля",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Хороший стан",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує ремонту",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує реновації",
+        "rootCentre": 254,
+        "labelCentre": 254,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "В процесі будівництва",
+        "rootCentre": 306,
+        "labelCentre": 306,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Нова будівля",
+        "rootCentre": 418,
+        "labelCentre": 418,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Хороший стан",
+        "rootCentre": 468,
+        "labelCentre": 468,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує ремонту",
+        "rootCentre": 518,
+        "labelCentre": 518,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує реновації",
+        "rootCentre": 568,
+        "labelCentre": 568,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "В процесі будівництва",
+        "rootCentre": 618,
+        "labelCentre": 618,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Усі",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Продаж",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Оренда",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Усі",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Продаж",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Оренда",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": [
+      {
+        "text": "Усі",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "Продаж",
+        "rootLeft": 77.359375,
+        "labelLeft": 94.359375,
+        "delta": 17
+      },
+      {
+        "text": "Оренда",
+        "rootLeft": 173.828125,
+        "labelLeft": 190.828125,
+        "delta": 17
+      }
+    ]
+  },
+  "filtercontrols__w320__sq": {
+    "name": "filtercontrols",
+    "width": 320,
+    "locale": "sq",
+    "buttonCount": 21,
+    "centring": [
+      {
+        "text": "Ndërtim i ri",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gjendje e mirë",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon riparim",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon renovim",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Në ndërtim",
+        "rootCentre": 254,
+        "labelCentre": 254,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Ndërtim i ri",
+        "rootCentre": 366,
+        "labelCentre": 366,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gjendje e mirë",
+        "rootCentre": 416,
+        "labelCentre": 416,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon riparim",
+        "rootCentre": 466,
+        "labelCentre": 466,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon renovim",
+        "rootCentre": 516,
+        "labelCentre": 516,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Në ndërtim",
+        "rootCentre": 566,
+        "labelCentre": 566,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Të gjitha",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Shitje",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Qira",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Të gjitha",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Shitje",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Qira",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": [
+      {
+        "text": "Të gjitha",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "Shitje",
+        "rootLeft": 114.5,
+        "labelLeft": 131.5,
+        "delta": 17
+      },
+      {
+        "text": "Qira",
+        "rootLeft": 193.59375,
+        "labelLeft": 210.59375,
+        "delta": 17
+      }
+    ]
+  },
+  "filterspanelshell__w320__en": {
+    "name": "filterspanelshell",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 49,
+    "centring": [
+      {
+        "text": "All types",
+        "rootCentre": 363,
+        "labelCentre": 363,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 363,
+        "labelCentre": 363,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 415,
+        "labelCentre": 415,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 415,
+        "labelCentre": 415,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 467,
+        "labelCentre": 467,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 467,
+        "labelCentre": 467,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 519,
+        "labelCentre": 519,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 519,
+        "labelCentre": 519,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 571,
+        "labelCentre": 571,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 571,
+        "labelCentre": 571,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 623,
+        "labelCentre": 623,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 738,
+        "labelCentre": 738,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Secondary market",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New building",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 1239,
+        "labelCentre": 1239,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New build",
+        "rootCentre": 1699,
+        "labelCentre": 1699,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Good condition",
+        "rootCentre": 1699,
+        "labelCentre": 1699,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs repair",
+        "rootCentre": 1751,
+        "labelCentre": 1751,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs renovation",
+        "rootCentre": 1803,
+        "labelCentre": 1803,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Under construction",
+        "rootCentre": 1855,
+        "labelCentre": 1855,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Studio",
+        "rootCentre": 1970,
+        "labelCentre": 1970,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Free layout",
+        "rootCentre": 1970,
+        "labelCentre": 1970,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Duplex",
+        "rootCentre": 2022,
+        "labelCentre": 2022,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Penthouse",
+        "rootCentre": 2022,
+        "labelCentre": 2022,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Small unit",
+        "rootCentre": 2074,
+        "labelCentre": 2074,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Electric",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gas",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Central",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2241,
+        "labelCentre": 2241,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No heating",
+        "rootCentre": 2241,
+        "labelCentre": 2241,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Brick",
+        "rootCentre": 2356,
+        "labelCentre": 2356,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Concrete",
+        "rootCentre": 2356,
+        "labelCentre": 2356,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Panel",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Other",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From owner",
+        "rootCentre": 2523,
+        "labelCentre": 2523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From agency",
+        "rootCentre": 2523,
+        "labelCentre": 2523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From developer",
+        "rootCentre": 2575,
+        "labelCentre": 2575,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Installment",
+        "rootCentre": 2690,
+        "labelCentre": 2690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Mortgage",
+        "rootCentre": 2690,
+        "labelCentre": 2690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Assignment",
+        "rootCentre": 2742,
+        "labelCentre": 2742,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Negotiable",
+        "rootCentre": 2742,
+        "labelCentre": 2742,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No commission",
+        "rootCentre": 2794,
+        "labelCentre": 2794,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters2",
+        "rootCentre": 906,
+        "labelCentre": 906,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Reset filters",
+        "rootCentre": 962,
+        "labelCentre": 962,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Apply filters2",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Reset filters",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      }
+    ]
+  },
+  "listingsfilters__w320__en": {
+    "name": "listingsfilters",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 34,
+    "centring": [
+      {
+        "text": "Listing type",
+        "rootCentre": 258,
+        "labelCentre": 258,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For sale",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For rent",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Property type",
+        "rootCentre": 391,
+        "labelCentre": 391,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All types",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 603,
+        "labelCentre": 603,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 603,
+        "labelCentre": 603,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Location",
+        "rootCentre": 680,
+        "labelCentre": 680,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Market type",
+        "rootCentre": 813,
+        "labelCentre": 813,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Rooms",
+        "rootCentre": 890,
+        "labelCentre": 890,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Price (ALL)",
+        "rootCentre": 1023,
+        "labelCentre": 1023,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Area (m²)",
+        "rootCentre": 1156,
+        "labelCentre": 1156,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Floor",
+        "rootCentre": 1233,
+        "labelCentre": 1233,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Building floors",
+        "rootCentre": 1310,
+        "labelCentre": 1310,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Condition",
+        "rootCentre": 1387,
+        "labelCentre": 1387,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Offer type",
+        "rootCentre": 1464,
+        "labelCentre": 1464,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Purchase conditions",
+        "rootCentre": 1541,
+        "labelCentre": 1541,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Posting period",
+        "rootCentre": 1618,
+        "labelCentre": 1618,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Listing ID",
+        "rootCentre": 1695,
+        "labelCentre": 1695,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootCentre": 1771,
+        "labelCentre": 1771,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Listing type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Property type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Location",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Market type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Rooms",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Price (ALL)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Area (m²)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Floor",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Building floors",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Condition",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Offer type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Purchase conditions",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Posting period",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Listing ID",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 114,
+        "labelLeft": 131,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 226.828125,
+        "labelLeft": 243.828125,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 94.015625,
+        "labelLeft": 111.015625,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 165.078125,
+        "labelLeft": 182.078125,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 94.765625,
+        "labelLeft": 111.765625,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 181.875,
+        "labelLeft": 198.875,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 131.609375,
+        "labelLeft": 148.609375,
+        "delta": 17
+      }
+    ]
+  },
+  "authformpattern__w320__en": {
+    "name": "authformpattern",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Sign In",
+        "rootCentre": 340.09375,
+        "labelCentre": 340.09375,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Create Account",
+        "rootCentre": 918.296875,
+        "labelCentre": 918.296875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Sign In",
+        "rootWidth": 190,
+        "parentWidth": 190,
+        "delta": 0
+      },
+      {
+        "text": "Create Account",
+        "rootWidth": 190,
+        "parentWidth": 190,
+        "delta": 0
+      }
+    ],
+    "justify": []
+  },
+  "filterspanelshell__w1440__en": {
+    "name": "filterspanelshell",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 49,
+    "centring": [
+      {
+        "text": "All types",
+        "rootCentre": 263,
+        "labelCentre": 263,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 263,
+        "labelCentre": 263,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 315,
+        "labelCentre": 315,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 315,
+        "labelCentre": 315,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 367,
+        "labelCentre": 367,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 367,
+        "labelCentre": 367,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 419,
+        "labelCentre": 419,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 419,
+        "labelCentre": 419,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 471,
+        "labelCentre": 471,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 471,
+        "labelCentre": 471,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 523,
+        "labelCentre": 523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 638,
+        "labelCentre": 638,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Secondary market",
+        "rootCentre": 638,
+        "labelCentre": 638,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New building",
+        "rootCentre": 690,
+        "labelCentre": 690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New build",
+        "rootCentre": 1495,
+        "labelCentre": 1495,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Good condition",
+        "rootCentre": 1495,
+        "labelCentre": 1495,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs repair",
+        "rootCentre": 1547,
+        "labelCentre": 1547,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs renovation",
+        "rootCentre": 1547,
+        "labelCentre": 1547,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Under construction",
+        "rootCentre": 1599,
+        "labelCentre": 1599,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Studio",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Free layout",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Duplex",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Penthouse",
+        "rootCentre": 1766,
+        "labelCentre": 1766,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Small unit",
+        "rootCentre": 1766,
+        "labelCentre": 1766,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Electric",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gas",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Central",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 1933,
+        "labelCentre": 1933,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No heating",
+        "rootCentre": 1933,
+        "labelCentre": 1933,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Brick",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Concrete",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Panel",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2100,
+        "labelCentre": 2100,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Other",
+        "rootCentre": 2100,
+        "labelCentre": 2100,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From owner",
+        "rootCentre": 2215,
+        "labelCentre": 2215,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From agency",
+        "rootCentre": 2215,
+        "labelCentre": 2215,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From developer",
+        "rootCentre": 2267,
+        "labelCentre": 2267,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Installment",
+        "rootCentre": 2382,
+        "labelCentre": 2382,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Mortgage",
+        "rootCentre": 2382,
+        "labelCentre": 2382,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Assignment",
+        "rootCentre": 2434,
+        "labelCentre": 2434,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Negotiable",
+        "rootCentre": 2434,
+        "labelCentre": 2434,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No commission",
+        "rootCentre": 2486,
+        "labelCentre": 2486,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters2",
+        "rootCentre": 906,
+        "labelCentre": 906,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Reset filters",
+        "rootCentre": 962,
+        "labelCentre": 962,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Apply filters2",
+        "rootWidth": 348,
+        "parentWidth": 348,
+        "delta": 0
+      },
+      {
+        "text": "Reset filters",
+        "rootWidth": 348,
+        "parentWidth": 348,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      }
+    ]
+  },
+  "listingsfilters__w1440__en": {
+    "name": "listingsfilters",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 34,
+    "centring": [
+      {
+        "text": "Listing type",
+        "rootCentre": 154,
+        "labelCentre": 154,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For sale",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For rent",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Property type",
+        "rootCentre": 287,
+        "labelCentre": 287,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All types",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Location",
+        "rootCentre": 576,
+        "labelCentre": 576,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Market type",
+        "rootCentre": 709,
+        "labelCentre": 709,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Rooms",
+        "rootCentre": 786,
+        "labelCentre": 786,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Price (ALL)",
+        "rootCentre": 919,
+        "labelCentre": 919,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Area (m²)",
+        "rootCentre": 1052,
+        "labelCentre": 1052,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Floor",
+        "rootCentre": 1129,
+        "labelCentre": 1129,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Building floors",
+        "rootCentre": 1206,
+        "labelCentre": 1206,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Condition",
+        "rootCentre": 1283,
+        "labelCentre": 1283,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Offer type",
+        "rootCentre": 1360,
+        "labelCentre": 1360,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Purchase conditions",
+        "rootCentre": 1437,
+        "labelCentre": 1437,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Posting period",
+        "rootCentre": 1514,
+        "labelCentre": 1514,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Listing ID",
+        "rootCentre": 1591,
+        "labelCentre": 1591,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootCentre": 0,
+        "labelCentre": 0,
+        "delta": 0,
+        "rootHeight": 0,
+        "estimatedLines": 0
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Listing type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Property type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Location",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Market type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Rooms",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Price (ALL)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Area (m²)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Floor",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Building floors",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Condition",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Offer type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Purchase conditions",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Posting period",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Listing ID",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootWidth": 0,
+        "parentWidth": 288,
+        "delta": 288
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 114,
+        "labelLeft": 131,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 226.828125,
+        "labelLeft": 243.828125,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 94.015625,
+        "labelLeft": 111.015625,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 165.078125,
+        "labelLeft": 182.078125,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 94.765625,
+        "labelLeft": 111.765625,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 181.875,
+        "labelLeft": 198.875,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 131.609375,
+        "labelLeft": 148.609375,
+        "delta": 17
+      }
+    ]
+  },
+  "authformpattern__w1440__en": {
+    "name": "authformpattern",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Sign In",
+        "rootCentre": 340.09375,
+        "labelCentre": 340.09375,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Create Account",
+        "rootCentre": 880.203125,
+        "labelCentre": 880.203125,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Sign In",
+        "rootWidth": 350,
+        "parentWidth": 350,
+        "delta": 0
+      },
+      {
+        "text": "Create Account",
+        "rootWidth": 350,
+        "parentWidth": 350,
+        "delta": 0
+      }
+    ],
+    "justify": []
+  },
+  "adminuserstable__w320__en": {
+    "name": "adminuserstable",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Back",
+        "rootCentre": 1506.171875,
+        "labelCentre": 1506.171875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Next",
+        "rootCentre": 1594.1875,
+        "labelCentre": 1594.1875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Back",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Next",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": []
+  },
+  "adminuserstable__w1440__en": {
+    "name": "adminuserstable",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Back",
+        "rootCentre": 653.015625,
+        "labelCentre": 653.015625,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Next",
+        "rootCentre": 653.015625,
+        "labelCentre": 653.015625,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": []
+  }
+}

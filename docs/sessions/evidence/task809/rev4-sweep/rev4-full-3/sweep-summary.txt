@@ -1,0 +1,7 @@
+Task 809 regression sweep — run rev4-full-3
+Locales: en, sq, uk, it
+Widths sampled: 21 (mode=boundary; boundary: 21, dense step 40px: 41, extra: 2560)
+Total assertions: 2100
+Failing: 0
+Failing by locale: en=0, sq=0, uk=0, it=0
+

@@ -89,8 +89,13 @@ task-design block for documents the same response authored. Conflating the two i
 | GR-2 | reviewer inspection + receipt | active |
 | GR-3 | `check:story-coverage` for enrolled components, `check-surface-census` for the rest | partial until 812 |
 | GR-4 | reviewer inspection + receipt | active |
-| GR-5 | receipt | active |
-| GR-6 | receipt | active |
+| GR-5 | **`Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks the response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
+| GR-6 | **`Stop` hook** — blocks the response when a `tasks/**` or governance doc is written and uncommitted with no `git add` block, and blocks `git push` outside an approved review | **enforced** |
 
-**A receipt is a self-report. 812 is what turns GR-1 and GR-3 into a failing command, and until it lands this file is
-stronger than prose but weaker than a gate. Do not let it sit.**
+**A receipt is a self-report, and on 2026-09-10 the orchestrator skipped one under pressure in the same session that
+wrote this file.** That is why GR-5 and GR-6 are now a **`Stop` hook**: it reads the real `git status` and the actual
+last response, and exits 2 — the response is blocked and must be fixed before it can finish. It is fail-open on any
+error and honours `stop_hook_active`, so it can never wedge a session.
+
+**GR-1 and GR-3 are still self-reported. Task 812 is what turns them into a failing command. Until it lands, they are
+the weakest rules here — do not let it sit.**

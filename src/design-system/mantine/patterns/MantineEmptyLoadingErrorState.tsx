@@ -1,6 +1,7 @@
 'use client'
 
-import { Stack, Text, Button, Loader, Alert, Center, ThemeIcon, useMantineTheme } from '@mantine/core'
+import type { ReactNode } from 'react'
+import { Stack, Text, Loader, Alert, Center, ThemeIcon, useMantineTheme } from '@mantine/core'
 
 export type StateType = 'empty' | 'loading' | 'error'
 
@@ -8,30 +9,50 @@ export interface MantineEmptyLoadingErrorStateProps {
   state: StateType
   title?: string
   description?: string
-  actionLabel?: string
-  onAction?: () => void
+  /** Icon for the `empty`/`error` states. `empty` defaults to the pattern's own generic list
+   * glyph when omitted; `error` renders no icon when omitted. */
+  icon?: ReactNode
+  /** Task 809 Revision 3 (owner rejection 2026-09-10) — a fully-formed action element, e.g.
+   * `<Button component={Link} href="/x" color="brand" w={{base:'100%',sm:'auto'}}>Label</Button>`.
+   * The pattern only PLACES this element (inside its own layout, with the correct alignment for
+   * the current state) — it never assigns a variant, color, or width. The caller decides whether
+   * an action is primary, secondary, or destructive, and whether it is full-width on mobile; the
+   * pattern has no way to know that and must not guess it. Omit for no action.
+   *
+   * Replaces the retired `actionLabel`/`onAction`/`actionHref` props, which hardcoded
+   * `color="brand"` for every `empty` action and `variant="light" color="red"` for every `error`
+   * action regardless of what the action actually meant — so two semantically different actions
+   * sharing the same `state` (a primary CTA and a secondary filter-reset, both `state="empty"` on
+   * `/favorites`) rendered identically, and a neutral retry was forced into a red/destructive
+   * look. Verified zero other production consumers before removing them (`grep -rln
+   * "MantineEmptyLoadingErrorState" src/` outside stories/tests → only `CollectionsSection.tsx`,
+   * which passes no action, and `FavoritesShell.tsx`, which now builds its own three buttons). */
+  action?: ReactNode
 }
 
 /**
  * Canonical empty / loading / error state pattern.
  *
  * Renders one of three states:
- *   - empty: icon + title + description + optional action
+ *   - empty: icon + title + description + optional `action`
  *   - loading: centered Mantine Loader
- *   - error: Alert with error message + optional retry action
+ *   - error: Alert with error message + optional `action`
  *
  * Responsive API:
  *   - Center component handles centering at all breakpoints.
- *   - Action button is full-width on mobile (mw="100%" at base, auto at sm+).
+ *   - `action` alignment is set by this pattern's own Stack (`align="center"` for empty,
+ *     `align="flex-start"` for error) so any caller-supplied action aligns correctly regardless of
+ *     its own width — the pattern owns layout, never the action's own chrome.
  *
- * All three variants are used across product surfaces (listings, admin, cabinet).
+ * Current production consumers (checked 2026-09-10, Task 809 Revision 3): `CollectionsSection.tsx`
+ * (empty state, no action) and `FavoritesShell.tsx` (all three states, each with its own `action`).
  */
 export function MantineEmptyLoadingErrorState({
   state,
   title,
   description,
-  actionLabel,
-  onAction,
+  icon,
+  action,
 }: MantineEmptyLoadingErrorStateProps) {
   const theme = useMantineTheme()
   if (state === 'loading') {
@@ -56,29 +77,11 @@ export function MantineEmptyLoadingErrorState({
         title={title}
         variant="light"
         radius="md"
+        icon={icon}
       >
-        <Stack gap="sm">
+        <Stack gap="sm" align="flex-start">
           {description && <Text size="sm">{description}</Text>}
-          {actionLabel && onAction && (
-            // Task 785 (site 10): `alignSelf: 'flex-start'` is required here — Stack's own default
-            // align is `stretch`, which stretches a flex item even when that item's own `width` is
-            // `auto` (an explicit non-auto width is what a stretch parent respects, not `auto`).
-            // Scoped to this Button only (not the whole Stack) so the sibling description Text keeps
-            // its existing full-width wrapping behavior. Without this, the Button's
-            // `w={{base:'100%',sm:'auto'}}` below would render full-width at every breakpoint
-            // regardless of the media query firing correctly — discovered via this task's AC2
-            // rendered-DOM check, not visible from source alone.
-            <Button
-              variant="light"
-              color="red"
-              size="sm"
-              onClick={onAction}
-              w={{ base: '100%', sm: 'auto' }}
-              style={{ alignSelf: 'flex-start' }}
-            >
-              {actionLabel}
-            </Button>
-          )}
+          {action}
         </Stack>
       </Alert>
     )
@@ -89,9 +92,11 @@ export function MantineEmptyLoadingErrorState({
     <Center py="xl" style={{ minHeight: theme.other.layout.emptyStateMinBlockSize }}>
       <Stack align="center" gap="md" maw={theme.other.boxSize.emptyState}>
         <ThemeIcon size="hero" radius="xl" color="gray" variant="light">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 7h18M3 12h18M3 17h18" />
-          </svg>
+          {icon ?? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
+          )}
         </ThemeIcon>
         {title && (
           <Text fw={600} size="lg" ta="center">
@@ -103,15 +108,7 @@ export function MantineEmptyLoadingErrorState({
             {description}
           </Text>
         )}
-        {actionLabel && onAction && (
-          <Button
-            color="brand"
-            onClick={onAction}
-            w={{ base: '100%', sm: 'auto' }}
-          >
-            {actionLabel}
-          </Button>
-        )}
+        {action}
       </Stack>
     </Center>
   )

@@ -3,6 +3,7 @@ import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import type { User } from '@/types/database'
@@ -148,12 +149,14 @@ export const Default: Story = {
  * `AuthContext.Provider` signed-in fixture the `Default` export already uses (§3.6: the button
  * returns `null` for a guest).
  *
- * FINAL FORM (Phase R-D, kickoff §10.4/R23/AC23): renders the real `ListingCard` with the real
- * `SaveToCollectionButton` passed through its `imageActions` prop — byte-identical composition
- * to `FavoritesShell.tsx` (no `.group` wrapper, no sibling overlay div; the action lives inside
- * the Card's own hover chain). Used by both the R-A pre-fold measurement (§10.1, temporarily
- * mutated to the retired sibling-overlay wrapper and reverted — see the session log and
- * `rev1-baseline-revert-proof.txt`) and the R-D post-implementation probe.
+ * Task 809 (D74-10/D74-11) — `FavoritesShell.tsx` now wraps its cards in the real
+ * `MantineListingCardTrack mode="grid"` (the same track `/listings` uses) instead of its own
+ * Tailwind column ladder, `layoutContext="card-track-grid"` (`'3-col-xl'` retired), and passes
+ * `SaveToCollectionButton` with no `className` — the raw Tailwind chrome it carried was already
+ * inert (`SaveToCollectionButton.module.css`'s `[data-shape='icon']` rule unconditionally
+ * overrides it; see that file's own comment), so dropping the prop is a no-op visually. The
+ * `maxWidth: 360` stand-in div is gone too — the real track, not an arbitrary wrapper, now owns
+ * the card's width, matching what a single-card `/favorites` grid actually renders.
  */
 export const FavoritesComposition: Story = {
   render: (_args, context) => {
@@ -163,21 +166,16 @@ export const FavoritesComposition: Story = {
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
         <MantineStoryShell>
-          <div style={{ maxWidth: 360 }}>
+          <MantineListingCardTrack mode="grid">
             <ListingCard
               listing={listing}
               variant="vertical"
               isFavorited
-              layoutContext="3-col-xl"
+              layoutContext="card-track-grid"
               rates={FIXTURE_RATES}
-              imageActions={
-                <SaveToCollectionButton
-                  listingId={listing.id}
-                  className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
-                />
-              }
+              imageActions={<SaveToCollectionButton listingId={listing.id} />}
             />
-          </div>
+          </MantineListingCardTrack>
         </MantineStoryShell>
       </AuthContext.Provider>
     )

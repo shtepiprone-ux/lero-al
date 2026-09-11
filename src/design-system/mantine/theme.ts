@@ -560,13 +560,39 @@ export const theme = createTheme({
       // already applies correctly at the `styles` merge stage — no relocation needed.
       // Filled/primary variant is untouched (left to Mantine's variantColorResolver).
       styles: (_theme: MantineTheme, props: ButtonProps) => ({
+        // Task 809 Revision 4 (owner rejection #4, 2026-09-10) — `root`'s `height: 'auto'` (Task
+        // 502, kept below unchanged, preserves wrap-growth) leaves the inner content box's height
+        // indefinite. Mantine's own `inner` rule is `display:flex; align-items:center; height:100%`
+        // (`node_modules/@mantine/core/styles/Button.css`), which resolves to `auto` against an
+        // indefinite parent height and collapses to the label's own line box. A `<button>` root
+        // masks this — the UA centers a button's anonymous content box regardless — but `root`
+        // rendered as `component={Link}` (an `<a>`, first introduced to this codebase by Task 809)
+        // gets no such UA centering, so the label sits pinned to the top with `minHeight`'s padding
+        // stranded underneath it. Fixed once, here, for every Button call site rendered as any
+        // element — never per consumer, never in a feature-local style (agent-contract 16b).
+        // `display` is the only property added to `root`; Mantine's own `:where([data-block])` rule
+        // (`fullWidth`) sets `display:block; width:100%` and is unaffected — verified no stylesheet
+        // in `src/` sets `display` on `.mantine-Button-root` (`grep -rn 'mantine-Button-root'
+        // src --include=*.css` → one comment line only, no declaration). `inner` gains
+        // `width:'100%'` — required because a flex `root` makes `inner` a flex item that would
+        // otherwise shrink-to-fit its content, silently neutralizing `justify-content:
+        // var(--button-justify)` (every `justify="flex-start"` button would read as centered) — and
+        // `height:'auto'`, matching `root`'s own Task-502 wrap-growth contract instead of
+        // reintroducing a fixed height on the inner.
         root: {
           minHeight: '2.75rem',
           fontWeight: '500',
           height: 'auto',
+          display: props.fullWidth ? 'flex' : 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           ...(props.variant === 'outline' || props.variant === 'default'
             ? { boxShadow: 'var(--mantine-shadow-xs)' }
             : {}),
+        },
+        inner: {
+          width: '100%',
+          height: 'auto',
         },
         // Task 567 round-2 Fix 1 (owner 2026-07-09): wordBreak was 'break-word', which breaks
         // a word mid-character whenever a flex-squeezed row runs out of room (e.g. "Вторинна" ->

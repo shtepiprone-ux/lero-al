@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SimpleGrid, Image, Stack, Divider, Title, Group } from '@mantine/core';
 import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
 import { theme } from '@/design-system/mantine/theme';
-import { expect } from 'storybook/test';
+import { expect, within, userEvent } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
@@ -197,7 +197,7 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
       }
       imageActions={
         withImageActions
-          ? <SaveToCollectionButton listingId={id} className="bg-card/80 hover:bg-card shadow-sm rounded-lg" />
+          ? <SaveToCollectionButton listingId={id} />
           : undefined
       }
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
@@ -292,5 +292,31 @@ export const Default: Story = {
     const hookEl = canvasElement.querySelector('.consumer-overlay-hook');
     expect(hookEl).not.toBeNull();
     expect(hookEl?.textContent).toBe(storyT(locale, 'storybook.mantine.card_overlay_sold'));
+
+    // Task 809 Revision 3 (R25) — card #1 carries both a "new" badge and the real
+    // SaveToCollectionButton in imageActions. Hover reveals imageActions (opacity:0 by default,
+    // MantineListingCardPattern.module.css `.cardGrid:hover .imageActions`); assert their
+    // rendered bounding rects never intersect — this is the exact collision the owner's rejection
+    // found live on /favorites and that the existing story never caught because nobody hovered it.
+    const canvas = within(canvasElement.ownerDocument.body);
+    // Multiple cards carry a "new" badge (ids 1, 2, 7, 8); only card #1 (`withImageActions`) is
+    // relevant here, and it is first in DOM order, so the first match is card #1's own badge.
+    const badges = await canvas.findAllByText(storyT(locale, 'storybook.mantine.card_badge_new'));
+    const badge = badges[0];
+    const saveButton = await canvas.findByRole('button', { name: storyT(locale, 'collections.save_to') });
+    await userEvent.hover(saveButton);
+    const badgeRect = badge.getBoundingClientRect();
+    const saveRect = saveButton.getBoundingClientRect();
+    const intersects = !(
+      badgeRect.right <= saveRect.left ||
+      badgeRect.left >= saveRect.right ||
+      badgeRect.bottom <= saveRect.top ||
+      badgeRect.top >= saveRect.bottom
+    );
+    if (intersects) {
+      throw new Error(
+        `badge/imageActions intersect: badge=${JSON.stringify(badgeRect)} save=${JSON.stringify(saveRect)}`
+      );
+    }
   },
 };

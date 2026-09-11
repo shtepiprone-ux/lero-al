@@ -1,0 +1,306 @@
+{
+  "runId": "reverted-clean-1",
+  "locale": "uk",
+  "baseUrl": "http://localhost:3002",
+  "detailSlug": "apartament-ne-lungomare-mtuf41kg",
+  "storageState": "C:\\Claude_Code_Projects\\lero-al\\playwright\\.auth\\admin-storage-state.json",
+  "capturedAt": "2026-09-10T16:43:40.011Z",
+  "probeHash": "d1ff42c882fabdedadfd5e1523d93727a51ce605",
+  "gitCommit": "3745bdb993d89bc921c541d0e5b3a0c13c345c70",
+  "favoritesVsListings": [
+    {
+      "width": 320,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 288,
+        "columnCount": 1,
+        "firstChildWidth": 288,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 288,
+        "columnCount": 1,
+        "firstChildWidth": 288,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 390,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 358,
+        "columnCount": 1,
+        "firstChildWidth": 358,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 358,
+        "columnCount": 1,
+        "firstChildWidth": 358,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 480,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 448,
+        "columnCount": 1,
+        "firstChildWidth": 448,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 448,
+        "columnCount": 1,
+        "firstChildWidth": 448,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 640,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 592,
+        "columnCount": 2,
+        "firstChildWidth": 288,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 592,
+        "columnCount": 2,
+        "firstChildWidth": 288,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 768,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 720,
+        "columnCount": 2,
+        "firstChildWidth": 352,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 720,
+        "columnCount": 2,
+        "firstChildWidth": 352,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 1024,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 960,
+        "columnCount": 3,
+        "firstChildWidth": 309.328125,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 960,
+        "columnCount": 3,
+        "firstChildWidth": 309.328125,
+        "childCount": 7
+      },
+      "cardWidthDiff": 0
+    },
+    {
+      "width": 1440,
+      "favoritesHttpStatus": 200,
+      "favoritesGrid": {
+        "containerWidth": 1344,
+        "columnCount": 4,
+        "firstChildWidth": 324,
+        "childCount": 3
+      },
+      "classNameSurvivors": {
+        "found": false,
+        "hits": []
+      },
+      "listingsHttpStatus": 200,
+      "listingsGrid": {
+        "containerWidth": 1312,
+        "columnCount": 4,
+        "firstChildWidth": 316,
+        "childCount": 7
+      },
+      "cardWidthDiff": 8
+    }
+  ],
+  "recentlyViewedSkeleton": [
+    {
+      "width": 320,
+      "pending": {
+        "containerWidth": 288,
+        "firstChildWidth": 184.3125,
+        "childCount": 4,
+        "hasImg": false
+      },
+      "resolved": {
+        "containerWidth": 288,
+        "firstChildWidth": 184.3125,
+        "childCount": 4,
+        "hasImg": true
+      },
+      "delta": 0
+    },
+    {
+      "width": 768,
+      "pending": {
+        "containerWidth": 720,
+        "firstChildWidth": 280,
+        "childCount": 4,
+        "hasImg": false
+      },
+      "resolved": {
+        "containerWidth": 720,
+        "firstChildWidth": 280,
+        "childCount": 4,
+        "hasImg": true
+      },
+      "delta": 0
+    },
+    {
+      "width": 1440,
+      "pending": {
+        "containerWidth": 854.65625,
+        "firstChildWidth": 250.6875,
+        "childCount": 4,
+        "hasImg": false
+      },
+      "resolved": {
+        "containerWidth": 854.65625,
+        "firstChildWidth": 250.6875,
+        "childCount": 4,
+        "hasImg": true
+      },
+      "delta": 0
+    }
+  ],
+  "filteredEmptyAction": {
+    "httpStatus": 200,
+    "anchors": [
+      {
+        "tag": "A",
+        "href": "/uk",
+        "text": "Lero.al"
+      },
+      {
+        "tag": "A",
+        "href": "/uk",
+        "text": "Головна"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/listings",
+        "text": "Оголошення"
+      },
+      {
+        "tag": "A",
+        "href": "/uk",
+        "text": "Головна"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/favorites",
+        "text": "Усі"
+      },
+      {
+        "tag": "A",
+        "href": "/uk",
+        "text": "Lero.al"
+      },
+      {
+        "tag": "A",
+        "href": "/uk",
+        "text": "Головна"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/listings",
+        "text": "Оголошення"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/listings/create",
+        "text": "Додати оголошення"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/about",
+        "text": "Про нас"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/contact",
+        "text": "Контакти"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/privacy-policy",
+        "text": "Політика конфіденційності"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/terms-of-service",
+        "text": "Умови обслуговування"
+      },
+      {
+        "tag": "A",
+        "href": "/uk/test",
+        "text": "Тестова"
+      },
+      {
+        "tag": "A",
+        "href": "https://facebook.com",
+        "text": "Facebook"
+      },
+      {
+        "tag": "A",
+        "href": "https://instagram.com",
+        "text": "Instagram"
+      }
+    ],
+    "actionAnchorFound": true
+  },
+  "hardFail": true,
+  "hardFailReasons": [
+    "width=1440: favorites card width 324.00px differs from /listings 316.00px by 8.00px (>1px)"
+  ]
+}

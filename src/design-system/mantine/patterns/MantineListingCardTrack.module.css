@@ -13,6 +13,20 @@
 }
 
 /*
+ * Task 809, Revision 6 (2026-09-11) — the two-column fit at Mantine's `sm` rung (640px) has
+ * ZERO horizontal margin, not a rounding artifact: `2 × var(--listing-card-min) + gap` =
+ * `2 × 280px + 16px` = `576px`, and `src/stories/mantine/_MantineStoryShell.tsx`'s canonical
+ * story harness delivers exactly `576px` of content width at a 640px viewport (measured,
+ * `measureStorybookColumnMonotonicity` in `scripts/task809-favorites-parity-probe.mjs`). Any
+ * future change to ONE of these three inputs can reopen the column-count dead zone this task
+ * fixed (a viewport growing from 639px to 640px dropping from 2 columns to 1): raising
+ * `--listing-card-min` (`globals.css`) above 280px, widening the grid `gap` above
+ * `--mantine-spacing-md` (16px), or widening any ancestor's horizontal padding/border at or
+ * below the `sm` breakpoint (the story shell's outer `Box`, or `/favorites`' own
+ * `.container-wide` page gutter). Re-run the monotonicity probe before changing any of the three.
+ */
+
+/*
  * Task 810 — positioning context for the rail's prev/next controls (R1-R3). The controls are
  * absolutely positioned against THIS wrapper, not the scroller (`.rail`) itself, so they never
  * become flex items of the scroller and never affect its scroll geometry. `grid` mode renders no

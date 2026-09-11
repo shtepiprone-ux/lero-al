@@ -2,17 +2,10 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { FolderOpen, Folder, Check, Loader2 } from 'lucide-react'
+import { FolderOpen, Folder } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import { ActionIcon, Button as MantineButton, useMantineTheme } from '@mantine/core'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { ActionIcon, Button as MantineButton, Checkbox, Loader, Stack, Text, TextInput, Flex, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns'
 import {
   getCollectionsWithMembership,
   createCollection,
@@ -121,7 +114,7 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
   // Task 654: trigger control — legacy shadcn `Button` → canonical Mantine `ActionIcon`/`Button`,
   // mirroring FavoriteButton.tsx's (Task 653) prop-choice pattern. `commonProps` carries the
   // identical `type`/`onClick`/`aria-label`/`className` for both shapes.
-  const icon = <FolderOpen className="h-4 w-4 shrink-0" />
+  const icon = <FolderOpen size={theme.other.iconSize.standard} />
 
   const commonProps = {
     type: 'button' as const,
@@ -133,10 +126,12 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
   return (
     <>
       {variant === 'icon' ? (
-        // Icon shape — the only current consumer is FavoritesShell.tsx's per-card hover overlay,
-        // which passes `className="bg-card/80 hover:bg-card shadow-sm rounded-lg"`. Those Tailwind
-        // background/radius classes would become inert once the trigger is a Mantine ActionIcon
-        // (Mantine's own `background`/`border-radius` CSS is unlayered and unconditionally set —
+        // Icon shape — the only current consumer is FavoritesShell.tsx's per-card hover overlay
+        // (Task 809 Revision 1: FavoritesShell no longer passes an external className — the frosted
+        // overlay chrome now lives entirely in this component's own CSS module, not a consumer prop).
+        // The background/radius were originally raw Tailwind classes; those become inert once the
+        // trigger is a Mantine ActionIcon (Mantine's own `background`/`border-radius` CSS is
+        // unlayered and unconditionally set —
         // confirmed via `node_modules/@mantine/core/styles.css`'s `.mantine-ActionIcon-root` rule —
         // so it always beats a layered Tailwind utility class for the same property). `radius="0.75rem"`
         // reproduces the exact `rounded-lg` value via a canonical Mantine prop — NOT Mantine's own
@@ -148,7 +143,7 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
         // `bg-card/80`/`hover:bg-card` resting/hover background (same technique + same token values
         // as FavoriteButton.module.css, Task 653) so the overlay's frosted-white look is unchanged.
         // `size={28}` matches the legacy `icon-sm` (`size-7` = 1.75rem = 28px) exactly.
-        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={theme.other.iconSize.feature} radius="0.75rem">
+        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={theme.other.iconSize.feature} radius="0.75rem" /* design-tokens-allow: radius="0.75rem" — reproduces legacy shadcn rounded-lg (globals.css --radius), not Mantine's own theme.radius.lg token; Task 652/654 provenance above */>
           {icon}
         </ActionIcon>
       ) : (
@@ -161,85 +156,82 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
           {...commonProps}
           variant="default"
           size={PILL_SIZE_MAP[size ?? 'default']}
-          radius="1.125rem"
+          radius="1.125rem" /* design-tokens-allow: radius="1.125rem" — exact value Task 653 set for the sibling FavoriteButton pill, no theme.radius token matches it; provenance above */
           bd="1px solid var(--border)"
         >
           {icon}
-          <span className="ml-1">{t('save_to')}</span>
+          <Text span ml={4} inherit>{t('save_to')}</Text>
         </MantineButton>
       )}
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-sm" onClick={e => e.stopPropagation()}>
-          <DialogHeader>
-            <DialogTitle>{t('save_to')}</DialogTitle>
-          </DialogHeader>
-
+      <MantineModal
+        opened={open}
+        onClose={() => setOpen(false)}
+        title={t('save_to')}
+      >
+        <Stack gap="sm" onClick={e => e.stopPropagation()}>
           {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-            </div>
+            <Flex justify="center" align="center" py="xl">
+              <Loader color="gray" size="sm" />
+            </Flex>
           ) : (
             <>
               {collections.length === 0 ? (
-                <div className="flex flex-col items-center justify-center pt-4 pb-2 gap-2 text-center">
-                  <Folder className="h-8 w-8 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">{t('no_collections')}</p>
-                </div>
+                <Stack align="center" gap="xs" pt="sm" pb="xs">
+                  <Folder size={theme.other.iconSize.feature} color="var(--mantine-color-gray-6)" />
+                  <Text size="sm" c="dimmed">{t('no_collections')}</Text>
+                </Stack>
               ) : (
-                <div className="flex flex-col gap-1 py-1">
+                <Stack gap="xs">
                   {collections.map(col => {
                     const isMember = memberIds.has(col.id)
                     return (
-                      <Button
+                      <Checkbox
                         key={col.id}
-                        type="button"
-                        variant="ghost"
-                        onClick={() => toggleCollection(col)}
+                        checked={isMember}
+                        onChange={() => toggleCollection(col)}
                         disabled={isPending}
-                        className="flex items-center gap-3 px-3 py-2.5 h-auto rounded-xl hover:bg-muted transition-colors text-left w-full justify-start disabled:opacity-60"
-                      >
-                        <div className={`h-5 w-5 rounded border flex items-center justify-center shrink-0 ${isMember ? 'bg-primary border-primary' : 'border-border'}`}>
-                          {isMember && <Check className="h-3 w-3 text-primary-foreground" />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium break-words">{col.name}</p>
-                          <p className="text-xs text-muted-foreground">{t('item_count', { count: col.item_count })}</p>
-                        </div>
-                      </Button>
+                        label={
+                          <Stack gap={0}>
+                            <Text size="sm" fw={500} truncate>{col.name}</Text>
+                            <Text size="xs" c="dimmed">{t('item_count', { count: col.item_count })}</Text>
+                          </Stack>
+                        }
+                      />
                     )
                   })}
-                </div>
+                </Stack>
               )}
 
               {/* Inline create-and-add — always visible, no extra dialog */}
-              <div className="flex gap-2 pt-2 border-t">
-                <Input
+              <Flex gap="xs" pt="sm" style={{ borderTop: '1px solid var(--border)' }}>
+                <TextInput
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
                   placeholder={t('name_placeholder')}
                   maxLength={100}
                   onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
                   disabled={isCreating}
-                  className="flex-1 h-8 text-sm"
+                  size="xs"
+                  style={{ flex: 1 }}
                 />
-                <Button
+                <MantineButton
                   type="button"
-                  size="sm"
+                  size="xs"
                   onClick={handleCreate}
                   disabled={!newName.trim() || isCreating}
-                  className="shrink-0 max-sm:w-auto"
+                  w={{ base: 'auto' }}
                 >
                   {isCreating
-                    ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    ? <Loader size={theme.other.iconSize.compact} color="white" />
                     : t('create')
                   }
-                </Button>
-              </div>
+                </MantineButton>
+              </Flex>
             </>
           )}
-        </DialogContent>
-      </Dialog>
+        </Stack>
+      </MantineModal>
     </>
   )
 }

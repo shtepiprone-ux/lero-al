@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { ScrollArea, SegmentedControl, Text, useMatches } from '@mantine/core'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
+
+const ALL_VALUE = '__all__'
 
 interface Props {
   typeCounts: Record<string, number>
@@ -15,6 +16,10 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
   const tf = useTranslations('favorites')
   const locale = useLocale()
   const router = useRouter()
+  // Task 809 Revision 1 — mobile adaptive pattern (owner decision 2026-06-25, same contract as
+  // Mantine/Primitives/SegmentedControl): <640 stretches full-width when labels fit, swipe-scrolls
+  // via ScrollArea when they overflow; >=640 stays content-width.
+  const mobileMinWidth = useMatches({ base: '100%', sm: 'auto' })
 
   const { propertyTypes } = usePropertyTypes()
   const total = Object.values(typeCounts).reduce((a, b) => a + b, 0)
@@ -22,41 +27,39 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
 
   if (availableTypes.length <= 1) return null
 
-  function navigate(type?: string) {
-    const url = type ? `/${locale}/favorites?type=${type}` : `/${locale}/favorites`
+  function navigate(value: string) {
+    const url = value === ALL_VALUE ? `/${locale}/favorites` : `/${locale}/favorites?type=${value}`
     router.push(url)
   }
 
-  return (
-    <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar" role="group" aria-label={tf('filter_label')}>
-      <Button
-        type="button"
-        variant={!currentType ? 'default' : 'secondary'}
-        onClick={() => navigate(undefined)}
-        className={cn(
-          'shrink-0 max-sm:w-auto px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
-          !currentType ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
-        )}
-        aria-pressed={!currentType}
-      >
-        {tf('filter_all')} <span className="opacity-70">{total}</span>
-      </Button>
+  const data = [
+    {
+      value: ALL_VALUE,
+      label: (
+        <>
+          {tf('filter_all')} <Text span opacity={0.7} inherit>{total}</Text>
+        </>
+      ),
+    },
+    ...availableTypes.map(pt => ({
+      value: pt.value,
+      label: (
+        <>
+          {pt.label} <Text span opacity={0.7} inherit>{typeCounts[pt.value]}</Text>
+        </>
+      ),
+    })),
+  ]
 
-      {availableTypes.map(pt => (
-        <Button
-          key={pt.value}
-          type="button"
-          variant={currentType === pt.value ? 'default' : 'secondary'}
-          onClick={() => navigate(pt.value)}
-          className={cn(
-            'shrink-0 max-sm:w-auto px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
-            currentType === pt.value ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
-          )}
-          aria-pressed={currentType === pt.value}
-        >
-          {pt.label} <span className="opacity-70">{typeCounts[pt.value]}</span>
-        </Button>
-      ))}
-    </div>
+  return (
+    <ScrollArea type="auto" scrollbars="x" scrollbarSize={0}>
+      <SegmentedControl
+        aria-label={tf('filter_label')}
+        style={{ minWidth: mobileMinWidth }}
+        value={currentType ?? ALL_VALUE}
+        onChange={navigate}
+        data={data}
+      />
+    </ScrollArea>
   )
 }

@@ -28,6 +28,35 @@ export interface MantineStoryShellProps {
  * chrome — `1px solid` `gray.2` border (`#e4e7ec`), `2xl` radius (16px), no shadow — byte-
  * identical to the existing §6 Card/Paper token, nothing invented.
  *
+ * The inner "white card chrome" Box's `px`/`bd` step at `md` (768px), NOT at `sm` (640px) —
+ * deliberately offset from the outer Box's own `sm`→`md` gutter ladder above. `bg`/`bdrs`/`py`
+ * stay keyed to `sm`, unchanged from before Task 809's remediation, because Revision 6 (owner
+ * classification, 2026-09-11) narrowed the fix to load-bearing properties only: only `px`
+ * (horizontal padding, both sides) and `bd` (a 1px border, both sides) consume the horizontal
+ * width the grid's column math depends on; `bg`, `bdrs` and `py` cost zero horizontal width and
+ * have no bearing on the defect below, so deferring them too (the 2026-09-11 remediation's first
+ * pass) was an unnecessarily wide fix — correct in layer and method, but wider than the constraint
+ * required. This file's own header comment is what the follow-up revision cites verbatim.
+ *
+ * Before the fix, both Boxes stepped at `sm` simultaneously: the outer Box's own `0 → 'md'` gutter
+ * jump ALONE (32px combined, both sides) already exceeds the ~31px of slack `MantineListingCardTrack`'s
+ * `.grid` (`repeat(auto-fill, minmax(280px, 1fr))`, `--listing-card-min` `globals.css:393`) has at a
+ * 639px viewport, and the inner Box's own `md → 'xl'` padding bump plus its `1px` border landed on the
+ * SAME 640px breakpoint, compounding to a measured 50px content-width loss (`gridContentBoxWidth`:
+ * 607px at 639px viewport → 558px at 640px, live Playwright capture) — enough to drop
+ * `Mantine/Primitives/FavoritesShell → Populated` from 2 columns to 1, then back to 2 once the
+ * viewport regrew past the new, smaller deficit (measured 663-664px). A real regression, not a
+ * hand-derived one: increasing viewport width must never decrease a grid's column count, and
+ * stacking two independent Box components' padding steps on the identical breakpoint is what broke
+ * that invariant. Deferring only `px`/`bd` to `md` leaves outer's own jump as the only width-bearing
+ * change at 640px (32px combined vs. the track's ~31px slack — an exact, verified fit, see
+ * `scripts/task809-favorites-parity-probe.mjs`'s `measureStorybookColumnMonotonicity`), and `px`/`bd`'s
+ * own combined step now lands at 768px, where the track already has ~94px of slack before the next
+ * column-count threshold — verified live, not assumed. `bg`/`bdrs`/`py` return to `sm` because none of
+ * the three affects this math; keeping them deferred to `md` would have been an unreviewed cosmetic
+ * change to every `Mantine/Primitives/*` story using `width="full"`, shifting the white-card moment
+ * from 640px to 768px for no width-budget reason.
+ *
  * `≥640`, `width="constrained"` (Table + Tabs ONLY, Task 540 exemption): Task 536's `1536px` centered
  * (`mx="auto"`) column — PLUS the same §6m outer edge gutter as `full` (Task 543 fix: constrained
  * previously had 0px edge below the 1536 cap, so Tabs/Table touched the screen edges at e.g. 773px).
@@ -53,9 +82,9 @@ export function MantineStoryShell({ children, width = 'full' }: MantineStoryShel
       >
         <Box
           bg={{ base: 'transparent', sm: 'white' }}
-          bd={{ base: 'none', sm: '1px solid var(--mantine-color-gray-2)' }}
+          bd={{ base: 'none', md: '1px solid var(--mantine-color-gray-2)' }}
           bdrs={{ base: 0, sm: '2xl' }}
-          px={{ base: 'md', sm: 'xl' }}
+          px={{ base: 'md', md: 'xl' }}
           py={{ base: 0, sm: 'xl' }}
         >
           {children}

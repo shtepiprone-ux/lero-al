@@ -1,10 +1,13 @@
 'use client'
 
-import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { Heart, AlertCircle } from 'lucide-react'
-import { buttonVariants } from '@/components/ui/button'
+import { Stack, Button } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
+import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { FavoritesTypeFilter } from '@/modules/listings/components/FavoritesTypeFilter'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
@@ -13,8 +16,11 @@ import { SaveToCollectionButton } from '@/modules/listings/components/SaveToColl
 import { useFavoritesRealtime } from '@/modules/listings/hooks/useFavoritesRealtime'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
-import { cn } from '@/lib/utils'
 import type { CollectionWithCount } from '@/types/database'
+
+// Task 809 Revision 3 — each of the three MantineEmptyLoadingErrorState actions below states this
+// explicitly at its own call site (not inherited from the pattern, which no longer assigns width).
+const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 interface Props {
   listings: CardListingData[]
@@ -131,93 +137,84 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
   // Pagination total reflects the active type filter for correct page count.
   const paginationTotal = typeFilter ? (liveCounts[typeFilter] ?? 0) : totalFavorites
 
-  // Error state: fetch failed on the server.
+  // Error state: fetch failed on the server. "Try again" is a neutral retry, not a destructive or
+  // alarming action — neutral secondary chrome (Task 809 Revision 3, owner rejection 2026-09-10;
+  // same variant/color convention as SaveSearchButton.tsx's Cancel and MantineDialogDrawerPattern's
+  // Cancel, both already `color="gray"` with an outline/default variant in this codebase).
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 gap-5 text-center">
-        <div className="h-20 w-20 rounded-2xl bg-destructive/10 flex items-center justify-center">
-          <AlertCircle className="h-9 w-9 text-destructive" />
-        </div>
-        <div>
-          <h2 className="text-xl font-bold mb-2">{t('error_title')}</h2>
-          <p className="text-muted-foreground text-sm max-w-sm mx-auto">{t('error_desc')}</p>
-        </div>
-        <Link
-          href={`/${locale}/favorites`}
-          className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}
-        >
-          {t('error_retry')}
-        </Link>
-      </div>
+      <MantineEmptyLoadingErrorState
+        state="error"
+        title={t('error_title')}
+        description={t('error_desc')}
+        icon={<AlertCircle size={theme.other!.iconSize!.decorative} />}
+        action={
+          <Button component={Link} href={`/${locale}/favorites`} variant="outline" color="gray" w={FULL_BELOW_SM}>
+            {t('error_retry')}
+          </Button>
+        }
+      />
     )
   }
 
-  // Full empty state: user has no favorites at all.
+  // Full empty state: user has no favorites at all. "Browse listings" is the page's one primary
+  // CTA — filled brand (unchanged from before Revision 3).
   if (totalFavorites === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 gap-5 text-center">
-        <div className="h-20 w-20 rounded-2xl bg-muted flex items-center justify-center">
-          <Heart className="h-9 w-9 text-muted-foreground" />
-        </div>
-        <div>
-          <h2 className="text-xl font-bold mb-2">{t('empty_title')}</h2>
-          <p className="text-muted-foreground text-sm max-w-sm mx-auto">{t('empty_desc')}</p>
-        </div>
-        <Link
-          href={`/${locale}/listings`}
-          className={cn(buttonVariants({ size: 'lg' }), 'rounded-xl')}
-        >
-          {t('empty_cta')}
-        </Link>
-      </div>
+      <MantineEmptyLoadingErrorState
+        state="empty"
+        title={t('empty_title')}
+        description={t('empty_desc')}
+        icon={<Heart size={theme.other!.iconSize!.decorative} />}
+        action={
+          <Button component={Link} href={`/${locale}/listings`} color="brand" w={FULL_BELOW_SM}>
+            {t('empty_cta')}
+          </Button>
+        }
+      />
     )
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <Stack gap="xl">
       <CollectionsSection initialCollections={initialCollections} />
 
       {/* Pass liveCounts so chip counts stay synchronized with displayed listings */}
       <FavoritesTypeFilter typeCounts={liveCounts} currentType={typeFilter} />
 
       {displayedListings.length === 0 ? (
-        // Filtered empty state: user has favorites but none match the selected type.
-        <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
-          <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center">
-            <Heart className="h-7 w-7 text-muted-foreground" />
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-1">{t('empty_filtered_title')}</h3>
-            <p className="text-muted-foreground text-sm">{t('empty_filtered_desc')}</p>
-          </div>
-          <Link
-            href={`/${locale}/favorites`}
-            className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}
-          >
-            {t('filter_all')}
-          </Link>
-        </div>
+        // Filtered empty state: user has favorites but none match the selected type. "All" resets
+        // the filter — a secondary action, not the page's primary CTA, so it does NOT share the
+        // true-empty state's filled-brand chrome despite sharing state="empty" (Task 809 Revision 3,
+        // owner rejection 2026-09-10 — this was the exact defect: two different-importance actions
+        // rendered identically because the pattern used to key chrome off `state` alone).
+        <MantineEmptyLoadingErrorState
+          state="empty"
+          title={t('empty_filtered_title')}
+          description={t('empty_filtered_desc')}
+          icon={<Heart size={theme.other!.iconSize!.decorative} />}
+          action={
+            <Button component={Link} href={`/${locale}/favorites`} variant="outline" color="gray" w={FULL_BELOW_SM}>
+              {t('filter_all')}
+            </Button>
+          }
+        />
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+          <MantineListingCardTrack mode="grid">
             {displayedListings.map((listing) => (
               <ListingCard
                 key={listing.id}
                 listing={listing}
                 isFavorited={true}
                 onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
-                layoutContext="3-col-xl"
+                layoutContext="card-track-grid"
                 displayCurrency={displayCurrency}
                 rates={rates}
-                imageActions={
-                  <SaveToCollectionButton
-                    listingId={listing.id}
-                    className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
-                  />
-                }
+                imageActions={<SaveToCollectionButton listingId={listing.id} />}
               />
             ))}
-          </div>
+          </MantineListingCardTrack>
           <ListingsPagination
             total={paginationTotal}
             page={page}
@@ -225,6 +222,6 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
           />
         </>
       )}
-    </div>
+    </Stack>
   )
 }

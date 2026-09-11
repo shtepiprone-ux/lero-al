@@ -1,0 +1,12 @@
+captured filtercontrols__w320__uk: 21 buttons
+captured filtercontrols__w320__sq: 21 buttons
+captured filterspanelshell__w320__en: 49 buttons
+captured listingsfilters__w320__en: 34 buttons
+captured authformpattern__w320__en: 2 buttons
+captured filterspanelshell__w1440__en: 49 buttons
+captured listingsfilters__w1440__en: 34 buttons
+captured authformpattern__w1440__en: 2 buttons
+captured adminuserstable__w320__en: 2 buttons
+captured adminuserstable__w1440__en: 2 buttons
+Wrote docs\sessions\evidence\task809\rev5-measurements\rev5-measurements.json
+EXIT_CODE=0

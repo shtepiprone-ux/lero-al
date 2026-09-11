@@ -223,13 +223,24 @@
 }
 
 /*
- * Task 764 Revision 1 — the `imageActions` slot wrapper (F3 fix). Reproduces the retired
- * `FavoritesShell.tsx` sibling-overlay div's own declarations exactly: `absolute top-2 left-2`
- * (same offsets as `.badgesGrid` above, §3.4 — grid occupancy: top-left badges, top-right
- * favorite overlay, bottom-right photo count), `opacity-0`/`transition-opacity` (Tailwind's own
- * compiled `.15s`/`cubic-bezier(0.4,0,0.2,1)`, same values `.cardTitle` above already
- * reproduces at :253-255). `z-index` is explicit (not DOM-order-dependent) so paint order over
- * `.badgesGrid` holds regardless of future render-order changes.
+ * Task 764 Revision 1 — the `imageActions` slot wrapper (F3 fix). `opacity-0`/`transition-opacity`
+ * reproduce Tailwind's own compiled `.15s`/`cubic-bezier(0.4,0,0.2,1)`, same values `.cardTitle`
+ * above already reproduces at :253-255. `z-index` is explicit (not DOM-order-dependent) so paint
+ * order over any sibling overlay holds regardless of future render-order changes.
+ *
+ * Task 809 Revision 3 (owner rejection 2026-09-10) — repositioned from top-left to bottom-left.
+ * The original top-left placement (`absolute top-2 left-2`, same offsets as `.badgesGrid`) was
+ * reproduced verbatim from the retired pre-Mantine `FavoritesShell.tsx` overlay div, which shared
+ * the exact top-left corner with `.badgesGrid` — a collision nobody noticed because `imageActions`
+ * had zero production consumers until Task 809 wired `SaveToCollectionButton` into `/favorites`.
+ * On hover/focus, the action icon rendered directly on top of an active badge (e.g. "New"),
+ * illegible, both fighting the same 8px×8px corner. Bottom-left is the verified-free corner:
+ * `{imageActions}` (`.tsx:330-334`) renders only in the grid-layout branch, after the
+ * `if (layout === 'list') return (...)` early return (`.tsx:176`) — `.photoCountList` (bottom-left,
+ * list-only, `:264-275`) can never coexist with `.imageActions` on the same rendered card, and
+ * `.photoCountGrid` (the grid variant's photo-count badge) is bottom-**right** (`:282-289`). Badges
+ * stay top-left, `favorite` (`FavoriteButton`'s own self-positioned `top/right`, `FavoriteButton.tsx:140`)
+ * stays top-right — all four overlay occupants now sit in four distinct corners.
  *
  * Reveal rules reproduce the retired `opacity-0 group-hover:opacity-100 focus-within:opacity-100`
  * utilities' OWN compiled guards, not a copy of this file's `:hover` zoom guard: the hover arm
@@ -242,7 +253,7 @@
  */
 .imageActions {
   position: absolute;
-  top: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
+  bottom: var(--homepage-runtime-space-2); /* Task 809 Revision 3 — was top; see comment above */
   left: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
   z-index: 1; /* design-tokens-allow: z-index: 1 — sibling paint-order guarantee over .badgesGrid, not a stacking-context escalation; no --z-* token exists at this low a value */
   opacity: 0;

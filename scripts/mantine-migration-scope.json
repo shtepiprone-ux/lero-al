@@ -31,5 +31,10 @@
   "src/modules/listings/components/ListingStatusBanner.tsx",
   "src/modules/listings/components/SimilarListingsView.tsx",
   "src/modules/listings/components/RecentlyViewedGridView.tsx",
-  "src/design-system/mantine/patterns/MantineListingCardTrack.tsx"
+  "src/design-system/mantine/patterns/MantineListingCardTrack.tsx",
+  "src/modules/listings/components/FavoritesShell.tsx",
+  "src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx",
+  "src/modules/listings/components/CollectionsSection.tsx",
+  "src/modules/listings/components/SaveToCollectionButton.tsx",
+  "src/modules/listings/components/FavoritesTypeFilter.tsx"
 ]

@@ -1,0 +1,7155 @@
+{
+  "filtercontrols__w320__uk": {
+    "name": "filtercontrols",
+    "width": 320,
+    "locale": "uk",
+    "buttonCount": 21,
+    "centring": [
+      {
+        "text": "Нова будівля",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Хороший стан",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує ремонту",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує реновації",
+        "rootCentre": 254,
+        "labelCentre": 254,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "В процесі будівництва",
+        "rootCentre": 306,
+        "labelCentre": 306,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Нова будівля",
+        "rootCentre": 418,
+        "labelCentre": 418,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Хороший стан",
+        "rootCentre": 468,
+        "labelCentre": 468,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує ремонту",
+        "rootCentre": 518,
+        "labelCentre": 518,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Потребує реновації",
+        "rootCentre": 568,
+        "labelCentre": 568,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "В процесі будівництва",
+        "rootCentre": 618,
+        "labelCentre": 618,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 730,
+        "labelCentre": 730,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Усі",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Продаж",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Оренда",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Усі",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Продаж",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Оренда",
+        "rootCentre": 972,
+        "labelCentre": 972,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": [
+      {
+        "text": "Усі",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "Продаж",
+        "rootLeft": 77.359375,
+        "labelLeft": 94.359375,
+        "delta": 17
+      },
+      {
+        "text": "Оренда",
+        "rootLeft": 173.828125,
+        "labelLeft": 190.828125,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "Нова будівля",
+        "tag": "BUTTON",
+        "rootTop": 128,
+        "rootBottom": 172,
+        "rootLeft": 16,
+        "rootWidth": 124.859375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 143,
+          "bottom": 157,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Хороший стан",
+        "tag": "BUTTON",
+        "rootTop": 128,
+        "rootBottom": 172,
+        "rootLeft": 148.859375,
+        "rootWidth": 133.390625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 143,
+          "bottom": 157,
+          "left": 165.859375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Потребує ремонту",
+        "tag": "BUTTON",
+        "rootTop": 180,
+        "rootBottom": 224,
+        "rootLeft": 16,
+        "rootWidth": 161.390625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 195,
+          "bottom": 209,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Потребує реновації",
+        "tag": "BUTTON",
+        "rootTop": 232,
+        "rootBottom": 276,
+        "rootLeft": 16,
+        "rootWidth": 169.203125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 247,
+          "bottom": 261,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "В процесі будівництва",
+        "tag": "BUTTON",
+        "rootTop": 284,
+        "rootBottom": 328,
+        "rootLeft": 16,
+        "rootWidth": 190,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 299,
+          "bottom": 313,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Нова будівля",
+        "tag": "BUTTON",
+        "rootTop": 396,
+        "rootBottom": 440,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 411,
+          "bottom": 425,
+          "left": 114.5625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Хороший стан",
+        "tag": "BUTTON",
+        "rootTop": 446,
+        "rootBottom": 490,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 461,
+          "bottom": 475,
+          "left": 110.296875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Потребує ремонту",
+        "tag": "BUTTON",
+        "rootTop": 496,
+        "rootBottom": 540,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 511,
+          "bottom": 525,
+          "left": 96.296875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Потребує реновації",
+        "tag": "BUTTON",
+        "rootTop": 546,
+        "rootBottom": 590,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 561,
+          "bottom": 575,
+          "left": 92.390625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "В процесі будівництва",
+        "tag": "BUTTON",
+        "rootTop": 596,
+        "rootBottom": 640,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 611,
+          "bottom": 625,
+          "left": 82,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 708,
+        "rootBottom": 752,
+        "rootLeft": 16,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 723,
+          "bottom": 737,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 708,
+        "rootBottom": 752,
+        "rootLeft": 66.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 723,
+          "bottom": 737,
+          "left": 83.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 708,
+        "rootBottom": 752,
+        "rootLeft": 116.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 723,
+          "bottom": 737,
+          "left": 133.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 708,
+        "rootBottom": 752,
+        "rootLeft": 166.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 723,
+          "bottom": 737,
+          "left": 183.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 708,
+        "rootBottom": 752,
+        "rootLeft": 216.0625,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 723,
+          "bottom": 737,
+          "left": 233.0625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Усі",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 16,
+        "rootWidth": 53.359375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Продаж",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 77.359375,
+        "rootWidth": 88.46875,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 94.359375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Оренда",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 173.828125,
+        "rootWidth": 86.828125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 190.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Усі",
+        "tag": "BUTTON",
+        "rootTop": 950,
+        "rootBottom": 994,
+        "rootLeft": 16,
+        "rootWidth": 53.359375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 965,
+          "bottom": 979,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Продаж",
+        "tag": "BUTTON",
+        "rootTop": 950,
+        "rootBottom": 994,
+        "rootLeft": 77.359375,
+        "rootWidth": 88.46875,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 965,
+          "bottom": 979,
+          "left": 94.359375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Оренда",
+        "tag": "BUTTON",
+        "rootTop": 950,
+        "rootBottom": 994,
+        "rootLeft": 173.828125,
+        "rootWidth": 86.828125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 965,
+          "bottom": 979,
+          "left": 190.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "filtercontrols__w320__sq": {
+    "name": "filtercontrols",
+    "width": 320,
+    "locale": "sq",
+    "buttonCount": 21,
+    "centring": [
+      {
+        "text": "Ndërtim i ri",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gjendje e mirë",
+        "rootCentre": 150,
+        "labelCentre": 150,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon riparim",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon renovim",
+        "rootCentre": 202,
+        "labelCentre": 202,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Në ndërtim",
+        "rootCentre": 254,
+        "labelCentre": 254,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Ndërtim i ri",
+        "rootCentre": 366,
+        "labelCentre": 366,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gjendje e mirë",
+        "rootCentre": 416,
+        "labelCentre": 416,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon riparim",
+        "rootCentre": 466,
+        "labelCentre": 466,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Kërkon renovim",
+        "rootCentre": 516,
+        "labelCentre": 516,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Në ndërtim",
+        "rootCentre": 566,
+        "labelCentre": 566,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 678,
+        "labelCentre": 678,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Të gjitha",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Shitje",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Qira",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Të gjitha",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Shitje",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Qira",
+        "rootCentre": 920,
+        "labelCentre": 920,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": [
+      {
+        "text": "Të gjitha",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "Shitje",
+        "rootLeft": 114.5,
+        "labelLeft": 131.5,
+        "delta": 17
+      },
+      {
+        "text": "Qira",
+        "rootLeft": 193.59375,
+        "labelLeft": 210.59375,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "Ndërtim i ri",
+        "tag": "BUTTON",
+        "rootTop": 128,
+        "rootBottom": 172,
+        "rootLeft": 16,
+        "rootWidth": 109.96875,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 143,
+          "bottom": 157,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Gjendje e mirë",
+        "tag": "BUTTON",
+        "rootTop": 128,
+        "rootBottom": 172,
+        "rootLeft": 133.96875,
+        "rootWidth": 130.890625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 143,
+          "bottom": 157,
+          "left": 150.96875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Kërkon riparim",
+        "tag": "BUTTON",
+        "rootTop": 180,
+        "rootBottom": 224,
+        "rootLeft": 16,
+        "rootWidth": 134.109375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 195,
+          "bottom": 209,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Kërkon renovim",
+        "tag": "BUTTON",
+        "rootTop": 180,
+        "rootBottom": 224,
+        "rootLeft": 158.109375,
+        "rootWidth": 140.34375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 195,
+          "bottom": 209,
+          "left": 175.109375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Në ndërtim",
+        "tag": "BUTTON",
+        "rootTop": 232,
+        "rootBottom": 276,
+        "rootLeft": 16,
+        "rootWidth": 109.734375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 247,
+          "bottom": 261,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Ndërtim i ri",
+        "tag": "BUTTON",
+        "rootTop": 344,
+        "rootBottom": 388,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 359,
+          "bottom": 373,
+          "left": 122.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Gjendje e mirë",
+        "tag": "BUTTON",
+        "rootTop": 394,
+        "rootBottom": 438,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 409,
+          "bottom": 423,
+          "left": 111.546875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Kërkon riparim",
+        "tag": "BUTTON",
+        "rootTop": 444,
+        "rootBottom": 488,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 459,
+          "bottom": 473,
+          "left": 109.9375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Kërkon renovim",
+        "tag": "BUTTON",
+        "rootTop": 494,
+        "rootBottom": 538,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 509,
+          "bottom": 523,
+          "left": 106.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Në ndërtim",
+        "tag": "BUTTON",
+        "rootTop": 544,
+        "rootBottom": 588,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 559,
+          "bottom": 573,
+          "left": 122.125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 656,
+        "rootBottom": 700,
+        "rootLeft": 16,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 671,
+          "bottom": 685,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 656,
+        "rootBottom": 700,
+        "rootLeft": 66.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 671,
+          "bottom": 685,
+          "left": 83.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 656,
+        "rootBottom": 700,
+        "rootLeft": 116.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 671,
+          "bottom": 685,
+          "left": 133.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 656,
+        "rootBottom": 700,
+        "rootLeft": 166.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 671,
+          "bottom": 685,
+          "left": 183.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 656,
+        "rootBottom": 700,
+        "rootLeft": 216.0625,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 671,
+          "bottom": 685,
+          "left": 233.0625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Të gjitha",
+        "tag": "BUTTON",
+        "rootTop": 768,
+        "rootBottom": 812,
+        "rootLeft": 16,
+        "rootWidth": 90.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 783,
+          "bottom": 797,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Shitje",
+        "tag": "BUTTON",
+        "rootTop": 768,
+        "rootBottom": 812,
+        "rootLeft": 114.5,
+        "rootWidth": 71.09375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 783,
+          "bottom": 797,
+          "left": 131.5,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Qira",
+        "tag": "BUTTON",
+        "rootTop": 768,
+        "rootBottom": 812,
+        "rootLeft": 193.59375,
+        "rootWidth": 62.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 783,
+          "bottom": 797,
+          "left": 210.59375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Të gjitha",
+        "tag": "BUTTON",
+        "rootTop": 898,
+        "rootBottom": 942,
+        "rootLeft": 16,
+        "rootWidth": 90.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 913,
+          "bottom": 927,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Shitje",
+        "tag": "BUTTON",
+        "rootTop": 898,
+        "rootBottom": 942,
+        "rootLeft": 114.5,
+        "rootWidth": 71.09375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 913,
+          "bottom": 927,
+          "left": 131.5,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Qira",
+        "tag": "BUTTON",
+        "rootTop": 898,
+        "rootBottom": 942,
+        "rootLeft": 193.59375,
+        "rootWidth": 62.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 913,
+          "bottom": 927,
+          "left": 210.59375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "filterspanelshell__w320__en": {
+    "name": "filterspanelshell",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 49,
+    "centring": [
+      {
+        "text": "All types",
+        "rootCentre": 363,
+        "labelCentre": 363,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 363,
+        "labelCentre": 363,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 415,
+        "labelCentre": 415,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 415,
+        "labelCentre": 415,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 467,
+        "labelCentre": 467,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 467,
+        "labelCentre": 467,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 519,
+        "labelCentre": 519,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 519,
+        "labelCentre": 519,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 571,
+        "labelCentre": 571,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 571,
+        "labelCentre": 571,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 623,
+        "labelCentre": 623,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 738,
+        "labelCentre": 738,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Secondary market",
+        "rootCentre": 790,
+        "labelCentre": 790,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New building",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 1187,
+        "labelCentre": 1187,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 1239,
+        "labelCentre": 1239,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New build",
+        "rootCentre": 1699,
+        "labelCentre": 1699,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Good condition",
+        "rootCentre": 1699,
+        "labelCentre": 1699,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs repair",
+        "rootCentre": 1751,
+        "labelCentre": 1751,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs renovation",
+        "rootCentre": 1803,
+        "labelCentre": 1803,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Under construction",
+        "rootCentre": 1855,
+        "labelCentre": 1855,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Studio",
+        "rootCentre": 1970,
+        "labelCentre": 1970,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Free layout",
+        "rootCentre": 1970,
+        "labelCentre": 1970,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Duplex",
+        "rootCentre": 2022,
+        "labelCentre": 2022,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Penthouse",
+        "rootCentre": 2022,
+        "labelCentre": 2022,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Small unit",
+        "rootCentre": 2074,
+        "labelCentre": 2074,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Electric",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gas",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Central",
+        "rootCentre": 2189,
+        "labelCentre": 2189,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2241,
+        "labelCentre": 2241,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No heating",
+        "rootCentre": 2241,
+        "labelCentre": 2241,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Brick",
+        "rootCentre": 2356,
+        "labelCentre": 2356,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Concrete",
+        "rootCentre": 2356,
+        "labelCentre": 2356,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Panel",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Other",
+        "rootCentre": 2408,
+        "labelCentre": 2408,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From owner",
+        "rootCentre": 2523,
+        "labelCentre": 2523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From agency",
+        "rootCentre": 2523,
+        "labelCentre": 2523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From developer",
+        "rootCentre": 2575,
+        "labelCentre": 2575,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Installment",
+        "rootCentre": 2690,
+        "labelCentre": 2690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Mortgage",
+        "rootCentre": 2690,
+        "labelCentre": 2690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Assignment",
+        "rootCentre": 2742,
+        "labelCentre": 2742,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Negotiable",
+        "rootCentre": 2742,
+        "labelCentre": 2742,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No commission",
+        "rootCentre": 2794,
+        "labelCentre": 2794,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters2",
+        "rootCentre": 906,
+        "labelCentre": 906,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Reset filters",
+        "rootCentre": 962,
+        "labelCentre": 962,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Apply filters2",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Reset filters",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 164,
+        "labelLeft": 181,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 36,
+        "labelLeft": 53,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "All types",
+        "tag": "BUTTON",
+        "rootTop": 341,
+        "rootBottom": 385,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 356,
+          "bottom": 370,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "apartment",
+        "tag": "BUTTON",
+        "rootTop": 341,
+        "rootBottom": 385,
+        "rootLeft": 164,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 356,
+          "bottom": 370,
+          "left": 181,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "house",
+        "tag": "BUTTON",
+        "rootTop": 393,
+        "rootBottom": 437,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 408,
+          "bottom": 422,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "room",
+        "tag": "BUTTON",
+        "rootTop": 393,
+        "rootBottom": 437,
+        "rootLeft": 164,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 408,
+          "bottom": 422,
+          "left": 181,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "land",
+        "tag": "BUTTON",
+        "rootTop": 445,
+        "rootBottom": 489,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 460,
+          "bottom": 474,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "commercial",
+        "tag": "BUTTON",
+        "rootTop": 445,
+        "rootBottom": 489,
+        "rootLeft": 164,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 460,
+          "bottom": 474,
+          "left": 181,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "office",
+        "tag": "BUTTON",
+        "rootTop": 497,
+        "rootBottom": 541,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 512,
+          "bottom": 526,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "garage",
+        "tag": "BUTTON",
+        "rootTop": 497,
+        "rootBottom": 541,
+        "rootLeft": 164,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 512,
+          "bottom": 526,
+          "left": 181,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "parking",
+        "tag": "BUTTON",
+        "rootTop": 549,
+        "rootBottom": 593,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 564,
+          "bottom": 578,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "warehouse",
+        "tag": "BUTTON",
+        "rootTop": 549,
+        "rootBottom": 593,
+        "rootLeft": 164,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 564,
+          "bottom": 578,
+          "left": 181,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "other",
+        "tag": "BUTTON",
+        "rootTop": 601,
+        "rootBottom": 645,
+        "rootLeft": 36,
+        "rootWidth": 120,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 616,
+          "bottom": 630,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All",
+        "tag": "BUTTON",
+        "rootTop": 716,
+        "rootBottom": 760,
+        "rootLeft": 36,
+        "rootWidth": 248,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 731,
+          "bottom": 745,
+          "left": 151.75,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Secondary market",
+        "tag": "BUTTON",
+        "rootTop": 768,
+        "rootBottom": 812,
+        "rootLeft": 36,
+        "rootWidth": 248,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 783,
+          "bottom": 797,
+          "left": 99.515625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "New building",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 36,
+        "rootWidth": 248,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 116.453125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 1165,
+        "rootBottom": 1209,
+        "rootLeft": 36,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1180,
+          "bottom": 1194,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 1165,
+        "rootBottom": 1209,
+        "rootLeft": 86.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1180,
+          "bottom": 1194,
+          "left": 103.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 1165,
+        "rootBottom": 1209,
+        "rootLeft": 136.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1180,
+          "bottom": 1194,
+          "left": 153.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 1165,
+        "rootBottom": 1209,
+        "rootLeft": 186.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1180,
+          "bottom": 1194,
+          "left": 203.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 1217,
+        "rootBottom": 1261,
+        "rootLeft": 36,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1232,
+          "bottom": 1246,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "New build",
+        "tag": "BUTTON",
+        "rootTop": 1677,
+        "rootBottom": 1721,
+        "rootLeft": 36,
+        "rootWidth": 100.953125,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1692,
+          "bottom": 1706,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Good condition",
+        "tag": "BUTTON",
+        "rootTop": 1677,
+        "rootBottom": 1721,
+        "rootLeft": 144.953125,
+        "rootWidth": 136.046875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1692,
+          "bottom": 1706,
+          "left": 161.953125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Needs repair",
+        "tag": "BUTTON",
+        "rootTop": 1729,
+        "rootBottom": 1773,
+        "rootLeft": 36,
+        "rootWidth": 119.75,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1744,
+          "bottom": 1758,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Needs renovation",
+        "tag": "BUTTON",
+        "rootTop": 1781,
+        "rootBottom": 1825,
+        "rootLeft": 36,
+        "rootWidth": 152.1875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1796,
+          "bottom": 1810,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Under construction",
+        "tag": "BUTTON",
+        "rootTop": 1833,
+        "rootBottom": 1877,
+        "rootLeft": 36,
+        "rootWidth": 162.90625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1848,
+          "bottom": 1862,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Studio",
+        "tag": "BUTTON",
+        "rootTop": 1948,
+        "rootBottom": 1992,
+        "rootLeft": 36,
+        "rootWidth": 76.546875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1963,
+          "bottom": 1977,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Free layout",
+        "tag": "BUTTON",
+        "rootTop": 1948,
+        "rootBottom": 1992,
+        "rootLeft": 120.546875,
+        "rootWidth": 108.203125,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1963,
+          "bottom": 1977,
+          "left": 137.546875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Duplex",
+        "tag": "BUTTON",
+        "rootTop": 2000,
+        "rootBottom": 2044,
+        "rootLeft": 36,
+        "rootWidth": 80.8125,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2015,
+          "bottom": 2029,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Penthouse",
+        "tag": "BUTTON",
+        "rootTop": 2000,
+        "rootBottom": 2044,
+        "rootLeft": 124.8125,
+        "rootWidth": 105.171875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2015,
+          "bottom": 2029,
+          "left": 141.8125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Small unit",
+        "tag": "BUTTON",
+        "rootTop": 2052,
+        "rootBottom": 2096,
+        "rootLeft": 36,
+        "rootWidth": 100.34375,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2067,
+          "bottom": 2081,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Electric",
+        "tag": "BUTTON",
+        "rootTop": 2167,
+        "rootBottom": 2211,
+        "rootLeft": 36,
+        "rootWidth": 82,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2182,
+          "bottom": 2196,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Gas",
+        "tag": "BUTTON",
+        "rootTop": 2167,
+        "rootBottom": 2211,
+        "rootLeft": 126,
+        "rootWidth": 58.875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2182,
+          "bottom": 2196,
+          "left": 143,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Central",
+        "tag": "BUTTON",
+        "rootTop": 2167,
+        "rootBottom": 2211,
+        "rootLeft": 192.875,
+        "rootWidth": 82.375,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2182,
+          "bottom": 2196,
+          "left": 209.875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Wood",
+        "tag": "BUTTON",
+        "rootTop": 2219,
+        "rootBottom": 2263,
+        "rootLeft": 36,
+        "rootWidth": 72.6875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2234,
+          "bottom": 2248,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "No heating",
+        "tag": "BUTTON",
+        "rootTop": 2219,
+        "rootBottom": 2263,
+        "rootLeft": 116.6875,
+        "rootWidth": 106.9375,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2234,
+          "bottom": 2248,
+          "left": 133.6875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Brick",
+        "tag": "BUTTON",
+        "rootTop": 2334,
+        "rootBottom": 2378,
+        "rootLeft": 36,
+        "rootWidth": 67.25,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2349,
+          "bottom": 2363,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Concrete",
+        "tag": "BUTTON",
+        "rootTop": 2334,
+        "rootBottom": 2378,
+        "rootLeft": 111.25,
+        "rootWidth": 93.984375,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2349,
+          "bottom": 2363,
+          "left": 128.25,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Panel",
+        "tag": "BUTTON",
+        "rootTop": 2386,
+        "rootBottom": 2430,
+        "rootLeft": 36,
+        "rootWidth": 70.90625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2401,
+          "bottom": 2415,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Wood",
+        "tag": "BUTTON",
+        "rootTop": 2386,
+        "rootBottom": 2430,
+        "rootLeft": 114.90625,
+        "rootWidth": 72.6875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2401,
+          "bottom": 2415,
+          "left": 131.90625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Other",
+        "tag": "BUTTON",
+        "rootTop": 2386,
+        "rootBottom": 2430,
+        "rootLeft": 195.59375,
+        "rootWidth": 72.8125,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2401,
+          "bottom": 2415,
+          "left": 212.59375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From owner",
+        "tag": "BUTTON",
+        "rootTop": 2501,
+        "rootBottom": 2545,
+        "rootLeft": 36,
+        "rootWidth": 114.71875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2516,
+          "bottom": 2530,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From agency",
+        "tag": "BUTTON",
+        "rootTop": 2501,
+        "rootBottom": 2545,
+        "rootLeft": 158.71875,
+        "rootWidth": 118.921875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2516,
+          "bottom": 2530,
+          "left": 175.71875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From developer",
+        "tag": "BUTTON",
+        "rootTop": 2553,
+        "rootBottom": 2597,
+        "rootLeft": 36,
+        "rootWidth": 139,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2568,
+          "bottom": 2582,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Installment",
+        "tag": "BUTTON",
+        "rootTop": 2668,
+        "rootBottom": 2712,
+        "rootLeft": 36,
+        "rootWidth": 109.375,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2683,
+          "bottom": 2697,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Mortgage",
+        "tag": "BUTTON",
+        "rootTop": 2668,
+        "rootBottom": 2712,
+        "rootLeft": 153.375,
+        "rootWidth": 97.640625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2683,
+          "bottom": 2697,
+          "left": 170.375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Assignment",
+        "tag": "BUTTON",
+        "rootTop": 2720,
+        "rootBottom": 2764,
+        "rootLeft": 36,
+        "rootWidth": 111.828125,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2735,
+          "bottom": 2749,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Negotiable",
+        "tag": "BUTTON",
+        "rootTop": 2720,
+        "rootBottom": 2764,
+        "rootLeft": 155.828125,
+        "rootWidth": 106.140625,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2735,
+          "bottom": 2749,
+          "left": 172.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "No commission",
+        "tag": "BUTTON",
+        "rootTop": 2772,
+        "rootBottom": 2816,
+        "rootLeft": 36,
+        "rootWidth": 136.671875,
+        "rootHeight": 44,
+        "parentWidth": 248,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2787,
+          "bottom": 2801,
+          "left": 53,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Apply filters2",
+        "tag": "BUTTON",
+        "rootTop": 884,
+        "rootBottom": 928,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 899,
+          "bottom": 913,
+          "left": 106.65625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Reset filters",
+        "tag": "BUTTON",
+        "rootTop": 940,
+        "rootBottom": 984,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 955,
+          "bottom": 969,
+          "left": 130.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "listingsfilters__w320__en": {
+    "name": "listingsfilters",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 34,
+    "centring": [
+      {
+        "text": "Listing type",
+        "rootCentre": 258,
+        "labelCentre": 258,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For sale",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For rent",
+        "rootCentre": 314,
+        "labelCentre": 314,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Property type",
+        "rootCentre": 391,
+        "labelCentre": 391,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All types",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 551,
+        "labelCentre": 551,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 603,
+        "labelCentre": 603,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 603,
+        "labelCentre": 603,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Location",
+        "rootCentre": 680,
+        "labelCentre": 680,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Market type",
+        "rootCentre": 813,
+        "labelCentre": 813,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Rooms",
+        "rootCentre": 890,
+        "labelCentre": 890,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 946,
+        "labelCentre": 946,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Price (ALL)",
+        "rootCentre": 1023,
+        "labelCentre": 1023,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Area (m²)",
+        "rootCentre": 1156,
+        "labelCentre": 1156,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Floor",
+        "rootCentre": 1233,
+        "labelCentre": 1233,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Building floors",
+        "rootCentre": 1310,
+        "labelCentre": 1310,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Condition",
+        "rootCentre": 1387,
+        "labelCentre": 1387,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Offer type",
+        "rootCentre": 1464,
+        "labelCentre": 1464,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Purchase conditions",
+        "rootCentre": 1541,
+        "labelCentre": 1541,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Posting period",
+        "rootCentre": 1618,
+        "labelCentre": 1618,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Listing ID",
+        "rootCentre": 1695,
+        "labelCentre": 1695,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootCentre": 1771,
+        "labelCentre": 1771,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Listing type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Property type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Location",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Market type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Rooms",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Price (ALL)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Area (m²)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Floor",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Building floors",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Condition",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Offer type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Purchase conditions",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Posting period",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Listing ID",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 114,
+        "labelLeft": 131,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 226.828125,
+        "labelLeft": 243.828125,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 94.015625,
+        "labelLeft": 111.015625,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 165.078125,
+        "labelLeft": 182.078125,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 94.765625,
+        "labelLeft": 111.765625,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 181.875,
+        "labelLeft": 198.875,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 131.609375,
+        "labelLeft": 148.609375,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "Listing type",
+        "tag": "BUTTON",
+        "rootTop": 236,
+        "rootBottom": 280,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 249,
+          "bottom": 267,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All",
+        "tag": "BUTTON",
+        "rootTop": 292,
+        "rootBottom": 336,
+        "rootLeft": 16,
+        "rootWidth": 50.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 307,
+          "bottom": 321,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "For sale",
+        "tag": "BUTTON",
+        "rootTop": 292,
+        "rootBottom": 336,
+        "rootLeft": 74.5,
+        "rootWidth": 85.734375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 307,
+          "bottom": 321,
+          "left": 91.5,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "For rent",
+        "tag": "BUTTON",
+        "rootTop": 292,
+        "rootBottom": 336,
+        "rootLeft": 168.234375,
+        "rootWidth": 87.203125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 307,
+          "bottom": 321,
+          "left": 185.234375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Property type",
+        "tag": "BUTTON",
+        "rootTop": 369,
+        "rootBottom": 413,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 382,
+          "bottom": 400,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All types",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 16,
+        "rootWidth": 90,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "apartment",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 114,
+        "rootWidth": 104.828125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 131,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "house",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 226.828125,
+        "rootWidth": 74.6875,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 243.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "room",
+        "tag": "BUTTON",
+        "rootTop": 477,
+        "rootBottom": 521,
+        "rootLeft": 16,
+        "rootWidth": 70.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 492,
+          "bottom": 506,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "land",
+        "tag": "BUTTON",
+        "rootTop": 477,
+        "rootBottom": 521,
+        "rootLeft": 94.015625,
+        "rootWidth": 63.0625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 492,
+          "bottom": 506,
+          "left": 111.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "commercial",
+        "tag": "BUTTON",
+        "rootTop": 477,
+        "rootBottom": 521,
+        "rootLeft": 165.078125,
+        "rootWidth": 111.703125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 492,
+          "bottom": 506,
+          "left": 182.078125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "office",
+        "tag": "BUTTON",
+        "rootTop": 529,
+        "rootBottom": 573,
+        "rootLeft": 16,
+        "rootWidth": 70.765625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 544,
+          "bottom": 558,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "garage",
+        "tag": "BUTTON",
+        "rootTop": 529,
+        "rootBottom": 573,
+        "rootLeft": 94.765625,
+        "rootWidth": 79.109375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 544,
+          "bottom": 558,
+          "left": 111.765625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "parking",
+        "tag": "BUTTON",
+        "rootTop": 529,
+        "rootBottom": 573,
+        "rootLeft": 181.875,
+        "rootWidth": 84.3125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 544,
+          "bottom": 558,
+          "left": 198.875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "warehouse",
+        "tag": "BUTTON",
+        "rootTop": 581,
+        "rootBottom": 625,
+        "rootLeft": 16,
+        "rootWidth": 107.609375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 596,
+          "bottom": 610,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "other",
+        "tag": "BUTTON",
+        "rootTop": 581,
+        "rootBottom": 625,
+        "rootLeft": 131.609375,
+        "rootWidth": 70.34375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 596,
+          "bottom": 610,
+          "left": 148.609375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Location",
+        "tag": "BUTTON",
+        "rootTop": 658,
+        "rootBottom": 702,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 671,
+          "bottom": 689,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Market type",
+        "tag": "BUTTON",
+        "rootTop": 791,
+        "rootBottom": 835,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 804,
+          "bottom": 822,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Rooms",
+        "tag": "BUTTON",
+        "rootTop": 868,
+        "rootBottom": 912,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 881,
+          "bottom": 899,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 924,
+        "rootBottom": 968,
+        "rootLeft": 16,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 939,
+          "bottom": 953,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 924,
+        "rootBottom": 968,
+        "rootLeft": 66.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 939,
+          "bottom": 953,
+          "left": 83.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 924,
+        "rootBottom": 968,
+        "rootLeft": 116.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 939,
+          "bottom": 953,
+          "left": 133.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 924,
+        "rootBottom": 968,
+        "rootLeft": 166.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 939,
+          "bottom": 953,
+          "left": 183.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 924,
+        "rootBottom": 968,
+        "rootLeft": 216.0625,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 939,
+          "bottom": 953,
+          "left": 233.0625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Price (ALL)",
+        "tag": "BUTTON",
+        "rootTop": 1001,
+        "rootBottom": 1045,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1014,
+          "bottom": 1032,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Area (m²)",
+        "tag": "BUTTON",
+        "rootTop": 1134,
+        "rootBottom": 1178,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1147,
+          "bottom": 1165,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Floor",
+        "tag": "BUTTON",
+        "rootTop": 1211,
+        "rootBottom": 1255,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1224,
+          "bottom": 1242,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Building floors",
+        "tag": "BUTTON",
+        "rootTop": 1288,
+        "rootBottom": 1332,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1301,
+          "bottom": 1319,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Condition",
+        "tag": "BUTTON",
+        "rootTop": 1365,
+        "rootBottom": 1409,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1378,
+          "bottom": 1396,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Offer type",
+        "tag": "BUTTON",
+        "rootTop": 1442,
+        "rootBottom": 1486,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1455,
+          "bottom": 1473,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Purchase conditions",
+        "tag": "BUTTON",
+        "rootTop": 1519,
+        "rootBottom": 1563,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1532,
+          "bottom": 1550,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Posting period",
+        "tag": "BUTTON",
+        "rootTop": 1596,
+        "rootBottom": 1640,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1609,
+          "bottom": 1627,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Listing ID",
+        "tag": "BUTTON",
+        "rootTop": 1673,
+        "rootBottom": 1717,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1686,
+          "bottom": 1704,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Apply filters (3)",
+        "tag": "BUTTON",
+        "rootTop": 1749,
+        "rootBottom": 1793,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 1764,
+          "bottom": 1778,
+          "left": 110.3125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "authformpattern__w320__en": {
+    "name": "authformpattern",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Sign In",
+        "rootCentre": 340.09375,
+        "labelCentre": 340.09375,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Create Account",
+        "rootCentre": 918.296875,
+        "labelCentre": 918.296875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Sign In",
+        "rootWidth": 190,
+        "parentWidth": 190,
+        "delta": 0
+      },
+      {
+        "text": "Create Account",
+        "rootWidth": 190,
+        "parentWidth": 190,
+        "delta": 0
+      }
+    ],
+    "justify": [],
+    "raw": [
+      {
+        "text": "Sign In",
+        "tag": "BUTTON",
+        "rootTop": 318.09375,
+        "rootBottom": 362.09375,
+        "rootLeft": 65,
+        "rootWidth": 190,
+        "rootHeight": 44,
+        "parentWidth": 190,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 332.09375,
+          "bottom": 348.09375,
+          "left": 134.6875,
+          "height": 16
+        },
+        "line": {
+          "lineHeight": 16,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Create Account",
+        "tag": "BUTTON",
+        "rootTop": 896.296875,
+        "rootBottom": 940.296875,
+        "rootLeft": 65,
+        "rootWidth": 190,
+        "rootHeight": 44,
+        "parentWidth": 190,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 910.296875,
+          "bottom": 926.296875,
+          "left": 102.015625,
+          "height": 16
+        },
+        "line": {
+          "lineHeight": 16,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "filterspanelshell__w1440__en": {
+    "name": "filterspanelshell",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 49,
+    "centring": [
+      {
+        "text": "All types",
+        "rootCentre": 263,
+        "labelCentre": 263,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 263,
+        "labelCentre": 263,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 315,
+        "labelCentre": 315,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 315,
+        "labelCentre": 315,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 367,
+        "labelCentre": 367,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 367,
+        "labelCentre": 367,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 419,
+        "labelCentre": 419,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 419,
+        "labelCentre": 419,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 471,
+        "labelCentre": 471,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 471,
+        "labelCentre": 471,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 523,
+        "labelCentre": 523,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 638,
+        "labelCentre": 638,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Secondary market",
+        "rootCentre": 638,
+        "labelCentre": 638,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New building",
+        "rootCentre": 690,
+        "labelCentre": 690,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 1035,
+        "labelCentre": 1035,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "New build",
+        "rootCentre": 1495,
+        "labelCentre": 1495,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Good condition",
+        "rootCentre": 1495,
+        "labelCentre": 1495,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs repair",
+        "rootCentre": 1547,
+        "labelCentre": 1547,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Needs renovation",
+        "rootCentre": 1547,
+        "labelCentre": 1547,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Under construction",
+        "rootCentre": 1599,
+        "labelCentre": 1599,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Studio",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Free layout",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Duplex",
+        "rootCentre": 1714,
+        "labelCentre": 1714,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Penthouse",
+        "rootCentre": 1766,
+        "labelCentre": 1766,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Small unit",
+        "rootCentre": 1766,
+        "labelCentre": 1766,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Electric",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Gas",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Central",
+        "rootCentre": 1881,
+        "labelCentre": 1881,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 1933,
+        "labelCentre": 1933,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No heating",
+        "rootCentre": 1933,
+        "labelCentre": 1933,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Brick",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Concrete",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Panel",
+        "rootCentre": 2048,
+        "labelCentre": 2048,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Wood",
+        "rootCentre": 2100,
+        "labelCentre": 2100,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Other",
+        "rootCentre": 2100,
+        "labelCentre": 2100,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From owner",
+        "rootCentre": 2215,
+        "labelCentre": 2215,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From agency",
+        "rootCentre": 2215,
+        "labelCentre": 2215,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "From developer",
+        "rootCentre": 2267,
+        "labelCentre": 2267,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Installment",
+        "rootCentre": 2382,
+        "labelCentre": 2382,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Mortgage",
+        "rootCentre": 2382,
+        "labelCentre": 2382,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Assignment",
+        "rootCentre": 2434,
+        "labelCentre": 2434,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Negotiable",
+        "rootCentre": 2434,
+        "labelCentre": 2434,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "No commission",
+        "rootCentre": 2486,
+        "labelCentre": 2486,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters2",
+        "rootCentre": 906,
+        "labelCentre": 906,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Reset filters",
+        "rootCentre": 962,
+        "labelCentre": 962,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Apply filters2",
+        "rootWidth": 348,
+        "parentWidth": 348,
+        "delta": 0
+      },
+      {
+        "text": "Reset filters",
+        "rootWidth": 348,
+        "parentWidth": 348,
+        "delta": 0
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 1254,
+        "labelLeft": 1271,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 1096,
+        "labelLeft": 1113,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "All types",
+        "tag": "BUTTON",
+        "rootTop": 241,
+        "rootBottom": 285,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 256,
+          "bottom": 270,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "apartment",
+        "tag": "BUTTON",
+        "rootTop": 241,
+        "rootBottom": 285,
+        "rootLeft": 1254,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 256,
+          "bottom": 270,
+          "left": 1271,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "house",
+        "tag": "BUTTON",
+        "rootTop": 293,
+        "rootBottom": 337,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 308,
+          "bottom": 322,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "room",
+        "tag": "BUTTON",
+        "rootTop": 293,
+        "rootBottom": 337,
+        "rootLeft": 1254,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 308,
+          "bottom": 322,
+          "left": 1271,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "land",
+        "tag": "BUTTON",
+        "rootTop": 345,
+        "rootBottom": 389,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 360,
+          "bottom": 374,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "commercial",
+        "tag": "BUTTON",
+        "rootTop": 345,
+        "rootBottom": 389,
+        "rootLeft": 1254,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 360,
+          "bottom": 374,
+          "left": 1271,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "office",
+        "tag": "BUTTON",
+        "rootTop": 397,
+        "rootBottom": 441,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 412,
+          "bottom": 426,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "garage",
+        "tag": "BUTTON",
+        "rootTop": 397,
+        "rootBottom": 441,
+        "rootLeft": 1254,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 412,
+          "bottom": 426,
+          "left": 1271,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "parking",
+        "tag": "BUTTON",
+        "rootTop": 449,
+        "rootBottom": 493,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 464,
+          "bottom": 478,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "warehouse",
+        "tag": "BUTTON",
+        "rootTop": 449,
+        "rootBottom": 493,
+        "rootLeft": 1254,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 464,
+          "bottom": 478,
+          "left": 1271,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "other",
+        "tag": "BUTTON",
+        "rootTop": 501,
+        "rootBottom": 545,
+        "rootLeft": 1096,
+        "rootWidth": 150,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 516,
+          "bottom": 530,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All",
+        "tag": "BUTTON",
+        "rootTop": 616,
+        "rootBottom": 660,
+        "rootLeft": 1096,
+        "rootWidth": 50.5,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 631,
+          "bottom": 645,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Secondary market",
+        "tag": "BUTTON",
+        "rootTop": 616,
+        "rootBottom": 660,
+        "rootLeft": 1154.5,
+        "rootWidth": 154.96875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 631,
+          "bottom": 645,
+          "left": 1171.5,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "New building",
+        "tag": "BUTTON",
+        "rootTop": 668,
+        "rootBottom": 712,
+        "rootLeft": 1096,
+        "rootWidth": 121.09375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 683,
+          "bottom": 697,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 1013,
+        "rootBottom": 1057,
+        "rootLeft": 1096,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1028,
+          "bottom": 1042,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 1013,
+        "rootBottom": 1057,
+        "rootLeft": 1146.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1028,
+          "bottom": 1042,
+          "left": 1163.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 1013,
+        "rootBottom": 1057,
+        "rootLeft": 1196.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1028,
+          "bottom": 1042,
+          "left": 1213.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 1013,
+        "rootBottom": 1057,
+        "rootLeft": 1246.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1028,
+          "bottom": 1042,
+          "left": 1263.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 1013,
+        "rootBottom": 1057,
+        "rootLeft": 1296.0625,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 1028,
+          "bottom": 1042,
+          "left": 1313.0625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "New build",
+        "tag": "BUTTON",
+        "rootTop": 1473,
+        "rootBottom": 1517,
+        "rootLeft": 1096,
+        "rootWidth": 100.953125,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1488,
+          "bottom": 1502,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Good condition",
+        "tag": "BUTTON",
+        "rootTop": 1473,
+        "rootBottom": 1517,
+        "rootLeft": 1204.953125,
+        "rootWidth": 136.046875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1488,
+          "bottom": 1502,
+          "left": 1221.953125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Needs repair",
+        "tag": "BUTTON",
+        "rootTop": 1525,
+        "rootBottom": 1569,
+        "rootLeft": 1096,
+        "rootWidth": 119.75,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1540,
+          "bottom": 1554,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Needs renovation",
+        "tag": "BUTTON",
+        "rootTop": 1525,
+        "rootBottom": 1569,
+        "rootLeft": 1223.75,
+        "rootWidth": 152.1875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1540,
+          "bottom": 1554,
+          "left": 1240.75,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Under construction",
+        "tag": "BUTTON",
+        "rootTop": 1577,
+        "rootBottom": 1621,
+        "rootLeft": 1096,
+        "rootWidth": 162.90625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1592,
+          "bottom": 1606,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Studio",
+        "tag": "BUTTON",
+        "rootTop": 1692,
+        "rootBottom": 1736,
+        "rootLeft": 1096,
+        "rootWidth": 76.546875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1707,
+          "bottom": 1721,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Free layout",
+        "tag": "BUTTON",
+        "rootTop": 1692,
+        "rootBottom": 1736,
+        "rootLeft": 1180.546875,
+        "rootWidth": 108.203125,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1707,
+          "bottom": 1721,
+          "left": 1197.546875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Duplex",
+        "tag": "BUTTON",
+        "rootTop": 1692,
+        "rootBottom": 1736,
+        "rootLeft": 1296.75,
+        "rootWidth": 80.8125,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1707,
+          "bottom": 1721,
+          "left": 1313.75,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Penthouse",
+        "tag": "BUTTON",
+        "rootTop": 1744,
+        "rootBottom": 1788,
+        "rootLeft": 1096,
+        "rootWidth": 105.171875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1759,
+          "bottom": 1773,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Small unit",
+        "tag": "BUTTON",
+        "rootTop": 1744,
+        "rootBottom": 1788,
+        "rootLeft": 1209.171875,
+        "rootWidth": 100.34375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1759,
+          "bottom": 1773,
+          "left": 1226.171875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Electric",
+        "tag": "BUTTON",
+        "rootTop": 1859,
+        "rootBottom": 1903,
+        "rootLeft": 1096,
+        "rootWidth": 82,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1874,
+          "bottom": 1888,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Gas",
+        "tag": "BUTTON",
+        "rootTop": 1859,
+        "rootBottom": 1903,
+        "rootLeft": 1186,
+        "rootWidth": 58.875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1874,
+          "bottom": 1888,
+          "left": 1203,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Central",
+        "tag": "BUTTON",
+        "rootTop": 1859,
+        "rootBottom": 1903,
+        "rootLeft": 1252.875,
+        "rootWidth": 82.375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1874,
+          "bottom": 1888,
+          "left": 1269.875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Wood",
+        "tag": "BUTTON",
+        "rootTop": 1911,
+        "rootBottom": 1955,
+        "rootLeft": 1096,
+        "rootWidth": 72.6875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1926,
+          "bottom": 1940,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "No heating",
+        "tag": "BUTTON",
+        "rootTop": 1911,
+        "rootBottom": 1955,
+        "rootLeft": 1176.6875,
+        "rootWidth": 106.9375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 1926,
+          "bottom": 1940,
+          "left": 1193.6875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Brick",
+        "tag": "BUTTON",
+        "rootTop": 2026,
+        "rootBottom": 2070,
+        "rootLeft": 1096,
+        "rootWidth": 67.25,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2041,
+          "bottom": 2055,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Concrete",
+        "tag": "BUTTON",
+        "rootTop": 2026,
+        "rootBottom": 2070,
+        "rootLeft": 1171.25,
+        "rootWidth": 93.984375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2041,
+          "bottom": 2055,
+          "left": 1188.25,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Panel",
+        "tag": "BUTTON",
+        "rootTop": 2026,
+        "rootBottom": 2070,
+        "rootLeft": 1273.234375,
+        "rootWidth": 70.90625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2041,
+          "bottom": 2055,
+          "left": 1290.234375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Wood",
+        "tag": "BUTTON",
+        "rootTop": 2078,
+        "rootBottom": 2122,
+        "rootLeft": 1096,
+        "rootWidth": 72.6875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2093,
+          "bottom": 2107,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Other",
+        "tag": "BUTTON",
+        "rootTop": 2078,
+        "rootBottom": 2122,
+        "rootLeft": 1176.6875,
+        "rootWidth": 72.8125,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2093,
+          "bottom": 2107,
+          "left": 1193.6875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From owner",
+        "tag": "BUTTON",
+        "rootTop": 2193,
+        "rootBottom": 2237,
+        "rootLeft": 1096,
+        "rootWidth": 114.71875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2208,
+          "bottom": 2222,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From agency",
+        "tag": "BUTTON",
+        "rootTop": 2193,
+        "rootBottom": 2237,
+        "rootLeft": 1218.71875,
+        "rootWidth": 118.921875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2208,
+          "bottom": 2222,
+          "left": 1235.71875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "From developer",
+        "tag": "BUTTON",
+        "rootTop": 2245,
+        "rootBottom": 2289,
+        "rootLeft": 1096,
+        "rootWidth": 139,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2260,
+          "bottom": 2274,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Installment",
+        "tag": "BUTTON",
+        "rootTop": 2360,
+        "rootBottom": 2404,
+        "rootLeft": 1096,
+        "rootWidth": 109.375,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2375,
+          "bottom": 2389,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Mortgage",
+        "tag": "BUTTON",
+        "rootTop": 2360,
+        "rootBottom": 2404,
+        "rootLeft": 1213.375,
+        "rootWidth": 97.640625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2375,
+          "bottom": 2389,
+          "left": 1230.375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Assignment",
+        "tag": "BUTTON",
+        "rootTop": 2412,
+        "rootBottom": 2456,
+        "rootLeft": 1096,
+        "rootWidth": 111.828125,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2427,
+          "bottom": 2441,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Negotiable",
+        "tag": "BUTTON",
+        "rootTop": 2412,
+        "rootBottom": 2456,
+        "rootLeft": 1215.828125,
+        "rootWidth": 106.140625,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2427,
+          "bottom": 2441,
+          "left": 1232.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "No commission",
+        "tag": "BUTTON",
+        "rootTop": 2464,
+        "rootBottom": 2508,
+        "rootLeft": 1096,
+        "rootWidth": 136.671875,
+        "rootHeight": 44,
+        "parentWidth": 308,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 2479,
+          "bottom": 2493,
+          "left": 1113,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Apply filters2",
+        "tag": "BUTTON",
+        "rootTop": 884,
+        "rootBottom": 928,
+        "rootLeft": 1076,
+        "rootWidth": 348,
+        "rootHeight": 44,
+        "parentWidth": 348,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 899,
+          "bottom": 913,
+          "left": 1196.65625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Reset filters",
+        "tag": "BUTTON",
+        "rootTop": 940,
+        "rootBottom": 984,
+        "rootLeft": 1076,
+        "rootWidth": 348,
+        "rootHeight": 44,
+        "parentWidth": 348,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 955,
+          "bottom": 969,
+          "left": 1220.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "listingsfilters__w1440__en": {
+    "name": "listingsfilters",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 34,
+    "centring": [
+      {
+        "text": "Listing type",
+        "rootCentre": 154,
+        "labelCentre": 154,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For sale",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "For rent",
+        "rootCentre": 210,
+        "labelCentre": 210,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Property type",
+        "rootCentre": 287,
+        "labelCentre": 287,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "All types",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "apartment",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "house",
+        "rootCentre": 343,
+        "labelCentre": 343,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "room",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "land",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "commercial",
+        "rootCentre": 395,
+        "labelCentre": 395,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "office",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "garage",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "parking",
+        "rootCentre": 447,
+        "labelCentre": 447,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "warehouse",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "other",
+        "rootCentre": 499,
+        "labelCentre": 499,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Location",
+        "rootCentre": 576,
+        "labelCentre": 576,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Market type",
+        "rootCentre": 709,
+        "labelCentre": 709,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Rooms",
+        "rootCentre": 786,
+        "labelCentre": 786,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "1",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "2",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "3",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "4",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "5+",
+        "rootCentre": 842,
+        "labelCentre": 842,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Price (ALL)",
+        "rootCentre": 919,
+        "labelCentre": 919,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Area (m²)",
+        "rootCentre": 1052,
+        "labelCentre": 1052,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Floor",
+        "rootCentre": 1129,
+        "labelCentre": 1129,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Building floors",
+        "rootCentre": 1206,
+        "labelCentre": 1206,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Condition",
+        "rootCentre": 1283,
+        "labelCentre": 1283,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Offer type",
+        "rootCentre": 1360,
+        "labelCentre": 1360,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Purchase conditions",
+        "rootCentre": 1437,
+        "labelCentre": 1437,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Posting period",
+        "rootCentre": 1514,
+        "labelCentre": 1514,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Listing ID",
+        "rootCentre": 1591,
+        "labelCentre": 1591,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootCentre": 0,
+        "labelCentre": 0,
+        "delta": 0,
+        "rootHeight": 0,
+        "estimatedLines": 0
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Listing type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Property type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Location",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Market type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Rooms",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Price (ALL)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Area (m²)",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Floor",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Building floors",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Condition",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Offer type",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Purchase conditions",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Posting period",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Listing ID",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Apply filters (3)",
+        "rootWidth": 0,
+        "parentWidth": 288,
+        "delta": 288
+      }
+    ],
+    "justify": [
+      {
+        "text": "All types",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "apartment",
+        "rootLeft": 114,
+        "labelLeft": 131,
+        "delta": 17
+      },
+      {
+        "text": "house",
+        "rootLeft": 226.828125,
+        "labelLeft": 243.828125,
+        "delta": 17
+      },
+      {
+        "text": "room",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "land",
+        "rootLeft": 94.015625,
+        "labelLeft": 111.015625,
+        "delta": 17
+      },
+      {
+        "text": "commercial",
+        "rootLeft": 165.078125,
+        "labelLeft": 182.078125,
+        "delta": 17
+      },
+      {
+        "text": "office",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "garage",
+        "rootLeft": 94.765625,
+        "labelLeft": 111.765625,
+        "delta": 17
+      },
+      {
+        "text": "parking",
+        "rootLeft": 181.875,
+        "labelLeft": 198.875,
+        "delta": 17
+      },
+      {
+        "text": "warehouse",
+        "rootLeft": 16,
+        "labelLeft": 33,
+        "delta": 17
+      },
+      {
+        "text": "other",
+        "rootLeft": 131.609375,
+        "labelLeft": 148.609375,
+        "delta": 17
+      }
+    ],
+    "raw": [
+      {
+        "text": "Listing type",
+        "tag": "BUTTON",
+        "rootTop": 132,
+        "rootBottom": 176,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 145,
+          "bottom": 163,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All",
+        "tag": "BUTTON",
+        "rootTop": 188,
+        "rootBottom": 232,
+        "rootLeft": 16,
+        "rootWidth": 50.5,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 203,
+          "bottom": 217,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "For sale",
+        "tag": "BUTTON",
+        "rootTop": 188,
+        "rootBottom": 232,
+        "rootLeft": 74.5,
+        "rootWidth": 85.734375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 203,
+          "bottom": 217,
+          "left": 91.5,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "For rent",
+        "tag": "BUTTON",
+        "rootTop": 188,
+        "rootBottom": 232,
+        "rootLeft": 168.234375,
+        "rootWidth": 87.203125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "center",
+        "label": {
+          "top": 203,
+          "bottom": 217,
+          "left": 185.234375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Property type",
+        "tag": "BUTTON",
+        "rootTop": 265,
+        "rootBottom": 309,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 278,
+          "bottom": 296,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "All types",
+        "tag": "BUTTON",
+        "rootTop": 321,
+        "rootBottom": 365,
+        "rootLeft": 16,
+        "rootWidth": 90,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 336,
+          "bottom": 350,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "apartment",
+        "tag": "BUTTON",
+        "rootTop": 321,
+        "rootBottom": 365,
+        "rootLeft": 114,
+        "rootWidth": 104.828125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 336,
+          "bottom": 350,
+          "left": 131,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "house",
+        "tag": "BUTTON",
+        "rootTop": 321,
+        "rootBottom": 365,
+        "rootLeft": 226.828125,
+        "rootWidth": 74.6875,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 336,
+          "bottom": 350,
+          "left": 243.828125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "room",
+        "tag": "BUTTON",
+        "rootTop": 373,
+        "rootBottom": 417,
+        "rootLeft": 16,
+        "rootWidth": 70.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 388,
+          "bottom": 402,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "land",
+        "tag": "BUTTON",
+        "rootTop": 373,
+        "rootBottom": 417,
+        "rootLeft": 94.015625,
+        "rootWidth": 63.0625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 388,
+          "bottom": 402,
+          "left": 111.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "commercial",
+        "tag": "BUTTON",
+        "rootTop": 373,
+        "rootBottom": 417,
+        "rootLeft": 165.078125,
+        "rootWidth": 111.703125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 388,
+          "bottom": 402,
+          "left": 182.078125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "office",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 16,
+        "rootWidth": 70.765625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "garage",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 94.765625,
+        "rootWidth": 79.109375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 111.765625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "parking",
+        "tag": "BUTTON",
+        "rootTop": 425,
+        "rootBottom": 469,
+        "rootLeft": 181.875,
+        "rootWidth": 84.3125,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 440,
+          "bottom": 454,
+          "left": 198.875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "warehouse",
+        "tag": "BUTTON",
+        "rootTop": 477,
+        "rootBottom": 521,
+        "rootLeft": 16,
+        "rootWidth": 107.609375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 492,
+          "bottom": 506,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "other",
+        "tag": "BUTTON",
+        "rootTop": 477,
+        "rootBottom": 521,
+        "rootLeft": 131.609375,
+        "rootWidth": 70.34375,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "flex-start",
+        "label": {
+          "top": 492,
+          "bottom": 506,
+          "left": 148.609375,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Location",
+        "tag": "BUTTON",
+        "rootTop": 554,
+        "rootBottom": 598,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 567,
+          "bottom": 585,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Market type",
+        "tag": "BUTTON",
+        "rootTop": 687,
+        "rootBottom": 731,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 700,
+          "bottom": 718,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Rooms",
+        "tag": "BUTTON",
+        "rootTop": 764,
+        "rootBottom": 808,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 777,
+          "bottom": 795,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "1",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 16,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 33,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "2",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 66.015625,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 83.015625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "3",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 116.03125,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 133.03125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "4",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 166.046875,
+        "rootWidth": 42.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 183.046875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "5+",
+        "tag": "BUTTON",
+        "rootTop": 820,
+        "rootBottom": 864,
+        "rootLeft": 216.0625,
+        "rootWidth": 50.015625,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 835,
+          "bottom": 849,
+          "left": 233.0625,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Price (ALL)",
+        "tag": "BUTTON",
+        "rootTop": 897,
+        "rootBottom": 941,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 910,
+          "bottom": 928,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Area (m²)",
+        "tag": "BUTTON",
+        "rootTop": 1030,
+        "rootBottom": 1074,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1043,
+          "bottom": 1061,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Floor",
+        "tag": "BUTTON",
+        "rootTop": 1107,
+        "rootBottom": 1151,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1120,
+          "bottom": 1138,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Building floors",
+        "tag": "BUTTON",
+        "rootTop": 1184,
+        "rootBottom": 1228,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1197,
+          "bottom": 1215,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Condition",
+        "tag": "BUTTON",
+        "rootTop": 1261,
+        "rootBottom": 1305,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1274,
+          "bottom": 1292,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Offer type",
+        "tag": "BUTTON",
+        "rootTop": 1338,
+        "rootBottom": 1382,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1351,
+          "bottom": 1369,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Purchase conditions",
+        "tag": "BUTTON",
+        "rootTop": 1415,
+        "rootBottom": 1459,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1428,
+          "bottom": 1446,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Posting period",
+        "tag": "BUTTON",
+        "rootTop": 1492,
+        "rootBottom": 1536,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1505,
+          "bottom": 1523,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Listing ID",
+        "tag": "BUTTON",
+        "rootTop": 1569,
+        "rootBottom": 1613,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "space-between",
+        "label": {
+          "top": 1582,
+          "bottom": 1600,
+          "left": 17,
+          "height": 18
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Apply filters (3)",
+        "tag": "BUTTON",
+        "rootTop": 0,
+        "rootBottom": 0,
+        "rootLeft": 0,
+        "rootWidth": 0,
+        "rootHeight": 0,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "height": 0
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 0
+        }
+      }
+    ]
+  },
+  "authformpattern__w1440__en": {
+    "name": "authformpattern",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Sign In",
+        "rootCentre": 340.09375,
+        "labelCentre": 340.09375,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Create Account",
+        "rootCentre": 880.203125,
+        "labelCentre": 880.203125,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Sign In",
+        "rootWidth": 350,
+        "parentWidth": 350,
+        "delta": 0
+      },
+      {
+        "text": "Create Account",
+        "rootWidth": 350,
+        "parentWidth": 350,
+        "delta": 0
+      }
+    ],
+    "justify": [],
+    "raw": [
+      {
+        "text": "Sign In",
+        "tag": "BUTTON",
+        "rootTop": 318.09375,
+        "rootBottom": 362.09375,
+        "rootLeft": 545,
+        "rootWidth": 350,
+        "rootHeight": 44,
+        "parentWidth": 350,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 332.09375,
+          "bottom": 348.09375,
+          "left": 694.6875,
+          "height": 16
+        },
+        "line": {
+          "lineHeight": 16,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Create Account",
+        "tag": "BUTTON",
+        "rootTop": 858.203125,
+        "rootBottom": 902.203125,
+        "rootLeft": 545,
+        "rootWidth": 350,
+        "rootHeight": 44,
+        "parentWidth": 350,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 872.203125,
+          "bottom": 888.203125,
+          "left": 662.015625,
+          "height": 16
+        },
+        "line": {
+          "lineHeight": 16,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "adminuserstable__w320__en": {
+    "name": "adminuserstable",
+    "width": 320,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Back",
+        "rootCentre": 1506.171875,
+        "labelCentre": 1506.171875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Next",
+        "rootCentre": 1594.1875,
+        "labelCentre": 1594.1875,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [
+      {
+        "text": "Back",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      },
+      {
+        "text": "Next",
+        "rootWidth": 288,
+        "parentWidth": 288,
+        "delta": 0
+      }
+    ],
+    "justify": [],
+    "raw": [
+      {
+        "text": "Back",
+        "tag": "BUTTON",
+        "rootTop": 1484.171875,
+        "rootBottom": 1528.171875,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 1499.171875,
+          "bottom": 1513.171875,
+          "left": 144.1875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Next",
+        "tag": "BUTTON",
+        "rootTop": 1572.1875,
+        "rootBottom": 1616.1875,
+        "rootLeft": 16,
+        "rootWidth": 288,
+        "rootHeight": 44,
+        "parentWidth": 288,
+        "isFullWidth": true,
+        "justify": "",
+        "label": {
+          "top": 1587.1875,
+          "bottom": 1601.1875,
+          "left": 144.25,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  },
+  "adminuserstable__w1440__en": {
+    "name": "adminuserstable",
+    "width": 1440,
+    "locale": "en",
+    "buttonCount": 2,
+    "centring": [
+      {
+        "text": "Back",
+        "rootCentre": 653.015625,
+        "labelCentre": 653.015625,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      },
+      {
+        "text": "Next",
+        "rootCentre": 653.015625,
+        "labelCentre": 653.015625,
+        "delta": 0,
+        "rootHeight": 44,
+        "estimatedLines": 1
+      }
+    ],
+    "fullWidth": [],
+    "justify": [],
+    "raw": [
+      {
+        "text": "Back",
+        "tag": "BUTTON",
+        "rootTop": 631.015625,
+        "rootBottom": 675.015625,
+        "rootLeft": 628.21875,
+        "rootWidth": 65.609375,
+        "rootHeight": 44,
+        "parentWidth": 1392,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 646.015625,
+          "bottom": 660.015625,
+          "left": 645.21875,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      },
+      {
+        "text": "Next",
+        "tag": "BUTTON",
+        "rootTop": 631.015625,
+        "rootBottom": 675.015625,
+        "rootLeft": 746.28125,
+        "rootWidth": 65.5,
+        "rootHeight": 44,
+        "parentWidth": 1392,
+        "isFullWidth": false,
+        "justify": "",
+        "label": {
+          "top": 646.015625,
+          "bottom": 660.015625,
+          "left": 763.28125,
+          "height": 14
+        },
+        "line": {
+          "lineHeight": 14,
+          "estimatedLines": 1
+        }
+      }
+    ]
+  }
+}

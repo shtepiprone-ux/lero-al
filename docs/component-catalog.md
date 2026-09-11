@@ -164,12 +164,12 @@ See `docs/component-risk-register.md` for risk register.
 | `BuildingFloorsField` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `ButtonGroupField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ClearRecentlyViewedButton` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `CollectionsSection` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `CollectionsSection` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 809 Rev1: leaves Tailwind/shadcn onto Mantine `SimpleGrid`/`Paper`/`ActionIcon`/`MantineModal`/`MantineEmptyLoadingErrorState`; zero `className=`, zero `@/components/ui/*`  |
 | `DynamicFieldSection` | APPROVED | — | — | PRIMITIVE_CHECK, HUGE_DESKTOP  |
 | `EnumSelectorField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `FavoriteButton` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `FavoritesShell` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `FavoritesTypeFilter` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `FavoritesShell` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 809: leaves Tailwind onto `MantineListingCardTrack` (`mode="grid"`) + `MantineEmptyLoadingErrorState` (extended with `actionHref`/`icon`); zero `className=` |
+| `FavoritesTypeFilter` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 809 Rev1: leaves Tailwind onto the canonical Mantine `SegmentedControl` (mobile stretch/swipe contract); zero `className=`  |
 | `FeaturedListings` | APPROVED | 📷 | — | PRIMITIVE_CHECK  |
 | `FeaturedListingsView` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `fieldRegistry.ts` | APPROVED | ✅ | — | —  |
@@ -219,7 +219,7 @@ See `docs/component-risk-register.md` for risk register.
 | `reportListing.ts` | APPROVED | ✅ | — | —  |
 | `RoomsSelectorField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SaveSearchButton` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `SaveToCollectionButton` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `SaveToCollectionButton` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 809 Rev1: dialog/list/inline-create leave shadcn onto `MantineModal`/`Checkbox`/`TextInput`; zero `className=`, zero `@/components/ui/*`  |
 | `SimilarListings` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SimilarListingsView` | APPROVED | ✅ | 🌐 | LOCALIZATION — Task 792: leaves Tailwind onto Mantine `Title`/`SimpleGrid`; Task 803: 8-item horizontal-scroll row (D72-5, `SimpleGrid` removed) + `ViewAllLink` header control |
 | `StepBasicInfo` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |

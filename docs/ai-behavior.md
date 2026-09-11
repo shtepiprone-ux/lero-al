@@ -717,6 +717,12 @@ docs/backlog-archive.md  ← HISTORICAL ledger (split out 2026-06-03):
 3. Add a row to the **`docs/backlog-archive.md`** ledger (TOP of the table) pointing to the new session file.
 4. Never paste full session logs directly into `docs/backlog.md` OR `docs/backlog-archive.md`.
 
+For an implementation awaiting review, Sonnet applies steps 1–2 only: it records
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (or its real non-approved status) and its session evidence. It must not
+perform step 3, mark a task approved, or perform final active-backlog cleanup. That `APPROVED` /
+`APPROVED WITH NOTES` closure — removing the task from active backlog and adding the approval archive row — belongs to
+Opus after review.
+
 #### Forbidden
 - DO NOT write multi-hundred-line session logs into `docs/backlog.md` or `docs/backlog-archive.md`.
 - DO NOT accumulate session history in `docs/backlog.md` — the ledger is `docs/backlog-archive.md`; full detail is `docs/sessions/`.

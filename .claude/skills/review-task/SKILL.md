@@ -121,9 +121,8 @@ command. The missing check requires `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `
 Approval is an Opus-only review decision. Sonnet's implementation report and its status can never approve a task;
 only this evidence-based review may return `APPROVED` or `APPROVED WITH NOTES`.
 
-Use read-only Git only. Never run mutating Git. The task-design handoff covers the task artifact itself. After an
-`APPROVED` or `APPROVED WITH NOTES` decision, emit a precise owner-run commit and push handoff for the inspected
-implementation and review artifacts:
+Use read-only Git only. Never run mutating Git. After an `APPROVED` or `APPROVED WITH NOTES` decision, emit a
+precise owner-run commit and push handoff for the inspected implementation and review artifacts:
 
 ```powershell
 git add <explicit-inspected-paths>
@@ -133,8 +132,13 @@ git push <verified-remote> <verified-branch>
 
 Never execute the commands. Before emitting the push line, inspect the current branch and remote/upstream with
 read-only Git and replace both placeholders with their verified values; a bare `git push` is not permitted. Never
-use `git add -A`, `git add -u`, or wildcards. Do not emit a commit or push handoff for `NEEDS REVISION`,
-`PARTIALLY VERIFIED`, or `BLOCKED`.
+use `git add -A`, `git add -u`, or wildcards.
+
+`NEEDS REVISION` is a task-revision action, not a report-only decision. Before returning it, amend the existing
+kickoff as specified in **Needs-revision closure** below, then emit an owner-run commit handoff for that amended
+kickoff and any state artifacts Opus changed. Do not stage executor implementation paths and never emit `git push`.
+`PARTIALLY VERIFIED` and `BLOCKED` emit no Git handoff unless the owner explicitly authorizes a separate task-design
+edit.
 
 Before emitting an approved-review handoff, run read-only `git status --short` and inspect the corresponding diff.
 Reconcile every status path with the task scope and the executor session's `Files Changed` table. The handoff must
@@ -144,6 +148,10 @@ contract requires them. Classify every remaining status path explicitly as eithe
 the fully reconciled current task. Use `STATUS/REPORT MISMATCH` and withhold the handoff only when a path that should
 belong to the current task is missing, undocumented, or ambiguous. Never silently omit a reconciled task artifact
 merely because it is documentation, and never stage an unrelated or uninspected artifact to make the worktree clean.
+
+For `APPROVED` and `APPROVED WITH NOTES`, the reconciled paths always include the changed `docs/backlog.md` and
+`docs/backlog-archive.md`. Approval is not ready for handoff while the reviewed task, or any confirmed stale closed
+or superseded row, still remains as active backlog state.
 
 Also inspect `.git/index.lock` before the handoff. It is an authorized agent-maintenance exception, not a Git commit:
 
@@ -255,23 +263,80 @@ Never use optimistic wording to disguise a non-approved verdict.
 
 **An `APPROVED` / `APPROVED WITH NOTES` decision is not delivered until the same response carries the owner-run commit + push block** (owner rule, 2026-09-10). Reconcile it against `git status --short`; if that cannot be run, say so in one line and emit the block from the paths this review inspected, asking the owner to verify the status before pasting. Never promise the handoff for a later turn.
 
+### Approved-review closure - mandatory backlog cleanup
+
+Before returning `APPROVED` or `APPROVED WITH NOTES`, Opus must complete this closure in the same turn:
+
+1. Synchronize the verdict across every GR-5 state artifact: the kickoff, sprint task table/order note, and the
+   backlog records that name the task.
+2. Re-read the full active `docs/backlog.md`. Remove the newly approved task and every other row confirmed closed,
+   superseded, archived, or otherwise no longer active. Do this even when the file is already within its 80-line limit.
+3. Add one concise, newest-first ledger row per closed task to `docs/backlog-archive.md`, linking the session and
+   kickoff where they exist. Never copy the review transcript into either backlog file.
+4. If a note or owner action remains open after approval, carry it as a separate active owner-action or numbered task;
+   do not keep the approved task row active merely to hold that follow-up.
+5. Re-read both backlog files, verify the active backlog contains only live work and is at most 80 physical lines,
+   then inspect the diff. Emit the approval handoff only after this check.
+
+The required receipt is one terse line under `Problems and verdict`:
+`GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.`
+
+### Needs-revision closure - mandatory orchestration work
+
+`NEEDS REVISION` is incomplete until Opus has revised the existing kickoff in the same turn. Do not merely list
+defects in chat or create a vague follow-up task.
+
+1. Map every confirmed blocking finding to the existing kickoff and edit the affected scope, requirement,
+   acceptance criterion, verification plan, re-entry instructions, or completion contract. Remove or replace any
+   stale or contradictory instruction so a fresh Sonnet session has one executable route.
+2. Record the task as `NEEDS REVISION` in every active state artifact required by GR-5. Keep state notes concise.
+3. If an owner decision is genuinely required, write `STOP - OWNER DECISION REQUIRED` in the kickoff with the exact
+   decision, bounded options, and the change/verification each option unlocks. The chat response names only that
+   decision; it is not a substitute for the kickoff edit.
+4. Reopen the saved revised kickoff and compare the response's amendment inventory with its actual headings,
+   requirement/AC identifiers, and changed text. Every internal `§N` / `§N.M` reference introduced by the revision
+   must resolve in that file. A review summary, backlog row, chat response, or remembered draft cannot supply missing
+   executor instructions. If this check fails, the orchestration artifact remains `NEEDS REVISION`; do not claim
+   `Kickoff updated`, hand Sonnet a partial route, or relabel the missing revision as an owner block.
+5. Inspect the revised kickoff's diff and issue the owner-run commit handoff for the kickoff and only the state
+   artifacts Opus changed. This commits orchestration work, not the rejected implementation; it never pushes. When a
+   later session relies on that commit, it must read `git show <verified-commit>:<kickoff-path>` before treating the
+   revision as persisted.
+
+The next Sonnet action is the revised kickoff itself. Do not repeat its instructions in chat.
+
 ## Required review output
 
 The final chat response is an **operational handoff**, not a review transcript. Use only these headings, in this
 order:
 
+For `NEEDS REVISION`, use only these headings:
+
+1. `Problems and verdict` — `NEEDS REVISION`, followed only by confirmed blocking defects. Each bullet is concise:
+   severity, location, evidence, impact, and the correction now written into the kickoff.
+2. `Kickoff updated` — exact kickoff path, a one-line list of the sections amended, and `GR-5 STATE SYNCED` when
+   state artifacts changed. Do not restate the new executor instructions; Sonnet reads them from the kickoff.
+3. `Next actions — owner` — only an unresolved owner decision or owner-native validation. Write `None.` if none.
+4. `Git handoff` — one explicit-path owner-run `git add` + `git commit` block for the amended kickoff and any state
+   artifacts Opus changed. State `No push - NEEDS REVISION is not an approved implementation review.`
+
+For every other decision, use only these headings:
+
 1. `Problems and verdict` — begin with the one allowed decision. List only confirmed quality defects, contradictions,
    missing required evidence, or material scope/status mismatches. Give each item its severity, location, a concise
-   evidence statement, impact, and required correction. If there are none, write `APPROVED — No problems found.` Do
+   evidence statement, impact, and required correction. If there are none, write `APPROVED - No problems found.` Do
    not describe what was done well, repeat the executor's report, enumerate passing checks, summarize requirement
-   coverage, or narrate the review process.
+   coverage, or narrate the review process. For an approved decision, append only the required one-line GR-5 backlog
+   receipt.
 2. `Next actions — Sonnet` — list only concrete remediation or evidence work still owed by the executor, including
    verification. Write `None.` for an approved task with no executor action.
 3. `Next actions — owner` — list only decisions, manual checks, or owner-native validation still owed. Put every
    owner-run command in one paste-ready `powershell` block as required above, followed by its expected result and
    the output to return. Write `None.` when no owner action is needed.
 4. `Git handoff` — include the explicit-path owner-run `git add`, `git commit`, and verified `git push` commands only
-   for `APPROVED` or `APPROVED WITH NOTES`; otherwise write `None — no Git handoff for <DECISION>.`
+   for `APPROVED` or `APPROVED WITH NOTES`; that block stages the changed `docs/backlog.md`,
+   `docs/backlog-archive.md`, and every other reconciled state artifact. Otherwise write
+   `None - no Git handoff for <DECISION>.`
 
 Keep detailed requirement coverage, command transcripts, evidence tables, and reviewer self-checks in the required
 review record or session log. Surface an evidence detail in chat only when it directly explains a problem or an

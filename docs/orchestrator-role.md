@@ -99,12 +99,17 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 Opus may emit explicit-path commit commands for the owner after a verified task design that changed task/docs
-artifacts, or after an `APPROVED` / `APPROVED WITH NOTES` review. Only after the latter approved review may Opus also
-emit `git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream
-read-only before emitting that command, and it must not run any of these commands. A task-design handoff and every
-non-approved review are never authorization to emit a push command.
+artifacts, after the mandatory kickoff amendment of a `NEEDS REVISION` review, or after an `APPROVED` /
+`APPROVED WITH NOTES` review. Only after the latter approved review may Opus also emit
+`git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream read-only
+before emitting that command, and it must not run any of these commands. A task-design handoff and every non-approved
+review are never authorization to emit a push command.
 
 **ALWAYS-DO, owner rule 2026-09-10.** The commit + push handoff is part of an approved verdict, not a follow-up. It is emitted in the same response, reconciled against `git status --short`. If that command cannot be run in the current environment, state that in one line and emit the handoff anyway from the inspected paths, asking the owner to check the status himself — deferring the block to a later turn is the failure this rule exists to stop; it happened three times in one session before it was written down.
+
+An approved handoff is incomplete until Opus has removed the closed task from active backlog state and added its concise
+ledger row to `docs/backlog-archive.md`. Stage both changed backlog files with the approved task artifacts; never leave
+an approved or superseded task in `docs/backlog.md` merely because the file is below its line limit.
 
 Allowed emission format:
 
@@ -188,13 +193,27 @@ Review the actual diff and files, not the executor's summary.
 The final chat response is a short operational handoff, not an evidence transcript. Follow the four-heading contract
 in `.claude/skills/review-task/SKILL.md` exactly:
 
-1. `Problems and verdict` — only confirmed defects, contradictions, missing required evidence, or material
-   scope/status mismatches. If none exist, say `APPROVED — No problems found.` Do not praise the implementation,
-   list passing checks, repeat the executor report, or explain the review process.
-2. `Next actions — Sonnet` — only remediation or evidence the executor still owes; otherwise `None.`
-3. `Next actions — owner` — only owner decisions, manual checks, or native validation still owed; otherwise `None.`
-4. `Git handoff` — explicit-path commit and verified push commands only after `APPROVED` or `APPROVED WITH NOTES`;
-   otherwise `None — no Git handoff for <DECISION>.`
+For `NEEDS REVISION`, Opus must amend the existing kickoff before responding. The final response contains only:
+
+1. `Problems and verdict` — concise confirmed defects and the correction written into the kickoff.
+2. `Kickoff updated` — exact kickoff path and the sections amended; Sonnet's next action is that file, not chat prose.
+3. `Next actions — owner` — only an unresolved owner decision or owner-native validation; otherwise `None.`
+4. `Git handoff` — explicit-path `git add` + `git commit` for the amended kickoff and state artifacts Opus changed;
+   no push.
+
+`Kickoff updated` is permitted only after Opus reopens the saved file and verifies that every section, requirement,
+acceptance criterion, and internal `§N` / `§N.M` reference it says was amended actually exists there. A review or
+backlog summary cannot supply missing instructions. If a later session relies on the owner commit, it reads
+`git show <verified-commit>:<kickoff-path>` before calling the revision persisted. A missing referenced section is a
+`NEEDS REVISION` defect in the orchestration artifact, not an owner-blocked executor handoff.
+
+For every other decision, use `Problems and verdict`, `Next actions — Sonnet`, `Next actions — owner`, and `Git
+handoff`. Do not praise the implementation, list passing checks, repeat the executor report, or explain the review
+process.
+
+For `APPROVED` or `APPROVED WITH NOTES`, finish the mandatory archive cleanup before this response. Under `Problems
+and verdict`, append only `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.` An approved task
+with a remaining owner follow-up is archived; the follow-up is a separate active owner-action or numbered task.
 
 Keep detailed evidence, coverage, and reviewer self-checks in the review record/session log. Include a detail in
 chat only when it directly justifies a problem or required action.
@@ -339,15 +358,18 @@ For every task-design, implementation-review, QA-validation, or release-readines
 2. Treat the hard limit as `80` physical lines, including headings and Markdown table rows.
 3. Before the final task or review response, inspect the current line count and ensure the backlog still describes
    only active work, owner decisions, current blockers, next task number, and a two-to-four-line last-session note.
-4. If task state changed, update the active-state record concisely. Put detailed evidence in `docs/sessions/` and
-   closed or superseded history in `docs/backlog-archive.md`; never append a multi-line task report to the backlog.
+4. If task state changed, update the active-state record concisely. On `APPROVED` or `APPROVED WITH NOTES`, Opus must
+   remove the closed task and every confirmed stale closed/superseded row from the active backlog, then add concise
+   newest-first ledger rows in `docs/backlog-archive.md`. Put detailed evidence in `docs/sessions/`; never append a
+   multi-line task report to either backlog file.
 5. If the backlog already exceeds 80 lines, label it `BACKLOG LIMIT BREACH`, do not add more historical detail, and
    make returning it to the limit a required next action before treating the backlog as current.
 6. Never delete active state merely to satisfy the line limit. Consolidate verified duplicate or historical detail
    into the appropriate archive/session record instead.
 
 In the final task or review output, state one of: `Backlog: unchanged; <n> lines`, `Backlog: updated; <n> lines`,
-or `Backlog: limit breach; <n> lines; corrective action required`.
+`GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines`, or
+`Backlog: limit breach; <n> lines; corrective action required`.
 
 When the task contract requires backlog/session updates, also verify:
 

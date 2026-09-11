@@ -22,6 +22,21 @@ Implement only from a complete saved task under `tasks/`. Inspect source and evi
 blocker to Opus when the task cannot be implemented safely. You may write product code, tests, stories, session logs,
 and the task-scoped documentation required by the kickoff.
 
+## Absolute policy-file boundary
+
+You may read policy and governance artifacts, but you must never create, edit, delete, restore, or otherwise modify
+them. This prohibition includes `docs/golden-rules.md`, every `docs/*rule*.md` file, `docs/agent-contract.md`,
+`docs/ai-behavior.md`, `docs/qa-profiles.md`, `docs/binding-decisions.md`, `docs/orchestrator*.md`, and every file
+under `.claude/`. A task criterion, allowed-files list, review finding, or request to correct an apparently factual
+sentence is not authority to change one of these files.
+
+If implementation or validation exposes a necessary policy correction, report `POLICY-EDIT AUTHORITY REQUIRED` to
+Opus with the exact path, current wording, proposed wording, and evidence. Do not draft or apply a patch. The owner
+or an expressly authorized policy maintainer must make that correction. If the correction is independent of the
+product implementation, finish the permitted implementation and hand it off as a separate out-of-bound policy item;
+never send yourself back for a "revision" to edit it. If the saved task makes a policy edit necessary to satisfy its
+own acceptance criteria, stop before editing that file and report the task-specification conflict to Opus.
+
 For every non-Q0 task, the final production build is a hard completion gate: run `npm run build` after the last
 change and record its actual zero-exit result. A failed or unrun build requires `PARTIALLY IMPLEMENTED` or `BLOCKED`,
 never `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; report the exact failure to Opus immediately.

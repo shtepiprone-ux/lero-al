@@ -49,6 +49,13 @@ emit broad staging commands. If approval evidence is missing, reject, partially 
 success. The sole `.git` maintenance exception is stale `index.lock` cleanup under the matching workflow: check for
 active Git processes first, then delete only the exact stale lock and re-check status before any handoff.
 
+Before an `APPROVED` or `APPROVED WITH NOTES` verdict, close the backlog in the same turn: synchronize all GR-5 state
+records, remove the approved task and every confirmed stale closed/superseded row from active `docs/backlog.md`, and
+add concise newest-first rows to `docs/backlog-archive.md`. Carry any open note as a separate active owner action or
+numbered task. Re-read both files, verify the active backlog is at most 80 lines, then stage both changed backlog
+files in the owner handoff. The final response includes only the required terse GR-5 archive receipt, not a closure
+narrative.
+
 Your final task or review must be self-contained for the next agent and must clearly distinguish verified facts, assumptions, unresolved decisions, and evidence gaps.
 
 Every UI task you create must include a canonical UI decision record for each changed visible artifact: inspected

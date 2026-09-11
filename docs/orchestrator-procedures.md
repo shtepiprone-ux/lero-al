@@ -131,6 +131,17 @@ the documentation table rather than `globals.css`. See `docs/design-system.md` �
 - A revision of completed work must begin with an explicit re-entry mode. Preserve prior baseline artifacts by
   default; do not rerun a baseline capture unless a valid pre-change input is available and overwriting is explicitly
   safe.
+- **Revision-persistence gate.** After writing a revised kickoff, reopen the saved file from disk before responding.
+  Compare the stated amendment inventory with the actual headings, requirement and acceptance-criterion identifiers,
+  and changed text; every newly introduced internal `§N` / `§N.M` reference must resolve to a section that exists in
+  that saved file. A review summary, backlog row, chat response, or remembered draft is evidence of a defect, never a
+  substitute for missing executor instructions. Do not say a section was appended, an AC was superseded, or an owner
+  decision was recorded unless the reopened file contains it. A revision with a missing referenced section is
+  `NEEDS REVISION` for the orchestration artifact itself, not an executor `BLOCKED` handoff.
+- **Committed-revision provenance.** When a later task, review, or handoff relies on a claimed revision commit, read
+  `git show <verified-commit>:<kickoff-path>` before treating its content as authoritative. Until that blob is read,
+  say the owner commit is unverified; never infer committed content from an earlier working-tree read or a commit
+  message.
 - Before assigning an executor write path, inspect its current worktree classification and any file-local cap. A
   mixed/unreviewed path or an already-over-limit file is not viable scope: defer it, define an explicit non-growing
   consolidation, or obtain owner sequencing. Scope, out-of-scope, verification, completion-report, and handoff
@@ -329,8 +340,9 @@ authorized retry, or replace an `UNATTRIBUTED` result with a causal story that w
 
 The final review must state the lowest-evidence row, not only the strongest result. If an artifact is stale,
 missing, narrower than required, or contradictory, downgrade the decision before writing required-next-actions.
-Owner commit/push commands may be emitted only after this locked decision; a non-approved decision must contain no
-commit or push handoff.
+Owner commit/push commands may be emitted only after this locked decision. `NEEDS REVISION` has one narrow exception:
+after Opus amends the kickoff, it emits a commit handoff for that orchestration artifact only; it never emits a push
+or stages rejected implementation paths.
 
 Allowed decisions:
 
@@ -357,6 +369,36 @@ converted into an approval by asserting that its intent was met, by a likely-cau
 follow-up. Use `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED` as the evidence warrants. A requirement may be
 changed only by an explicit owner decision recorded before the verdict.
 
+### Approved-review closure - archive before handoff
+
+`APPROVED` and `APPROVED WITH NOTES` are closure workflows, not chat-only verdicts. Before final output, Opus must
+synchronize GR-5 state artifacts, re-read the full active backlog, remove the newly closed task and every confirmed
+stale closed/superseded entry, and add one concise newest-first archive-ledger row per closed task. If a P3 note or
+owner action survives approval, record it separately as active work; it is never a reason to retain the approved task
+in `docs/backlog.md`.
+
+Re-read `docs/backlog.md` and `docs/backlog-archive.md`, verify that the active file has only live work and no more
+than 80 physical lines, then inspect the diff. The approval handoff must stage both changed backlog files with the
+task's other reconciled artifacts. Do not repeat closure evidence in chat: one required receipt is enough.
+
+### Needs-revision closure - amend the kickoff before responding
+
+`NEEDS REVISION` is a task-revision workflow. Before final output, Opus must update the current kickoff so a fresh
+Sonnet session can execute the correction without chat context. Map each confirmed blocking finding to the changed
+scope, requirement, acceptance criterion, verification, re-entry, or completion-report clause; remove contradictory
+text; and update all active task-state artifacts required by GR-5. A missing owner decision is written into the
+kickoff as `STOP - OWNER DECISION REQUIRED` with bounded options and their verification impact.
+
+Apply the revision-persistence gate before calling the kickoff updated: reopen the saved file, compare its actual
+headings and amended requirement/AC identifiers with the response's amendment inventory, and resolve every internal
+section reference introduced by the revision. If the check fails, keep the verdict `NEEDS REVISION`, correct the
+kickoff, and do not hand Sonnet a chat-only substitute. A claimed owner decision must be a dated, verbatim decision in
+the saved kickoff or sprint artifact; a review/backlog summary cannot authorize the missing branch.
+
+After that reread and the corresponding diff inspection, emit an explicit-path `git add` + `git commit` handoff for
+the kickoff and only the state artifacts Opus changed. Do not stage executor implementation paths and do not push. The
+kickoff, not a long revision brief in chat, is Sonnet's sole next-action source.
+
 ### Owner-native validation handoff
 
 When sandbox execution, a missing native binary, or a timeout prevents a task-required check, list the exact command
@@ -367,16 +409,27 @@ decision.
 
 ### Final review response — concise operational handoff
 
-The final chat response must contain only these four headings, in order:
+For `NEEDS REVISION`, the final chat response contains only these four headings, in order:
+
+1. `Problems and verdict` — concise confirmed blocking defects and the correction now written into the kickoff.
+2. `Kickoff updated` — the exact task path and sections amended. Do not restate Sonnet instructions.
+3. `Next actions — owner` — only unresolved owner decisions or owner-native validation; otherwise `None.`
+4. `Git handoff` — explicit-path `git add` + `git commit` for the amended kickoff and Opus-authored state artifacts;
+   `No push - NEEDS REVISION is not an approved implementation review.`
+
+For every other decision, the final chat response contains only these four headings, in order:
 
 1. `Problems and verdict` — state the verdict and list only confirmed quality defects, contradictions, missing
    required evidence, or material scope/status mismatches. Each problem includes severity, location, concise
-   evidence, impact, correction, and verification. If no problem exists, write `APPROVED — No problems found.`
+   evidence, impact, correction, and verification. If no problem exists, write `APPROVED - No problems found.`
+   For `APPROVED` or `APPROVED WITH NOTES`, append only `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog:
+   <n> lines.`
 2. `Next actions — Sonnet` — only concrete executor remediation or outstanding evidence, with verification; otherwise
    `None.`
 3. `Next actions — owner` — only owner decisions, manual checks, and owner-native validation; otherwise `None.`
 4. `Git handoff` — explicit-path `git add`, `git commit`, and verified `git push` commands only after `APPROVED` or
-   `APPROVED WITH NOTES`; otherwise `None — no Git handoff for <DECISION>.`
+   `APPROVED WITH NOTES`; include changed `docs/backlog.md`, `docs/backlog-archive.md`, and every other reconciled
+   state artifact. Otherwise `None - no Git handoff for <DECISION>.`
 
 Do not praise the implementation; replay the executor report; list passing checks, requirements, or validation
 coverage; describe the review process; or add a "what I verified" / self-check section. Keep the detailed evidence
@@ -462,17 +515,18 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git clean`
 - `git config`
 
-After verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review, the
-orchestrator may emit explicit-path commit commands for the owner to run, but must not run them. Only after the
-`APPROVED` / `APPROVED WITH NOTES` review may Opus append `git push <verified-remote> <verified-branch>` for the
-owner. Inspect the current branch and remote/upstream read-only first and replace both placeholders with verified
-values; never emit a bare `git push`. A task-design handoff and each non-approved review must omit a push command.
-Never emit `git add -A`, `git add -u`, or wildcard staging.
+After verified task design that changed task/docs artifacts, a `NEEDS REVISION` kickoff amendment, or an `APPROVED` /
+`APPROVED WITH NOTES` review, the orchestrator may emit explicit-path commit commands for the owner to run, but must
+not run them. Only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus append
+`git push <verified-remote> <verified-branch>` for the owner. Inspect the current branch and remote/upstream read-only
+first and replace both placeholders with verified values; never emit a bare `git push`. A task-design handoff and
+each non-approved review must omit a push command. For `NEEDS REVISION`, stage only the amended kickoff and
+Opus-authored state artifacts, never implementation paths. Never emit `git add -A`, `git add -u`, or wildcard staging.
 
 Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status
 path with task scope and the session `Files Changed` table. The command lists every reconciled artifact once, including
-required `docs/backlog.md` and `docs/sessions/...` updates. Classify every remaining status path as `EXCLUDED AS
-UNRELATED` or `AMBIGUOUS`. Explicitly excluded parallel work is not a blocker and must not be staged. Report
+required `docs/backlog.md`, `docs/backlog-archive.md` after approval, and `docs/sessions/...` updates. Classify every
+remaining status path as `EXCLUDED AS UNRELATED` or `AMBIGUOUS`. Explicitly excluded parallel work is not a blocker and must not be staged. Report
 `STATUS/REPORT MISMATCH` and withhold the handoff only when a path that should belong to the current task is missing,
 undocumented, or ambiguous; never omit a reconciled task artifact or stage a broad set.
 

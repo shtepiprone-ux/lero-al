@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers'
+import { Paper, Skeleton, Stack, Text, Title } from '@mantine/core'
 import { getUser } from '@/lib/auth/server'
+import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { RECENTLY_VIEWED_COOKIE } from '../lib/recentlyViewedConstants'
 import { getRecentlyViewedForUser, getRecentlyViewedForGuest } from '../lib/recentlyViewedQueries'
 import { ClearRecentlyViewedButton } from './ClearRecentlyViewedButton'
@@ -61,23 +63,34 @@ export async function RecentlyViewedSection({
 
 /**
  * Skeleton fallback for <Suspense> on the listing detail page.
+ *
+ * Task 809 (R4) — rewritten to `SimilarListingsSkeleton`'s composition
+ * (`ListingDetailView.tsx`, Task 807) so the recently-viewed placeholder is the SAME
+ * `MantineListingCardTrack mode="rail"` as the content that replaces it — no more grid-then-rail
+ * re-layout when the Suspense boundary resolves. `aria-busy`/`.recently-viewed` dropped: neither is
+ * selected anywhere in the repo (grepped) and the canonical model carries neither.
  */
 export function RecentlyViewedSkeleton() {
   return (
-    <div className="recently-viewed" aria-busy="true">
-      <div className="h-7 w-52 rounded-lg bg-muted animate-pulse mb-4" />
-      <div className="flex gap-3 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <Stack gap="lg">
+      <Skeleton radius="md">
+        <Title order={2} size="h4">&nbsp;</Title>
+      </Skeleton>
+      <MantineListingCardTrack mode="rail">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="w-48 shrink-0 sm:w-auto rounded-xl border overflow-hidden">
-            <div className="aspect-[4/3] bg-muted animate-pulse" />
-            <div className="p-3 space-y-2">
-              <div className="h-3 w-16 bg-muted rounded animate-pulse" />
-              <div className="h-4 w-full bg-muted rounded animate-pulse" />
-              <div className="h-5 w-28 bg-muted rounded animate-pulse" />
-            </div>
-          </div>
+          <Paper key={i} withBorder radius="lg" style={{ overflow: 'hidden' }}>
+            <Skeleton radius={0} style={{ aspectRatio: '4 / 3' }} />
+            <Stack gap="xs" p="sm">
+              <Skeleton radius="sm">
+                <Text size="sm">&nbsp;</Text>
+              </Skeleton>
+              <Skeleton radius="sm">
+                <Text size="md" fw={600}>&nbsp;</Text>
+              </Skeleton>
+            </Stack>
+          </Paper>
         ))}
-      </div>
-    </div>
+      </MantineListingCardTrack>
+    </Stack>
   )
 }

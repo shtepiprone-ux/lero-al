@@ -61,27 +61,23 @@ export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
 // §3.1/807 §10.3) instead of a `vw` fraction, since a `vw` fraction cannot describe an
 // `auto-fill`/container-relative column at all (the column count is a function of the
 // *container*, not the viewport — `ListingsShellView` proves it: the sidebar narrows the
-// container at a fixed viewport width). `'default'` and `'3-col-xl'` are kept, UNCHANGED, for
-// two consumers Task 807 does not touch: `FavoritesShell.tsx:209` and
-// `ListingCard.stories.tsx`'s `FavoritesComposition` story (both out of this task's §7/§8 scope —
-// `FavoritesShell` is Task 809, a legacy-Tailwind de-migration, not a track swap) and the
-// `ListingCard.stories.tsx` `Default` story / `ListingsShellView`'s own horizontal list variant,
-// which fall back to `'default'` (`DEFAULT_LISTING_LAYOUT_CONTEXT`,
-// `useAdaptiveImageConfig.ts:47`) and are not track consumers. Kickoff §10.3's own instruction:
-// "If any consumer outside §7 references a removed context name, stop and report — do not widen
-// the diff." `'sidebar'` and `'4-col'` are removed — every one of their consumers
-// (`ListingsShellView`, `RecentlyViewedGridView`, `SimilarListingsView`) is migrated in this same
-// diff to a `card-track-*` context.
+// container at a fixed viewport width). `'default'` is kept, UNCHANGED, for the two consumers
+// that are not track consumers at all: the `ListingCard.stories.tsx` `Default` story and
+// `ListingsShellView`'s own horizontal list variant, which fall back to `'default'`
+// (`DEFAULT_LISTING_LAYOUT_CONTEXT`, `useAdaptiveImageConfig.ts:47`). `'sidebar'` and `'4-col'`
+// were removed by Task 807 — every one of their consumers (`ListingsShellView`,
+// `RecentlyViewedGridView`, `SimilarListingsView`) migrated to a `card-track-*` context in that
+// diff. `'3-col-xl'` was Task 807's one deliberately-deferred member (`FavoritesShell.tsx` and
+// `ListingCard.stories.tsx`'s `FavoritesComposition` story, both out of Task 807's scope) — Task
+// 809 (D74-11) migrates both remaining consumers to `'card-track-grid'` and removes it.
 
 export type ListingLayoutContext =
   | 'default'         // 3-col at lg (1024px), no sidebar — FALLBACK ONLY (non-track consumers: ListingCard.stories.tsx Default, ListingsShellView's horizontal list variant)
-  | '3-col-xl'        // 3-col at xl (1280px), no sidebar — FavoritesShell (Task 809, out of scope)
-  | 'card-track-grid' // MantineListingCardTrack mode="grid" — /listings search results (ListingsShellView)
+  | 'card-track-grid' // MantineListingCardTrack mode="grid" — /listings search results (ListingsShellView), Favorites (FavoritesShell, Task 809/D74-10)
   | 'card-track-rail' // MantineListingCardTrack mode="rail" — Featured, Latest, Recently viewed, Similar
 
 export const LISTING_LAYOUT_SIZES: Record<ListingLayoutContext, string> = {
   'default':  '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
-  '3-col-xl': '(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw',
   // Grid column is `minmax(280px, 1fr)` inside `repeat(auto-fill, …)`, inside `.container-wide`
   // (`globals.css:710-720`) — a container-relative arithmetic no `vw` fraction can express (§3.3).
   // MEASURED on the real `/listings` route (Task 807 session log §13, `runs/clean-1`, real

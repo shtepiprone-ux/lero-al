@@ -27,6 +27,21 @@ responsible for deciding whether to run `review-task`, independently inspect the
 If a request asks the `executor` to review, including an automatic follow-up after implementation, return the current
 implementation status and direct the request to Opus; do not begin review work.
 
+## Absolute policy-file boundary
+
+Policy and governance artifacts are read-only for Sonnet. Never create, edit, delete, restore, or otherwise modify
+`docs/golden-rules.md`, any `docs/*rule*.md` file, `docs/agent-contract.md`, `docs/ai-behavior.md`,
+`docs/qa-profiles.md`, `docs/binding-decisions.md`, `docs/orchestrator*.md`, or anything under `.claude/`. This is a
+role boundary, not a task-scoping preference: a kickoff's acceptance criterion, its allowed-files list, a review
+finding, or a request to correct a factual statement cannot delegate the authority.
+
+When a task or its evidence exposes a policy change, report `POLICY-EDIT AUTHORITY REQUIRED` to Opus, identifying
+the path, current wording, proposed wording, and supporting evidence. Do not prepare or apply a patch. Only the
+owner or an expressly authorized policy maintainer can make the change. When that correction is independent of the
+implementation, complete the permitted product work and hand off the policy correction separately; never treat it as
+a Sonnet revision. When a policy edit is necessary for the task's own acceptance criteria, stop before changing the
+file and report the task-specification conflict to Opus.
+
 ## Start gate
 
 Before editing code:

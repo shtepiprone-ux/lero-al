@@ -245,6 +245,14 @@ Do not publish the first draft. Check all of the following and revise the task i
   creation order.
 - After the final revision, every cited step/phase/AC matches the actual plan and no current self-check repeats a
   superseded claim.
+- For a revised kickoff, reopen the saved artifact after the final write and compare the stated amendment inventory
+  with its actual headings, requirement/AC identifiers, and changed text. Every internal `§N` / `§N.M` reference
+  introduced by the revision resolves in that file. A review summary, backlog row, chat response, remembered draft,
+  or commit message never supplies a missing section or executor instruction. Until the check passes, the revision is
+  `NEEDS REVISION`, not an executable or owner-blocked handoff.
+- When relying on a claimed prior revision commit, inspect `git show <verified-commit>:<kickoff-path>` before calling
+  that revision persisted. A prior working-tree read proves neither the saved commit content nor the sections a fresh
+  executor will receive.
 - No requirement, AC, scope boundary, or handoff asserts a material fact as `Confirmed` when its first or only
   verification is deferred to the executor. A task may require an I0 re-measure of an author-verified fact when
   state can drift, but it must retain the author's complete trace and name the re-measure as freshness validation.

@@ -112,7 +112,10 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a
     "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a
     `BACKLOG LIMIT BREACH` when it cannot keep the file at or below 80 lines. Opus validates Sonnet's backlog/session
-    evidence against the real diff, then corrects or consolidates the backlog as needed. Agents may use read-only git
+    evidence against the real diff, then corrects or consolidates the backlog as needed. Before `APPROVED` or
+    `APPROVED WITH NOTES`, Opus alone removes closed or confirmed stale closed/superseded items from active backlog
+    state and adds concise `docs/backlog-archive.md` ledger rows; any surviving owner follow-up is a separate active
+    item. Agents may use read-only git
     for inspection. Mutating git is owner-only and native PowerShell only. Sonnet neither runs, emits, suggests, nor
     delegates mutating git commands, including any `git push` form, and it cannot approve its own task. Opus alone
     may issue an approval verdict after review; it may emit explicit-path commit commands after verified task design

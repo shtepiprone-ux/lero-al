@@ -32,9 +32,9 @@ interface AppImageProps {
    * Controls the `sizes` attribute to match the card's real track geometry.
    * Ignored for all other variants.
    * Omitting is safe — defaults to the legacy 'default' vw-based sizing (non-track consumers only).
-   * Task 807: pass 'card-track-grid' or 'card-track-rail' for any card rendered through
-   * `MantineListingCardTrack`; 'default' | '3-col-xl' remain for the two consumers that are not
-   * migrated yet (see imageDelivery.ts's `ListingLayoutContext` comment).
+   * Task 807/809: pass 'card-track-grid' or 'card-track-rail' for any card rendered through
+   * `MantineListingCardTrack`; 'default' remains for the two non-track consumers (see
+   * imageDelivery.ts's `ListingLayoutContext` comment).
    * To add a new grid context: extend ListingLayoutContext in imageDelivery.ts.
    */
   layoutContext?: ListingLayoutContext

@@ -75,6 +75,14 @@ size must come from a registered token or theme value, not a literal. This kicko
 per `docs/orchestrator-procedures.md`'s "A documented token is not an implemented token — grep the definition, never
 the table", the executor must grep the definition and quote the matched line before consuming it. R2 covers this.
 
+*Resolved 2026-09-11 by owner decision (Task 813 review Revision 4, verbatim in the sprint file):* the thumbnail square
+is **44 × 44 px** from `theme.other.boxSize.galleryThumb` (`'2.75rem'`), which Task 813 R17 adds to
+`src/design-system/mantine/theme.ts`. Consume that role; grep and quote its definition per R2. If 813 has not landed
+when this task executes, stop and report — do not add the role here. *Also corrected by the same review:* §3.1/§5.1's
+"zero `AspectRatio` usages in `src/`" is false — `src/modules/listings/components/FeaturedListingsView.tsx:4,24`
+already renders `AspectRatio ratio={theme.other.listingSkeleton.mediaRatio}`; R4's standalone-Story requirement is
+unaffected.
+
 `UNKNOWN` — whether `--listing-gallery-h-*` are defined or merely documented. R2 greps them too; if a consumed custom
 property has no definition, that is a finding to report, not a value to invent.
 

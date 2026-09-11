@@ -2,12 +2,31 @@
 
 Sprint 75 · **P0** (raised from tier-3 filing by owner decision §17.6, 2026-09-11) · QA profile **Q4**
 
-**Status: `NEEDS REVISION` — Revision 2 filed 2026-09-11 after the owner RETURNED AC11's visual review. R14, R15 and
-R16 are closed and re-verified; **R17 is the only work left**: this task's own new
-`src/stories/mantine/primitives/AppImage.stories.tsx` draws stretched, hardcoded thumbnails and overflows at 320/480.
-The gallery pattern's identical-looking defect is **not this task's** — it is Task 824. Read §5.4.**
+**Status: `NEEDS REVISION` — Revision 4 filed 2026-09-11 by the Opus review of R17. Read §5.5 first, then execute
+§13.5 only.** Revision 3's R17 implementation is **retained in part**: the `style={{...}}` objects are gone, the
+`gallery-strip` and no-src cells are `AspectRatio ratio={1}` squares, and the owner has visually accepted that the
+Story no longer overflows the screen. Two things fail and are owed: (1) **AC24 fails on the executor's own retained
+JSON** — the thumbs measure 66 / 83.5 / 106 / 329.5 px at 320 / 390 / 480 / 1440, so they are not "the same number at
+all four widths", and at 1440 they are full-width 330 px squares, the stretch the owner rejected; the probe tested
+per-row uniformity instead of AC24's cross-width equality and printed a pass; (2) **R17's "no hardcoded dimension"
+is not met** — `maw="20rem"`, `maw="30rem"`, `w="6rem"` and `maw="10rem"` are the old 320/480/96/160 px values
+re-expressed in rem, which AC23's Revision 3 search could not see. The owner has now fixed the thumbnail size
+(44 × 44 px, as a token — §5.5), so no decision is open. R1–R16 stay closed and are not re-run.
 
-*Superseded header, kept for the record:* `NEEDS REVISION` — Revision 1 filed 2026-09-11 after the executor's first implementation. Read §5.3 first;
+*Superseded header, kept for the record:* `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` — Revision 3 (R17) filed 2026-09-11 by the executor. Every
+`style={{...}}` pixel wrapper in `src/stories/mantine/primitives/AppImage.stories.tsx` (5 occurrences) is replaced
+with Mantine `Box`/`AspectRatio` sizing props; the `gallery-strip` cells and the negative-flow thumbnail now render as
+`AspectRatio ratio={1}` squares with the `maxWidth: 360` cap removed. AC23's zero-raw-dimension-literal search and
+AC24's rendered measurement (320/390/480/1440, `en`) both pass — see the session log's R17 section and
+`docs/sessions/evidence/task813/R17_*`. Sonnet does not self-approve; AC11's re-review and Opus's review remain
+open.**
+
+*Superseded header, kept for the record:* `NEEDS REVISION` — Revision 2 filed 2026-09-11 after the owner RETURNED
+AC11's visual review. R14, R15 and R16 were closed and re-verified; R17 was the only work left: this task's own new
+`src/stories/mantine/primitives/AppImage.stories.tsx` drew stretched, hardcoded thumbnails and overflowed at 320/480.
+The gallery pattern's identical-looking defect was not this task's — it is Task 824. See §5.4.
+
+*Further-superseded header, kept for the record:* `NEEDS REVISION` — Revision 1 filed 2026-09-11 after the executor's first implementation. Read §5.3 first;
 it carries the owner decision that widened this scope and the three things still owed. Revision 0's implementation is
 **retained** — R1-R9, R12 and R13 are verified, the move is byte-identical, and nothing is to be rolled back.
 R14, R15 and R16 are the only work left.**
@@ -178,7 +197,7 @@ another task and was not re-verified for this kickoff. R1 measures it.
 | **R14** | Owner decision 2026-09-11, §5.3 | The three retarget edits the move forces are **in scope and required**, not deviations: `scripts/check-homepage-theme-runtime-deps.mjs` (its `EXPECTED_ZERO_INPUT_REL` constant, `:105`), `scripts/design-tokens-allowlist.json` (its path-keyed entry), and `docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts` (a real test importing the moved path). Each must be listed in the session log's `Files Changed` with the reason. **`npm run check:homepage-theme-runtime-deps` and `npm run check:homepage-theme-runtime-deps:verify-gate` must both be run and must both exit 0** — Revision 0 changed that gate's input constant and produced no transcript for either. | **P0** | AC18, AC19 | **Open — executor** |
 | **R15** | Review Revision 1 | The session log and completion report must state the measured census result, not "green". `npm run check:surface-census -- --surface` on **both** affected patterns exits **1** on the pre-existing `src/modules/listings/components/LightboxView.tsx [tier1-unenrolled-or-unstoried]` block; what this task removed is the `src/components/ui/AppImage.tsx [tier2-legacy-primitive]` block, and only that. Correct every sentence claiming both censuses are green. | **P0** | AC20 | **Open — executor** |
 | **R16** | Owner decision 2026-09-11, §5.3 | `check:design-tokens:strict` and `check:tailwind-runtime-tokens` may **not** be called pre-existing without a before/after proof, because this diff edits `scripts/design-tokens-allowlist.json` — an input the first gate reads. Produce the comparison from an **isolated snapshot of `HEAD`** (`git worktree add` a detached checkout, or a `git archive` export to a scratch directory) — **never `git stash`**, which mutates the live worktree this task's evidence depends on. Run both gates there and in the working tree, and diff the two outputs. Identical output → file two separate numbered tasks, one per gate. Different output → it is a Task 813 regression and is fixed **in this task**; it is not carried out as debt. | **P0** | AC21, AC22 | **Open — executor** |
-| **R17** | Owner AC11 rejection, 2026-09-11, §5.4 | This task's own new `src/stories/mantine/primitives/AppImage.stories.tsx` must draw its `gallery-strip / thumbnail row` as **canonical Mantine squares with no hardcoded dimension**, and must not overflow at any reviewed width. `FACT`, read this turn — `:72-77` currently reads `<SimpleGrid cols={4} spacing="xs" style={{ maxWidth: 360 }}>` wrapping `<div style={{ width: 80, height: 56 }}>`: three raw inline dimensions and a 10:7 box, which is both the hardcode the owner forbids and the stretch he rejected. The `negative flow` block's `style={{ width: 160, height: 120 }}` (`:85`) is the same defect and is fixed with it. Use the same canonical Mantine square Task 824 adopts (`AspectRatio ratio={1}`); if 824 has not landed, this task establishes it and 824 consumes it. No px literal, no inline style number, no Tailwind arbitrary dimension anywhere in the file. | **P0** | AC23, AC24 | **Open — executor** |
+| **R17** | Owner AC11 rejection, 2026-09-11, §5.4 | This task's own new `src/stories/mantine/primitives/AppImage.stories.tsx` must draw its `gallery-strip / thumbnail row` as **canonical Mantine squares with no hardcoded dimension**, and must not overflow at any reviewed width. `FACT`, read this turn — `:72-77` currently reads `<SimpleGrid cols={4} spacing="xs" style={{ maxWidth: 360 }}>` wrapping `<div style={{ width: 80, height: 56 }}>`: three raw inline dimensions and a 10:7 box, which is both the hardcode the owner forbids and the stretch he rejected. The `negative flow` block's `style={{ width: 160, height: 120 }}` (`:85`) is the same defect and is fixed with it. Use the same canonical Mantine square Task 824 adopts (`AspectRatio ratio={1}`); if 824 has not landed, this task establishes it and 824 consumes it. No px literal, no inline style number, no Tailwind arbitrary dimension anywhere in the file. **Revision 4 (review 2026-09-11):** "no hardcoded dimension" includes a literal in **any** CSS unit passed through a Mantine sizing prop (`w`/`h`/`maw`/`mah`/`miw`/`mih`) — re-expressing a px value in rem is the same hardcode. The thumbnail square is **44 × 44 px from the new registered token `theme.other.boxSize.galleryThumb`** (owner decision §5.5); every other demo size either disappears (column-count layout) or comes from an existing `theme.other` role that documents that variant as its owner. | **P0** | AC23, AC24 | **NEEDS REVISION — Revision 4, §5.5 / §13.5** |
 | **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs` and `scripts/check-pattern-enrolment.mjs` are **not modified** — decision §5.1 states "Do not weaken or alter the existing pattern-directory check", and the 2026-09-11 owner decision in §5.3 confirms R10 "remains in force for the six explicitly named governance scripts". `scripts/check-homepage-theme-runtime-deps.mjs` is **not** one of the six and its path-constant retarget is authorised by R14. `TIER2_PREFIX` is not changed, widened, or made configurable — moving the file is the fix; editing the classifier is not. R12's check is a **new** script, never an arm added to an existing one. | **P0** | AC12 | Confirmed |
 | **R11** | §5.1 decision | `docs/golden-rules.md`, `docs/design-system-pattern-ownership.md` and `docs/storybook-governance.md` record where the project's image primitive now lives and which gate governs it. No GR-n rule body, `Command` block or receipt string changes. | P1 | AC13 | Confirmed |
 | **R12** | §5.1 decision (C) | A **blocking, CI-safe, self-tested media-directory parity check** lands in this same task: every `.tsx` directly under `src/design-system/media/` must be a `scripts/mantine-migration-scope.json` entry, and a manifest entry under that directory whose file no longer exists fails as a ghost entry. It derives the directory listing **at runtime** — never a hard-coded name list — prints its scope boundary and its cannot-see sentence on every run, takes its exit decision from one pure function the real run and the self-test both call, and carries a planted-failure proof. Wired into the `governance` job with no `continue-on-error`, no `\|\| true`, no `exit 0` and no wrapper, in the same shape as the four existing `*:verify` steps. Story coverage stays enforced by the existing `check:story-coverage`; this check does not duplicate it. | **P0** | AC14, AC15, AC16 | Confirmed |
@@ -293,6 +312,42 @@ nor Task 813 touched, with `baseline entries: 0`. Both gates are **blocking** in
 (`:149`, `:152`). That evidence points towards "inherited", which is exactly why it must be proven rather than
 asserted: R16 decides it.
 
+### 5.5 `OWNER DECISION — RECORDED VERBATIM, 2026-09-11 (Revision 4 of the review, R17)`
+
+The review put AC24's measured table to the owner (66 / 83.5 / 106 / 329.5 px at 320 / 390 / 480 / 1440) with three
+options: a new registered size token, reuse of `theme.other.boxSize.thumbnail`, or accepting container-relative
+squares. The owner answered, verbatim:
+
+> візуально аідтверджую, що тепер Image не виходить за рамки екранів
+
+> розмір квадратів має бути 44х44px
+
+> цей розмір треба записати токеном!
+
+**What this settles.**
+
+1. **No-overflow is owner-accepted** for the Revision 3 Story. AC24 still re-measures it on the Revision 4 Story,
+   because the Story changes.
+2. **The thumbnail square is 44 × 44 px, and it is a token, not a literal.** Add exactly one new role to the existing
+   dimension scale in `src/design-system/mantine/theme.ts`: the `MantineThemeOther` augmentation's `boxSize` key
+   union gains `'galleryThumb'`, and `other.boxSize` gains `galleryThumb: '2.75rem', // 44px`, with a provenance
+   comment citing this decision (Task 813 R17 Revision 4, owner decision 2026-09-11) and naming its owners: the
+   `AppImage` Story's `gallery-strip` row and no-src square, and Task 824's gallery thumbnail row.
+3. **Do not reuse a 44-valued role that already exists.** `theme.other.touchTarget` (`2.75rem`) and
+   `theme.other.iconSize.touch` (`44`) have the same value and a different documented owner; the theme's own rule
+   ("same value, different documented owner, is still invalid") forbids consuming either for a thumbnail.
+4. **Canonical square stays `AspectRatio ratio={1}`**, now sized by the token (for example
+   `<AspectRatio ratio={1} w={theme.other.boxSize.galleryThumb}>`, with `theme` from `useMantineTheme()` inside a
+   component). The row is a **non-stretching** Mantine row (e.g. `Group gap="xs"`) — never a `SimpleGrid` whose
+   columns divide the container, which is what produced 329.5 px at 1440.
+5. **Other demo sizes get no new token.** `listing`, `gallery-main` and `avatar` either size from a column-count
+   layout (`SimpleGrid cols={{ … }}` — counts, not dimensions) or from an existing `theme.other` role whose documented
+   owner is that variant. If a section cannot be sized either way, stop with `CANONICAL STYLE DECISION REQUIRED` naming
+   it — do not invent a value.
+6. **Task 824 consumes the same token** instead of leaving its §3.3 dimension source `UNKNOWN`; the decision is
+   recorded in the sprint file and in 824's kickoff. This does not change 824's scope and does not make 813 wait for
+   824.
+
 ## 6. Pre-read rule bundle
 
 `docs/golden-rules.md` in full, GR-1 · GR-3 · the `Enforcement status` table · `docs/agent-contract.md` clauses
@@ -322,6 +377,10 @@ this kickoff.
   and its two `package.json` entries (R12) · two blocking steps in `.github/workflows/governance-pr.yml` (R12).
 - **Written:** `docs/sessions/evidence/task813/*` · `docs/sessions/2026-MM-DD-task813-*.md` · the concise
   `docs/backlog.md` state line.
+- **Revision 4 (R17), added by the review:** `src/design-system/mantine/theme.ts` — exactly the one `boxSize.galleryThumb`
+  role and its type-union key (§5.5), nothing else in that file · `src/stories/mantine/primitives/AppImage.stories.tsx` ·
+  `scripts/task813-appimage-thumb-probe.mjs` — authorised as retained, task-numbered evidence tooling (no
+  `package.json` entry, not a gate).
 
 ## 8. Out of scope
 
@@ -461,18 +520,26 @@ same images, the same blur-up, the same srcset and the same LCP timing as before
   it may not be carried out as debt, baselined, or handed to a follow-up. Quote the set comparison, not just the
   totals.
 
-- **AC23 [R17]** — Given `src/stories/mantine/primitives/AppImage.stories.tsx` after the fix, then a search for raw
-  dimension literals in that file returns **zero** — no `style={{ width: n }}`, no `height: n`, no `maxWidth: n`, no
-  `px` literal, no Tailwind arbitrary `[...]` dimension — and every thumbnail is rendered through the canonical
-  Mantine square primitive. Quote the empty search and the changed hunk.
-- **AC24 [R17]** — Given `Mantine/Primitives/AppImage → Default` rendered at **320, 390, 480 and 1440** in `en`, then
-  each thumbnail's measured width equals its measured height within 1px and is the same number at all four widths,
-  and `document.documentElement.scrollWidth` does not exceed `clientWidth` at any of them. Quote the raw measurements
-  per width — a screenshot is not a measurement. These four widths then go back to the owner as AC11's re-review.
+- **AC23 [R17]** — *Amended in Revision 4.* Given `src/stories/mantine/primitives/AppImage.stories.tsx` after the
+  fix, then §13.5's `Select-String` search returns **no output**. It covers what Revision 3's search could not see: a
+  Mantine sizing prop or style key carrying a literal in any unit (`maw="20rem"` is a hit), any CSS length literal
+  (`px`, `rem`, `em`, `vw`, `vh`, `vmin`, `vmax`, `%`), any `style={{` object, and any Tailwind arbitrary value in a
+  `className`. Comments count: a historical value quoted in a comment is removed, not exempted. Every remaining size
+  is either a column-count layout (`SimpleGrid cols`) or a `theme.other.*` value whose definition line is quoted from
+  `src/design-system/mantine/theme.ts`. Quote the empty search, the token definition lines and the changed hunk.
+- **AC24 [R17]** — *Amended in Revision 4.* Given `Mantine/Primitives/AppImage → Default` rendered at **320, 390, 480
+  and 1440** in `en`, then each of the four `gallery-strip` thumbnails and the no-src square measures **44 × 44 px**
+  (`getBoundingClientRect()` width and height each within 1 px of 44), the value is **the same at all four widths**
+  (max − min of every thumbnail width across all four widths ≤ 1 px), and `document.documentElement.scrollWidth` does
+  not exceed `clientWidth` at any width. The probe's pass condition is exactly this sentence; a field named for a
+  weaker property (per-row uniformity) does not satisfy it, and the retained JSON carries the derived cross-width
+  max − min. The corrected probe must first **fail** on the Revision 3 Story (§13.5 step 2). Quote the raw
+  measurements per width — a screenshot is not a measurement. These four widths then go back to the owner as AC11's
+  re-review.
 
-**GR-4 AC AUDIT — 24 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits" and
-AC12's / AC17's "empty diff" are this task's defined outcome, scoped to named paths this task deliberately does not
-otherwise change.**
+**GR-4 AC AUDIT — 24 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits",
+AC23's empty search and AC12's / AC17's "empty diff" are this task's defined outcome, scoped to named paths this task
+deliberately does not otherwise change; AC24's 1 px is a measurement tolerance, not a pixel-perfect claim.**
 
 ## 13. QA profile and verification plan
 
@@ -581,6 +648,93 @@ AC15's probe, run and restored under §10.5's one-transcript witness rule, touch
 Native Windows PowerShell throughout. A result from WSL, a Linux VM or a mounted Linux view is an environment screen,
 not evidence; record it as `MISSING EVIDENCE` with the exact native command.
 
+### 13.5 Revision 4 — R17 re-entry (execute this and nothing else)
+
+**Execution state: `remediation`.** Start at step 1 below. Reusable and not to be re-run: every R1–R16 artifact,
+§13.1's baseline, §13.2a's worktree comparison, both `--update-baseline` writes, AC15's plant. `R17_04_ac24-thumb-measurements.json`
+and `R17_04_probe-run.txt` are **preserved** as the Revision 3 evidence and marked superseded in the session log —
+the probe must stop hard-coding that output path, so no rerun can overwrite them.
+
+1. **Correct the probe first, before touching the Story.** In `scripts/task813-appimage-thumb-probe.mjs`: take the
+   output path from a required `--out <file>` argument (refuse to run without it, refuse an existing file); make the
+   pass condition exactly AC24's sentence — per thumbnail `|w − 44| ≤ 1` and `|h − 44| ≤ 1`, cross-width
+   `max − min ≤ 1` over every thumbnail width at all four widths, the no-src square measured the same way, and
+   `scrollWidth ≤ clientWidth`; write the derived cross-width `max`, `min` and `delta` into the JSON. Select the thumbnails
+   **structurally** (the `AspectRatio` roots inside the section whose label reads `gallery-strip / thumbnail row`, and the
+   one inside the no-src section) and remove every `data-testid` from the Story — story markup that exists only to
+   serve a measurement is a probe, not a permanent artifact (`orchestrator-procedures.md`, corollary 726; the
+   `appimage-gallery-strip-grid` hook is not even read by the probe).
+2. **Negative arm.** Build Storybook and run the corrected probe against the **unchanged Revision 3 Story**. It must
+   exit **1**, naming the 44 px and cross-width failures (the Revision 3 cells are 66…329.5 px). A probe that passes
+   here cannot prove AC24 and is itself a defect.
+3. Add `boxSize.galleryThumb` to `theme.ts` (§5.5 item 2) and quote both definition lines.
+4. Rewrite the Story per §5.5 items 4–5: no literal in any unit, no `style={{`, no `data-testid`; the `gallery-strip`
+   row and the no-src square consume the token; the other sections size from a column-count layout or an existing
+   owning role.
+5. Run the two blocks below and retain every output as `R17R4_*` under `docs/sessions/evidence/task813/`, each
+   transcript carrying platform, Node version, cwd, exact command and exit code **in the same file** (§10.5).
+
+**Block A — after step 1, before steps 3–4 (the negative arm):**
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$ev = "docs\sessions\evidence\task813"
+node.exe -p process.platform
+node.exe --version
+Get-Location
+git --no-optional-locks status --short
+npm.cmd run build-storybook
+node.exe scripts\task813-appimage-thumb-probe.mjs --out "$ev\R17R4_02_probe-negative-arm.json"
+```
+
+Expected: `win32`; the probe **exits 1**, naming the 44 px and cross-width failures for the Revision 3 cells.
+
+**Block B — after step 4 (the final gate block):**
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$story = "src\stories\mantine\primitives\AppImage.stories.tsx"
+$theme = "src\design-system\mantine\theme.ts"
+$ev = "docs\sessions\evidence\task813"
+node.exe -p process.platform
+node.exe --version
+Get-Location
+Select-String -Path $theme -Pattern 'galleryThumb'
+Select-String -Path $story -Pattern '\b(w|h|maw|mah|miw|mih|width|height|maxWidth|maxHeight|minWidth|minHeight)\s*[=:]\s*\{?\s*["''`]?\s*-?\d', '\d+(\.\d+)?\s*(px|rem|em|vw|vh|vmin|vmax)\b', '\d%', 'style=\{\{', 'className=.*\[', 'data-testid'
+Select-String -Path "src\design-system\mantine\__tests__\*" -Pattern 'boxSize'
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build-storybook
+node.exe scripts\task813-appimage-thumb-probe.mjs --out "$ev\R17R4_06_ac24-thumb-measurements.json"
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:tailwind-runtime-tokens
+npm.cmd run check:homepage-theme-runtime-deps
+npm.cmd run check:homepage-theme-runtime-deps:verify-gate
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build
+git hash-object $story $theme scripts\task813-appimage-thumb-probe.mjs
+git --no-optional-locks status --short
+```
+
+Expected: `galleryThumb` matched on exactly two lines of `theme.ts` (union key, `'2.75rem'` value); the Story search
+prints **nothing**; the `__tests__` search either prints nothing or names a test that is then run with the
+repository's existing test script and reported; typecheck 0; lint 0; the probe **exit 0** with every thumbnail
+44 ± 1 px at 320/390/480/1440, cross-width delta ≤ 1 px and no page overflow; `check:stories` 0 violations;
+`check:story-coverage` exit 0 at 67/67; `check:design-tokens:strict` with the **same 56-violation set** as `R16_03`
+and `check:tailwind-runtime-tokens` with the same single row as `R16_04` (a new finding is this task's regression);
+both homepage-theme gates exit 0; both hygiene gates clean; `build` **exit 0**; one `git hash-object` line per
+changed file, captured in this same pass. Return every transcript path.
+
+**Completion report for Revision 4:** the probe diff and the negative-arm transcript · the two `theme.ts` definition
+lines · the empty Story search · the new Story hunk · the per-width measurement table with the cross-width delta ·
+every exit code above · the hash-object lines · the session log's R17 section rewritten to Revision 4, with
+`R17_04_*` marked superseded and the §5.5 decision quoted · the `Files Changed` table updated for `theme.ts`.
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `BLOCKED — CANONICAL STYLE DECISION REQUIRED`. The owner then
+re-reviews AC11 against the Revision 4 Story at AC24's four widths.
+
 ## 14. Completion report contract
 
 Files changed · requirement IDs completed · §13.1's baseline including the full importer census and the before-half
@@ -610,4 +764,5 @@ Do not self-approve; Sonnet runs, emits and suggests no mutating git command.
 | Is the `check-homepage-theme-runtime-deps.mjs` edit a R10 violation? | **No** — it is not one of R10's six, and the 2026-09-11 owner decision (§5.3) puts the retarget in scope. What was missing was proof: R14/AC19 requires the gate and its self-test to exit 0. |
 | Are the two red gates pre-existing? | **Unproven, and that is the point.** This diff edits `scripts/design-tokens-allowlist.json`, an input the first gate reads. R16/AC21 decides it from an isolated `HEAD` snapshot, never `git stash`; AC22 binds both outcomes in advance so the answer cannot be chosen after seeing it. |
 | Is the stretched gallery this task's fault? | **Only half of it.** Its own new `AppImage.stories.tsx` is (R17) — hardcoded 80×56 boxes in a 4-column grid with a 360px cap. `MantineListingGalleryPattern.tsx` is not: it appears in neither 813's nor 820's diff, and is Task **824**. |
+| Why did Revision 3's R17 not close? | **Its own evidence failed AC24** (66→329.5 px across widths; the probe checked per-row uniformity) and the rem props were the old px values in another unit — the Revision 3 AC23 search could not see them. Revision 4 widens the search, fixes the size by owner decision §5.5 (44 × 44 px token), and requires the probe to fail on the old Story before it may pass on the new one. |
 | Does this task touch the allowlist? | **No** — R13/AC17, and the 2026-09-11 owner amendment in §5.1 makes the residual `owner: "813"` values a documented transitional snapshot. The field transfer is Task 821's first tracked-file change, after it verifies Task 820's commit. No further work on those two components is authorized under this task. |

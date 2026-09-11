@@ -1,0 +1,74 @@
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 4
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+FAIL  1 stale rendered-scope-allowlist.json entry(ies) — no matching rendered, unenrolled edge exists:
+    src/modules/listings/components/DOES_NOT_EXIST_AC5_PROBE.tsx
+  Remove the entry, or fix the path so it matches a real edge.
+FAIL  50 tier1-unenrolled component(s) rendered by an enrolled surface but not enrolled:
+    src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx  [tier1-unenrolled]
+    src/components/layout/MobileNavDrawer.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [tier1-unenrolled]
+    src/components/layout/UserMenu.tsx -> src/design-system/mantine/patterns/MantineDropdownMenu.tsx  [tier1-unenrolled]
+    src/components/shared/HeroSearchView.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [tier1-unenrolled]
+    src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRangeInputs.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRoomsRow.tsx  [tier1-unenrolled]
+    src/components/shared/LocationCombobox.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsPagination.tsx -> src/design-system/mantine/patterns/MantinePagination.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/YearCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRangeInputs.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterChoiceGroup.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRoomsRow.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/SaveSearchButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsShellView.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingsActionRow.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryStaticFrame.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryIsland.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/SimilarListings.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/components/shared/MapWrapper.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ViewTracker.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedTracker.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingShareButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingContact.tsx -> src/design-system/mantine/patterns/MantineListingContactPattern.tsx  [tier1-unenrolled]
+    src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx  [tier1-unenrolled]
+    src/modules/listings/components/CollectionsSection.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [tier1-unenrolled]
+    src/modules/listings/components/SaveToCollectionButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [tier1-unenrolled]
+  Fix: migrate, story and add the target to scripts/mantine-migration-scope.json — or,
+  if it is a tier-3 shared component owned by another surface, add it to
+  scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  3 tier2-legacy-primitive import(s) — an enrolled surface still imports a legacy @/components/ui/* primitive:
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+    src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx  [tier2-legacy-primitive]
+    src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx  [tier2-legacy-primitive]
+  Fix: stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

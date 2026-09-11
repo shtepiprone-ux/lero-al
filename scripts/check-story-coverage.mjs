@@ -45,6 +45,7 @@ import { resolve, join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { extractImportSpecifiers, resolveImportSpecifier as resolveImportSpecifierShared } from './lib/import-resolver.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -155,36 +156,9 @@ function extractTitle(sourceFile) {
   return found;
 }
 
-/** Every `import ... from '<spec>'` module specifier in the file (AST, not regex). */
-function extractImportSpecifiers(sourceFile) {
-  const specs = [];
-  for (const stmt of sourceFile.statements) {
-    if (ts.isImportDeclaration(stmt) && ts.isStringLiteral(stmt.moduleSpecifier)) {
-      specs.push(stmt.moduleSpecifier.text);
-    }
-  }
-  return specs;
-}
-
 /** Resolves an `@/*` or relative import specifier to a repo-relative file path, or null (external). */
 function resolveImportSpecifier(storyFilePath, spec) {
-  let candidate;
-  if (spec.startsWith('@/')) {
-    candidate = join(ROOT, 'src', spec.slice(2));
-  } else if (spec.startsWith('.')) {
-    candidate = resolve(dirname(storyFilePath), spec);
-  } else {
-    return null; // external package — not a local component
-  }
-  for (const ext of ['', '.tsx', '.ts', '/index.tsx', '/index.ts']) {
-    const p = candidate + ext;
-    try {
-      if (existsSync(p) && statSync(p).isFile()) {
-        return relative(ROOT, p).replace(/\\/g, '/');
-      }
-    } catch { /* candidate not a file — keep trying extensions */ }
-  }
-  return null;
+  return resolveImportSpecifierShared(ROOT, storyFilePath, spec);
 }
 
 // ── Parse every story file; classify canonical Mantine; collect import edges ──

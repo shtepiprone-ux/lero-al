@@ -66,10 +66,14 @@ indicated a real defect.
 
 Binds `orchestrator-role` → Backlog discipline. **Forbidden:** recording a verdict in one place and leaving another
 stale. Enumerate every artifact naming the task's state — `docs/backlog.md`, the sprint Tasks table, the sprint
-execution-order note, `docs/backlog-archive.md`, the kickoff — and change them in the same response. This has
-recurred four times (661, 703/704/705, 702 twice).
+execution-order note, `docs/backlog-archive.md`, the kickoff — and change them in the same response. For `APPROVED`
+or `APPROVED WITH NOTES`, this means removing the closed task and every confirmed stale closed/superseded record from
+the active backlog and adding concise newest-first archive rows before the handoff. An open note becomes a separate
+active owner action or numbered task; it never keeps an approved task active. This has recurred four times (661,
+703/704/705, 702 twice).
 
-**Receipt:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.`
+**Receipts:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.` For an approved verdict also emit
+`GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.`
 
 ## GR-6 — Every response that writes a task/doc artifact ends with the owner-run git block
 
@@ -85,9 +89,9 @@ task-design block for documents the same response authored. Conflating the two i
 
 | Rule | Enforced by | State |
 |---|---|---|
-| GR-1 | `scripts/check-surface-census.mjs` | **Task 812 — not yet built.** Until it exists GR-1 is receipt-only, which is exactly the weakness this file names. **812 is P0.** |
+| GR-1 | `scripts/check-rendered-scope.mjs` (`npm run check:rendered-scope`) | **Built and proven (Task 812); a step now runs it in the `governance` CI job, but GR-1 is still receipt-only, not enforced.** Owner decision 3 (2026-09-11, kickoff §14.6.4) put the step in as advisory only — `continue-on-error: true` at step level, real exit code preserved, full report printed — so the frontier is visible on every PR without blocking any of them. 13 allowlist entries are recorded: 11 shared `design-system/mantine/patterns/*` paths (owner decision 1, Task 816) and 2 Task 813 feature paths. Together they cover 27 rendered edges; the pattern cluster accounts for 11 paths and 23 edges. 27 tier1 + 3 tier2 edges remain, unowned by this task. Blocking enforcement is gated on **Task 817** (GR-1's own missing per-surface command, `check-surface-census.mjs` — decision 2) and **Task 818** (reducing or baselining the remaining frontier so the advisory step can become blocking — decision 3's mandatory exit). GR-1's `Command` block above is unchanged and is not `check:rendered-scope` — the two are complementary, not substitutes (decision 2's binding consequence). |
 | GR-2 | reviewer inspection + receipt | active |
-| GR-3 | `check:story-coverage` for enrolled components, `check-surface-census` for the rest | partial until 812 |
+| GR-3 | `check:story-coverage` for enrolled components; `check-rendered-scope` runs advisory in CI for the frontier, not yet blocking | not enforced — gated on Tasks 817 and 818, same as GR-1 |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **`Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks the response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **`Stop` hook** — blocks the response when a `tasks/**` or governance doc is written and uncommitted with no `git add` block, and blocks `git push` outside an approved review | **enforced** |
@@ -97,5 +101,7 @@ wrote this file.** That is why GR-5 and GR-6 are now a **`Stop` hook**: it reads
 last response, and exits 2 — the response is blocked and must be fixed before it can finish. It is fail-open on any
 error and honours `stop_hook_active`, so it can never wedge a session.
 
-**GR-1 and GR-3 are still self-reported. Task 812 is what turns them into a failing command. Until it lands, they are
-the weakest rules here — do not let it sit.**
+**GR-1 and GR-3 are still not enforced. Task 812 built `check:rendered-scope`, proved it correct, and it now runs
+advisory on every PR (owner decision 3, 2026-09-11) — but advisory is not blocking, and no artifact may describe
+this as GR-1 or GR-3 being enforced or as R6's blocking condition being met. Tasks 817 and 818 are what closes
+that gap. Until they land, GR-1 and GR-3 are still the weakest rules here — do not let it sit.**

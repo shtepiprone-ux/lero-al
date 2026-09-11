@@ -1,0 +1,20 @@
+=== Task 812 Revision 1 — AC1/AC8-R manifest restore witness ===
+--- BEFORE PLANT: git hash-object scripts/mantine-migration-scope.json ---
+9fdc9303c89d98d5e82f28e5ededb16f803924a3
+
+--- ARM 1 (CollectionsSection removed from manifest): npm run check:rendered-scope ---
+FAIL  50 tier1-unenrolled component(s) rendered by an enrolled surface but not enrolled:
+    src/modules/listings/components/FavoritesShell.tsx -> src/modules/listings/components/CollectionsSection.tsx  [tier1-unenrolled]
+FAIL  3 tier2-legacy-primitive import(s) — an enrolled surface still imports a legacy @/components/ui/* primitive:
+ARM1_EXIT_CODE=1
+
+--- AFTER RESTORE: git hash-object scripts/mantine-migration-scope.json ---
+9fdc9303c89d98d5e82f28e5ededb16f803924a3
+
+--- git status --porcelain -- scripts/mantine-migration-scope.json (explicit; empty means clean) ---
+PORCELAIN_OUTPUT=<empty — file matches HEAD, no diff>
+
+--- ARM 2 (restored): npm run check:rendered-scope — full output grepped for every "CollectionsSection" mention ---
+    src/modules/listings/components/CollectionsSection.tsx -> src/design-system/mantine/patterns/MantineModal.tsx  [tier1-unenrolled]
+ARM2_COLLECTIONSSECTION_MENTIONS=1 (the ONLY mention; it is CollectionsSection.tsx as an enrolled ROOT importing MantineModal — a separate, pre-existing, unrelated edge, NOT the planted FavoritesShell->CollectionsSection edge, which is absent from the output — arm 2's specific claim (AC8-R) is that this one edge is cleared, and it is)
+ARM2_EXIT_CODE=1 (non-zero is EXPECTED and CORRECT here: 51 unrelated pre-existing tier1/tier2 edges remain unresolved on this tree, independent of this plant — full listing: docs/sessions/evidence/task812/R1_final_gate.txt. R7's literal "the gate exits 0" wording is NOT met and cannot be met without resolving those 51 edges; AC8-R's actual claim — the planted edge itself clears on restore — IS met and is what this witness proves.)

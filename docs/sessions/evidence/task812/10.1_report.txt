@@ -1,0 +1,97 @@
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812)
+    Enrolled roots walked: 38 (of 38 manifest entries)
+    Local import edges resolved: 252
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 155
+    Allowlisted edges (tier3, owner-filed): 0
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+  tier1-unenrolled (54):
+    src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx
+    src/components/layout/MobileNavDrawer.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/layout/UserMenu.tsx -> src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+    src/components/shared/HeroSearchView.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/modules/listings/components/ListingCard.tsx -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/ListingFeatureIcon.tsx
+    src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/FavoriteButton.tsx
+    src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/components/shared/FiltersPanel.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRangeInputs.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRoomsRow.tsx
+    src/components/shared/LocationCombobox.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx
+    src/modules/listings/components/ListingsPagination.tsx -> src/design-system/mantine/patterns/MantinePagination.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/YearCombobox.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRangeInputs.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterChoiceGroup.tsx
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRoomsRow.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsSortBar.tsx -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/SaveSearchButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/ListingsShellView.tsx -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingsActionRow.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryStaticFrame.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryIsland.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/SimilarListings.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/components/shared/MapWrapper.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ViewTracker.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedTracker.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingFeatureIcon.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/FavoriteButton.tsx
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingShareButton.tsx
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx
+    src/modules/listings/components/ListingContact.tsx -> src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+    src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx
+    src/modules/listings/components/CollectionsSection.tsx -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx -> src/design-system/mantine/patterns/MantineModal.tsx
+  tier2-legacy-primitive (3):
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx
+    src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx
+    src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx
+  allowlisted (0):
+  barrel hops unwrapped (26):
+    src/components/layout/MobileNavDrawer.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/layout/UserMenu.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+    src/components/shared/HeroSearchView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+    src/modules/listings/components/ListingCard.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCopyIdButton.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/components/shared/FiltersPanel.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineFilterSection.tsx
+    src/modules/locations/components/PopularLocationsView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineHomeSection.tsx
+    src/components/shared/LocationCombobox.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/components/shared/LocationCombobox.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineAddItemPanel.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineAddItemPanel.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/auth/components/AuthSheet.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/listings/components/ListingsFilters.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/RangeDatePicker.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsFilterBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/ListingsSortBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCombobox.tsx
+    src/modules/listings/components/ListingsSortBar.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineCountButton.tsx
+    src/modules/listings/components/SaveSearchButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/ListingsShellView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineDrawer.tsx
+    src/modules/listings/components/ListingDetailView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+    src/modules/listings/components/ListingContact.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+    src/modules/listings/components/CollectionsSection.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+    src/modules/listings/components/SaveToCollectionButton.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantineModal.tsx
+EXIT_CODE=0

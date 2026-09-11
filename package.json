@@ -68,6 +68,8 @@
     "check:story-coverage": "node scripts/check-story-coverage.mjs",
     "check:story-coverage:report": "node scripts/check-story-coverage.mjs --report",
     "check:story-coverage:update-exempt": "node scripts/check-story-coverage.mjs --update-exempt",
+    "check:rendered-scope": "node scripts/check-rendered-scope.mjs",
+    "check:rendered-scope:report": "node scripts/check-rendered-scope.mjs --report",
     "check:design-tokens": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:report": "node scripts/check-design-tokens.mjs --report",

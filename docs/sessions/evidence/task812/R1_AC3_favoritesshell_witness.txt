@@ -1,0 +1,13 @@
+=== Task 812 Revision 1 — AC3 FavoritesShell.tsx type-only-import probe restore witness ===
+--- BEFORE PROBE: git hash-object src/modules/listings/components/FavoritesShell.tsx ---
+087c45c5886c2d46645aef11f9ece4fe14a4a3f0
+
+--- WITH PROBE: npm run check:rendered-scope --report, grepped for every ListingReportDialog mention ---
+53:    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+55:    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx
+
+--- AFTER RESTORE: git hash-object src/modules/listings/components/FavoritesShell.tsx ---
+087c45c5886c2d46645aef11f9ece4fe14a4a3f0
+
+--- git status --porcelain -- src/modules/listings/components/FavoritesShell.tsx (explicit; empty means clean) ---
+PORCELAIN_OUTPUT=<empty — file matches HEAD, no diff>

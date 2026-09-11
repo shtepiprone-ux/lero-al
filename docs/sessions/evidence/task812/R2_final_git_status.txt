@@ -1,0 +1,23 @@
+ M .claude/agents/orchestrator.md
+ M .claude/skills/create-task/SKILL.md
+ M .claude/skills/review-task/SKILL.md
+ M .github/workflows/governance-pr.yml
+ M CLAUDE.md
+ M docs/agent-contract.md
+ M docs/ai-behavior.md
+ M docs/component-catalog.md
+ M docs/golden-rules.md
+ M docs/orchestrator-procedures.md
+ M docs/orchestrator-role.md
+ M docs/performance.md
+ M docs/storybook-governance.md
+ M package.json
+ M scripts/check-story-coverage.mjs
+ M src/components/ui/AppImage.tsx
+ M src/lib/imageDelivery.ts
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+?? docs/sessions/2026-09-11-task812-rendered-but-unenrolled-component-detector.md
+?? docs/sessions/evidence/task812/
+?? scripts/check-rendered-scope.mjs
+?? scripts/lib/import-resolver.mjs
+?? scripts/rendered-scope-allowlist.json

@@ -31,7 +31,7 @@ of the wrong proposition.
 
 | # | Title | P | QA | State |
 |---|---|---|---|---|
-| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **NEEDS REVISION** 2026-09-11 — R10/R11/R12/R13/R15 verified against the artifacts; owner answered §14.6 on 2026-09-11 (1a · 2a · 3a, quoted verbatim below), which unblocks **R14** and adds **R16-R19** (11 literal tier-3 allowlist entries owned by 816 · post-R16 census 27/3/27 · no enforced-claim · golden-rules Enforcement-status row). Kickoff §§14-15 carry R10-R19 / AC4-R,AC7-R,AC8-R,AC11-AC17 → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
+| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **APPROVED** 2026-09-11 — R1-R20 verified against the artifacts; R20 closed by the owner directly in `docs/golden-rules.md:92`. Archived in `docs/backlog-archive.md`. GR-1/GR-3 remain **not enforced** — gated on **817** and **818**. → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
 | **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **FILED** 2026-09-11 by owner decision 1 — kickoff owed |
 | **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 2 — kickoff owed |

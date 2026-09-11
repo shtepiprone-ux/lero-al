@@ -2483,6 +2483,27 @@ The scaffold:
 
 `check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, before Storybook builds. It parses story source directly (TypeScript AST) rather than a built index — no Storybook build required.
 
+### §15.5 Rendered-but-unenrolled component gate: `check:rendered-scope` (Task 812, 2026-09-11)
+
+**Why.** `check:story-coverage` (§15.1) only inspects components already IN `scripts/mantine-migration-scope.json`. A component that an enrolled component *renders* but that is not itself enrolled is invisible to that gate — this is the exact hole Task 809 fell through: `/favorites` shipped with `CollectionsSection`, `SaveToCollectionButton` and `FavoritesTypeFilter` rendered, unmigrated, unenrolled and unstoried, while `check:story-coverage` printed 34/34 green.
+
+**Mechanism.** `scripts/check-rendered-scope.mjs` walks the enrolled subgraph: for every manifest path, it resolves each local (`@/*` or relative) import via the shared `scripts/lib/import-resolver.mjs` (also used by `check-story-coverage.mjs` — one resolver, never duplicated), unwraps a single barrel (`index.ts`/`.tsx`) hop by matching the imported binding against the barrel's named re-exports, and reports the resolved path **only if** it is not itself enrolled **and** the importing file actually renders it — its local binding appears as a JSX opening-element tag name, not merely imported for a type, a hook, a util, a constant, or a context object.
+
+```bash
+npm run check:rendered-scope           # gate check
+npm run check:rendered-scope:report    # full frontier listing (tier1/tier2/allowlisted/barrel), always exit 0
+```
+
+Findings carry a reason code:
+
+- `tier1-unenrolled` — a local feature component. Fix: migrate, story it, and add it to `scripts/mantine-migration-scope.json`.
+- `tier2-legacy-primitive` — resolves under `src/components/ui/*`. Fix: stop importing it from the enrolled surface (the file itself is consumed repo-wide and is not this surface's to migrate — agent-contract 16d tier 2).
+- allowlisted (tier 3, agent-contract 16d) — a shared component owned by another surface. Excluded only via `scripts/rendered-scope-allowlist.json`, **keyed by component path, not by edge** — one entry excuses every importing/rendering call site of that component, and stays non-stale as long as at least one such edge still exists — each requiring a non-empty `reason` and an `owner` task number (house pattern: `check-design-tokens.mjs`'s missing-reason/stale-marker handling). An entry missing either, or one whose path no edge matches at all (**stale**), is itself a gate failure. **The allowlist is tier-3 only** (Task 812 Revision 1): a `src/components/ui/*` (tier-2) path is never honoured through it, even with a valid reason/owner — such an entry is its own failure category, distinct from missing-reason and stale, because the correct fix is removing the import, not excusing it.
+
+**Known limitation, stated by the gate itself, not silently absorbed:** dynamic `import()` and `React.lazy()` are not statically resolved — the gate's scope line says so on every run rather than claiming coverage it doesn't have.
+
+**Status as landed (Task 812, Revision 1).** The detector is built and proven correct: a two-armed plant (temporarily de-enrolling `CollectionsSection.tsx`) fails and names the exact edge, and restoring the manifest (`git hash-object` identical, `git status --porcelain` clean) clears that specific finding. The raw measured frontier across the 38 manifest roots was 54 `tier1-unenrolled` + 3 `tier2-legacy-primitive` edges. Owner decision 1 (2026-09-11) classified the 11-path/23-edge shared `design-system/mantine/patterns/*` cluster as tier 3, owned by Task 816, and allowlisted it; 27 `tier1-unenrolled` + 3 `tier2-legacy-primitive` edges remain, unowned by this task. Owner decision 3 (2026-09-11) wired `npm run check:rendered-scope` into the `governance` CI job, immediately after `check:story-coverage`, with step-level `continue-on-error: true` — **advisory only**: the real exit code is preserved and the full report is printed on every PR, but the step does not block, and this is **not** GR-1 or GR-3 being enforced. Tasks 817 (GR-1's own missing per-surface command) and 818 (clearing or baselining the remaining 30-edge frontier) gate turning it blocking. See `docs/sessions/evidence/task812/` for the full measured census and `docs/golden-rules.md`'s GR-1 row for the current enforcement state.
+
 ---
 
 ## §MQ — Manual visual QA requirements (machine-detection limits, 2026-06-08)

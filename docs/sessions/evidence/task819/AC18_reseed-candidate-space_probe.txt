@@ -1,0 +1,96 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== R13: re-seed the baseline across the full candidate space (previously: 140 entries / 15 surfaces, seeded from one diff) ==
+hash-object of prior (one-diff-seeded) baseline = af304127fe657baadc9200ef61a91075e65649b8
+prior entry count = 140
+moved prior baseline aside to scripts\surface-census-baseline.json.one-diff-seed.bak (kept for this transcript's before/after comparison, not committed)
+=== command: node.exe scripts\check-surface-census-changed.mjs --seed-baseline ===
+    Candidate-space surfaces: 291
+About to seed 690 block(s) as pre-existing debt into scripts\surface-census-baseline.json:
+    src/app/[locale]/auth/reset-password/page.tsx :: src/app/[locale]/auth/reset-password/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive
+    src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+    src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/alert.tsx :: tier2-legacy-primitive
+    src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive
+    src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive
+    src/app/[locale]/auth/reset-password/page.tsx :: src/modules/auth/components/ResetPasswordClient.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive
+    src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+    src/app/[locale]/cabinet/page.tsx :: src/modules/cabinet/components/CabinetPasswordSection.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+    src/app/admin/currency/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive
+    src/lib/passwordRules.ts :: src/lib/passwordRules.ts :: tier1-unenrolled-or-unstoried
+    src/modules/auth/components/AuthSheet.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+    src/modules/notifications/lib/emails/PasswordChangedEmail.tsx :: src/modules/notifications/lib/emails/BaseEmail.tsx :: tier1-unenrolled-or-unstoried
+    src/modules/notifications/lib/emails/PasswordChangedEmail.tsx :: src/modules/notifications/lib/emails/PasswordChangedEmail.tsx :: tier1-unenrolled-or-unstoried
+    src/modules/notifications/lib/emails/passwordChanged.ts :: src/modules/notifications/lib/emails/passwordChanged.ts :: tier1-unenrolled-or-unstoried
+PASS  --seed-baseline — wrote 690 entries across 291 candidate-space surfaces, version 1.
+exit code = 0
+
+new entry count = 690 (delta vs prior 140 = 550)
+new distinct surface count = 268 (delta vs prior 15 = 253)
+first 3 entries:
+    src/app/[locale]/[slug]/page.tsx :: src/app/[locale]/[slug]/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/confirm-email/page.tsx :: src/app/[locale]/auth/confirm-email/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/login/page.tsx :: src/app/[locale]/auth/login/page.tsx :: tier1-unenrolled-or-unstoried
+hash-object of re-seeded baseline = bfa1076f3ba97fea44f708c14a226164a014df24
+
+== AC18 (continued): sample2's pair (0c673fef1..37e99dc31, 30 surfaces) against the re-seeded 690/268 baseline -- expect 0 new ==
+      docs/sessions/evidence/task803/ac6-planted-violation-FAIL.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-rev1-planted-violation-FAIL.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-rev1-reverted-PASS.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-reverted-PASS.txt  [outside-src]
+      docs/sessions/evidence/task803/i-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task803/i-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i6-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i7-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i8-file-integrity-pass2.txt  [outside-src]
+      docs/sessions/evidence/task808/i9-mojibake-pass2.txt  [outside-src]
+      docs/sessions/evidence/task809/i11-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task809/i12-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task809/i13-file-integrity-pass2.txt  [outside-src]
+      docs/sessions/evidence/task809/i14-mojibake-pass2.txt  [outside-src]
+    Surfaces censused: 30
+    Blocks baselined (recorded debt, does not fail): 152
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 538
+    Blocks new (not in baseline): 1
+    Stale baseline entries (censused surface, no matching measured block): 0
+FAIL  1 block(s) not in the baseline:
+exit code = 1
+
+
+== FIX discovered while proving AC18: a changed src/stories/** helper file (not itself .stories.tsx/.test.tsx) ==
+  wrongly resolved to itself as a bogus surface (src/stories/mantine/_MantineStoryShell.tsx), because the whole
+  src/stories/ subtree is excluded from the render graph (SKIP_DIRS), so it always reads as 'nothing renders it'.
+  Fixed: classifyChangedFile now excludes any changed file under a directory the render graph itself never walks
+  into (node_modules/.next/storybook-static/__tests__/stories), reason 'non-production-directory', mirroring the
+  existing story/test-file suffix exclusion.
+== re-run after the fix: sample2's pair (0c673fef1..37e99dc31) against the re-seeded baseline ==
+      docs/sessions/evidence/task803/ac6-planted-violation-FAIL.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-rev1-planted-violation-FAIL.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-rev1-reverted-PASS.txt  [outside-src]
+      docs/sessions/evidence/task803/ac6-reverted-PASS.txt  [outside-src]
+      docs/sessions/evidence/task803/i-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task803/i-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i6-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i7-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i8-file-integrity-pass2.txt  [outside-src]
+      docs/sessions/evidence/task808/i9-mojibake-pass2.txt  [outside-src]
+      docs/sessions/evidence/task809/i11-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task809/i12-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task809/i13-file-integrity-pass2.txt  [outside-src]
+      docs/sessions/evidence/task809/i14-mojibake-pass2.txt  [outside-src]
+    Surfaces censused: 29
+    Blocks baselined (recorded debt, does not fail): 152
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 538
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+exit code = 0
+
+== self-test re-confirmed after the fix: 8/8 PASS, exit 0 (see Rev1_ gate block for the full transcript) ==
+

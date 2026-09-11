@@ -1,0 +1,34 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== git hash-object of every file this task changed ==
+  scripts/map-changed-surfaces.mjs = 4bdcb56b2f6e867d45cdf4f203ffc3edae60ce3b
+  scripts/check-surface-census.mjs = 0e295da693f6dbc1bf3ccda96ef5e4c54292a7cf
+  scripts/check-surface-census-changed.mjs = 9736869d0985e9350d599d628e1ac34291b66214
+  scripts/surface-census-baseline.json = af304127fe657baadc9200ef61a91075e65649b8
+  package.json = 6f8b411c717f291f2a955507d8ea80e5eef38cb5
+  .github/workflows/governance-pr.yml = a3df73e28fb2daeb36ef5b85a9c14655f9b3d3c2
+  docs/golden-rules.md = dcaa71eaff13b3c98854e4e097f9013d476c0429
+  docs/storybook-governance.md = f98e39788209d77c8a2cbda41bc539a57aea5615
+
+== AC10: unchanged-gate re-check ==
+=== command: npm.cmd run check:rendered-scope (compare to R0_baseline-13.1.txt) ===
+    Baselined edges (recorded debt, does not fail): 29
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+exit code = 0
+=== command: npm.cmd run check:story-coverage ===
+    ✅ 38 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+exit code = 0
+=== command: node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\FavoritesShell.tsx --report ===
+NODES (15):
+exit code = 0
+
+=== git diff --stat for the 5 named unmodified files ===
+(empty)

@@ -1,0 +1,35 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC20: break compareToBaseline's carried-vs-stale distinction (reverts to the pre-Revision-1 unconditional-stale bug) ==
+hash-object of pristine copy = 172b6e332ba0e3f10b08d2011d7f96d2f8de262a
+=== command: npm.cmd run check:surface-census:changed:verify (arms 7/8 must now behave wrong) ===
+
+> lero-al@0.1.0 check:surface-census:changed:verify
+> node scripts/check-surface-census-changed.mjs --verify-gate
+
+check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running 8 arms
+
+  PASS  Arm 1 — changed file resolves upward to a known (manifest) surface -> included
+  PASS  Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero
+  PASS  Arm 3 — changed-file limit set below the real diff size -> fail-closed, drives exit non-zero
+  PASS  Arm 4 — new (un-baselined) block on a censused surface -> drives exit non-zero
+  PASS  Arm 5 — baselined block is recorded debt -> does not fail
+  PASS  Arm 6 — real pipeline, base===head (empty diff) -> clean (0 changed, 0 surfaces)
+  FAIL  Arm 7 — baseline entry for an un-censused surface -> carried, not stale, does not fail
+  PASS  Arm 8 — block missing from a censused surface -> stale, drives exit non-zero
+
+Arms run: 8
+Self-test: 7 passed, 1 failed
+FAIL  check:surface-census:changed:verify — the gate self-test found a broken arm.
+exit code = 1
+
+== restore (via Node read/write, per §17.5's explicit warning against PowerShell Get-Content -Raw) ==
+hash-object after restore = 172b6e332ba0e3f10b08d2011d7f96d2f8de262a
+HASH_MATCH = True (172b6e332ba0e3f10b08d2011d7f96d2f8de262a both before and after)
+== git status --porcelain -- scripts/check-surface-census-changed.mjs ==
+?? scripts/check-surface-census-changed.mjs
+

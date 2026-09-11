@@ -1,0 +1,24 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command (run twice) ===
+node.exe scripts\map-changed-surfaces.mjs --base f46c487d5 --head HEAD --json
+run1 exit code = 0
+run2 exit code = 0
+run1 SHA256 = 3BFB1B27E383D2074B497D69F7761B697B9E351FFC4EA9D7B47AF846AD0E1956
+run2 SHA256 = 3BFB1B27E383D2074B497D69F7761B697B9E351FFC4EA9D7B47AF846AD0E1956
+HASHES_IDENTICAL = True
+first ten included entries (run1):
+    src/app/[locale]/cabinet/page.tsx
+    src/app/[locale]/ci/click-shield-modal/page.tsx
+    src/app/admin/companies/page.tsx
+    src/app/admin/locations/page.tsx
+    src/app/admin/popular-locations/page.tsx
+    src/app/admin/users/[id]/page.tsx
+    src/app/admin/users/new/page.tsx
+    src/lib/imageDelivery.ts
+    src/modules/listings/components/ListingCard.tsx
+    src/modules/listings/components/ListingDetailView.tsx

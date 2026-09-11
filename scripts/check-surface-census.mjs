@@ -24,13 +24,22 @@
  *   node scripts/check-surface-census.mjs --surface <repo-relative-or-absolute path>
  *   npm run check:surface-census -- --surface <path>
  *   node scripts/check-surface-census.mjs --surface <path> --report   # full table, always exit 0
+ *   node scripts/check-surface-census.mjs --surface <path> --json     # ONE JSON object on stdout (Task 819 R2)
  *
  * Exit codes:
  *   0 — census complete, GR-1 receipt printed (or --report, always 0).
  *   1 — at least one blocking node/entry; `GR-1 CENSUS BLOCKED` printed naming every offender.
  *   2 — the invocation itself is unusable (missing/absent/non-.ts(x)/out-of-repo --surface path).
  *
- * Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d, docs/storybook-governance.md §15.6.
+ * `--json` (Task 819, additive only): when the gate would otherwise print human text, it instead
+ * prints exactly one JSON object to stdout — `{ surface, scope, nodes, blocking }` — and nothing else,
+ * with the SAME exit code (0/1) the non-`--json` run would produce for the same surface. It exists so
+ * `check-surface-census-changed.mjs` (Task 819) consumes structure rather than regexing prose. The
+ * `--surface`-argument validation errors (exit 2, before any node is walked) are unchanged by `--json`
+ * — they still print to stderr as before, on every run. `--report` mode and the ordinary human output
+ * are byte-unchanged for an unchanged tree; nothing else in this file changes.
+ *
+ * Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d, docs/storybook-governance.md §15.6/§15.7.
  */
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -49,6 +58,7 @@ const TIER2_PREFIX = 'src/components/ui/';
 // ── CLI flags ─────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const REPORT_ONLY = args.includes('--report');
+const JSON_MODE = args.includes('--json');
 
 function readSurfaceArg() {
   const idx = args.indexOf('--surface');
@@ -501,14 +511,92 @@ function main() {
   // ── Determinism: sort by depth, then path (R5's requirement 5) ──
   const orderedNodes = [...nodes.values()].sort((a, b) => a.depth - b.depth || a.path.localeCompare(b.path));
 
+  const tier3Nodes = orderedNodes.filter((n) => n.tier === 'tier3');
+  const tier3Owners = [...new Set(tier3Nodes.map((n) => n.owner))].sort();
+
+  // ── Blocking determination (R7, extended by R16) — computed here (moved up from below the human
+  // prints, Task 819) so --json can use it without duplicating the logic or printing human text. ──
+  const blockingNodes = [];
+  for (const n of orderedNodes) {
+    if (n.parseFailed) {
+      blockingNodes.push({
+        node: n,
+        reasonCode: 'unparseable-source',
+        correction: 'This node\'s file could not be read or parsed, so its className/ui-imports (and, for a tier-1 node, its children) cannot be measured. A node the census cannot read is a node it cannot vouch for — fix or investigate the file before this surface can pass.',
+      });
+    }
+    if (n.tier === 'tier2') {
+      blockingNodes.push({
+        node: n,
+        reasonCode: n.invalidAllowlistEntry ? 'tier2-invalid-allowlist-entry' : 'tier2-legacy-primitive',
+        correction: n.invalidAllowlistEntry
+          ? 'A src/components/ui/* (tier-2) path is never a valid allowlist entry. Remove the entry; fix the import, not the allowlist.'
+          : 'Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). Migrating the primitive file itself is a separate, repo-wide task.',
+      });
+    } else if (n.tier === 'tier1') {
+      if (n.malformedAllowlistEntry) {
+        blockingNodes.push({
+          node: n,
+          reasonCode: 'tier3-malformed-allowlist-entry',
+          correction: 'This allowlist entry is missing a "reason" or an "owner" task number. Every tier-3 entry requires both.',
+        });
+      }
+      if (!(n.manifest && n.story)) {
+        blockingNodes.push({
+          node: n,
+          reasonCode: 'tier1-unenrolled-or-unstoried',
+          correction: !n.manifest
+            ? 'Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.'
+            : 'This component is enrolled but no canonical Mantine story imports it by its own path (a story that only imports its parent does not count — GR-3). Create or fix its own canonical Story.',
+        });
+      }
+    }
+  }
+
+  // ── --json (Task 819 R2): ONE structured object, same exit code as the human run, nothing else on
+  // stdout. Computed from the same orderedNodes/blockingNodes the human path uses below — never a
+  // second derivation. ──
+  if (JSON_MODE) {
+    const jsonExitCode = blockingNodes.length > 0 ? 1 : 0;
+    const result = {
+      surface: surface.relPath,
+      scope: {
+        nodesVisited: orderedNodes.length,
+        edgesResolved,
+        nonRenderedSkipped,
+        tier3Count: tier3Nodes.length,
+        tier3Owners,
+        barrelHopsCount: barrelHops.length,
+        barrelUnresolvedCount: barrelUnresolvedEdges.length,
+        parseFailedCount,
+        canonicalStoryCount,
+        storyFileCount,
+      },
+      nodes: orderedNodes.map((n) => ({
+        path: n.path,
+        depth: n.depth,
+        parentPath: n.parentPath,
+        tier: n.tier,
+        owner: n.owner,
+        reason: n.reason,
+        manifest: n.manifest,
+        story: n.story,
+        className: n.className,
+        uiImports: n.uiImports,
+        parseFailed: n.parseFailed,
+      })),
+      blocking: blockingNodes.map((b) => ({ path: b.node.path, reasonCode: b.reasonCode, correction: b.correction })),
+    };
+    console.log(JSON.stringify(result));
+    process.exit(jsonExitCode);
+  }
+
   // ── Scope block — printed on every run (R8) ──
   console.log('check:surface-census — per-surface GR-1 census (Task 817)');
   console.log(`    Surface: ${surface.relPath}`);
   console.log(`    Nodes visited: ${orderedNodes.length}`);
   console.log(`    Local import edges resolved (from tier-1 nodes): ${edgesResolved}`);
   console.log(`    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): ${nonRenderedSkipped}`);
-  const tier3Nodes = orderedNodes.filter((n) => n.tier === 'tier3');
-  const tier3Owners = [...new Set(tier3Nodes.map((n) => n.owner))].sort();
   console.log(`    Tier-3 nodes excluded from recursion, owner-filed (${tier3Nodes.length}): ${tier3Owners.join(', ') || 'none'}`);
   console.log(`    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): ${barrelHops.length}`);
   console.log(`    Barrel edges NOT unwrapped (reported at the barrel file itself): ${barrelUnresolvedEdges.length}`);
@@ -549,44 +637,7 @@ function main() {
     process.exit(0);
   }
 
-  // ── Blocking determination (R7, extended by R16) ──
-  const blockingNodes = [];
-  for (const n of orderedNodes) {
-    if (n.parseFailed) {
-      blockingNodes.push({
-        node: n,
-        reasonCode: 'unparseable-source',
-        correction: 'This node\'s file could not be read or parsed, so its className/ui-imports (and, for a tier-1 node, its children) cannot be measured. A node the census cannot read is a node it cannot vouch for — fix or investigate the file before this surface can pass.',
-      });
-    }
-    if (n.tier === 'tier2') {
-      blockingNodes.push({
-        node: n,
-        reasonCode: n.invalidAllowlistEntry ? 'tier2-invalid-allowlist-entry' : 'tier2-legacy-primitive',
-        correction: n.invalidAllowlistEntry
-          ? 'A src/components/ui/* (tier-2) path is never a valid allowlist entry. Remove the entry; fix the import, not the allowlist.'
-          : 'Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). Migrating the primitive file itself is a separate, repo-wide task.',
-      });
-    } else if (n.tier === 'tier1') {
-      if (n.malformedAllowlistEntry) {
-        blockingNodes.push({
-          node: n,
-          reasonCode: 'tier3-malformed-allowlist-entry',
-          correction: 'This allowlist entry is missing a "reason" or an "owner" task number. Every tier-3 entry requires both.',
-        });
-      }
-      if (!(n.manifest && n.story)) {
-        blockingNodes.push({
-          node: n,
-          reasonCode: 'tier1-unenrolled-or-unstoried',
-          correction: !n.manifest
-            ? 'Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.'
-            : 'This component is enrolled but no canonical Mantine story imports it by its own path (a story that only imports its parent does not count — GR-3). Create or fix its own canonical Story.',
-        });
-      }
-    }
-  }
-
+  // blockingNodes was computed above (before the --json branch); reused here unchanged.
   if (blockingNodes.length > 0) {
     for (const b of blockingNodes) {
       console.error(`FAIL  ${b.node.path}  [${b.reasonCode}]`);

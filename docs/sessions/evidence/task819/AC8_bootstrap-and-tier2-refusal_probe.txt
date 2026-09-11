@@ -1,0 +1,42 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC8 part 1: baseline moved aside, --update-baseline must refuse to bootstrap ==
+hash-object before = af304127fe657baadc9200ef61a91075e65649b8
+moved aside; exists at original path now = False
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD --update-baseline ===
+FAIL  Baseline file missing: scripts\surface-census-baseline.json
+  --update-baseline only updates an EXISTING baseline — regenerating from nothing would record
+  any new tier2-legacy-primitive block as pre-existing debt, which the tier-2 ratchet must never
+  permit. Restore the file from version control instead of regenerating it, e.g.:
+    git checkout -- scripts/surface-census-baseline.json
+exit code = 1
+file exists at original path after refusal = False
+hash-object after restore = af304127fe657baadc9200ef61a91075e65649b8
+HASH_MATCH = True
+
+== AC8 part 2: delete a real tier2-legacy-primitive entry (= a 'new' tier-2 block relative to the resulting prior state) ==
+hash-object before = af304127fe657baadc9200ef61a91075e65649b8
+target tier-2 key: src/app/[locale]/cabinet/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD (gate should name the tier-2 block as new) ===
+    Blocks baselined (recorded debt, does not fail): 139
+    Blocks new (not in baseline): 1
+FAIL  1 block(s) not in the baseline:
+exit code = 1
+
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD --update-baseline (should REFUSE it) ===
+    entries written: 139
+FAIL  1 new tier2-legacy-primitive block(s) refused — a baseline cannot exempt a new legacy-primitive import:
+  Fix: stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+exit code = 1
+entries after refusal write = 139 (expect 139, unchanged from the planted 139)
+target tier-2 key still absent = True
+== hash-object after restore ==
+af304127fe657baadc9200ef61a91075e65649b8
+HASH_MATCH = True
+== git status --porcelain -- scripts/surface-census-baseline.json ==
+?? scripts/surface-census-baseline.json
+

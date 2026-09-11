@@ -1,0 +1,131 @@
+map-changed-surfaces — PR-diff -> affected-surface mapper (Task 819)
+    Base: f46c487d5  Head: HEAD  Merge base: f46c487d5cc87ac98fc4cf261080ff736f1303e2
+    Changed paths seen: 109
+    Render graph: 419 production file(s) under src/ (built only when there is a candidate to resolve)
+    Excluded (106):
+      .claude/agents/executor.md  [outside-src]
+      .claude/agents/orchestrator.md  [outside-src]
+      .claude/skills/create-task/SKILL.md  [outside-src]
+      .claude/skills/execute-task/SKILL.md  [outside-src]
+      .claude/skills/review-task/SKILL.md  [outside-src]
+      .github/workflows/governance-pr.yml  [outside-src]
+      CLAUDE.md  [outside-src]
+      docs/agent-contract.md  [outside-src]
+      docs/ai-behavior.md  [outside-src]
+      docs/backlog-archive.md  [outside-src]
+      docs/backlog.md  [outside-src]
+      docs/component-catalog.md  [outside-src]
+      docs/golden-rules.md  [outside-src]
+      docs/orchestrator-procedures.md  [outside-src]
+      docs/orchestrator-role.md  [outside-src]
+      docs/performance.md  [outside-src]
+      docs/sessions/2026-09-11-task817-per-surface-census-command.md  [outside-src]
+      docs/sessions/2026-09-11-task818-rendered-scope-becomes-blocking.md  [outside-src]
+      docs/sessions/evidence/task817/13.1-baseline.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-build.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-check-rendered-scope-gate-mode.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-final-gates-post-docs.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-final-gates-post-session-log.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-gates-part1.txt  [outside-src]
+      docs/sessions/evidence/task817/13.2-typecheck.txt  [outside-src]
+      docs/sessions/evidence/task817/AC1-AC2-AC3-AC4-AC7-favoritesshell-clean.txt  [outside-src]
+      docs/sessions/evidence/task817/AC11a-no-args.txt  [outside-src]
+      docs/sessions/evidence/task817/AC11b-missing-path.txt  [outside-src]
+      docs/sessions/evidence/task817/AC13-npm-wrapper.txt  [outside-src]
+      docs/sessions/evidence/task817/AC5-allowlist-probe-part1-with-probe.txt  [outside-src]
+      docs/sessions/evidence/task817/AC5-allowlist-probe-part2-restored.txt  [outside-src]
+      docs/sessions/evidence/task817/AC6-unenrolled-surface-ViewAllLink.txt  [outside-src]
+      docs/sessions/evidence/task817/AC8-AC12-post-restore-baseline-check.txt  [outside-src]
+      docs/sessions/evidence/task817/AC9-AC10-plant-arm1.txt  [outside-src]
+      docs/sessions/evidence/task817/AC9-AC10-plant-arm2-restore.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC16-AC18-favoritesshell-report.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC16-favoritesshell-report.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC17-story-barrel-probe-part1-during.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC17-story-barrel-probe-part2-restored.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC19-root-unparseable-exit2.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_AC19-unparseable-probes.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_favoritesshell-final-report.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_final-gates-post-docs.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_gates-part1.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_gates-part2.txt  [outside-src]
+      docs/sessions/evidence/task817/R1_platform-and-check.txt  [outside-src]
+      docs/sessions/evidence/task818/AC16_bootstrap-refusal_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC18_broken-arm5_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC2_version-mismatch_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC4_new-tier1-edge_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC5_two-arms_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC6_new-tier2-edge_probe.txt  [outside-src]
+      docs/sessions/evidence/task818/AC7_package-json_diff.txt  [outside-src]
+      docs/sessions/evidence/task818/AC9_workflow_diff.txt  [outside-src]
+      docs/sessions/evidence/task818/G1_typecheck.txt  [outside-src]
+      docs/sessions/evidence/task818/G10_build.txt  [outside-src]
+      docs/sessions/evidence/task818/G11_file-integrity_final.txt  [outside-src]
+      docs/sessions/evidence/task818/G12_file-integrity_with-session-log.txt  [outside-src]
+      docs/sessions/evidence/task818/G13_mojibake_with-session-log.txt  [outside-src]
+      docs/sessions/evidence/task818/G2_eslint.txt  [outside-src]
+      docs/sessions/evidence/task818/G3_check-rendered-scope.txt  [outside-src]
+      docs/sessions/evidence/task818/G4_check-rendered-scope-verify.txt  [outside-src]
+      docs/sessions/evidence/task818/G5_check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task818/G6_check-stories.txt  [outside-src]
+      docs/sessions/evidence/task818/G7_surface-census.txt  [outside-src]
+      docs/sessions/evidence/task818/G8_file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task818/G9_mojibake_recheck.txt  [outside-src]
+      docs/sessions/evidence/task818/G9_mojibake.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_rendered-scope-report_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_rendered-scope-report.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_story-coverage_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_surface-census_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R0_surface-census.txt  [outside-src]
+      docs/sessions/evidence/task818/R1_gate_before_baseline_missing_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R1_gate_before_baseline_missing.txt  [outside-src]
+      docs/sessions/evidence/task818/R2_update-baseline_bootstrap_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R2_update-baseline_bootstrap.txt  [outside-src]
+      docs/sessions/evidence/task818/R3_gate_clean-tree_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R3_gate_clean-tree.txt  [outside-src]
+      docs/sessions/evidence/task818/R4_verify-gate_run_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R4_verify-gate_run.txt  [outside-src]
+      docs/sessions/evidence/task818/R4_verify-gate_status.txt  [outside-src]
+      docs/sessions/evidence/task818/R5_verify-gate_broken-arm4_exit.txt  [outside-src]
+      docs/sessions/evidence/task818/R5_verify-gate_broken-arm4.txt  [outside-src]
+      docs/sessions/evidence/task818/R6_ac8_broken-arm_restore_witness.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_01_check-syntax.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_02_typecheck.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_03_eslint.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_04_check-rendered-scope.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_05_check-rendered-scope-report.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_06_check-rendered-scope-verify.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_07_check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_08_check-stories.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_09_build.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_10_check-file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task818/Rev1_11_check-mojibake.txt  [outside-src]
+      docs/storybook-governance.md  [outside-src]
+      package.json  [outside-src]
+      scripts/check-rendered-scope.mjs  [outside-src]
+      scripts/check-surface-census.mjs  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      tasks/Sprints/Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md  [outside-src]
+      tasks/Sprints/Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md  [outside-src]
+      tasks/Sprints/Sprint_75_kickoff_prompt_Task_819_Pre_Enrolment_Census_Becomes_Blocking.md  [outside-src]
+      tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md  [outside-src]
+    Included surfaces (15):
+      src/app/[locale]/cabinet/page.tsx
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/app/admin/companies/page.tsx
+      src/app/admin/locations/page.tsx
+      src/app/admin/popular-locations/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/lib/imageDelivery.ts
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingDetailView.tsx
+      src/modules/listings/components/ListingFormShell.tsx
+      src/modules/listings/components/ListingGallery.tsx
+      src/modules/listings/components/steps/StepPhotos.tsx
+      src/modules/listings/components/steps/StepPreview.tsx
+      src/modules/locations/components/PopularLocationsView.tsx
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, or a file changed outside src/.
+EXIT_CODE=0

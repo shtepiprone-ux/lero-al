@@ -1,0 +1,160 @@
+map-changed-surfaces — PR-diff -> affected-surface mapper (Task 819)
+    Base: a8148a4b4  Head: e8b8ff96d  Merge base: a8148a4b4a86f7ab47322376e69d18e8f9b1101e
+    Changed paths seen: 138
+    Render graph: 419 production file(s) under src/ (built only when there is a candidate to resolve)
+    Excluded (128):
+      .claude/skills/create-task/SKILL.md  [outside-src]
+      .claude/skills/execute-task/SKILL.md  [outside-src]
+      .claude/skills/review-task/SKILL.md  [outside-src]
+      CLAUDE.md  [outside-src]
+      docs/agent-contract.md  [outside-src]
+      docs/backlog-archive.md  [outside-src]
+      docs/backlog.md  [outside-src]
+      docs/component-catalog.md  [outside-src]
+      docs/golden-rules.md  [outside-src]
+      docs/orchestrator-procedures.md  [outside-src]
+      docs/orchestrator-role.md  [outside-src]
+      docs/performance.md  [outside-src]
+      docs/rule-index.md  [outside-src]
+      docs/sessions/2026-09-10-task807-every-card-surface-adopts-the-track.md  [outside-src]
+      docs/sessions/2026-09-10-task808-detail-route-missing-key-warning.md  [outside-src]
+      docs/sessions/2026-09-10-task810-the-rail-becomes-usable.md  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-ac7-buildhref.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-ac7-similar-ladder.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-ac7-similar-visibility.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-build-2-sizes-fix.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-build-3-planted.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-build-4-reverted.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-build.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-check-stories.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-design-tokens.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-file-integrity-1.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-check-stories.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-design-tokens.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-file-integrity-2.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-file-integrity-3.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-lint.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-mojibake-2.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-mojibake-3.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-test-full.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-tsc.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-final-vitest-listings.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-lint.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-mojibake-1.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-platform.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-test-full.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-tsc.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/nat-vitest-listings.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/sample-slugs.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-pid-2.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-pid-3.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-pid-4.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-pid.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stderr-2.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stderr-3.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stderr-4.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stderr.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stdout-2.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stdout-3.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stdout-4.txt  [outside-src]
+      docs/sessions/evidence/task807/gates/server-stdout.txt  [outside-src]
+      docs/sessions/evidence/task807/runs/clean-1/card-width-parity.json  [outside-src]
+      docs/sessions/evidence/task807/runs/clean-2/card-width-parity.json  [outside-src]
+      docs/sessions/evidence/task807/runs/planted-1/card-width-parity.json  [outside-src]
+      docs/sessions/evidence/task807/runs/reverted-clean-1/card-width-parity.json  [outside-src]
+      docs/sessions/evidence/task808/console-hard-nav-named-slug.txt  [outside-src]
+      docs/sessions/evidence/task808/console-soft-nav-after.txt  [outside-src]
+      docs/sessions/evidence/task808/console-soft-nav-before.txt  [outside-src]
+      docs/sessions/evidence/task808/i1-typecheck.txt  [outside-src]
+      docs/sessions/evidence/task808/i2-lint.txt  [outside-src]
+      docs/sessions/evidence/task808/i3-vitest-targeted.txt  [outside-src]
+      docs/sessions/evidence/task808/i4-full-test.txt  [outside-src]
+      docs/sessions/evidence/task808/i5-build.txt  [outside-src]
+      docs/sessions/evidence/task808/i6-file-integrity-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i7-mojibake-pass1.txt  [outside-src]
+      docs/sessions/evidence/task808/i8-file-integrity-pass2.txt  [outside-src]
+      docs/sessions/evidence/task808/i9-mojibake-pass2.txt  [outside-src]
+      docs/sessions/evidence/task810/runs/baseline-1/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/runs/planted-1/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/runs/rev1-baseline/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/runs/rev1-heights-planted/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/runs/rev1-heights-reverted/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/runs/reverted-1/rail-controls-probe.json  [outside-src]
+      docs/sessions/evidence/task810/transcripts/build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/build.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-design-tokens.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-file-integrity-final.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-mojibake-final.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-mojibake.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-stories.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/lint.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/npm-test-full.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/platform.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-build.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-design-tokens.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-file-integrity-final.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-file-integrity-final2.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-mojibake-final.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-mojibake-final2.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-mojibake.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-stories.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-lint.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-npm-test-full.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-platform.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-typecheck.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/rev1-vitest-targeted.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/typecheck.txt  [outside-src]
+      docs/sessions/evidence/task810/transcripts/vitest-targeted.txt  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/task807-card-width-parity.mjs  [outside-src]
+      scripts/task808-key-warning-probe.mjs  [outside-src]
+      scripts/task810-rail-controls-probe.mjs  [outside-src]
+      src/design-system/mantine/patterns/MantineListingCardTrack.module.css  [not-ts-tsx]
+      src/modules/listings/components/RecentlyViewedGridView.module.css  [deleted]
+      src/modules/listings/components/SimilarListingsView.module.css  [deleted]
+      src/stories/mantine/primitives/RecentlyViewedGridView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingCardTrack.stories.tsx  [story-or-test-file]
+      tasks/Sprints/Sprint_71_kickoff_prompt_Task_808_Detail_Route_Missing_Key_Warning.md  [outside-src]
+      tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.md  [outside-src]
+      tasks/Sprints/Sprint_74_kickoff_prompt_Task_809_Favorites_And_The_Last_Two_Tailwind_Card_Surfaces.md  [outside-src]
+      tasks/Sprints/Sprint_74_kickoff_prompt_Task_810_The_Rail_Becomes_Usable.md  [outside-src]
+      tasks/Sprints/Sprint_74_One_Card_Width_For_The_Whole_Site.md  [outside-src]
+    Included surfaces (22):
+      src/app/[locale]/cabinet/page.tsx
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/app/admin/companies/page.tsx
+      src/app/admin/locations/page.tsx
+      src/app/admin/popular-locations/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/components/ui/useAdaptiveImageConfig.ts
+      src/design-system/mantine/patterns/MantineListingCardTrack.tsx
+      src/lib/imageDelivery.ts
+      src/modules/listings/components/FeaturedListingsView.tsx
+      src/modules/listings/components/LatestListingsView.tsx
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingDetailView.tsx
+      src/modules/listings/components/ListingFormShell.tsx
+      src/modules/listings/components/ListingGallery.tsx
+      src/modules/listings/components/ListingsShellView.tsx
+      src/modules/listings/components/RecentlyViewedGridView.tsx
+      src/modules/listings/components/SimilarListingsView.tsx
+      src/modules/listings/components/steps/StepPhotos.tsx
+      src/modules/listings/components/steps/StepPreview.tsx
+      src/modules/locations/components/PopularLocationsView.tsx
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, or a file changed outside src/.
+EXIT_CODE=0

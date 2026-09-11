@@ -1,0 +1,18 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC9 arm 1: changed-file limit set below the real diff size (f46c487d5..HEAD = 109 changed files; limit=5) ==
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD --max-changed-files 5 ===
+FAIL  check:surface-census:changed — changed-file-limit-exceeded: 109 changed file(s) exceeds the limit of 5
+Docs: docs/storybook-governance.md §15.7, docs/golden-rules.md GR-1/GR-3.
+exit code = 1
+
+== AC9 arm 2: unreachable merge base -- constructed by passing a nonexistent ref as --base ==
+=== command: node.exe scripts\check-surface-census-changed.mjs --base this-ref-does-not-exist-task819-probe --head HEAD ===
+fatal: Not a valid object name this-ref-does-not-exist-task819-probe
+FAIL  check:surface-census:changed — merge-base-unavailable: cannot determine a merge base for this-ref-does-not-exist-task819-probe...HEAD: Command failed: git --no-optional-locks merge-base this-ref-does-not-exist-task819-probe HEAD
+Docs: docs/storybook-governance.md §15.7, docs/golden-rules.md GR-1/GR-3.
+exit code = 1

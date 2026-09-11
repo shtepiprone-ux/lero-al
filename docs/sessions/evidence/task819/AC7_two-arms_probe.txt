@@ -1,0 +1,32 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC7 arm 1: delete a real baseline entry (block still exists) -> expect NEW ==
+hash-object before = af304127fe657baadc9200ef61a91075e65649b8
+target key: src/app/[locale]/cabinet/page.tsx :: src/app/[locale]/cabinet/page.tsx :: tier1-unenrolled-or-unstoried
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD (arm 1) ===
+    Blocks baselined (recorded debt, does not fail): 139
+    Blocks new (not in baseline): 1
+FAIL  1 block(s) not in the baseline:
+exit code = 1
+hash-object after restore (arm1) = af304127fe657baadc9200ef61a91075e65649b8
+HASH_MATCH_ARM1 = True
+
+== AC7 arm 2: baseline entry pointing at a block that does not exist -> expect STALE ==
+hash-object before = af304127fe657baadc9200ef61a91075e65649b8
+ghost key: src/fake/task819/Ghost.tsx :: src/fake/task819/Phantom.tsx :: tier1-unenrolled-or-unstoried
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD (arm 2) ===
+    Blocks baselined (recorded debt, does not fail): 140
+    Blocks new (not in baseline): 0
+    Stale baseline entries (no matching measured block): 1
+FAIL  1 stale baseline entr(ies) — no matching block exists:
+    src/fake/task819/Ghost.tsx :: src/fake/task819/Phantom.tsx :: tier1-unenrolled-or-unstoried
+exit code = 1
+hash-object after restore (arm2) = af304127fe657baadc9200ef61a91075e65649b8
+HASH_MATCH_ARM2 = True
+== git status --porcelain -- scripts/surface-census-baseline.json (final) ==
+?? scripts/surface-census-baseline.json
+

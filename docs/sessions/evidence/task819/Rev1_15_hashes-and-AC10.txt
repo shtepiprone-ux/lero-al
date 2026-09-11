@@ -1,0 +1,48 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== git hash-object of every file this revision changed ==
+  scripts/map-changed-surfaces.mjs = 4ef2194778821a8dfbd78746b5447a4212a76f93
+  scripts/check-surface-census.mjs = 0e295da693f6dbc1bf3ccda96ef5e4c54292a7cf
+  scripts/check-surface-census-changed.mjs = 172b6e332ba0e3f10b08d2011d7f96d2f8de262a
+  scripts/surface-census-baseline.json = bfa1076f3ba97fea44f708c14a226164a014df24
+  package.json = 6f8b411c717f291f2a955507d8ea80e5eef38cb5
+  .github/workflows/governance-pr.yml = a3df73e28fb2daeb36ef5b85a9c14655f9b3d3c2
+  docs/golden-rules.md = dcaa71eaff13b3c98854e4e097f9013d476c0429
+  docs/storybook-governance.md = 426c6035c432981d9739bee770a2f6b1e8e10d37
+
+== AC10 (repeat): unchanged-gate re-check ==
+    Baselined edges (recorded debt, does not fail): 29
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+exit code = 0
+    ✅ 38 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+exit code = 0
+NODES (15):
+exit code = 0
+
+=== git diff --stat for the 5 named unmodified files ===
+(empty)
+
+== confirmation that the forbidden-re-run §17.1 artifacts are unmodified ==
+git status --porcelain on the 14 forbidden-re-run paths (expect all '??', none 'M'):
+?? docs/sessions/evidence/task819/AC11_broken-arm_probe.txt
+?? docs/sessions/evidence/task819/AC1_determinism_probe.txt
+?? docs/sessions/evidence/task819/AC6_unresolved-candidate_probe.txt
+?? docs/sessions/evidence/task819/AC7_two-arms_probe.txt
+?? docs/sessions/evidence/task819/AC8_bootstrap-and-tier2-refusal_probe.txt
+?? docs/sessions/evidence/task819/AC9_fail-closed_probe.txt
+?? docs/sessions/evidence/task819/R0_baseline-13.1.txt
+?? docs/sessions/evidence/task819/Rev0_sample1_fixed.txt
+?? docs/sessions/evidence/task819/Rev0_sample2_fixed.txt
+?? docs/sessions/evidence/task819/Rev0_sample3_fixed.txt
+?? docs/sessions/evidence/task819/Rev0_sample4_fixed.txt
+?? docs/sessions/evidence/task819/Rev0_seed-baseline.txt
+?? docs/sessions/evidence/task819/Rev0_verify-first-try.txt
+?? docs/sessions/evidence/task819/Rev0_verify-second-try.txt

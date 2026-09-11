@@ -1,0 +1,23 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command ===
+npx.cmd eslint scripts/map-changed-surfaces.mjs scripts/check-surface-census.mjs scripts/check-surface-census-changed.mjs
+=== output ===
+
+C:\Claude_Code_Projects\lero-al\scripts\check-surface-census-changed.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+C:\Claude_Code_Projects\lero-al\scripts\check-surface-census.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+C:\Claude_Code_Projects\lero-al\scripts\map-changed-surfaces.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+✖ 3 problems (0 errors, 3 warnings)
+
+=== exit code ===
+0

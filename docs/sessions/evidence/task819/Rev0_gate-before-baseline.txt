@@ -1,0 +1,10 @@
+node.exe : FAIL  Baseline file missing: scripts\surface-census-baseline.json
+At line:3 char:1
++ node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 -- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  Baseline ...s-baseline.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Run: npm run check:surface-census:changed:update-baseline
+Docs: docs/storybook-governance.md §15.7, docs/golden-rules.md GR-1/GR-3.
+EXIT=1

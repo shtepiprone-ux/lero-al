@@ -124,6 +124,15 @@ jobs:
       - name: Rendered-scope gate self-test (verifies gate detects violations — CI-safe, Task 818)
         run: npm run check:rendered-scope:verify
 
+      - name: Diff-mapped per-surface GR-1 census gate (Task 819 — blocking, baselined fail-on-new)
+        env:
+          SURFACE_CENSUS_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          SURFACE_CENSUS_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npm run check:surface-census:changed
+
+      - name: Diff-mapped surface census gate self-test (verifies gate detects violations — CI-safe, Task 819)
+        run: npm run check:surface-census:changed:verify
+
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 

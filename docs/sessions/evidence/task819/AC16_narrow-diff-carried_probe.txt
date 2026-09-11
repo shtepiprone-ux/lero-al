@@ -1,0 +1,29 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC16: base=f46c487d5 head=HEAD -- this diff maps to 15 surfaces, a strict subset of the re-seeded 268-surface baseline ==
+=== command (AFTER the fix): node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD ===
+    Surfaces censused: 15
+    Blocks baselined (recorded debt, does not fail): 140
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 550
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+exit code (after fix) = 0
+
+=== BEFORE-FIX RECONSTRUCTION (old unconditional-stale comparator, same pair, same re-seeded 690-entry baseline) ===
+baselined: 140
+new: 0
+stale (BUG: includes every un-censused surface entry): 550
+exit code the old code would have produced: 1
+first 5 wrongly-stale keys (all belong to surfaces this 15-surface diff never censused):
+    src/app/[locale]/[slug]/page.tsx :: src/app/[locale]/[slug]/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/confirm-email/page.tsx :: src/app/[locale]/auth/confirm-email/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/login/page.tsx :: src/app/[locale]/auth/login/page.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/login/page.tsx :: src/modules/auth/components/AuthRedirect.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/auth/register/page.tsx :: src/app/[locale]/auth/register/page.tsx :: tier1-unenrolled-or-unstoried
+(reconstruction script exit code = 0; this is a Node.js process exit, not the gate's own)
+

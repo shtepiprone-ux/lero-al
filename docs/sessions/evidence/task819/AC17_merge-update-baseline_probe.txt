@@ -1,0 +1,35 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC17: --update-baseline on the same narrow diff (f46c487d5..HEAD, 15/268 surfaces) must merge, not replace ==
+hash-object before = bfa1076f3ba97fea44f708c14a226164a014df24
+entry count before = 690
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD --update-baseline ===
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 690 (carried-forward entries for the 690-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+exit code = 0
+entry count after = 690 (did not decrease: True)
+hash-object after = bfa1076f3ba97fea44f708c14a226164a014df24
+BYTE_IDENTICAL_TO_BEFORE = True (expected TRUE -- update-baseline on an already-current diff should be a true no-op)
+
+== AC17 (repeat AC8): plant a new tier-2 block, confirm --update-baseline still refuses it under the merge logic ==
+hash-object before = bfa1076f3ba97fea44f708c14a226164a014df24
+target tier-2 key: src/app/[locale]/cabinet/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive
+=== command: node.exe scripts\check-surface-census-changed.mjs --base f46c487d5 --head HEAD --update-baseline (should REFUSE) ===
+    entries written: 689 (carried-forward entries for the 689-entry prior baseline's un-censused surfaces are preserved, not deleted)
+FAIL  1 new tier2-legacy-primitive block(s) refused — a baseline cannot exempt a new legacy-primitive import:
+  Fix: stop importing the legacy primitive from the enrolled surface (agent-contract 16d tier 2).
+exit code = 1
+entries after refusal = 689 (expect 689, unchanged from the planted 689)
+target tier-2 key still absent = True
+== hash-object after restore ==
+bfa1076f3ba97fea44f708c14a226164a014df24
+HASH_MATCH = True
+== git status --porcelain -- scripts/surface-census-baseline.json ==
+?? scripts/surface-census-baseline.json
+

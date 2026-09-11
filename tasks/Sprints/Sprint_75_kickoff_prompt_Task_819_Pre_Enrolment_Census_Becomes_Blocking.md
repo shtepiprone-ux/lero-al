@@ -391,3 +391,141 @@ git commit -m "docs(Task819): kickoff filed - diff-mapped per-surface census, fa
 ```
 
 No `git push` — a task-design handoff is never authorization for one.
+
+---
+
+## 17. Revision 1 — 2026-09-11 (Opus implementation review: `NEEDS REVISION`)
+
+Task 819 state: **`NEEDS REVISION`**, on one **P0**. The mapper, the runner, the census `--json`, the fail-closed
+conditions and the 6-arm self-test are right and are **not re-done**. What is wrong is the baseline's comparison
+model, and the root cause is a defect in this kickoff's own R4.
+
+### 17.1 Re-entry mode and preserved artifacts
+
+**Re-entry mode: `remediation`.** Do not rebuild the mapper, the runner, the census `--json` patch, or the CI hunk,
+and do not re-derive the unresolved-rate measurement.
+
+**Forbidden re-runs — the only record of a state that no longer exists:** `R0_baseline-13.1.txt` ·
+`Rev0_sample1_fixed.txt` – `Rev0_sample4_fixed.txt` (the four measured diffs, 587 changed files, 0 unresolved —
+the measurement §5's `CONFLICT` turned on) · `Rev0_seed-baseline.txt` (the one-time seed write) ·
+`Rev0_verify-first-try.txt` / `Rev0_verify-second-try.txt` · `AC6_unresolved-candidate_probe.txt` (the real on-disk
+rootless cycle) · `AC1`, `AC7`, `AC8`, `AC9`, `AC11` probes with their witnesses.
+
+**Verified in review and carried forward untouched:** `resolveSurfacesFor`'s three-rule climb (stop at a manifest
+entry or `src/app/**`; nothing-renders-it is its own root; a fully-explored rootless cycle is unresolved) —
+`AC6`'s probe fires it on two real files, so the fail-closed condition is not dead code; determinism (identical
+SHA-256 over two runs); both fail-closed arms (limit, unreachable merge base); the bootstrap refusal and the tier-2
+refusal; the 6 self-test arms and the broken-arm proof; `G15`'s per-file `git hash-object` block, which closes Task
+818's remaining P3; and AC10's five byte-identical untouched files with `check:rendered-scope` 29/0/0 and
+`check:story-coverage` 38/0. The separately-named one-time `--seed-baseline` flag, never wired into npm, is a
+**better** reading of R4 than the wording I gave and stands.
+
+### 17.2 Confirmed defects
+
+1. **`P0 BLOCKER` — stale detection is whole-tree but the run is diff-scoped, so the gate fails almost every real
+   PR.** `compareToBaseline` (`scripts/check-surface-census-changed.mjs:135-137`) marks **every** baseline key absent
+   from this run's measured blocks as `stale`, and `currentBlocks` only ever holds blocks from the surfaces *this
+   diff mapped to* (`dedupeBlocks`, `:115-124`, fed from `mapping.included`). The seeded baseline holds **140 blocks
+   across 15 surfaces**. Therefore any PR whose diff maps to a subset of those 15 reports the remainder as stale —
+   and stale is a failing condition. **The only diff on which this gate passes is the one the baseline was seeded
+   from**, which is exactly the pair `G06_check-surface-census-changed.txt` used (`--base f46c487d5 --head HEAD`,
+   `140 baselined / 0 new / 0 stale`). The mirror defect is in the writer: `computeBaselineUpdate` (`:147-160`)
+   rebuilds `blocks` from `currentBlocks` alone and never merges `priorBaselineBlocks`, so running
+   `--update-baseline` on a narrow diff "fixes" the stale failure by **deleting** the recorded debt of every surface
+   that diff did not touch — which then returns as `new` blocks the next time someone touches them.
+   **Root cause is mine.** Task 818's baseline is whole-tree: its walk measures every edge on every run, so "a
+   baseline entry nothing matches" really is paid-off debt. 819's run is diff-scoped. R4 carried 818's sentence
+   across unchanged — *"A baseline entry no block matches is **stale** and fails"* — as if this run measured
+   everything too. It does not. → **R12 / AC16, AC17**.
+2. **`P2` — the baseline is seeded from one diff's surfaces, not from the candidate space.** 140 blocks across
+   **15** surfaces, all from the single `f46c487d5..HEAD` run (`Rev0_seed-baseline.txt:132,273`). Measured against
+   this task's own retained sample: `Rev0_sample2_fixed.txt` maps to **27** surfaces, of which **15 are absent from
+   the seed**, among them `FeaturedListingsView.tsx` and `ListingsShellView.tsx`. `INFERENCE` from two measured
+   sources — Task 812's frontier listing records `FeaturedListingsView -> ViewAllLink` and
+   `ListingsShellView -> ListingsActionRow` as tier-1 unenrolled, and the census blocks on a tier-1 node that is not
+   both enrolled and storied — so a PR touching either surface brings pre-existing debt the baseline does not carry,
+   and after defect 1 is fixed it still fails as `new`. §10 requirement 5 said "seeded by measurement **over the
+   measured candidate set**"; one diff's mapped surfaces is not that set. → **R13 / AC18**.
+3. **`P3` — every baseline value is `{}`.** All 140 entries carry an empty object; the sibling ledger
+   `scripts/rendered-scope-baseline.json` carries `{"tier": …}`. The reason code survives only inside the key
+   string, which is why `computeBaselineUpdate` has to read `block.reasonCode` from the *measured* block rather than
+   from the baseline, and why no entry can ever carry an owning task number the way the allowlist does.
+   → **R14 / AC19**.
+4. **`NOTE`, not a finding** — the session log's §7 says *"No limitation found in R1-R11's actual implementation"*.
+   Defects 1 and 2 are both in R1-R11's implementation. Correct that sentence when the revision lands; a limitations
+   section that says "none" is the one place a reviewer's finding should never be able to land.
+
+### 17.3 Revision 1 requirements
+
+| ID | Requirement | P | Verified by |
+|---|---|---|---|
+| **R12** | Staleness is scoped to what the run measured. A baseline entry is `stale` **only** when its surface was censused in this run and the block no longer appears; an entry whose surface this run did not census is `carried` — neither stale nor new — and is counted separately in the scope block. `--update-baseline` **merges**: it keeps every prior entry for a surface this run did not census, updates the entries for surfaces it did, and still refuses a new tier-2 block. A run must never be able to delete recorded debt for a surface it did not look at. | **P0** | AC16, AC17 |
+| **R13** | The baseline is re-seeded across the **candidate space**, not one diff: every surface root the mapper can produce from `src/` (manifest entries, `src/app/**` routes, and files nothing renders), censused once, every resulting block recorded. Report the new block and surface counts against the current 140/15 and explain the delta. The one-time `--seed-baseline` flag keeps its existing guard — it refuses to run when the file already exists — so the re-seed is an explicit, witnessed replacement, not an in-place drift. | **P1** | AC18 |
+| **R14** | Each baseline entry's value carries at least its `reasonCode`, so the ledger is readable without parsing its own key and a future entry can carry an owning task number. The comparator keys stay exactly as they are. | P3 | AC19 |
+| **R15** | The self-test gains an arm for defect 1: a synthetic baseline containing a block for a surface **not** in this run's censused set must not be reported stale and must not drive the exit non-zero; a synthetic block missing from a surface that **was** censused must. Both through the same shared exit-decision function the real run calls. Print the arm count. | **P0** | AC20 |
+| **R16** | The session log's §7 limitations sentence is corrected, and `docs/storybook-governance.md` §15.7 states the carried/stale/new distinction and the merge semantics of `--update-baseline`. No other section of either file changes. | P2 | AC21 |
+
+### 17.4 Revision 1 acceptance criteria
+
+- **AC16 [R12]** — Given the re-seeded baseline and a run whose diff maps to a **strict subset** of the baselined
+  surfaces — name the base/head pair and the subset — then the run reports `0 stale`, a non-zero `carried` count, and
+  exits **0**. Quote the scope block. This is the case that fails today; quote the current failure too, from a run
+  on the same pair before the fix, so the before/after is in one place.
+- **AC17 [R12]** — Given `--update-baseline` run on that same narrow diff, then the baseline's entry count does not
+  decrease and every entry for an uncensused surface survives byte-identically. Quote the entry counts before and
+  after and the `git diff --stat` for the baseline. Then repeat AC8's tier-2 refusal to show it still fires.
+- **AC18 [R13]** — Given the re-seeded baseline, then its surface count is the candidate-space count, not 15; the
+  block count is stated against the previous 140 with the delta explained; and a run on `Rev0_sample2_fixed.txt`'s
+  base/head pair reports `0 new`. Quote the counts and that run's scope block.
+- **AC19 [R14]** — Given the re-seeded baseline, then every entry's value carries its `reasonCode`. Quote three
+  entries including one `tier2-legacy-primitive`.
+- **AC20 [R15]** — Given `npm run check:surface-census:changed:verify`, then it prints its arm count, every arm
+  passes, and the two new arms of R15 are named in the output. Break one deliberately, show the self-test exits
+  non-zero naming it, restore, and show `git --no-optional-locks status --porcelain` unchanged in the same
+  transcript.
+- **AC21 [R16]** — Given the session log §7 and `docs/storybook-governance.md` §15.7 after the change, then the
+  limitations sentence no longer says none were found, and §15.7 states the carried/stale/new distinction and the
+  merge semantics. Quote both.
+
+**GR-4 AC AUDIT — 6 criteria (AC16-AC21); each states an observable property; absolutes: none.** AC17's
+"does not decrease" and "survives byte-identically" are scoped to one named file across one named command, captured
+as a measured before/after pair.
+
+### 17.5 Revision 1 verification plan
+
+Re-run §13.2's full block on the final tree with `Rev1_` names, every transcript carrying platform, Node version,
+working directory, command and exit code in the same file, plus §13.2's `git hash-object` block for every changed
+file. The AC16-AC18 runs and the AC20 broken-arm probe are separate, individually restored probes, each witnessed by
+one transcript in §10.6's shape. **Do not read any source file back through PowerShell's `Get-Content -Raw` without
+`-Encoding utf8`** — §10.7, and the Task 818 incident it was written from.
+
+### 17.6 Revision 1 completion report contract
+
+Everything §14 requires that Revision 1 touched, plus: AC16's before/after scope blocks on the same pair · AC17's
+entry counts, baseline `git diff --stat` and the repeated tier-2 refusal · AC18's candidate-space counts with the
+delta against 140/15 and the sample-2 run · AC19's three entries · AC20's arm count, broken-arm run and restore
+witness · AC21's two corrected texts · confirmation that the §17.1 artifacts are unmodified.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. No owner decision is outstanding.
+
+### 17.7 Revision 1 pre-read bundle
+
+`scripts/check-surface-census-changed.mjs` `:113-161` (the comparator and the writer), its scope-block printer and
+its self-test · `scripts/check-rendered-scope.mjs`'s comparator — **and why its stale rule is valid there and not
+here** · `scripts/surface-census-baseline.json` · `docs/sessions/evidence/task819/Rev0_seed-baseline.txt` and
+`Rev0_sample2_fixed.txt` · `docs/storybook-governance.md` §15.7 · §§13-17 of this kickoff.
+
+## 18. Git handoff — Revision 1 orchestration (owner-run, do not execute)
+
+Read-only `git status --short` could not be run from this session: the desktop bridge's Linux workspace does not
+start after the 2026-09-08 Windows update. Built from the paths this review wrote — check `git status` before
+pasting.
+
+```powershell
+git add "tasks/Sprints/Sprint_75_kickoff_prompt_Task_819_Pre_Enrolment_Census_Becomes_Blocking.md" "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "docs/backlog.md"
+git commit -m "docs(Task819): review - NEEDS REVISION; R12-R16 filed for diff-scoped staleness, the one-diff seed and the merge-less baseline writer"
+```
+
+Orchestration artifacts only — no `scripts/`, no `package.json`, no `.github/`, no `docs/golden-rules.md`, no
+`docs/storybook-governance.md`, no `docs/sessions/`. No `git push`: `NEEDS REVISION` is not an approved
+implementation review.

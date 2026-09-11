@@ -1,0 +1,21 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC6: real on-disk scratch cycle, resolved via the REAL buildRenderGraph()/resolveSurfacesFor() production functions (not mocked) ==
+  Why a direct function call instead of the CLI: git diff never lists an untracked file (no --head ref exists for it,
+  and Sonnet cannot run git add to stage it), so the git-diff step of the CLI cannot see these scratch files.
+  buildRenderGraph() reads the filesystem directly (readdirSync), independent of git tracking, so it DOES see them.
+  This exercises the exact resolution code the CLI calls, against real files physically on disk right now.
+=== command: node.exe scratch-ac6-probe.mjs ===
+graph file count: 421
+renderedBy(Orphan): [ 'src/modules/listings/components/__task819_scratch_Ghost.tsx' ]
+renderedBy(Ghost): [ 'src/modules/listings/components/__task819_scratch_Orphan.tsx' ]
+resolveSurfacesFor(Orphan): {"unresolved":true}
+resolveSurfacesFor(Ghost): {"unresolved":true}
+exit code = 0
+== cleanup ==
+Deleted src/modules/listings/components/__task819_scratch_Orphan.tsx, __task819_scratch_Ghost.tsx, scratch-ac6-probe.mjs.
+git status --short shows none of these three paths afterward (never tracked, so no residual entry is possible).

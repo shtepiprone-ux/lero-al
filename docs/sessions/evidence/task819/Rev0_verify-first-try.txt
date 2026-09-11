@@ -1,0 +1,23 @@
+
+> lero-al@0.1.0 check:surface-census:changed:verify
+> node scripts/check-surface-census-changed.mjs --verify-gate
+
+check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running 6 arms
+
+  PASS  Arm 1 — changed file resolves upward to a known (manifest) surface -> included
+  PASS  Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero
+  FAIL  Arm 3 — changed-file limit set below the real diff size -> fail-closed, drives exit non-zero
+  PASS  Arm 4 — new (un-baselined) block -> drives exit non-zero
+  PASS  Arm 5 — baselined block is recorded debt -> does not fail
+  PASS  Arm 6 — real pipeline, base===head (empty diff) -> clean (0 changed, 0 surfaces)
+
+Arms run: 6
+Self-test: 5 passed, 1 failed
+npm.cmd : FAIL  check:surface-census:changed:verify — the gate self-test found a broken arm.
+At line:3 char:1
++ npm.cmd run check:surface-census:changed:verify > "$evidence\Rev0_ver ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  check:sur...d a broken arm.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT=1

@@ -259,10 +259,12 @@ Revision 1's own handoff is §15.
 
 ## 14. Revision 1 — 2026-09-11
 
-Task 812 state: **`NEEDS REVISION`**. Revision 0 was reviewed on 2026-09-11 and four task-design/implementation
-defects were confirmed. A Revision 1 executor pass has since landed three of the four corrections in code; this
-section is the authoritative record of what is done, what is still owed, and what the owner must decide. Until §14.6
-is answered the task stays `NEEDS REVISION` — not `BLOCKED` — because executable work remains (R13, R15).
+Task 812 state: **`PARTIALLY VERIFIED`** (Opus review 2026-09-11 of the executor's `PARTIALLY IMPLEMENTED`).
+Revision 0 was reviewed on 2026-09-11 and four task-design/implementation defects were confirmed; a fifth (§14.2.5)
+was found while writing this revision. Two Revision 1 executor passes have since landed **R10, R11, R12, R13 and
+R15** — all verified against the artifacts, not the report. **R14 is the only requirement still open, and it is held
+by §14.6, not by missing work.** `BLOCKED` is retired: no executable work remains outside the owner's decision, and
+`APPROVED` is unavailable while a P0 requirement is unimplemented.
 
 ### 14.1 Re-entry mode and preserved artifacts
 
@@ -281,6 +283,13 @@ exists:**
 | `docs/sessions/evidence/task812/AC4_gate_with_allowlist.txt` | the **defective** state (`tier2-legacy-primitive (1)`) that the R10 finding rests on; deleting it destroys the proof that the defect was real |
 
 Every Revision 1 transcript is written under `docs/sessions/evidence/task812/` with an `R1_` prefix, BOM-free.
+
+**Superseded within Revision 1, recorded so no later session cites a stale reading.** Revision 1 ran in two passes
+(R10-R12, then R13/R15) and the second pass reused the `R1_final_*` names. `R1_final_gate.txt` was 7 915 bytes at the
+first pass and is 7 994 bytes now; only the current set — captured on the post-R13 tree — is AC14 evidence. The
+first-pass artifacts that keep their own names (`R1_10.1_report_corrected_allowlist.txt`, `R1_tier2_invalid_probe.txt`,
+`R1_AC5_reprobe.txt`, `R1_AC1_manifest_witness.txt`, `R1_AC3_favoritesshell_witness.txt`) are **not** superseded: they
+carry AC4-R, AC11 and AC8-R and must not be overwritten either.
 
 ### 14.2 Confirmed defects from the Revision 0 review
 
@@ -312,9 +321,9 @@ Every Revision 1 transcript is written under `docs/sessions/evidence/task812/` w
 | **R10** | The allowlist is a **tier-3 mechanism only**. An entry whose `path` starts with `src/components/ui/` is an **invalid entry**: the gate prints it in its own `FAIL` block, exits non-zero, and **does not honour it** — the edge is still counted and printed under `tier2-legacy-primitive`. An invalid entry is reported as invalid, never as *stale*. `src/components/ui/AppImage.tsx` is removed from `scripts/rendered-scope-allowlist.json`. | **P0** | **DONE** | AC4-R, AC11 |
 | **R11** | The two-armed plant asserts the **clearing of one named edge**, never an exit code: `src/modules/listings/components/FavoritesShell.tsx -> src/modules/listings/components/CollectionsSection.tsx  [tier1-unenrolled]` is present in the de-enrolled arm and absent from the restored arm. Each restore witness is **one** retained transcript carrying the `git hash-object` value before, the same value after, and the explicit `git status --porcelain -- <path>` output. Binds the manifest plant and the `FavoritesShell.tsx` type-only probe alike. | **P0** | **DONE** | AC8-R |
 | **R12** | `docs/golden-rules.md` GR-1's **`Command`** block is restored verbatim to its pre-812 per-surface form. Only the `Enforcement status` table and the closing paragraph — R8's real scope — may carry 812's result. | **P0** | **DONE** | AC12 |
-| **R13** | `scripts/check-rendered-scope.mjs` drops the two imports it never uses (`statSync` at `:41`, `extractImportSpecifiers` at `:45`). The phrase "one entry per edge" is corrected in both places it appears — `scripts/check-rendered-scope.mjs:21` and `docs/storybook-governance.md:2501` — to the implemented semantics: the allowlist is **keyed by path**, so one entry excuses every call site of that component and remains non-stale while any single edge to it survives. | P1 | **OPEN** | AC13 |
-| **R14** | `check:rendered-scope` is placed in `.github/workflows/governance-pr.yml` in exactly the form §14.6 decision 3 selects, or deliberately left unwired with that decision quoted in the sprint file. §14.5 states the placement conflict this requirement must resolve. | **P0** | **OPEN — blocked on §14.6 decision 3** | AC7-R |
-| **R15** | The Revision 1 gate evidence is completed on the final tree. `scripts/check-rendered-scope.mjs` changed after Revision 0's build transcript was captured, so that transcript is stale for this diff: `agent-contract` clause **9** requires a current `npm run build` exit 0, and no `R1_` build or eslint transcript exists. Re-run the full §10.2 block with `R1_final_` names. | **P0** | **OPEN** | AC14 |
+| **R13** | `scripts/check-rendered-scope.mjs` drops the two imports it never uses (`statSync` at `:41`, `extractImportSpecifiers` at `:45`). The phrase "one entry per edge" is corrected in both places it appears — `scripts/check-rendered-scope.mjs:21` and `docs/storybook-governance.md:2501` — to the implemented semantics: the allowlist is **keyed by path**, so one entry excuses every call site of that component and remains non-stale while any single edge to it survives. | P1 | **DONE** 2026-09-11 | AC13 |
+| **R14** | `check:rendered-scope` is placed in `.github/workflows/governance-pr.yml` in exactly the form §14.6 decision 3 selects, or deliberately left unwired with that decision quoted in the sprint file. §14.5 states the placement conflict this requirement must resolve. | **P0** | **OPEN — the only open requirement; blocked on §14.6 decision 3** | AC7-R |
+| **R15** | The Revision 1 gate evidence is completed on the final tree. `scripts/check-rendered-scope.mjs` changed after Revision 0's build transcript was captured, so that transcript is stale for this diff: `agent-contract` clause **9** requires a current `npm run build` exit 0, and no `R1_` build or eslint transcript exists. Re-run the full §10.2 block with `R1_final_` names. | **P0** | **DONE** 2026-09-11 | AC14 |
 
 ### 14.4 Revision 1 acceptance criteria
 
@@ -347,7 +356,18 @@ Every Revision 1 transcript is written under `docs/sessions/evidence/task812/` w
   §14.6 decision 2, and it is not resolved by reverting the block.
 - **AC13 [R13]** — Given `node.exe --check scripts/check-rendered-scope.mjs` and a read of that file's header and of
   `docs/storybook-governance.md` §15.5, then no unused import remains and neither text claims "one entry per edge";
-  both state path-keying and its consequence for staleness. **Status: `OPEN`.**
+  both state path-keying and its consequence for staleness.
+  **Status: `VERIFIED`** — `scripts/check-rendered-scope.mjs:43,47` now import only `{ readFileSync, existsSync }` and
+  `{ resolveImportSpecifier as resolveImportSpecifierShared }`; `grep "statSync|extractImportSpecifiers"` returns zero
+  hits, and `grep "one entry per edge"` returns zero hits across both files. The script header (`:20-27`) and
+  `docs/storybook-governance.md:2501` both now read "keyed by component path, not by edge — one entry excuses every
+  importing/rendering call site of that component, and stays non-stale as long as at least one such edge still
+  exists", and §15.5 additionally states the tier-3-only rule as its own failure category.
+  **`NOTE` on the parse check:** no standalone `node --check` transcript was retained. The property is closed twice
+  over instead — `R1_final_file-integrity.txt` passes 59 files through `check-file-integrity.mjs`'s own `node --check`
+  arm (the changed script among them), and `R1_final_gate.txt` shows the script executing, which an unparseable file
+  cannot do. Accepted as equivalent evidence; a future criterion of this shape should name the closing artifact rather
+  than the command.
 - **AC7-R [R6, R14]** — Given §14.6 decision 3, then `.github/workflows/governance-pr.yml` contains the step that
   decision selected — quote the hunk with its job name — or the sprint file quotes the dated decision to defer it. A
   silent omission fails this criterion; that is the `scripts/task808-key-warning-probe.mjs` defect R6 was written
@@ -357,7 +377,16 @@ Every Revision 1 transcript is written under `docs/sessions/evidence/task812/` w
   `R1_final_file-integrity.txt` and `R1_final_mojibake.txt` all exist, are BOM-free, and record `win32`, the Node
   version, the exact command and the real exit code; `build` exits 0; `check:story-coverage` prints
   `38 covered / 0 unproven` exit 0; `check:rendered-scope` exits 1 with `tier1-unenrolled (50)` and
-  `tier2-legacy-primitive (3)`. **Status: `OPEN` — no `R1_` build or eslint transcript exists.**
+  `tier2-legacy-primitive (3)`.
+  **Status: `VERIFIED`** — all eight exist plus `R1_final_env.txt`, `R1_final_report.txt` and
+  `R1_final_git_status.txt`; every one is BOM-free (byte-checked, not inferred from `check:file-integrity`);
+  `R1_final_env.txt` records `win32` / `v22.22.3`; transcripts carry `C:\Claude_Code_Projects\lero-al\…` paths and an
+  explicit `EXIT_CODE=` line. Results: typecheck 0 · eslint `0 errors, 3 warnings` (the repo-wide `scripts/` ignore
+  pattern) exit 0 · `check:story-coverage` `38 covered / 0 unproven` exit 0 · `check:rendered-scope` exit 1 with
+  `tier1-unenrolled (50)`, `tier2-legacy-primitive (3)`, `Allowlisted edges … 4` — unchanged by R13, which is the
+  correct outcome for a wording-and-imports fix · `check:stories` 144 files / 0 violations · `build`
+  `✓ Compiled successfully in 60s`, exit 0 · `check:file-integrity` 59 files clean · `check:mojibake` 0 artifacts in
+  4258 files.
 - **AC10 carried forward unchanged** and re-proven by AC14's `R1_final_story-coverage.txt`.
 
 **GR-4 AC AUDIT — 7 criteria (AC4-R, AC11, AC8-R, AC12, AC13, AC7-R, AC14); each states an observable property;

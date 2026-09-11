@@ -1,0 +1,18 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command ===
+npm.cmd run check:mojibake
+=== output ===
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 4434 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 4434 files
+=== exit code ===
+0

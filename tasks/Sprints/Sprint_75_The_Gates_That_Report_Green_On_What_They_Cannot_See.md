@@ -33,14 +33,15 @@ of the wrong proposition.
 |---|---|---|---|---|
 | **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **APPROVED** 2026-09-11 — R1-R20 verified against the artifacts; R20 closed by the owner directly in `docs/golden-rules.md:92`. Archived in `docs/backlog-archive.md`. GR-1/GR-3 remain **not enforced** — gated on **817** and **818**. → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
-| **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **KICKOFF FILED** 2026-09-11 — measured at design time: the 33 patterns are governed **three** ways (5 enrolled · 11 tier-3 allowlisted · **17 in neither**), a split nobody chose. Carries a `STOP — OWNER DECISION REQUIRED` on the governance model and absorbs the 6 P3 notes from 817/818/819 → [`Sprint_75_kickoff_prompt_Task_816_…`](Sprint_75_kickoff_prompt_Task_816_Design_System_Pattern_Ownership_And_Audit.md) |
+| **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **APPROVED WITH NOTES** 2026-09-11 — archived in `docs/backlog-archive.md`. `npm run audit:design-system-patterns` landed and correctly exits 1: **3 of the 11** allowlisted patterns measurably fail decision 1's own word *shared* (1 consumer each). The governance model for the 33 is now an **owner action row** in `docs/backlog.md`. → [`Sprint_75_kickoff_prompt_Task_816_…`](Sprint_75_kickoff_prompt_Task_816_Design_System_Pattern_Ownership_And_Audit.md) |
 | **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. GR-1's `Command` block is runnable; the blind spot is measured (planted de-enrolment: the census blocks on `CollectionsSection`, `check:rendered-scope` names it zero times). GR-1/GR-3 remain **not enforced** — gated on **818**. 3 P3 notes carried to 816/818. → [`Sprint_75_kickoff_prompt_Task_817_…`](Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md) |
 | **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. The gate is **blocking** in CI against a versioned 29-edge baseline, with a 5-arm `check:rendered-scope:verify` self-test. GR-1/GR-3 now enforced **for the enrolled subgraph only** — exit criterion 2 is not met; owner decision 4 files **819**. → [`Sprint_75_kickoff_prompt_Task_818_…`](Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md) |
 | **819** | GR-1's pre-enrolment case becomes blocking — diff → affected surfaces → `check-surface-census.mjs --surface` each | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. Blocking in CI against a 690-block/268-surface baseline with carried/stale/new semantics and an 8-arm self-test. **Exit criterion 2 is now met.** → [`Sprint_75_kickoff_prompt_Task_819_…`](Sprint_75_kickoff_prompt_Task_819_Pre_Enrolment_Census_Becomes_Blocking.md) |
+| **820** | One rule for the pattern directory — enrol the remaining 28, retire the 11 transitional tier-3 entries, add the parity check | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 5 — kickoff owed. Manifest **38 → 66**; `responsiveBottomSheet.tsx` needs a canonical Story first; the expanded frontier is measured **before** it is modified; no baseline for the three single-consumer paths |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
-**Execution order: 812 → 817 → 818 → 819 → 816 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own
+**Execution order: 812 → 817 → 818 → 819 → 816 → 820 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own
 enforcement table calls it P0 and says GR-1 and GR-3 stay self-reported until it lands; 812 is now **APPROVED** and
 archived. **817, 818 and 819 come next because exit criterion 2 depends on all three and on nothing else** — 817 gives
 GR-1 the command its own `Command` block already cites, 818 turns decision 3's advisory CI step into a blocking one, and 819 (owner decision 4,
@@ -145,3 +146,23 @@ its kickoff is owed and 818's approval (2026-09-11) has now unblocked it. No art
 enforced while 819 is open — `docs/golden-rules.md`'s rows already say "enforced for the enrolled subgraph" and must
 not be widened. "Fail closed" is the owner's word and is not negotiable by task design: an unresolved candidate or a
 diff too large to map is a failing run, never a skipped check.
+
+#### Decision 5 — 2026-09-11, on the design-system governance model (quoted verbatim)
+
+> **Decision — select (c), 2026-09-11.** Every current and future `.tsx` file under
+> `src/design-system/mantine/patterns/` is governed as an enrolled design-system pattern. The eleven Task 816 tier-3
+> allowlist entries are transitional and must be removed by a separate implementation task; no baseline is approved
+> for the three single-consumer paths. That task must enrol the remaining 28 paths, add a canonical Story for
+> `responsiveBottomSheet.tsx` before enrolment, measure the expanded frontier before modifying it, and add a
+> CI-safe, planted-failure parity check that fails when a pattern-directory file is not enrolled. It resolves the
+> audit's current red state by eliminating the invalid tier-3 premise, not by weakening or baselining the audit.
+>
+> Important correction to §4: this is manifest growth **38 → 66**, not `38 → 71`, because 5 of the 33 patterns are
+> already enrolled — 28 are added, not 33.
+>
+> Option (a) leaves an arbitrary mixed model; option (b) entrenches three known-false exceptions.
+
+Binding consequences: **820** is that task, filed in the Tasks table above in the same state update. The audit's exit 1 is resolved by enrolment
+only — **no baseline, no reworded `reason`, no relaxed premise** is available to it. The `38 → 66` correction is the owner's, made while
+selecting this option: `docs/design-system-pattern-ownership.md` §4 read `38 → 71`, double-counting the 5 already-enrolled patterns, and the
+review that approved Task 816 did not re-derive the sum. Corrected in that document with the error recorded rather than silently fixed.

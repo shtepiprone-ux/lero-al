@@ -1,0 +1,42 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== AC5: plant a temporary allowlist entry pointing at a scratch pattern file with no canonical Story ==
+hash-object before = 91c1aa8330b92e1c8c64a8717c4c77f52f29d10d
+scratch file: src/design-system/mantine/patterns/__task816_scratch_NoStory.tsx (new, no story imports it)
+=== command: node.exe scripts\audit-design-system-patterns.mjs (should FAIL naming the scratch path, no-own-story) ===
+audit:design-system-patterns — design-system pattern census (Task 816)
+    src/design-system/mantine/patterns/__task816_scratch_NoStory.tsx  state:tier3-allowlisted  edges:0  consumers:0  (enrolled-only:0)  story:no
+FAIL  src/design-system/mantine/patterns/MantineCopyIdButton.tsx  [not-shared]  1 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/MantineListingCardPattern.tsx  [not-shared]  1 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  [not-shared]  1 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/__task816_scratch_NoStory.tsx  [not-shared]  0 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/__task816_scratch_NoStory.tsx  [no-own-story]
+AUDIT FAILED — 5 allowlist entr(ies) no longer satisfy decision 1's premise.
+exit code = 1
+== hash-object after restore (FIRST ATTEMPT — FAILED) ==
+d1e4fa82dfaf1a52bb19ee3a75db093be7678530
+HASH_MATCH = False
+== git status --porcelain -- scripts/rendered-scope-allowlist.json ==
+ M scripts/rendered-scope-allowlist.json
+
+== CORRECTION — this is exactly the hazard R4 asks this task to document ==
+The restore used `$pristine = Get-Content $path -Raw` (no `-Encoding utf8`) to capture the pre-plant content, then
+`[IO.File]::WriteAllText` to write it back. On this BOM-less UTF-8 file, Windows PowerShell 5.1's `Get-Content -Raw`
+decoded the bytes through the system codepage instead of UTF-8, corrupting every `§` (U+00A7, in "kickoff §14.6.2")
+into `Â§` before the write-back — real content corruption, confirmed by `git diff` (13 occurrences, one per
+allowlist entry's `reason` string) and by `npm run check:rendered-scope` still passing only because `§` inside a
+`reason` string is never parsed by that gate's own logic, so the corruption was silent to every existing check.
+Corrected via the Task 818/819-proven Node.js reversal (read the corrupted file as UTF-8, map each mojibake
+character back to its Windows-1252 byte value, decode that byte sequence as UTF-8, write back as UTF-8):
+`git hash-object` afterward matched the ORIGINAL pre-plant hash exactly (`91c1aa8330b92e1c8c64a8717c4c77f52f29d10d`).
+`npm run check:mojibake` and `npm run check:rendered-scope` both clean/passing afterward.
+
+== hash-object after the corrected restore ==
+91c1aa8330b92e1c8c64a8717c4c77f52f29d10d
+HASH_MATCH (corrected) = True
+== git status --porcelain -- scripts/rendered-scope-allowlist.json (after correction) ==
+(empty — file matches HEAD exactly)

@@ -186,9 +186,11 @@ export function gitDiffNameStatus(base, head) {
 // ── Candidate classification ────────────────────────────────────────────────
 
 const CANDIDATE_SKIP_SUFFIXES = ['.stories.tsx', '.stories.ts', '.test.tsx', '.test.ts'];
-// Same directory names the render graph itself never walks into (SKIP_DIRS below) — a changed file
-// under any of these is never a production candidate, because it can never appear as a renderer OR a
-// rendered node in the graph the resolution climbs. Kept in sync with SKIP_DIRS deliberately.
+// The ONE canonical set of directory names the render graph never walks into — `SKIP_DIRS` (below,
+// in the render-graph section) is the SAME Set object, not a second literal (Task 816 R4: two
+// literals synchronised only by a comment had already been named as a risk by Task 819's own notes).
+// A changed file under any of these is never a production candidate, because it can never appear as a
+// renderer OR a rendered node in the graph the resolution climbs.
 const CANDIDATE_SKIP_DIR_SEGMENTS = new Set(['node_modules', '.next', 'storybook-static', '__tests__', 'stories']);
 
 export function classifyChangedFile(entry) {
@@ -214,7 +216,10 @@ export function classifyChangedFile(entry) {
 
 // ── Whole-src render graph ──────────────────────────────────────────────────
 
-const SKIP_DIRS = new Set(['node_modules', '.next', 'storybook-static', '__tests__', 'stories']);
+// One literal, not two (Task 816 R4): `CANDIDATE_SKIP_DIR_SEGMENTS` above is the canonical set of
+// directory names the render graph never walks into; `SKIP_DIRS` is the SAME Set object, not a copy,
+// so the two can never drift out of sync again.
+const SKIP_DIRS = CANDIDATE_SKIP_DIR_SEGMENTS;
 const SKIP_SUFFIXES = ['.stories.tsx', '.stories.ts', '.test.tsx', '.test.ts'];
 
 function collectProductionFiles(dir) {

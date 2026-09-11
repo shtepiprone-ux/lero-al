@@ -76,6 +76,7 @@
     "check:surface-census:changed": "node scripts/check-surface-census-changed.mjs",
     "check:surface-census:changed:update-baseline": "node scripts/check-surface-census-changed.mjs --update-baseline",
     "check:surface-census:changed:verify": "node scripts/check-surface-census-changed.mjs --verify-gate",
+    "audit:design-system-patterns": "node scripts/audit-design-system-patterns.mjs",
     "check:design-tokens": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:report": "node scripts/check-design-tokens.mjs --report",

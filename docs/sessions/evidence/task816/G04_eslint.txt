@@ -1,0 +1,20 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command ===
+npx.cmd eslint scripts/audit-design-system-patterns.mjs scripts/map-changed-surfaces.mjs
+=== output ===
+
+C:\Claude_Code_Projects\lero-al\scripts\audit-design-system-patterns.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+C:\Claude_Code_Projects\lero-al\scripts\map-changed-surfaces.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+✖ 2 problems (0 errors, 2 warnings)
+
+=== exit code ===
+0

@@ -1,0 +1,57 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+== git hash-object of every file this task changed ==
+  scripts/audit-design-system-patterns.mjs = 2578c5b2781efe1771ae45a08d8f7c071df9f200
+  scripts/map-changed-surfaces.mjs = 67ac8d858007d33274adcbdfe8b373f12ef38e0e
+  package.json = bfcf22c11d1259a283ca1be3da80a6f04519458f
+  docs/orchestrator-procedures.md = 95e1685b5318795a9c391668b17198928bbc1cda
+  docs/design-system-pattern-ownership.md = 0db1e480231ae5eb4fa883ad47ed5148bedb7cdc
+  docs/sessions/evidence/task817/R1_AC16-favoritesshell-report.txt = 1722ff14a2842c1ee76b9f9865a21a4fa570cb25
+
+== AC10: unchanged-gate re-check (six named files: check-rendered-scope.mjs, check-surface-census.mjs,
+   check-surface-census-changed.mjs, mantine-migration-scope.json, rendered-scope-allowlist.json, both baselines) ==
+    Baselined edges (recorded debt, does not fail): 29
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+exit code = 0
+check:rendered-scope gate self-test (--verify-gate, Task 818 R6/R15) — running 5 arms
+  PASS  Arm 1 — new tier1-unenrolled edge absent from baseline -> reported new
+  PASS  Arm 2 — new tier2-legacy-primitive edge -> gate reports new, --update-baseline refuses it
+  PASS  Arm 3 — baseline entry with no matching measured edge -> reported stale
+  PASS  Arm 4 — unplanted tree vs. committed baseline -> clean (0 new, 0 stale)
+  PASS  Arm 5 — exit-code wiring: a synthetic new edge drives evaluateGateExitCode to 1, the clean state to 0
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:rendered-scope:verify — all 5 arms (R6 + R15) behave correctly.
+exit code = 0
+    ✅ 38 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+exit code = 0
+    Blocks baselined (recorded debt, does not fail): 140
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 550
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+exit code = 0
+check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running 8 arms
+  PASS  Arm 1 — changed file resolves upward to a known (manifest) surface -> included
+  PASS  Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero
+  PASS  Arm 3 — changed-file limit set below the real diff size -> fail-closed, drives exit non-zero
+  PASS  Arm 4 — new (un-baselined) block on a censused surface -> drives exit non-zero
+  PASS  Arm 5 — baselined block is recorded debt -> does not fail
+  PASS  Arm 6 — real pipeline, base===head (empty diff) -> clean (0 changed, 0 surfaces)
+  PASS  Arm 7 — baseline entry for an un-censused surface -> carried, not stale, does not fail
+  PASS  Arm 8 — block missing from a censused surface -> stale, drives exit non-zero
+Arms run: 8
+Self-test: 8 passed, 0 failed
+PASS  check:surface-census:changed:verify — all 8 arms (R7) behave correctly.
+exit code = 0
+
+=== git diff --stat for the six named unmodified files ===
+(empty)

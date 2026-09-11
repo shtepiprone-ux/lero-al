@@ -1,0 +1,64 @@
+=== platform ===
+win32
+=== node version ===
+v22.22.3
+=== working directory ===
+C:\Claude_Code_Projects\lero-al
+=== command ===
+npm.cmd run audit:design-system-patterns
+=== output ===
+
+> lero-al@0.1.0 audit:design-system-patterns
+> node scripts/audit-design-system-patterns.mjs
+
+audit:design-system-patterns — design-system pattern census (Task 816)
+    Patterns directory: src\design-system\mantine\patterns
+    Pattern files (derived from the directory at execution): 33
+    Enrolled: 5  Tier-3 allowlisted: 11  Ungoverned (neither): 17
+    Consumer counts are whole-src (every file under src/ that renders it), not only enrolled roots;
+    "enrolled-only" reconstructs check:rendered-scope:report's narrower, enrolled-root-scoped view.
+    Cannot see: a consumer reached only through dynamic import()/React.lazy(), or one under a
+    directory the render graph never walks into (node_modules/.next/storybook-static/__tests__/stories).
+
+CENSUS (33):
+    src/design-system/mantine/patterns/MantineAddItemPanel.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/patterns/mantine/AddItemPanel.stories.tsx
+    src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx
+    src/design-system/mantine/patterns/MantineAppShellFoundation.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AppShellFoundation.stories.tsx
+    src/design-system/mantine/patterns/MantineAuthFormPattern.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineCombobox.tsx  state:tier3-allowlisted  edges:8  consumers:8  (enrolled-only:4)  story:yes  story-file:src/stories/mantine/primitives/Combobox.stories.tsx
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx  state:tier3-allowlisted  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/CopyIdButton.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineCountButton.tsx  state:tier3-allowlisted  edges:4  consumers:4  (enrolled-only:4)  story:yes  story-file:src/stories/mantine/primitives/CountButton.stories.tsx
+    src/design-system/mantine/patterns/MantineDataTableToCards.tsx  state:ungoverned  edges:2  consumers:2  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Table.stories.tsx
+    src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/DialogDrawerPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineDrawer.tsx  state:tier3-allowlisted  edges:4  consumers:4  (enrolled-only:4)  story:yes  story-file:src/stories/mantine/primitives/Drawer.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineDropdownMenu.tsx  state:tier3-allowlisted  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/DropdownMenu.stories.tsx
+    src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/patterns/mantine/EmptyLoadingErrorState.stories.tsx
+    src/design-system/mantine/patterns/MantineFilterSection.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/FilterSection.stories.tsx
+    src/design-system/mantine/patterns/MantineFormSectionStack.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/FormSectionStack.stories.tsx
+    src/design-system/mantine/patterns/MantineHomeSection.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/HomeSection.stories.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx  state:tier3-allowlisted  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  state:enrolled  edges:8  consumers:8  (enrolled-only:7)  story:yes  story-file:src/stories/mantine/primitives/ListingCard.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx  state:tier3-allowlisted  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  state:tier3-allowlisted  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  state:ungoverned  edges:1  consumers:1  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineModal.tsx  state:tier3-allowlisted  edges:3  consumers:3  (enrolled-only:3)  story:yes  story-file:src/stories/mantine/primitives/Modal.stories.tsx
+    src/design-system/mantine/patterns/MantineNavigationMenu.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/NavigationMenu.stories.tsx
+    src/design-system/mantine/patterns/MantineNotificationPattern.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/NotificationPattern.stories.tsx
+    src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+    src/design-system/mantine/patterns/MantinePagination.tsx  state:tier3-allowlisted  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/Pagination.stories.tsx
+    src/design-system/mantine/patterns/MantinePopover.tsx  state:ungoverned  edges:2  consumers:2  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Popover.stories.tsx
+    src/design-system/mantine/patterns/MantineProgress.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Progress.stories.tsx
+    src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/ResponsiveActionFooter.stories.tsx
+    src/design-system/mantine/patterns/MantineSelect.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Select.stories.tsx
+    src/design-system/mantine/patterns/MantineTooltip.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Tooltip.stories.tsx
+    src/design-system/mantine/patterns/MantineTwoColumnForm.tsx  state:ungoverned  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+    src/design-system/mantine/patterns/RangeDatePicker.tsx  state:tier3-allowlisted  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+    src/design-system/mantine/patterns/responsiveBottomSheet.tsx  state:ungoverned  edges:12  consumers:8  (enrolled-only:0)  story:no
+
+FAIL  src/design-system/mantine/patterns/MantineCopyIdButton.tsx  [not-shared]  1 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/MantineListingCardPattern.tsx  [not-shared]  1 distinct consumer(s)
+FAIL  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  [not-shared]  1 distinct consumer(s)
+
+AUDIT FAILED — 3 allowlist entr(ies) no longer satisfy decision 1's premise.
+=== exit code ===
+1

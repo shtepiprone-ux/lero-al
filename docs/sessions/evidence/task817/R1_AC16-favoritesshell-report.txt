@@ -1,3 +1,4 @@
+SUPERSEDED (Task 816, 2026-09-11) — this transcript's `ui-imports:2` reading for `AppImage.tsx` was corrected by a later run in this same session; cite `R1_favoritesshell-final-report.txt` instead.
 EXIT_CODE=0
 check:surface-census — per-surface GR-1 census (Task 817)
     Surface: src/modules/listings/components/FavoritesShell.tsx

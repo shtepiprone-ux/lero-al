@@ -139,6 +139,12 @@ jobs:
       - name: Pattern-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 820)
         run: npm run check:pattern-enrolment:verify
 
+      - name: Media-directory enrolment gate (Task 813 — blocking, one rule for the media directory)
+        run: npm run check:media-enrolment
+
+      - name: Media-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 813)
+        run: npm run check:media-enrolment:verify
+
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 

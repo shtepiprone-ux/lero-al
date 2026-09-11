@@ -1,0 +1,7 @@
+src/components/ui/AppImage.module.css
+src/components/ui/AppImage.tsx
+src/components/ui/useAdaptiveImageConfig.ts
+src/design-system/mantine/patterns/MantineListingCardPattern.module.css
+src/lib/imageDelivery.ts
+src/lib/performance/predictive.ts
+

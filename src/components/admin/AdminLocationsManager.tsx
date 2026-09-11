@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')

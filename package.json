@@ -79,6 +79,8 @@
     "audit:design-system-patterns": "node scripts/audit-design-system-patterns.mjs",
     "check:pattern-enrolment": "node scripts/check-pattern-enrolment.mjs",
     "check:pattern-enrolment:verify": "node scripts/check-pattern-enrolment.mjs --verify-gate",
+    "check:media-enrolment": "node scripts/check-media-enrolment.mjs",
+    "check:media-enrolment:verify": "node scripts/check-media-enrolment.mjs --verify-gate",
     "check:design-tokens": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:report": "node scripts/check-design-tokens.mjs --report",

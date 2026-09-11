@@ -1,0 +1,34 @@
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 67 (of 67 manifest entries)
+    Local import edges resolved: 302
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 186
+    Allowlisted edges (tier3, owner-filed): 4
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 28 (deduped from 29 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 2
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+npm.cmd : FAIL  2 stale baseline entr(ies) — no matching rendered edge exists:
+At line:2 char:1
++ npm.cmd run check:rendered-scope *> docs\sessions\evidence\task813\I6 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  2 stale b...ed edge exists::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx
+    src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx
+  Fix: run `npm run check:rendered-scope:update-baseline` to drop paid-off debt from the baseline.
+
+Docs: docs/storybook-governance.md §15.5, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

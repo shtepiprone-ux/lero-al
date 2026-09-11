@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { removeUserAvatar } from '@/modules/admin/actions'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { cn } from '@/lib/utils'
 import styles from './AdminUserAvatar.module.css'
 

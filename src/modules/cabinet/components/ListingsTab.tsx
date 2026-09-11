@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Plus, Pencil, Trash2, Eye, Maximize2, Loader2, Check, X, SlidersHorizontal, Phone } from 'lucide-react'
 import { toast } from '@/lib/toast'

@@ -70,9 +70,6 @@
     "src/app/[locale]/cabinet/page.tsx :: src/components/shared/RelativeTime.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/cabinet/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -132,9 +129,6 @@
     },
     "src/app/[locale]/ci/click-shield-modal/page.tsx :: src/components/ci/ClickShieldModalFixture.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/ci/click-shield-modal/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/[locale]/ci/click-shield-modal/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -201,12 +195,6 @@
     },
     "src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/[locale]/layout.tsx :: src/design-system/mantine/patterns/MantinePopover.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/layout.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/layout.tsx :: src/modules/auth/context/AuthContext.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -348,9 +336,6 @@
     },
     "src/app/admin/companies/page.tsx :: src/components/shared/RelativeTime.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/companies/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/admin/companies/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -667,9 +652,6 @@
     "src/app/admin/locations/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/locations/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/admin/locations/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -759,9 +741,6 @@
     },
     "src/app/admin/popular-locations/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/popular-locations/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/admin/popular-locations/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -931,9 +910,6 @@
     "src/app/admin/users/[id]/page.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/users/[id]/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/admin/users/[id]/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -981,9 +957,6 @@
     },
     "src/app/admin/users/new/page.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/users/new/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/admin/users/new/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -1265,6 +1238,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: tier1-unenrolled-or-unstoried": {
@@ -1576,9 +1552,6 @@
     "src/modules/listings/components/LatestListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
-    "src/modules/listings/components/ListingCard.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/ListingContact.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1666,9 +1639,6 @@
     "src/modules/listings/components/ListingFormShell.tsx :: src/components/shared/PropertyTypeCombobox.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/ListingFormShell.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/ListingFormShell.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1698,9 +1668,6 @@
     },
     "src/modules/listings/components/ListingFormShell.tsx :: src/modules/listings/components/form/DynamicFieldSection.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/modules/listings/components/ListingGallery.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/modules/listings/components/ListingGallery.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -1867,9 +1834,6 @@
     "src/modules/listings/components/steps/StepLocation.tsx :: src/modules/listings/components/steps/StepLocation.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/steps/StepPhotos.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/steps/StepPhotos.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1878,9 +1842,6 @@
     },
     "src/modules/listings/components/steps/StepPhotos.tsx :: src/modules/listings/components/steps/StepPhotos.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/modules/listings/components/steps/StepPreview.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/modules/listings/components/steps/StepPreview.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -1968,9 +1929,6 @@
     },
     "src/modules/locations/actions/popularLocationActions.ts :: src/modules/locations/actions/popularLocationActions.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/modules/locations/components/PopularLocationsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/modules/locations/hooks/useLocations.ts :: src/modules/locations/hooks/useLocations.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"

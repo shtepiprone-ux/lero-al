@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelativeTime } from '@/components/shared/RelativeTime'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import {
   Dialog,
   DialogContent,

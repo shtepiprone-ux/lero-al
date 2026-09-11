@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { Camera, Maximize2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LightboxView } from './LightboxView'

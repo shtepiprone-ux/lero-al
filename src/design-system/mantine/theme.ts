@@ -71,6 +71,8 @@ declare module '@mantine/core' {
     // string directly.
     boxSize: Record<
       | 'statusDot'       // 8px  — NotificationItem unread-status dot (h=w)
+      | 'galleryThumb'    // 44px — Task 813 R17 Revision 4 (owner decision 2026-09-11): AppImage
+                          // Story's gallery-strip row + no-src square; Task 824's gallery thumbnail row
       | 'thumbnail'       // 112px — PopularLocationsView location-card height
       | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
@@ -446,6 +448,10 @@ export const theme = createTheme({
     // `MantineThemeOther` augmentation above for the full role-name rationale.
     boxSize: {
       statusDot: '0.5rem',       //   8px
+      galleryThumb: '2.75rem',   //  44px — Task 813 R17 Revision 4, owner decision 2026-09-11:
+                                 // AppImage Story gallery-strip row + no-src square; Task 824
+                                 // gallery thumbnail row. Same value as `touchTarget`/
+                                 // `iconSize.touch` but a distinct, documented owner (rule 3).
       thumbnail: '7rem',         // 112px
       truncateLabel: '7.5rem',   // 120px
       dropdownPanel: '13.75rem', // 220px

@@ -76,7 +76,7 @@ const LISTING_STATUS_IGNORES = [
 // All other files must use <AppImage variant="..."> from AppImage.tsx.
 const IMAGE_RENDER_EXCEPTIONS = [
   // AppImage.tsx is the canonical image render site — raw <img> is intentional here
-  "src/components/ui/AppImage.tsx",
+  "src/design-system/media/AppImage.tsx",
   // GalleryStaticFrame.tsx renders a raw <img> as a Server Component hero for
   // LCP optimization (bypasses 'use client' so Chrome paints before hydration)
   "src/modules/listings/components/GalleryStaticFrame.tsx",

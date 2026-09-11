@@ -3,8 +3,8 @@
 // zero-Tailwind-string assertion across all 9 variants except the BLOCKED `listing.hoverClass`.
 // Not a permanent production test (out of scope per §7) — retained as I5/§10.5 evidence only.
 import { describe, it, expect } from 'vitest'
-import { VARIANTS } from '@/components/ui/appImageConfig'
-import styles from '@/components/ui/AppImage.module.css'
+import { VARIANTS } from '@/design-system/media/appImageConfig'
+import styles from '@/design-system/media/AppImage.module.css'
 
 const TAILWIND_UTILITY_SHAPE = /^(relative|absolute|inset-0|w-full|h-full|aspect-\[|aspect-square|overflow-hidden|bg-muted|rounded-full|object-cover|object-contain|transition|duration-300|opacity-100|opacity-0|group-hover:)/
 

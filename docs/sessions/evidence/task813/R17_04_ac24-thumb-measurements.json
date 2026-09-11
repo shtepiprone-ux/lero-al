@@ -1,0 +1,147 @@
+{
+  "story": "mantine-primitives-appimage--default",
+  "locale": "en",
+  "capturedAt": "2026-09-11T21:41:06.839Z",
+  "widths": [
+    {
+      "width": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "thumbCount": 4,
+      "thumbs": [
+        {
+          "index": 0,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "index": 1,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "index": 2,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "index": 3,
+          "width": 66,
+          "height": 66
+        }
+      ],
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "noHorizontalOverflow": true,
+      "allSquareWithin1px": true,
+      "uniformWidthAcrossThumbs": true
+    },
+    {
+      "width": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "thumbCount": 4,
+      "thumbs": [
+        {
+          "index": 0,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "index": 1,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "index": 2,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "index": 3,
+          "width": 83.5,
+          "height": 83.5
+        }
+      ],
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "noHorizontalOverflow": true,
+      "allSquareWithin1px": true,
+      "uniformWidthAcrossThumbs": true
+    },
+    {
+      "width": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "thumbCount": 4,
+      "thumbs": [
+        {
+          "index": 0,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "index": 1,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "index": 2,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "index": 3,
+          "width": 106,
+          "height": 106
+        }
+      ],
+      "scrollWidth": 480,
+      "clientWidth": 480,
+      "noHorizontalOverflow": true,
+      "allSquareWithin1px": true,
+      "uniformWidthAcrossThumbs": true
+    },
+    {
+      "width": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "thumbCount": 4,
+      "thumbs": [
+        {
+          "index": 0,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "index": 1,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "index": 2,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "index": 3,
+          "width": 329.5,
+          "height": 329.5
+        }
+      ],
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "noHorizontalOverflow": true,
+      "allSquareWithin1px": true,
+      "uniformWidthAcrossThumbs": true
+    }
+  ]
+}

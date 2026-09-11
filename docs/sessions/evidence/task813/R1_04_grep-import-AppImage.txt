@@ -1,0 +1,12 @@
+src/components/admin/AdminCompaniesManager.tsx:11:import { AppImage } from '@/components/ui/AppImage'
+src/components/admin/AdminLocationsManager.tsx:14:import { AppImage } from '@/components/ui/AppImage'
+src/components/admin/AdminPopularLocationsManager.tsx:10:import { AppImage } from '@/components/ui/AppImage'
+src/components/admin/AdminUserAvatar.tsx:10:import { AppImage } from '@/components/ui/AppImage'
+src/components/ui/appImageConfig.ts:5://   src/components/ui/AppImage.tsx
+src/modules/cabinet/components/ListingsTab.tsx:6:import { AppImage } from '@/components/ui/AppImage'
+src/modules/listings/components/ImageUpload.tsx:5:import { AppImage } from '@/components/ui/AppImage'
+src/modules/listings/components/LightboxView.tsx:6:import { AppImage } from '@/components/ui/AppImage'
+src/modules/listings/components/ListingCard.tsx:7:import { AppImage } from '@/components/ui/AppImage'
+src/modules/listings/components/ListingGallery.tsx:5:import { AppImage } from '@/components/ui/AppImage'
+src/modules/listings/components/steps/StepPreview.tsx:4:import { AppImage } from '@/components/ui/AppImage'
+src/modules/locations/components/PopularLocationsView.tsx:4:import { AppImage } from '@/components/ui/AppImage'

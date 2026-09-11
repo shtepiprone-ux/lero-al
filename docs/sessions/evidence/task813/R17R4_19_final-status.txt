@@ -1,0 +1,40 @@
+ M .github/workflows/governance-pr.yml
+ M docs/design-system-pattern-ownership.md
+ M docs/golden-rules.md
+ M docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts
+ M docs/storybook-governance.md
+ M eslint.config.mjs
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package.json
+ M scripts/check-homepage-theme-runtime-deps.mjs
+ M scripts/design-tokens-allowlist.json
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/surface-census-baseline.json
+ M src/components/admin/AdminCompaniesManager.tsx
+ M src/components/admin/AdminLocationsManager.tsx
+ M src/components/admin/AdminPopularLocationsManager.tsx
+ M src/components/admin/AdminUserAvatar.tsx
+ M src/components/shared/PerfDevOverlay.tsx
+ D src/components/ui/AppImage.module.css
+ D src/components/ui/AppImage.tsx
+ D src/components/ui/appImageConfig.ts
+ D src/components/ui/useAdaptiveImageConfig.ts
+ M src/design-system/mantine/theme.ts
+ M src/lib/performance/predictive.ts
+ M src/modules/cabinet/components/ListingsTab.tsx
+ M src/modules/listings/components/ImageUpload.tsx
+ M src/modules/listings/components/LightboxView.tsx
+ M src/modules/listings/components/ListingCard.tsx
+ M src/modules/listings/components/ListingGallery.tsx
+ M src/modules/listings/components/steps/StepPreview.tsx
+ M src/modules/locations/components/PopularLocationsView.tsx
+?? docs/sessions/2026-09-11-task813-appimage-tier2-root-cause.md
+?? docs/sessions/evidence/task813/
+?? scripts/check-media-enrolment.mjs
+?? scripts/task813-appimage-thumb-probe.mjs
+?? src/design-system/media/
+?? src/stories/mantine/primitives/AppImage.stories.tsx

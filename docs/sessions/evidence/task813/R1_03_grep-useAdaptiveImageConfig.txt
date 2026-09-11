@@ -1,0 +1,7 @@
+src/components/shared/PerfDevOverlay.tsx
+src/components/ui/AppImage.tsx
+src/components/ui/appImageConfig.ts
+src/components/ui/useAdaptiveImageConfig.ts
+src/lib/imageDelivery.ts
+src/lib/performance/imageGuard.ts
+

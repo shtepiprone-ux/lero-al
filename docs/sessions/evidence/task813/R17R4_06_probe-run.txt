@@ -1,0 +1,355 @@
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task813\R17R4_06_ac24-thumb-measurements.json
+{
+  "story": "mantine-primitives-appimage--default",
+  "locale": "en",
+  "target": {
+    "px": 44,
+    "tolerancePx": 1
+  },
+  "capturedAt": "2026-09-11T22:14:18.901Z",
+  "widths": [
+    {
+      "viewportWidth": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        }
+      ],
+      "all44WithinTolerance": true
+    },
+    {
+      "viewportWidth": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        }
+      ],
+      "all44WithinTolerance": true
+    },
+    {
+      "viewportWidth": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "scrollWidth": 480,
+      "clientWidth": 480,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        }
+      ],
+      "all44WithinTolerance": true
+    },
+    {
+      "viewportWidth": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 44,
+          "height": 44,
+          "withinToleranceOf44": true
+        }
+      ],
+      "all44WithinTolerance": true
+    }
+  ],
+  "crossWidth": {
+    "max": 44,
+    "min": 44,
+    "delta": 0,
+    "sampleCount": 20
+  },
+  "hardFail": false,
+  "failReasons": []
+}
+
+✅ task813-appimage-thumb-probe: every thumbnail 44±1px, cross-width delta ≤1px, no overflow.
+EXIT_CODE=0

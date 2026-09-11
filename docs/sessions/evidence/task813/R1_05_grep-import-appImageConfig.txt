@@ -1,0 +1,4 @@
+src/components/ui/AppImage.tsx:17:export type { ImageVariant } from './appImageConfig'
+src/components/ui/AppImage.tsx:23:  variant: import('./appImageConfig').ImageVariant
+src/components/ui/useAdaptiveImageConfig.ts:14:} from './appImageConfig'
+src/lib/performance/predictive.ts:5:import type { ImageVariant } from '@/components/ui/appImageConfig'

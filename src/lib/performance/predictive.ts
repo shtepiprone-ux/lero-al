@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore } from 'react'
 import { preload } from 'react-dom'
-import type { ImageVariant } from '@/components/ui/appImageConfig'
+import type { ImageVariant } from '@/design-system/media/appImageConfig'
 import { type PerformanceTier } from './tier'
 import { usePerformanceTier } from './store'
 import {

@@ -1,0 +1,74 @@
+=== BEFORE hash ===
+96ac948a0d56ac97e7eb3107c4fed8c9f0072e9f
+
+=== PLANTED gate run (expect FAIL naming AppImage.tsx) ===
+FAIL  1 media-directory file(s) not enrolled in scripts\mantine-migration-scope.json:
+    src/design-system/media/AppImage.tsx
+  Fix: add the path to scripts/mantine-migration-scope.json and give it a canonical Mantine Story.
+
+Docs: docs/design-system-pattern-ownership.md, docs/golden-rules.md GR-1.
+stdout: check:media-enrolment — one rule for the media directory (Task 813, decision §5.1 (C))
+    Scanned: every top-level *.tsx directly under src/design-system/media/
+    NOT scanned (stated, never implicit): *.module.css, non-.tsx siblings (hooks/config, e.g.
+    appImageConfig.ts, useAdaptiveImageConfig.ts), any __tests__/ subdirectory, and any .tsx this
+    directory does not itself contain — a file added anywhere else is invisible to this check by
+    construction.
+    Cannot see: a file this script cannot read (permissions/symlink) — skipped, never silently
+    treated as compliant. Canonical-Story coverage is check:story-coverage's job, not this
+    check's — enrolment here does not imply a Story exists.
+
+    Media files found: 1
+    Manifest entries (total, all surfaces): 66
+
+
+stderr: FAIL  1 media-directory file(s) not enrolled in scripts\mantine-migration-scope.json:
+    src/design-system/media/AppImage.tsx
+  Fix: add the path to scripts/mantine-migration-scope.json and give it a canonical Mantine Story.
+
+Docs: docs/design-system-pattern-ownership.md, docs/golden-rules.md GR-1.
+
+exit code: 1
+
+=== PLANTED verify-gate (arm 5 must fail against the real planted tree) ===
+FAIL  check:media-enrolment:verify — the gate self-test found a broken arm.
+stdout: check:media-enrolment gate self-test (--verify-gate, Task 813) — running 5 arms
+
+  PASS  Arm 1 — .tsx in the directory, absent from the manifest -> reported unenrolled
+  PASS  Arm 2 — manifest entry under the directory, file no longer exists -> reported a ghost entry
+  PASS  Arm 3 — directory and manifest agree exactly (manifest entries outside the directory ignored) -> zero findings
+  PASS  Arm 4 — exit-code wiring: an unenrolled or a ghost finding drives evaluateGateExitCode to 1, the clean state to 0
+  FAIL  Arm 5 — real directory (1 files) vs. real manifest -> clean (1 unenrolled, 0 ghost)
+
+Arms run: 5
+Self-test: 4 passed, 1 failed
+
+exit code: 1
+
+=== AFTER hash (must equal BEFORE) ===
+96ac948a0d56ac97e7eb3107c4fed8c9f0072e9f
+MATCH: true
+
+=== git status --porcelain for the manifest (must be empty vs HEAD... but file has other uncommitted changes from this task, so check content equality instead) ===
+BYTE-IDENTICAL TO PRE-PLANT SNAPSHOT: true
+
+=== gate re-run after restore (expect PASS) ===
+check:media-enrolment — one rule for the media directory (Task 813, decision §5.1 (C))
+    Scanned: every top-level *.tsx directly under src/design-system/media/
+    NOT scanned (stated, never implicit): *.module.css, non-.tsx siblings (hooks/config, e.g.
+    appImageConfig.ts, useAdaptiveImageConfig.ts), any __tests__/ subdirectory, and any .tsx this
+    directory does not itself contain — a file added anywhere else is invisible to this check by
+    construction.
+    Cannot see: a file this script cannot read (permissions/symlink) — skipped, never silently
+    treated as compliant. Canonical-Story coverage is check:story-coverage's job, not this
+    check's — enrolment here does not imply a Story exists.
+
+    Media files found: 1
+    Manifest entries (total, all surfaces): 67
+
+PASS  check:media-enrolment — every .tsx under src/design-system/media/ is enrolled, and every manifest entry under it exists. Canonical-Story coverage is check:story-coverage's job, not this check's.
+
+script exit: 0
+
+=== git --no-optional-locks status --porcelain -- scripts/mantine-migration-scope.json (post-restore) ===
+ M scripts/mantine-migration-scope.json
+(M is expected — this task's own AppImage enrolment edit is legitimately uncommitted; the restoration proof is the hash-match + byte-identity above, not an empty status)

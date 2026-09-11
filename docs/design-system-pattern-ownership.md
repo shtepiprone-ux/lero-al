@@ -228,3 +228,18 @@ import to the direct component path (the convention already documented in `Manti
 Task 820 did not modify `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`,
 `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, or `scripts/audit-design-system-
 patterns.mjs`.
+
+## 8. A sibling directory for the project's non-Mantine image primitive (Task 813, 2026-09-11)
+
+Owner decision §5.1 (C) on Task 813 (recorded verbatim in
+`tasks/Sprints/Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md` §5.1) needed a destination for
+`AppImage.tsx` — the project's canonical, non-Mantine `<img>` render site — outside `src/components/ui/`, whose path
+prefix both `check-rendered-scope.mjs` and `check-surface-census.mjs` classify as `tier2-legacy-primitive`. The
+decision refused this file's own directory by name: `AppImage` is a bespoke `<img>` renderer, not a Mantine pattern,
+so `src/design-system/mantine/patterns/` — governed by §4's decision 5 above — is not its home. It moved instead to
+a new sibling directory, `src/design-system/media/`, governed the same way: every `.tsx` there is an enrolled
+manifest entry, enforced by a new, independent, directory-listing-driven gate, `scripts/check-media-enrolment.mjs`
+(`npm run check:media-enrolment`, blocking, same shape as `check-pattern-enrolment.mjs` — see
+`docs/storybook-governance.md` §15.9 for the full mechanism). `AppImage.tsx` and its co-located siblings
+(`appImageConfig.ts`, `useAdaptiveImageConfig.ts`, `AppImage.module.css`) moved byte-identically; every external
+importer was rewritten to the new path; `scripts/mantine-migration-scope.json` grew 66 → 67.

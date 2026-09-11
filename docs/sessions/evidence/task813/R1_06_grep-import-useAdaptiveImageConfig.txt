@@ -1,0 +1,2 @@
+src/components/shared/PerfDevOverlay.tsx:4:import { usePriorityImageCount } from '@/components/ui/useAdaptiveImageConfig'
+src/components/ui/AppImage.tsx:13:import { useAdaptiveImageConfig } from './useAdaptiveImageConfig'

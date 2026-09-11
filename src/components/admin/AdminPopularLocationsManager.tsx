@@ -7,7 +7,7 @@ import { Plus, Loader2, MapPin, ImagePlus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { Combobox } from '@/components/shared/Combobox'
 import {
   Dialog,

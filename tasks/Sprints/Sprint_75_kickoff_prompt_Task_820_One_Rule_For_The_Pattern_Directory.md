@@ -5,7 +5,7 @@ Sprint 75 · **P0** · QA profile **Q4**
 **Status: `NEEDS REVISION` — Revision 2 of the review, 2026-09-11; owner decisions recorded verbatim in §17.7 the
 same day. Read §17, then §17.6 and §17.7, which supersede §17.2. Revision 0's implementation is retained: R1-R5,
 R7-R10 verified and must not be redone. R12 is closed. R11/AC15 is BLOCKED on Task 813 (owner select (A2)).
-R13/AC17 is executable now and is the only executor work owed. AC3 stays `NOT VERIFIABLE` pending owner visual QA.**
+**Update 2026-09-11: Task 813 is `APPROVED WITH NOTES`, so R11/AC15 is UNBLOCKED** — re-run §17.2 option (A) from base `02d975f945159df38c23a0caab43e1c7a96faa58` to the then-current fixed HEAD once the owner has committed 813, per decision §17.6. R13/AC17 is executable now. AC3 stays `NOT VERIFIABLE` pending owner visual QA.**
 
 ## 1. Mode and task type
 

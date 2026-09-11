@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Box, Flex, SimpleGrid, Text, Title } from '@mantine/core'
 import { MapPin } from 'lucide-react'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 import { theme } from '@/design-system/mantine/theme'

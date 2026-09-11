@@ -1,0 +1,52 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: d5031fa4a1f0742688df69cbd3f735586ab040a6
+    Changed paths seen: 28
+    Excluded (15):
+      docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts  [outside-src]
+      eslint.config.mjs  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-homepage-theme-runtime-deps.mjs  [outside-src]
+      scripts/design-tokens-allowlist.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/components/ui/AppImage.module.css  [deleted]
+      src/components/ui/AppImage.tsx  [deleted]
+      src/components/ui/appImageConfig.ts  [deleted]
+      src/components/ui/useAdaptiveImageConfig.ts  [deleted]
+    Included surfaces (16):
+      src/app/[locale]/cabinet/page.tsx
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/app/[locale]/layout.tsx
+      src/app/admin/companies/page.tsx
+      src/app/admin/locations/page.tsx
+      src/app/admin/popular-locations/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+      src/lib/performance/predictive.ts
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingFormShell.tsx
+      src/modules/listings/components/ListingGallery.tsx
+      src/modules/listings/components/steps/StepPhotos.tsx
+      src/modules/listings/components/steps/StepPreview.tsx
+      src/modules/locations/components/PopularLocationsView.tsx
+    Surfaces censused: 16
+    Blocks baselined (recorded debt, does not fail): 126
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 550
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

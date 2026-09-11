@@ -4,7 +4,7 @@
  *
  * A fixed-manifest ownership check. NOT a route-graph parser, NOT a directory walk. Twelve hardcoded
  * repository-relative paths: the eleven migration inputs of kickoff §3.1, plus
- * `src/components/ui/AppImage.module.css` as the single expected-zero input (D65-E — the durable
+ * `src/design-system/media/AppImage.module.css` as the single expected-zero input (D65-E — the durable
  * control Task 768 transferred here). All twelve are resolved before any scanning; a missing path is
  * fatal in every mode, naming every missing path (fail-closed, the same shape
  * `check-tailwind-runtime-tokens.mjs` already gives its own configured TSX inputs).
@@ -102,7 +102,7 @@ export const MIGRATION_INPUTS_REL = [
   'src/modules/listings/components/ListingCard.module.css',
 ];
 // The single expected-zero input (kickoff §3.7, D65-E) — twelfth fixed path.
-export const EXPECTED_ZERO_INPUT_REL = 'src/components/ui/AppImage.module.css';
+export const EXPECTED_ZERO_INPUT_REL = 'src/design-system/media/AppImage.module.css';
 export const EXPECTED_ZERO_PROPERTY = '--space-0';
 
 // ── The approved migration target manifest (Task 770 remediation, owner decision 2026-08-27) ──

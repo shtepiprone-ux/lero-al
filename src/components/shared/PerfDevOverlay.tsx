@@ -1,7 +1,7 @@
 'use client'
 
 import { usePerformanceState } from '@/lib/performance/store'
-import { usePriorityImageCount } from '@/components/ui/useAdaptiveImageConfig'
+import { usePriorityImageCount } from '@/design-system/media/useAdaptiveImageConfig'
 import { usePredictiveImageCount, MAX_PREDICTIVE_PRELOADS } from '@/lib/performance/predictive'
 import { useGuardStats } from '@/lib/performance/imageGuard'
 import { MAX_PRIORITY_IMAGES } from '@/lib/imageDelivery'

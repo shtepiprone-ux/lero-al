@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { formatPrice } from '@/lib/formatters'
 import { MapPin, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'

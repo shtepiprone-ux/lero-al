@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react'
 import { Modal, ActionIcon, UnstyledButton } from '@mantine/core'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { cn } from '@/lib/utils'
 import styles from './LightboxView.module.css'
 

@@ -34,9 +34,6 @@
     "src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
       "tier": "tier1-unenrolled"
     },
-    "src/modules/listings/components/ListingCard.tsx -> src/components/ui/AppImage.tsx": {
-      "tier": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx": {
       "tier": "tier1-unenrolled"
     },
@@ -87,9 +84,6 @@
     },
     "src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
       "tier": "tier1-unenrolled"
-    },
-    "src/modules/locations/components/PopularLocationsView.tsx -> src/components/ui/AppImage.tsx": {
-      "tier": "tier2-legacy-primitive"
     }
   }
 }

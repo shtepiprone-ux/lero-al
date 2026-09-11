@@ -1,0 +1,11 @@
+
+> lero-al@0.1.0 check:homepage-theme-runtime-deps
+> node scripts/check-homepage-theme-runtime-deps.mjs
+
+🔍  check:homepage-theme-runtime-deps — scanned 11 migration input(s) + 1 expected-zero input
+    TOTAL CLASSIFIED (all categories): 77 pair(s) / 142 use(s)
+    BLOCKING (theme-inline-only + unknown): 0 pair(s) / 0 use(s)
+    MIGRATED_TARGETS (approved subset): 34 pair(s) / 66 use(s)  signature OK
+
+✅  check:homepage-theme-runtime-deps — 0 blocking pairs, 0 expected-zero findings, migration signature OK.
+EXIT_CODE=0

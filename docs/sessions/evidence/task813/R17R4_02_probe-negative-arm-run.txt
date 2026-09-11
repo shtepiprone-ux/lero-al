@@ -1,0 +1,370 @@
+Wrote C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task813\R17R4_02_probe-negative-arm.json
+{
+  "story": "mantine-primitives-appimage--default",
+  "locale": "en",
+  "target": {
+    "px": 44,
+    "tolerancePx": 1
+  },
+  "capturedAt": "2026-09-11T22:09:42.406Z",
+  "widths": [
+    {
+      "viewportWidth": 320,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 66,
+          "height": 66
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160
+        }
+      ],
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 66,
+          "height": 66,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 66,
+          "height": 66,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 66,
+          "height": 66,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 66,
+          "height": 66,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160,
+          "withinToleranceOf44": false
+        }
+      ],
+      "all44WithinTolerance": false,
+      "failReason": "5 element(s) not 44±1px: gallery-strip[0]=66.0x66.0, gallery-strip[1]=66.0x66.0, gallery-strip[2]=66.0x66.0, gallery-strip[3]=66.0x66.0, no-src-square[0]=160.0x160.0"
+    },
+    {
+      "viewportWidth": 390,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 83.5,
+          "height": 83.5
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160
+        }
+      ],
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 83.5,
+          "height": 83.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 83.5,
+          "height": 83.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 83.5,
+          "height": 83.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 83.5,
+          "height": 83.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160,
+          "withinToleranceOf44": false
+        }
+      ],
+      "all44WithinTolerance": false,
+      "failReason": "5 element(s) not 44±1px: gallery-strip[0]=83.5x83.5, gallery-strip[1]=83.5x83.5, gallery-strip[2]=83.5x83.5, gallery-strip[3]=83.5x83.5, no-src-square[0]=160.0x160.0"
+    },
+    {
+      "viewportWidth": 480,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 106,
+          "height": 106
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160
+        }
+      ],
+      "scrollWidth": 480,
+      "clientWidth": 480,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 106,
+          "height": 106,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 106,
+          "height": 106,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 106,
+          "height": 106,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 106,
+          "height": 106,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160,
+          "withinToleranceOf44": false
+        }
+      ],
+      "all44WithinTolerance": false,
+      "failReason": "5 element(s) not 44±1px: gallery-strip[0]=106.0x106.0, gallery-strip[1]=106.0x106.0, gallery-strip[2]=106.0x106.0, gallery-strip[3]=106.0x106.0, no-src-square[0]=160.0x160.0"
+    },
+    {
+      "viewportWidth": 1440,
+      "httpStatus": 200,
+      "ok": true,
+      "devServerDetected": false,
+      "errorScreen": false,
+      "gallerySectionFound": true,
+      "noSrcSectionFound": true,
+      "galleryThumbCount": 4,
+      "rects": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 329.5,
+          "height": 329.5
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160
+        }
+      ],
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "noHorizontalOverflow": true,
+      "perElement": [
+        {
+          "role": "gallery-strip",
+          "index": 0,
+          "width": 329.5,
+          "height": 329.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 1,
+          "width": 329.5,
+          "height": 329.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 2,
+          "width": 329.5,
+          "height": 329.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "gallery-strip",
+          "index": 3,
+          "width": 329.5,
+          "height": 329.5,
+          "withinToleranceOf44": false
+        },
+        {
+          "role": "no-src-square",
+          "index": 0,
+          "width": 160,
+          "height": 160,
+          "withinToleranceOf44": false
+        }
+      ],
+      "all44WithinTolerance": false,
+      "failReason": "5 element(s) not 44±1px: gallery-strip[0]=329.5x329.5, gallery-strip[1]=329.5x329.5, gallery-strip[2]=329.5x329.5, gallery-strip[3]=329.5x329.5, no-src-square[0]=160.0x160.0"
+    }
+  ],
+  "crossWidth": {
+    "max": 329.5,
+    "min": 66,
+    "delta": 263.5,
+    "sampleCount": 20
+  },
+  "hardFail": true,
+  "failReasons": [
+    "width 320: 5 element(s) not 44±1px: gallery-strip[0]=66.0x66.0, gallery-strip[1]=66.0x66.0, gallery-strip[2]=66.0x66.0, gallery-strip[3]=66.0x66.0, no-src-square[0]=160.0x160.0",
+    "width 390: 5 element(s) not 44±1px: gallery-strip[0]=83.5x83.5, gallery-strip[1]=83.5x83.5, gallery-strip[2]=83.5x83.5, gallery-strip[3]=83.5x83.5, no-src-square[0]=160.0x160.0",
+    "width 480: 5 element(s) not 44±1px: gallery-strip[0]=106.0x106.0, gallery-strip[1]=106.0x106.0, gallery-strip[2]=106.0x106.0, gallery-strip[3]=106.0x106.0, no-src-square[0]=160.0x160.0",
+    "width 1440: 5 element(s) not 44±1px: gallery-strip[0]=329.5x329.5, gallery-strip[1]=329.5x329.5, gallery-strip[2]=329.5x329.5, gallery-strip[3]=329.5x329.5, no-src-square[0]=160.0x160.0",
+    "cross-width delta 263.5px exceeds 1px (max 329.5, min 66, pooled across every measured thumbnail at every width)"
+  ]
+}
+
+❌ task813-appimage-thumb-probe: FAIL —
+   - width 320: 5 element(s) not 44±1px: gallery-strip[0]=66.0x66.0, gallery-strip[1]=66.0x66.0, gallery-strip[2]=66.0x66.0, gallery-strip[3]=66.0x66.0, no-src-square[0]=160.0x160.0
+   - width 390: 5 element(s) not 44±1px: gallery-strip[0]=83.5x83.5, gallery-strip[1]=83.5x83.5, gallery-strip[2]=83.5x83.5, gallery-strip[3]=83.5x83.5, no-src-square[0]=160.0x160.0
+   - width 480: 5 element(s) not 44±1px: gallery-strip[0]=106.0x106.0, gallery-strip[1]=106.0x106.0, gallery-strip[2]=106.0x106.0, gallery-strip[3]=106.0x106.0, no-src-square[0]=160.0x160.0
+   - width 1440: 5 element(s) not 44±1px: gallery-strip[0]=329.5x329.5, gallery-strip[1]=329.5x329.5, gallery-strip[2]=329.5x329.5, gallery-strip[3]=329.5x329.5, no-src-square[0]=160.0x160.0
+   - cross-width delta 263.5px exceeds 1px (max 329.5, min 66, pooled across every measured thumbnail at every width)
+EXIT_CODE=1

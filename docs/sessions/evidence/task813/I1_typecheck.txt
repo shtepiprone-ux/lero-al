@@ -1,0 +1,8 @@
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts(6,26): error TS2307: Cannot find module '@/components/ui/appImageConfig' or its corresponding type declarations.
+docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts(68,14): error TS18046: 'cfg' is of type 'unknown'.
+docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts(69,14): error TS18046: 'cfg' is of type 'unknown'.
+EXIT_CODE=2

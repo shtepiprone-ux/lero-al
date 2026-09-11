@@ -2,7 +2,7 @@
 
 import { useCallback, useRef } from 'react'
 import { useTranslations } from 'next-intl'
-import { AppImage } from '@/components/ui/AppImage'
+import { AppImage } from '@/design-system/media/AppImage'
 import { CldUploadWidget } from 'next-cloudinary'
 import type { CloudinaryUploadWidgetResults } from 'next-cloudinary'
 import {

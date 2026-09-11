@@ -1,0 +1,7 @@
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:17: *      equal `theme.other.boxSize.compactTrigger`.
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:145:  it('theme.other.tooltip.multilineWidth is NOT theme.other.boxSize.compactTrigger (different owners)', () => {
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:147:    expect(t.other.tooltip.multilineWidth).not.toBe(t.other.boxSize.compactTrigger)
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:300:  // A historical-note comment quoting "theme.other.boxSize.compactTrigger" (documenting the
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:302:  // expression `theme.other.boxSize.compactTrigger` (or `.boxSize.compactTrigger`) remains
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:304:  it('MantineTooltip.tsx has no live theme.other.boxSize.compactTrigger property access', () => {
+src/design-system/mantine/__tests__/theme.d69-18.test.tsx:308:    expect(withoutBlockComments).not.toContain('boxSize.compactTrigger')

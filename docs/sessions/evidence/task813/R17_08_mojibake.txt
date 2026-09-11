@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 4555 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 4 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  src/components/ui/AppImage.module.css
+  src/components/ui/AppImage.tsx
+  src/components/ui/appImageConfig.ts
+  src/components/ui/useAdaptiveImageConfig.ts
+
+check:mojibake: 0 artifacts in 4555 files
+EXIT_CODE=0

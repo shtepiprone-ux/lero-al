@@ -2,7 +2,12 @@
 
 Sprint 75 · **P0** (raised from tier-3 filing by owner decision §17.6, 2026-09-11) · QA profile **Q4**
 
-**Status: `NEEDS REVISION` — Revision 1 filed 2026-09-11 after the executor's first implementation. Read §5.3 first;
+**Status: `NEEDS REVISION` — Revision 2 filed 2026-09-11 after the owner RETURNED AC11's visual review. R14, R15 and
+R16 are closed and re-verified; **R17 is the only work left**: this task's own new
+`src/stories/mantine/primitives/AppImage.stories.tsx` draws stretched, hardcoded thumbnails and overflows at 320/480.
+The gallery pattern's identical-looking defect is **not this task's** — it is Task 824. Read §5.4.**
+
+*Superseded header, kept for the record:* `NEEDS REVISION` — Revision 1 filed 2026-09-11 after the executor's first implementation. Read §5.3 first;
 it carries the owner decision that widened this scope and the three things still owed. Revision 0's implementation is
 **retained** — R1-R9, R12 and R13 are verified, the move is byte-identical, and nothing is to be rolled back.
 R14, R15 and R16 are the only work left.**
@@ -173,6 +178,7 @@ another task and was not re-verified for this kickoff. R1 measures it.
 | **R14** | Owner decision 2026-09-11, §5.3 | The three retarget edits the move forces are **in scope and required**, not deviations: `scripts/check-homepage-theme-runtime-deps.mjs` (its `EXPECTED_ZERO_INPUT_REL` constant, `:105`), `scripts/design-tokens-allowlist.json` (its path-keyed entry), and `docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts` (a real test importing the moved path). Each must be listed in the session log's `Files Changed` with the reason. **`npm run check:homepage-theme-runtime-deps` and `npm run check:homepage-theme-runtime-deps:verify-gate` must both be run and must both exit 0** — Revision 0 changed that gate's input constant and produced no transcript for either. | **P0** | AC18, AC19 | **Open — executor** |
 | **R15** | Review Revision 1 | The session log and completion report must state the measured census result, not "green". `npm run check:surface-census -- --surface` on **both** affected patterns exits **1** on the pre-existing `src/modules/listings/components/LightboxView.tsx [tier1-unenrolled-or-unstoried]` block; what this task removed is the `src/components/ui/AppImage.tsx [tier2-legacy-primitive]` block, and only that. Correct every sentence claiming both censuses are green. | **P0** | AC20 | **Open — executor** |
 | **R16** | Owner decision 2026-09-11, §5.3 | `check:design-tokens:strict` and `check:tailwind-runtime-tokens` may **not** be called pre-existing without a before/after proof, because this diff edits `scripts/design-tokens-allowlist.json` — an input the first gate reads. Produce the comparison from an **isolated snapshot of `HEAD`** (`git worktree add` a detached checkout, or a `git archive` export to a scratch directory) — **never `git stash`**, which mutates the live worktree this task's evidence depends on. Run both gates there and in the working tree, and diff the two outputs. Identical output → file two separate numbered tasks, one per gate. Different output → it is a Task 813 regression and is fixed **in this task**; it is not carried out as debt. | **P0** | AC21, AC22 | **Open — executor** |
+| **R17** | Owner AC11 rejection, 2026-09-11, §5.4 | This task's own new `src/stories/mantine/primitives/AppImage.stories.tsx` must draw its `gallery-strip / thumbnail row` as **canonical Mantine squares with no hardcoded dimension**, and must not overflow at any reviewed width. `FACT`, read this turn — `:72-77` currently reads `<SimpleGrid cols={4} spacing="xs" style={{ maxWidth: 360 }}>` wrapping `<div style={{ width: 80, height: 56 }}>`: three raw inline dimensions and a 10:7 box, which is both the hardcode the owner forbids and the stretch he rejected. The `negative flow` block's `style={{ width: 160, height: 120 }}` (`:85`) is the same defect and is fixed with it. Use the same canonical Mantine square Task 824 adopts (`AspectRatio ratio={1}`); if 824 has not landed, this task establishes it and 824 consumes it. No px literal, no inline style number, no Tailwind arbitrary dimension anywhere in the file. | **P0** | AC23, AC24 | **Open — executor** |
 | **R10** | 812 R9 precedent | `scripts/check-rendered-scope.mjs`, `scripts/check-surface-census.mjs`, `scripts/check-surface-census-changed.mjs`, `scripts/map-changed-surfaces.mjs`, `scripts/audit-design-system-patterns.mjs` and `scripts/check-pattern-enrolment.mjs` are **not modified** — decision §5.1 states "Do not weaken or alter the existing pattern-directory check", and the 2026-09-11 owner decision in §5.3 confirms R10 "remains in force for the six explicitly named governance scripts". `scripts/check-homepage-theme-runtime-deps.mjs` is **not** one of the six and its path-constant retarget is authorised by R14. `TIER2_PREFIX` is not changed, widened, or made configurable — moving the file is the fix; editing the classifier is not. R12's check is a **new** script, never an arm added to an existing one. | **P0** | AC12 | Confirmed |
 | **R11** | §5.1 decision | `docs/golden-rules.md`, `docs/design-system-pattern-ownership.md` and `docs/storybook-governance.md` record where the project's image primitive now lives and which gate governs it. No GR-n rule body, `Command` block or receipt string changes. | P1 | AC13 | Confirmed |
 | **R12** | §5.1 decision (C) | A **blocking, CI-safe, self-tested media-directory parity check** lands in this same task: every `.tsx` directly under `src/design-system/media/` must be a `scripts/mantine-migration-scope.json` entry, and a manifest entry under that directory whose file no longer exists fails as a ghost entry. It derives the directory listing **at runtime** — never a hard-coded name list — prints its scope boundary and its cannot-see sentence on every run, takes its exit decision from one pure function the real run and the self-test both call, and carries a planted-failure proof. Wired into the `governance` job with no `continue-on-error`, no `\|\| true`, no `exit 0` and no wrapper, in the same shape as the four existing `*:verify` steps. Story coverage stays enforced by the existing `check:story-coverage`; this check does not duplicate it. | **P0** | AC14, AC15, AC16 | Confirmed |
@@ -233,6 +239,29 @@ further implementation work for `ListingFeatureIcon` or `FavoriteButton` is auth
   `PasswordRequirementsHint` (the other tier-2 edge, owner decision 1) · Task 820's own baseline reconciliation,
   which re-runs after this task is approved · editing any gate's **logic** (a path-constant retarget is not logic —
   see R14).
+
+### 5.4 `OWNER REJECTION — AC11 RETURNED, 2026-09-11`
+
+The owner opened AC11's tuples and returned them, verbatim:
+
+> я не приймаю таку галерею … Вилазить за рамки екрану. Прев'ю картинок розтягнуті на всю ширину … в оригіналі
+> прев'ю сука були майже квадратні, тобто такі як треба.
+>
+> Необхідно зробити згідно Mantine канонічних квадратів! Ніякого хардкоду, він заборонений!
+
+**Two defects look identical on screen and are not the same defect.** The review separated them against
+`git status --short`:
+
+1. **This task's** — `src/stories/mantine/primitives/AppImage.stories.tsx`, an **untracked new file created by Task
+   813** (`??` in the owner's status output). `:72-77` hardcodes `maxWidth: 360`, `width: 80`, `height: 56` inside a
+   `SimpleGrid cols={4}`, so the cells stretch, the boxes are 10:7 rather than square, and the 360px cap overflows a
+   320px viewport. That is R17/AC23/AC24 above, and it is this task's to fix.
+2. **Not this task's** — `MantineListingGalleryPattern.tsx`'s `SimpleGrid cols={{ base: 4 }}` at `:79`. `FACT`: that
+   file appears in **neither** Task 813's nor Task 820's diff. The defect predates both and was merely surfaced by
+   AC11. It is filed as **Task 824**, with `rozetka.com.ua` as the owner's reference.
+
+AC11 stays `RETURNED` until R17 lands and the owner re-reviews AC24's four widths. Task 820's R11 remains blocked on
+this task's approval.
 
 ### 5.3 `OWNER DECISION — RECORDED VERBATIM, 2026-09-11 (Revision 1 of the review)`
 
@@ -432,7 +461,16 @@ same images, the same blur-up, the same srcset and the same LCP timing as before
   it may not be carried out as debt, baselined, or handed to a follow-up. Quote the set comparison, not just the
   totals.
 
-**GR-4 AC AUDIT — 22 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits" and
+- **AC23 [R17]** — Given `src/stories/mantine/primitives/AppImage.stories.tsx` after the fix, then a search for raw
+  dimension literals in that file returns **zero** — no `style={{ width: n }}`, no `height: n`, no `maxWidth: n`, no
+  `px` literal, no Tailwind arbitrary `[...]` dimension — and every thumbnail is rendered through the canonical
+  Mantine square primitive. Quote the empty search and the changed hunk.
+- **AC24 [R17]** — Given `Mantine/Primitives/AppImage → Default` rendered at **320, 390, 480 and 1440** in `en`, then
+  each thumbnail's measured width equals its measured height within 1px and is the same number at all four widths,
+  and `document.documentElement.scrollWidth` does not exceed `clientWidth` at any of them. Quote the raw measurements
+  per width — a screenshot is not a measurement. These four widths then go back to the owner as AC11's re-review.
+
+**GR-4 AC AUDIT — 24 criteria; each states an observable property; absolutes: AC4's and AC9's "zero hits" and
 AC12's / AC17's "empty diff" are this task's defined outcome, scoped to named paths this task deliberately does not
 otherwise change.**
 
@@ -571,4 +609,5 @@ Do not self-approve; Sonnet runs, emits and suggests no mutating git command.
 | Does the new directory ship ungoverned? | **No** — R12 lands its parity check in this same task, blocking in CI with a planted-failure proof, reading the directory at runtime. That was the one cost of choosing a new namespace, and the decision closed it here rather than deferring it. |
 | Is the `check-homepage-theme-runtime-deps.mjs` edit a R10 violation? | **No** — it is not one of R10's six, and the 2026-09-11 owner decision (§5.3) puts the retarget in scope. What was missing was proof: R14/AC19 requires the gate and its self-test to exit 0. |
 | Are the two red gates pre-existing? | **Unproven, and that is the point.** This diff edits `scripts/design-tokens-allowlist.json`, an input the first gate reads. R16/AC21 decides it from an isolated `HEAD` snapshot, never `git stash`; AC22 binds both outcomes in advance so the answer cannot be chosen after seeing it. |
+| Is the stretched gallery this task's fault? | **Only half of it.** Its own new `AppImage.stories.tsx` is (R17) — hardcoded 80×56 boxes in a 4-column grid with a 360px cap. `MantineListingGalleryPattern.tsx` is not: it appears in neither 813's nor 820's diff, and is Task **824**. |
 | Does this task touch the allowlist? | **No** — R13/AC17, and the 2026-09-11 owner amendment in §5.1 makes the residual `owner: "813"` values a documented transitional snapshot. The field transfer is Task 821's first tracked-file change, after it verifies Task 820's commit. No further work on those two components is authorized under this task. |

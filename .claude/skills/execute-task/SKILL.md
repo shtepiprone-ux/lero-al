@@ -128,6 +128,20 @@ classification.
 Do not invent missing behavior, paths, commands, prior test results, or owner decisions. Do not begin broad cleanup
 or a redesign because the task feels incomplete.
 
+### Scope guard for mechanical multi-file edits
+
+Before any script, one-liner, or bulk command can modify more than one repository file — including a BOM/encoding
+repair, normalization, generated-data rewrite, or plant-and-restore operation — build and print an ordered manifest
+of the exact relative target paths. The write loop may touch only a manifest member and must stop before the first
+write with `SCOPE GUARD FAILED` if a candidate path is absent, duplicated, or outside the task-owned scope.
+
+Never derive a write set from a bare directory, recursive glob, or all of `docs/sessions/`. A genuinely directory-wide
+task must name its permitted root, file extensions, exclusions, and expected candidate count in the kickoff; re-check
+that count immediately before writing and stop on any mismatch. Use Node UTF-8 I/O for source/data rewrites, or pass
+`-Encoding utf8` explicitly to PowerShell reads; never round-trip a BOM-less UTF-8 file through bare
+`Get-Content -Raw`. Record the pre-write and final `git hash-object` values for every manifest path and inspect the
+real diff. A clean functional gate cannot substitute for this scope proof.
+
 ## Implementation discipline
 
 - Change only the task's owned scope. When a shared primitive, type, contract, or flow is affected, inspect actual

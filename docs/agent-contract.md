@@ -138,7 +138,10 @@ convenient interpretation. Clause identifiers are intentionally stable because o
 
 14. **File integrity and encoding must be protected.** Touched text/source files remain UTF-8 without BOM, without
     NUL bytes, parseable where applicable, complete, and free of mojibake. Use owner-native or CI evidence as the
-    authority when a sandbox read looks suspicious; a sandbox anomaly is a screen, not a verdict.
+    authority when a sandbox read looks suspicious; a sandbox anomaly is a screen, not a verdict. A mechanical write
+    to more than one file requires an explicit relative-path manifest, enforced before every write; a bare directory
+    or recursive glob is never a write scope. The task must state any permitted directory root, extensions,
+    exclusions, and expected count. A manifest/count mismatch is `SCOPE GUARD FAILED`, with no write performed.
 
 15. **Critical flows require regression proof.** If a task touches a flow in `docs/critical-flow-registry.md`, it
     must establish the existing baseline, preserve or add automated coverage for the changed behavior, and record

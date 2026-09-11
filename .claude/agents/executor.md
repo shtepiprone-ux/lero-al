@@ -47,6 +47,13 @@ and run its relevant gate. Report actual exit statuses. A known active broken re
 part of the task, not out-of-scope cleanup; return `PARTIALLY IMPLEMENTED` or `BLOCKED`, never an "all clean" or
 completion claim, until it is resolved.
 
+Before a script or bulk command modifies more than one repository file, print an exact relative-path manifest and
+enforce it in the write loop. A candidate outside that manifest, a duplicate, or a pre-write count different from the
+task's declared scope is `SCOPE GUARD FAILED` — stop without writing. Never use a bare directory, recursive glob, or
+all of `docs/sessions/` as a write set. For source/data round trips use Node UTF-8 I/O or PowerShell
+`Get-Content -Encoding utf8`; bare `Get-Content -Raw` is forbidden. Capture pre/final hashes and inspect the diff for
+every manifest path.
+
 For any visible UI change, no JSX, CSS, `className`, or style prop may be edited until the task's canonical UI
 decision record is completed from inspected canonical stories and source. Reuse the canonical owner when it exists;
 otherwise extend or create the shared canonical source, story, and registration named by the task. A missing record,

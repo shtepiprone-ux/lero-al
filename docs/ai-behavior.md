@@ -148,10 +148,10 @@ and paste the output in the session log:
    - **MJS/JS syntax clean**: `node --check <file>` exits 0 (for `.mjs`/`.js` files)
    - **Not truncated**: re-read the tail; the intended last line is present
    - Run `npm run check:file-integrity` (or `check:file-integrity:all`) and paste the green transcript.
-   A claimed `tsc=0`/gate-green contradicted by NUL bytes or a parse failure is a fabricated proof and a TASK FAILURE.
-   Full rule: `docs/agent-contract.md` clause 14. Gate script: `scripts/check-file-integrity.mjs` (Task 400).
+    A claimed `tsc=0`/gate-green contradicted by NUL bytes or a parse failure is a fabricated proof and a TASK FAILURE.
+    Full rule: `docs/agent-contract.md` clause 14. Gate script: `scripts/check-file-integrity.mjs` (Task 400).
 
-   **5a. The counting gates run TWICE — this step is not the last one (Task 720 review, 2026-08-06).**
+    **5a. The counting gates run TWICE — this step is not the last one (Task 720 review, 2026-08-06).**
    `check:file-integrity` and `check:mojibake` *count* what `git status` reports, and the session log and
    `docs/backlog.md` are themselves files that `git status` reports. Running them only here — "before writing
    the session log", as this step says — guarantees the persisted count is short by at least one and cannot
@@ -167,10 +167,18 @@ and paste the output in the session log:
      files, `docs/backlog.md`, the session log, and after deleting every scratch file — re-run **both**
      `check:file-integrity` and `check:mojibake`, persist them separately (e.g. `iN-final-*`), and reconcile
      their counts to `git status --porcelain`.
-   - **The chicken-and-egg is resolved by path set, not by content.** The session log must be *created* before
-     pass 2 so it is counted; only its counting-gates section is *filled in* afterwards. Editing an
-     already-counted file does not change the count. If pass 2's number differs from `git status`, you have
-     created or deleted a path since — fix that, do not narrate around it.
+    - **The chicken-and-egg is resolved by path set, not by content.** The session log must be *created* before
+      pass 2 so it is counted; only its counting-gates section is *filled in* afterwards. Editing an
+      already-counted file does not change the count. If pass 2's number differs from `git status`, you have
+      created or deleted a path since — fix that, do not narrate around it.
+
+    **5b. Mechanical multi-file write scope guard (2026-09-11 — mandatory):** Before a script may change more than
+    one repository file, print an ordered manifest of exact relative paths and enforce that manifest in the write
+    loop. Never treat a bare directory, recursive glob, or all of `docs/sessions/` as an authorised write set. A
+    directory-wide task must state its allowed root, extensions, exclusions, and expected count; a candidate outside
+    the manifest, duplicate path, or count mismatch is `SCOPE GUARD FAILED` and stops before any write. Use Node
+    UTF-8 I/O, or explicit PowerShell `-Encoding utf8`, for source/data round trips; capture pre/final
+    `git hash-object` values and inspect the diff for every manifest path.
 
 6. **Self-validation verdict line in the session log:**
    ```

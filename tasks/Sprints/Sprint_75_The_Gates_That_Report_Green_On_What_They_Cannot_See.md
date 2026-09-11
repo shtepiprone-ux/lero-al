@@ -34,13 +34,23 @@ of the wrong proposition.
 | **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **APPROVED** 2026-09-11 — R1-R20 verified against the artifacts; R20 closed by the owner directly in `docs/golden-rules.md:92`. Archived in `docs/backlog-archive.md`. GR-1/GR-3 remain **not enforced** — gated on **817** and **818**. → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
 | **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **FILED** 2026-09-11 by owner decision 1 — kickoff owed |
-| **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 2 — kickoff owed |
+| **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **KICKOFF FILED** 2026-09-11 → [`Sprint_75_kickoff_prompt_Task_817_…`](Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md) |
 | **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 3 — kickoff owed |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
-**Execution order: 812 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own enforcement table calls it
-P0 and says GR-1 and GR-3 stay self-reported until it lands. The other three are independent of each other.
+**Execution order: 812 → 817 → 818 → 816 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own
+enforcement table calls it P0 and says GR-1 and GR-3 stay self-reported until it lands; 812 is now **APPROVED** and
+archived. **817 and 818 come next because exit criterion 2 depends on both of them and on nothing else** — 817 gives
+GR-1 the command its own `Command` block already cites, 818 turns decision 3's advisory CI step into a blocking one.
+816 follows because it owns the 11-path allowlist those two report against. 815, 797 and 743 are independent of each
+other and of the enforcement chain.
+
+> **Corrected 2026-09-11 while filing 817's kickoff.** This line read `812 → 815 → 797 → 743` for the whole day
+> after **816**, **817** and **818** were added to the Tasks table above — the same two-tables-one-maintained defect
+> recorded against Sprint 74's Task 702 row (`orchestrator-procedures.md` → recurring failure modes, the
+> 2026-08-10 fourth-occurrence corollary). The Tasks table is the single state source; this line is order and
+> gating only.
 
 **786 is deliberately NOT in this sprint.** "No control can see a React hook called in a Server Component" is the same
 family by description, but it is a P1 production-outage detector with its own false-positive boundary and blast

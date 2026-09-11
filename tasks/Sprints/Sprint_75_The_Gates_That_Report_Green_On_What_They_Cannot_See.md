@@ -31,7 +31,7 @@ of the wrong proposition.
 
 | # | Title | P | QA | State |
 |---|---|---|---|---|
-| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **KICKOFF FILED** 2026-09-11 → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
+| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **NEEDS REVISION** 2026-09-11 — Opus review of the executor's `BLOCKED — OWNER DECISION REQUIRED`: detector built and proven, R6/CI wiring open behind an owner sequencing call, four correctable defects owed → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |

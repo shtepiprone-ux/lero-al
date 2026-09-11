@@ -70,11 +70,11 @@ restorable with a hash witness.
 | **R1** | A detector walks the **enrolled subgraph**: starting from every manifest path, parse the file, resolve each local import, and recurse into resolved files that are themselves enrolled. Every resolved local file at the frontier — imported by an enrolled file, not itself enrolled — is a candidate. | **P0** | AC1 |
 | **R2** | A candidate is reported **only if it is actually rendered** by the importing file — its imported local binding appears as a JSX opening-element tag name in that file. A type-only import, a hook, a util, a constant, a context object or a value imported but never placed in JSX is not a rendered component and must not be reported. | **P0** | AC2, AC3 |
 | **R3** | Findings carry a reason code: `tier1-unenrolled` for a local feature component, `tier2-legacy-primitive` for anything resolving under `src/components/ui/`. The two are printed separately, because the corrections differ. | P1 | AC1 |
-| **R4** | An allowlist file carries the tier-3 exclusions. Every entry requires a **reason string** and an **owning task number**; an entry missing either is itself an error. An entry that no longer matches any real edge is reported as **stale** and fails the gate, in the same shape `check-design-tokens.mjs` already uses for stale markers. | **P0** | AC4, AC5 |
+| **R4** | An allowlist file carries the tier-3 exclusions. Every entry requires a **reason string** and an **owning task number**; an entry missing either is itself an error. An entry that no longer matches any real edge is reported as **stale** and fails the gate, in the same shape `check-design-tokens.mjs` already uses for stale markers. **Amended by Revision 1 → R10: tier-3 only — a `src/components/ui/*` path is tier 2 and must be rejected as an invalid entry, never honoured.** | **P0** | AC4-R, AC5, AC11 |
 | **R5** | The detector prints its own scope alongside its result — how many enrolled roots it walked, how many edges it resolved, and how many local imports it skipped as non-rendered — so a green line states what it actually inspected. This is Sprint 75's exit criterion 5 in miniature. | P1 | AC6 |
-| **R6** | The check is wired into `package.json` and runs in the same CI job as `check:story-coverage`, before `build-storybook`. A detector that is not wired is a proof, not a gate — the defect already recorded against `scripts/task808-key-warning-probe.mjs`. | **P0** | AC7 |
-| **R7** | Two-armed plant, both arms retained: with `CollectionsSection.tsx` removed from the manifest the gate exits non-zero and names the `FavoritesShell → CollectionsSection` edge; with it restored the gate exits 0, and the manifest's `git hash-object` is identical before the plant and after the restore. | **P0** | AC8 |
-| **R8** | `docs/golden-rules.md`'s enforcement table is updated: GR-1 and GR-3 move from receipt-only to enforced by this command, and the "812 — not yet built" sentence is replaced by what actually landed. `docs/storybook-governance.md` §15 gains the new gate beside §15's existing description. | P1 | AC9 |
+| **R6** | The check is wired into `package.json` and runs in the same CI job as `check:story-coverage`, before `build-storybook`. A detector that is not wired is a proof, not a gate — the defect already recorded against `scripts/task808-key-warning-probe.mjs`. **`package.json` half landed in Revision 0; the CI half is held behind owner decision 3 (§14.6) and executed by Revision 1 → R14.** | **P0** | AC7-R |
+| **R7** | Two-armed plant, both arms retained: with `CollectionsSection.tsx` removed from the manifest the gate exits non-zero and names the `FavoritesShell → CollectionsSection` edge; with it restored the gate exits 0, and the manifest's `git hash-object` is identical before the plant and after the restore. **`GR-4 VIOLATION, mine — "with it restored the gate exits 0" is an absolute a correct implementation cannot satisfy on a tree carrying 51 other unresolved edges. Superseded by Revision 1 → R11.`** | **P0** | ~~AC8~~ → AC8-R |
+| **R8** | `docs/golden-rules.md`'s **`Enforcement status` table only** is updated: GR-1 and GR-3 move from receipt-only to enforced by this command, and the "812 — not yet built" sentence is replaced by what actually landed. `docs/storybook-governance.md` §15 gains the new gate beside §15's existing description. **This never authorized editing GR-1's `Command` block or any other rule body — that file's own header reserves rule-body changes to a dated owner decision. Revision 0 rewrote it anyway; Revision 1 → R12 corrects that.** | P1 | AC9, AC12 |
 | **R9** | `check:story-coverage` itself is **not modified in behaviour**. If the shared resolver is extracted to `scripts/lib/`, that file keeps importing it and its output stays byte-identical for an unchanged tree. | **P0** | AC10 |
 
 ## 5. Assumptions and open questions
@@ -143,16 +143,19 @@ fails in CI, naming the importing file, the rendered component and the tier.
 - **AC3 [R2]** — Given a deliberate probe: add a type-only import of an unenrolled local component to one enrolled
   file, run the gate, observe it is **not** reported; remove the probe and restore the file byte-identically, quoting
   its `git hash-object` before and after and its absence from `git status --porcelain`.
-- **AC4 [R4]** — Given an allowlist containing `AppImage`, `ListingFeatureIcon` and `FavoriteButton` with reasons and
-  owner **813**, then those three are not reported, and the scope line counts them as allowlisted.
+- **AC4 [R4]** — ~~Given an allowlist containing `AppImage`, `ListingFeatureIcon` and `FavoriteButton` with reasons and
+  owner **813**, then those three are not reported, and the scope line counts them as allowlisted.~~ **Superseded by AC4-R
+  (§14.4). `src/components/ui/AppImage.tsx` is a tier-2 legacy primitive, not a tier-3 shared component; naming it here
+  was a task-design defect that put an always-in-scope obligation behind a reason string.**
 - **AC5 [R4]** — Given one allowlist entry pointed at a path no enrolled file renders, then the gate fails with a
   stale-entry message naming it. Restore and re-run clean.
 - **AC6 [R5]** — The gate's output states, on a passing run, the number of enrolled roots walked, edges resolved,
   non-rendered local imports skipped, allowlisted edges, and the classes it cannot see (dynamic import / `React.lazy`).
 - **AC7 [R6]** — `npm run check:rendered-scope` exists in `package.json` and the CI governance job runs it; quote the
   workflow diff hunk.
-- **AC8 [R7]** — Both plant arms retained under `docs/sessions/evidence/task812/`, with the manifest's
-  `git hash-object` identical before the plant and after the restore.
+- **AC8 [R7]** — ~~Both plant arms retained under `docs/sessions/evidence/task812/`, with the manifest's
+  `git hash-object` identical before the plant and after the restore.~~ **Superseded by AC8-R (§14.4) — the retained
+  restored arm exits 1, and a single retained hash cannot witness "identical before and after".**
 - **AC9 [R8]** — `docs/golden-rules.md`'s enforcement table names this command for GR-1 and GR-3 and no longer says
   812 is unbuilt; `docs/storybook-governance.md` §15 describes the new gate.
 - **AC10 [R9]** — `npm run check:story-coverage` still prints **38 covered / 0 unproven**, exit 0, on the restored
@@ -160,6 +163,11 @@ fails in CI, naming the importing file, the rendered component and the tier.
 
 **GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: none.** AC10's `38/0` is a
 reproduction of a measured current value on an unchanged tree, not a target a correct implementation could violate.
+
+> **RETRACTED 2026-09-11 by the Revision 0 review — this audit was wrong.** AC8's "the gate exits 0" *is* an absolute,
+> and the measured tree makes it unsatisfiable. See §14.2 defect 2 and the corrected audit in §14.4. This is the fifth
+> recorded instance of a kickoff's own measured/derived claim being the defect; the receipt was emitted and false,
+> which is exactly what `docs/golden-rules.md`'s preamble warns a self-reported receipt can be.
 
 ## 10. Verification plan
 
@@ -189,8 +197,10 @@ npm.cmd run check:mojibake
 ```
 
 Expected: typecheck 0 · eslint 0 errors · `check:story-coverage` **38 covered / 0 unproven** exit 0 ·
-`check:rendered-scope` exit 0 with its scope line · `check:stories` 0 violations · `build` exit 0 · both hygiene
-gates clean. **The last two are not optional and are not omitted from this block** — the previous two passes on Task
+~~`check:rendered-scope` exit 0 with its scope line~~ **corrected 2026-09-11: `check:rendered-scope` exits **1** on the
+current tree and that is the correct result — the 51 unresolved frontier edges are real. Assert the scope line and the
+tier counts, never the exit code, until owner decision 3 (§14.6) resolves the frontier** · `check:stories` 0
+violations · `build` exit 0 · both hygiene gates clean. **The last two are not optional and are not omitted from this block** — the previous two passes on Task
 809 each left a hygiene gate out of the command block and each produced a defect that reached the reviewer.
 
 ### 10.3 Two-armed plant
@@ -235,9 +245,11 @@ transcript path · assumptions · deviations · limitations. Status: `IMPLEMENTE
 | Does it change `check:story-coverage`'s behaviour? | No — R9/AC10. A shared resolver may be extracted; the output must stay identical. |
 | Are the hygiene gates in the command block? | Yes — §10.2, deliberately, after two consecutive Task 809 passes where their omission from my own block produced a defect. |
 
-## 13. Git handoff — task design (owner-run, do not execute)
+## 13. Git handoff — task design, Revision 0 (owner-run, do not execute) — **already committed**
 
 ```powershell
 git add "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "tasks/Sprints/Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md" "docs/backlog.md"
 git commit -m "docs(Task812): Sprint 75 opened - the gates that report green on what they cannot see; 812 kickoff filed"
 ```
+
+Revision 1's own handoff is §15.

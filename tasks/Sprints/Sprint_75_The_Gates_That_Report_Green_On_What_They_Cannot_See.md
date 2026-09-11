@@ -37,7 +37,9 @@ of the wrong proposition.
 | **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. GR-1's `Command` block is runnable; the blind spot is measured (planted de-enrolment: the census blocks on `CollectionsSection`, `check:rendered-scope` names it zero times). GR-1/GR-3 remain **not enforced** — gated on **818**. 3 P3 notes carried to 816/818. → [`Sprint_75_kickoff_prompt_Task_817_…`](Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md) |
 | **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. The gate is **blocking** in CI against a versioned 29-edge baseline, with a 5-arm `check:rendered-scope:verify` self-test. GR-1/GR-3 now enforced **for the enrolled subgraph only** — exit criterion 2 is not met; owner decision 4 files **819**. → [`Sprint_75_kickoff_prompt_Task_818_…`](Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md) |
 | **819** | GR-1's pre-enrolment case becomes blocking — diff → affected surfaces → `check-surface-census.mjs --surface` each | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. Blocking in CI against a 690-block/268-surface baseline with carried/stale/new semantics and an 8-arm self-test. **Exit criterion 2 is now met.** → [`Sprint_75_kickoff_prompt_Task_819_…`](Sprint_75_kickoff_prompt_Task_819_Pre_Enrolment_Census_Becomes_Blocking.md) |
-| **820** | One rule for the pattern directory — enrol the remaining 28, retire the 11 transitional tier-3 entries, add the parity check | **P0** | Q4 | **KICKOFF FILED** 2026-09-11 by owner decision 5. Manifest **38 → 66**; `responsiveBottomSheet.tsx` needs a canonical Story first; the expanded frontier is measured **before** it is modified; no baseline for the three single-consumer paths. → [`Sprint_75_kickoff_prompt_Task_820_…`](Sprint_75_kickoff_prompt_Task_820_One_Rule_For_The_Pattern_Directory.md) |
+| **820** | One rule for the pattern directory — enrol the remaining 28, retire the 11 transitional tier-3 entries, add the parity check | **P0** | Q4 | **NEEDS REVISION** 2026-09-11 (review Revision 2) — R1-R10 and R12 verified; **R11/AC15 BLOCKED on Task 813** by owner decision §17.6 select (A2), recorded verbatim below and in the kickoff's §17.7. R13/AC17 (session-log sync) is the only executor work owed meanwhile. Originally **KICKOFF FILED** 2026-09-11 by owner decision 5. Manifest **38 → 66**; `responsiveBottomSheet.tsx` needs a canonical Story first; the expanded frontier is measured **before** it is modified; no baseline for the three single-consumer paths. → [`Sprint_75_kickoff_prompt_Task_820_…`](Sprint_75_kickoff_prompt_Task_820_One_Rule_For_The_Pattern_Directory.md) |
+| **813** | `AppImage` leaves `src/components/ui/` → `src/design-system/media/` — clear the tier-2 root cause that blocks Task 820 | **P0** (raised from tier-3 filing by decision §17.6) | Q4 | **READY FOR SONNET** 2026-09-11 — §5.1 answered, select **(C)+(B1)**, recorded verbatim below. Destination `src/design-system/media/`; a blocking self-tested **media-directory parity check lands in the same task** (R12) so the new namespace never ships ungoverned; scope narrowed to `AppImage` + its R1-proven siblings, the other two components split to **821**. `TIER2_PREFIX` is the literal string `src/components/ui/` in both gates, so the fix is the path, not the component: **25** census blocks + **2** frontier edges + the **2** refused by Task 820 all clear at once. Both patterns reach `AppImage` through one shared node, `LightboxView.tsx`. §5.1 holds the one open decision — destination namespace, and whether 813 stays whole or scopes to `AppImage`. → [`Sprint_75_kickoff_prompt_Task_813_…`](Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md) |
+| **821** | `ListingFeatureIcon` and `FavoriteButton` — the last two tier-3 allowlist entries get their own Stories | P1 | Q3 | **READY FOR SONNET** 2026-09-11, sequenced **after Task 820's commit** — split out of 813 by decision §5.1 (B1). Both enrolled and storied (`FavoriteButton` appears today only inside `ListingCardPattern.stories.tsx` as a composition — GR-3 says that is not its Story); both allowlist entries keep their explicit rows and move `owner` `813` → `821`. Must not start while Task 820's `13 → 2` allowlist edit is uncommitted — it would invalidate 820's recorded `bf09fd2f…` hash. → [`Sprint_75_kickoff_prompt_Task_821_…`](Sprint_75_kickoff_prompt_Task_821_Last_Two_Tier3_Allowlist_Entries.md) |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
@@ -166,3 +168,43 @@ Binding consequences: **820** is that task, filed in the Tasks table above in th
 only — **no baseline, no reworded `reason`, no relaxed premise** is available to it. The `38 → 66` correction is the owner's, made while
 selecting this option: `docs/design-system-pattern-ownership.md` §4 read `38 → 71`, double-counting the 5 already-enrolled patterns, and the
 review that approved Task 816 did not re-derive the sum. Corrected in that document with the error recorded rather than silently fixed.
+
+> **Decision §17.2 (Task 820) — select (A), 2026-09-11.** Reconcile the baseline in Task 820 through the existing
+> diff-scoped writer with an explicitly recorded base and head; never hand-edit it or defer a known false-red gate.
+> Stop if the widened measurement refuses tier-2 debt or produces an unexplainable delta.
+
+> **Decision §17.6 (Task 820) — select (A2), 2026-09-11.** Task 813's AppImage migration is a blocking dependency of
+> Task 820. Migrate `LightboxView.tsx` off `src/components/ui/AppImage.tsx` through Task 813; do not enrol
+> `LightboxView` merely to hide the tier-2 hop, defer either pattern, add an exclusion, or baseline the tier-2
+> finding. After Task 813 is approved, re-run Task 820 §17.2 option (A) from the same base
+> `02d975f945159df38c23a0caab43e1c7a96faa58` to the then-current fixed HEAD, with diff/surface limits re-measured and
+> recorded. The reconciliation must remove the 20 now-false entries, list every baseline delta, and pass the gate plus
+> its self-test. Any new tier-2 refusal remains a stop for a new owner decision.
+
+Binding consequences: **813** is raised to **P0** and inserted into the execution order **before 820's completion** —
+the order is now **812 → 817 → 818 → 819 → 816 → 820 (partial) → 813 → 820 (R11 reconciliation) → 815 → 797 → 743**.
+Task 820's R11/AC15 may not be re-attempted until 813 carries an `APPROVED` verdict. These two decisions are recorded
+here because `agent-contract` 16d requires an owner decision to be quoted verbatim with its date **in the sprint
+file**; the Task 820 kickoff's §17.7 carries the same text and the binding order it imposes on the executor.
+
+> **Decision §5.1 (Task 813) — select (C) and (B1), 2026-09-11.** Move `AppImage.tsx` and only the co-located
+> siblings proven by R1 to `src/design-system/media/`; do not place the project's canonical non-Mantine image
+> primitive under `src/design-system/mantine/patterns/`. In the same Task 813, add a blocking, CI-safe, self-tested
+> media-directory parity check: every `src/design-system/media/*.tsx` file must be enrolled in the manifest, while
+> existing story coverage continues to require its canonical Story. The check must derive the directory at runtime,
+> print its scope boundary, and prove a planted missing-enrolment failure. Do not weaken or alter the existing
+> pattern-directory check.
+>
+> Task 813 is scoped to `AppImage` and its proven co-located siblings only. File `ListingFeatureIcon` and
+> `FavoriteButton` as the next numbered task, transfer their allowlist ownership from `813` to that task in the same
+> state update, and keep them governed by their explicit entries. Task 820 may resume immediately after the AppImage
+> half is approved; it does not wait for the two unrelated components.
+
+Binding consequences: **821** is filed in the Tasks table above in the same state update, and the execution order
+becomes **812 → 817 → 818 → 819 → 816 → 820 (partial) → 813 → 820 (R11 reconciliation) → 821 → 815 → 797 → 743**.
+Task 820's R11 resumes on **813's** approval alone. The `owner` `813` → `821` field transfer in
+`scripts/rendered-scope-allowlist.json` is sequenced into 821 and **after Task 820's commit**, because that file
+currently carries 820's uncommitted `13 → 2` edit whose `git hash-object` `bf09fd2f63b542faa14a63bfb44253203422b026`
+is 820's own AC6 evidence; editing the field earlier would force 820 to re-run it. This is the one place the
+decision's "in the same state update" is satisfied by the state records here and in `docs/backlog.md`, with the data
+file following in 821.

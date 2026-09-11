@@ -31,8 +31,11 @@ of the wrong proposition.
 
 | # | Title | P | QA | State |
 |---|---|---|---|---|
-| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **PARTIALLY VERIFIED** 2026-09-11 — Opus review of the executor's `PARTIALLY IMPLEMENTED`. Kickoff §§14-15 carry R10-R15 / AC4-R,AC7-R,AC8-R,AC11-AC14; **R10, R11, R12, R13, R15 all verified against the artifacts**. **R14 is the only open requirement** and is held by `STOP - OWNER DECISION REQUIRED` (§14.6: pattern-frontier classification · GR-1's missing `check-surface-census.mjs` · CI host and mode) → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
+| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **NEEDS REVISION** 2026-09-11 — R10/R11/R12/R13/R15 verified against the artifacts; owner answered §14.6 on 2026-09-11 (1a · 2a · 3a, quoted verbatim below), which unblocks **R14** and adds **R16-R19** (11 literal tier-3 allowlist entries owned by 816 · post-R16 census 27/3/27 · no enforced-claim · golden-rules Enforcement-status row). Kickoff §§14-15 carry R10-R19 / AC4-R,AC7-R,AC8-R,AC11-AC17 → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
+| **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **FILED** 2026-09-11 by owner decision 1 — kickoff owed |
+| **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 2 — kickoff owed |
+| **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 3 — kickoff owed |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
@@ -65,3 +68,46 @@ established the detector-plus-boundary pattern this sprint is meant to produce.
    modes" stating the rule this sprint proves — **when a check narrows its input set, the narrowing must be printed
    alongside the result, so a green line can never be read as a claim about the excluded set.** GR-2 already demands
    this of agents in prose; the exit criterion is that the *commands* say it themselves.
+
+## Owner decisions — 2026-09-11, Task 812 §14.6 (quoted verbatim, `agent-contract` 16d)
+
+> **Decision 1 — select 1a, systematic tier-3 for the shared Mantine-pattern cluster.**
+>
+> The current live census, not the stale "10 edges" text in §14.6, is authoritative. Correct §14.6 first: it currently
+> contains 11 pattern target paths across 23 rendered edges:
+> MantineCombobox, MantineCopyIdButton, MantineCountButton, MantineDrawer,
+> MantineDropdownMenu, MantineListingCardPattern, MantineListingContactPattern,
+> MantineListingDetailPattern, MantineModal, MantinePagination, RangeDatePicker.
+>
+> These are shared design-system components with canonical Stories; classify them as tier 3. Add one literal allowlist
+> entry per path — no directory rule, glob, prefix suppression, or broad exemption. Each entry needs a durable reason
+> and owner Task 816. File Task 816 in the same state update as the design-system-pattern ownership/audit task. It owns
+> future changes to this path list and must re-measure it whenever a listed pattern changes.
+>
+> This does not authorize allowlisting any non-pattern tier-1 target or any tier-2 `src/components/ui/*` path.
+> AppImage and PasswordRequirementsHint remain tier 2.
+
+> **Decision 2 — select 2a, build the real per-surface GR-1 command.**
+>
+> File Task 817 to implement `scripts/check-surface-census.mjs --surface <path>`. It must produce GR-1's per-surface
+> receipt for an enrolled or unenrolled surface, so it detects the exact pre-enrolment blind spot that
+> `check:rendered-scope` cannot see. It needs a two-armed plant and must run against FavoritesShell.
+>
+> Do not replace GR-1 with the whole-manifest walk and do not downgrade it to the manual Select-String procedure.
+> Until Task 817 is approved, GR-1 remains receipt-only; Task 812's whole-manifest detector is complementary, not its
+> replacement.
+
+> **Decision 3 — select 3a as a temporary, observable rollout with a mandatory enforcement exit.**
+>
+> Wire `npm run check:rendered-scope` into the existing `governance` job immediately after `check:story-coverage`,
+> with step-level `continue-on-error: true`. Preserve the script's real exit code and print its full report in the job
+> log. It is advisory visibility only: do not mark GR-1/GR-3 enforced and do not claim R6's original blocking
+> condition is complete.
+>
+> In the same response, file Task 818 to make the rollout blocking safely: it must either reduce the reviewed frontier
+> to zero or add a versioned, path-level fail-on-new baseline comparator with a planted new-edge proof. On Task 818
+> approval, remove `continue-on-error` and make the governance step blocking/required. The advisory mode has no
+> indefinite exemption.
+
+**Exit criterion 2 is not met by decision 3.** GR-1 and GR-3 stay receipt-only until Task 817 is approved and Task 818
+makes the governance step blocking. An advisory step is visibility, not enforcement.

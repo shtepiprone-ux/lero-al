@@ -259,12 +259,12 @@ Revision 1's own handoff is §15.
 
 ## 14. Revision 1 — 2026-09-11
 
-Task 812 state: **`PARTIALLY VERIFIED`** (Opus review 2026-09-11 of the executor's `PARTIALLY IMPLEMENTED`).
-Revision 0 was reviewed on 2026-09-11 and four task-design/implementation defects were confirmed; a fifth (§14.2.5)
-was found while writing this revision. Two Revision 1 executor passes have since landed **R10, R11, R12, R13 and
-R15** — all verified against the artifacts, not the report. **R14 is the only requirement still open, and it is held
-by §14.6, not by missing work.** `BLOCKED` is retired: no executable work remains outside the owner's decision, and
-`APPROVED` is unavailable while a P0 requirement is unimplemented.
+Task 812 state: **`NEEDS REVISION`** (Opus, 2026-09-11, after the owner answered §14.6).
+**R10, R11, R12, R13 and R15 are verified done** against the artifacts, not the report. The owner's decisions of
+2026-09-11 — recorded verbatim in §14.6 — lift the block on **R14** and add **R16-R19**, so the task has executable
+work again. `BLOCKED` does not apply, and `APPROVED` is unavailable while R14 and R16-R19 are unimplemented.
+A sixth task-design defect was found while recording those decisions: §14.6's own pattern-cluster census was wrong.
+See §14.2 defect 6.
 
 ### 14.1 Re-entry mode and preserved artifacts
 
@@ -313,6 +313,11 @@ carry AC4-R, AC11 and AC8-R and must not be overwritten either.
    line requires. The file's header reserves rule-body changes to an owner decision quoted with its date.
    → **R12 / AC12**.
 5. **R6's CI instruction is internally unsatisfiable** — see §14.5. Discovered while writing this revision.
+6. **§14.6's own census of the pattern cluster was wrong — the seventh time a kickoff's own measured fact has been
+   the defect.** It said "10 of the 50 `tier1-unenrolled` edges" and then listed 10 component **names**, conflating
+   paths with edges and omitting `MantinePagination` entirely. Re-measured from `R1_final_report.txt` on 2026-09-11:
+   **11 paths across 23 edges.** The owner caught it and supplied the correct list before selecting option 1a.
+   Corrected in §14.6; the per-path edge counts are now printed so the next reader cannot repeat the conflation.
 
 ### 14.3 Revision 1 requirements
 
@@ -322,7 +327,11 @@ carry AC4-R, AC11 and AC8-R and must not be overwritten either.
 | **R11** | The two-armed plant asserts the **clearing of one named edge**, never an exit code: `src/modules/listings/components/FavoritesShell.tsx -> src/modules/listings/components/CollectionsSection.tsx  [tier1-unenrolled]` is present in the de-enrolled arm and absent from the restored arm. Each restore witness is **one** retained transcript carrying the `git hash-object` value before, the same value after, and the explicit `git status --porcelain -- <path>` output. Binds the manifest plant and the `FavoritesShell.tsx` type-only probe alike. | **P0** | **DONE** | AC8-R |
 | **R12** | `docs/golden-rules.md` GR-1's **`Command`** block is restored verbatim to its pre-812 per-surface form. Only the `Enforcement status` table and the closing paragraph — R8's real scope — may carry 812's result. | **P0** | **DONE** | AC12 |
 | **R13** | `scripts/check-rendered-scope.mjs` drops the two imports it never uses (`statSync` at `:41`, `extractImportSpecifiers` at `:45`). The phrase "one entry per edge" is corrected in both places it appears — `scripts/check-rendered-scope.mjs:21` and `docs/storybook-governance.md:2501` — to the implemented semantics: the allowlist is **keyed by path**, so one entry excuses every call site of that component and remains non-stale while any single edge to it survives. | P1 | **DONE** 2026-09-11 | AC13 |
-| **R14** | `check:rendered-scope` is placed in `.github/workflows/governance-pr.yml` in exactly the form §14.6 decision 3 selects, or deliberately left unwired with that decision quoted in the sprint file. §14.5 states the placement conflict this requirement must resolve. | **P0** | **OPEN — the only open requirement; blocked on §14.6 decision 3** | AC7-R |
+| **R14** | `check:rendered-scope` is placed in `.github/workflows/governance-pr.yml` in the form §14.6.4 selected: a step in the **`governance`** job, immediately after `npm run check:story-coverage`, with step-level `continue-on-error: true`, the script's real exit code preserved and its full report printed in the job log. §14.5 states the placement conflict this resolves. | **P0** | **OPEN — unblocked 2026-09-11 by §14.6.4** | AC7-R |
+| **R16** | Eleven **literal** allowlist entries are added to `scripts/rendered-scope-allowlist.json`, one per path in §14.6.1's table, each with a durable `reason` and `owner` `"816"`. No glob, prefix, directory rule, or new suppression mechanism in `check-rendered-scope.mjs` — the detector's logic is not touched. No non-pattern tier-1 path and no tier-2 `src/components/ui/*` path is added. | **P0** | **OPEN** | AC15 |
+| **R17** | After R16, the measured census is `tier1-unenrolled` **27** across the 20 non-pattern paths §14.6.2 lists, `tier2-legacy-primitive` **3**, `Allowlisted edges (tier3, owner-filed)` **27**, and `check:rendered-scope` still exits **1**. R10/AC11's tier-2 rejection still fires. | **P0** | **OPEN** | AC15, AC16 |
+| **R18** | No artifact this task writes or edits states or implies that GR-1 or GR-3 is enforced, that R6's blocking condition is met, or that `check:rendered-scope` is GR-1's compliance command. `docs/golden-rules.md` GR-1's `Command` block is not touched again (§14.6.3). | **P0** | **OPEN** | AC17 |
+| **R19** | `docs/golden-rules.md`'s **`Enforcement status` table only** — R8's authorized scope, and nothing else in that file — is corrected: the GR-1 row no longer says CI wiring is `BLOCKED — OWNER DECISION REQUIRED pending a sequencing call`, and instead records the 2026-09-11 decision, the advisory `continue-on-error` step, that GR-1 and GR-3 remain **receipt-only / not enforced**, and that enforcement is gated on Tasks 817 and 818. | P1 | **OPEN** | AC17 |
 | **R15** | The Revision 1 gate evidence is completed on the final tree. `scripts/check-rendered-scope.mjs` changed after Revision 0's build transcript was captured, so that transcript is stale for this diff: `agent-contract` clause **9** requires a current `npm run build` exit 0, and no `R1_` build or eslint transcript exists. Re-run the full §10.2 block with `R1_final_` names. | **P0** | **DONE** 2026-09-11 | AC14 |
 
 ### 14.4 Revision 1 acceptance criteria
@@ -368,10 +377,29 @@ carry AC4-R, AC11 and AC8-R and must not be overwritten either.
   arm (the changed script among them), and `R1_final_gate.txt` shows the script executing, which an unparseable file
   cannot do. Accepted as equivalent evidence; a future criterion of this shape should name the closing artifact rather
   than the command.
-- **AC7-R [R6, R14]** — Given §14.6 decision 3, then `.github/workflows/governance-pr.yml` contains the step that
-  decision selected — quote the hunk with its job name — or the sprint file quotes the dated decision to defer it. A
-  silent omission fails this criterion; that is the `scripts/task808-key-warning-probe.mjs` defect R6 was written
-  against. **Status: `OPEN`.**
+- **AC7-R [R6, R14]** — Given `.github/workflows/governance-pr.yml` read after the change, then the `governance` job
+  contains a step running `npm run check:rendered-scope` positioned immediately after the
+  `run: npm run check:story-coverage` step, carrying `continue-on-error: true` **on the step**, with no `|| true`, no
+  `exit 0`, no `set +e` and no other wrapper between the runner and the script. Quote the hunk together with the job
+  name and the two neighbouring steps. A silent omission fails this criterion; that is the
+  `scripts/task808-key-warning-probe.mjs` defect R6 was written against. **Status: `OPEN`.**
+- **AC15 [R16, R17]** — Given `scripts/rendered-scope-allowlist.json` after the change, then it holds exactly 13
+  entries: the 2 existing `owner 813` entries unchanged, plus the 11 of §14.6.1, each with a non-empty `reason` and
+  `owner` `"816"`, and every `path` matching §14.6.1's table character for character. `git diff` on
+  `scripts/check-rendered-scope.mjs` is **empty** for this requirement — the detector is not modified. Then
+  `npm run check:rendered-scope:report` prints `tier1-unenrolled (27)`, `tier2-legacy-primitive (3)` and
+  `allowlisted (27)`, and lists no `src/design-system/mantine/patterns/` path under `tier1-unenrolled`.
+  **Status: `OPEN`.**
+- **AC16 [R17, R10]** — Given the post-R16 tree, when the AC11 probe is repeated — `src/components/ui/AppImage.tsx`
+  temporarily added to the allowlist — then the gate still prints the invalid-entry `FAIL` naming that path **and**
+  still reports `tier2-legacy-primitive` **3**; and `npm run check:rendered-scope` still exits **1** on the clean
+  post-R16 tree, because the 27 non-pattern tier-1 edges and 3 tier-2 edges remain. Remove the probe entry and re-run.
+  **Status: `OPEN`.**
+- **AC17 [R18, R19]** — Given `docs/golden-rules.md` read after the change, then its GR-1 `Command` block is
+  byte-identical to its pre-change content, its `Enforcement status` GR-1 row records the 2026-09-11 advisory decision
+  and names Tasks 817 and 818 as the enforcement gate, and the words "enforced" / "blocking" appear nowhere in that
+  row as a claim about GR-1 or GR-3's current state; and `grep -rn "R6 .*complete\|GR-1 .*enforced\|GR-3 .*enforced"`
+  across the files this task changed returns no such claim. **Status: `OPEN`.**
 - **AC14 [R15]** — Given the final Revision 1 tree, then `R1_final_typecheck.txt`, `R1_final_eslint.txt`,
   `R1_final_story-coverage.txt`, `R1_final_gate.txt`, `R1_final_stories.txt`, `R1_final_build.txt`,
   `R1_final_file-integrity.txt` and `R1_final_mojibake.txt` all exist, are BOM-free, and record `win32`, the Node
@@ -389,8 +417,11 @@ carry AC4-R, AC11 and AC8-R and must not be overwritten either.
   4258 files.
 - **AC10 carried forward unchanged** and re-proven by AC14's `R1_final_story-coverage.txt`.
 
-**GR-4 AC AUDIT — 7 criteria (AC4-R, AC11, AC8-R, AC12, AC13, AC7-R, AC14); each states an observable property;
-absolutes: none.** AC8-R's "zero occurrences" is scoped to one named edge string in one named transcript,
+**GR-4 AC AUDIT — 11 criteria (AC4-R, AC11, AC8-R, AC12, AC13, AC14, AC7-R, AC15, AC16, AC17, and AC10 carried
+forward); each states an observable property; absolutes: none.** AC15's "`git diff` is empty for
+`scripts/check-rendered-scope.mjs`" is scoped to one named file that this requirement deliberately does not touch, so
+it is an assertion about this change's boundary, not a global invariant a correct implementation could violate;
+AC17's "byte-identical" is scoped the same way to a block §14.6.3 forbids editing. AC8-R's "zero occurrences" is scoped to one named edge string in one named transcript,
 which is an observable property of that artifact, not a global invariant a correct implementation could violate.
 
 ### 14.5 The CI placement conflict R14 must resolve
@@ -410,43 +441,126 @@ instruction.
 is dropped as a task-design error, not silently reinterpreted. R14 implements the `governance` placement **in the
 mode §14.6 decision 3 selects**; it does not choose the mode.
 
-### 14.6 STOP - OWNER DECISION REQUIRED
+### 14.6 OWNER DECISIONS - ANSWERED 2026-09-11
 
-Three decisions. Each must be recorded **verbatim with its date** in
-`tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md`. This kickoff is not that
-authorization, and no option below may be selected by an executor or by the reviewer.
+This section was `STOP - OWNER DECISION REQUIRED`. All three decisions were answered by the owner on **2026-09-11**
+and are quoted verbatim below; the same text is recorded in
+`tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md` per `agent-contract` 16d, which
+requires the sprint file to carry the dated decision. No option here may be widened, narrowed or re-selected by an
+executor or a reviewer.
 
-**Decision 1 — the `src/design-system/mantine/patterns/*` cluster.** 10 of the 50 `tier1-unenrolled` edges resolve
-into that directory (`MantineDrawer`, `MantineModal`, `MantineCombobox`, `MantineCountButton`,
-`MantineDropdownMenu`, `MantineListingCardPattern`, `MantineCopyIdButton`, `RangeDatePicker`,
-`MantineListingContactPattern`, `MantineListingDetailPattern` — full listing `R1_10.1_report_corrected_allowlist.txt`).
+#### 14.6.1 The corrected pattern-cluster census — measured, not quoted
 
-| Option | What it changes | What it must verify |
+`FACT`, re-measured from `docs/sessions/evidence/task812/R1_final_report.txt` on 2026-09-11. The earlier text in this
+section said "10 edges" and listed 10 names; both were wrong. **11 target paths across 23 rendered edges**, and this
+table is the authoritative list decision 1 binds:
+
+| # | Target path | Rendered edges |
 |---|---|---|
-| **1a** — systematic tier-3 | one allowlist entry per pattern path, each with a standing reason and an owning task number | the gate's `tier1-unenrolled` count drops by exactly the pattern edges; no entry is stale; AC11 still fires |
-| **1b** — individual enrolment | each pattern joins `scripts/mantine-migration-scope.json` and needs a canonical Story of its own | `check:story-coverage` stays at *N* covered / 0 unproven with the new roots; each new root's own frontier is re-measured |
-| **1c** — split by case | a dated per-component list; no default | the list itself is the artifact; the gate result must match it edge for edge |
+| 1 | `src/design-system/mantine/patterns/MantineCombobox.tsx` | 4 |
+| 2 | `src/design-system/mantine/patterns/MantineCopyIdButton.tsx` | 1 |
+| 3 | `src/design-system/mantine/patterns/MantineCountButton.tsx` | 4 |
+| 4 | `src/design-system/mantine/patterns/MantineDrawer.tsx` | 4 |
+| 5 | `src/design-system/mantine/patterns/MantineDropdownMenu.tsx` | 1 |
+| 6 | `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` | 1 |
+| 7 | `src/design-system/mantine/patterns/MantineListingContactPattern.tsx` | 1 |
+| 8 | `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` | 1 |
+| 9 | `src/design-system/mantine/patterns/MantineModal.tsx` | 3 |
+| 10 | `src/design-system/mantine/patterns/MantinePagination.tsx` | 1 |
+| 11 | `src/design-system/mantine/patterns/RangeDatePicker.tsx` | 2 |
+| | **Total** | **23** |
 
-**Decision 2 — GR-1's compliance command.** `scripts/check-surface-census.mjs`, which GR-1 names at
-`docs/golden-rules.md:28`, does not exist.
+**Freshness rule:** this is a measured value that can drift. Re-run `npm run check:rendered-scope:report` at execution
+and reconcile against this table before writing the allowlist. If a path has appeared or disappeared, stop and report
+it — do not silently widen the list, because decision 1 binds *these* paths.
 
-| Option | What it changes | What it must verify |
+#### 14.6.2 Decision 1 — 1a, systematic tier-3 for the shared Mantine-pattern cluster
+
+> **Decision 1 — select 1a, systematic tier-3 for the shared Mantine-pattern cluster.**
+>
+> The current live census, not the stale "10 edges" text in §14.6, is authoritative. Correct §14.6 first: it currently
+> contains 11 pattern target paths across 23 rendered edges:
+> MantineCombobox, MantineCopyIdButton, MantineCountButton, MantineDrawer,
+> MantineDropdownMenu, MantineListingCardPattern, MantineListingContactPattern,
+> MantineListingDetailPattern, MantineModal, MantinePagination, RangeDatePicker.
+>
+> These are shared design-system components with canonical Stories; classify them as tier 3. Add one literal allowlist
+> entry per path — no directory rule, glob, prefix suppression, or broad exemption. Each entry needs a durable reason
+> and owner Task 816. File Task 816 in the same state update as the design-system-pattern ownership/audit task. It owns
+> future changes to this path list and must re-measure it whenever a listed pattern changes.
+>
+> This does not authorize allowlisting any non-pattern tier-1 target or any tier-2 `src/components/ui/*` path.
+> AppImage and PasswordRequirementsHint remain tier 2.
+
+Binding consequences, stated so they cannot be read loosely:
+
+- **Eleven literal `{ "path": …, "reason": …, "owner": "816" }` entries.** No glob, no prefix, no directory rule, no
+  new suppression mechanism in `check-rendered-scope.mjs`. A code change that makes the detector treat
+  `src/design-system/mantine/patterns/` as a class is **out of scope and forbidden** — it would recreate the
+  broad-exemption failure R10 exists to stop.
+- **The 20 non-pattern tier-1 paths stay tier 1** (27 edges): `CaptchaWidget`, `FilterChoiceGroup`,
+  `FilterRangeInputs`, `FilterRoomsRow`, `LocaleSwitcher`, `MapWrapper`, `PhoneField`, `PropertyTypeCombobox`,
+  `ViewAllLink`, `YearCombobox`, `GalleryIsland`, `GalleryStaticFrame`, `ListingInquiryDialog`, `ListingReportDialog`,
+  `ListingShareButton`, `ListingsActionRow`, `RecentlyViewedSection`, `RecentlyViewedTracker`, `SimilarListings`,
+  `ViewTracker`. None of them may be allowlisted by this task.
+- **The 3 tier-2 edges stay tier 2** and are untouched: `ListingCard -> AppImage`,
+  `PopularLocationsView -> AppImage`, `AuthSheet -> PasswordRequirementsHint`. R10/AC11 continue to reject any attempt
+  to allowlist them.
+- **Ownership of the remaining tier-1/tier-2 frontier is not settled by this decision.** The owner assigned Task 816
+  to the pattern cluster only. The 20 non-pattern tier-1 paths and the 3 tier-2 edges remain unowned frontier and are
+  what Task 818 must either clear or baseline (§14.6.4).
+
+#### 14.6.3 Decision 2 — 2a, build the real per-surface GR-1 command
+
+> **Decision 2 — select 2a, build the real per-surface GR-1 command.**
+>
+> File Task 817 to implement `scripts/check-surface-census.mjs --surface <path>`. It must produce GR-1's per-surface
+> receipt for an enrolled or unenrolled surface, so it detects the exact pre-enrolment blind spot that
+> `check:rendered-scope` cannot see. It needs a two-armed plant and must run against FavoritesShell.
+>
+> Do not replace GR-1 with the whole-manifest walk and do not downgrade it to the manual Select-String procedure.
+> Until Task 817 is approved, GR-1 remains receipt-only; Task 812's whole-manifest detector is complementary, not its
+> replacement.
+
+Binding consequence for this task: `docs/golden-rules.md` GR-1's **`Command`** block stays exactly as R12 restored it.
+Task 812 may not touch it again, and no text in this repository may describe `check:rendered-scope` as GR-1's
+compliance command.
+
+#### 14.6.4 Decision 3 — 3a, temporary advisory rollout with a mandatory enforcement exit
+
+> **Decision 3 — select 3a as a temporary, observable rollout with a mandatory enforcement exit.**
+>
+> Wire `npm run check:rendered-scope` into the existing `governance` job immediately after `check:story-coverage`,
+> with step-level `continue-on-error: true`. Preserve the script's real exit code and print its full report in the job
+> log. It is advisory visibility only: do not mark GR-1/GR-3 enforced and do not claim R6's original blocking
+> condition is complete.
+>
+> In the same response, file Task 818 to make the rollout blocking safely: it must either reduce the reviewed frontier
+> to zero or add a versioned, path-level fail-on-new baseline comparator with a planted new-edge proof. On Task 818
+> approval, remove `continue-on-error` and make the governance step blocking/required. The advisory mode has no
+> indefinite exemption.
+
+Binding consequences:
+
+- The step goes in the `governance` job (`.github/workflows/governance-pr.yml`), immediately after the
+  `npm run check:story-coverage` step. §14.5 explains why `governance` and not a `build-storybook` job.
+- `continue-on-error: true` is set **at step level only**. Do not set it on the job, and do not add `|| true`,
+  `exit 0`, or any wrapper that hides the script's real exit code — the decision requires the real code preserved and
+  the full report printed.
+- Advisory means advisory: R6's original blocking condition is **not** complete, and no artifact may say GR-1 or GR-3
+  is enforced. R19 fixes the one place that currently implies otherwise.
+- The advisory mode expires on Task 818's approval; 818 is filed now, not later.
+
+#### 14.6.5 Tasks filed by these decisions
+
+Filed in the same state update as this revision — `docs/backlog.md` and the Sprint 75 Tasks table. Each needs its own
+kickoff before execution; none of them is executable from this file.
+
+| Task | Owner decision | Scope as the owner stated it |
 |---|---|---|
-| **2a** — build it | a new numbered task creates `check-surface-census.mjs` producing GR-1's four receipt slots for one surface, enrolled or not | the command runs against `FavoritesShell.tsx` and emits the receipt line |
-| **2b** — authorize the whole-manifest walk | a dated decision replaces GR-1's `Command` with `check:rendered-scope` and accepts that a not-yet-enrolled surface is outside it | the decision text states the accepted blind spot |
-| **2c** — make it the manual procedure | GR-1's `Command` becomes the three `Select-String` commands `agent-contract` 16d already prints, and the missing script reference is deleted | GR-1's receipt is producible by hand for one named surface |
-
-**Decision 3 — CI host and mode for `check:rendered-scope`**, given §14.5's conflict and the 53 currently-failing
-edges.
-
-| Option | What it changes | What it must verify |
-|---|---|---|
-| **3a** — `governance` job, `continue-on-error: true` | the frontier is visible on every PR and blocks nothing | the step appears in the `governance` job and a red run does not fail the job |
-| **3b** — `governance` job, blocking, sequenced after decision 1 | full enforcement, but only once the frontier is resolved | `npm run check:rendered-scope` exits 0 on the tree at the moment the step is added |
-| **3c** — not wired, deliberately | `check:rendered-scope` stays a local command | the dated decision is quoted in the sprint file, and `docs/golden-rules.md`'s GR-1 row keeps saying GR-1 is receipt-only in CI |
-
-**A non-blocking CI step is not a default.** Option 3a is only available once the owner has selected it in writing;
-an executor may not choose it to make a red gate tolerable.
+| **816** | 1 | Design-system-pattern ownership/audit. Owns the 11-path list in §14.6.1 and re-measures it whenever a listed pattern changes. |
+| **817** | 2 | Implement `scripts/check-surface-census.mjs --surface <path>` producing GR-1's per-surface receipt for an enrolled **or unenrolled** surface; two-armed plant; runs against `FavoritesShell`. |
+| **818** | 3 | Make the advisory rollout blocking: reduce the reviewed frontier to zero, **or** add a versioned path-level fail-on-new baseline comparator with a planted new-edge proof; then remove `continue-on-error`. |
 
 ### 14.7 Revision 1 verification plan
 
@@ -467,11 +581,16 @@ npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
 ```
 
-Expected: `win32` · `v22.22.3` · status lists only Task 812 artifacts plus the pre-existing paths named in §14.8 ·
+Expected **before R16** (the state R13/R15 left, already captured in `R1_final_*`): `win32` · `v22.22.3` ·
 `--check` silent, exit 0 · typecheck 0 · eslint 0 errors · coverage `38 covered / 0 unproven` exit 0 · the report
 prints `tier1-unenrolled (50)`, `tier2-legacy-primitive (3)`, `Allowlisted edges (tier3, owner-filed): 4`, exit 0 ·
-`check:rendered-scope` **exit 1**, which is correct while the frontier is unresolved · `check:stories` 0 violations ·
-`build` exit 0 · both hygiene gates clean.
+`check:rendered-scope` **exit 1** · `check:stories` 0 violations · `build` exit 0 · both hygiene gates clean.
+
+Expected **after R16/R14** — re-run the same block and retain it as `R2_final_<check>.txt`, do not overwrite the
+`R1_final_*` set: the report prints `tier1-unenrolled (27)`, `tier2-legacy-primitive (3)`,
+`Allowlisted edges (tier3, owner-filed): 27`, exit 0; `check:rendered-scope` still **exit 1**; every other result
+unchanged. `git status --short` lists the Task 812 artifacts plus the pre-existing paths named in §14.8 and, newly,
+`.github/workflows/governance-pr.yml` and `scripts/rendered-scope-allowlist.json`.
 
 Retain each transcript as `docs/sessions/evidence/task812/R1_final_<check>.txt`, BOM-free, written with
 `[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))` or PowerShell 7's `-Encoding utf8NoBOM`.
@@ -481,9 +600,13 @@ A plain `>` redirect writes a BOM and `check:file-integrity` rejects it.
 
 Everything §11 requires, plus, and replacing §11's references to the superseded AC4 and AC8:
 
+- AC15's allowlist diff — 13 entries, the 11 new ones quoted — and the `git diff --stat scripts/check-rendered-scope.mjs` empty result;
+- AC15/AC16's post-R16 census line (`27 / 3 / 27`) and the repeated AC11 probe transcript;
+- AC17's GR-1 `Command`-block byte-identity check and the corrected `Enforcement status` row quoted;
 - AC13's two corrected texts quoted, and `node.exe --check` exit code;
-- AC7-R's workflow hunk **with its job name**, or the dated decision quoted from the sprint file;
-- AC14's eight `R1_final_*` transcript paths with their real exit codes, the `build` exit 0 line included;
+- AC7-R's workflow hunk **with its job name and the two neighbouring steps**;
+- AC14's eight `R1_final_*` transcript paths with their real exit codes, the `build` exit 0 line included, plus the
+  `R2_final_*` re-run set;
 - confirmation that the five §14.1 artifacts are unmodified —
   `git status --porcelain -- docs/sessions/evidence/task812/` naming no `M` on any of them;
 - for any §14.6 option selected, the verbatim dated decision text as it was copied into the sprint file.
@@ -493,17 +616,18 @@ Everything §11 requires, plus, and replacing §11's references to the supersede
 `src/modules/listings/components/RecentlyViewedSection.tsx`. `src/components/ui/AppImage.tsx` being dirty is **not**
 licence to migrate it: R10 removes its allowlist entry and touches nothing else.
 
-Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` when R13 and R15 land and §14.6 is answered;
-`PARTIALLY IMPLEMENTED` when R13 and R15 land while §14.6 is still open. `BLOCKED` is not available while R13 and R15
-remain executable.
+Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` when R14 and R16-R19 all land; `PARTIALLY
+IMPLEMENTED` when some land and the rest are named with their blocker. `BLOCKED` is not available — §14.6 is answered
+and every remaining requirement is executable from this file. Do not self-approve; Opus alone issues the verdict.
 
 ### 14.9 Revision 1 pre-read bundle
 
 `docs/golden-rules.md` in full, including its header and GR-1's `Command` block · `docs/agent-contract.md` clauses
 **9** and **16d** tiers 1-3 · `scripts/check-rendered-scope.mjs` in full · `scripts/rendered-scope-allowlist.json` ·
 `docs/storybook-governance.md` §15.5 · `.github/workflows/governance-pr.yml` jobs `governance`, `homepage-grid`,
-`locale-leak` · `docs/sessions/2026-09-11-task812-rendered-but-unenrolled-component-detector.md` · §§13-14 of this
-kickoff.
+`locale-leak` · `docs/sessions/evidence/task812/R1_final_report.txt` — the census §14.6.1 is measured from ·
+`docs/sessions/2026-09-11-task812-rendered-but-unenrolled-component-detector.md` · §§13-15 of this kickoff, §14.6 in
+full.
 
 ## 15. Git handoff — Revision 1 orchestration (owner-run, do not execute)
 
@@ -513,7 +637,7 @@ repository after the 2026-09-08 Windows update, so this block is built from the 
 
 ```powershell
 git add "tasks/Sprints/Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md" "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "docs/backlog.md"
-git commit -m "docs(Task812): Revision 1 sections 14-15 written into the kickoff; GR-5 state synced to NEEDS REVISION"
+git commit -m "docs(Task812): owner decisions 1a/2a/3a recorded in 14.6; R16-R19 added; 816/817/818 filed; GR-5 synced"
 ```
 
 This stages orchestration artifacts only — no `scripts/`, no `docs/sessions/`, no implementation path. No `git push`:

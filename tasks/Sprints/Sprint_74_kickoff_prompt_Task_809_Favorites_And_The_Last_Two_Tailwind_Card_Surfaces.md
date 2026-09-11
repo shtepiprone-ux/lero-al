@@ -1465,3 +1465,129 @@ or `BLOCKED`. **A Bash-produced result presented as a repository result makes th
 git add "tasks/Sprints/Sprint_74_kickoff_prompt_Task_809_Favorites_And_The_Last_Two_Tailwind_Card_Surfaces.md" "docs/backlog.md"
 git commit -m "docs(Task809): Revision 5 - close Revision 4's evidence gaps (locale dimension, wrap-growth cell, R36 consumers, Windows-native transcripts, fixture semantics); no product code in scope"
 ```
+
+
+---
+
+# Task 809 — Revision 6
+
+**Owner classification, 2026-09-11, quoted verbatim and binding:** *"F1 не означає, що Sonnet зробила «неправильний» або
+hardcoded fix. Вона, імовірно, логічно перенесла весь responsive-блок white-card chrome з `sm` на `md`, використовуючи
+Mantine props і токени, як я того просив… Це не помилка підходу Sonnet, а надто широкий, але природний Mantine-native
+fix. Правильна вимога до неї мала бути сформульована відразу так: «залишити card chrome на `sm`; відкласти тільки
+horizontal padding і border, бо лише вони впливають на grid-fit». Opus має прийняти це як вузьке уточнення реалізації,
+а не як черговий сумнів у правильності адаптації."*
+
+This revision therefore carries **no quality finding against the executor.** The 2026-09-11 remediation is accepted as
+correct in approach, layer and method: the root cause was traced to the right file, the fix used Mantine breakpoint
+keys and spacing/colour tokens with zero raw px — which is exactly what was asked for — and it was proven two-armed
+with a permanent monotonicity check. What follows is a **scoped implementation refinement plus one unrun gate.**
+
+## 80. The orchestrator's omission — recorded, because it is the cause
+
+`FACT` — neither the kickoff nor the review that requested this fix ever stated **which properties are load-bearing
+for the constraint**. The instruction was "fix the dead zone in the right layer, in Mantine props and tokens". Moving
+the whole `sm`-keyed chrome block to `md` satisfies that instruction completely and idiomatically. A Mantine-native
+responsive block is authored and read as one unit, so moving it as one unit is the natural reading — there was nothing
+in the request to suggest the block should be split.
+
+The durable lesson, and it belongs to task design, not execution: **when a fix is constrained by a measurable budget
+(here, horizontal width), the task must name which properties consume that budget and which do not.** For a
+Mantine `Box` responsive chrome block, `px`/`bd` consume horizontal width; `bg`, `bdrs` and `py` do not. Had the
+request said so, the narrowing below would have been in the first implementation.
+
+## 81. The refinement — what changes and why it is not a re-fix
+
+`FACT`, re-derived by the reviewer against the measured numbers in
+`docs/sessions/2026-09-11-task809-storybook-column-dead-zone-remediation.md` §1/§3:
+
+| Property | Horizontal width consumed at the `sm`→`md` step | Disposition |
+|---|---|---|
+| `px` (`'md'` 16px → `'xl'` 24px, both sides) | **16px** | defer to `md` |
+| `bd` (`none` → `1px solid`, both sides) | **2px** | defer to `md` |
+| `bg` (`transparent` → `white`) | 0 | **return to `sm`** |
+| `bdrs` (`0` → `'2xl'`) | 0 | **return to `sm`** |
+| `py` (`0` → `'xl'`) | 0 (vertical only) | **return to `sm`** |
+
+Geometry is unchanged by the refinement — this is the point, and it is why no re-measurement of the fix itself is
+required, only a reproduction. At 640px: `640 − 32` (outer `'md'`, both sides) `− 32` (inner `'md'`, both sides)
+`− 0` (no border yet) = **576px**, identical to the remediation's measured value and exactly the two-column
+requirement (`2 × 280 + 16`). At 768px: `768 − 48 − 48 − 2` = **670px**, also identical to its measured value.
+Column counts across the swept range are therefore unchanged; only the harness's appearance between 640px and 767px
+is restored to what §6m documents.
+
+## 82. Requirements — Revision 6
+
+| ID | Requirement | Priority | Verified by |
+|---|---|---|---|
+| **R45** | In `src/stories/mantine/_MantineStoryShell.tsx`'s inner `Box`, only `px` and `bd` are keyed to `md`; `bg`, `bdrs` and `py` return to their documented `sm` keying. The file's header comment states which two properties move, and that the other three were returned because they consume no horizontal width. | P2 | AC42 |
+| **R46** | `npm run build-storybook` is run and exits 0. It was not run on the remediation, and it is the only gate that compiles the ~90 stories importing this file. | P2 | AC43 |
+| **R47** | `MantineListingCardTrack.module.css` records, in a comment at the `.grid` rule, that the track has **zero** horizontal margin at the `sm` rung (576px required vs 576px available), so a future change to `--listing-card-min`, the 16px gap, or the story-shell gutter reopens the dead zone. | P3 | AC44 |
+| **R48** | The earlier session log's probe-hash sentence is corrected: `d1ff42c882…` is the Revision 0 value, and the file was extended on 2026-09-11 with `measureStorybookColumnMonotonicity`. | P3 | AC44 |
+
+## 83. Scope and out of scope
+
+**In scope:** `src/stories/mantine/_MantineStoryShell.tsx` (R45) · `MantineListingCardTrack.module.css` comment only
+(R47) · `docs/sessions/2026-09-10-…md`'s probe-hash sentence (R48) · `docs/sessions/2026-09-11-…md` and
+`docs/backlog.md` for the new evidence.
+
+**Out of scope:** the fix's own approach, layer and method — accepted by owner decision above · the zero-slack fit at
+640px, accepted with R47's comment as its record · `FavoritesShell.tsx`, `theme.ts`,
+`MantineEmptyLoadingErrorState.tsx`, the `.grid` rule itself · widening the monotonicity sweep to other breakpoint
+rungs (→ **815**) · re-running the full Q3 profile.
+
+## 84. Acceptance criteria
+
+- **AC42 [R45]** — Given the refined `_MantineStoryShell.tsx`, then `measureStorybookColumnMonotonicity` reproduces
+  the remediation's own 14-width table (§3 of the 2026-09-11 log) cell for cell, `MONOTONIC: PASS`, with 576px content
+  at 640px and 670px at 768px. Quote the table. A cell that differs is a finding to report, not to accept.
+- **AC43 [R46]** — Given `npm run build-storybook` run natively, then it exits 0. Record platform, Node version,
+  working directory and exit code.
+- **AC44 [R47, R48]** — The `.grid` comment states the zero-margin fit and names the three inputs that would reopen
+  it; the probe-hash sentence names the Revision 0 value and the 2026-09-11 extension.
+
+**GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.** AC42 asserts reproduction of a
+measured table rather than a hand-derived target, which is what makes a differing cell informative instead of a
+tolerance argument.
+
+## 85. QA profile and verification plan
+
+**Profile: `Q2 Standard UI`** — down from Q3, and the reason is specific: R45 changes no geometry (§81), R47/R48 are
+comments, and the visual criterion for the surface itself was accepted by the owner on 2026-09-11. The one rendered
+question — does the white card chrome reappear at 640-767px — is a single look, below.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+npm.cmd run typecheck
+npx.cmd eslint src/stories/mantine/_MantineStoryShell.tsx
+node.exe scripts\check-design-tokens.mjs --strict --scope=mantine
+npm.cmd run check:stories
+npm.cmd run build-storybook
+```
+
+Expected: `win32`; the Node version recorded; typecheck exit 0; eslint 0 errors; design-tokens 0 violations;
+`check:stories` 0 violations; `build-storybook` exit 0. Then re-run the monotonicity probe against the rebuilt
+Storybook and quote its 14-width table.
+
+**`OWNER VISUAL QA REQUIRED`** — one tuple, because one thing changed:
+
+| Surface | State | Locale | Viewport |
+|---|---|---|---|
+| any `Mantine/Primitives/*` story using `width="full"` | default | en | 700 |
+
+The white bordered card with its `2xl` radius must be present again at 700px, as `§6m` documents.
+
+## 86. Completion report contract
+
+Files changed · requirement IDs completed · AC42's reproduced table · AC43's native transcript · the two comment
+edits · commands run with real exit codes · assumptions · deviations · limitations. Status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+
+## 87. Git handoff — task design (owner-run, do not execute)
+
+```powershell
+git add "tasks/Sprints/Sprint_74_kickoff_prompt_Task_809_Favorites_And_The_Last_Two_Tailwind_Card_Surfaces.md" "docs/backlog.md"
+git commit -m "docs(Task809): Revision 6 - owner reclassifies the chrome deferral as a scoped refinement, not a defect; narrow to px+bd, run build-storybook, record the zero-margin fit"
+```

@@ -73,7 +73,7 @@ restorable with a hash witness.
 | **R4** | An allowlist file carries the tier-3 exclusions. Every entry requires a **reason string** and an **owning task number**; an entry missing either is itself an error. An entry that no longer matches any real edge is reported as **stale** and fails the gate, in the same shape `check-design-tokens.mjs` already uses for stale markers. **Amended by Revision 1 → R10: tier-3 only — a `src/components/ui/*` path is tier 2 and must be rejected as an invalid entry, never honoured.** | **P0** | AC4-R, AC5, AC11 |
 | **R5** | The detector prints its own scope alongside its result — how many enrolled roots it walked, how many edges it resolved, and how many local imports it skipped as non-rendered — so a green line states what it actually inspected. This is Sprint 75's exit criterion 5 in miniature. | P1 | AC6 |
 | **R6** | The check is wired into `package.json` and runs in the same CI job as `check:story-coverage`, before `build-storybook`. A detector that is not wired is a proof, not a gate — the defect already recorded against `scripts/task808-key-warning-probe.mjs`. **`package.json` half landed in Revision 0; the CI half is held behind owner decision 3 (§14.6) and executed by Revision 1 → R14.** | **P0** | AC7-R |
-| **R7** | Two-armed plant, both arms retained: with `CollectionsSection.tsx` removed from the manifest the gate exits non-zero and names the `FavoritesShell → CollectionsSection` edge; with it restored the gate exits 0, and the manifest's `git hash-object` is identical before the plant and after the restore. **`GR-4 VIOLATION, mine — "with it restored the gate exits 0" is an absolute a correct implementation cannot satisfy on a tree carrying 51 other unresolved edges. Superseded by Revision 1 → R11.`** | **P0** | ~~AC8~~ → AC8-R |
+| **R7** | Two-armed plant, both arms retained: with `CollectionsSection.tsx` removed from the manifest the gate exits non-zero and names the `FavoritesShell → CollectionsSection` edge; with it restored the gate exits 0, and the manifest's `git hash-object` is identical before the plant and after the restore. **`GR-4 VIOLATION, mine — "with it restored the gate exits 0" is an absolute a correct implementation cannot satisfy on a tree carrying 53 other unresolved edges. Superseded by Revision 1 → R11.`** | **P0** | ~~AC8~~ → AC8-R |
 | **R8** | `docs/golden-rules.md`'s **`Enforcement status` table only** is updated: GR-1 and GR-3 move from receipt-only to enforced by this command, and the "812 — not yet built" sentence is replaced by what actually landed. `docs/storybook-governance.md` §15 gains the new gate beside §15's existing description. **This never authorized editing GR-1's `Command` block or any other rule body — that file's own header reserves rule-body changes to a dated owner decision. Revision 0 rewrote it anyway; Revision 1 → R12 corrects that.** | P1 | AC9, AC12 |
 | **R9** | `check:story-coverage` itself is **not modified in behaviour**. If the shared resolver is extracted to `scripts/lib/`, that file keeps importing it and its output stays byte-identical for an unchanged tree. | **P0** | AC10 |
 
@@ -198,8 +198,9 @@ npm.cmd run check:mojibake
 
 Expected: typecheck 0 · eslint 0 errors · `check:story-coverage` **38 covered / 0 unproven** exit 0 ·
 ~~`check:rendered-scope` exit 0 with its scope line~~ **corrected 2026-09-11: `check:rendered-scope` exits **1** on the
-current tree and that is the correct result — the 51 unresolved frontier edges are real. Assert the scope line and the
-tier counts, never the exit code, until owner decision 3 (§14.6) resolves the frontier** · `check:stories` 0
+current tree and that is the correct result — the 53 unresolved frontier edges (50 tier-1 + 3 tier-2, measured
+`R1_final_gate.txt`) are real. Assert the scope line and the
+tier counts, never the exit code, until owner decision 3 (§14.6) resolves the 53-edge frontier** · `check:stories` 0
 violations · `build` exit 0 · both hygiene gates clean. **The last two are not optional and are not omitted from this block** — the previous two passes on Task
 809 each left a hygiene gate out of the command block and each produced a defect that reached the reviewer.
 
@@ -253,3 +254,240 @@ git commit -m "docs(Task812): Sprint 75 opened - the gates that report green on 
 ```
 
 Revision 1's own handoff is §15.
+
+---
+
+## 14. Revision 1 — 2026-09-11
+
+Task 812 state: **`NEEDS REVISION`**. Revision 0 was reviewed on 2026-09-11 and four task-design/implementation
+defects were confirmed. A Revision 1 executor pass has since landed three of the four corrections in code; this
+section is the authoritative record of what is done, what is still owed, and what the owner must decide. Until §14.6
+is answered the task stays `NEEDS REVISION` — not `BLOCKED` — because executable work remains (R13, R15).
+
+### 14.1 Re-entry mode and preserved artifacts
+
+**Re-entry mode: `remediation`.** Do not rebuild the detector, re-extract `scripts/lib/import-resolver.mjs`, re-run
+the resolver refactor of `scripts/check-story-coverage.mjs`, or re-derive the frontier as a fresh measurement.
+
+**Forbidden re-runs — these files must not be overwritten, they are the only record of a state that no longer
+exists:**
+
+| Artifact | Why it is irreplaceable |
+|---|---|
+| `docs/sessions/evidence/task812/10.1_report.txt` | the frontier as measured **before any allowlist existed**: `tier1-unenrolled (54)`, `tier2-legacy-primitive (3)`, `Allowlisted edges … 0` |
+| `docs/sessions/evidence/task812/AC1_plant_arm1.txt` | the original arm-1 fire |
+| `docs/sessions/evidence/task812/AC1_plant_arm2_restored_report.txt` | the original restored-arm report |
+| `docs/sessions/evidence/task812/AC3_probe_report.txt` | the type-only probe run, edges `253` / skipped `156` |
+| `docs/sessions/evidence/task812/AC4_gate_with_allowlist.txt` | the **defective** state (`tier2-legacy-primitive (1)`) that the R10 finding rests on; deleting it destroys the proof that the defect was real |
+
+Every Revision 1 transcript is written under `docs/sessions/evidence/task812/` with an `R1_` prefix, BOM-free.
+
+### 14.2 Confirmed defects from the Revision 0 review
+
+1. **The allowlist accepted a tier-2 path.** `scripts/rendered-scope-allowlist.json` carried
+   `src/components/ui/AppImage.tsx` with owner `813`. `agent-contract` **16d** tier 2 says the surface must *stop
+   importing* a `@/components/ui/*` primitive — an obligation that is always in scope and that no reason string may
+   excuse. Measured effect: `tier2-legacy-primitive` read **1** in `AC4_gate_with_allowlist.txt` against **3** in the
+   unallowlisted census. Origin: the Revision 0 kickoff's own AC4 named `AppImage` as a tier-3 seed. My defect.
+   → **R10 / AC4-R / AC11**.
+2. **R7 asserted an absolute.** "with it restored the gate exits 0" cannot hold on a tree carrying 53 other
+   unresolved edges, and `AC1_plant_arm2_restored_gate.txt` ends `EXIT_CODE=1`. Both arms additionally print
+   `FAIL 50 tier1-unenrolled`, so neither the exit code nor the counts discriminate — only the named edge does.
+   `GR-4` violation in my own kickoff. → **R11 / AC8-R**.
+3. **Restore witnesses were single-valued.** `AC1_plant_restore_hash.txt` and `AC3_restore_hash.txt` each held one
+   40-character hash and no `git status --porcelain` output, so "identical before and after" was asserted, not
+   witnessed. → **R11 / AC8-R**.
+4. **R8's scope was not stated, and `docs/golden-rules.md`'s rule body was rewritten.** R8 authorized the
+   `Enforcement status` table; Revision 0 also replaced GR-1's **`Command`** block with the whole-manifest walk. That
+   walk covers only enrolled roots, so a surface mid-migration — the Task 809 topology GR-1 exists for — is never
+   censused by it, and it emits edge counts rather than the per-surface tier1/tier2/tier3 node counts GR-1's receipt
+   line requires. The file's header reserves rule-body changes to an owner decision quoted with its date.
+   → **R12 / AC12**.
+5. **R6's CI instruction is internally unsatisfiable** — see §14.5. Discovered while writing this revision.
+
+### 14.3 Revision 1 requirements
+
+| ID | Requirement | P | State | Verified by |
+|---|---|---|---|---|
+| **R10** | The allowlist is a **tier-3 mechanism only**. An entry whose `path` starts with `src/components/ui/` is an **invalid entry**: the gate prints it in its own `FAIL` block, exits non-zero, and **does not honour it** — the edge is still counted and printed under `tier2-legacy-primitive`. An invalid entry is reported as invalid, never as *stale*. `src/components/ui/AppImage.tsx` is removed from `scripts/rendered-scope-allowlist.json`. | **P0** | **DONE** | AC4-R, AC11 |
+| **R11** | The two-armed plant asserts the **clearing of one named edge**, never an exit code: `src/modules/listings/components/FavoritesShell.tsx -> src/modules/listings/components/CollectionsSection.tsx  [tier1-unenrolled]` is present in the de-enrolled arm and absent from the restored arm. Each restore witness is **one** retained transcript carrying the `git hash-object` value before, the same value after, and the explicit `git status --porcelain -- <path>` output. Binds the manifest plant and the `FavoritesShell.tsx` type-only probe alike. | **P0** | **DONE** | AC8-R |
+| **R12** | `docs/golden-rules.md` GR-1's **`Command`** block is restored verbatim to its pre-812 per-surface form. Only the `Enforcement status` table and the closing paragraph — R8's real scope — may carry 812's result. | **P0** | **DONE** | AC12 |
+| **R13** | `scripts/check-rendered-scope.mjs` drops the two imports it never uses (`statSync` at `:41`, `extractImportSpecifiers` at `:45`). The phrase "one entry per edge" is corrected in both places it appears — `scripts/check-rendered-scope.mjs:21` and `docs/storybook-governance.md:2501` — to the implemented semantics: the allowlist is **keyed by path**, so one entry excuses every call site of that component and remains non-stale while any single edge to it survives. | P1 | **OPEN** | AC13 |
+| **R14** | `check:rendered-scope` is placed in `.github/workflows/governance-pr.yml` in exactly the form §14.6 decision 3 selects, or deliberately left unwired with that decision quoted in the sprint file. §14.5 states the placement conflict this requirement must resolve. | **P0** | **OPEN — blocked on §14.6 decision 3** | AC7-R |
+| **R15** | The Revision 1 gate evidence is completed on the final tree. `scripts/check-rendered-scope.mjs` changed after Revision 0's build transcript was captured, so that transcript is stale for this diff: `agent-contract` clause **9** requires a current `npm run build` exit 0, and no `R1_` build or eslint transcript exists. Re-run the full §10.2 block with `R1_final_` names. | **P0** | **OPEN** | AC14 |
+
+### 14.4 Revision 1 acceptance criteria
+
+- **AC4-R [R4, R10]** — Given `scripts/rendered-scope-allowlist.json` holding exactly
+  `src/modules/listings/components/ListingFeatureIcon.tsx` and `src/modules/listings/components/FavoriteButton.tsx`,
+  each with a non-empty `reason` and `owner` `813`, when `node.exe scripts\check-rendered-scope.mjs --report` runs,
+  then neither path appears in a tier block, the scope line reads `Allowlisted edges (tier3, owner-filed): 4`, and
+  the report prints `tier1-unenrolled (50)` and `tier2-legacy-primitive (3)`.
+  **Status: `VERIFIED`** — `R1_10.1_report_corrected_allowlist.txt`, `EXIT_CODE=0`.
+- **AC11 [R10]** — Given `{"path": "src/components/ui/AppImage.tsx", "reason": "…", "owner": "813"}` present in the
+  allowlist, when `npm run check:rendered-scope` runs, then **both** of the following hold in the same transcript:
+  it prints `FAIL  1 invalid rendered-scope-allowlist.json entry(ies) — a src/components/ui/* (tier-2) path is never
+  a valid allowlist entry:` naming that path, **and** the `tier2-legacy-primitive` block still reports **3** edges.
+  Refusing the entry without still reporting its edges fails this criterion, and so does reporting the entry as
+  *stale*. Remove the entry and re-run.
+  **Status: `VERIFIED`** — `R1_tier2_invalid_probe.txt` lines 10 and 68, `EXIT_CODE=1`.
+- **AC8-R [R7, R11]** — Given one retained transcript per restore, then: the manifest witness carries
+  `9fdc9303c89d98d5e82f28e5ededb16f803924a3` before the plant and after the restore, an explicit empty
+  `git status --porcelain -- scripts/mantine-migration-scope.json`, the planted
+  `FavoritesShell.tsx -> CollectionsSection.tsx` edge in arm 1, and **zero** occurrences of that edge in arm 2; and
+  the probe witness carries `087c45c5886c2d46645aef11f9ece4fe14a4a3f0` before and after with its own empty porcelain
+  line. **Do not assert either arm's exit code** — both are 1 while the frontier is unresolved.
+  **Status: `VERIFIED`** — `R1_AC1_manifest_witness.txt`, `R1_AC3_favoritesshell_witness.txt`.
+- **AC12 [R8, R12]** — Given `docs/golden-rules.md` read after the change, then GR-1's `Command` block is the
+  per-surface form (`$surface = "…"` plus `node.exe scripts\check-surface-census.mjs --surface $surface`) and no
+  longer the whole-manifest walk, while the `Enforcement status` GR-1 row still names `check:rendered-scope` and its
+  actual state. **Status: `VERIFIED`** — `docs/golden-rules.md:24-29` and `:92`.
+  **Consequence this revision records rather than hides:** `scripts/check-surface-census.mjs` does not exist in
+  `scripts/`, so GR-1's restored command is not runnable today. That is a real, pre-existing GR-1 defect, it is
+  §14.6 decision 2, and it is not resolved by reverting the block.
+- **AC13 [R13]** — Given `node.exe --check scripts/check-rendered-scope.mjs` and a read of that file's header and of
+  `docs/storybook-governance.md` §15.5, then no unused import remains and neither text claims "one entry per edge";
+  both state path-keying and its consequence for staleness. **Status: `OPEN`.**
+- **AC7-R [R6, R14]** — Given §14.6 decision 3, then `.github/workflows/governance-pr.yml` contains the step that
+  decision selected — quote the hunk with its job name — or the sprint file quotes the dated decision to defer it. A
+  silent omission fails this criterion; that is the `scripts/task808-key-warning-probe.mjs` defect R6 was written
+  against. **Status: `OPEN`.**
+- **AC14 [R15]** — Given the final Revision 1 tree, then `R1_final_typecheck.txt`, `R1_final_eslint.txt`,
+  `R1_final_story-coverage.txt`, `R1_final_gate.txt`, `R1_final_stories.txt`, `R1_final_build.txt`,
+  `R1_final_file-integrity.txt` and `R1_final_mojibake.txt` all exist, are BOM-free, and record `win32`, the Node
+  version, the exact command and the real exit code; `build` exits 0; `check:story-coverage` prints
+  `38 covered / 0 unproven` exit 0; `check:rendered-scope` exits 1 with `tier1-unenrolled (50)` and
+  `tier2-legacy-primitive (3)`. **Status: `OPEN` — no `R1_` build or eslint transcript exists.**
+- **AC10 carried forward unchanged** and re-proven by AC14's `R1_final_story-coverage.txt`.
+
+**GR-4 AC AUDIT — 7 criteria (AC4-R, AC11, AC8-R, AC12, AC13, AC7-R, AC14); each states an observable property;
+absolutes: none.** AC8-R's "zero occurrences" is scoped to one named edge string in one named transcript,
+which is an observable property of that artifact, not a global invariant a correct implementation could violate.
+
+### 14.5 The CI placement conflict R14 must resolve
+
+`FACT`, read from `.github/workflows/governance-pr.yml` on 2026-09-11: R6's wording — *"runs in the same CI job as
+`check:story-coverage`, before `build-storybook`"* — names two different jobs and cannot be satisfied as one
+instruction.
+
+| Job | Line | Relevant step |
+|---|---|---|
+| `governance` (`Governance Check`) | `:119` | `run: npm run check:story-coverage` — this job never runs `build-storybook` |
+| `homepage-grid` (`Homepage Grid Validation`) | `:175` | `run: npm run build-storybook` |
+| `locale-leak` (`Locale Leak Detection`) | `:205` | `run: npm run build-storybook` |
+
+`check:rendered-scope` is a static AST walk: it needs no Storybook build and no browser, so `governance` beside
+`check:story-coverage` is the placement that matches its cost and its subject. R6's "before `build-storybook`" clause
+is dropped as a task-design error, not silently reinterpreted. R14 implements the `governance` placement **in the
+mode §14.6 decision 3 selects**; it does not choose the mode.
+
+### 14.6 STOP - OWNER DECISION REQUIRED
+
+Three decisions. Each must be recorded **verbatim with its date** in
+`tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md`. This kickoff is not that
+authorization, and no option below may be selected by an executor or by the reviewer.
+
+**Decision 1 — the `src/design-system/mantine/patterns/*` cluster.** 10 of the 50 `tier1-unenrolled` edges resolve
+into that directory (`MantineDrawer`, `MantineModal`, `MantineCombobox`, `MantineCountButton`,
+`MantineDropdownMenu`, `MantineListingCardPattern`, `MantineCopyIdButton`, `RangeDatePicker`,
+`MantineListingContactPattern`, `MantineListingDetailPattern` — full listing `R1_10.1_report_corrected_allowlist.txt`).
+
+| Option | What it changes | What it must verify |
+|---|---|---|
+| **1a** — systematic tier-3 | one allowlist entry per pattern path, each with a standing reason and an owning task number | the gate's `tier1-unenrolled` count drops by exactly the pattern edges; no entry is stale; AC11 still fires |
+| **1b** — individual enrolment | each pattern joins `scripts/mantine-migration-scope.json` and needs a canonical Story of its own | `check:story-coverage` stays at *N* covered / 0 unproven with the new roots; each new root's own frontier is re-measured |
+| **1c** — split by case | a dated per-component list; no default | the list itself is the artifact; the gate result must match it edge for edge |
+
+**Decision 2 — GR-1's compliance command.** `scripts/check-surface-census.mjs`, which GR-1 names at
+`docs/golden-rules.md:28`, does not exist.
+
+| Option | What it changes | What it must verify |
+|---|---|---|
+| **2a** — build it | a new numbered task creates `check-surface-census.mjs` producing GR-1's four receipt slots for one surface, enrolled or not | the command runs against `FavoritesShell.tsx` and emits the receipt line |
+| **2b** — authorize the whole-manifest walk | a dated decision replaces GR-1's `Command` with `check:rendered-scope` and accepts that a not-yet-enrolled surface is outside it | the decision text states the accepted blind spot |
+| **2c** — make it the manual procedure | GR-1's `Command` becomes the three `Select-String` commands `agent-contract` 16d already prints, and the missing script reference is deleted | GR-1's receipt is producible by hand for one named surface |
+
+**Decision 3 — CI host and mode for `check:rendered-scope`**, given §14.5's conflict and the 53 currently-failing
+edges.
+
+| Option | What it changes | What it must verify |
+|---|---|---|
+| **3a** — `governance` job, `continue-on-error: true` | the frontier is visible on every PR and blocks nothing | the step appears in the `governance` job and a red run does not fail the job |
+| **3b** — `governance` job, blocking, sequenced after decision 1 | full enforcement, but only once the frontier is resolved | `npm run check:rendered-scope` exits 0 on the tree at the moment the step is added |
+| **3c** — not wired, deliberately | `check:rendered-scope` stays a local command | the dated decision is quoted in the sprint file, and `docs/golden-rules.md`'s GR-1 row keeps saying GR-1 is receipt-only in CI |
+
+**A non-blocking CI step is not a default.** Option 3a is only available once the owner has selected it in writing;
+an executor may not choose it to make a red gate tolerable.
+
+### 14.7 Revision 1 verification plan
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+git --no-optional-locks status --short
+node.exe --check scripts/check-rendered-scope.mjs
+npm.cmd run typecheck
+npx.cmd eslint scripts/check-rendered-scope.mjs scripts/check-story-coverage.mjs scripts/lib/import-resolver.mjs
+npm.cmd run check:story-coverage
+node.exe scripts\check-rendered-scope.mjs --report
+npm.cmd run check:rendered-scope
+npm.cmd run check:stories
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+```
+
+Expected: `win32` · `v22.22.3` · status lists only Task 812 artifacts plus the pre-existing paths named in §14.8 ·
+`--check` silent, exit 0 · typecheck 0 · eslint 0 errors · coverage `38 covered / 0 unproven` exit 0 · the report
+prints `tier1-unenrolled (50)`, `tier2-legacy-primitive (3)`, `Allowlisted edges (tier3, owner-filed): 4`, exit 0 ·
+`check:rendered-scope` **exit 1**, which is correct while the frontier is unresolved · `check:stories` 0 violations ·
+`build` exit 0 · both hygiene gates clean.
+
+Retain each transcript as `docs/sessions/evidence/task812/R1_final_<check>.txt`, BOM-free, written with
+`[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))` or PowerShell 7's `-Encoding utf8NoBOM`.
+A plain `>` redirect writes a BOM and `check:file-integrity` rejects it.
+
+### 14.8 Revision 1 completion report contract
+
+Everything §11 requires, plus, and replacing §11's references to the superseded AC4 and AC8:
+
+- AC13's two corrected texts quoted, and `node.exe --check` exit code;
+- AC7-R's workflow hunk **with its job name**, or the dated decision quoted from the sprint file;
+- AC14's eight `R1_final_*` transcript paths with their real exit codes, the `build` exit 0 line included;
+- confirmation that the five §14.1 artifacts are unmodified —
+  `git status --porcelain -- docs/sessions/evidence/task812/` naming no `M` on any of them;
+- for any §14.6 option selected, the verbatim dated decision text as it was copied into the sprint file.
+
+**Pre-existing and out of scope, left untouched** — already modified before this task began and unrelated to it:
+`docs/component-catalog.md`, `docs/performance.md`, `src/components/ui/AppImage.tsx`, `src/lib/imageDelivery.ts`,
+`src/modules/listings/components/RecentlyViewedSection.tsx`. `src/components/ui/AppImage.tsx` being dirty is **not**
+licence to migrate it: R10 removes its allowlist entry and touches nothing else.
+
+Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` when R13 and R15 land and §14.6 is answered;
+`PARTIALLY IMPLEMENTED` when R13 and R15 land while §14.6 is still open. `BLOCKED` is not available while R13 and R15
+remain executable.
+
+### 14.9 Revision 1 pre-read bundle
+
+`docs/golden-rules.md` in full, including its header and GR-1's `Command` block · `docs/agent-contract.md` clauses
+**9** and **16d** tiers 1-3 · `scripts/check-rendered-scope.mjs` in full · `scripts/rendered-scope-allowlist.json` ·
+`docs/storybook-governance.md` §15.5 · `.github/workflows/governance-pr.yml` jobs `governance`, `homepage-grid`,
+`locale-leak` · `docs/sessions/2026-09-11-task812-rendered-but-unenrolled-component-detector.md` · §§13-14 of this
+kickoff.
+
+## 15. Git handoff — Revision 1 orchestration (owner-run, do not execute)
+
+Read-only `git status --short` could not be run from this session: the desktop bridge's shell cannot mount the
+repository after the 2026-09-08 Windows update, so this block is built from the paths this revision wrote. Check
+`git status` before pasting.
+
+```powershell
+git add "tasks/Sprints/Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md" "tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md" "docs/backlog.md"
+git commit -m "docs(Task812): Revision 1 sections 14-15 written into the kickoff; GR-5 state synced to NEEDS REVISION"
+```
+
+This stages orchestration artifacts only — no `scripts/`, no `docs/sessions/`, no implementation path. No `git push`:
+`NEEDS REVISION` is not an approved implementation review. A later session that relies on this commit must read
+`git show <verified-commit>:tasks/Sprints/Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md`
+before treating §§14-15 as persisted.

@@ -31,7 +31,7 @@ of the wrong proposition.
 
 | # | Title | P | QA | State |
 |---|---|---|---|---|
-| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **NEEDS REVISION** 2026-09-11 — Opus review of the executor's `BLOCKED — OWNER DECISION REQUIRED`: detector built and proven, R6/CI wiring open behind an owner sequencing call, four correctable defects owed → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
+| **812** | `check:story-coverage` reports green for the components it cannot see | **P0** | **Q4** | **NEEDS REVISION** 2026-09-11 — Revision 1 written into the kickoff §§14-15 (R10-R15, AC4-R/AC7-R/AC8-R/AC11-AC14). R10/R11/R12 verified done; R13 and R15 open and executable; R14 held by `STOP - OWNER DECISION REQUIRED` (§14.6: pattern-frontier classification · GR-1's missing `check-surface-census.mjs` · CI host and mode) → [`Sprint_75_kickoff_prompt_Task_812_…`](Sprint_75_kickoff_prompt_Task_812_Rendered_But_Unenrolled_Component_Detector.md) |
 | **815** | The column-monotonicity check runs for one story at one breakpoint band | P1 | Q2 | reserved |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |

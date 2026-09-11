@@ -36,14 +36,16 @@ of the wrong proposition.
 | **816** | Design-system Mantine-pattern ownership and audit — owns the 11-path tier-3 list in Task 812 §14.6.1 | P1 | Q2 | **FILED** 2026-09-11 by owner decision 1 — kickoff owed |
 | **817** | `scripts/check-surface-census.mjs --surface <path>` — GR-1's real per-surface command | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. GR-1's `Command` block is runnable; the blind spot is measured (planted de-enrolment: the census blocks on `CollectionsSection`, `check:rendered-scope` names it zero times). GR-1/GR-3 remain **not enforced** — gated on **818**. 3 P3 notes carried to 816/818. → [`Sprint_75_kickoff_prompt_Task_817_…`](Sprint_75_kickoff_prompt_Task_817_Per_Surface_Census_Command.md) |
 | **818** | Make the advisory `check:rendered-scope` rollout blocking — clear the frontier or add a fail-on-new baseline | **P0** | Q4 | **APPROVED WITH NOTES** 2026-09-11 after Revision 1 — archived in `docs/backlog-archive.md`. The gate is **blocking** in CI against a versioned 29-edge baseline, with a 5-arm `check:rendered-scope:verify` self-test. GR-1/GR-3 now enforced **for the enrolled subgraph only** — exit criterion 2 is not met; owner decision 4 files **819**. → [`Sprint_75_kickoff_prompt_Task_818_…`](Sprint_75_kickoff_prompt_Task_818_Rendered_Scope_Becomes_Blocking.md) |
-| **819** | GR-1's pre-enrolment case becomes blocking — diff → affected surfaces → `check-surface-census.mjs --surface` each | **P0** | Q4 | **FILED** 2026-09-11 by owner decision 4 — kickoff owed, gated on 818's approval (now given) |
+| **819** | GR-1's pre-enrolment case becomes blocking — diff → affected surfaces → `check-surface-census.mjs --surface` each | **P0** | Q4 | **KICKOFF FILED** 2026-09-11 by owner decision 4 — carries a `CONFLICT` to the owner on the mapper's strictness if the measured unresolved rate makes fail-closed unlivable (§5); §13.1 measures that before any CI wiring → [`Sprint_75_kickoff_prompt_Task_819_…`](Sprint_75_kickoff_prompt_Task_819_Pre_Enrolment_Census_Becomes_Blocking.md) |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
-**Execution order: 812 → 817 → 818 → 816 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own
+**Execution order: 812 → 817 → 818 → 819 → 816 → 815 → 797 → 743.** 812 first because `docs/golden-rules.md`'s own
 enforcement table calls it P0 and says GR-1 and GR-3 stay self-reported until it lands; 812 is now **APPROVED** and
-archived. **817 and 818 come next because exit criterion 2 depends on both of them and on nothing else** — 817 gives
-GR-1 the command its own `Command` block already cites, 818 turns decision 3's advisory CI step into a blocking one.
+archived. **817, 818 and 819 come next because exit criterion 2 depends on all three and on nothing else** — 817 gives
+GR-1 the command its own `Command` block already cites, 818 turns decision 3's advisory CI step into a blocking one, and 819 (owner decision 4,
+2026-09-11) makes the pre-enrolment half blocking. **819 was added to this line on 2026-09-11, the same day it was filed** — the second time this
+sprint that leaving it stale was the near-miss.
 816 follows because it owns the 11-path allowlist those two report against. 815, 797 and 743 are independent of each
 other and of the enforcement chain.
 

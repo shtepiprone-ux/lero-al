@@ -2,7 +2,7 @@
 
 Sprint 75 · **P1** · QA profile **Q3**
 
-**Status: `NEEDS REVISION`** (Opus implementation review 1, 2026-09-12). Filed 2026-09-11 by the owner's rejection of Task 813's AC11 visual review. **Re-entry, the blocking findings, the four owner decisions answered 2026-09-12 and the single re-validation route are §16 — read §16 first; §1-§15 are the original scope and are amended only where §16 says so.** The
+**Status: `NEEDS REVISION`** (Opus implementation review 2, 2026-09-12; review 1 same day). Filed 2026-09-11 by the owner's rejection of Task 813's AC11 visual review. **§16 implemented and reviewed; the current route is §17 — read §17 first, then §16 for the decisions it records. The four owner decisions answered 2026-09-12 stand and are not reopened; §1-§15 are the original scope and are amended only where §16 says so.** The
 defect is **pre-existing** — `MantineListingGalleryPattern.tsx` is untouched by Tasks 813 and 820 (absent from both
 diffs) — and was only surfaced because AC11 forced the story open.
 
@@ -567,3 +567,180 @@ Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY
 answered (§16.2), so there is no owner block left to return; a genuinely new conflict is a fresh
 `BLOCKED — OWNER DECISION REQUIRED` naming it. Sonnet does not self-approve and runs, emits and suggests no mutating
 git command.
+
+---
+
+## 17. Revision 2 — Opus implementation review 2, 2026-09-12: `NEEDS REVISION`
+
+Reviewed tree: the working tree as of 2026-09-12, evidenced by session-log §11–§11.12 and
+`docs/sessions/evidence/task824/118`–`141`. §16's implementation is substantially correct and all four of
+§16.2's owner decisions were honored: the three controls are in `src/design-system/mantine/patterns/` with three
+manifest entries and their own canonical Stories (`137` census, `122`, `127`); the six `theme.other` roles are
+defined in both the interface and the implementation and consumed through style props, with both
+`design-tokens-allow` dimension markers gone (`131` no longer reports a `tailwind-dimension-utility` category); the
+desktop thumbnail selects only; `141`'s hash block is 34 unique paths reconciling exactly with `140`, which fixes all
+three defects §16's R17 found. What follows are the blocking defects only. §17 is the sole executable route for the
+next session; where it contradicts §1–§16, §17 wins.
+
+### 17.1 Re-entry mode
+
+`remediation`. Start at §17.3. Do not re-run §13.1's baseline. Preserve every artifact under
+`docs/sessions/evidence/task824/`; number this revision's transcripts from `142` upward and never overwrite
+`00`–`141`. Append to the session log as a new session-log §12; do not rewrite §1–§11.12.
+
+### 17.2 No owner decision is open
+
+D824-1 to D824-4 stand as answered on 2026-09-12 and are not reopened. §17 adds no new design choice — every item
+below is either a measurement that was skipped, a defect in code already written, or a disclosure gap.
+
+### 17.3 Amended requirement ledger — R19 to R24
+
+| ID | Source | Observable requirement | P | Verification | Status |
+|---|---|---|---|---|---|
+| **R19** | AC13, AC18-AC21, AC4a, AC5 | Every measurement-based criterion is **measured**, in the Playwright-against-`storybook-static` harness session-log §11.11 already built and ran in this same session. Code-path inspection does not close any of them. Raw numbers retained; conclusions derived from the numbers. | **P0** | AC25 | Confirmed |
+| **R20** | Adversarial review | A mouse/pen drag that leaves the track before release still settles. `useSwipeTrackSync.ts:248-261` binds `pointerdown`/`pointermove`/`pointerup`/`pointercancel` on the container only and `onPointerDown` never calls `setPointerCapture`, so once the cursor leaves the container `pointermove` stops firing and `pointerup` is delivered elsewhere: `dragEnd()` never runs, `drag.active` stays `true`, and `dragOffset` stays frozen at up to `±clientWidth` with `transitionEnabled` false — the strip sits visibly offset until a fresh `pointerdown`, whose click `suppressNextClick` then correctly swallows. The container is the photo box, so leaving it during a horizontal drag is ordinary. | **P0** | AC26 | Confirmed |
+| **R21** | Clause 10, GR-2 | The session log's Files Changed table matches the real diff, and R7/§8's "no gate script is edited" is narrowed to what it was always meant to forbid. `scripts/check-locale-leak.mjs` is a changed path in this task's working tree — `140_r18_final_status.txt` lists it `M`, `141_r18_final_hash-object.txt` hashes it `9c037f1a…`, `125_r18_surface-census-changed.txt` names it under "Changed paths seen" — and session-log §11.9's table omits it, which makes session-log §11.9b's `GR-2 SCOPE STATED` receipt false. **The change itself is legitimate and is NOT to be reverted** (reviewer-verified 2026-09-12, see §17.8): it is a single `PER_STORY_TOKENS` entry, `'mantine-primitives-unstyledbutton': ['Link']`, exactly mirroring the file's own pre-existing `'primitives-button': ['Link']` and falling squarely in category 1 of that table's documented purpose. What is owed is the disclosure, the per-locale justification, and the narrowing in §17.8 — not a revert and not a re-run. | P2 | AC27 | Confirmed |
+| **R22** | Clause 9, Task 818 corollary | The final gate block describes the shipped tree. `src/stories/mantine/primitives/DimensionTokens.stories.tsx` was written after every transcript from `118` through `138`, and it is a file `check:stories` scans, `check:story-coverage` counts, `build-storybook` compiles and `check:file-integrity`/`check:mojibake` enumerate. `122` also predates the final `LightboxView.stories.tsx` by 13 s. Session-log §11.11 says typecheck and `build-storybook` were re-run after that edit, but no transcript for either re-run exists. The drift is visible in the handoff's own figures: it reports 176 file-integrity files and 4730 mojibake files where `135`/`136` read 168 and 4725. | **P0** | AC28 | Confirmed |
+| **R23** | AC14 (task-design defect) | The per-surface census is reconciled, not reported as clean and not omitted. `137` exits 1 with `FAIL src/modules/listings/components/LightboxView.tsx [tier1-unenrolled-or-unstoried]` and `GR-1 CENSUS BLOCKED`; `01_baseline_surface-census.txt`, captured before this task began, carries the identical verdict for the identical node. Session-log §11.2 measured, quoted and reconciled it correctly. **AC14 as written in §16.4 was unsatisfiable** — relocating the three controls could never clear a FAIL whose subject is `LightboxView.tsx` itself. That is a review defect, corrected by AC14a below, and `LightboxView.tsx`'s own enrolment is filed as **Task 825**. | P2 | AC14a | Confirmed |
+| **R24** | Accuracy | Stale comments and refactor nits: `src/stories/mantine/primitives/LightboxView.stories.tsx:22` still says both sections use a "`play`-free manual open via `onClick`" after session-log §11.8 added a `play` to `Default`; `MantineListingGalleryPattern.module.css`'s cascade rationale still calls the badge "a plain child of an `UnstyledButton`" when it is a sibling of the photo button (`MantineListingGalleryPattern.tsx:124`); `useSwipeTrackSync.ts:240-243`'s `onTouchMove` dereferences `e.touches[0]` before `dragMove`'s own `drag.active` guard, where the pre-refactor version guarded first; `onPointerDown` does not filter `e.button`, so a right- or middle-press starts a drag. | P3 | AC29 | Confirmed |
+
+### 17.4 Amended and superseded acceptance criteria
+
+- **AC14 is superseded by AC14a** — given the final tree, `node.exe scripts\check-surface-census.mjs --surface src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx`
+  reports `manifest:yes story:yes` for every tier-1 node **except** `src/modules/listings/components/LightboxView.tsx`,
+  whose `manifest:no` is reconciled line-for-line against `01_baseline_surface-census.txt` and named as Task 825's.
+  Quote both census blocks and the command's real exit code; the gate exits 1 and that is the reconciled expected
+  result for this task, not a pass to be reported as green.
+- **AC25 [R19]** — Given the Playwright harness serving `storybook-static`, then each of these is measured and its raw
+  numbers quoted: **AC13** photo 2 reached at 320 and 390 by a dispatched pointer drag and by `ArrowRight` on the
+  focused track, in the closed gallery and in the open lightbox, counter `2 / 9` in all eight cases, plus one
+  vertical-gesture case per viewport showing `preventDefault` was not called and the page still scrolled; **AC18**
+  forward wrap then a second `touchstart` 100 ms into the settle then a completed second forward swipe — counter
+  `2 / 9`, visible slide photo 2, computed `translateX` inside `[-(count + 1) × width, 0]` — and the same for the
+  backward wrap; **AC19** a completed horizontal drag followed by a tap opens the lightbox on the **first** tap;
+  **AC20** a desktop thumbnail click at 1440 changes `activeIndex` and the main photo, leaves the lightbox closed,
+  and the clicked thumbnail's computed border width equals `theme.other.borderWidth.galleryThumbActive` while every
+  sibling's is the same width in `transparent`; **AC21** `play` completes at 320, 390, 480 and 1440 with a unique
+  resolved main-photo trigger, and the accessible-name set actually rendered at 320 is quoted; **AC4a** each
+  thumbnail's measured width equals its height within 1px and is the same number at 768, 1024 and 1440, and the
+  thumbnail row is absent from the DOM at 320, 390 and 480; **AC5** `document.documentElement.scrollWidth` does not
+  exceed `clientWidth` at all six widths and any overflow is on the row element itself.
+- **AC26 [R20]** — Given a dispatched pointer drag that crosses the container's boundary before `pointerup`, then the
+  strip settles to a whole-slide offset, `activeIndex` reflects the threshold decision, and no frozen `dragOffset`
+  remains. Quote the computed `transform` before and after release. Resolution: `container.setPointerCapture(e.pointerId)`
+  in `onPointerDown` — implicit capture retargets every subsequent pointer event to the container through `pointerup`
+  — or bind `pointermove`/`pointerup`/`pointercancel` on `window` for the drag's duration. State which you chose.
+- **AC27 [R21]** — Given the final tree, then session-log §11.9's Files Changed table carries `scripts/check-locale-leak.mjs` with §17.8's one-line justification, §11.9b's `GR-2 SCOPE STATED` receipt is re-emitted truthfully, and the session log states in one sentence that the entry suppresses at most the `it`-locale `Link` token for one story, so `139`'s 158-leak figure is comparable to the earlier baselines it is compared against. Do **not** revert the entry, do **not** re-run `check:locale-leak:mantine-only` for it, and do not add a second allowlist entry anywhere. Quote the amended table row and the re-emitted receipt.
+- **AC28 [R22]** — Given §17.6's block run as one pass with **no tracked file edited afterwards**, then every
+  transcript is retained under `142`+ with platform, Node version, working directory, command and real exit code, and
+  the pass ends with the `git hash-object` block — same shape as `141`, which is correct and is the model. Quote
+  `check:file-integrity`'s and `check:mojibake`'s file counts and reconcile them against the numbers reported in the
+  completion report; a figure in prose that no transcript shows is the defect this criterion exists to stop.
+- **AC29 [R24]** — Given the final tree, then the four items in R24 are corrected and each is quoted.
+
+**GR-4 AC AUDIT — 7 amended/new criteria (AC14a, AC25–AC29); each states an observable property; absolutes: AC28's
+"no tracked file edited afterwards" is a sequencing condition this revision defines, and AC4a's 1px and AC26's
+whole-slide offset are measurement tolerances, not pixel-perfect claims.**
+
+### 17.5 Amended scope
+
+- **Editable in this revision:** `src/hooks/useSwipeTrackSync.ts` (R20, R24) ·
+  `src/stories/mantine/primitives/LightboxView.stories.tsx` and
+  `src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css` (R24, comments only) ·
+  `scripts/check-locale-leak.mjs` — **not edited again**, see §17.8 ·
+  `docs/sessions/2026-09-12-task824-...md` as a new session-log §12 · `docs/backlog.md`'s own concise state line.
+- **Out of scope, unchanged:** `LightboxView.tsx`'s manifest enrolment — that is **Task 825** · `appImageConfig.ts`'s
+  `fitContain` lightbox call and the `docs`/`tasks` `rozetka`-scoping call, both still open owner items ·
+  `LightboxView.tsx`'s pre-existing `max-h-[85vh]`/`max-w-[90vw]`, which session-log §11.7 correctly proved unchanged
+  by any diff in this task and correctly declined to "fix" with a token that does not exist for a viewport-relative
+  value · Tasks 822/823's inherited red gates.
+
+### 17.6 The single re-validation route — one pass, project root, nothing edited afterwards
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+Get-Location
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:rendered-scope
+npm.cmd run check:rendered-scope:verify
+npm.cmd run check:surface-census:changed
+npm.cmd run check:surface-census:changed:verify
+npm.cmd run check:pattern-enrolment
+npm.cmd run check:pattern-enrolment:verify
+npm.cmd run check:media-enrolment
+npm.cmd run check:media-enrolment:verify
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:tailwind-runtime-tokens
+npm.cmd run build
+npm.cmd run build-storybook
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+node.exe scripts\check-surface-census.mjs --surface src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+git --no-optional-locks diff --stat -- scripts/check-rendered-scope.mjs scripts/check-surface-census.mjs scripts/check-surface-census-changed.mjs scripts/map-changed-surfaces.mjs scripts/audit-design-system-patterns.mjs scripts/check-pattern-enrolment.mjs scripts/check-media-enrolment.mjs
+git --no-optional-locks status --short
+```
+
+Expected, unchanged from §16.6 except where noted: `win32`; typecheck 0 · lint 0 new errors · `check:stories` 0
+violations with its file count and key parity quoted · coverage 0 unproven · rendered-scope 0 new / 0 stale ·
+surface-census:changed 0 new · every `*:verify` passing every arm · design-tokens **≤ 56** · no new Tailwind-token
+row · `build` **exit 0** · `build-storybook` exit 0 · `check:locale-leak:mantine-only` completed with its figure
+quoted and AC27's disposition attached · both hygiene gates clean with their counts quoted · the per-surface census
+exiting **1** on `LightboxView.tsx` alone, reconciled per AC14a · an empty diff for the seven gate scripts. Retain
+each transcript as `142_*`, `143_*`, … and close the pass with one `git hash-object` block over every changed file.
+§10's implementation rules 4 and 6 still bind: Node for any read-back, transcripts BOM-free.
+
+AC25's and AC26's measurements run in the Playwright-against-`storybook-static` harness session-log §11.11 already
+used — serve the built Storybook, load each story's `iframe.html?viewMode=story`, dispatch real
+`TouchEvent`/`PointerEvent`/`KeyboardEvent` sequences, read computed styles and bounding boxes. Retain the raw
+numbers in their own transcripts and derive every conclusion from them. A screenshot is not a measurement, and
+`screenshots:assert` and every alias stay retired.
+
+### 17.7 Completion contract for this revision
+
+§14's and §16.7's contracts, plus: AC14a's two reconciled census blocks · AC25's seven measurement sets with raw
+numbers · AC26's before/after `transform` · AC27's amended Files Changed row and re-emitted receipt · AC28's `142`+
+transcripts with reconciled file counts · AC29's four corrections · the closing `git hash-object` block · the
+corrected Files Changed table · the `GR-1 CENSUS COMPLETE`, `GR-2 SCOPE STATED`, `GR-3 STORY PROVEN` and
+`GR-5 STATE SYNCED` receipts, each true as written. Carried forward and still open: real-device confirmation on a
+physical phone (no synthetic dispatch replaces it), the `fit="contain"` call, the `docs`/`tasks` `rozetka`-scoping
+call, and AC12a's owner visual-QA matrix.
+
+Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. No owner decision is
+open, so `BLOCKED — OWNER DECISION REQUIRED` applies only to a genuinely new conflict, named. Sonnet does not
+self-approve and runs, emits and suggests no mutating git command. **Report every command's real exit code; a gate
+that exits non-zero is reported as exiting non-zero, with its reconciliation, never folded into "all passing".**
+### 17.8 `scripts/check-locale-leak.mjs` — reviewer finding retracted, and R7/§8 narrowed
+
+Review 2 first named this change a possible gate weakened to pass, and specifically asked whether allowlisting `Link`
+for the whole story masked a real leak in `uk` and `sq` while justifying only Italian. **The owner supplied the diff
+and the answer is no — the finding is retracted on evidence.** The reviewer read all four locale files directly:
+
+| key | `en` | `uk` | `sq` | `it` |
+|---|---|---|---|---|
+| `storybook.mantine.unstyledbutton_link_label` | `Link` | `Посилання` | `Lidhje` | `Link` |
+
+`uk` and `sq` are properly translated, so the comparison-based detector can never raise `Link` for them and the entry
+cannot mask anything there; `it` is the one locale where the correct translation is the English loanword, which is
+category 1 of `PER_STORY_TOKENS`' own documented purpose ("Genuine loanwords where the sq/it translation is identical
+to English — the comparison-based detector cannot distinguish a correctly-translated loanword from a hardcode"). The
+cited precedent is real and sits ten lines above it: `'primitives-button': ['Link'], // Button: Italian "Link" is a
+loanword (same word in it).` The entry is scoped to one story-ID prefix and one token, adds no global allowance, and
+changes no detector logic. `git log` shows the file's last three commits belong to Tasks 788, 626 and a CI fix, so
+this is an uncommitted working-tree change belonging to Task 824 — the authorship question §17.3's R21 could not
+settle.
+
+**R7 and §8 are narrowed accordingly, and this narrowing is the binding reading from here on.** "No gate script is
+modified" forbids changing a gate's *logic, thresholds, scope or exit semantics*, and AC10's seven-script empty-diff
+check is its measurement. It does not forbid adding a correctly-justified per-story data allowance to
+`PER_STORY_TOKENS`, which is this project's own sanctioned route for a genuine loanword (established by Task 626 when
+it moved Studio/Penthouse/Max out of the global allowlist into exactly this table). Requiring the opposite would have
+left the executor choosing between two of the review's own rules, which is a task-design defect, not an executor
+deviation. Every such entry must still be: one story prefix, the minimum token set, a comment naming the locale whose
+correct translation collides with English, and disclosure in the Files Changed table — that last one is the only
+thing this task actually missed.

@@ -42,7 +42,7 @@ of the wrong proposition.
 | **821** | `ListingFeatureIcon` and `FavoriteButton` — the last two tier-3 allowlist entries get their own Stories | P1 | Q3 | **READY FOR SONNET** 2026-09-11, sequenced **after Task 820's commit** — split out of 813 by decision §5.1 (B1). Both enrolled and storied (`FavoriteButton` appears today only inside `ListingCardPattern.stories.tsx` as a composition — GR-3 says that is not its Story); both allowlist entries keep their explicit rows and move `owner` `813` → `821`. Must not start while Task 820's `13 → 2` allowlist edit is uncommitted — it would invalidate 820's recorded `bf09fd2f…` hash. → [`Sprint_75_kickoff_prompt_Task_821_…`](Sprint_75_kickoff_prompt_Task_821_Last_Two_Tier3_Allowlist_Entries.md) |
 | **822** | `check:design-tokens:strict` is blocking in CI and red — 56 inherited raw style-value violations | P1 | Q2 | **RESERVED** 2026-09-11 by Task 813's AC22. Proven inherited by isolated `HEAD`-worktree comparison (identical 56-violation set both sides). Kickoff not yet written. |
 | **823** | `check:tailwind-runtime-tokens` is blocking in CI and red — 1 inherited Tailwind-owned reference | P1 | Q2 | **RESERVED** 2026-09-11 by Task 813's AC22. `MantineListingCardTrack.module.css:209 --shadow-sm`, baseline entries 0; proven inherited the same way. Kickoff not yet written. |
-| **824** | The listing gallery's thumbnail row — canonical Mantine squares, not a stretching grid | P1 | Q3 | **READY FOR SONNET** 2026-09-11, filed by the owner's AC11 rejection. Cause measured at `MantineListingGalleryPattern.tsx:79`; reference `rozetka.com.ua`; `AspectRatio ratio={1}` is a first adoption in this repo, so its standalone Story lands before the composition. → [`Sprint_75_kickoff_prompt_Task_824_…`](Sprint_75_kickoff_prompt_Task_824_Gallery_Thumbnail_Squares.md) **Thumbnail size fixed by owner decision 2026-09-11 (Task 813 review Revision 4): 44×44 px via `theme.other.boxSize.galleryThumb`, established by 813 — 824 consumes it.** |
+| **824** | The listing gallery's thumbnail row — canonical Mantine squares, not a stretching grid | P1 | Q3 | **NEEDS REVISION** 2026-09-12 (Opus implementation review 1) — implemented across two sessions (session log `docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md`), then returned on ten blocking findings now written into kickoff §16. **Four owner decisions ANSWERED 2026-09-12** — quoted verbatim at the end of this file and bound in kickoff §16.2: D824-1 (A) pointer/mouse drag + `ArrowLeft`/`ArrowRight` below 640px, mobile chrome unchanged · D824-2 (A) the three shared gallery controls move to `src/design-system/mantine/patterns/` with their own Stories and manifest entries, `LightboxView` still not enrolled so Task 820 §17.6 stands · D824-3 (A) desktop thumbnail click selects only · D824-4 the `2px` border and `16px`×`2px` segment become three registered `theme.other` roles, no raw literals and no dimension markers. The next executor session's route is kickoff §16; the task's state stays **NEEDS REVISION** until a fresh implementation is reviewed. Earlier: **READY FOR SONNET** 2026-09-11, filed by the owner's AC11 rejection. Cause measured at `MantineListingGalleryPattern.tsx:79`; reference `rozetka.com.ua`; `AspectRatio ratio={1}` is a first adoption in this repo, so its standalone Story lands before the composition. → [`Sprint_75_kickoff_prompt_Task_824_…`](Sprint_75_kickoff_prompt_Task_824_Gallery_Thumbnail_Squares.md) **Thumbnail size fixed by owner decision 2026-09-11 (Task 813 review Revision 4): 44×44 px via `theme.other.boxSize.galleryThumb`, established by 813 — 824 consumes it.** |
 | **797** | `check:design-tokens` cannot see a raw dimension in Mantine's responsive object form | P2 | Q2 | reserved |
 | **743** | `check:css-vars` un-owns a token and its orphaned consumers together, then goes silent | P2 | Q2 | reserved — **moves here from Sprint 46.8** |
 
@@ -260,3 +260,32 @@ Binding consequences: Task 813's `AppImage` Story no-overflow is owner-accepted;
 from one new registered role, `theme.other.boxSize.galleryThumb: '2.75rem'`, added by Task 813 (kickoff §5.5) — not
 `theme.other.touchTarget` or `iconSize.touch`, which share the value but have another documented owner. Task 824's
 thumbnail row consumes the same role; its §3.3 dimension source is no longer `UNKNOWN`.
+
+> **Owner decision, 2026-09-12 (Task 824, Opus implementation review 1 — D824-1 to D824-4) — verbatim.**
+> Затверджую рішення для Task 824:
+>
+> D824-1: A — нижче 640px додати mouse/pointer drag і keyboard arrows; mobile chrome лишається без thumbnails та side arrows.
+>
+> D824-2: A — винести GalleryNavActionIcon, GalleryDesktopNavigation і GalleryThumbnailButton з LightboxView у src/design-system/mantine/patterns/, із окремими Stories та enrollment.
+>
+> D824-3: A — desktop thumbnail click лише обирає фото; lightbox відкривається тільки через main photo.
+>
+> D824-4: зареєструвати потрібні значення для 2px border і 16px × 2px pagination segment як theme.other roles, без raw literals.
+
+Binding consequences, all four written into `Sprint_75_kickoff_prompt_Task_824_Gallery_Thumbnail_Squares.md` §16.2 and
+its R9–R18 ledger. **D824-1** — `useSwipeTrackSync` gains a pointer-drag path and `ArrowLeft`/`ArrowRight` on the
+focused track, reusing the one existing `±clientWidth` clamp / axis lock / 18% threshold state machine rather than a
+second copy; below `sm` there is still no thumbnail row and no side arrow. **D824-2** — `GalleryNavActionIcon`,
+`GalleryDesktopNavigation` and `GalleryThumbnailButton` leave `src/modules/listings/components/LightboxView.tsx` for
+`src/design-system/mantine/patterns/`, one file each, each with its own canonical Mantine Story and its own
+`scripts/mantine-migration-scope.json` entry; `LightboxView.tsx` is **not** enrolled, so this sprint's Task 820 §17.6
+decision ("no enrolment of `LightboxView` to hide the hop") stands unchanged, and `check:pattern-enrolment`'s
+directory rule (Task 820) covers the three new files by construction. **D824-3** — a desktop thumbnail click sets
+`activeIndex` only; the lightbox opens from the main photo alone, which is also what makes the active 2px brand
+border an observable steady state. **D824-4** — three new registered roles replace every literal, no
+`design-tokens-allow` dimension marker survives: `theme.other.borderWidth.galleryThumbActive: '0.125rem'` (2px, a new
+one-role `borderWidth` scale — none existed), `theme.other.boxSize.paginationSegment: '1rem'` (16px) and
+`theme.other.boxSize.paginationSegmentThickness: '0.125rem'` (2px, a role distinct from the border width despite the
+equal value, per rule 3). This repo has no `cssVariablesResolver`, so all three are consumed through Mantine style
+props reading `useMantineTheme()` — the same route `theme.other.boxSize.galleryThumb` already uses — and
+`LightboxView.module.css` keeps only its `border-radius: 0` and `color-mix` background.

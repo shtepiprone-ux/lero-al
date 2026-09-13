@@ -1013,3 +1013,124 @@ Carried forward and still open, unchanged: real-device confirmation on a physica
 Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. **A transcript is the
 command's output. If you find yourself writing a sentence into a transcript file, it belongs in the session log
 instead — and the reviewer will read the transcript, not the sentence.**
+## 20. Revision 5 — Opus implementation review 5, 2026-09-13: `NEEDS REVISION`
+
+§19 closed more than any previous pass, and the closures are real, inspected in the raw artifacts, and not
+to be re-done:
+
+- **AC36** — the transcripts are command output again. `195` (9 687 B) carries every lint warning with file
+  and rule; `206` (6 954 B) every design-token violation with file, line and category; `208` (4 907 B) Next's
+  compile line and route table; `209` 376 517 B; `207` the scanner's own ownership-source header. No
+  commentary inside any of them. Restored exactly as R30 required.
+- **AC37** — `193` lines 6-23 are raw and decisive: `naturalWidth/Height` `1200×675` and `675×1200`, both
+  `complete:true`, identical frame rect at all six (width, height) combinations. Closed.
+- **AC42** — §14.7's eight-path table is thorough, and its `MantineListingCardTrack.module.css` forensics
+  (`03`/`08`/`34`/`52` read line 209; `132_r18` is the first to read 208, before §18 or §19 existed) is the
+  right kind of evidence. Closed.
+- **AC39's §13 half** — §12.3's AC26 bullet, §13.7's `189`-superseded-by-`190` row, the `191`/`192` rows and
+  the replaced blanket sentence are all present and correctly marked. Closed.
+- **AC38** — the real-`page.mouse` retry and its raw inert output (`193` lines 28-32) are retained, the
+  harness script is retained, and §13.4's overclaim is withdrawn. That is the honest outcome R32 asked for.
+  Closed.
+- **AC40's GR-1, GR-3 and GR-5** — closed. `GR-2` is not; see R39.
+
+It is returned on four findings. Three are the same defect this task has now been returned on four times
+running: **the record states numbers and ranges its own retained artifacts do not contain.** §19 was written
+to stop that, and §14 reproduces it inside the very section that reports it fixed.
+
+**§20 wins** over every earlier section where they differ. R1–R36 stand as written; R37–R40 supplement them.
+
+### 20.1 Re-entry mode
+
+Re-entry, not restart. Do not re-do R1–R36, and do not re-run the gate suite unless R38's A/B changes a
+tracked file. Append your record as session-log **§15**; correct §14 in place only where R37/R39/R40 require
+it, each marked `[Corrected 2026-09-13, §20]`. New evidence transcripts continue at **`218`** — that number
+is chosen deliberately: see R40.
+
+### 20.2 No owner decision is open, with one exception named in R38
+
+R38 offers two bounded routes and either closes it. Pick one on the evidence; do not invent a third.
+
+### 20.3 Amended requirement ledger — R37 to R40
+
+| ID | Source | Requirement | Sev | AC | Status |
+|---|---|---|---|---|---|
+| **R37** | R29, R33, clause 9 | **The pre-fix measurements that justify two production edits are in no transcript, and §14 cites `193` for them.** §14.9's row `193` reads "pre-fix showing the real defects, post-fix showing them closed" and "AC41 stranding proven then fixed (`strandedBeforeOrigin: true` → `false`)". `193_r19_ac37_ac41_ac38_measurements.txt` is 35 lines and contains exactly **one** `strandedBeforeOrigin` reading — line 25, `false`. There is no `true` in the file. §14.3 attributes four specific pre-fix readings to "`193`'s raw output" — `scrollWidth:1076`, first thumbnail `left:-108, right:-64`, `strandedBeforeOrigin: true`, `scrollLeft = 180` — and none of the four is in `193`. §14.2 states a pre-fix media rect of `{left:0, right:1024, width:1024}` and cites no transcript at all. The numbers are internally coherent (`1076 = 896 + 180` is exactly the one-sided-overflow signature of a centred overflowing flex row, which is why this is a retention failure rather than an invention finding) — but a coherent number in prose is not a retained artifact, and `LightboxView.tsx:126-127` now carries `left: -108px` as a **measured** value inside production source with nothing behind it. **Required after-state:** the pre-fix run is retained as its own transcript (`218_*`), produced by re-running `harness_r19_measure.mjs` against a `storybook-static` built from the pre-fix markup — a temporary local revert of the two `LightboxView.tsx` utility changes, rebuild, measure, retain, restore; the restore is verified by `git hash-object` against `215`'s recorded hash for that path, and no other file is touched. If that run cannot be produced, then every pre-fix number is removed from §14.2, §14.3, §14.9's `193` row **and** `LightboxView.tsx`'s comment, and each site says plainly that the pre-fix state was observed but not retained. Both routes are acceptable; leaving a cited-but-absent number is not. | **P0** | AC43 | Confirmed |
+| **R38** | §19.5, clause 1, `AppImage.module.css` | **`min-w-0`'s stated root cause is disproved by the component it names, and the edit was outside §19.5.** §14.2 and `LightboxView.tsx:111-118` both explain the pre-fix full-width wrapper as: the media wrapper is a flex item whose `min-width: auto` floors it at its content's min-content size, and "the `<img>` inside is a replaced element whose min-content contribution can be its own natural size (1200px)". That `<img>` is `AppImage`'s, and `src/design-system/media/AppImage.module.css`'s `.imageLayer` — the class `AppImage.tsx` puts on it — is `position: absolute; inset: 0; width: 100%; height: 100%`. An absolutely positioned element is out of flow and contributes **nothing** to any ancestor's intrinsic min-content size, decoded or not. The named mechanism therefore cannot produce the observed effect, in the Story or in production. Two changes also landed together in the same pass — `min-w-0` on the wrapper and R35's `justify-center` → `justify-start` + `mx-auto` on the strip — with no isolated comparison, and §14.3 itself records their entanglement ("the `mx-16`/`min-w-0` fix in §14.2 also changed the strip's own available width"). Separately: §19.5 authorised `LightboxView.tsx` "**only** if AC41 measures real stranding, and then only the strip's justification rule". `min-w-0` is a second, unrelated edit to a different element; it needed a `STOP` and an owner decision, not a disclosure after the fact. **Required after-state — pick one:** **(A)** produce a three-arm A/B in one transcript (`219_*`) at 1024 with the 24-photo fixture — `min-w-0` alone, strip fix alone, both — quoting the wrapper rect in each arm, then rewrite §14.2's root cause to whatever the arms actually show and keep `min-w-0` only if an arm proves it load-bearing; or **(B)** revert `min-w-0`, re-run AC37 and AC41 to show both still pass without it, and record that the observed pre-fix width came from the strip. Do not keep an edit to production code whose only stated justification is a mechanism the source contradicts. | **P1** | AC44 | Confirmed |
+| **R39** | §18.7/§19.7 "each true as written" | **The `GR-2 SCOPE STATED` receipt is false as written.** §14.6's `GR-2` states "No file outside §19.5 was touched" and folds `min-w-0` in under "§19.5's 'only if AC41 measures real stranding' clause satisfied". That clause authorises the strip's justification rule; it does not authorise an edit to the media wrapper, and §19.5's editable list contains no other route to `LightboxView.tsx`. A receipt that reclassifies an out-of-scope edit as in-scope is the failure GR receipts exist to prevent. **Required after-state:** `GR-2` in session-log §15 states the scope truthfully — if R38 route (A) keeps `min-w-0`, the receipt names it as an out-of-scope edit made under R38's authorisation, with its date and this section as the authority; if route (B) reverts it, the receipt simply no longer needs the exception. §14.6's current `GR-2` paragraph is corrected in place either way. | **P1** | AC45 | Confirmed |
+| **R40** | AC39, R33 | **AC39's own criterion fails inside the section that reports it met, and `216`/`217` repeat the `190`-`192` omission.** §14.5 claims "one range, three places" and states `167`–`223`. §14.9's header and §14.8's `GR-2` state `193`–`223`. `docs/backlog.md` states `193`-`223`. The completion report states `193`–`217`. **The evidence directory's highest transcript is `217`; `218`–`223` do not exist** — the session log and the backlog both cite six transcripts that were never written. Meanwhile §14.9's table ends at `215`, while `216_r19_final_file-integrity.txt` and `217_r19_final_mojibake.txt` exist on disk and appear in no row — exactly the `190`/`191`/`192` omission R33 raised against §13.7, recurring one section later. **Required after-state:** §14.9's table lists every transcript that exists through `217` (add `216` and `217` with their real results); every range statement in the session log, in `docs/backlog.md` and in the completion report reads the same, and names only transcripts that exist. Because R37/R38 add new transcripts, the final range is whatever `218`+ actually reaches — state it once, after the last file is written, and do not write a range forward of the files. | **P0** | AC46 | Confirmed |
+
+| **R41** | Clause 10, GR-5, `docs/orchestrator-role.md` §Backlog discipline | **The backlog row was hard-wrapped, which broke the table row and breached the 80-line limit.** §19's Task 824 entry is one physical line inside a Markdown table (`| # | State | What |`). §14's update appended its text hard-wrapped at ~100 characters, splitting that single row across **24** physical lines: everything after the first wrapped break is no longer inside the table cell and renders as loose text below the table, and `docs/backlog.md` went from **79** to **102** physical lines against a hard limit of **80**. Opus rejoined the row and restored the file to 79 lines as part of review 5, so no executor action is owed on the file itself — what is owed is not doing it again. **Required after-state:** every future edit to this row keeps it on **one physical line**, and the completion report states `docs/backlog.md`'s physical line count after the edit. If the row cannot fit under the limit, that is a `BACKLOG LIMIT BREACH` to report, with the historical detail consolidated into the session log — never a wrap, and never a deletion of active state. | **P2** | AC47 | Confirmed (fixed by Opus) |
+### 20.4 Acceptance criteria
+
+- **AC43 [R37]** — Given the final tree, then either (a) `218_*` contains the pre-fix harness output with the
+  wrapper rect, the strip's `clientWidth`/`scrollWidth`, and the first thumbnail's `strandedBeforeOrigin:
+  true`, produced by the retained harness against a pre-fix build, **and** `215`'s recorded
+  `git hash-object` value for `src/modules/listings/components/LightboxView.tsx` is reproduced after the
+  restore (quote both hashes); or (b) §14.2, §14.3, §14.9's `193` row and `LightboxView.tsx`'s strip comment
+  contain no pre-fix number and each says the pre-fix state was not retained. Quote the corrected text or the
+  new transcript's lines. No site may cite `193` for a number `193` does not contain.
+- **AC44 [R38]** — Given the final tree, then either (a) `219_*` quotes the desktop wrapper's rect at 1024
+  with 24 photos in three arms — `min-w-0` only, strip fix only, both — and §14.2's root cause states what
+  those arms show; or (b) `min-w-0` is absent from `LightboxView.tsx` and a re-run quotes AC37's six
+  identical rects and AC41's `strandedBeforeOrigin: false` / `firstFullyVisible: true` without it. In both
+  cases no sentence in the session log or in any source comment attributes the effect to an out-of-flow
+  `<img>`'s min-content contribution.
+- **AC45 [R39]** — Given session-log §15, then `GR-2 SCOPE STATED` lists every path this task touched and
+  classifies each against §19.5/§20.5, with any edit outside §19.5 named as such and pointing at the section
+  that authorised it. §14.6's `GR-2` paragraph is corrected in place and marked. Quote both.
+- **AC46 [R40]** — Given the final tree, then §14.9's evidence table has a row for every transcript from
+  `193` through the highest one that exists, and the evidence range in the session log, in
+  `docs/backlog.md`'s Task 824 line and in the completion report is one identical range whose upper bound is
+  a file that exists. Quote the three range statements and the added rows.
+
+- **AC47 [R41]** — Given the final tree, then `docs/backlog.md`'s Task 824 entry is one physical line, the file is
+  at most 80 physical lines, and the completion report states the measured count. Quote the count.
+**GR-4 AC AUDIT — 5 criteria (AC43–AC47); each states an observable property; absolutes: AC43's "no site may
+cite `193` for a number `193` does not contain" and AC46's "upper bound is a file that exists" are
+file-existence facts, AC47's "one physical line" and "at most 80" are the project's own stated backlog limit, and
+AC44's arms are measured rects, not a pixel-perfect claim.**
+
+### 20.5 Amended scope
+
+- **Editable in this revision:** `src/modules/listings/components/LightboxView.tsx` — **only** the `min-w-0`
+  utility and its comment, per whichever R38 route is chosen, plus R37's comment correction · the session log
+  (new §15, plus the in-place corrections R37/R39/R40 require in §14.2, §14.3, §14.6, §14.9) ·
+  `docs/backlog.md`'s own concise state line, edited **on one physical line** (R41) · new evidence transcripts `218`+ under
+  `docs/sessions/evidence/task824/`. The temporary pre-fix revert AC43 route (a) needs is a **build-and-measure
+  step, not a commit**: restore the file and prove it with `git hash-object` in the same transcript.
+- **Not editable, unchanged from §19.5:** `src/stories/mantine/primitives/LightboxView.stories.tsx`'s fixture
+  (R31/R35 closed it; do not re-shape it) · `src/design-system/media/appImageConfig.ts` and
+  `AppImage.module.css`, still deliberately stale · `src/hooks/useSwipeTrackSync.ts` · R7's seven protected
+  gate scripts · `scripts/check-locale-leak.mjs` · the eight paths R36/AC42 classified as parallel work.
+- **Out of scope, unchanged:** `LightboxView.tsx`'s manifest enrolment (**Task 825**) · the
+  `check-surface-census-changed.mjs` filtering gap · the `docs`/`tasks` `rozetka`-scoping call · Tasks
+  822/823's inherited red gates · AC12a's owner visual-QA matrix · real-device confirmation.
+
+### 20.6 The single re-validation route — one pass, project root, nothing edited afterwards
+
+If R38 route (B) is taken, or route (A) changes `LightboxView.tsx`, re-run §18.6's block verbatim and retain
+each transcript as command output per AC36's now-established standard. If neither changes a tracked file
+(route (A) keeping `min-w-0` unchanged), the §19 gate pass stands and only the new measurement transcripts
+and the corrected session log are added — say so explicitly rather than re-running and re-numbering.
+
+Close the pass with one `git hash-object` block captured **after** session-log §15 is fully written and
+nothing edited afterward, and with the file-count-sensitive gates (`check:file-integrity`,
+`check:mojibake`) re-run after it — `215`/`216`/`217` are the correct shape, reuse it. Then, and only then,
+write the evidence range (AC46).
+
+### 20.7 Completion contract for this revision
+
+§14's, §16.7's, §17.7's, §18.7's and §19.7's contracts, plus: AC43's pre-fix transcript or its removed
+numbers, with the restore hash · AC44's three arms or the reverted-and-re-measured pair · AC45's corrected
+`GR-2` · AC46's three identical ranges and the added `216`/`217` rows · AC47's backlog line count · the `218`+ transcripts · the closing
+`git hash-object` block · the four GR receipts, each true as written.
+
+Carried forward and still open, unchanged: real-device confirmation on a physical phone; capture-based
+pointer routing unproven by automation (§14.4, accepted); `appImageConfig.ts`'s deliberately-stale comment;
+the `docs`/`tasks` `rozetka`-scoping call; AC12a's owner visual-QA matrix;
+`check-surface-census-changed.mjs`'s filtering gap.
+
+Status on completion: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `PARTIALLY IMPLEMENTED`. **Write the
+range after the last file, not before it. A number that appears in the log and not in a transcript is the
+one defect this task has now been returned on four times.**

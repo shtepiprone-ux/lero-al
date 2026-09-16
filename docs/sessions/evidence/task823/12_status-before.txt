@@ -1,0 +1,4 @@
+?? docs/sessions/evidence/task823/10_platform.txt
+?? docs/sessions/evidence/task823/11_node-version.txt
+?? docs/sessions/evidence/task823/12_status-before.txt
+EXIT_CODE=0

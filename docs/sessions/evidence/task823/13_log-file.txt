@@ -1,0 +1,2 @@
+701d5a315 feat(Task815): check:card-track-monotonicity - canonical track Stories x 17 rung widths, Storybook render-phase discovery, 5-arm self-test with mutation proof, blocking in homepage-grid CI, Rev 2 approved
+EXIT_CODE=0

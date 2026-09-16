@@ -2,7 +2,7 @@
 
 Sprint 75 · P1 · QA profile **Q2**
 
-**Status: `READY FOR SONNET`** — filed 2026-09-16. **Sequenced after Task 815's approved commit**: 815 is being
+**Status: ✅ `APPROVED` 2026-09-16 — archived.** Filed 2026-09-16. **Sequenced after Task 815's approved commit**: 815 is being
 implemented now and edits comments in the same file (§3.4).
 
 ## 1. Mode and task type

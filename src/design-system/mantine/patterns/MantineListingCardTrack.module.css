@@ -206,7 +206,7 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: var(--z-dropdown);
-  box-shadow: var(--shadow-sm);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 2px -1px; /* design-tokens-allow: rgba( — shadow-sm, flattened from the Tailwind --tw-shadow/--tw-ring-* composition; captured live via getComputedStyle (Task 762 Revision 1), not hand-derived — the three registered-invisible (fully transparent) layers are dropped, confirmed absent from this capture */ /* design-tokens-allow: box-shadow: 1px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 3px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 2px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: -1px — same flattened shadow-sm layer */
 }
 /*
  * Owner instruction, mid-Revision-1 (2026-09-10): the control must be static on click — no press

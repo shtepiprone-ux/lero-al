@@ -1,0 +1,14 @@
+20_probe-box-shadow.mjs — Task 823 §13 before/after box-shadow probe
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task823/20_probe-box-shadow.mjs
+
+CSS asset: MantineListingCardTrack-BsCj8UXA.css
+Control class: _control_xgvr5_204
+Rail class: _rail_xgvr5_32
+
+controls found: 2
+  aria-label="Previous listings" boxShadow="rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px"
+  aria-label="Next listings" boxShadow="rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px"
+EXIT_CODE=0

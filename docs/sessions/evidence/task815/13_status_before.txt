@@ -1,0 +1,4 @@
+ M docs/backlog.md
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+?? docs/sessions/evidence/task815/
+?? tasks/Sprints/Sprint_75_kickoff_prompt_Task_815_Card_Track_Monotonicity_Gate.md

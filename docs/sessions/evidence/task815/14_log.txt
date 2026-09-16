@@ -1,0 +1,1 @@
+1ed5cd2a5 feat(Task821): ListingFeatureIcon and FavoriteButton get own canonical Stories and enrolment, allowlist emptied by owner decision, 826 filed

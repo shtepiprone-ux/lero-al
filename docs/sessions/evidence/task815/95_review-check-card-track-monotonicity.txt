@@ -1,0 +1,324 @@
+reviewer: Opus (Task 815 Rev 2 review)
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe scripts\check-card-track-monotonicity.mjs
+script hash: b4c307e0539432f75046a2000a76b82ce4886e8e
+
+check-card-track-monotonicity.mjs — asserting the real tree
+
+CSS asset: MantineListingCardTrack-xPQNAbuy.css
+Grid class: _grid_az6ln_5
+Rail class: _rail_az6ln_32
+
+discovery readiness: storybook render phase (finished|errored)
+in scope: 16 canonical stories rendering the track (of 140 canonical, 351 total)
+  - mantine-primitives-favoritesshell--populated
+  - mantine-primitives-listingcard--favorites-composition
+  - mantine-primitives-recentlyviewedgridview--populated
+  - mantine-primitives-similarlistingsview--default
+  - mantine-primitives-similarlistingsview--fewer-than-eight
+  - patterns-mantine-homepagelistinggrids--default
+  - patterns-mantine-homepagelistinggrids--loading
+  - patterns-mantine-listingcardtrack--grid
+  - patterns-mantine-listingcardtrack--rail
+  - patterns-mantine-listingcardtrack--grid-single-item
+  - patterns-mantine-listingcardtrack--rail-single-item
+  - patterns-mantine-listingcardtrack--rail-no-overflow
+  - patterns-mantine-listingcardtrack--rail-mixed-title-lengths
+  - patterns-mantine-listingcardtrack--grid-mixed-title-lengths
+  - patterns-mantine-listingcardtrack--empty
+  - patterns-mantine-listingsshellview--default
+excluded (owner decision 2026-09-16): 211 non-canonical stories, including the System/* stories — Task 827 owns the known 1535->1536 drop there
+
+mantine-primitives-favoritesshell--populated: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g4
+  @1536: t0=g4
+  @1920: t0=g6
+  @2560: t0=g8
+mantine-primitives-listingcard--favorites-composition: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g4
+  @1536: t0=g4
+  @1920: t0=g6
+  @2560: t0=g8
+mantine-primitives-recentlyviewedgridview--populated: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r1
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r2
+  @1023: t0=r3
+  @1024: t0=r3
+  @1279: t0=r4
+  @1280: t0=r4
+  @1439: t0=r5
+  @1440: t0=r5
+  @1535: t0=r5
+  @1536: t0=r5
+  @1920: t0=r6
+  @2560: t0=r8
+mantine-primitives-similarlistingsview--default: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r1
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r2
+  @1023: t0=r3
+  @1024: t0=r3
+  @1279: t0=r4
+  @1280: t0=r4
+  @1439: t0=r5
+  @1440: t0=r5
+  @1535: t0=r5
+  @1536: t0=r5
+  @1920: t0=r6
+  @2560: t0=r8
+mantine-primitives-similarlistingsview--fewer-than-eight: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r1
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r2
+  @1023: t0=r3
+  @1024: t0=r3
+  @1279: t0=r4
+  @1280: t0=r4
+  @1439: t0=r4
+  @1440: t0=r4
+  @1535: t0=r4
+  @1536: t0=r4
+  @1920: t0=r4
+  @2560: t0=r4
+patterns-mantine-homepagelistinggrids--default: PASS
+  @320: t0=r1 t1=r1
+  @479: t0=r1 t1=r1
+  @480: t0=r1 t1=r1
+  @639: t0=r2 t1=r2
+  @640: t0=r2 t1=r2
+  @767: t0=r2 t1=r2
+  @768: t0=r2 t1=r2
+  @1023: t0=r3 t1=r3
+  @1024: t0=r3 t1=r3
+  @1279: t0=r4 t1=r4
+  @1280: t0=r4 t1=r4
+  @1439: t0=r5 t1=r5
+  @1440: t0=r5 t1=r5
+  @1535: t0=r5 t1=r5
+  @1536: t0=r5 t1=r5
+  @1920: t0=r5 t1=r5
+  @2560: t0=r5 t1=r5
+patterns-mantine-homepagelistinggrids--loading: PASS
+  @320: t0=r1 t1=r1
+  @479: t0=r1 t1=r1
+  @480: t0=r1 t1=r1
+  @639: t0=r2 t1=r2
+  @640: t0=r2 t1=r2
+  @767: t0=r2 t1=r2
+  @768: t0=r2 t1=r2
+  @1023: t0=r3 t1=r3
+  @1024: t0=r3 t1=r3
+  @1279: t0=r3 t1=r4
+  @1280: t0=r3 t1=r4
+  @1439: t0=r3 t1=r4
+  @1440: t0=r3 t1=r4
+  @1535: t0=r3 t1=r4
+  @1536: t0=r3 t1=r4
+  @1920: t0=r3 t1=r4
+  @2560: t0=r3 t1=r4
+patterns-mantine-listingcardtrack--grid: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g5
+  @1536: t0=g5
+  @1920: t0=g6
+  @2560: t0=g8
+patterns-mantine-listingcardtrack--rail: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r2
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r3
+  @1023: t0=r3
+  @1024: t0=r4
+  @1279: t0=r4
+  @1280: t0=r5
+  @1439: t0=r5
+  @1440: t0=r5
+  @1535: t0=r5
+  @1536: t0=r5
+  @1920: t0=r6
+  @2560: t0=r8
+patterns-mantine-listingcardtrack--grid-single-item: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g5
+  @1536: t0=g5
+  @1920: t0=g6
+  @2560: t0=g8
+patterns-mantine-listingcardtrack--rail-single-item: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r1
+  @639: t0=r1
+  @640: t0=r1
+  @767: t0=r1
+  @768: t0=r1
+  @1023: t0=r1
+  @1024: t0=r1
+  @1279: t0=r1
+  @1280: t0=r1
+  @1439: t0=r1
+  @1440: t0=r1
+  @1535: t0=r1
+  @1536: t0=r1
+  @1920: t0=r1
+  @2560: t0=r1
+patterns-mantine-listingcardtrack--rail-no-overflow: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r2
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r2
+  @1023: t0=r2
+  @1024: t0=r2
+  @1279: t0=r2
+  @1280: t0=r2
+  @1439: t0=r2
+  @1440: t0=r2
+  @1535: t0=r2
+  @1536: t0=r2
+  @1920: t0=r2
+  @2560: t0=r2
+patterns-mantine-listingcardtrack--rail-mixed-title-lengths: PASS
+  @320: t0=r1
+  @479: t0=r1
+  @480: t0=r2
+  @639: t0=r2
+  @640: t0=r2
+  @767: t0=r2
+  @768: t0=r3
+  @1023: t0=r3
+  @1024: t0=r4
+  @1279: t0=r4
+  @1280: t0=r4
+  @1439: t0=r4
+  @1440: t0=r4
+  @1535: t0=r4
+  @1536: t0=r4
+  @1920: t0=r4
+  @2560: t0=r4
+patterns-mantine-listingcardtrack--grid-mixed-title-lengths: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g5
+  @1536: t0=g5
+  @1920: t0=g6
+  @2560: t0=g8
+patterns-mantine-listingcardtrack--empty: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g5
+  @1536: t0=g5
+  @1920: t0=g6
+  @2560: t0=g8
+patterns-mantine-listingsshellview--default: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g4
+  @1536: t0=g4
+  @1920: t0=g6
+  @2560: t0=g8
+
+cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint; a Story whose track mounts only after its Storybook render reaches finished.
+EXIT_CODE=0

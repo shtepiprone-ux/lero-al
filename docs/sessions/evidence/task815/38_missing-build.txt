@@ -1,0 +1,2 @@
+storybook-static/ not found at C:\Claude_Code_Projects\lero-al\storybook-static. Build first: npm run build-storybook
+EXIT_CODE=1

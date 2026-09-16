@@ -201,6 +201,12 @@ jobs:
       - name: Build Storybook (runs check:stories pre-gate)
         run: npm run build-storybook
 
+      - name: Card-track monotonicity gate (Task 815 — blocking, canonical-scope, owner decision 2026-09-16)
+        run: npm run check:card-track-monotonicity
+
+      - name: Card-track monotonicity gate self-test (verifies gate detects violations — CI-safe, Task 815)
+        run: npm run check:card-track-monotonicity:verify
+
       - name: Homepage grid invariants gate (column steps, gaps, header geometry)
         run: npm run check:homepage-grid
 

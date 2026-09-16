@@ -1,0 +1,7 @@
+
+Path                           
+----                           
+C:\Claude_Code_Projects\lero-al
+
+
+EXIT_CODE=0

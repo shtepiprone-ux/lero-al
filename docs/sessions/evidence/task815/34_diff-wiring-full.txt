@@ -1,0 +1,36 @@
+diff --git a/.github/workflows/governance-pr.yml b/.github/workflows/governance-pr.yml
+index d95795f93..8ff4753a9 100644
+--- a/.github/workflows/governance-pr.yml
++++ b/.github/workflows/governance-pr.yml
+@@ -201,6 +201,12 @@ jobs:
+       - name: Build Storybook (runs check:stories pre-gate)
+         run: npm run build-storybook
+ 
++      - name: Card-track monotonicity gate (Task 815 — blocking, canonical-scope, owner decision 2026-09-16)
++        run: npm run check:card-track-monotonicity
++
++      - name: Card-track monotonicity gate self-test (verifies gate detects violations — CI-safe, Task 815)
++        run: npm run check:card-track-monotonicity:verify
++
+       - name: Homepage grid invariants gate (column steps, gaps, header geometry)
+         run: npm run check:homepage-grid
+ 
+diff --git a/package.json b/package.json
+index 5348b64da..e71a464f2 100644
+--- a/package.json
++++ b/package.json
+@@ -98,10 +98,13 @@
+     "check:listing-visibility:verify": "node scripts/check-listing-visibility.mjs --verify-gate",
+     "check:homepage-grid": "node scripts/check-homepage-grid.mjs",
+     "check:homepage-grid:verify": "node scripts/check-homepage-grid.mjs --verify-gate",
++    "check:card-track-monotonicity": "node scripts/check-card-track-monotonicity.mjs",
++    "check:card-track-monotonicity:verify": "node scripts/check-card-track-monotonicity.mjs --verify-gate",
+     "check:click-shield": "node scripts/check-click-shield.mjs",
+     "check:click-shield:verify": "node scripts/check-click-shield.mjs --verify-gate",
+     "check:css-vars": "node scripts/check-css-var-resolvability.mjs",
+     "check:css-vars:verify": "node scripts/check-css-var-resolvability.mjs --verify-gate",
++    "check:css-vars:update-snapshot": "node scripts/check-css-var-resolvability.mjs --update-snapshot",
+     "check:tailwind-runtime-tokens": "node scripts/check-tailwind-runtime-tokens.mjs",
+     "check:tailwind-runtime-tokens:verify-gate": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate",
+     "check:homepage-literal-utilities": "node scripts/check-homepage-literal-utilities.mjs",
+EXIT_CODE=0

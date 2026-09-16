@@ -1,0 +1,4 @@
+ .github/workflows/governance-pr.yml | 6 ++++++
+ package.json                        | 3 +++
+ 2 files changed, 9 insertions(+)
+EXIT_CODE=0

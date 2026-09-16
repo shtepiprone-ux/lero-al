@@ -1,0 +1,87 @@
+62_probe-render-phase.mjs — Task 815 §17.3 signal probe
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task815/62_probe-render-phase.mjs
+
+selectors: asset=MantineListingCardTrack-xPQNAbuy.css gridClass=_grid_az6ln_5 railClass=_rail_az6ln_32
+
+── Step 1/2: render-phase resolve + 2000ms stability witness (16 stories x 2 widths = 32 samples) ──
+SAMPLE 1: story=mantine-primitives-favoritesshell--populated width=320 idProp=id resolvedId=mantine-primitives-favoritesshell--populated idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 2: story=mantine-primitives-favoritesshell--populated width=1440 idProp=id resolvedId=mantine-primitives-favoritesshell--populated idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 3: story=mantine-primitives-listingcard--favorites-composition width=320 idProp=id resolvedId=mantine-primitives-listingcard--favorites-composition idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 4: story=mantine-primitives-listingcard--favorites-composition width=1440 idProp=id resolvedId=mantine-primitives-listingcard--favorites-composition idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 5: story=mantine-primitives-recentlyviewedgridview--populated width=320 idProp=id resolvedId=mantine-primitives-recentlyviewedgridview--populated idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 6: story=mantine-primitives-recentlyviewedgridview--populated width=1440 idProp=id resolvedId=mantine-primitives-recentlyviewedgridview--populated idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 7: story=mantine-primitives-similarlistingsview--default width=320 idProp=id resolvedId=mantine-primitives-similarlistingsview--default idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 8: story=mantine-primitives-similarlistingsview--default width=1440 idProp=id resolvedId=mantine-primitives-similarlistingsview--default idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 9: story=mantine-primitives-similarlistingsview--fewer-than-eight width=320 idProp=id resolvedId=mantine-primitives-similarlistingsview--fewer-than-eight idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 10: story=mantine-primitives-similarlistingsview--fewer-than-eight width=1440 idProp=id resolvedId=mantine-primitives-similarlistingsview--fewer-than-eight idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 11: story=patterns-mantine-homepagelistinggrids--default width=320 idProp=id resolvedId=patterns-mantine-homepagelistinggrids--default idMatches=true phase=finished trackCountAtResolve=2 trackCountAfter2000ms=2
+SAMPLE 12: story=patterns-mantine-homepagelistinggrids--default width=1440 idProp=id resolvedId=patterns-mantine-homepagelistinggrids--default idMatches=true phase=finished trackCountAtResolve=2 trackCountAfter2000ms=2
+SAMPLE 13: story=patterns-mantine-homepagelistinggrids--loading width=320 idProp=id resolvedId=patterns-mantine-homepagelistinggrids--loading idMatches=true phase=finished trackCountAtResolve=2 trackCountAfter2000ms=2
+SAMPLE 14: story=patterns-mantine-homepagelistinggrids--loading width=1440 idProp=id resolvedId=patterns-mantine-homepagelistinggrids--loading idMatches=true phase=finished trackCountAtResolve=2 trackCountAfter2000ms=2
+SAMPLE 15: story=patterns-mantine-listingcardtrack--grid width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 16: story=patterns-mantine-listingcardtrack--grid width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 17: story=patterns-mantine-listingcardtrack--rail width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 18: story=patterns-mantine-listingcardtrack--rail width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 19: story=patterns-mantine-listingcardtrack--grid-single-item width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid-single-item idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 20: story=patterns-mantine-listingcardtrack--grid-single-item width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid-single-item idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 21: story=patterns-mantine-listingcardtrack--rail-single-item width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-single-item idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 22: story=patterns-mantine-listingcardtrack--rail-single-item width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-single-item idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 23: story=patterns-mantine-listingcardtrack--rail-no-overflow width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-no-overflow idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 24: story=patterns-mantine-listingcardtrack--rail-no-overflow width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-no-overflow idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 25: story=patterns-mantine-listingcardtrack--rail-mixed-title-lengths width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-mixed-title-lengths idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 26: story=patterns-mantine-listingcardtrack--rail-mixed-title-lengths width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--rail-mixed-title-lengths idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 27: story=patterns-mantine-listingcardtrack--grid-mixed-title-lengths width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid-mixed-title-lengths idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 28: story=patterns-mantine-listingcardtrack--grid-mixed-title-lengths width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--grid-mixed-title-lengths idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 29: story=patterns-mantine-listingcardtrack--empty width=320 idProp=id resolvedId=patterns-mantine-listingcardtrack--empty idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 30: story=patterns-mantine-listingcardtrack--empty width=1440 idProp=id resolvedId=patterns-mantine-listingcardtrack--empty idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 31: story=patterns-mantine-listingsshellview--default width=320 idProp=id resolvedId=patterns-mantine-listingsshellview--default idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+SAMPLE 32: story=patterns-mantine-listingsshellview--default width=1440 idProp=id resolvedId=patterns-mantine-listingsshellview--default idMatches=true phase=finished trackCountAtResolve=1 trackCountAfter2000ms=1
+
+── Step 4: counter-check — same 32 samples, track count at the moment sb-show-main resolves (Rev 1 signal) ──
+COUNTERCHECK 1: story=mantine-primitives-favoritesshell--populated width=320 sbShowMainTrackCount=0
+COUNTERCHECK 2: story=mantine-primitives-favoritesshell--populated width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 3: story=mantine-primitives-listingcard--favorites-composition width=320 sbShowMainTrackCount=0
+COUNTERCHECK 4: story=mantine-primitives-listingcard--favorites-composition width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 5: story=mantine-primitives-recentlyviewedgridview--populated width=320 sbShowMainTrackCount=0
+COUNTERCHECK 6: story=mantine-primitives-recentlyviewedgridview--populated width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 7: story=mantine-primitives-similarlistingsview--default width=320 sbShowMainTrackCount=0
+COUNTERCHECK 8: story=mantine-primitives-similarlistingsview--default width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 9: story=mantine-primitives-similarlistingsview--fewer-than-eight width=320 sbShowMainTrackCount=0
+COUNTERCHECK 10: story=mantine-primitives-similarlistingsview--fewer-than-eight width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 11: story=patterns-mantine-homepagelistinggrids--default width=320 sbShowMainTrackCount=0
+COUNTERCHECK 12: story=patterns-mantine-homepagelistinggrids--default width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 13: story=patterns-mantine-homepagelistinggrids--loading width=320 sbShowMainTrackCount=0
+COUNTERCHECK 14: story=patterns-mantine-homepagelistinggrids--loading width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 15: story=patterns-mantine-listingcardtrack--grid width=320 sbShowMainTrackCount=0
+COUNTERCHECK 16: story=patterns-mantine-listingcardtrack--grid width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 17: story=patterns-mantine-listingcardtrack--rail width=320 sbShowMainTrackCount=0
+COUNTERCHECK 18: story=patterns-mantine-listingcardtrack--rail width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 19: story=patterns-mantine-listingcardtrack--grid-single-item width=320 sbShowMainTrackCount=0
+COUNTERCHECK 20: story=patterns-mantine-listingcardtrack--grid-single-item width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 21: story=patterns-mantine-listingcardtrack--rail-single-item width=320 sbShowMainTrackCount=0
+COUNTERCHECK 22: story=patterns-mantine-listingcardtrack--rail-single-item width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 23: story=patterns-mantine-listingcardtrack--rail-no-overflow width=320 sbShowMainTrackCount=0
+COUNTERCHECK 24: story=patterns-mantine-listingcardtrack--rail-no-overflow width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 25: story=patterns-mantine-listingcardtrack--rail-mixed-title-lengths width=320 sbShowMainTrackCount=0
+COUNTERCHECK 26: story=patterns-mantine-listingcardtrack--rail-mixed-title-lengths width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 27: story=patterns-mantine-listingcardtrack--grid-mixed-title-lengths width=320 sbShowMainTrackCount=0
+COUNTERCHECK 28: story=patterns-mantine-listingcardtrack--grid-mixed-title-lengths width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 29: story=patterns-mantine-listingcardtrack--empty width=320 sbShowMainTrackCount=0
+COUNTERCHECK 30: story=patterns-mantine-listingcardtrack--empty width=1440 sbShowMainTrackCount=0
+COUNTERCHECK 31: story=patterns-mantine-listingsshellview--default width=320 sbShowMainTrackCount=0
+COUNTERCHECK 32: story=patterns-mantine-listingsshellview--default width=1440 sbShowMainTrackCount=0
+
+── Step 5: two canonical stories with no track — each must reach finished/errored within the timeout ──
+NOTRACK 1: story=admin-adminuserstable--default width=320 idProp=id resolvedId=admin-adminuserstable--default idMatches=true phase=finished reached=true
+NOTRACK 2: story=admin-adminuserstable--default width=1440 idProp=id resolvedId=admin-adminuserstable--default idMatches=true phase=finished reached=true
+NOTRACK 3: story=mantine-primitives-actionicon--default width=320 idProp=id resolvedId=mantine-primitives-actionicon--default idMatches=true phase=finished reached=true
+NOTRACK 4: story=mantine-primitives-actionicon--default width=1440 idProp=id resolvedId=mantine-primitives-actionicon--default idMatches=true phase=finished reached=true
+
+── Adoption rule (mechanical) ──
+step1 (32 in-scope samples) all pass: true
+no-track 2 stories (4 samples) all reach finished/errored: true
+ROUTE SELECTED: A (Storybook render phase)
+EXIT_CODE=0

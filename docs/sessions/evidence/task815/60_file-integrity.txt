@@ -1,0 +1,43 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 49 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+npm.cmd : ❌  check:file-integrity FAILED — 10 corrupt / invalid file(s):
+At line:4 char:1
++ npm.cmd run check:file-integrity *> "$evidence\60_file-integrity.txt"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:file-i...nvalid file(s)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  docs/sessions/evidence/task815/50_platform.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/51_node-version.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/52_location.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/53_typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/54_lint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/58_build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/58a_probe-render-state.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/58b_probe-discovery.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/59_check-card-track-monotonicity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task815/60_file-integrity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

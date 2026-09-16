@@ -1,0 +1,41 @@
+diff --git a/src/design-system/mantine/patterns/MantineListingCardTrack.module.css b/src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+index dac185b80..bd00aa105 100644
+--- a/src/design-system/mantine/patterns/MantineListingCardTrack.module.css
++++ b/src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+@@ -17,13 +17,14 @@
+  * ZERO horizontal margin, not a rounding artifact: `2 × var(--listing-card-min) + gap` =
+  * `2 × 280px + 16px` = `576px`, and `src/stories/mantine/_MantineStoryShell.tsx`'s canonical
+  * story harness delivers exactly `576px` of content width at a 640px viewport (measured,
+- * `measureStorybookColumnMonotonicity` in `scripts/task809-favorites-parity-probe.mjs`). Any
+- * future change to ONE of these three inputs can reopen the column-count dead zone this task
+- * fixed (a viewport growing from 639px to 640px dropping from 2 columns to 1): raising
+- * `--listing-card-min` (`globals.css`) above 280px, widening the grid `gap` above
+- * `--mantine-spacing-md` (16px), or widening any ancestor's horizontal padding/border at or
+- * below the `sm` breakpoint (the story shell's outer `Box`, or `/favorites`' own
+- * `.container-wide` page gutter). Re-run the monotonicity probe before changing any of the three.
++ * `measureStorybookColumnMonotonicity` in `scripts/task809-favorites-parity-probe.mjs`, since
++ * superseded — Task 815). Any future change to ONE of these three inputs can reopen the
++ * column-count dead zone this task fixed (a viewport growing from 639px to 640px dropping from
++ * 2 columns to 1): raising `--listing-card-min` (`globals.css`) above 280px, widening the grid
++ * `gap` above `--mantine-spacing-md` (16px), or widening any ancestor's horizontal padding/border
++ * at or below the `sm` breakpoint (the story shell's outer `Box`, or `/favorites`' own
++ * `.container-wide` page gutter). Re-run `npm run check:card-track-monotonicity` before changing
++ * any of the three.
+  */
+ 
+ /*
+diff --git a/src/stories/mantine/_MantineStoryShell.tsx b/src/stories/mantine/_MantineStoryShell.tsx
+index 8f2cd058e..fe81faab2 100644
+--- a/src/stories/mantine/_MantineStoryShell.tsx
++++ b/src/stories/mantine/_MantineStoryShell.tsx
+@@ -50,7 +50,8 @@ export interface MantineStoryShellProps {
+  * stacking two independent Box components' padding steps on the identical breakpoint is what broke
+  * that invariant. Deferring only `px`/`bd` to `md` leaves outer's own jump as the only width-bearing
+  * change at 640px (32px combined vs. the track's ~31px slack — an exact, verified fit, see
+- * `scripts/task809-favorites-parity-probe.mjs`'s `measureStorybookColumnMonotonicity`), and `px`/`bd`'s
++ * `scripts/task809-favorites-parity-probe.mjs`'s `measureStorybookColumnMonotonicity`, since
++ * superseded by `npm run check:card-track-monotonicity` — Task 815), and `px`/`bd`'s
+  * own combined step now lands at 768px, where the track already has ~94px of slack before the next
+  * column-count threshold — verified live, not assumed. `bg`/`bdrs`/`py` return to `sm` because none of
+  * the three affects this math; keeping them deferred to `md` would have been an unreviewed cosmetic
+EXIT_CODE=0

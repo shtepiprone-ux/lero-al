@@ -3,7 +3,7 @@
 Sprint 75 · P1 · QA profile **Q4** (was `Q2` in the reservation — corrected in §13 because this task claims a new
 blocking gate)
 
-**Status: `NEEDS REVISION` (Rev 2, Opus review 2026-09-16, owner decision §17.2) — start at §17.3; §17 supersedes §16.2.** Filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
+**Status: ✅ `APPROVED` 2026-09-16 after Revision 2 (owner decision §17.2) — archived; review ledger `docs/reviews/2026-09-16-task815-card-track-monotonicity-gate.review-ledger.json`.** Filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
 in §5.1.
 
 ## 1. Mode and task type

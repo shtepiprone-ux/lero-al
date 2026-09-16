@@ -1,0 +1,7 @@
+ .github/workflows/governance-pr.yml                 |  6 ++++++
+ docs/storybook-governance.md                        | 21 +++++++++++++++++++++
+ package.json                                        |  2 ++
+ .../patterns/MantineListingCardTrack.module.css     | 15 ++++++++-------
+ src/stories/mantine/_MantineStoryShell.tsx          |  3 ++-
+ 5 files changed, 39 insertions(+), 8 deletions(-)
+EXIT_CODE=0

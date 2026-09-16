@@ -1,0 +1,492 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-815 — check:card-track-monotonicity: every canonical Story rendering MantineListingCardTrack, 17 rung widths, blocking in CI (Sprint 75), Revision 2",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "46036fa29ea704380bd001fdc0d7a181256d4f4f",
+    "reviewedRevision": "uncommitted worktree on top of 46036fa29ea704380bd001fdc0d7a181256d4f4f (main). Task 815 paths: scripts/check-card-track-monotonicity.mjs (new, blob b4c307e0539432f75046a2000a76b82ce4886e8e), package.json (+2 scripts), .github/workflows/governance-pr.yml (+2 steps), src/design-system/mantine/patterns/MantineListingCardTrack.module.css and src/stories/mantine/_MantineStoryShell.tsx (comment-only), docs/storybook-governance.md (§15.10), docs/backlog.md, docs/sessions/2026-09-16-task815-card-track-monotonicity-gate.md, docs/sessions/evidence/task815/.",
+    "reviewedPaths": [
+      "scripts/check-card-track-monotonicity.mjs",
+      "package.json",
+      ".github/workflows/governance-pr.yml",
+      "src/design-system/mantine/patterns/MantineListingCardTrack.module.css",
+      "src/stories/mantine/_MantineStoryShell.tsx",
+      "docs/storybook-governance.md",
+      "docs/sessions/2026-09-16-task815-card-track-monotonicity-gate.md",
+      "docs/sessions/evidence/task815"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-16-task815-card-track-monotonicity-gate.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1-AC3 + AC12-R2 / R1-R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-card-track-monotonicity.mjs",
+        "symbol": "main (missing-build exits), extractTrackSelectors, waitForRenderPhase, discoverInScope",
+        "diffHunks": [
+          "scripts/check-card-track-monotonicity.mjs:116-141 (selectors), :199-217 (waitForRenderPhase), :278-309 (discoverInScope), :658-670 (missing build)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "missing storybook-static, runtime selector extraction, canonical-only discovery with render-phase readiness, named discovery failure on timeout/errored"
+        ],
+        "stories": [
+          "the 16 canonical track Stories listed in docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt"
+        ],
+        "viewports": [
+          "320",
+          "1440"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "locales": "Owner decision (kickoff §5.1/R6): the gate runs locale en only; other locales are a printed blind spot.",
+          "states": "Discovery has no UI state beyond the Storybook render phase, which is the enumerated subject."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/62_probe-render-phase.txt",
+          "command": "node docs/sessions/evidence/task815/62_probe-render-phase.mjs (win32, Node v22.22.3)",
+          "observable": "32/32 samples: currentRender.id equals the story id, phase=finished, track count > 0 at resolve and unchanged after 2000 ms; both no-track controls reach finished; ROUTE SELECTED: A.",
+          "freshness": "Revision 2 run on the final storybook-static build (74_build-storybook exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing storybook-static, runtime selector extraction, canonical-only discovery with render-phase readiness, named discovery failure on timeout/errored"
+            ],
+            "stories": [
+              "the 16 canonical track Stories listed in docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt"
+            ],
+            "viewports": [
+              "320",
+              "1440"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task815/95_review-check-card-track-monotonicity.txt",
+          "command": "node.exe scripts\\check-card-track-monotonicity.mjs (reviewer re-executed natively, win32, script blob b4c307e0)",
+          "observable": "discovery readiness: storybook render phase (finished|errored); in scope: 16 of 140 canonical, 351 total — the same 16 ids as 23_; no discovery failures; EXIT_CODE=0. Missing-build exit 1 accepted from 38_missing-build.txt (main() unchanged since).",
+          "freshness": "reviewer run 2026-09-16 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing storybook-static, runtime selector extraction, canonical-only discovery with render-phase readiness, named discovery failure on timeout/errored"
+            ],
+            "stories": [
+              "the 16 canonical track Stories listed in docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt"
+            ],
+            "viewports": [
+              "320",
+              "1440"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The render-phase signal races the track mount the same way sb-show-main did, and the probe is too coarse to see it.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task815/62_probe-render-phase.txt",
+          "result": "REFUTED. The probe's own sb-show-main counter-check on the same 32 samples records trackCount=0 at resolve on all 32 (COUNTERCHECK 1-32), so it can see a race; the render-phase samples record > 0 on all 32."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A Playwright gate script; no Tailwind utility or generated CSS is added, removed or recompiled."
+      }
+    },
+    {
+      "id": "AC4 + AC5 / R4-R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-card-track-monotonicity.mjs",
+        "symbol": "WIDTHS, evalTracks, measureStoryAtWidth, sweepStory, evaluateSweep",
+        "diffHunks": [
+          "scripts/check-card-track-monotonicity.mjs:67, :157-174, :232-267, :316-346 (incl. the unrequested :340 prev-width fix)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "17-width sweep of every in-scope Story, per-track grid/rail measure, drop detection naming story/track/mode/both widths/both measures/both track widths, no baseline or allowlist"
+        ],
+        "viewports": [
+          "320",
+          "479",
+          "480",
+          "639",
+          "640",
+          "767",
+          "768",
+          "1023",
+          "1024",
+          "1279",
+          "1280",
+          "1439",
+          "1440",
+          "1535",
+          "1536",
+          "1920",
+          "2560"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "The in-scope Story set is the discovered subject of the AC1-AC3 row; this row covers the sweep applied to it.",
+          "locales": "Owner decision: en only, printed blind spot.",
+          "states": "No interaction states; a track rendered only after interaction is a printed blind spot."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/77_check-card-track-monotonicity-verify-final.txt",
+          "command": "npm.cmd run check:card-track-monotonicity:verify (final block)",
+          "observable": "Arm (b) evaluateSweep failure 'patterns-mantine-listingcardtrack--grid track 0 (grid): 1023px->1024px measure 3->2 (track width 1023.0px->864.0px)'; arm (c) '...--rail track 0 (rail): 1279px->1280px measure 4->3 (track width 1279.0px->1000.0px)' — both widths, both measures, both track widths named. 95_ shows all 16 Stories PASS at all 17 widths. The script reads only index.json, the one CSS asset and served static files (readFile/readdir only; no write API imported).",
+          "freshness": "final block 2026-09-16, script blob b4c307e0 (93_hash-object-final.txt)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "17-width sweep of every in-scope Story, per-track grid/rail measure, drop detection naming story/track/mode/both widths/both measures/both track widths, no baseline or allowlist"
+            ],
+            "viewports": [
+              "320",
+              "479",
+              "480",
+              "639",
+              "640",
+              "767",
+              "768",
+              "1023",
+              "1024",
+              "1279",
+              "1280",
+              "1439",
+              "1440",
+              "1535",
+              "1536",
+              "1920",
+              "2560"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The unrequested evaluateSweep change at :340 alters the pass/fail decision rather than only the message.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-card-track-monotonicity.mjs",
+          "result": "REFUTED. :340 only adds width: cell.width to the stored prev record; the comparison at :334 is unchanged. Before it, Rev 0's failure string rendered prev.width as undefined, violating R5's 'both widths' — the fix brings the real gate into R5, and 77_ shows the named 1023px/1279px."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS; the in-page plant style is injected at runtime by the self-test only."
+      }
+    },
+    {
+      "id": "AC7 + AC7-R1 + AC11 + AC15 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-card-track-monotonicity.mjs",
+        "symbol": "runPlantArm, runVerifyGate",
+        "diffHunks": [
+          "scripts/check-card-track-monotonicity.mjs:447-569 (plant arms through sweepStory/evaluateSweep, produced-width and measure Y<X checks), :571-654 (five arms)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "negative arm, grid plant at 1024, rail plant at 1280, selector fail-closed, scope fail-closed, mutation of the evaluateSweep comparator"
+        ],
+        "stories": [
+          "patterns-mantine-listingcardtrack--grid",
+          "patterns-mantine-listingcardtrack--rail"
+        ],
+        "phases": [
+          "planted",
+          "mutated",
+          "restored"
+        ],
+        "notApplicable": {
+          "locales": "Self-test runs en only, as the gate does.",
+          "viewports": "The plant arms sweep the full 17-width list recorded in the AC4 row.",
+          "states": "Arm outcomes are the enumerated subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/77_check-card-track-monotonicity-verify-final.txt",
+          "command": "npm.cmd run check:card-track-monotonicity:verify",
+          "observable": "Arms (a)-(e) PASS, EXIT_CODE=0; (b)/(c) print the produced width (864/1000 px) before exactly one evaluateSweep failure, then 'reload clean — full 17-width unplanted sweep'. 76_/78_ status snapshots differ only by 77_/78_ themselves (the redirect targets).",
+          "freshness": "final block 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "negative arm, grid plant at 1024, rail plant at 1280, selector fail-closed, scope fail-closed, mutation of the evaluateSweep comparator"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardtrack--grid",
+              "patterns-mantine-listingcardtrack--rail"
+            ],
+            "phases": [
+              "planted",
+              "restored"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task815/63_mutation-verify.txt",
+          "command": "57_mutation-probe.mjs apply 'tr.value < prev.value' -> false; npm.cmd run check:card-track-monotonicity:verify; restore",
+          "observable": "MUTATED_VERIFY_EXIT_CODE=1; arms (b) and (c) FAILED with 'expected exactly 1 evaluateSweep failure, found 0' after the produced width was confirmed; 64_ hashes before/after b4c307e0... identical, equal to the shipped blob.",
+          "freshness": "run on the final script content (blob b4c307e0 equals 93_ and the reviewer's hash-object)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "negative arm, grid plant at 1024, rail plant at 1280, selector fail-closed, scope fail-closed, mutation of the evaluateSweep comparator"
+            ],
+            "stories": [
+              "patterns-mantine-listingcardtrack--grid",
+              "patterns-mantine-listingcardtrack--rail"
+            ],
+            "phases": [
+              "mutated",
+              "restored"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The plant arms still decide the trip privately, so a broken evaluateSweep leaves --verify-gate green (the Revision 1 finding).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task815/63_mutation-verify.txt",
+          "result": "REFUTED. With detection disabled in evaluateSweep the self-test exits 1 and both plant arms FAIL; git grep plantedValue over scripts/ returns no hit."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC6 + AC13-R2 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-card-track-monotonicity.mjs",
+        "symbol": "CANNOT_SEE, printScopeReport, runGate try/finally, runVerifyGate arm (d)",
+        "diffHunks": [
+          "scripts/check-card-track-monotonicity.mjs:73-76, :357-366, :392-443, :602-619"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "scope and blind-spot block on the success path and on the selector-failure exit"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI output.",
+          "locales": "Governance output, English-only, not user-facing.",
+          "viewports": "No rendered output of its own.",
+          "states": "The two exit paths are the enumerated subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/77_check-card-track-monotonicity-verify-final.txt",
+          "command": "npm.cmd run check:card-track-monotonicity:verify; git grep -n force-bad-selector -- scripts/",
+          "observable": "Arm (d) calls runGate with a non-matching assetPattern and a collecting log: exit 1 and the captured output contains 'scope: not discovered — selector extraction failed' and the cannot see: line. 95_ (success path) prints discovery readiness, in scope, excluded and cannot see. git grep force-bad-selector: no hit.",
+          "freshness": "final block 2026-09-16; reviewer grep and run 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "scope and blind-spot block on the success path and on the selector-failure exit"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The printed blind-spot list and the documented one in storybook-governance.md §15.10 differ.",
+          "kind": "EXECUTED",
+          "path": "docs/storybook-governance.md",
+          "result": "REFUTED. §15.10 'Cannot see, stated on every run' lists the same five items as CANNOT_SEE at :73-76, including the Route A item."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC8-AC10 / R8-R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": ".github/workflows/governance-pr.yml",
+        "symbol": "homepage-grid job steps; package.json scripts; two maintainer comments; storybook-governance.md §15.10",
+        "diffHunks": [
+          ".github/workflows/governance-pr.yml:204-209",
+          "package.json:101-102",
+          "src/design-system/mantine/patterns/MantineListingCardTrack.module.css:17-28 (comment)",
+          "src/stories/mantine/_MantineStoryShell.tsx:53-54 (comment)",
+          "docs/storybook-governance.md §15.10"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "CI placement between Build Storybook and the homepage grid gate, two npm scripts, comment-only retargets, untouched task809 probe, §15.10 content"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Wiring and documentation.",
+          "locales": "No user-facing string.",
+          "viewports": "Comment-only source edits; no rendered change.",
+          "states": "Static diff."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/86_diff-stat-wiring.txt",
+          "command": "git diff --stat/diff of the wiring, comment, probe and docs paths (85_-89_); reviewer git diff of the same paths",
+          "observable": "Workflow +6 (two steps, no continue-on-error, after 'Build Storybook', before 'Homepage grid invariants gate'); package.json +2; both source hunks are comment-only naming npm run check:card-track-monotonicity; task809 probe diff empty (88_); §15.10 records scope decision, widths, arms, blind spots, 827/828.",
+          "freshness": "final block 2026-09-16, reproduced by reviewer git diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "CI placement between Build Storybook and the homepage grid gate, two npm scripts, comment-only retargets, untouched task809 probe, §15.10 content"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new CI steps never run because an earlier step in the homepage-grid job is red.",
+          "kind": "EXECUTED",
+          "path": ".github/workflows/governance-pr.yml",
+          "result": "REFUTED for the known red step: both new steps sit before 'Homepage grid invariants gate', the step measured red on HEAD (Task 828); the only earlier step is Build Storybook, which exits 0 in 74_."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "§13.2 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-16-task815-card-track-monotonicity-gate.md",
+        "symbol": "Revision 2 final block",
+        "diffHunks": [
+          "docs/sessions/evidence/task815/69_-93_"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "typecheck, lint, build-storybook, check:stories, check:surface-census:changed, build, file-integrity, mojibake, hash-object"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Command exit codes.",
+          "locales": "Command exit codes.",
+          "viewports": "Command exit codes.",
+          "states": "Command exit codes."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task815/94_review-file-integrity-native.txt",
+          "command": "72_-83_ EXIT_CODE lines; reviewer node.exe scripts\\check-file-integrity.mjs with output outside the scanned tree",
+          "observable": "typecheck, lint, build-storybook, check:stories, check:surface-census:changed, npm run build, mojibake EXIT_CODE=0. The executor's 82_/91_ file-integrity EXIT_CODE=1 each flagged only the transcript being written; reviewer run: 82 files clean, exit 0; 82_/91_ start with 0D 0A, no BOM. 93_ hashes equal the reviewer's hash-object of the script, docs, session log and both probe files.",
+          "freshness": "final block 2026-09-16; reviewer reruns same day",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "typecheck, lint, build-storybook, check:stories, check:surface-census:changed, build, file-integrity, mojibake, hash-object"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The failing file-integrity transcripts hide a real BOM/NUL defect in a Task 815 file.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task815/94_review-file-integrity-native.txt",
+          "result": "REFUTED. The reviewer's native run over every git-changed and untracked path (82 files) passes, and the only file each failing run named was its own in-progress output."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "§13.2 final gate block",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed check:card-track-monotonicity (exit 0, 16/16, 95_) and check:file-integrity (82 files clean, 94_). The verify-gate, mutation proof, probe, build, typecheck, lint, check:stories, check:surface-census:changed and mojibake are accepted from Revision 2's retained transcripts, each with EXIT_CODE recorded and the script blob matching."
+  }
+}

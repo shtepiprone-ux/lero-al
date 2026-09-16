@@ -1,0 +1,26 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 46036fa29ea704380bd001fdc0d7a181256d4f4f
+    Changed paths seen: 5
+    Excluded (5):
+      .github/workflows/governance-pr.yml  [outside-src]
+      docs/storybook-governance.md  [outside-src]
+      package.json  [outside-src]
+      src/design-system/mantine/patterns/MantineListingCardTrack.module.css  [not-ts-tsx]
+      src/stories/mantine/_MantineStoryShell.tsx  [non-production-directory]
+    Included surfaces (0):
+    Surfaces censused: 0
+    Blocks baselined (recorded debt, does not fail): 0
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 653
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

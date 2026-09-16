@@ -50,7 +50,8 @@ export interface MantineStoryShellProps {
  * stacking two independent Box components' padding steps on the identical breakpoint is what broke
  * that invariant. Deferring only `px`/`bd` to `md` leaves outer's own jump as the only width-bearing
  * change at 640px (32px combined vs. the track's ~31px slack — an exact, verified fit, see
- * `scripts/task809-favorites-parity-probe.mjs`'s `measureStorybookColumnMonotonicity`), and `px`/`bd`'s
+ * `scripts/task809-favorites-parity-probe.mjs`'s `measureStorybookColumnMonotonicity`, since
+ * superseded by `npm run check:card-track-monotonicity` — Task 815), and `px`/`bd`'s
  * own combined step now lands at 768px, where the track already has ~94px of slack before the next
  * column-count threshold — verified live, not assumed. `bg`/`bdrs`/`py` return to `sm` because none of
  * the three affects this math; keeping them deferred to `md` would have been an unreviewed cosmetic

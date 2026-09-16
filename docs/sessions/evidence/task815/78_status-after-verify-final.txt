@@ -1,0 +1,67 @@
+ M .github/workflows/governance-pr.yml
+ M docs/storybook-governance.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/stories/mantine/_MantineStoryShell.tsx
+?? docs/sessions/2026-09-16-task815-card-track-monotonicity-gate.md
+?? docs/sessions/evidence/task815/00_census-reproduction.json
+?? docs/sessions/evidence/task815/10_platform.txt
+?? docs/sessions/evidence/task815/11_node_version.txt
+?? docs/sessions/evidence/task815/12_location.txt
+?? docs/sessions/evidence/task815/13_status_before.txt
+?? docs/sessions/evidence/task815/14_log.txt
+?? docs/sessions/evidence/task815/15_build-storybook.txt
+?? docs/sessions/evidence/task815/16_census-reproduction.txt
+?? docs/sessions/evidence/task815/20_typecheck.txt
+?? docs/sessions/evidence/task815/21_lint.txt
+?? docs/sessions/evidence/task815/22_build-storybook-final.txt
+?? docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt
+?? docs/sessions/evidence/task815/24_status_before_verify.txt
+?? docs/sessions/evidence/task815/25_check-card-track-monotonicity-verify.txt
+?? docs/sessions/evidence/task815/26_status_after_verify.txt
+?? docs/sessions/evidence/task815/27_check-stories.txt
+?? docs/sessions/evidence/task815/28_check-surface-census-changed.txt
+?? docs/sessions/evidence/task815/29_build.txt
+?? docs/sessions/evidence/task815/30_file-integrity.txt
+?? docs/sessions/evidence/task815/31_mojibake.txt
+?? docs/sessions/evidence/task815/32_diff-stat.txt
+?? docs/sessions/evidence/task815/33_diff-stat-wiring.txt
+?? docs/sessions/evidence/task815/34_diff-wiring-full.txt
+?? docs/sessions/evidence/task815/35_diff-comments.txt
+?? docs/sessions/evidence/task815/36_diff-stat-probe.txt
+?? docs/sessions/evidence/task815/37_diff-stat-docs.txt
+?? docs/sessions/evidence/task815/38_missing-build.txt
+?? docs/sessions/evidence/task815/40_hash-object.txt
+?? docs/sessions/evidence/task815/50_platform.txt
+?? docs/sessions/evidence/task815/51_node-version.txt
+?? docs/sessions/evidence/task815/52_location.txt
+?? docs/sessions/evidence/task815/53_typecheck.txt
+?? docs/sessions/evidence/task815/54_lint.txt
+?? docs/sessions/evidence/task815/57_mutation-probe.mjs
+?? docs/sessions/evidence/task815/58_build-storybook.txt
+?? docs/sessions/evidence/task815/58a_probe-render-state.mjs
+?? docs/sessions/evidence/task815/58a_probe-render-state.txt
+?? docs/sessions/evidence/task815/58b_probe-discovery.mjs
+?? docs/sessions/evidence/task815/58b_probe-discovery.txt
+?? docs/sessions/evidence/task815/59_check-card-track-monotonicity.txt
+?? docs/sessions/evidence/task815/60_file-integrity.txt
+?? docs/sessions/evidence/task815/61_mojibake.txt
+?? docs/sessions/evidence/task815/62_probe-render-phase.mjs
+?? docs/sessions/evidence/task815/62_probe-render-phase.txt
+?? docs/sessions/evidence/task815/63_mutation-verify.txt
+?? docs/sessions/evidence/task815/64_mutation-hashes.txt
+?? docs/sessions/evidence/task815/65_check-card-track-monotonicity.txt
+?? docs/sessions/evidence/task815/66_status-before-verify.txt
+?? docs/sessions/evidence/task815/67_check-card-track-monotonicity-verify.txt
+?? docs/sessions/evidence/task815/68_status-after-verify.txt
+?? docs/sessions/evidence/task815/69_platform.txt
+?? docs/sessions/evidence/task815/70_node-version.txt
+?? docs/sessions/evidence/task815/71_location.txt
+?? docs/sessions/evidence/task815/72_typecheck.txt
+?? docs/sessions/evidence/task815/73_lint.txt
+?? docs/sessions/evidence/task815/74_build-storybook.txt
+?? docs/sessions/evidence/task815/75_check-card-track-monotonicity.txt
+?? docs/sessions/evidence/task815/76_status-before-verify-final.txt
+?? docs/sessions/evidence/task815/77_check-card-track-monotonicity-verify-final.txt
+?? docs/sessions/evidence/task815/78_status-after-verify-final.txt
+?? scripts/check-card-track-monotonicity.mjs

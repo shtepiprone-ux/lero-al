@@ -1,0 +1,15 @@
+=== patterns-mantine-listingcardtrack--grid ===
++0ms: {"classList":[],"trackCount":0}
++200ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++500ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++1000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++2000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++4000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
+=== mantine-primitives-favoritesshell--populated ===
++0ms: {"classList":[],"trackCount":0}
++200ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++500ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++1000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++2000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
++4000ms: {"classList":["sb-main-fullscreen","sb-show-main"],"trackCount":1}
+EXIT_CODE=0

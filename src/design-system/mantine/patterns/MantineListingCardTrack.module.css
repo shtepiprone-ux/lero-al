@@ -78,9 +78,8 @@
 }
 .rail:hover::-webkit-scrollbar,
 .rail:focus-within::-webkit-scrollbar {
-  /* Owner instruction, mid-Revision-1 (2026-09-10, reference screenshot: rozetka.com.ua "Схожі
-     товари") — 12px on hover/focus, big enough to grab and drag the thumb with the mouse, not just
-     a visual hint. theme.ts:350 `sm: '0.75rem', // 12px`. */
+  /* 12px on hover/focus — big enough to grab and drag the thumb with the mouse, not just a visual
+     hint. theme.ts:350 `sm: '0.75rem', // 12px`. */
   height: var(--mantine-spacing-sm);
 }
 

@@ -1,0 +1,3 @@
+scripts/__tests__/css-var-resolvability.test.ts:212:    // hardcoded it (259 -> 257 -> 256 -> 297 across Tasks 695/749/743) and it
+scripts/check-css-var-resolvability.mjs:1218:  // `=== 297` already went stale twice (256/257 -> 297) and broke this exact
+EXIT_CODE=0

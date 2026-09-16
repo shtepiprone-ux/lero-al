@@ -1,0 +1,315 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (48 tests | 21 failed) 40ms
+     × parses a valid { version: 1, names: [...] } document 4ms
+     × rejects invalid JSON as malformed 1ms
+     × rejects a document with the wrong version 0ms
+     × rejects a document whose "names" is not an array 0ms
+     × rejects a document containing a non-custom-property name entry 0ms
+     × rejects a bare JSON array (not an object) 0ms
+     × reports kind "missing" for a path that does not exist, never throws 1ms
+     × loads a real, present, valid snapshot file 2ms
+     × reports kind "malformed" for a present-but-corrupt file (distinct from "missing") 2ms
+     × sorts names with localeCompare, 2-space indent, trailing newline, version 1 0ms
+     × round-trips through parseSnapshotContent 0ms
+     × reports no drift when the sets are identical 0ms
+     × reports an added name present in owned but not the snapshot 0ms
+     × reports a dropped name present in the snapshot but not owned 0ms
+     × sorts added/dropped with localeCompare and handles both directions at once 0ms
+     × classifies a fallback-less reference to a dropped name as a violation 0ms
+     × classifies a fallback-bearing reference to a dropped name as non-blocking 0ms
+     × ignores a reference whose name is not in the dropped set 1ms
+     × bootstraps from a missing snapshot file (first-run flow, §13) 4ms
+     × refuses when a dropped name still has a fallback-less reference, and leaves the file byte-unchanged 2ms
+     × succeeds when a dropped name has zero references anywhere 2ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run scripts\__tests__\css-var-resolvabilit ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 21 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > parses a 
+valid { version: 1, names: [...] } document
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:296:20
+    294| describe('parseSnapshotContent (R1) — valid / malformed', () => {
+    295|   it('parses a valid { version: 1, names: [...] } document', () => {
+    296|     const result = parseSnapshotContent('{"version":1,"names":["--a","…
+       |                    ^
+    297|     expect(result.ok).toBe(true)
+    298|     expect(result.names.has('--a')).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > rejects 
+invalid JSON as malformed
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:304:20
+    302|
+    303|   it('rejects invalid JSON as malformed', () => {
+    304|     const result = parseSnapshotContent('{not json')
+       |                    ^
+    305|     expect(result.ok).toBe(false)
+    306|     expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > rejects a 
+document with the wrong version
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:310:20
+    308|
+    309|   it('rejects a document with the wrong version', () => {
+    310|     const result = parseSnapshotContent('{"version":2,"names":["--a"]}…
+       |                    ^
+    311|     expect(result.ok).toBe(false)
+    312|     expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > rejects a 
+document whose "names" is not an array
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:316:20
+    314|
+    315|   it('rejects a document whose "names" is not an array', () => {
+    316|     const result = parseSnapshotContent('{"version":1,"names":"--a"}')
+       |                    ^
+    317|     expect(result.ok).toBe(false)
+    318|     expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > rejects a 
+document containing a non-custom-property name entry
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:322:20
+    320|
+    321|   it('rejects a document containing a non-custom-property name entry',…
+    322|     const result = parseSnapshotContent('{"version":1,"names":["--a","…
+       |                    ^
+    323|     expect(result.ok).toBe(false)
+    324|     expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > parseSnapshotContent (R1) — valid / malformed > rejects a 
+bare JSON array (not an object)
+TypeError: parseSnapshotContent is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:328:20
+    326|
+    327|   it('rejects a bare JSON array (not an object)', () => {
+    328|     const result = parseSnapshotContent('["--a"]')
+       |                    ^
+    329|     expect(result.ok).toBe(false)
+    330|     expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > loadSnapshot (R1) — missing file > reports kind "missing" for 
+a path that does not exist, never throws
+TypeError: loadSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:338:22
+    336|     const dir = mkdtempSync(join(tmpdir(), 'css-var-snapshot-test-'))
+    337|     try {
+    338|       const result = loadSnapshot(join(dir, 'does-not-exist.json'))
+       |                      ^
+    339|       expect(result.ok).toBe(false)
+    340|       expect(result.kind).toBe('missing')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > loadSnapshot (R1) — missing file > loads a real, present, 
+valid snapshot file
+TypeError: loadSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:351:22
+    349|       const path = join(dir, 'snapshot.json')
+    350|       writeFileSync(path, '{"version":1,"names":["--x"]}', 'utf8')
+    351|       const result = loadSnapshot(path)
+       |                      ^
+    352|       expect(result.ok).toBe(true)
+    353|       expect(result.names.has('--x')).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > loadSnapshot (R1) — missing file > reports kind "malformed" 
+for a present-but-corrupt file (distinct from "missing")
+TypeError: loadSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:364:22
+    362|       const path = join(dir, 'snapshot.json')
+    363|       writeFileSync(path, 'not json at all', 'utf8')
+    364|       const result = loadSnapshot(path)
+       |                      ^
+    365|       expect(result.ok).toBe(false)
+    366|       expect(result.kind).toBe('malformed')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > serializeSnapshot (R1/§10.4) — canonical on-disk form > sorts 
+names with localeCompare, 2-space indent, trailing newline, version 1
+TypeError: serializeSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:375:18
+    373| describe('serializeSnapshot (R1/§10.4) — canonical on-disk form', () =…
+    374|   it('sorts names with localeCompare, 2-space indent, trailing newline…
+    375|     const text = serializeSnapshot(new Set(['--zeta', '--alpha', '--be…
+       |                  ^
+    376|     expect(text).toBe('{\n  "version": 1,\n  "names": [\n    "--alpha"…
+    377|     expect(text.endsWith('\n')).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > serializeSnapshot (R1/§10.4) — canonical on-disk form > 
+round-trips through parseSnapshotContent
+TypeError: serializeSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:383:41
+    381|   it('round-trips through parseSnapshotContent', () => {
+    382|     const names = new Set(['--one', '--two', '--three'])
+    383|     const parsed = parseSnapshotContent(serializeSnapshot(names))
+       |                                         ^
+    384|     expect(parsed.ok).toBe(true)
+    385|     expect([...parsed.names].sort()).toEqual([...names].sort())
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > computeDrift (R3) — owned set vs. snapshot, as pure sets > 
+reports no drift when the sets are identical
+TypeError: computeDrift is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:391:19
+    389| describe('computeDrift (R3) — owned set vs. snapshot, as pure sets', (…
+    390|   it('reports no drift when the sets are identical', () => {
+    391|     const drift = computeDrift(new Set(['--a', '--b']), new Set(['--a'…
+       |                   ^
+    392|     expect(drift.added).toEqual([])
+    393|     expect(drift.dropped).toEqual([])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > computeDrift (R3) — owned set vs. snapshot, as pure sets > 
+reports an added name present in owned but not the snapshot
+TypeError: computeDrift is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:397:19
+    395|
+    396|   it('reports an added name present in owned but not the snapshot', ()…
+    397|     const drift = computeDrift(new Set(['--a', '--b']), new Set(['--a'…
+       |                   ^
+    398|     expect(drift.added).toEqual(['--b'])
+    399|     expect(drift.dropped).toEqual([])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > computeDrift (R3) — owned set vs. snapshot, as pure sets > 
+reports a dropped name present in the snapshot but not owned
+TypeError: computeDrift is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:403:19
+    401|
+    402|   it('reports a dropped name present in the snapshot but not owned', (…
+    403|     const drift = computeDrift(new Set(['--a']), new Set(['--a', '--b'…
+       |                   ^
+    404|     expect(drift.added).toEqual([])
+    405|     expect(drift.dropped).toEqual(['--b'])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > computeDrift (R3) — owned set vs. snapshot, as pure sets > 
+sorts added/dropped with localeCompare and handles both directions at once
+TypeError: computeDrift is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:409:19
+    407|
+
+ Test Files  1 failed (1)
+      Tests  21 failed | 27 passed (48)
+   Start at  17:30:56
+   Duration  512ms (transform 72ms, setup 103ms, import 65ms, tests 40ms, environment 0ms)
+
+    408|   it('sorts added/dropped with localeCompare and handles both directio…
+    409|     const drift = computeDrift(new Set(['--z', '--new']), new Set(['--…
+       |                   ^
+    410|     expect(drift.added).toEqual(['--new'])
+    411|     expect(drift.dropped).toEqual(['--old'])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > findDroppedNameRefs (R2) — fallback-less vs. fallback-bearing 
+split > classifies a fallback-less reference to a dropped name as a violation
+TypeError: findDroppedNameRefs is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:418:20
+    416|   it('classifies a fallback-less reference to a dropped name as a viol…
+    417|     const allRefs = [{ name: '--gone', line: 5, hasFallback: false, fi…
+    418|     const result = findDroppedNameRefs(allRefs, new Set(['--gone']), '…
+       |                    ^
+    419|     expect(result.violations).toHaveLength(1)
+    420|     expect(result.violations[0]).toMatchObject({ arm: 'B', file: 'a.cs…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > findDroppedNameRefs (R2) — fallback-less vs. fallback-bearing 
+split > classifies a fallback-bearing reference to a dropped name as non-blocking
+TypeError: findDroppedNameRefs is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:426:20
+    424|   it('classifies a fallback-bearing reference to a dropped name as non…
+    425|     const allRefs = [{ name: '--gone', line: 5, hasFallback: true, fil…
+    426|     const result = findDroppedNameRefs(allRefs, new Set(['--gone']), '…
+       |                    ^
+    427|     expect(result.violations).toHaveLength(0)
+    428|     expect(result.fallbackReports).toHaveLength(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > findDroppedNameRefs (R2) — fallback-less vs. fallback-bearing 
+split > ignores a reference whose name is not in the dropped set
+TypeError: findDroppedNameRefs is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:433:20
+    431|   it('ignores a reference whose name is not in the dropped set', () =>…
+    432|     const allRefs = [{ name: '--still-owned', line: 5, hasFallback: fa…
+    433|     const result = findDroppedNameRefs(allRefs, new Set(['--gone']), '…
+       |                    ^
+    434|     expect(result.violations).toHaveLength(0)
+    435|     expect(result.fallbackReports).toHaveLength(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > performUpdateSnapshot (R4) — writer refusal and success, 
+against a real fixture tree > bootstraps from a missing snapshot file (first-run flow, §13)
+TypeError: performUpdateSnapshot is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:461:22
+    459|     try {
+    460|       const snapshotPath = join(tree.base, 'snapshot.json')
+    461|       const result = performUpdateSnapshot({ cssDir: tree.cssDir, glob…
+       |                      ^
+    462|       expect(result.refused).toBe(false)
+    463|       expect(result.written).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > performUpdateSnapshot (R4) — writer refusal and success, 
+against a real fixture tree > refuses when a dropped name still has a fallback-less reference, and leaves the file 
+byte-unchanged
+TypeError: writeSnapshotFile is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:479:7
+    477|       // (above) only declares --kept now, and a live source file stil…
+    478|       // other one without a fallback.
+    479|       writeSnapshotFile(snapshotPath, new Set(['--kept', '--dropped-bu…
+       |       ^
+    480|       const before = readFileSync(snapshotPath, 'utf8')
+    481|       writeFileSync(join(tree.srcDir, 'consumer.tsx'), "const s = { co…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/21]⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > performUpdateSnapshot (R4) — writer refusal and success, 
+against a real fixture tree > succeeds when a dropped name has zero references anywhere
+TypeError: writeSnapshotFile is not a function
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:496:7
+    494|     try {
+    495|       const snapshotPath = join(tree.base, 'snapshot.json')
+    496|       writeSnapshotFile(snapshotPath, new Set(['--kept', '--dropped-un…
+       |       ^
+    497|       const result = performUpdateSnapshot({ cssDir: tree.cssDir, glob…
+    498|       expect(result.refused).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/21]⎯
+
+EXIT_CODE=1

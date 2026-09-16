@@ -1,0 +1,17 @@
+❌  check:css-vars:update-snapshot — refused: 2 dropped name(s) still referenced without a fallback:
+    Arm A  ../../Users/Nox/AppData/Local/Temp/task743-rev1-ac8cli-pPPkOA/css/3294fd458d254b37.css:1  var(--motion-duration-slow)
+    Arm B  ../../Users/Nox/AppData/Local/Temp/task743-rev1-ac8cli-pPPkOA/src/design-system/media/AppImage.module.css:159  var(--motion-duration-slow)
+    ..\..\Users\Nox\AppData\Local\Temp\task743-rev1-ac8cli-pPPkOA\css-var-ownership-snapshot.json left byte-unchanged. Remove or fallback-guard the reference(s) above, then retry.
+--- stdout ---
+    Ownership snapshot: version 1, 297 name(s) (..\..\Users\Nox\AppData\Local\Temp\task743-rev1-ac8cli-pPPkOA\css-var-ownership-snapshot.json)
+    Blind spots (R6): a name deleted from globals.css BEFORE the snapshot's first commit is invisible to drift — the snapshot only remembers what it was told to; a dynamically-built var(--prefix${…}) construction site is covered only by the existing prefix rule (R6/§3.4), unchanged by this task; a reference living outside src/**/*.{css,tsx,ts} (Arm B's own glob) is never scanned by either arm.
+
+--- stderr ---
+❌  check:css-vars:update-snapshot — refused: 2 dropped name(s) still referenced without a fallback:
+    Arm A  ../../Users/Nox/AppData/Local/Temp/task743-rev1-ac8cli-pPPkOA/css/3294fd458d254b37.css:1  var(--motion-duration-slow)
+    Arm B  ../../Users/Nox/AppData/Local/Temp/task743-rev1-ac8cli-pPPkOA/src/design-system/media/AppImage.module.css:159  var(--motion-duration-slow)
+    ..\..\Users\Nox\AppData\Local\Temp\task743-rev1-ac8cli-pPPkOA\css-var-ownership-snapshot.json left byte-unchanged. Remove or fallback-guard the reference(s) above, then retry.
+
+exitCode=1
+hash before=c854ac0bd9c9237203623d5617397a8571045023 after=c854ac0bd9c9237203623d5617397a8571045023 unchanged=true
+EXIT_CODE=0

@@ -56,14 +56,27 @@
  * never introduces a NEW name in this file, measured 2026-08-10). An empty owned set is a
  * non-zero exit (a `globals.css` parse failure must never look like "0 violations").
  *
- * Input seam (R11, kickoff §0.2 D4): `--css-dir` / `--globals-path` / `--src-dir`. Every
- * `--verify-gate` plant and control runs against a `mkdtempSync` copy driven through these three
- * flags — the real tree is never written to.
+ * Input seam (R11, kickoff §0.2 D4): `--css-dir` / `--globals-path` / `--src-dir` / `--snapshot-path`
+ * (the last added by Task 743, same seam shape). Every `--verify-gate` plant and control runs
+ * against a `mkdtempSync` copy driven through all four flags — the real tree is never written to.
+ *
+ * OWNERSHIP SNAPSHOT (Task 743, Sprint 75 — 700 F1 / kickoff §3.1). `extractOwnedNames` above is
+ * computed LIVE from globals.css on every run — which means DELETING a declaration un-owns the name
+ * and every reference to it in the same motion, and the two arms above report "0 violations" even
+ * though a live reference is now dangling. Reproduced twice: `--color-overlay-foreground` (Task 700's
+ * own review) and `--motion-duration-slow` (Task 765, a sibling-preserved deletion with a static
+ * `.css` consumer). `scripts/css-var-ownership-snapshot.json` — a committed `{version, names}` record,
+ * written only by `--update-snapshot` — is the second, deliberately-stale signal this blind spot
+ * needs: comparing the live owned set against it (drift, R3) makes a SHRINK observable, and checking
+ * every fallback-less reference to a name that fell out of the live set (dropped-name, R2) turns that
+ * shrink into a named failure. See `docs/design-system.md` §23.9 for the full contract, the writer's
+ * refusal rule, and the update workflow.
  *
  * Usage:
  *   node scripts/check-css-var-resolvability.mjs                    Assert the real tree.
  *   node scripts/check-css-var-resolvability.mjs --verify-gate       Self-test (temp copies only).
- *   node scripts/check-css-var-resolvability.mjs --css-dir <dir> --globals-path <file> --src-dir <dir>
+ *   node scripts/check-css-var-resolvability.mjs --update-snapshot   Write the ownership snapshot.
+ *   node scripts/check-css-var-resolvability.mjs --css-dir <dir> --globals-path <file> --src-dir <dir> --snapshot-path <file>
  *
  * Precedent copied (kickoff §3.7): `check-homepage-grid.mjs`'s `--verify-gate` self-test
  * convention and provenance-comment style; `check-design-tokens.mjs`'s strict/report split and
@@ -81,6 +94,7 @@ import {
 import { join, resolve, dirname, relative, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
+import { execFileSync } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -92,9 +106,11 @@ function getFlag(name, def) {
   return def;
 }
 const VERIFY_GATE = process.argv.includes('--verify-gate');
+const UPDATE_SNAPSHOT = process.argv.includes('--update-snapshot');
 const CSS_DIR = resolve(process.cwd(), getFlag('css-dir', resolve(ROOT, '.next/static/css')));
 const GLOBALS_PATH = resolve(process.cwd(), getFlag('globals-path', resolve(ROOT, 'src/app/globals.css')));
 const SRC_DIR = resolve(process.cwd(), getFlag('src-dir', resolve(ROOT, 'src')));
+const SNAPSHOT_PATH = resolve(process.cwd(), getFlag('snapshot-path', resolve(ROOT, 'scripts/css-var-ownership-snapshot.json')));
 
 // ═══════════════════════════════════════════════════════════════════════════
 // § Comment stripping (R4) — CSS: block comments only (CSS has no line comments).
@@ -305,6 +321,104 @@ export function extractPropertyRegisteredNames(rawCssContent) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// § Ownership snapshot (Task 743) — a committed record of what "owned" was the
+// last time a human deliberately ran `--update-snapshot`. `extractOwnedNames`
+// (above) is computed LIVE from globals.css on every run, which is exactly
+// the mechanism that makes a DELETED-but-still-referenced token invisible
+// (700 F1 / kickoff §3.1): deleting a declaration un-owns the name and every
+// reference to it in the same motion, so the live-only gate reports "0
+// violations". The snapshot is the second, deliberately-stale signal that
+// makes a live-set SHRINK observable as drift, without reopening the ~112
+// Mantine runtime false positives (§3.2) — those names were never owned and
+// are never in the snapshot either.
+// ═══════════════════════════════════════════════════════════════════════════
+const SNAPSHOT_VERSION = 1;
+const SNAPSHOT_NAME_RE = /^--[\w-]+$/;
+
+// Parses raw snapshot JSON TEXT (no filesystem access — the seam unit tests
+// exercise directly for the valid/malformed cases, R7).
+export function parseSnapshotContent(raw) {
+  let json;
+  try {
+    json = JSON.parse(raw);
+  } catch (e) {
+    return { ok: false, kind: 'malformed', reason: `invalid JSON — ${e.message}` };
+  }
+  if (json === null || typeof json !== 'object' || Array.isArray(json)) {
+    return { ok: false, kind: 'malformed', reason: 'expected a JSON object { "version": 1, "names": [...] }' };
+  }
+  if (json.version !== SNAPSHOT_VERSION) {
+    return { ok: false, kind: 'malformed', reason: `expected "version": ${SNAPSHOT_VERSION}, found ${JSON.stringify(json.version)}` };
+  }
+  if (!Array.isArray(json.names)) {
+    return { ok: false, kind: 'malformed', reason: '"names" must be an array of strings' };
+  }
+  const names = new Set();
+  for (const n of json.names) {
+    if (typeof n !== 'string' || !SNAPSHOT_NAME_RE.test(n)) {
+      return { ok: false, kind: 'malformed', reason: `"names" contains a non-custom-property entry: ${JSON.stringify(n)}` };
+    }
+    names.add(n);
+  }
+  return { ok: true, names };
+}
+
+// Reads and parses the snapshot at `snapshotPath`. A MISSING file and a
+// present-but-unparsable file are distinguished (`kind`) because the two
+// callers treat them differently: the default scan (R1) treats both as
+// fatal; the writer (R4) treats "missing" as the empty starting snapshot
+// (first-run bootstrap, §13's own required flow) but still refuses to
+// silently overwrite a present, corrupt file.
+export function loadSnapshot(snapshotPath) {
+  if (!existsSync(snapshotPath)) {
+    return { ok: false, kind: 'missing', reason: `snapshot not found at ${snapshotPath}` };
+  }
+  const raw = readFileSync(snapshotPath, 'utf8');
+  return parseSnapshotContent(raw);
+}
+
+// Canonical on-disk form (R1/§10.4): UTF-8 no BOM (writeFileSync's default
+// 'utf8' encoding never emits one), LF (JSON.stringify never emits \r),
+// 2-space indent, trailing newline, names sorted with localeCompare.
+export function serializeSnapshot(namesIterable) {
+  const names = [...namesIterable].sort((a, b) => a.localeCompare(b));
+  return `${JSON.stringify({ version: SNAPSHOT_VERSION, names }, null, 2)}\n`;
+}
+
+export function writeSnapshotFile(snapshotPath, namesIterable) {
+  writeFileSync(snapshotPath, serializeSnapshot(namesIterable), 'utf8');
+}
+
+// Drift (R3): the live-computed owned set vs. the committed snapshot, as pure
+// sets — independent of whether either side is ever referenced. `added` is
+// only meaningful as "run --update-snapshot"; `dropped` is the set R2's
+// dropped-name check evaluates for live fallback-less references.
+export function computeDrift(ownedSet, snapshotNames) {
+  const added = [...ownedSet].filter((n) => !snapshotNames.has(n)).sort((a, b) => a.localeCompare(b));
+  const dropped = [...snapshotNames].filter((n) => !ownedSet.has(n)).sort((a, b) => a.localeCompare(b));
+  return { added, dropped };
+}
+
+// Dropped-name references (R2): given a flat list of every var() reference
+// found on one arm (owned or not — this deliberately does NOT filter through
+// ownedSet, because a dropped name is by definition no longer owned) and the
+// current dropped-name set, split into blocking (fallback-less) and
+// non-blocking (fallback-bearing, folded into the existing R10 report).
+export function findDroppedNameRefs(allRefs, droppedNames, armLabel) {
+  const violations = [];
+  const fallbackReports = [];
+  for (const ref of allRefs) {
+    if (!droppedNames.has(ref.name)) continue;
+    if (ref.hasFallback) {
+      fallbackReports.push({ arm: armLabel, file: ref.file, line: ref.line, name: ref.name });
+    } else {
+      violations.push({ arm: armLabel, file: ref.file, line: ref.line, name: ref.name });
+    }
+  }
+  return { violations, fallbackReports };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // § var() reference extraction — literal (static) references only. A dynamic
 // construction site (`var(--prefix${...})`) never matches here: `--[\w-]+`
 // cannot consume a `$`, so the regex fails to reach a `,`/`)` at that position
@@ -493,17 +607,19 @@ function scanArmA(cssDir, ownedSet) {
   const violations = [];
   const fallbackReports = [];
   const referencedOwnedNames = new Set();
+  const allRefs = []; // every literal var() ref found on this arm, owned or not (R2 needs the unowned/dropped ones too)
   for (const f of files) {
     const stripped = stripComments(rawByFile.get(f), true);
     const refs = findVarReferences(stripped);
     const rel = relative(ROOT, f).replace(/\\/g, '/');
+    for (const r of refs) allRefs.push({ ...r, file: rel });
     const { violations: v, fallbackReports: fb, resolvedOwnedNames } =
       classifyReferences(refs, ownedSet, declaredSet, propertySet, 'A', rel);
     violations.push(...v);
     fallbackReports.push(...fb);
     for (const n of resolvedOwnedNames) referencedOwnedNames.add(n);
   }
-  return { violations, fallbackReports, referencedOwnedNames, declaredSet, propertySet };
+  return { violations, fallbackReports, referencedOwnedNames, declaredSet, propertySet, allRefs };
 }
 
 function scanArmB(srcDir, globalsPath, ownedSet, declaredSet, propertySet) {
@@ -512,6 +628,7 @@ function scanArmB(srcDir, globalsPath, ownedSet, declaredSet, propertySet) {
   const fallbackReports = [];
   const referencedOwnedNames = new Set();
   const dynamicSites = [];
+  const allRefs = []; // same purpose as scanArmA's allRefs, see comment there
   for (const f of files) {
     const isCss = f.endsWith('.css');
     const raw = readFileSync(f, 'utf8');
@@ -519,6 +636,7 @@ function scanArmB(srcDir, globalsPath, ownedSet, declaredSet, propertySet) {
     const rel = relative(ROOT, f).replace(/\\/g, '/');
 
     const refs = findVarReferences(stripped);
+    for (const r of refs) allRefs.push({ ...r, file: rel });
     const { violations: v, fallbackReports: fb, resolvedOwnedNames } =
       classifyReferences(refs, ownedSet, declaredSet, propertySet, 'B', rel);
     violations.push(...v);
@@ -532,10 +650,10 @@ function scanArmB(srcDir, globalsPath, ownedSet, declaredSet, propertySet) {
       }
     }
   }
-  return { violations, fallbackReports, referencedOwnedNames, dynamicSites };
+  return { violations, fallbackReports, referencedOwnedNames, dynamicSites, allRefs };
 }
 
-function runScan({ cssDir, globalsPath, srcDir }) {
+function runScan({ cssDir, globalsPath, srcDir, snapshotPath }) {
   if (!existsSync(globalsPath)) {
     return { fatal: `globals.css not found at ${globalsPath}` };
   }
@@ -550,10 +668,25 @@ function runScan({ cssDir, globalsPath, srcDir }) {
     return { fatal: freshness.reason };
   }
 
+  const snapshotResult = loadSnapshot(snapshotPath);
+  if (!snapshotResult.ok) {
+    return { fatal: `ownership snapshot ${snapshotResult.kind} at ${snapshotPath} — ${snapshotResult.reason} (run "npm run check:css-vars:update-snapshot", R1)` };
+  }
+  const snapshotNames = snapshotResult.names;
+
   const armA = scanArmA(cssDir, ownedSet);
   const armB = scanArmB(srcDir, globalsPath, ownedSet, armA.declaredSet, armA.propertySet);
 
   const inClassDynamicSites = armB.dynamicSites.filter((s) => s.inClass);
+
+  const drift = computeDrift(ownedSet, snapshotNames);
+  const droppedNames = new Set(drift.dropped);
+  const droppedA = findDroppedNameRefs(armA.allRefs, droppedNames, 'A');
+  const droppedB = findDroppedNameRefs(armB.allRefs, droppedNames, 'B');
+  const dropped = {
+    violations: [...droppedA.violations, ...droppedB.violations],
+    fallbackReports: [...droppedA.fallbackReports, ...droppedB.fallbackReports],
+  };
 
   return {
     ownedSet,
@@ -561,18 +694,42 @@ function runScan({ cssDir, globalsPath, srcDir }) {
     armB,
     inClassDynamicSites,
     violations: [...armA.violations, ...armB.violations],
+    snapshotPath,
+    snapshotNames,
+    drift,
+    dropped,
   };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // § Report + main run
 // ═══════════════════════════════════════════════════════════════════════════
+// R6 — printed on every run, meaning every call site that can reach a
+// terminal state with the scan/writer having attempted to load the snapshot:
+// `run()` (default scan); `updateSnapshot()`'s success, refusal, and
+// fatal-after-load paths (the three early fatals in performUpdateSnapshot —
+// missing globals.css, 0 owned names, stale build — occur BEFORE any
+// snapshot load is attempted, so there is nothing yet to print there); and
+// once in `verifyGate()`, immediately after the baseline line (Task 743
+// Rev 1, F2 — the original comment here claimed the writer and verify-gate
+// already called this function; neither did, which is exactly the defect).
+// Prints the snapshot's own identity, plus the three known blind spots this
+// ownership snapshot still cannot see. None of the three is a new check;
+// they are the honest boundary of R2/R3, stated so a reader never mistakes
+// "0 drift, 0 dropped" for "nothing can go missing here".
+function printSnapshotScope(snapshotPath, snapshotNames) {
+  const sizeText = snapshotNames ? `${snapshotNames.size} name(s)` : 'unavailable (see error above)';
+  console.log(`    Ownership snapshot: version ${SNAPSHOT_VERSION}, ${sizeText} (${relative(ROOT, snapshotPath) || snapshotPath})`);
+  console.log('    Blind spots (R6): a name deleted from globals.css BEFORE the snapshot\'s first commit is invisible to drift — the snapshot only remembers what it was told to; a dynamically-built var(--prefix${…}) construction site is covered only by the existing prefix rule (R6/§3.4), unchanged by this task; a reference living outside src/**/*.{css,tsx,ts} (Arm B\'s own glob) is never scanned by either arm.');
+}
+
 function printReport(result) {
-  const { ownedSet, armA, armB, inClassDynamicSites, violations } = result;
+  const { ownedSet, armA, armB, inClassDynamicSites, violations, snapshotPath, snapshotNames, drift, dropped } = result;
   console.log(`🔍  check:css-vars — owned custom properties (globals.css @theme/@theme inline/:root): ${ownedSet.size}`);
   console.log(`    Arm A (shipped CSS) — owned names referenced: ${armA.referencedOwnedNames.size}`);
   console.log(`    Arm B (src/**/*.{css,tsx,ts}, excl. globals.css) — owned names referenced: ${armB.referencedOwnedNames.size}`);
   console.log(`    Dynamic var() construction sites: ${armB.dynamicSites.length} raw, ${inClassDynamicSites.length} in-class (prefix could name an owned token)`);
+  printSnapshotScope(snapshotPath, snapshotNames);
   console.log('');
 
   if (violations.length > 0) {
@@ -591,8 +748,24 @@ function printReport(result) {
     console.log('');
   }
 
-  const allFallback = [...armA.fallbackReports, ...armB.fallbackReports];
-  console.log(`ℹ️   ${allFallback.length} fallback-bearing owned reference(s) — non-blocking (R10):`);
+  if (dropped.violations.length > 0) {
+    console.log(`❌  ${dropped.violations.length} dropped-name var() reference(s) — name left globals.css but a reference still reads it (R2):`);
+    for (const d of dropped.violations) {
+      console.log(`    Arm ${d.arm}  ${d.file}:${d.line}  var(${d.name}) — dropped from ownership, no fallback`);
+    }
+    console.log('');
+  }
+
+  if (drift.added.length > 0 || drift.dropped.length > 0) {
+    console.log(`❌  Ownership snapshot drift (R3) — owned set does not match ${relative(ROOT, snapshotPath) || snapshotPath}:`);
+    if (drift.added.length > 0) console.log(`    added (${drift.added.length}): ${drift.added.join(', ')}`);
+    if (drift.dropped.length > 0) console.log(`    dropped (${drift.dropped.length}): ${drift.dropped.join(', ')}`);
+    console.log('    remedy: npm run check:css-vars:update-snapshot (refuses if any dropped name above is still referenced without a fallback)');
+    console.log('');
+  }
+
+  const allFallback = [...armA.fallbackReports, ...armB.fallbackReports, ...dropped.fallbackReports];
+  console.log(`ℹ️   ${allFallback.length} fallback-bearing owned/dropped reference(s) — non-blocking (R10):`);
   if (allFallback.length > 0) {
     for (const f of allFallback) console.log(`    Arm ${f.arm}  ${f.file}:${f.line}  var(${f.name}, …)`);
   }
@@ -600,25 +773,111 @@ function printReport(result) {
 }
 
 function run() {
-  const result = runScan({ cssDir: CSS_DIR, globalsPath: GLOBALS_PATH, srcDir: SRC_DIR });
+  const result = runScan({ cssDir: CSS_DIR, globalsPath: GLOBALS_PATH, srcDir: SRC_DIR, snapshotPath: SNAPSHOT_PATH });
   if (result.fatal) {
     console.error(`❌  check:css-vars — ${result.fatal}`);
     process.exit(1);
   }
   printReport(result);
-  const blocking = result.violations.length + result.inClassDynamicSites.length;
+  const blocking = result.violations.length + result.inClassDynamicSites.length
+    + result.dropped.violations.length + result.drift.added.length + result.drift.dropped.length;
   if (blocking > 0) {
     console.error(`❌  check:css-vars — ${blocking} blocking finding(s). Baseline is 0.`);
     process.exit(1);
   }
-  console.log('✅  check:css-vars — 0 violations, 0 in-class dynamic sites.');
+  console.log('✅  check:css-vars — 0 violations, 0 in-class dynamic sites, 0 dropped-name references, 0 snapshot drift.');
   process.exit(0);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// § --verify-gate (R9/R11) — 4 plants shown FAILING, 4 controls shown PASSING,
-// all against mkdtempSync copies driven through --css-dir/--globals-path/
-// --src-dir. No plant ever writes to the real tree.
+// § --update-snapshot (R4) — writes scripts/css-var-ownership-snapshot.json
+// to the CURRENT live-computed owned set. Refuses (no write, exit 1) while
+// any name the snapshot is about to drop still has a fallback-less var()
+// reference in Arm A or Arm B — the exact condition R2's dropped-name check
+// blocks on, checked here BEFORE the write so the snapshot can never move
+// past a reference it would immediately make invisible.
+// ═══════════════════════════════════════════════════════════════════════════
+export function performUpdateSnapshot({ cssDir, globalsPath, srcDir, snapshotPath }) {
+  if (!existsSync(globalsPath)) {
+    return { refused: true, fatal: `globals.css not found at ${globalsPath}` };
+  }
+  const globalsRaw = readFileSync(globalsPath, 'utf8');
+  const ownedSet = extractOwnedNames(globalsRaw);
+  if (ownedSet.size === 0) {
+    return { refused: true, fatal: `0 owned custom properties parsed from ${relative(ROOT, globalsPath) || globalsPath} — parse failure, not a vacuous pass (R3)` };
+  }
+  const freshness = checkFreshness(cssDir, globalsPath, srcDir);
+  if (!freshness.fresh) {
+    return { refused: true, fatal: freshness.reason };
+  }
+
+  // Missing snapshot bootstraps as empty (first-run flow, §13 implementation
+  // order) — an empty prior snapshot can never have a "dropped" name, so the
+  // very first write always proceeds straight to the refusal check below. A
+  // PRESENT but malformed snapshot is still fatal: silently overwriting
+  // corrupt state defeats the point of a committed, reviewable file.
+  const loaded = loadSnapshot(snapshotPath);
+  let snapshotNames;
+  if (loaded.ok) {
+    snapshotNames = loaded.names;
+  } else if (loaded.kind === 'missing') {
+    snapshotNames = new Set();
+  } else {
+    // "fatal-after-load" (Rev 1, F2): the load was attempted, but the
+    // present file is corrupt — distinct from the two early fatals above,
+    // which never got as far as attempting a load at all. `snapshotPath` is
+    // still returned so the caller can print the scope line with an
+    // "unavailable" size rather than silently skipping it.
+    return { refused: true, fatal: `ownership snapshot malformed at ${snapshotPath} — ${loaded.reason}`, snapshotPath };
+  }
+
+  const armA = scanArmA(cssDir, ownedSet);
+  const armB = scanArmB(srcDir, globalsPath, ownedSet, armA.declaredSet, armA.propertySet);
+  const drift = computeDrift(ownedSet, snapshotNames);
+  const droppedNames = new Set(drift.dropped);
+  const droppedA = findDroppedNameRefs(armA.allRefs, droppedNames, 'A');
+  const droppedB = findDroppedNameRefs(armB.allRefs, droppedNames, 'B');
+  const droppedViolations = [...droppedA.violations, ...droppedB.violations];
+
+  if (droppedViolations.length > 0) {
+    // Refused: print the PRIOR (still-current, since nothing was written)
+    // snapshot's own size — not the live owned set, which is what the
+    // refusal is preventing from being written.
+    return { refused: true, droppedViolations, drift, ownedSet, snapshotPath, snapshotNames };
+  }
+
+  writeSnapshotFile(snapshotPath, ownedSet);
+  return { refused: false, written: true, drift, ownedSet, snapshotPath };
+}
+
+function updateSnapshot() {
+  const result = performUpdateSnapshot({ cssDir: CSS_DIR, globalsPath: GLOBALS_PATH, srcDir: SRC_DIR, snapshotPath: SNAPSHOT_PATH });
+  if (result.fatal) {
+    console.error(`❌  check:css-vars:update-snapshot — ${result.fatal}`);
+    if (result.snapshotPath) printSnapshotScope(result.snapshotPath, null);
+    process.exit(1);
+  }
+  if (result.refused) {
+    console.error(`❌  check:css-vars:update-snapshot — refused: ${result.droppedViolations.length} dropped name(s) still referenced without a fallback:`);
+    for (const d of result.droppedViolations) {
+      console.error(`    Arm ${d.arm}  ${d.file}:${d.line}  var(${d.name})`);
+    }
+    console.error(`    ${relative(ROOT, SNAPSHOT_PATH) || SNAPSHOT_PATH} left byte-unchanged. Remove or fallback-guard the reference(s) above, then retry.`);
+    printSnapshotScope(result.snapshotPath, result.snapshotNames);
+    process.exit(1);
+  }
+  printSnapshotScope(result.snapshotPath, result.ownedSet);
+  console.log(`✅  check:css-vars:update-snapshot — wrote ${result.ownedSet.size} name(s) to ${relative(ROOT, SNAPSHOT_PATH) || SNAPSHOT_PATH} (version ${SNAPSHOT_VERSION}).`);
+  console.log(`    added: ${result.drift.added.length ? result.drift.added.join(', ') : '(none)'}`);
+  console.log(`    dropped: ${result.drift.dropped.length ? result.drift.dropped.join(', ') : '(none)'}`);
+  process.exit(0);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// § --verify-gate (R9/R11) — 7 plants shown FAILING, 6 controls shown PASSING
+// (Task 743 added P5-P7/C5-C6 to the original 4/4), all against mkdtempSync
+// copies driven through --css-dir/--globals-path/--src-dir/--snapshot-path.
+// No plant ever writes to the real tree.
 // ═══════════════════════════════════════════════════════════════════════════
 function setupTempTree() {
   const base = mkdtempSync(join(tmpdir(), 'css-var-resolvability-'));
@@ -643,7 +902,15 @@ function setupTempTree() {
   // `--primary: var(--brand-700)`) — measured baseline Arm B refs = 106
   // instead of 55 before this fix (2026-08-10).
   const globalsPath = join(srcDir, 'app', 'globals.css');
-  return { base, cssDir, globalsPath, srcDir };
+  // The snapshot copy lives at the temp base, outside srcDir — it is not a
+  // `.css`/`.tsx`/`.ts` file so Arm B would never scan it anyway, but keeping
+  // it structurally separate from src/ matches cssDir's own placement and
+  // avoids any accidental future glob overlap. Copied from the REAL committed
+  // snapshot so P1-P4/C1-C4 (none of which touch globals.css) see 0 drift —
+  // their assertions are about Arm A/B resolvability, not ownership drift.
+  const snapshotPath = join(base, 'css-var-ownership-snapshot.json');
+  cpSync(resolve(ROOT, 'scripts/css-var-ownership-snapshot.json'), snapshotPath);
+  return { base, cssDir, globalsPath, srcDir, snapshotPath };
 }
 
 function teardownTempTree(base) {
@@ -687,6 +954,51 @@ function renameDeclarationName(filePath, oldName, newName) {
   writeFileSync(filePath, newContent, 'utf8');
 }
 
+// Appends a brand-new top-level :root block to globals.css (P7) — never
+// touches an existing block, so it cannot accidentally remove or shadow a
+// real declaration; `extractOwnedNames` finds every top-level :root
+// occurrence (findAllBlocks, 'g' flag), so a second one at EOF is owned same
+// as the first.
+function appendRootDeclaration(filePath, name, value) {
+  const raw = readFileSync(filePath, 'utf8');
+  writeFileSync(filePath, `${raw}\n:root {\n  ${name}: ${value};\n}\n`, 'utf8');
+}
+
+// How many times NAME is declared anywhere in globals.css raw content — used
+// only to pick a C6 candidate that is unambiguous (exactly one declaration
+// site in the WHOLE file, .dark block included), so removeDeclarationLine's
+// single regex match is guaranteed to be the real, ownership-conferring one.
+function countAllDeclarationOccurrences(rawContent, name) {
+  const stripped = stripComments(rawContent, true);
+  const re = /(?:^|[{;])\s*(--[\w-]+)\s*:/g;
+  let m;
+  let count = 0;
+  while ((m = re.exec(stripped)) !== null) if (m[1] === name) count++;
+  return count;
+}
+
+// C6 (§13 implementation order — "chosen at runtime from the owned set,
+// printed"): finds the alphabetically-first owned name that (a) is declared
+// exactly once in the whole globals.css copy, so its removal is unambiguous,
+// and (b) has ZERO var() references anywhere across the already-scanned
+// baseline Arm A + Arm B ref lists — so deleting it drifts the snapshot
+// without ever tripping the dropped-name (R2) check, isolating the drift
+// assertion C6 exists to make.
+function findZeroReferenceOwnedName(ownedSet, globalsRaw, baselineArmA, baselineArmB) {
+  const referenced = new Set([...baselineArmA.allRefs, ...baselineArmB.allRefs].map((r) => r.name));
+  const candidates = [...ownedSet]
+    .filter((n) => !referenced.has(n) && countAllDeclarationOccurrences(globalsRaw, n) === 1)
+    .sort((a, b) => a.localeCompare(b));
+  return candidates[0] ?? null;
+}
+
+// git hash-object computes the same content hash git would assign this file
+// as a blob, without requiring it to be tracked — used by C5 to prove the
+// refused writer left the temp snapshot byte-for-byte unchanged.
+function gitHashObject(filePath) {
+  return execFileSync('git', ['hash-object', filePath], { cwd: ROOT, encoding: 'utf8' }).trim();
+}
+
 const results = [];
 function record(id, expectation, ok, detail) {
   results.push({ id, expectation, ok, detail });
@@ -717,7 +1029,7 @@ function runPlantP1(tree) {
   renameDeclarationName(declFile, name, `${name}-renamed`);
   try {
     touchCssDir(tree.cssDir);
-    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
     const hit = result.violations?.find((v) => v.name === name && v.arm === 'A');
     record('P1', 'FAIL', !!hit, hit
       ? `Arm A correctly reported unresolved ${name} at ${hit.file}:${hit.line} after its declaration was renamed to ${name}-renamed`
@@ -731,8 +1043,23 @@ function runPlantP2(tree) {
   // P2 (Arm A) — full declaration deletion from the shipped CSS, leaving a
   // consumer intact; mirrors Task 690's move-out-of-@theme (the shipped
   // declaration disappeared, but nothing else changed). globals.css is left
-  // untouched (same ownership-preservation reasoning as P1).
-  const name = '--color-badge-premium';
+  // untouched (same ownership-preservation reasoning as P1). Re-targeted
+  // TWICE by Task 743 (2026-09-16). First attempt, --color-badge-premium: no
+  // longer has ANY shipped declaration or reference — it now only exists as
+  // an alias inside globals.css itself, never emitted to the bundle. Second
+  // attempt, --badge-premium (12 shipped refs, looked clean by presence
+  // alone): its ONE shipped declaration FILE actually contains the literal
+  // text `--badge-premium:` **twice** (measured — a duplicate emission this
+  // gate's own `countDeclarationSites`/`extractCssDeclaredNames` cannot see,
+  // since both check Set membership, not occurrence count), so
+  // `removeDeclarationLine`'s single-match regex left the second declaration
+  // standing and the plant silently failed to reproduce. --color-input is
+  // the current target: exactly ONE literal `--color-input:` occurrence in
+  // the whole shipped CSS (its declaration file), consumed by
+  // `.mantine-Switch-track{background-color:var(--color-input)}` in a
+  // separate shipped file — genuinely single-declaration, genuinely
+  // referenced.
+  const name = '--color-input';
   const declSites = countDeclarationSites(tree.cssDir, name);
   const refFileBefore = listCssDirFiles(tree.cssDir).find((f) =>
     findVarReferences(stripComments(readFileSync(f, 'utf8'), true)).some((r) => r.name === name));
@@ -741,11 +1068,22 @@ function runPlantP2(tree) {
     return;
   }
   const declFile = findFirstDeclarationSite(tree.cssDir, name);
+  // Literal-occurrence guard (Task 743, added after the --badge-premium
+  // near-miss above): declSites===1 only proves ONE FILE contains the name,
+  // not that the name is declared exactly once WITHIN that file —
+  // removeDeclarationLine's regex removes only the first match, so a second
+  // occurrence in the same file would silently survive and this plant would
+  // not reproduce.
+  const occurrencesInDeclFile = countAllDeclarationOccurrences(readFileSync(declFile, 'utf8'), name);
+  if (occurrencesInDeclFile !== 1) {
+    record('P2', 'FAIL', false, `pre-plant census failed — ${name} occurs ${occurrencesInDeclFile} time(s) in its own declaration file ${declFile} (expected exactly 1 — no further lifeline unproven)`);
+    return;
+  }
   const original = readFileSync(declFile, 'utf8');
   removeDeclarationLine(declFile, name);
   try {
     touchCssDir(tree.cssDir);
-    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
     const hit = result.violations?.find((v) => v.name === name && v.arm === 'A');
     record('P2', 'FAIL', !!hit, hit
       ? `Arm A correctly reported unresolved ${name} at ${hit.file}:${hit.line} after its declaration was deleted`
@@ -756,37 +1094,29 @@ function runPlantP2(tree) {
 }
 
 function runPlantP3(tree) {
-  // P3 (Arm B) — --text-3xl. Task 695 deleted --color-overlay-foreground (this
-  // plant's original target) along with the rest of the `@theme inline`
-  // overlay copy, so a token with the same shape had to be found: exactly 1
-  // shipped declaration site and 0 shipped var() REFERENCES (confirmed
-  // 2026-08-13 against the real build — Tailwind's own `.text-3xl` utility
-  // inlines the literal `1.875rem` rather than emitting `var(--text-3xl)`, so
-  // the declaration `--text-3xl:1.875rem;` is the only place the name appears
-  // in shipped CSS), plus a live TSX consumer outside cssDir
-  // (`src/app/[locale]/page.tsx`'s `fz={{ base: 'var(--text-3xl)', … }}`) so
-  // Arm B actually fires when the declaration disappears. `--overlay-foreground`
-  // is NOT a valid substitute after this task: it now has live CSS Module
-  // var() consumers (`LightboxView.module.css` and siblings, §3.4 of the
-  // kickoff) as well as the migrated inline-style consumers, so its shipped
-  // reference count is no longer 0 — it would fail this plant's own
-  // pre-plant census, the same self-immunization P1/P2/P3 all guard against.
-  // Remove ONLY the one shipped declaration. globals.css is left untouched: the
-  // token stays owned via its single @theme declaration there, which is what
-  // lets Arm B evaluate it at all (removing it from globals.css would un-own it
-  // — the same self-immunization P1/P2 avoid).
+  // P3 (Arm B) — --homepage-runtime-search-max-width. Re-targeted by Task 743
+  // (2026-09-16): the previous target, --text-3xl, no longer has ANY shipped
+  // declaration site — measured this session, Tailwind now inlines
+  // `.text-3xl{font-size:1.875rem}` directly rather than emitting
+  // `--text-3xl:1.875rem` at all, so the plant's own pre-plant census started
+  // failing (0 decl sites, not the required 1) independent of anything this
+  // task changes. The replacement has the same required shape: exactly 1
+  // shipped declaration site (globals.css:362, `@theme inline`), 0 shipped
+  // var() REFERENCES, and a live TSX consumer outside cssDir
+  // (`src/components/shared/HeroSearchView.tsx:51`'s
+  // `maw="var(--homepage-runtime-search-max-width)"`) so Arm B actually fires
+  // when the declaration disappears. Remove ONLY the one shipped declaration.
+  // globals.css is left untouched: the token stays owned via its single
+  // `@theme inline` declaration there, which is what lets Arm B evaluate it at
+  // all (removing it from globals.css would un-own it — the same
+  // self-immunization P1/P2 avoid).
   //
-  // OVER-MATCH GUARD (Task 695 review, F1). The re-point to --text-3xl retired
-  // the previous named-sibling guard: it compared the declaration-site count of
-  // `--text-3xl--line-height` before and after, and that name is NOT emitted in
-  // the shipped bundle at all (Tailwind inlines `line-height` into the utility),
-  // so the comparison was 0 -> 0 unconditionally and could not have come out
-  // wrong — the exact defect class this gate exists to prevent, introduced into
-  // the gate's own self-test. The guard below is name-agnostic and structurally
-  // always live instead: `declaredBefore` is non-empty by construction (the
-  // census above proved `name` is declared in this file), and it catches ANY
-  // over-match, not only the one sibling somebody thought to name.
-  const name = '--text-3xl';
+  // OVER-MATCH GUARD (Task 695 review, F1, preserved verbatim across the
+  // re-target). The guard is name-agnostic and structurally always live:
+  // `declaredBefore` is non-empty by construction (the census above proved
+  // `name` is declared in this file), and it catches ANY over-match, not only
+  // one sibling somebody thought to name.
+  const name = '--homepage-runtime-search-max-width';
   const declSites = countDeclarationSites(tree.cssDir, name);
   const refCountBefore = listCssDirFiles(tree.cssDir).reduce((sum, f) =>
     sum + findVarReferences(stripComments(readFileSync(f, 'utf8'), true)).filter((r) => r.name === name).length, 0);
@@ -806,7 +1136,7 @@ function runPlantP3(tree) {
       return;
     }
     touchCssDir(tree.cssDir);
-    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
     const armAHit = result.violations.find((v) => v.name === name && v.arm === 'A');
     const armBHit = result.violations.find((v) => v.name === name && v.arm === 'B');
     const armASilent = !armAHit;
@@ -829,7 +1159,7 @@ function runPlantP4(tree) {
   writeFileSync(fixturePath, `const style = { padding: \`var(--space-\${n})\` }\n`, 'utf8');
   try {
     touchCssDir(tree.cssDir);
-    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
     const hit = result.inClassDynamicSites.find((s) => s.prefix === 'space-');
     record('P4', 'FAIL', !!hit, hit
       ? `in-class dynamic site correctly reported: ${hit.file}:${hit.line} prefix "--${hit.prefix}"`
@@ -848,7 +1178,7 @@ function runControlC1(tree) {
   writeFileSync(fixturePath, `const style = { color: 'var(${name}, red)' }\n`, 'utf8');
   try {
     touchCssDir(tree.cssDir);
-    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
     const isViolation = result.violations.some((v) => v.name === name);
     const inFallbackReport = result.armB.fallbackReports.some((f) => f.name === name);
     const ok = !isViolation && inFallbackReport;
@@ -864,7 +1194,7 @@ function runControlC2(tree) {
   // C2 — an unowned Mantine runtime name must not be reported at all (R3/§3.3).
   const name = '--app-shell-navbar-width';
   touchCssDir(tree.cssDir);
-  const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+  const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
   const ownedIncludes = result.ownedSet.has(name);
   const inAnyReport =
     result.violations.some((v) => v.name === name) ||
@@ -884,11 +1214,25 @@ function runControlC3(tree) {
   // copy, proving the tokenizer strips both forms correctly.
   const globalsRaw = readFileSync(tree.globalsPath, 'utf8');
   const ownedSet = extractOwnedNames(globalsRaw);
-  // 259 -> 257 (Task 695): --color-overlay and --color-overlay-foreground no
-  // longer exist anywhere in globals.css. 257 -> 256 (Task 749): the now-unused
-  // --breakpoint-notification-compact token was removed. Keep this control tied
-  // to the current real tree; the unit test asserts the same measured count.
-  const blockOk = ownedSet.size === 256 && !ownedSet.has('--spacing-N');
+  // Task 743 Rev 1 (F1): no hardcoded owned-count literal — Revision 0's
+  // `=== 297` already went stale twice (256/257 -> 297) and broke this exact
+  // control the moment an unrelated task added a token to globals.css. The
+  // temp snapshot copy (a copy of the real committed
+  // scripts/css-var-ownership-snapshot.json, unmodified by any earlier
+  // plant/control in this run) is the source of truth: compare set size AND
+  // membership against it.
+  const snapshotLoaded = loadSnapshot(tree.snapshotPath);
+  let blockOk = false;
+  let snapshotDetail;
+  if (!snapshotLoaded.ok) {
+    snapshotDetail = `snapshot failed to load (${snapshotLoaded.kind}: ${snapshotLoaded.reason})`;
+  } else {
+    const snapshotNames = snapshotLoaded.names;
+    const added = [...ownedSet].filter((n) => !snapshotNames.has(n));
+    const dropped = [...snapshotNames].filter((n) => !ownedSet.has(n));
+    blockOk = added.length === 0 && dropped.length === 0 && !ownedSet.has('--spacing-N');
+    snapshotDetail = `owned=${ownedSet.size} snapshot=${snapshotNames.size} added=${JSON.stringify(added)} dropped=${JSON.stringify(dropped)}`;
+  }
 
   const themePath = join(tree.srcDir, 'design-system/mantine/theme.ts');
   let lineOk = true;
@@ -915,42 +1259,238 @@ function runControlC3(tree) {
   }
   const ok = blockOk && lineOk;
   record('C3', 'PASS', ok,
-    `block: owned=${ownedSet.size} (expect 256), --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
+    `block: ${snapshotDetail}, --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
 }
 
 function runControlC4(tree) {
   // C4 — an out-of-class dynamic site (var(--mantine-color-${c}-5)) must not
   // be reported (R6). Asserts against the real 8 measured sites, unmodified.
   touchCssDir(tree.cssDir);
-  const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
+  const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
   const mantineSites = result.armB.dynamicSites.filter((s) => s.prefix === 'mantine-color-');
   const ok = mantineSites.length >= 1 && mantineSites.every((s) => !s.inClass);
   record('C4', 'PASS', ok,
     `${mantineSites.length} "--mantine-color-" dynamic site(s) found, all out-of-class=${mantineSites.every((s) => !s.inClass)}`);
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// § Task 743 additions — R5: 3 new plants (P5-P7), 2 new controls (C5-C6),
+// all against the same mkdtempSync copy P1-P4/C1-C4 already run against. Only
+// P5/P6/P7/C5/C6 ever touch tree.globalsPath or tree.snapshotPath; every
+// mutation is restored in its own `finally` before the next assertion runs.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function runPlantP5(tree) {
+  // P5 — the exact 765 reproduction (kickoff §3.1): delete
+  // --motion-duration-slow's single :root declaration from globals.css while
+  // AppImage.module.css's two live `var(--motion-duration-slow)` references
+  // stay untouched. Must surface as a dropped-name violation on Arm B (a
+  // `.module.css` file, in Arm B's own `.css` glob — never Arm A, which only
+  // scans SHIPPED bundle CSS, not source CSS Modules).
+  const name = '--motion-duration-slow';
+  const before = readFileSync(tree.globalsPath, 'utf8');
+  if (countAllDeclarationOccurrences(before, name) !== 1) {
+    record('P5', 'FAIL', false, `pre-plant census failed — ${name} has ${countAllDeclarationOccurrences(before, name)} declaration occurrence(s) in globals.css (expected 1 — no further lifeline unproven)`);
+    return;
+  }
+  // OVER-MATCH GUARD (Task 743 Rev 1, F3 — same shape as P3's, applied to the
+  // OWNED set rather than a shipped-CSS declared set: removeDeclarationLine's
+  // regex has no left anchor, so a longer name ending in this one, e.g.
+  // `--x--motion-duration-slow:`, would be removed instead and nothing would
+  // report it).
+  const ownedBefore = extractOwnedNames(before);
+  removeDeclarationLine(tree.globalsPath, name);
+  try {
+    const ownedAfter = extractOwnedNames(readFileSync(tree.globalsPath, 'utf8'));
+    const removedNames = [...ownedBefore].filter((n) => !ownedAfter.has(n));
+    if (removedNames.length !== 1 || removedNames[0] !== name) {
+      record('P5', 'FAIL', false, `plant removed ${removedNames.length} owned name(s) [${removedNames.join(', ') || 'none'}] from globals.css — must remove exactly one, ${name}`);
+      return;
+    }
+    touchCssDir(tree.cssDir);
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const hit = result.dropped.violations.find((v) => v.name === name && v.arm === 'B' && v.file.includes('AppImage.module.css'));
+    record('P5', 'FAIL', !!hit, hit
+      ? `dropped-name violation correctly reported: Arm B ${hit.file}:${hit.line} var(${name}) — CSS Module consumer`
+      : `planted deletion of ${name} was NOT reported as a dropped-name violation naming AppImage.module.css (dropped.violations=${JSON.stringify(result.dropped?.violations)})`);
+  } finally {
+    writeFileSync(tree.globalsPath, before, 'utf8');
+  }
+}
+
+function runPlantP6(tree) {
+  // P6 — the TSX-consumer sibling of P5 (kickoff §3.3): delete
+  // --width-page-max's single :root declaration while
+  // ListingsPageFrame.tsx's `maw="var(--width-page-max)"` (×2) stays live.
+  // Same dropped-name check, different arm shape: a `.tsx` file has no
+  // shipped-CSS declaration to speak of at all — Arm B is the only arm that
+  // could ever see either this token or its consumer.
+  const name = '--width-page-max';
+  const before = readFileSync(tree.globalsPath, 'utf8');
+  if (countAllDeclarationOccurrences(before, name) !== 1) {
+    record('P6', 'FAIL', false, `pre-plant census failed — ${name} has ${countAllDeclarationOccurrences(before, name)} declaration occurrence(s) in globals.css (expected 1 — no further lifeline unproven)`);
+    return;
+  }
+  // OVER-MATCH GUARD (Task 743 Rev 1, F3) — see P5's comment for the reasoning.
+  const ownedBefore = extractOwnedNames(before);
+  removeDeclarationLine(tree.globalsPath, name);
+  try {
+    const ownedAfter = extractOwnedNames(readFileSync(tree.globalsPath, 'utf8'));
+    const removedNames = [...ownedBefore].filter((n) => !ownedAfter.has(n));
+    if (removedNames.length !== 1 || removedNames[0] !== name) {
+      record('P6', 'FAIL', false, `plant removed ${removedNames.length} owned name(s) [${removedNames.join(', ') || 'none'}] from globals.css — must remove exactly one, ${name}`);
+      return;
+    }
+    touchCssDir(tree.cssDir);
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const hit = result.dropped.violations.find((v) => v.name === name && v.arm === 'B' && v.file.includes('ListingsPageFrame.tsx'));
+    record('P6', 'FAIL', !!hit, hit
+      ? `dropped-name violation correctly reported: Arm B ${hit.file}:${hit.line} var(${name}) — TSX consumer`
+      : `planted deletion of ${name} was NOT reported as a dropped-name violation naming ListingsPageFrame.tsx (dropped.violations=${JSON.stringify(result.dropped?.violations)})`);
+  } finally {
+    writeFileSync(tree.globalsPath, before, 'utf8');
+  }
+}
+
+function runPlantP7(tree) {
+  // P7 (R3) — add a brand-new owned name with no snapshot entry and no
+  // consumer at all. Must surface as drift (added), never as a dropped-name
+  // or resolvability violation — isolating the "owned set grew" half of R3
+  // from the "owned set shrank" half P5/P6/C6 exercise.
+  const name = '--task743-plant';
+  const before = readFileSync(tree.globalsPath, 'utf8');
+  appendRootDeclaration(tree.globalsPath, name, '1px');
+  try {
+    touchCssDir(tree.cssDir);
+    const result = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const inAdded = result.drift?.added?.includes(name);
+    const noOtherFindings = result.violations.length === 0 && result.inClassDynamicSites.length === 0 && result.dropped.violations.length === 0;
+    const ok = !!inAdded && noOtherFindings;
+    record('P7', 'FAIL', ok, ok
+      ? `drift correctly reported ${name} as added, with no other blocking finding`
+      : `expected ONLY drift.added to contain ${name} — got added=${JSON.stringify(result.drift?.added)}, violations=${result.violations.length}, dropped=${result.dropped.violations.length}`);
+  } finally {
+    writeFileSync(tree.globalsPath, before, 'utf8');
+  }
+}
+
+function runControlC5(tree) {
+  // C5 (R4) — the writer refuses P5's exact plant. Reuses P5's own mutation
+  // (delete --motion-duration-slow, leaving AppImage.module.css's references
+  // live) and calls the writer directly against the temp snapshot copy,
+  // asserting BOTH the refusal AND that the temp snapshot file is left
+  // byte-for-byte unchanged (git hash-object before === after).
+  const name = '--motion-duration-slow';
+  const before = readFileSync(tree.globalsPath, 'utf8');
+  if (countAllDeclarationOccurrences(before, name) !== 1) {
+    record('C5', 'PASS', false, `pre-plant census failed — ${name} has ${countAllDeclarationOccurrences(before, name)} declaration occurrence(s) in globals.css (expected 1)`);
+    return;
+  }
+  // OVER-MATCH GUARD (Task 743 Rev 1, F3) — see P5's comment for the reasoning.
+  const ownedBefore = extractOwnedNames(before);
+  removeDeclarationLine(tree.globalsPath, name);
+  try {
+    const ownedAfter = extractOwnedNames(readFileSync(tree.globalsPath, 'utf8'));
+    const removedNames = [...ownedBefore].filter((n) => !ownedAfter.has(n));
+    if (removedNames.length !== 1 || removedNames[0] !== name) {
+      record('C5', 'PASS', false, `plant removed ${removedNames.length} owned name(s) [${removedNames.join(', ') || 'none'}] from globals.css — must remove exactly one, ${name}`);
+      return;
+    }
+    touchCssDir(tree.cssDir);
+    const hashBefore = gitHashObject(tree.snapshotPath);
+    const result = performUpdateSnapshot({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const hashAfter = gitHashObject(tree.snapshotPath);
+    const refusedCorrectly = result.refused === true && (result.droppedViolations ?? []).some((v) => v.name === name);
+    const byteUnchanged = hashBefore === hashAfter;
+    const ok = refusedCorrectly && byteUnchanged;
+    record('C5', 'PASS', ok,
+      `refused=${result.refused === true} naming ${name}=${(result.droppedViolations ?? []).some((v) => v.name === name)}; git hash-object before=${hashBefore} after=${hashAfter} unchanged=${byteUnchanged}`);
+  } finally {
+    writeFileSync(tree.globalsPath, before, 'utf8');
+  }
+}
+
+function runControlC6(tree, baseline) {
+  // C6 (R4/R3) — a dropped name with NO reference anywhere: drift blocks the
+  // plain scan, then --update-snapshot succeeds (nothing referenced it, so no
+  // refusal condition), then a fresh scan of the now-updated snapshot exits
+  // clean. Chosen at RUNTIME from the tree's own owned set (never hardcoded),
+  // using the already-computed baseline scan's Arm A/B reference lists.
+  const name = findZeroReferenceOwnedName(baseline.ownedSet, readFileSync(tree.globalsPath, 'utf8'), baseline.armA, baseline.armB);
+  if (!name) {
+    record('C6', 'PASS', false, 'no candidate found — every owned name in the current tree is referenced at least once (cannot isolate an unreferenced-drift case)');
+    return;
+  }
+  const before = readFileSync(tree.globalsPath, 'utf8');
+  const snapshotBefore = readFileSync(tree.snapshotPath, 'utf8');
+  // OVER-MATCH GUARD (Task 743 Rev 1, F3) — see P5's comment for the
+  // reasoning. `findZeroReferenceOwnedName` already filters candidates to
+  // exactly-one-anchored-occurrence, but that only bounds the PRE-condition;
+  // this asserts what `removeDeclarationLine`'s own unanchored regex actually
+  // removed.
+  const ownedBefore = extractOwnedNames(before);
+  removeDeclarationLine(tree.globalsPath, name);
+  try {
+    const ownedAfterRemoval = extractOwnedNames(readFileSync(tree.globalsPath, 'utf8'));
+    const removedNames = [...ownedBefore].filter((n) => !ownedAfterRemoval.has(n));
+    if (removedNames.length !== 1 || removedNames[0] !== name) {
+      record('C6', 'PASS', false, `plant removed ${removedNames.length} owned name(s) [${removedNames.join(', ') || 'none'}] from globals.css — must remove exactly one, ${name}`);
+      return;
+    }
+    touchCssDir(tree.cssDir);
+    const driftScan = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const driftBlocked = driftScan.drift?.dropped?.includes(name) && driftScan.dropped.violations.length === 0;
+
+    const writeResult = performUpdateSnapshot({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const writeSucceeded = writeResult.refused === false && writeResult.written === true;
+
+    const finalScan = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const finalClean = !finalScan.fatal && finalScan.violations.length === 0 && finalScan.inClassDynamicSites.length === 0
+      && finalScan.dropped.violations.length === 0 && finalScan.drift.added.length === 0 && finalScan.drift.dropped.length === 0;
+
+    const ok = driftBlocked && writeSucceeded && finalClean;
+    record('C6', 'PASS', ok,
+      `chosen name=${name}; drift-blocked=${!!driftBlocked} (dropped=${JSON.stringify(driftScan.drift?.dropped)}); writer succeeded=${writeSucceeded}; post-update scan clean=${finalClean}`);
+  } finally {
+    writeFileSync(tree.globalsPath, before, 'utf8');
+    writeFileSync(tree.snapshotPath, snapshotBefore, 'utf8');
+  }
+}
+
 function verifyGate() {
-  console.log('🔬 check:css-vars self-test (--verify-gate) — 4 plants FAIL, 4 controls PASS\n');
+  console.log('🔬 check:css-vars self-test (--verify-gate) — 7 plants FAIL, 6 controls PASS\n');
   const tree = setupTempTree();
   try {
-    // Baseline: the unmodified temp copy must itself be clean (0 violations).
+    // Baseline: the unmodified temp copy must itself be clean — 0 violations,
+    // 0 in-class dynamic sites, AND (Task 743) 0 dropped-name violations, 0
+    // snapshot drift, since the temp snapshot is a copy of the real committed
+    // one and no plant has run yet.
     touchCssDir(tree.cssDir);
-    const baseline = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir });
-    if (baseline.fatal || baseline.violations.length > 0 || baseline.inClassDynamicSites.length > 0) {
-      console.error(`❌  baseline (unmodified temp copy) is not clean: ${baseline.fatal ?? `${baseline.violations.length} violation(s), ${baseline.inClassDynamicSites.length} in-class dynamic site(s)`}`);
+    const baseline = runScan({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath: tree.snapshotPath });
+    const baselineClean = !baseline.fatal && baseline.violations.length === 0 && baseline.inClassDynamicSites.length === 0
+      && baseline.dropped.violations.length === 0 && baseline.drift.added.length === 0 && baseline.drift.dropped.length === 0;
+    if (!baselineClean) {
+      console.error(`❌  baseline (unmodified temp copy) is not clean: ${baseline.fatal ?? `${baseline.violations.length} violation(s), ${baseline.inClassDynamicSites.length} in-class dynamic site(s), ${baseline.dropped.violations.length} dropped-name violation(s), drift added=${JSON.stringify(baseline.drift.added)} dropped=${JSON.stringify(baseline.drift.dropped)}`}`);
       process.exitCode = 1;
       return;
     }
-    console.log(`✅  baseline (unmodified temp copy): 0 violations, 0 in-class dynamic sites (owned=${baseline.ownedSet.size}, Arm A refs=${baseline.armA.referencedOwnedNames.size}, Arm B refs=${baseline.armB.referencedOwnedNames.size})\n`);
+    console.log(`✅  baseline (unmodified temp copy): 0 violations, 0 in-class dynamic sites, 0 dropped-name violations, 0 snapshot drift (owned=${baseline.ownedSet.size}, snapshot=${baseline.snapshotNames.size}, Arm A refs=${baseline.armA.referencedOwnedNames.size}, Arm B refs=${baseline.armB.referencedOwnedNames.size})`);
+    printSnapshotScope(tree.snapshotPath, baseline.snapshotNames);
+    console.log('');
 
     runPlantP1(tree);
     runPlantP2(tree);
     runPlantP3(tree);
     runPlantP4(tree);
+    runPlantP5(tree);
+    runPlantP6(tree);
+    runPlantP7(tree);
     runControlC1(tree);
     runControlC2(tree);
     runControlC3(tree);
     runControlC4(tree);
+    runControlC5(tree);
+    runControlC6(tree, baseline);
 
     console.log('');
     const failed = results.filter((r) => !r.ok);
@@ -958,7 +1498,7 @@ function verifyGate() {
       console.error(`❌  ${failed.length}/${results.length} verify-gate assertion(s) did not behave as expected.`);
       process.exitCode = 1;
     } else {
-      console.log(`✅  ${results.length}/${results.length} verify-gate assertions behaved as expected (4 plants FAILED, 4 controls PASSED).`);
+      console.log(`✅  ${results.length}/${results.length} verify-gate assertions behaved as expected (7 plants FAILED, 6 controls PASSED).`);
       process.exitCode = 0;
     }
   } finally {
@@ -969,5 +1509,6 @@ function verifyGate() {
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (VERIFY_GATE) verifyGate();
+  else if (UPDATE_SNAPSHOT) updateSnapshot();
   else run();
 }

@@ -2,7 +2,7 @@
 
 Sprint 75 · P2 · QA profile **Q4** (was `Q2` in the reservation — a new gate arm needs planted proof)
 
-**Status: `NEEDS REVISION`** — Revision 1, review 2026-09-16. **A fresh session starts at §16**, not §10. Filed
+**Status: `APPROVED`** — 2026-09-16, after Revision 1 (§16). Review ledger `docs/reviews/2026-09-16-task743-css-var-ownership-snapshot.review-ledger.json`. Filed
 2026-09-16. Independent of 822/823/797/825. **Correction:** "no shared file" with 815 was false — `package.json` and
 `docs/backlog.md` also carry uncommitted Task 815 hunks (§16.5).
 

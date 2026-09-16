@@ -1,0 +1,10 @@
+
+> lero-al@0.1.0 check:css-vars:update-snapshot
+> node scripts/check-css-var-resolvability.mjs --update-snapshot
+
+    Ownership snapshot: version 1, 297 name(s) (scripts\css-var-ownership-snapshot.json)
+    Blind spots (R6): a name deleted from globals.css BEFORE the snapshot's first commit is invisible to drift — the snapshot only remembers what it was told to; a dynamically-built var(--prefix${…}) construction site is covered only by the existing prefix rule (R6/§3.4), unchanged by this task; a reference living outside src/**/*.{css,tsx,ts} (Arm B's own glob) is never scanned by either arm.
+✅  check:css-vars:update-snapshot — wrote 297 name(s) to scripts\css-var-ownership-snapshot.json (version 1).
+    added: (none)
+    dropped: (none)
+EXIT_CODE=0

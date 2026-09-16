@@ -1,18 +1,23 @@
 // @vitest-environment node
 /**
- * Unit-test suite for scripts/check-css-var-resolvability.mjs (Task 700, Sprint 46.3).
+ * Unit-test suite for scripts/check-css-var-resolvability.mjs (Task 700, Sprint 46.3;
+ * ownership-snapshot suite added by Task 743, Sprint 75).
  *
  * Covers R3-R6/AC4/AC5's parser-level guarantees: comment stripping across all
  * required forms (CSS block, TS/TSX block, TS/TSX line, JSX), string/template
  * literal preservation, ownership extraction scoped to @theme/@theme inline/
  * :root, @property registration as a declaration (R5), the fallback split
- * (R10), and the dynamic-site prefix rule (R6).
+ * (R10), and the dynamic-site prefix rule (R6). Task 743 adds: the snapshot
+ * parser (valid/missing/malformed), drift computation, dropped-name
+ * detection and writer-refusal coverage (R7).
  *
  * Run: npx vitest run scripts/__tests__/css-var-resolvability.test.ts
  */
 
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { readFileSync, mkdtempSync, rmSync, writeFileSync, mkdirSync, utimesSync } from 'node:fs'
+import { join } from 'node:path'
+import { tmpdir } from 'node:os'
 import {
   stripComments,
   extractOwnedNames,
@@ -20,6 +25,13 @@ import {
   extractPropertyRegisteredNames,
   findVarReferences,
   findDynamicVarSites,
+  parseSnapshotContent,
+  loadSnapshot,
+  serializeSnapshot,
+  writeSnapshotFile,
+  computeDrift,
+  findDroppedNameRefs,
+  performUpdateSnapshot,
 } from '../check-css-var-resolvability.mjs'
 
 describe('stripComments — CSS block comments (R4)', () => {
@@ -195,17 +207,24 @@ describe('extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :roo
     expect(owned.size).toBe(0)
   })
 
-  it('matches the real globals.css measured count (257) — Task 695 re-derivation', () => {
+  it('matches the committed ownership snapshot (Task 743 Rev 1) — no hardcoded count', () => {
+    // The owned count is no longer asserted as a literal number: Revision 0
+    // hardcoded it (259 -> 257 -> 256 -> 297 across Tasks 695/749/743) and it
+    // went stale twice, most recently breaking this exact test and verify-gate
+    // C3 the moment an unrelated task added a token to globals.css. The
+    // snapshot (scripts/css-var-ownership-snapshot.json) is now the single
+    // source of truth for "what should be owned"; this test asserts the live
+    // extraction matches it exactly, in both directions, so a real
+    // add/drop still fails loudly (via drift, R3) without a second
+    // hand-maintained number to also keep in sync.
     const raw = readFileSync('src/app/globals.css', 'utf8')
     const owned = extractOwnedNames(raw)
-    // 259 -> 257 (Task 695): --color-overlay and --color-overlay-foreground no
-    // longer exist anywhere in globals.css (the @theme inline overlay copy was
-    // deleted once its last Tailwind-scanned utility was gone), so the owned
-    // set shrinks by exactly those two names. Measured 2026-08-13.
-    // 257 -> 256 (Task 749): --breakpoint-notification-compact deleted with its last consumer
-    // (NotificationCenter's 390px threshold retargeted to the canonical 640px sm, owner decision
-    // 2026-08-15 superseding Task 593). Measured 2026-08-15.
-    expect(owned.size).toBe(257)
+    const snapshot = loadSnapshot('scripts/css-var-ownership-snapshot.json')
+    expect(snapshot.ok).toBe(true)
+    const snapshotNames = snapshot.names!
+    const added = [...owned].filter((n) => !snapshotNames.has(n))
+    const dropped = [...snapshotNames].filter((n) => !owned.has(n))
+    expect({ added, dropped }).toEqual({ added: [], dropped: [] })
     // --spacing-N is prose inside a comment at globals.css:146-150 (draft 1's
     // own D2 defect) — must never be counted.
     expect(owned.has('--spacing-N')).toBe(false)
@@ -266,5 +285,227 @@ describe('findDynamicVarSites — prefix rule (R6, §3.4)', () => {
   it('does not misfire on a plain static var() reference', () => {
     const sites = findDynamicVarSites('const s = `var(--space-4)`')
     expect(sites).toHaveLength(0)
+  })
+})
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Task 743 — ownership snapshot (R1-R4/R7). The parser/serializer/drift/
+// dropped-name functions below are pure and filesystem-free (parseSnapshotContent,
+// computeDrift, findDroppedNameRefs) except where a test is specifically about
+// the file-reading seam (loadSnapshot) or the writer (performUpdateSnapshot),
+// which get a real mkdtempSync fixture tree, torn down after each test.
+// ═══════════════════════════════════════════════════════════════════════════
+describe('parseSnapshotContent (R1) — valid / malformed', () => {
+  it('parses a valid { version: 1, names: [...] } document', () => {
+    const result = parseSnapshotContent('{"version":1,"names":["--a","--b"]}')
+    expect(result.ok).toBe(true)
+    expect(result.names!.has('--a')).toBe(true)
+    expect(result.names!.has('--b')).toBe(true)
+    expect(result.names!.size).toBe(2)
+  })
+
+  it('rejects invalid JSON as malformed', () => {
+    const result = parseSnapshotContent('{not json')
+    expect(result.ok).toBe(false)
+    expect(result.kind).toBe('malformed')
+  })
+
+  it('rejects a document with the wrong version', () => {
+    const result = parseSnapshotContent('{"version":2,"names":["--a"]}')
+    expect(result.ok).toBe(false)
+    expect(result.kind).toBe('malformed')
+  })
+
+  it('rejects a document whose "names" is not an array', () => {
+    const result = parseSnapshotContent('{"version":1,"names":"--a"}')
+    expect(result.ok).toBe(false)
+    expect(result.kind).toBe('malformed')
+  })
+
+  it('rejects a document containing a non-custom-property name entry', () => {
+    const result = parseSnapshotContent('{"version":1,"names":["--a","not-a-var"]}')
+    expect(result.ok).toBe(false)
+    expect(result.kind).toBe('malformed')
+  })
+
+  it('rejects a bare JSON array (not an object)', () => {
+    const result = parseSnapshotContent('["--a"]')
+    expect(result.ok).toBe(false)
+    expect(result.kind).toBe('malformed')
+  })
+})
+
+describe('loadSnapshot (R1) — missing file', () => {
+  it('reports kind "missing" for a path that does not exist, never throws', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'css-var-snapshot-test-'))
+    try {
+      const result = loadSnapshot(join(dir, 'does-not-exist.json'))
+      expect(result.ok).toBe(false)
+      expect(result.kind).toBe('missing')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('loads a real, present, valid snapshot file', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'css-var-snapshot-test-'))
+    try {
+      const path = join(dir, 'snapshot.json')
+      writeFileSync(path, '{"version":1,"names":["--x"]}', 'utf8')
+      const result = loadSnapshot(path)
+      expect(result.ok).toBe(true)
+      expect(result.names!.has('--x')).toBe(true)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('reports kind "malformed" for a present-but-corrupt file (distinct from "missing")', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'css-var-snapshot-test-'))
+    try {
+      const path = join(dir, 'snapshot.json')
+      writeFileSync(path, 'not json at all', 'utf8')
+      const result = loadSnapshot(path)
+      expect(result.ok).toBe(false)
+      expect(result.kind).toBe('malformed')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+})
+
+describe('serializeSnapshot (R1/§10.4) — canonical on-disk form', () => {
+  it('sorts names with localeCompare, 2-space indent, trailing newline, version 1', () => {
+    const text = serializeSnapshot(new Set(['--zeta', '--alpha', '--beta']))
+    expect(text).toBe('{\n  "version": 1,\n  "names": [\n    "--alpha",\n    "--beta",\n    "--zeta"\n  ]\n}\n')
+    expect(text.endsWith('\n')).toBe(true)
+    expect(text.includes('\r')).toBe(false)
+  })
+
+  it('round-trips through parseSnapshotContent', () => {
+    const names = new Set(['--one', '--two', '--three'])
+    const parsed = parseSnapshotContent(serializeSnapshot(names))
+    expect(parsed.ok).toBe(true)
+    expect([...parsed.names!].sort()).toEqual([...names].sort())
+  })
+})
+
+describe('computeDrift (R3) — owned set vs. snapshot, as pure sets', () => {
+  it('reports no drift when the sets are identical', () => {
+    const drift = computeDrift(new Set(['--a', '--b']), new Set(['--a', '--b']))
+    expect(drift.added).toEqual([])
+    expect(drift.dropped).toEqual([])
+  })
+
+  it('reports an added name present in owned but not the snapshot', () => {
+    const drift = computeDrift(new Set(['--a', '--b']), new Set(['--a']))
+    expect(drift.added).toEqual(['--b'])
+    expect(drift.dropped).toEqual([])
+  })
+
+  it('reports a dropped name present in the snapshot but not owned', () => {
+    const drift = computeDrift(new Set(['--a']), new Set(['--a', '--b']))
+    expect(drift.added).toEqual([])
+    expect(drift.dropped).toEqual(['--b'])
+  })
+
+  it('sorts added/dropped with localeCompare and handles both directions at once', () => {
+    const drift = computeDrift(new Set(['--z', '--new']), new Set(['--z', '--old']))
+    expect(drift.added).toEqual(['--new'])
+    expect(drift.dropped).toEqual(['--old'])
+  })
+})
+
+describe('findDroppedNameRefs (R2) — fallback-less vs. fallback-bearing split', () => {
+  it('classifies a fallback-less reference to a dropped name as a violation', () => {
+    const allRefs = [{ name: '--gone', line: 5, hasFallback: false, file: 'a.css' }]
+    const result = findDroppedNameRefs(allRefs, new Set(['--gone']), 'B')
+    expect(result.violations).toHaveLength(1)
+    expect(result.violations[0]).toMatchObject({ arm: 'B', file: 'a.css', line: 5, name: '--gone' })
+    expect(result.fallbackReports).toHaveLength(0)
+  })
+
+  it('classifies a fallback-bearing reference to a dropped name as non-blocking', () => {
+    const allRefs = [{ name: '--gone', line: 5, hasFallback: true, file: 'a.css' }]
+    const result = findDroppedNameRefs(allRefs, new Set(['--gone']), 'B')
+    expect(result.violations).toHaveLength(0)
+    expect(result.fallbackReports).toHaveLength(1)
+  })
+
+  it('ignores a reference whose name is not in the dropped set', () => {
+    const allRefs = [{ name: '--still-owned', line: 5, hasFallback: false, file: 'a.css' }]
+    const result = findDroppedNameRefs(allRefs, new Set(['--gone']), 'B')
+    expect(result.violations).toHaveLength(0)
+    expect(result.fallbackReports).toHaveLength(0)
+  })
+})
+
+describe('performUpdateSnapshot (R4) — writer refusal and success, against a real fixture tree', () => {
+  function makeFixtureTree() {
+    const base = mkdtempSync(join(tmpdir(), 'css-var-writer-test-'))
+    const cssDir = join(base, 'css')
+    const srcDir = join(base, 'src')
+    mkdirSync(cssDir, { recursive: true })
+    mkdirSync(srcDir, { recursive: true })
+    writeFileSync(join(base, 'globals.css'), ':root {\n  --kept: 1px;\n}\n', 'utf8')
+    writeFileSync(join(cssDir, 'shipped.css'), ':root{--kept:1px}', 'utf8')
+    // checkFreshness compares the shipped-CSS mtime against globals.css/src's
+    // newest mtime — bump the shipped file forward so a fast test run never
+    // ties (or loses to) a later fixture write in the same call (mirrors the
+    // script's own touchCssDir rationale).
+    const future = new Date(Date.now() + 60_000)
+    utimesSync(join(cssDir, 'shipped.css'), future, future)
+    return { base, cssDir, srcDir, globalsPath: join(base, 'globals.css') }
+  }
+
+  it('bootstraps from a missing snapshot file (first-run flow, §13)', () => {
+    const tree = makeFixtureTree()
+    try {
+      const snapshotPath = join(tree.base, 'snapshot.json')
+      const result = performUpdateSnapshot({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath })
+      expect(result.refused).toBe(false)
+      expect(result.written).toBe(true)
+      const written = loadSnapshot(snapshotPath)
+      expect(written.ok).toBe(true)
+      expect(written.names!.has('--kept')).toBe(true)
+    } finally {
+      rmSync(tree.base, { recursive: true, force: true })
+    }
+  })
+
+  it('refuses when a dropped name still has a fallback-less reference, and leaves the file byte-unchanged', () => {
+    const tree = makeFixtureTree()
+    try {
+      const snapshotPath = join(tree.base, 'snapshot.json')
+      // Prior snapshot owned BOTH --kept and --dropped-but-referenced; globals.css
+      // (above) only declares --kept now, and a live source file still reads the
+      // other one without a fallback.
+      writeSnapshotFile(snapshotPath, new Set(['--kept', '--dropped-but-referenced']))
+      const before = readFileSync(snapshotPath, 'utf8')
+      writeFileSync(join(tree.srcDir, 'consumer.tsx'), "const s = { color: 'var(--dropped-but-referenced)' }\n", 'utf8')
+      const result = performUpdateSnapshot({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath })
+      expect(result.refused).toBe(true)
+      expect(result.droppedViolations!.some((v) => v.name === '--dropped-but-referenced')).toBe(true)
+      const after = readFileSync(snapshotPath, 'utf8')
+      expect(after).toBe(before)
+    } finally {
+      rmSync(tree.base, { recursive: true, force: true })
+    }
+  })
+
+  it('succeeds when a dropped name has zero references anywhere', () => {
+    const tree = makeFixtureTree()
+    try {
+      const snapshotPath = join(tree.base, 'snapshot.json')
+      writeSnapshotFile(snapshotPath, new Set(['--kept', '--dropped-unreferenced']))
+      const result = performUpdateSnapshot({ cssDir: tree.cssDir, globalsPath: tree.globalsPath, srcDir: tree.srcDir, snapshotPath })
+      expect(result.refused).toBe(false)
+      expect(result.written).toBe(true)
+      const written = loadSnapshot(snapshotPath)
+      expect(written.names!.has('--dropped-unreferenced')).toBe(false)
+      expect(written.names!.has('--kept')).toBe(true)
+    } finally {
+      rmSync(tree.base, { recursive: true, force: true })
+    }
   })
 })

@@ -1,0 +1,41 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (27 tests | 1 failed) 19ms
+     × matches the real globals.css measured count (257) — Task 695 re-derivation 10ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run scripts/__tests__/css-var-resolvabilit ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline 
+/ :root > matches the real globals.css measured count (257) — Task 695 re-derivation
+AssertionError: expected 297 to be 257 // Object.is equality
+
+- Expected
++ Received
+
+- 257
++ 297
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:208:24
+    206|     // (NotificationCenter's 390px threshold retargeted to the canonic…
+    207|     // 2026-08-15 superseding Task 593). Measured 2026-08-15.
+    208|     expect(owned.size).toBe(257)
+       |                        ^
+    209|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    210|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 26 passed (27)
+   Start at  17:20:32
+   Duration  286ms (transform 56ms, setup 87ms, import 48ms, tests 19ms, environment 0ms)
+
+EXIT_CODE=1

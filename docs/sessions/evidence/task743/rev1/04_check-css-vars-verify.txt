@@ -1,0 +1,26 @@
+
+> lero-al@0.1.0 check:css-vars:verify
+> node scripts/check-css-var-resolvability.mjs --verify-gate
+
+🔬 check:css-vars self-test (--verify-gate) — 7 plants FAIL, 6 controls PASS
+
+✅  baseline (unmodified temp copy): 0 violations, 0 in-class dynamic sites, 0 dropped-name violations, 0 snapshot drift (owned=297, snapshot=297, Arm A refs=93, Arm B refs=68)
+    Ownership snapshot: version 1, 297 name(s) (..\..\Users\Nox\AppData\Local\Temp\css-var-resolvability-TRNWkn\css-var-ownership-snapshot.json)
+    Blind spots (R6): a name deleted from globals.css BEFORE the snapshot's first commit is invisible to drift — the snapshot only remembers what it was told to; a dynamically-built var(--prefix${…}) construction site is covered only by the existing prefix rule (R6/§3.4), unchanged by this task; a reference living outside src/**/*.{css,tsx,ts} (Arm B's own glob) is never scanned by either arm.
+
+✅  P1 (FAIL) — Arm A correctly reported unresolved --radius-md at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/css/e1194fa246eca6c7.css:1 after its declaration was renamed to --radius-md-renamed
+✅  P2 (FAIL) — Arm A correctly reported unresolved --color-input at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/css/cd649922b130fd4d.css:1 after its declaration was deleted
+✅  P3 (FAIL) — Arm A silent (0 refs to check) + Arm B correctly reported unresolved --homepage-runtime-search-max-width at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/src/components/shared/HeroSearchView.tsx:51
+✅  P4 (FAIL) — in-class dynamic site correctly reported: ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/src/__task700_verify_gate_fixture_p4.tsx:1 prefix "--space-"
+✅  P5 (FAIL) — dropped-name violation correctly reported: Arm B ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/src/design-system/media/AppImage.module.css:159 var(--motion-duration-slow) — CSS Module consumer
+✅  P6 (FAIL) — dropped-name violation correctly reported: Arm B ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-TRNWkn/src/modules/listings/components/ListingsPageFrame.tsx:53 var(--width-page-max) — TSX consumer
+✅  P7 (FAIL) — drift correctly reported --task743-plant as added, with no other blocking finding
+✅  C1 (PASS) — var(--color-badge-reduced, red) reported only in the non-blocking fallback list, never as a violation
+✅  C2 (PASS) — --app-shell-navbar-width is not owned and appears in no report
+✅  C3 (PASS) — block: owned=297 snapshot=297 added=[] dropped=[], --spacing-N excluded=true | line: line comment at theme.ts:556 correctly stripped
+✅  C4 (PASS) — 8 "--mantine-color-" dynamic site(s) found, all out-of-class=true
+✅  C5 (PASS) — refused=true naming --motion-duration-slow=true; git hash-object before=c854ac0bd9c9237203623d5617397a8571045023 after=c854ac0bd9c9237203623d5617397a8571045023 unchanged=true
+✅  C6 (PASS) — chosen name=--bp-2xl; drift-blocked=true (dropped=["--bp-2xl"]); writer succeeded=true; post-update scan clean=true
+
+✅  13/13 verify-gate assertions behaved as expected (7 plants FAILED, 6 controls PASSED).
+EXIT_CODE=0

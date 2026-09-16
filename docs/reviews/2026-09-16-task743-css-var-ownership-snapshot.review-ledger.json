@@ -1,0 +1,333 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-743 — check:css-vars ownership snapshot: dropped-name + drift checks and a refusing --update-snapshot writer (Sprint 75), Revision 1",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "21e41fe8047e09d90a83a669c1aa71af35605583",
+    "reviewedRevision": "uncommitted worktree on top of 21e41fe8047e09d90a83a669c1aa71af35605583 (main). Task 743 paths: scripts/check-css-var-resolvability.mjs, scripts/__tests__/css-var-resolvability.test.ts, scripts/css-var-ownership-snapshot.json (new), package.json (one check:css-vars:update-snapshot line; the two check:card-track-monotonicity lines in the same file belong to Task 815), docs/design-system.md (§23.9 only), docs/backlog.md (743 row), docs/sessions/2026-09-16-task743-css-var-ownership-snapshot.md, docs/sessions/evidence/task743/. All other status paths belong to Task 815.",
+    "reviewedPaths": [
+      "scripts/check-css-var-resolvability.mjs",
+      "scripts/__tests__/css-var-resolvability.test.ts",
+      "scripts/css-var-ownership-snapshot.json",
+      "package.json",
+      "docs/design-system.md",
+      "docs/sessions/2026-09-16-task743-css-var-ownership-snapshot.md",
+      "docs/sessions/evidence/task743"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 5,
+      "verified": 5,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-09-16-task743-css-var-ownership-snapshot.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1-AC3 / R1-R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-css-var-resolvability.mjs",
+        "symbol": "parseSnapshotContent, loadSnapshot, computeDrift, findDroppedNameRefs, runScan, performUpdateSnapshot",
+        "diffHunks": [
+          "scripts/check-css-var-resolvability.mjs snapshot module (parseSnapshotContent..findDroppedNameRefs), runScan drift/dropped wiring, run() blocking sum, performUpdateSnapshot refusal-before-write"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "snapshot load (valid/missing/malformed), drift added/dropped, dropped-name CSS and TSX consumers, writer refusal and success"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI gate script is not parameterised by any Storybook story.",
+          "locales": "No user-facing string is read, emitted or changed.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic single-pass scan; no runtime UI state."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task743/rev1/04_check-css-vars-verify.txt",
+          "command": "npm.cmd run check:css-vars:verify (reviewer re-executed natively, win32)",
+          "observable": "13/13; P5 names AppImage.module.css:159, P6 names ListingsPageFrame.tsx:53, P7 reports --task743-plant as added only, C5 refused with git hash-object c854ac0b... unchanged, C6 drift-blocked then writer succeeded then clean.",
+          "freshness": "reviewer run 2026-09-16 on the submitted worktree; build transcript rev1/02_build.txt exit 0",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "snapshot load (valid/missing/malformed), drift added/dropped, dropped-name CSS and TSX consumers, writer refusal and success"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The snapshot was hand-written or re-written in Revision 1, so its content is not the writer's output.",
+          "kind": "EXECUTED",
+          "path": "scripts/css-var-ownership-snapshot.json",
+          "result": "REFUTED. git hash-object is c854ac0bd9c9237203623d5617397a8571045023 in Revision 0's writer transcript, in rev1/18_hash-object_final.txt, and in the reviewer's own run; the real-tree no-op writer run (rev1/05) reports added (none) dropped (none)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility or generated CSS is added, removed or recompiled."
+      }
+    },
+    {
+      "id": "AC4 / R5 + AC9 / F3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-css-var-resolvability.mjs",
+        "symbol": "runPlantP5, runPlantP6, runControlC5, runControlC6 over-match guards; verifyGate",
+        "diffHunks": [
+          "scripts/check-css-var-resolvability.mjs:1296-1309 (P5 guard), P6 :1336-1341, C5 :1391-1396, C6 :1432-1437"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "13 verify-gate assertions and the four Revision 1 guards"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI self-test.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Temp-copy mutations restored in finally."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task743/rev1/04_check-css-vars-verify.txt",
+          "command": "npm.cmd run check:css-vars:verify; grep -n 'must remove exactly one' scripts/check-css-var-resolvability.mjs",
+          "observable": "Reviewer run: exit 0, 13/13. Guard sites at :1307, :1341, :1396, :1437 each compare extractOwnedNames before/after and fail unless exactly [name] left the owned set.",
+          "freshness": "reviewer run 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "13 verify-gate assertions and the four Revision 1 guards"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The P2/P3 retargets weakened pre-existing plants to make them pass.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-css-var-resolvability.mjs",
+          "result": "REFUTED. Both retargets keep the original pre-plant census shape (1 shipped declaration; P3 additionally 0 shipped refs plus a live TSX consumer and the Task 695 over-match guard), P2 gained a literal-occurrence guard, and both still FAIL as planted in the reviewer's run."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC5 + AC8 / R6 (F2)",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-css-var-resolvability.mjs",
+        "symbol": "printSnapshotScope call sites in run/printReport, updateSnapshot (success, refusal, fatal-after-load), verifyGate",
+        "diffHunks": [
+          "scripts/check-css-var-resolvability.mjs:708-724, :853-874, :1478"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "default scan, verify-gate, successful writer, refused writer"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI output.",
+          "locales": "Governance output is English-only by design; not user-facing.",
+          "viewports": "No rendered output.",
+          "states": "Four CLI modes enumerated as subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task743/rev1/07_ac8_writer-refusal-cli.txt",
+          "command": "grep -c 'Blind spots (R6)' rev1/03 rev1/04 rev1/05 rev1/07",
+          "observable": "One Blind spots (R6) line and one Ownership snapshot version line in each of the four transcripts; 07 is a real CLI subprocess refusal with exitCode=1 and unchanged snapshot hash.",
+          "freshness": "Revision 1 transcripts; 03/04 reproduced by reviewer run 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "default scan, verify-gate, successful writer, refused writer"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The comment still claims call sites that do not exist.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-css-var-resolvability.mjs",
+          "result": "REFUTED. grep printSnapshotScope returns :732 (printReport), :857, :866, :869 (updateSnapshot) and :1478 (verifyGate), matching the comment at :708-715 exactly; the three early fatals before snapshot load are stated as not printing."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC7 / R7, R9 (F1)",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/__tests__/css-var-resolvability.test.ts",
+        "symbol": "'matches the committed ownership snapshot' test; runControlC3; design-system.md §23.9 Workflow cost",
+        "diffHunks": [
+          "scripts/__tests__/css-var-resolvability.test.ts:210-235",
+          "scripts/check-css-var-resolvability.mjs:1217-1235",
+          "docs/design-system.md §23.9 Workflow cost paragraph"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "unit test, C3, documented add-token workflow"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Test and docs only.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Two arms (token added / writer run) enumerated in evidence."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task743/rev1/06_ac7_ac8_scratch-proof.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/css-var-resolvability.test.ts (reviewer, 48/48); scratch-copy two-armed proof",
+          "observable": "Arm (a): owned=298 snapshot=297 added=[--task743-rev1] comparison fails. Arm (b): after performUpdateSnapshot, 298/298 added=[] dropped=[] passes. Real snapshot hash unchanged. rev1/08 grep shows '297' only in two explanatory comments.",
+          "freshness": "Revision 1 transcript; vitest reproduced by reviewer 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "unit test, C3, documented add-token workflow"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "vitest's default include does not pick up scripts/__tests__, so the hardcoded count never affected CI.",
+          "kind": "EXECUTED",
+          "path": "scripts/__tests__/css-var-resolvability.test.ts",
+          "result": "CONFIRMED relevant: vitest.config.ts declares no include/exclude, so the default glob covers scripts/__tests__ and CI's npm test ran it; the snapshot-derived comparison removes that rot path."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC6 / R8 + §13.2 gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-16-task743-css-var-ownership-snapshot.md",
+        "symbol": "R8 census and final gate block",
+        "diffHunks": [
+          "docs/sessions/evidence/task743/18_r8_census.txt; rev1/01-18"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "R8 census, build, typecheck, lint, mojibake, scoped file-integrity, hash-object"
+        ],
+        "phases": [
+          "baseline",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "No Storybook surface.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Command exit codes."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task743/rev1/02_build.txt",
+          "command": "rev1 01/02/10/11/13 EXIT_CODE lines; reviewer node scripts/check-file-integrity.mjs --files <24 Task 743 paths incl. rev1/*>",
+          "observable": "vitest/build/typecheck/lint/mojibake EXIT_CODE=0; reviewer file-integrity 24/24 clean exit 0; R8 census orphan names found=0; final hashes in rev1/18 equal the reviewer's hash-object of the working files.",
+          "freshness": "Revision 1 final block 2026-09-16; reviewer reruns same day",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "R8 census, build, typecheck, lint, mojibake, scoped file-integrity, hash-object"
+            ],
+            "phases": [
+              "baseline",
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The build transcript is stale relative to the reviewed scan inputs.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-css-var-resolvability.mjs",
+          "result": "REFUTED. The freshness guard compares shipped CSS against globals.css and every src/**/*.{css,tsx,ts}; the reviewer's check:css-vars run exited 0 without a stale-build fatal. Revision 1 changed no src/ file."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC5 + AC8 / R6 (F2)",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed vitest (48/48), check:css-vars (exit 0), check:css-vars:verify (13/13) and scoped check:file-integrity (24/24). Build, typecheck, lint, mojibake, the no-op writer and the CLI refusal subprocess are accepted from Revision 1's retained transcripts, each with EXIT_CODE recorded."
+  }
+}

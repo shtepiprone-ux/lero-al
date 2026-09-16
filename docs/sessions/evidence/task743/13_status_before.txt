@@ -1,0 +1,23 @@
+ M .github/workflows/governance-pr.yml
+ M docs/storybook-governance.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/stories/mantine/_MantineStoryShell.tsx
+?? docs/sessions/evidence/task743/10_platform.txt
+?? docs/sessions/evidence/task743/11_node_version.txt
+?? docs/sessions/evidence/task743/12_location.txt
+?? docs/sessions/evidence/task743/13_status_before.txt
+?? docs/sessions/evidence/task815/00_census-reproduction.json
+?? docs/sessions/evidence/task815/10_platform.txt
+?? docs/sessions/evidence/task815/11_node_version.txt
+?? docs/sessions/evidence/task815/12_location.txt
+?? docs/sessions/evidence/task815/13_status_before.txt
+?? docs/sessions/evidence/task815/14_log.txt
+?? docs/sessions/evidence/task815/15_build-storybook.txt
+?? docs/sessions/evidence/task815/16_census-reproduction.txt
+?? docs/sessions/evidence/task815/20_typecheck.txt
+?? docs/sessions/evidence/task815/21_lint.txt
+?? docs/sessions/evidence/task815/22_build-storybook-final.txt
+?? docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt
+?? scripts/check-card-track-monotonicity.mjs
+EXIT_CODE=0

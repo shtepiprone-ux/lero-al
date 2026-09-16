@@ -102,6 +102,7 @@
     "check:click-shield:verify": "node scripts/check-click-shield.mjs --verify-gate",
     "check:css-vars": "node scripts/check-css-var-resolvability.mjs",
     "check:css-vars:verify": "node scripts/check-css-var-resolvability.mjs --verify-gate",
+    "check:css-vars:update-snapshot": "node scripts/check-css-var-resolvability.mjs --update-snapshot",
     "check:tailwind-runtime-tokens": "node scripts/check-tailwind-runtime-tokens.mjs",
     "check:tailwind-runtime-tokens:verify-gate": "node scripts/check-tailwind-runtime-tokens.mjs --verify-gate",
     "check:homepage-literal-utilities": "node scripts/check-homepage-literal-utilities.mjs",

@@ -1496,6 +1496,115 @@ changes retain task-scoped real-route evidence. A fourteenth file that starts re
 tomorrow is invisible to this gate by design; that is the deliberate cost of a fixed manifest, which
 is why the missing-input arm is fatal rather than silently skipped.
 
+### §23.9 — Owned custom-property resolvability: `check:css-vars` (Task 700 gate, Task 743 ownership snapshot)
+
+**`scripts/check-css-var-resolvability.mjs`** (`npm run check:css-vars`) asserts that every reference
+to a project-OWNED custom property resolves to a declaration that actually ships in the production
+bundle, or to an `@property` registration. "Owned" is computed **live** from `src/app/globals.css`'s
+`@theme`/`@theme inline`/top-level `:root` blocks — deliberately never a hardcoded allowlist, because
+an unscoped "every `var()` must resolve" check false-positives on ~112 Mantine runtime custom
+properties set only through inline styles. Two arms: **Arm A** every `var(--owned)` in the shipped CSS
+(`.next/static/css/*.css`); **Arm B** every `var(--owned)` in `src/**/*.{css,tsx,ts}` (excluding
+`globals.css`, the ownership source). A reference carrying a fallback (`var(--x, fallback)`) is
+reported separately and never blocks (R10).
+
+**The blind spot this section closes (Task 743, Sprint 75, filed by Task 700's own review — 700 F1).**
+Because ownership is computed live, **deleting** a declaration from `globals.css` un-owns the name and
+every reference to it in the same motion — the gate then reports "0 violations" even though a live
+consumer is left dangling. Reproduced twice: removing `--color-overlay-foreground`'s declaration while
+six TSX consumers stayed live (Task 700's review), and removing only `--motion-duration-slow` from
+`:root` while its sibling `--motion-duration-*` tokens stayed owned and
+`src/design-system/media/AppImage.module.css`'s live `var(--motion-duration-slow)` kept reading it
+(Task 765). Neither case is "declaration stays, stops shipping" (Task 690's case, already covered by
+Arm A/B above) — the declaration itself is gone.
+
+**The fix: a committed ownership snapshot, not a git-base diff or a third-party prefix list.**
+`scripts/css-var-ownership-snapshot.json` — `{ "version": 1, "names": [<sorted owned names>] }`, UTF-8
+no BOM, LF, 2-space indent, trailing newline, names sorted with `localeCompare` — is a deliberately
+**stale** second signal: it records what "owned" was the last time a human ran `--update-snapshot`, so
+a live-set **shrink** becomes observable by comparison instead of vanishing along with the name it
+described. A git-base diff was rejected because CI here only triggers on `pull_request`
+(`.github/workflows/governance-pr.yml:3-5`), giving no measured guarantee it runs on every landing
+path; a third-party prefix allowlist was rejected because it re-derives the same 112-name
+false-positive problem an unscoped check already has. The snapshot fires on every run, wherever it
+runs, and is never edited or hand-derived — only `--update-snapshot` may write it.
+
+Two new blocking checks, both computed every run, in addition to the existing Arm A/B resolvability
+check above:
+
+1. **Drift (R3).** The live-computed owned set is compared against the snapshot as plain sets. Any
+   difference — a name **added** to `globals.css` since the snapshot was last written, or a name
+   **dropped** from it — is a blocking finding listing both lists and the remedy
+   (`npm run check:css-vars:update-snapshot`). Drift fires on a mere set difference, independent of
+   whether either side is ever referenced — an unused new token still requires a deliberate
+   `--update-snapshot`, and a deleted-but-unreferenced token still surfaces so its removal from the
+   snapshot is a decision, not a silent side effect.
+2. **Dropped-name (R2).** For every name the snapshot has but the live owned set no longer does, every
+   fallback-less `var(--name)` found in Arm A or Arm B is a named blocking violation (file, line, arm).
+   A fallback-bearing reference to a dropped name is folded into the existing non-blocking fallback
+   report instead. This is the check that actually catches Task 765's `--motion-duration-slow`
+   scenario and its TSX-consumer sibling (a token read only via `maw="var(--width-page-max)"`,
+   never from any `.css` file).
+
+**The writer refuses to move past a live reference.** `npm run check:css-vars:update-snapshot`
+(`--update-snapshot`) recomputes the owned set, and — **before writing anything** — checks whether any
+name it is about to drop from the snapshot still has a fallback-less reference anywhere in Arm A or
+Arm B. If so, it refuses: exit 1, the snapshot file left byte-for-byte unchanged, the offending
+references listed. Otherwise it writes the current owned set and exits 0, printing what was added and
+dropped. A missing snapshot file bootstraps as the empty set (the first-ever write always proceeds,
+since an empty prior snapshot can never have a "dropped" name); a **present but malformed** snapshot
+is still a hard refusal — silently overwriting corrupt state defeats the point of a reviewable,
+committed file. The writer honours the same `--css-dir`/`--globals-path`/`--src-dir` seam as the
+scanner, plus its own `--snapshot-path`.
+
+**Workflow cost, stated plainly.** `npm run check:css-vars:update-snapshot` in the same change is the
+**only** step needed when a token is added to `globals.css` — or `check:css-vars` fails with the exact
+remedy printed (same shape as the Task 818/819 baseline workflows). Neither the unit test nor
+`--verify-gate`'s C3 keep a second, hand-maintained count of how many names should be owned (Task 743
+Revision 1 — Revision 0 shipped exactly that, as a hardcoded literal in both places, and it went stale
+twice, most recently breaking the moment an unrelated task added one token). Both compare the live
+owned set against the committed snapshot instead, so running the writer is genuinely sufficient; no
+second file needs editing by hand. Removing a token whose consumers were **not** cleaned up in the same
+change also fails — correctly, since that consumer would otherwise read an undefined custom property in
+production.
+
+**`--verify-gate` — 13 assertions** (`npm run check:css-vars:verify`): the original 8 (4 plants shown
+FAILING — P1 renamed shipped declaration, P2 deleted shipped declaration, P3 Arm-B-only deletion, P4
+in-class dynamic site; 4 controls shown PASSING — C1 fallback exemption, C2 unowned Mantine name, C3
+comment stripping, C4 out-of-class dynamic site) plus 5 Task 743 additions, all against the same
+`mkdtempSync` copy, every mutation restored in its own `finally`:
+
+- **P5** — delete `--motion-duration-slow`'s declaration from the temp `globals.css` copy, leaving
+  `AppImage.module.css`'s two live references untouched → dropped-name violation naming that file.
+- **P6** — same shape for `--width-page-max`, whose only consumer is
+  `ListingsPageFrame.tsx`'s `maw="var(--width-page-max)"` → dropped-name violation naming that file.
+- **P7** — append a brand-new `:root { --task743-plant: 1px; }` block with no snapshot entry and no
+  consumer → drift (`added`), and **only** drift; no resolvability or dropped-name finding.
+- **C5** — reuse P5's own mutation and call the writer directly: refused, and the temp snapshot's
+  `git hash-object` is identical before and after.
+- **C6** — pick, at runtime (never hardcoded), an owned name with **zero** references anywhere in the
+  tree and exactly one declaration occurrence in `globals.css`; delete it → drift blocks the plain
+  scan; `--update-snapshot` then succeeds (nothing referenced it, so no refusal condition); a final
+  scan of the updated snapshot exits clean.
+
+**Blind spots (R6), printed on every run — none of the three is a new check, and none is closed by
+this task:**
+
+1. A name deleted from `globals.css` **before** the snapshot's first commit is invisible to drift —
+   the snapshot only remembers what it was told to when it was written. This is why R8's one-time
+   census (below) exists: a name that was already an undetected orphan at the moment the first
+   snapshot is written would otherwise stay invisible forever.
+2. A dynamically-built `var(--prefix${…})` construction site is covered only by the existing prefix
+   rule (R6/§3.4 above), unchanged by this task.
+3. A reference living outside `src/**/*.{css,tsx,ts}` (Arm B's own glob) is never scanned by either
+   arm.
+
+**R8 — the one-time bootstrap census.** Before the first snapshot was ever written, every fallback-less
+`var(--x)` in `src/**/*.{css,tsx,ts}` whose name was not owned, not `--mantine-*`/`--tw-*`, and not
+declared in any shipped CSS file was enumerated once (a project-looking orphan in that list would have
+required stopping for an owner decision, since blind spot 1 above means such an orphan predating the
+snapshot would otherwise never surface). Measured 2026-09-16: zero such names existed at that time.
+
 > **This clause is BINDING and OVERRIDES any weaker local wording. Any pattern listed here
 > applied in a task without an approved exception entry is a FAIL — do not approve or commit.**
 

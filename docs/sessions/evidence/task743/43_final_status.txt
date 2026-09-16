@@ -1,0 +1,55 @@
+ M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M docs/design-system.md
+ M docs/storybook-governance.md
+ M package.json
+ M scripts/__tests__/css-var-resolvability.test.ts
+ M scripts/check-css-var-resolvability.mjs
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/stories/mantine/_MantineStoryShell.tsx
+?? docs/sessions/2026-09-16-task743-css-var-ownership-snapshot.md
+?? docs/sessions/evidence/task743/10_platform.txt
+?? docs/sessions/evidence/task743/11_node_version.txt
+?? docs/sessions/evidence/task743/12_location.txt
+?? docs/sessions/evidence/task743/13_status_before.txt
+?? docs/sessions/evidence/task743/14_build.txt
+?? docs/sessions/evidence/task743/15_check-css-vars_baseline.txt
+?? docs/sessions/evidence/task743/16_check-css-vars_verify_baseline.txt
+?? docs/sessions/evidence/task743/17_vitest_baseline.txt
+?? docs/sessions/evidence/task743/18_r8_census.txt
+?? docs/sessions/evidence/task743/20_vitest_red.txt
+?? docs/sessions/evidence/task743/21_vitest_green.txt
+?? docs/sessions/evidence/task743/22_update-snapshot_first-write.txt
+?? docs/sessions/evidence/task743/23_check-css-vars_after-snapshot.txt
+?? docs/sessions/evidence/task743/24_check-css-vars_verify.txt
+?? docs/sessions/evidence/task743/30_final_platform.txt
+?? docs/sessions/evidence/task743/31_final_vitest.txt
+?? docs/sessions/evidence/task743/32_final_build.txt
+?? docs/sessions/evidence/task743/33_final_check-css-vars.txt
+?? docs/sessions/evidence/task743/34_final_check-css-vars-verify.txt
+?? docs/sessions/evidence/task743/35_final_typecheck.txt
+?? docs/sessions/evidence/task743/36_final_lint.txt
+?? docs/sessions/evidence/task743/37_final_file-integrity.txt
+?? docs/sessions/evidence/task743/38_final_mojibake.txt
+?? docs/sessions/evidence/task743/39_final_diff-stat.txt
+?? docs/sessions/evidence/task743/40_final_hash-object.txt
+?? docs/sessions/evidence/task743/41_final_file-integrity_v2.txt
+?? docs/sessions/evidence/task743/42_final_diff-stat_v2.txt
+?? docs/sessions/evidence/task743/43_final_status.txt
+?? docs/sessions/evidence/task815/00_census-reproduction.json
+?? docs/sessions/evidence/task815/10_platform.txt
+?? docs/sessions/evidence/task815/11_node_version.txt
+?? docs/sessions/evidence/task815/12_location.txt
+?? docs/sessions/evidence/task815/13_status_before.txt
+?? docs/sessions/evidence/task815/14_log.txt
+?? docs/sessions/evidence/task815/15_build-storybook.txt
+?? docs/sessions/evidence/task815/16_census-reproduction.txt
+?? docs/sessions/evidence/task815/20_typecheck.txt
+?? docs/sessions/evidence/task815/21_lint.txt
+?? docs/sessions/evidence/task815/22_build-storybook-final.txt
+?? docs/sessions/evidence/task815/23_check-card-track-monotonicity.txt
+?? docs/sessions/evidence/task815/24_status_before_verify.txt
+?? docs/sessions/evidence/task815/25_check-card-track-monotonicity-verify.txt
+?? scripts/check-card-track-monotonicity.mjs
+?? scripts/css-var-ownership-snapshot.json
+EXIT_CODE=0

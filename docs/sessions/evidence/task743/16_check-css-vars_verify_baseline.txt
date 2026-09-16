@@ -1,0 +1,25 @@
+
+> lero-al@0.1.0 check:css-vars:verify
+> node scripts/check-css-var-resolvability.mjs --verify-gate
+
+🔬 check:css-vars self-test (--verify-gate) — 4 plants FAIL, 4 controls PASS
+
+✅  baseline (unmodified temp copy): 0 violations, 0 in-class dynamic sites (owned=297, Arm A refs=93, Arm B refs=68)
+
+✅  P1 (FAIL) — Arm A correctly reported unresolved --radius-md at ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-w2jWz5/css/e1194fa246eca6c7.css:1 after its declaration was renamed to --radius-md-renamed
+❌  P2 (FAIL) — pre-plant census failed — --color-badge-premium has 0 declaration site(s), ref file none (no further lifeline unproven)
+❌  P3 (FAIL) — pre-plant census failed — --text-3xl has 0 declaration site(s) and 0 shipped var() reference(s) (expected 1 decl, 0 refs — no further lifeline unproven)
+✅  P4 (FAIL) — in-class dynamic site correctly reported: ../../Users/Nox/AppData/Local/Temp/css-var-resolvability-w2jWz5/src/__task700_verify_gate_fixture_p4.tsx:1 prefix "--space-"
+✅  C1 (PASS) — var(--color-badge-reduced, red) reported only in the non-blocking fallback list, never as a violation
+✅  C2 (PASS) — --app-shell-navbar-width is not owned and appears in no report
+❌  C3 (PASS) — block: owned=297 (expect 256), --spacing-N excluded=true | line: line comment at theme.ts:556 correctly stripped
+✅  C4 (PASS) — 8 "--mantine-color-" dynamic site(s) found, all out-of-class=true
+
+npm.cmd : ❌  3/8 verify-gate assertion(s) did not behave as expected.
+At line:3 char:1
++ npm.cmd run check:css-vars:verify *> docs\sessions\evidence\task743\1 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  3/8 verify-g...ve as expected.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=1

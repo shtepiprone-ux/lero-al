@@ -1,0 +1,13 @@
+=== AC7(a) — append an unsnapshotted token, comparison must fail (added) ===
+owned=298 snapshot=297 added=["--task743-rev1"] dropped=[]
+PASS — comparison correctly fails, naming --task743-rev1 as added
+
+=== AC7(b) — same append, then run the writer (performUpdateSnapshot), comparison must pass ===
+writer: refused=false written=true added=["--task743-rev1"]
+post-write: owned=298 snapshot=298 added=[] dropped=[]
+PASS — comparison passes after --update-snapshot
+
+=== AC8 — real writer refusal transcript (scratch copy, --motion-duration-slow dropped+referenced) ===
+refused=true droppedViolations=[{"arm":"A","file":"../../Users/Nox/AppData/Local/Temp/task743-rev1-ac7-J1BxaU/css/3294fd458d254b37.css","line":1,"name":"--motion-duration-slow"},{"arm":"B","file":"../../Users/Nox/AppData/Local/Temp/task743-rev1-ac7-J1BxaU/src/design-system/media/AppImage.module.css","line":159,"name":"--motion-duration-slow"}]
+hash before=c854ac0bd9c9237203623d5617397a8571045023 after=c854ac0bd9c9237203623d5617397a8571045023 unchanged=true
+EXIT_CODE=0

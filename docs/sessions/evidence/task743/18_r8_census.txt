@@ -1,0 +1,4 @@
+owned=297 declared(shipped)=1207 propertyRegistered(shipped)=80
+files scanned=684
+orphan names found=0
+EXIT_CODE=0

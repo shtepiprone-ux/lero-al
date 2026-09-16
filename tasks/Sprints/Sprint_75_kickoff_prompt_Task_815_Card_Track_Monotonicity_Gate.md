@@ -3,7 +3,7 @@
 Sprint 75 · P1 · QA profile **Q4** (was `Q2` in the reservation — corrected in §13 because this task claims a new
 blocking gate)
 
-**Status: `READY FOR SONNET`** — filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
+**Status: `NEEDS REVISION` (Rev 1, Opus review 2026-09-16) — start at §16.** Filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
 in §5.1.
 
 ## 1. Mode and task type
@@ -133,11 +133,11 @@ stories × 20 widths. Canonical-only (§5.1) is 139 canonical stories to discove
 |---|---|---|---|---|---|
 | **R1** | §3.1, reservation text | A new script `scripts/check-card-track-monotonicity.mjs` runs with **nothing but `storybook-static/`**: its own `node:http` static server on `127.0.0.1`, Playwright Chromium. No `next start`, no storage state, no network, no dev server. It fails with exit 1 and a named message when `storybook-static/index.json` is absent. | **P0** | AC1 | Confirmed |
 | **R2** | §3.3 | The track selectors are **derived at runtime** from the built CSS: exactly one `storybook-static/assets/MantineListingCardTrack-*.css`, from which exactly one `_grid_<hash>_<n>` and exactly one `_rail_<hash>_<n>` class are extracted. Zero or more than one file, or zero or more than one class of either kind, is exit 1 with a message naming what was found. No literal hashed class name appears in the script. | **P0** | AC2, AC7 | Confirmed |
-| **R3** | §3.4, owner decision §5.1 | Scope is discovered, never listed: every `type: "story"` entry of `index.json` whose `title` satisfies `isCanonicalMantineTitle` (imported from `scripts/lib/mantine-story-scope.mjs`, not re-implemented) is loaded at **320×900 and 1440×900**, `locale:en`; a story is in scope when either load contains at least one track. A discovered scope of **zero** stories is exit 1. | **P0** | AC3, AC7 | Confirmed |
+| **R3** | §3.4, owner decision §5.1 | Scope is discovered, never listed: every `type: "story"` entry of `index.json` whose `title` satisfies `isCanonicalMantineTitle` (imported from `scripts/lib/mantine-story-scope.mjs`, not re-implemented) is loaded at **320×900 and 1440×900**, `locale:en`; a story is in scope when either load contains at least one track. A discovered scope of **zero** stories is exit 1. **Rev 1: discovery waits for render state — §16.2.** | **P0** | AC3, AC7, AC12 | Confirmed |
 | **R4** | §3.2, §3.5 | Each in-scope story is loaded at the ascending width list **`320, 479, 480, 639, 640, 767, 768, 1023, 1024, 1279, 1280, 1439, 1440, 1535, 1536, 1920, 2560`** (height 900, `locale:en`). Each track is measured by document order: grid → `grid-template-columns` track count; rail → number of direct children whose box lies entirely within `[rail.left, rail.left + rail.clientWidth]` at `scrollLeft` 0. A track missing at any width, or a different track count between widths, is a failure for that story. | **P0** | AC4 | Confirmed |
 | **R5** | §2 | For each track, a measure at a wider width that is **lower** than at the immediately preceding sampled width fails, naming story id, track index, mode, both widths, both measures and both track widths in px. Exit 0 iff no failure in any in-scope story. No baseline file, no allowlist, no per-story exception. | **P0** | AC4, AC5 | Confirmed |
-| **R6** | Sprint 75 exit criterion 4, GR-2 | **Every run prints its own scope and blind spots**, whatever the result: extracted CSS asset and classes; `in scope: <n> canonical stories rendering the track (of <m> canonical, <t> total)`; the full list of in-scope story ids; `excluded (owner decision 2026-09-16): <k> non-canonical stories, including the System/* stories — Task 827 owns the known 1535→1536 drop there`; and `cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint`. | **P0** | AC6 | Confirmed |
-| **R7** | QA profile Q4, Sprint 75 exit criterion 3 | `--verify-gate` runs, in order: **(a)** negative arm — the real tree, expect every in-scope story clean; **(b)** grid plant on `patterns-mantine-listingcardtrack--grid` at the **1024** rung; **(c)** rail plant on `patterns-mantine-listingcardtrack--rail` at the **1280** rung; **(d)** selector fail-closed — extraction run against a non-matching asset pattern must fail; **(e)** scope fail-closed — discovery with a title predicate that matches nothing must fail. Each plant is a `<style>` element injected by `page.addStyleTag` after navigation, keyed to `@media (min-width: <rung>px)`, adding `padding-inline` to the **track's parent element** (tagged with a `data-task815-plant` attribute by the plant itself); (b) and (c) must each fail with a reason naming **that** story, **that** rung pair and a lower measure, and nothing else; the arm then reloads the story and re-measures the rung pair clean. Any arm that does not produce its expected outcome is exit 1. No repository file is written by `--verify-gate`. | **P0** | AC7 | Confirmed |
+| **R6** | Sprint 75 exit criterion 4, GR-2 | **Every run prints its own scope and blind spots**, whatever the result: extracted CSS asset and classes; `in scope: <n> canonical stories rendering the track (of <m> canonical, <t> total)`; the full list of in-scope story ids; `excluded (owner decision 2026-09-16): <k> non-canonical stories, including the System/* stories — Task 827 owns the known 1535→1536 drop there`; and `cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint`. **Rev 1: on every exit path — §16.3.** | **P0** | AC6, AC13 | Confirmed |
+| **R7** | QA profile Q4, Sprint 75 exit criterion 3 | `--verify-gate` runs, in order: **(a)** negative arm — the real tree, expect every in-scope story clean; **(b)** grid plant on `patterns-mantine-listingcardtrack--grid` at the **1024** rung; **(c)** rail plant on `patterns-mantine-listingcardtrack--rail` at the **1280** rung; **(d)** selector fail-closed — extraction run against a non-matching asset pattern must fail; **(e)** scope fail-closed — discovery with a title predicate that matches nothing must fail. Each plant is a `<style>` element injected by `page.addStyleTag` after navigation, keyed to `@media (min-width: <rung>px)`, adding `padding-inline` to the **track's parent element** (tagged with a `data-task815-plant` attribute by the plant itself); (b) and (c) must each fail with a reason naming **that** story, **that** rung pair and a lower measure, and nothing else; the arm then reloads the story and re-measures the rung pair clean. Any arm that does not produce its expected outcome is exit 1. No repository file is written by `--verify-gate`. **Rev 1: arms (b)/(c) run the gate's own sweep and `evaluateSweep`, proven by a mutation run — §16.1.** | **P0** | AC7, AC7-R1, AC11 | Confirmed |
 | **R8** | §3.6 | `package.json` gains `check:card-track-monotonicity` and `check:card-track-monotonicity:verify`. `.github/workflows/governance-pr.yml` job `homepage-grid` runs both as two steps placed **after** `Build Storybook` and **before** `Homepage grid invariants gate`, without `continue-on-error`. No other workflow step changes. | **P0** | AC8 | Confirmed |
 | **R9** | §3.1 | The two maintainer comments in §3.1 name the new command instead of the probe; nothing else in either file changes. `scripts/task809-favorites-parity-probe.mjs` is **not** modified (it is Task 809's retained evidence producer). | P1 | AC9 | Confirmed |
 | **R10** | Sprint 75 exit criterion 4 | `docs/storybook-governance.md` gains `§15.10` recording the command, its scope rule and owner decision, the measure, the width list and why, the verify arms, the four blind spots of R6, and Tasks 827/828. | P1 | AC10 | Confirmed |
@@ -391,3 +391,139 @@ Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, o
 | planted drop at 1024 / 1280 | verify arms (b)(c), produced width asserted | exit 1 with named reason, clean after reload |
 | plant silently not applied | width assertion before drop assertion | arm fails |
 | task-created file enters a scan | the gate reads only `storybook-static/` | none possible |
+
+## 16. Revision 1 — `NEEDS REVISION` (Opus review, 2026-09-16)
+
+Reviewed tree: `scripts/check-card-track-monotonicity.mjs` blob `74819e1987e8d030c8d7841e5469d9ce33d6ec6e` plus the
+five edited files of §7. **Accepted, not to be redone:** R1, R2, R4, R8, R9, R10; the §13.1 baseline and census
+(`00_`–`16_`); the Rev 0 real-run sweep (16/16 clean, 0 drops). The three defects below are the whole revision.
+
+### 16.1 P1 — the plant arms do not exercise the gate's decision path (R5, R7, AC7)
+
+`FACT` — `evaluateSweep` (`:240`) has one caller, `runGate` (`:336`). `runPlantArm` (`:407-505`) decides the trip with
+its own comparison, `plantedValue < baselinePrev.track.value` (`:475`), and prints its own reason string (`:483-486`).
+`CONTRADICTION` — the comment at `:237-238` says `evaluateSweep` is "shared by the real run and the plant arms so the
+failure/pass decision is never re-derived in two places".
+
+`INFERENCE` — a mutation that disables detection inside `evaluateSweep` leaves arm (a) green (the real tree has no
+drop) and arms (b)/(c) green (they never call it), so `--verify-gate` exits 0 on a gate that can no longer fail. That is
+the Sprint 75 failure class and the M1-M5 corollary in `docs/orchestrator-procedures.md` ("the control could not
+detect its own effect").
+
+**Required change.**
+
+1. Extract the per-story sweep of `runGate` (`:330-338`) into one function, e.g.
+   `sweepStory(page, baseUrl, storyId, selectors, { plant } = {})`, that measures every `WIDTHS` entry through
+   `measureStoryAtWidth` and returns `evaluateSweep(storyId, cells)`. `runGate` calls it with no plant; its output is
+   unchanged.
+2. `measureStoryAtWidth` accepts an optional `plant` (`{ mode, rung, paddingPx }`). When present it is applied **on
+   every navigation, after readiness and before `evalTracks`**: tag the track's parent with `data-task815-plant`, then
+   `page.addStyleTag` the `@media (min-width: <rung>px)` rule. A plant does not survive navigation, which is why it is
+   per-navigation.
+3. Arms (b)/(c) call `sweepStory` with the plant over the **full 17-width list** and pass only when all hold, in order:
+   - the cell at `rung` has produced track width `Math.round(width) === expectedProducedWidth` (864 / 1000) — asserted
+     first; a mismatch is an arm failure (§10.4 unchanged);
+   - `failures` from `evaluateSweep` has **exactly one** entry;
+   - that entry contains the story id, `track 0 (<mode>)`, `<prevWidth>px-><rung>px`, and `measure X->Y` with `Y < X`;
+   - an unplanted `sweepStory` of the same story afterwards returns `pass: true` (the reload-clean check).
+   Print the `evaluateSweep` failure string verbatim. Delete `runPlantArm`'s private comparison and reason string. If a
+   planted sweep yields a second failure at another rung pair, **stop and report it** — do not change the padding, the
+   width list or the comparator to make it one.
+4. Correct the arm (c) `describe` text: the measured pair is `1279=4 → 1280=3` (`25_…-verify.txt`), not "5->3".
+5. Rewrite the `:237-238` comment so it describes the shipped code.
+
+**Mutation proof (mandatory).** Create `docs/sessions/evidence/task815/57_mutation-probe.mjs` with exactly this content
+(Node I/O only — never PowerShell `Get-Content -Raw`, per the 818/819 corollary):
+
+```js
+import { readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+const [mode, target, find] = process.argv.slice(2);
+const backup = `${target}.task815-orig`;
+if (mode === 'apply') {
+  const src = readFileSync(target, 'utf8');
+  if (src.split(find).length !== 2) { console.error(`MUTATION TARGET NOT UNIQUE/FOUND: ${find}`); process.exit(2); }
+  writeFileSync(backup, src);
+  writeFileSync(target, src.replace(find, 'false'));
+  console.log(`applied: "${find}" -> "false"`);
+} else if (mode === 'restore') {
+  writeFileSync(target, readFileSync(backup, 'utf8'));
+  unlinkSync(backup);
+  console.log('restored');
+} else { process.exit(2); }
+```
+
+Then run, redirecting to `55_mutation-verify.txt` (hash lines to `56_mutation-hashes.txt`):
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$script = "scripts/check-card-track-monotonicity.mjs"
+$find = "tr.value < prev.value"
+git --no-optional-locks hash-object $script
+node.exe docs\sessions\evidence\task815\57_mutation-probe.mjs apply $script $find
+npm.cmd run check:card-track-monotonicity:verify
+node.exe docs\sessions\evidence\task815\57_mutation-probe.mjs restore $script
+git --no-optional-locks hash-object $script
+```
+
+Expected: `apply` prints one line (exit 0 — if the refactor changed the comparator text, set `$find` to the exact new
+comparator expression, record it in the session log, and keep the mutation meaning "detection disabled"); the mutated
+`--verify-gate` exits **1** with arms (b) and (c) `FAILED`; `restore` prints `restored`; the two hashes are identical.
+
+### 16.2 P2 — discovery scope depends on a fixed 2 s wait and can shrink silently (R3, §10.3)
+
+`FACT` — `discoverInScope` (`:220-235`) loads each canonical story with `DISCOVERY_READY_TIMEOUT_MS = 2000` (`:181`), and
+`waitForReady` swallows its timeout (`:192`). A canonical story whose track appears more than 2 s after `load` is
+recorded as "renders no track", leaves the in-scope list, and the gate still exits 0; no output says so.
+`INFERENCE` — on a slower CI runner the scope is timing-dependent: a gate reporting green on what it did not see.
+
+`FACT` — the built `storybook-static/iframe.html` defines the body states `sb-show-main`, `sb-show-errordisplay`,
+`sb-show-nopreview` and `sb-show-preparing*`.
+
+**Required change.** After `waitUntil: 'load'`, discovery waits (with `SWEEP_READY_TIMEOUT_MS`) until `document.body`
+carries `sb-show-main`, `sb-show-errordisplay` or `sb-show-nopreview`, then queries the track selectors **once**. A story
+that reaches none of those states within the timeout is a **discovery failure** naming the story, and the run exits 1 —
+never an out-of-scope story. Remove `DISCOVERY_READY_TIMEOUT_MS`. Before relying on the signal, verify at runtime on
+`patterns-mantine-listingcardtrack--grid` and on one canonical story without a track that `sb-show-main` is set only
+once the story has rendered; record both body class lists in the session log. **If it is not a reliable post-render
+signal, stop and return `BLOCKED — OWNER DECISION REQUIRED`** with the observed class sequence; do not substitute another
+fixed timeout.
+
+### 16.3 P3 — failure exits skip the R6 blind-spot block (R6, AC6)
+
+`FACT` — on selector-extraction failure `runGate` returns at `:309-312` before printing any scope or `CANNOT_SEE`. R6
+requires the block "whatever the result". **Required change:** every `runGate` exit path prints `CANNOT_SEE` and the
+scope facts it has (e.g. `scope: not discovered — selector extraction failed`), including the §16.2 discovery-failure
+path. The missing-build exit in `main()` stays a one-line error.
+
+### 16.4 Re-entry mode — `remediation`
+
+- **Start at §16.1.** Do not re-run §13.1. Do not overwrite `00_`–`40_`; they are Rev 0 evidence, superseded only by the
+  `50_`+ files below.
+- Write set: `scripts/check-card-track-monotonicity.mjs`; `docs/storybook-governance.md` §15.10 (verify-arm paragraph —
+  arms now run the gate's own sweep; discovery waits for render state; the mutation proof); the session log; the Task
+  815 line of `docs/backlog.md`; `docs/sessions/evidence/task815/50_`+. `package.json`, the workflow and the two comment
+  files are accepted and stay unchanged.
+- Re-run the §13.2 block in full on the final tree, one transcript per command numbered from `50_`, each with the
+  platform, Node version, working directory and exact command **inside the transcript**, plus `55_`–`57_`.
+- The two `git status --porcelain` snapshots around `--verify-gate` are taken with no other session writing to the
+  worktree. If another session is active, say so and print both the raw and the filtered comparison, filtering only
+  that task's named paths.
+- The final `git hash-object` line covers the script, `docs/storybook-governance.md`, `docs/backlog.md`, the session log
+  and `57_mutation-probe.mjs`.
+
+### 16.5 Revision acceptance criteria
+
+- **AC7-R1 [R5, R7]** — `--verify-gate` exits 0; arms (b)/(c) each print the produced width, then exactly one
+  `evaluateSweep` failure string naming `1023px->1024px measure 3->2` and `1279px->1280px measure 4->3` respectively;
+  `git grep -n "plantedValue" -- scripts/check-card-track-monotonicity.mjs` returns no hit. Quote both.
+- **AC11 [R7]** — the §16.1 mutation run exits 1 with arms (b) and (c) `FAILED`; the pre and post hashes are identical.
+  Quote the arm lines and both hashes.
+- **AC12 [R3]** — the discovery code has no discovery-only timeout; the session log records the render-settled body
+  class list for the two stories named in §16.2; the real run lists the same 16 in-scope stories as `23_`.
+- **AC13 [R6]** — a run whose selector extraction fails (arm (d)'s path invoked through `runGate`, or a temporary CLI
+  argument; no repository file written) prints the `cannot see:` line. Quote it.
+
+GR-4 AC AUDIT — 4 revision criteria; each states an observable property; absolutes: AC7-R1's zero-hit grep is the
+removal of a named private comparator this revision requires; AC11's identical hashes are the restore property.
+
+Completion status for Revision 1 stays `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

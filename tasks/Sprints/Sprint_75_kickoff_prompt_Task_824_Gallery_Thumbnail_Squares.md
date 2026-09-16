@@ -6,7 +6,9 @@
 > Nothing in this task requires reading an earlier version of this kickoff. The full narrative history
 > lives in the session log and in git — see §14.
 >
-> **Status: NEEDS REVISION (Opus review 5, 2026-09-13). Route: this file, §7 onward.**
+> **Status: NEEDS REVISION (Opus review 6, 2026-09-16). Route: this file, §15.**
+> §7's R37–R41 are partly closed — §15.1 records exactly which, and supersedes the rest.
+> Do not re-execute a §7 row that §15.1 marks `CLOSED`.
 
 ---
 
@@ -133,6 +135,11 @@ Do not read §1–§20 of any earlier version of this kickoff. Everything still 
 | **R39** | **The `GR-2 SCOPE STATED` receipt is false as written.** session-log §14.6 states "No file outside the scope then in force was touched" and files `min-w-0` under the stranding clause, which authorised the strip's justification rule only. A receipt that reclassifies an out-of-scope edit as in-scope is the failure GR receipts exist to prevent. **Do:** correct session-log §14.6's `GR-2` in place, and state it truthfully in the new session-log section — if R38 route (A) keeps `min-w-0`, name it as an out-of-scope edit authorised by **this** §7/R38, with its date. | **P1** | AC45 |
 | **R40** | **The evidence range names files that do not exist, and two that do exist are in no row.** session-log §14.5 claims "one range, three places" and says `167`–`223`; session-log §14.9's header and §14.8 say `193`–`223`; the completion report said `193`–`217`. **The directory's highest transcript is `217`; `218`–`223` were never written.** Meanwhile §14.9's table ends at `215`, while `216_r19_final_file-integrity.txt` and `217_r19_final_mojibake.txt` exist and appear nowhere — the same omission already corrected once for `190`/`191`/`192`. **Do:** give session-log §14.9 a row for every transcript through the highest that exists, and state one identical range in the session log, in `docs/backlog.md` and in the completion report, written **after** the last file. | **P0** | AC46 |
 | **R41** | **`docs/backlog.md`'s Task 824 entry is one physical line in a Markdown table, and it is not there right now.** The §14 update appended it hard-wrapped at ~100 characters, which pushed everything after the first break outside the table cell and took the file from 79 to 102 physical lines against a hard limit of 80. That edit has since been rolled back along with the kickoff, so the row currently carries no §14 state at all. **Do:** re-add this session's concise state to the Task 824 row **on one physical line**, and report the file's physical line count. If it cannot fit under 80, report `BACKLOG LIMIT BREACH` and consolidate historical detail into the session log — never a wrap, never a deletion of active state. | **P2** | AC47 |
+
+**§7 disposition after Opus review 6 (2026-09-16) — read §15.1 before acting on any row above.**
+R38, R39 and R41 are `CLOSED`. R37 is `PARTIALLY CLOSED` (its route-(A) restore witness is still missing
+and one pre-fix bullet is still unretained) and R40 is `NOT CLOSED`. AC43, AC44, AC45, AC46 and AC47 keep
+their identifiers and their wording; §15 adds R42–R47 / AC48–AC53 on top of them.
 
 ## 8. Acceptance criteria
 
@@ -276,3 +283,83 @@ decisions in context, and every review verdict are in
 `docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md` (§1–§14) and in this file's git
 history. Requirement and criterion identifiers are **not** reused: R37–R41 and AC43–AC47 continue the original
 numbering so every reference in the session log, the backlog and the evidence directory still resolves.
+
+---
+
+## 15. Sixth return — Opus review 6, 2026-09-16 — R42 to R47
+
+The product work stays closed (§3). This return is again the evidence record, and every finding below was
+measured against the real files in the review session, not against session-log §16's narrative of them.
+
+### 15.1 Disposition of §7's R37–R41
+
+| §7 row | Status after review 6 | Why |
+|---|---|---|
+| R37 / AC43 | **PARTIALLY CLOSED** | `218`/`219` do retain the wrapper rect, `clientWidth`/`scrollWidth` and `strandedBeforeOrigin: true`, and no site cites `193` for a number `193` lacks. Two conjuncts are still open: AC43's restore witness (→ R47) and one pre-fix bullet in session-log §14.3 that no transcript supports (→ R44). |
+| R38 / AC44 | **CLOSED** | `219_r20_ab_three_arms.txt` holds all three arms; `STRIPFIX_ONLY`'s wrapper rect is identical to `218`'s `NEITHER`, `MINW0_ONLY` still strands. Both edits proven load-bearing; no surviving sentence attributes the effect to the out-of-flow `<img>`. |
+| R39 / AC45 | **CLOSED** | session-log §14.6's `GR-2` names `min-w-0` as outside the superseded kickoff the superseded kickoff §19.5's grant and cites the superseded kickoff §20/R38 as its authorisation; session-log §16's own `GR-2` lists both touched paths against §9. |
+| R40 / AC46 | **NOT CLOSED** | The range is stated three different ways across the record and one existing transcript has no row (→ R45). |
+| R41 / AC47 | **CLOSED** | `docs/backlog.md` is 79 physical lines and Task 824's entry is one physical line (measured in the review session, `awk 'END{print NR}'` = 79). |
+
+### 15.2 Requirements
+
+| ID | Requirement | Sev | AC |
+|---|---|---|---|
+| **R42** | **The closing hash block does not describe the shipped session log.** `250_r16_final_hash_supersedes_247.txt` records the session log as `baa31ceb66c35e5cc066f73a8550cee7c50966f5` and as **1974** physical lines, and session-log §16.10's row for `250` repeats that hash. The file on disk is `ba9caaba60152d61dfd39db955eec3ab0ff5b37a` and **1976** physical lines. `247`'s own header ("captured after this session log's own final content, nothing tracked edited afterward") and `250`'s ("supersedes 247 for one path only") are both falsified by that mismatch: the log was written to again after its own final hash. This is the Task 818 corollary verbatim — a final hash that cannot be tied to the shipped content. **Do:** make the closing hash block the genuinely last write. Write every word of the session log first, including its own evidence table and every result cell; then capture one block that hashes **every** path this task changed (`docs/backlog.md`, the session log, `src/modules/listings/components/LightboxView.tsx`) plus `git --no-optional-locks status --short`; then write nothing further. If a later correction is unavoidable, the superseding transcript is the **new highest file**, it re-hashes every path it supersedes, and the range (R45) is restated after it. | **P0** | AC48 |
+| **R43** | **A hash is attributed to a transcript that does not contain it, and the real provenance is a rollback.** session-log §16.10's row for `246` reads "`docs/backlog.md` `bb17a40d…` (unchanged from `245`)". `245_r20_final_hash_and_linecount.txt` records `docs/backlog.md` as `4c0a541884db971a5c8d2f8e4d5555543b44c6bc`. `bb17a40d2433bf73508ff7c9b8b672c95ce39985` is `HEAD:docs/backlog.md` (`git --no-optional-locks rev-parse HEAD:docs/backlog.md`, run in the review session), and `246`'s own `git status` block lists no ` M docs/backlog.md` — so at `246` the backlog carried **no** §15 state at all, because §15's backlog edit had been rolled back with the kickoff (§7/R41 says so in its own words). The record states the opposite of what its own cited transcript and the repository show. **Do:** correct session-log §16.10's `246` row to state the measured fact — `bb17a40d…` is `HEAD`'s blob, the pre-edit baseline after the §15 rollback, **not** "unchanged from `245`" — and quote `245`'s `4c0a5418…` beside it so the two are not conflated again. | **P0** | AC49 |
+| **R44** | **session-log §14.3's pre-fix bullet is built from post-fix numbers and a scroll target no transcript contains.** session-log §14.3 cites its whole pre-fix bullet list to `219`'s `MINW0_ONLY` arm. That arm is one line: `{"clientWidth":896,"scrollWidth":1076,"scrollLeft":0,"stripLeft":64,"firstLeft":-108,"firstRight":-64,"strandedBeforeOrigin":true}`. The bullet "Scrolled to `scrollLeft = scrollWidth - clientWidth = 180`: last thumbnail `left:908, right:952` against `stripRight:960` — reachable" has no support: `grep -r` over the whole of `docs/sessions/evidence/task824/` returns **zero** occurrences of `180`, and `scrollLeft` occurs only as `0` or `360` anywhere in the directory. `left:908, right:952` occurs only in `193` line 26 and in `220` — both **post-fix** runs at `scrollLeft=360`, `scrollWidth=1256`. The same miscitation runs through session-log §14.3's `BOTH_FINAL` bullets, which cite `219` for `scrollLeft=360`, `908`/`952` and `firstFullyVisible: true`, none of which `219` contains. session-log §16 states it re-checked session-log §14.3 and found it "already correct"; that is disproved. This is R37's defect, sixth occurrence, and §10.2 is the rule it breaks. **Do:** for every bullet in session-log §14.3, grep the transcript you cite for each number before it stays. Re-cite the post-fix bullets to `193`/`220` (which do contain them) or to the arm that does; and for the pre-fix last-thumbnail state, either retain it in a new highest-numbered transcript or delete the bullet and write "observed, not retained" per §10.3. No derived arithmetic (`1076 - 896 = 180`) may be presented as a measured scroll position. | **P0** | AC50 |
+| **R45** | **The evidence range is stated three ways, one existing transcript has no row, and the upper bound is not the highest file.** session-log §16 line "session-log §15.7: `218`-`245`" contradicts session-log §15.7's own closing line (`218`–`244`), session-log §14.5 (`218`–`244`) and `245`'s own text ("not folded into that range"); `docs/backlog.md` says "evidence `218`-`245`". session-log §16 then says `250` is "not folded into the range, per that precedent" and in the next sentence gives the combined range as "`193`-`245`". `245_r20_final_hash_and_linecount.txt` exists and has a row in **no** evidence table (session-log §15.7 ends at `244`, session-log §16.10 begins at `246`), so session-log §16's "every file in that span exists on disk … and has a row in exactly one of those three tables" is false. The highest file on disk is `250`; the stated upper bound is `249`. **Do:** one range, computed from the directory after the last file exists (§10.4), stated identically in the session log, in `docs/backlog.md`'s Task 824 line and in the completion report; a row for **every** transcript that exists, `245` included (§10.5); and every sub-range quoted from another section must match that section's own words verbatim. | **P1** | AC51 |
+| **R46** | **Three of the four required receipts are missing from the new section, and `GR-5` is not true.** session-log §16 emits `GR-2 SCOPE STATED` only; §12 requires `GR-1 CENSUS COMPLETE`, `GR-2 SCOPE STATED`, `GR-3 STORY PROVEN` and `GR-5 STATE SYNCED`, each true as written. `GR-5` cannot be emitted as true against the current tree: `docs/backlog.md` read `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, the sprint Tasks table read `NEEDS REVISION 2026-09-12 (Opus implementation review 3)` and this kickoff's header read `NEEDS REVISION (Opus review 5)` — three artifacts, three states. The sprint file and this kickoff are outside §9's editable list, so Opus has synced all three to review 6 in the same response that issues this revision. **Do:** emit all four receipts in the new session-log section. `GR-5` names `docs/backlog.md` and the session log as the artifacts **this** session changed and states that the kickoff and the sprint Tasks table are Opus-owned and already synced; it does not claim to have written them. | **P2** | AC52 |
+| **R47** | **AC43's restore witness is still missing, and session-log §16 reports AC43 closed.** AC43's route (A) requires `215`'s recorded `git hash-object` for `src/modules/listings/components/LightboxView.tsx` — `b7fbfe07d601217154daf6aaa0bd7dfdb1355e65`, `215` line 66 — to be reproduced after the restore, with both hashes quoted. session-log §15.1 states in its own words that the checkpoint was skipped ("rather than pausing to independently verify an intermediate byte-match against `215`'s hash"); session-log §16 re-verifies only the post-edit `0640ae03…`. The revert–measure–restore therefore has no witness at all, which is the one control the 818/819 corollary makes non-optional for a plant-and-restore probe. **Do — pick one and say which:** **(A)** repeat the revert–measure–restore, capture `git hash-object src/modules/listings/components/LightboxView.tsx` immediately after the restore and before any other edit, and quote it beside `b7fbfe07…` — they must be equal, or the restore is not proven and the file must be restored from the last known-good content and re-hashed; or **(B)** state at session-log §15.1 and session-log §16 that the restore was performed but not witnessed and can no longer be witnessed retroactively, name `220`'s functional re-confirmation as the only evidence that the fix survived, and stop describing AC43 as closed — record it as `PARTIALLY VERIFIED` in the completion report. | **P1** | AC53 |
+
+### 15.3 Acceptance criteria
+
+- **AC48 [R42]** — The highest-numbered transcript in `docs/sessions/evidence/task824/` hashes every changed path and its recorded hash for the session log equals `git hash-object` of the shipped session log. Quote the transcript number, its recorded hash, and the value re-read after the final write; they are equal.
+- **AC49 [R43]** — session-log §16.10's `246` row states `bb17a40d…` as `HEAD:docs/backlog.md` / the post-rollback pre-edit baseline and quotes `245`'s `4c0a5418…` separately. No sentence in the record says `bb17a40d…` is "unchanged from `245`".
+- **AC50 [R44]** — Every number in session-log §14.3 appears in the transcript that bullet cites, proved by a quoted `Select-String` hit per bullet; and `180` appears in no session-log sentence that presents it as a measured scroll position.
+- **AC51 [R45]** — One identical range string in the session log, in `docs/backlog.md`'s Task 824 line and in the completion report, whose upper bound is the highest file in the directory; every transcript that exists has exactly one row across the evidence tables, `245` included; every quoted sub-range matches its source section verbatim.
+- **AC52 [R46]** — The new session-log section contains all four receipt lines, and `GR-5 STATE SYNCED` names only the artifacts this session wrote.
+- **AC53 [R47]** — Either the post-restore hash equals `b7fbfe07d601217154daf6aaa0bd7dfdb1355e65` with both values quoted, or AC43 is recorded as `PARTIALLY VERIFIED` with the restore explicitly unwitnessed at session-log §15.1, session-log §16 and the completion report.
+
+**GR-4 AC AUDIT — 6 criteria (AC48–AC53); each states a property observable by reading a file or a transcript.
+Absolutes: none — AC48, AC50 and AC53 are equality-of-quoted-values checks against artifacts the executor itself
+produces, and AC51's "every transcript has exactly one row" is a directory listing compared to a table.**
+
+### 15.4 Scope for this revision — supersedes §9
+
+- **Editable:** the session log — a new session-log §17, plus the in-place corrections R43/R44/R45 require in session-log §14.3,
+  session-log §16.10 and session-log §16's range paragraph · `docs/backlog.md`'s Task 824 row, one physical line · new transcripts
+  numbered above `250` under `docs/sessions/evidence/task824/` ·
+  `src/modules/listings/components/LightboxView.tsx` **only if** R47 route (A) is taken and only for the
+  revert–measure–restore cycle, which must end byte-identical to its start.
+- **Not editable:** everything §9 lists as not editable, unchanged · this kickoff ·
+  `tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md` (Opus synced both in
+  review 6).
+- **Out of scope:** everything §9 lists as out of scope, unchanged.
+- **Reviewer classification of the ninth `git status` path:** ` M .gitignore` adds `tech-materials/` to the
+  ignore list. `EXCLUDED AS UNRELATED` — owner/parallel work, not Task 824's. §5.4 and session-log §14.7
+  say "eight" unlisted paths; there are now nine. Add `.gitignore` to session-log §14.7's classification table with that
+  disposition; do not edit the file.
+
+### 15.5 Verification route
+
+`LightboxView.tsx` is hash-identical to `242`/`245`/`246` (`0640ae0337046cbdba989b39c3f0973f995bae8f`,
+re-read in the review session), so if R47 route (B) is taken **no tracked source file changes** and §11's
+"no tracked file changes" branch applies: do **not** re-run the 20-command block; say so explicitly and add
+only the new transcripts and the corrected session log. `docs/backlog.md` changing does not trigger the
+block — state that reading of §11 in the session log rather than leaving it implicit, since session-log §16 asserted
+the branch without addressing that the backlog is tracked.
+
+If R47 route (A) is taken, `LightboxView.tsx` is written twice (revert, restore) even though it ends
+unchanged, so run §11's full block from the project root after the last edit and retain each transcript per
+§10.1.
+
+Close the pass with the single block AC48 requires — after the session log's final content, hashing every
+changed path — then `check:file-integrity` and `check:mojibake`, then write the range (§10.4, R45). Nothing
+is written after that block.
+
+### 15.6 Completion contract delta
+
+§12 stands, plus: name the R47 route chosen · quote the equal-or-not hash pair · quote the one range string
+three times from its three homes · quote one `Select-String` hit per corrected session-log §14.3 bullet · report
+`docs/backlog.md`'s physical line count · all four GR receipts.

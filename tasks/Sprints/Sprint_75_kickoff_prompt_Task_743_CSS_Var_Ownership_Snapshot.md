@@ -2,7 +2,9 @@
 
 Sprint 75 · P2 · QA profile **Q4** (was `Q2` in the reservation — a new gate arm needs planted proof)
 
-**Status: `READY FOR SONNET`** — filed 2026-09-16. Independent of 815/822/823/797/825 (no shared file).
+**Status: `NEEDS REVISION`** — Revision 1, review 2026-09-16. **A fresh session starts at §16**, not §10. Filed
+2026-09-16. Independent of 822/823/797/825. **Correction:** "no shared file" with 815 was false — `package.json` and
+`docs/backlog.md` also carry uncommitted Task 815 hunks (§16.5).
 
 ## 1. Mode and task type
 
@@ -180,7 +182,7 @@ npm.cmd run check:css-vars
 npm.cmd run check:css-vars:verify
 npm.cmd run typecheck
 npm.cmd run lint
-npm.cmd run check:file-integrity
+npm.cmd run check:file-integrity -- --files scripts/check-css-var-resolvability.mjs scripts/__tests__/css-var-resolvability.test.ts scripts/css-var-ownership-snapshot.json package.json docs/design-system.md docs/backlog.md docs/sessions/2026-09-16-task743-css-var-ownership-snapshot.md
 npm.cmd run check:mojibake
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object scripts/check-css-var-resolvability.mjs scripts/__tests__/css-var-resolvability.test.ts scripts/css-var-ownership-snapshot.json package.json docs/design-system.md docs/backlog.md
@@ -215,3 +217,86 @@ self-approval, no git.
 | 4 first snapshot | writer transcript + hash | hand-written → reject |
 | 5 arms | `:verify` | any arm wrong → exit 1 |
 | 6 final | §13.2 | any non-zero → not `IMPLEMENTED` |
+
+## 16. Revision 1 — `NEEDS REVISION` (Opus review, 2026-09-16)
+
+### 16.1 Re-entry mode
+
+**`remediation`.** Start at §16.3. Keep every Revision 0 artifact: `docs/sessions/evidence/task743/10_*`–`44_*`,
+`scripts/css-var-ownership-snapshot.json` (hash `c854ac0bd9c9237203623d5617397a8571045023`) and the R8 census. Do
+**not** rerun R8, the red-test step, or the first snapshot write. Do **not** hand-edit the snapshot. Write new
+transcripts as `docs/sessions/evidence/task743/rev1/NN_*.txt`.
+
+**Accepted from Revision 0; do not redo:** R1–R5, R7, R8; the P2/P3 retargets and the P2 literal-occurrence guard.
+§13.1 expected verify at 8/8 on the baseline, and that was the kickoff's own error: it was measured 5/8.
+
+### 16.2 Findings this revision fixes
+
+| ID | Sev | Req | Location | Observed | Required |
+|---|---|---|---|---|---|
+| **F1** | P2 | R9, R5 | `scripts/__tests__/css-var-resolvability.test.ts:210-223` (`expect(owned.size).toBe(297)`); `scripts/check-css-var-resolvability.mjs:1203,1230` (C3 `ownedSet.size === 297`) | §23.9 says adding a token needs only `npm run check:css-vars:update-snapshot`. Following that, the unit test fails the next time a token is added (CI `npm test` = `vitest run` picks up `scripts/__tests__`), and so does verify-gate C3. This hardcoded count already went stale twice (256/257 → 297), and Revision 0 had to repair it. The snapshot now records the owned set, so a second hand-maintained copy of the count only adds another place for it to go stale. | Remove both literal counts. Compare the owned set to the committed snapshot. |
+| **F2** | P2 | R6 | `check-css-var-resolvability.mjs:707-715` (comment), `updateSnapshot()` `:836-854`, `verifyGate()` `:1388-1433` | R6 requires the snapshot version/size and blind spots on **every run**. The comment at `:707-708` says they print on "default, --update-snapshot, and inside the --verify-gate harness". Only `run()` calls `printSnapshotScope`. `22_update-snapshot_first-write.txt` shows a green `✅ … wrote 297 name(s)` line with no blind-spot line. The verify output has none either. | Print the scope from every mode, and make the comment match the code. |
+| **F3** | P3 | R5 | P5 `:1264`, P6 `:1290`, C5 `:1337`, C6 `:1366` | These plants call `removeDeclarationLine`, whose regex has no left anchor (`:919`). Unlike P3 (`:1109-1117`), they never assert that exactly the target name left the owned set. A declaration for a longer name ending in the target (for example `--x--width-page-max:`) would be removed instead of the target, and nothing would report it. | Add P3's over-match guard, applied to the owned set. |
+| **F4** | P3 | §13.2 | `37_final_file-integrity.txt`, `41_final_file-integrity_v2.txt` exit 1 | The repo-wide mode cannot pass while another task's evidence has BOMs. The retained final transcript also flags three of this task's own files (`39_`, `40_`, `41_`), captured before they were stripped. The reviewer's scoped rerun of 36 Task 743 paths exits 0. | §13.2 now uses `--files`. Capture transcripts with byte-exact redirection (§16.5). |
+
+### 16.3 Required changes
+
+1. **F1 — `scripts/__tests__/css-var-resolvability.test.ts`.** Replace the `toBe(297)` test with one that reads
+   `scripts/css-var-ownership-snapshot.json` through the exported `loadSnapshot` and asserts
+   `extractOwnedNames(readFileSync('src/app/globals.css','utf8'))` equals the snapshot's `names` as sets, in both
+   directions. Keep the `--spacing-N`-excluded assertion. Replace the 259→257→256→297 history comment with one line
+   saying the count now lives in the snapshot (Task 743 Rev 1).
+2. **F1 — C3 (`runControlC3`).** Replace `ownedSet.size === 297` with a size-and-membership equality against
+   `loadSnapshot(tree.snapshotPath).names`. Print `owned=<n> snapshot=<m>` in the detail. If the snapshot does not
+   load, C3 fails and names the reason.
+3. **F1 — `docs/design-system.md` §23.9, "Workflow cost" paragraph.** State that `--update-snapshot` is the **only**
+   step needed when a token is added. The unit test and C3 compare against the snapshot, and no count is kept in
+   code.
+4. **F2 — `printSnapshotScope`.** Call it:
+   - in `updateSnapshot()` before exit, on the success, refusal and fatal-after-load paths (print the size of the set just written on success, and the prior snapshot's size on refusal);
+   - once in `verifyGate()`, immediately after the baseline line.
+   
+   Rewrite the comment at `:707-711` to name exactly the call sites that exist. Update the header comment
+   (`:75-79`) if it lists modes.
+5. **F3 — P5, P6, C5, C6.** Before each `removeDeclarationLine(tree.globalsPath, name)`, record
+   `extractOwnedNames(before)`. After it, compute the names that left the owned set. If that set is not exactly
+   `[name]`, `record(<id>, <expectation>, false, 'plant removed … — must remove exactly one, <name>')` and restore in
+   `finally`. Same shape as P3 `:1112-1117`.
+6. Do not change anything else. That includes `src/app/globals.css`, the snapshot file, the CI workflow, and every
+   Task 815 hunk in `package.json` / `docs/backlog.md`.
+
+### 16.4 Acceptance criteria (Revision 1, in addition to AC1–AC6)
+
+- **AC7 [F1, R9]** — `git --no-optional-locks grep -n "297" -- scripts/check-css-var-resolvability.mjs
+  scripts/__tests__/css-var-resolvability.test.ts` returns no line that asserts the owned count. **Two-armed
+  proof:** on a scratch copy only (never the real tree), run the new unit-test logic through a
+  node script that copies `src/app/globals.css` and the snapshot to `mkdtempSync`:
+  - **(a)** Append `:root{--task743-rev1:1px}`. The comparison must fail, naming `--task743-rev1` as added.
+  - **(b)** Then apply the writer through `performUpdateSnapshot` against that scratch copy. The comparison must pass.
+
+  Retain the transcript and `git hash-object` of the real snapshot before and after. They must be equal.
+- **AC8 [F2, R6]** — the `Blind spots (R6)` line and the `Ownership snapshot: version 1, <n> name(s)` line appear in
+  all four transcripts:
+  - `check:css-vars`
+  - `check:css-vars:verify`
+  - a **successful** `check:css-vars:update-snapshot` on the real tree, which must write zero changes: `added: (none)`, `dropped: (none)`, and snapshot hash unchanged
+  - C5's refusal. Quote the lines from each transcript.
+- **AC9 [F3]** — `check:css-vars:verify` exits 0 with 13/13. The source shows the over-match guard in P5, P6, C5 and
+  C6. Quote the four guard sites with line numbers.
+
+**GR-4 AC AUDIT — 3 new criteria; each states an observable property; absolutes: AC7's unchanged hash is the
+no-write requirement on the real snapshot; AC9's count is this task's defined arm set.**
+
+### 16.5 Verification and handoff notes
+
+- Run §13.2 as amended: `check:file-integrity` now uses `--files`. Add `docs/sessions/evidence/task743/rev1/*` to
+  that `--files` list by explicit name.
+- **Transcript capture:** do not use PowerShell `*>`, because it writes a BOM. Use
+  `cmd.exe /c "npm.cmd run <script> > docs\sessions\evidence\task743\rev1\NN_name.txt 2>&1"` and record
+  `echo EXIT=%ERRORLEVEL%` in the same `cmd.exe /c` call.
+- Final block includes `git hash-object` of the three script/data files plus `docs/design-system.md`.
+- **Shared paths.** `package.json` (Task 815 adds `check:card-track-monotonicity[:verify]`) and `docs/backlog.md`
+  (815's row) are co-modified with Task 815. Do not touch 815's hunks. The approval commit will be sequenced with
+  815's review by Opus; not the executor's concern.
+- Update the session log with a `## Revision 1` section and a Files Changed table for this revision. Set the 743 row
+  in `docs/backlog.md` back to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when §13.2 exits 0 throughout.

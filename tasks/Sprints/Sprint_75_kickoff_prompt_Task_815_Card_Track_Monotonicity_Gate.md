@@ -3,7 +3,7 @@
 Sprint 75 · P1 · QA profile **Q4** (was `Q2` in the reservation — corrected in §13 because this task claims a new
 blocking gate)
 
-**Status: `NEEDS REVISION` (Rev 1, Opus review 2026-09-16) — start at §16.** Filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
+**Status: `NEEDS REVISION` (Rev 2, Opus review 2026-09-16, owner decision §17.2) — start at §17.3; §17 supersedes §16.2.** Filed 2026-09-16. Scope fixed by the owner decision of 2026-09-16 quoted verbatim
 in §5.1.
 
 ## 1. Mode and task type
@@ -133,7 +133,7 @@ stories × 20 widths. Canonical-only (§5.1) is 139 canonical stories to discove
 |---|---|---|---|---|---|
 | **R1** | §3.1, reservation text | A new script `scripts/check-card-track-monotonicity.mjs` runs with **nothing but `storybook-static/`**: its own `node:http` static server on `127.0.0.1`, Playwright Chromium. No `next start`, no storage state, no network, no dev server. It fails with exit 1 and a named message when `storybook-static/index.json` is absent. | **P0** | AC1 | Confirmed |
 | **R2** | §3.3 | The track selectors are **derived at runtime** from the built CSS: exactly one `storybook-static/assets/MantineListingCardTrack-*.css`, from which exactly one `_grid_<hash>_<n>` and exactly one `_rail_<hash>_<n>` class are extracted. Zero or more than one file, or zero or more than one class of either kind, is exit 1 with a message naming what was found. No literal hashed class name appears in the script. | **P0** | AC2, AC7 | Confirmed |
-| **R3** | §3.4, owner decision §5.1 | Scope is discovered, never listed: every `type: "story"` entry of `index.json` whose `title` satisfies `isCanonicalMantineTitle` (imported from `scripts/lib/mantine-story-scope.mjs`, not re-implemented) is loaded at **320×900 and 1440×900**, `locale:en`; a story is in scope when either load contains at least one track. A discovered scope of **zero** stories is exit 1. **Rev 1: discovery waits for render state — §16.2.** | **P0** | AC3, AC7, AC12 | Confirmed |
+| **R3** | §3.4, owner decision §5.1 | Scope is discovered, never listed: every `type: "story"` entry of `index.json` whose `title` satisfies `isCanonicalMantineTitle` (imported from `scripts/lib/mantine-story-scope.mjs`, not re-implemented) is loaded at **320×900 and 1440×900**, `locale:en`; a story is in scope when either load contains at least one track. A discovered scope of **zero** stories is exit 1. **Rev 2: discovery readiness per owner decision — §17 (supersedes §16.2).** | **P0** | AC3, AC7, AC12 | Confirmed |
 | **R4** | §3.2, §3.5 | Each in-scope story is loaded at the ascending width list **`320, 479, 480, 639, 640, 767, 768, 1023, 1024, 1279, 1280, 1439, 1440, 1535, 1536, 1920, 2560`** (height 900, `locale:en`). Each track is measured by document order: grid → `grid-template-columns` track count; rail → number of direct children whose box lies entirely within `[rail.left, rail.left + rail.clientWidth]` at `scrollLeft` 0. A track missing at any width, or a different track count between widths, is a failure for that story. | **P0** | AC4 | Confirmed |
 | **R5** | §2 | For each track, a measure at a wider width that is **lower** than at the immediately preceding sampled width fails, naming story id, track index, mode, both widths, both measures and both track widths in px. Exit 0 iff no failure in any in-scope story. No baseline file, no allowlist, no per-story exception. | **P0** | AC4, AC5 | Confirmed |
 | **R6** | Sprint 75 exit criterion 4, GR-2 | **Every run prints its own scope and blind spots**, whatever the result: extracted CSS asset and classes; `in scope: <n> canonical stories rendering the track (of <m> canonical, <t> total)`; the full list of in-scope story ids; `excluded (owner decision 2026-09-16): <k> non-canonical stories, including the System/* stories — Task 827 owns the known 1535→1536 drop there`; and `cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint`. **Rev 1: on every exit path — §16.3.** | **P0** | AC6, AC13 | Confirmed |
@@ -527,3 +527,130 @@ GR-4 AC AUDIT — 4 revision criteria; each states an observable property; absol
 removal of a named private comparator this revision requires; AC11's identical hashes are the restore property.
 
 Completion status for Revision 1 stays `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+## 17. Revision 2 — owner decision on the discovery signal (Opus review, 2026-09-16)
+
+**§17 supersedes §16.2's "Required change" and AC12.** §16.1, §16.3, §16.4's evidence-preservation rules and AC7-R1 /
+AC11 / AC13 stay in force except where §17 amends them.
+
+### 17.1 Why Revision 1 stopped — reviewed, the stop was correct
+
+`FACT` — `docs/sessions/evidence/task815/58b_probe-discovery.txt`: `page.waitForFunction` on `sb-show-main` resolves
+while `document.body` still carries `sb-show-preparing-story`, and the track selectors match 0 elements in 5 of 6
+samples (including `patterns-mantine-listingcardtrack--grid`). `58a_` polls at 200 ms steps, so it cannot see the race.
+§16.2's signal was the orchestrator's choice, and it was wrong. The executor stopped exactly as §16.2 required.
+`FACT` — `59_check-card-track-monotonicity.txt`: with that signal the real gate reports `in scope: 0` and exits 1.
+
+`FACT` — the built preview bundle `storybook-static/assets/iframe-*.js` (Storybook `10.4.2`) sets
+`window.__STORYBOOK_PREVIEW__`, keeps `currentRender`, and runs a story render through the phases `loading`,
+`rendering`, `playing`, `played`, `completing`, `completed`, `finished`, with `errored` / `aborted` on failure paths
+(`runPhase(g,"finished",…)` emits `STORY_FINISHED`).
+
+### 17.2 Owner decision — 2026-09-16, quoted verbatim
+
+Asked in the review session with the options "Storybook render phase", "Deterministic 15 s wait" and
+"Rev 0 + printed blind spot". The owner selected:
+
+> **Storybook render phase (Recommended)**: wait for `__STORYBOOK_PREVIEW__.currentRender` of this story to reach the
+> `finished`/`errored` phase (present in the built iframe bundle). Adopted only if a probe on all 16 known track
+> Stories × 2 widths shows the track present at the signal moment in 32 of 32 samples. If even one misses, it
+> automatically falls back to option 2, with no new stop.
+
+Option 2, as offered: wait for the track or an error, up to 15 s, for every canonical Story, running discovery in
+parallel across several pages.
+
+### 17.3 Step 1 — signal probe (before any gate change)
+
+Create `docs/sessions/evidence/task815/62_probe-render-phase.mjs` (evidence only, never imported by the gate). It
+serves `storybook-static/` on its own port (not 6020 / 6034 / 6035 / 6036 / 6006), extracts selectors exactly as
+`extractTrackSelectors` does, and for each of the **16 in-scope story ids listed in `23_check-card-track-monotonicity.txt`**
+at widths **320 and 1440** (32 samples), on a fresh `page.goto(..., { waitUntil: 'load' })`:
+
+1. `page.waitForFunction` (timeout 15000) until `window.__STORYBOOK_PREVIEW__?.currentRender` exists, its story id
+   equals the navigated id, and its `phase` is `finished` or `errored`. First read the render object's real
+   story-id property name from the runtime and record it (`id`, `storyId`, or whatever the object carries); do not
+   guess it.
+2. **At the moment it resolves**, record the phase, the story id read back, and the track count.
+3. Only as a stability witness inside the probe (not in the gate): wait 2000 ms and record the track count again.
+4. **Counter-check on the same 32 samples:** navigate again and record the track count at the moment a
+   `waitForFunction` on `sb-show-main` resolves (the Rev 1 signal). This proves the probe can see a race; §17.1 says
+   some of these should be 0.
+5. Also run steps 1-2 on two canonical stories that render no track (pick the first two canonical ids in `index.json`
+   order that are not in the 16), and record that each reaches `finished` / `errored` within the timeout.
+
+Transcript: `62_probe-render-phase.txt` (one line per sample), with the §10.7 transcript header.
+
+**Adoption rule — mechanical, no judgement:**
+
+- **Route A (render phase)** applies iff all 32 samples have phase `finished` / `errored`, a track count > 0 at resolve,
+  and the same track count after 2000 ms; **and** both no-track stories reach the phase.
+- **Otherwise Route B (deterministic wait)** applies. Record which sample(s) failed and go straight to Route B. This
+  is not a stop.
+
+If the story-id property cannot be found on `currentRender` at all, treat that as a Route A failure → Route B.
+
+### 17.4 Step 2 — implement the route the probe selected
+
+Common to both routes:
+
+- Delete `waitForRenderSettled` and every `sb-show-main` readiness check added in Rev 1.
+- A canonical story that reaches no settled state within `SWEEP_READY_TIMEOUT_MS` is a **named discovery failure** and
+  the run exits 1 (Rev 1's `discoveryFailures` handling stays). Discovery never drops a story silently.
+- The printed scope line adds the route, e.g. `discovery readiness: storybook render phase (finished|errored)` or
+  `discovery readiness: track-or-error wait, 15000ms, <n> pages`.
+
+**Route A.** Discovery waits with the §17.3 predicate (story id match + phase `finished` / `errored`), then queries the
+track selectors once. `errored` → the story is checked for `sb-show-errordisplay`; if a canonical story errors, that
+is a named discovery failure (exit 1), not out of scope. Discovery stays sequential on one page.
+
+**Route B.** Discovery uses the existing `waitForReady` predicate (track present, or `sb-show-errordisplay`) with the
+full `SWEEP_READY_TIMEOUT_MS`, with no discovery-only timeout. Discovery runs on `DISCOVERY_CONCURRENCY = 6` pages
+pulling from one shared queue. The in-scope list is still printed in `index.json` order. A story that times out at
+both widths with no track and no error display is out of scope; that is the only way to be out of scope. Record the
+wall-clock time of discovery in the run output (`discovery took <s>s`).
+
+### 17.5 Step 3 — two Rev 1 corrections found in this review
+
+1. **`runPlantArm` shape check is incomplete (§16.1 item 3).** `FACT` — `:525` checks the story id, `track 0 (<mode>)`
+   and the width pair, but not the required `measure X->Y` with `Y < X`. Add it: parse `measure (\d+)->(\d+)` from the
+   failure string and require it to match with the second number lower; otherwise the arm fails.
+2. **Remove the evidence-only CLI flag.** `FACT` — `:63` ships `--force-bad-selector-task815-evidence` in a CI gate.
+   Instead, `runGate` accepts `{ assetPattern, log }` options (defaults: the real pattern, `console.log`). Verify arm
+   (d) calls `runGate` with a non-matching `assetPattern` and a collecting `log`, and passes only when the return
+   value is 1 **and** the collected output contains the `cannot see:` line. That makes AC13 re-provable on every CI
+   run. After the change, `git grep -n "force-bad-selector" -- scripts/` returns no hit.
+
+### 17.6 Step 4 — docs, then the full final block
+
+- `docs/storybook-governance.md` §15.10: update the Mechanism paragraph (discovery readiness = the adopted route, with
+  the `62_` result in one sentence) and the verify-arms paragraph (arms (b)/(c) run the gate's own sweep and
+  `evaluateSweep`; arm (d) runs `runGate` and checks the blind-spot line; the mutation proof). Add
+  "a Story whose track mounts only after its Storybook render reaches `finished`" to the blind-spot sentence **for
+  Route A only**, and to `CANNOT_SEE` in the script too, so the printed and documented lists stay identical.
+- Run §16.1's mutation proof block (transcripts `63_mutation-verify.txt`, `64_mutation-hashes.txt`; `57_mutation-probe.mjs`
+  unchanged).
+- Run §13.2 in full on the final tree, one transcript per command numbered from `65_`, each with the §10.7 header. The
+  `hash-object` line covers the script, `docs/storybook-governance.md`, `docs/backlog.md`, the session log,
+  `57_mutation-probe.mjs` and `62_probe-render-phase.mjs`.
+- Rev 1's `50_`–`61_` and `58a_`/`58b_` are kept as the record of the stop. `59_` is superseded by the `65_`+ real run.
+  State both in the session log.
+
+### 17.7 Revision 2 acceptance criteria
+
+- **AC12-R2 [R3]** — `62_probe-render-phase.txt` shows 32 samples with phase, id and track count at resolve and after
+  2000 ms, the 32 `sb-show-main` counter-check counts, and the two no-track stories. The session log states the route
+  the §17.3 rule selects, and the script implements exactly that route (quote the discovery readiness function). The
+  real run lists the same 16 in-scope stories as `23_` and prints the `discovery readiness:` line.
+- **AC7-R1, AC11** — unchanged from §16.5, re-captured on the final tree (`63_`/`64_` and the `65_`+ verify run).
+- **AC13-R2 [R6]** — the `--verify-gate` transcript shows arm (d) PASS naming `runGate`'s exit 1 and the captured
+  `cannot see:` line; `git grep -n "force-bad-selector" -- scripts/` returns no hit. Quote both.
+- **AC15 [R7]** — arms (b)/(c) print `measure 3->2` / `measure 4->3` as parsed values, and the source shows the
+  `Y < X` check. Quote the source lines.
+- **AC4, AC6, AC7, AC10** — re-captured on the final tree per §13.2.
+
+GR-4 AC AUDIT — 4 revision criteria plus 4 re-captured; each states an observable property; absolutes: the two
+zero-hit greps are removals this revision requires; 32/32 is the owner's own adoption threshold, and its failure
+branch is a defined route, not a failure.
+
+Completion status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. A `BLOCKED` return is valid only if **both** routes
+fail, e.g. Route B still leaves a canonical track story timing out. In that case report the samples.

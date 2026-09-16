@@ -1,0 +1,52 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:surface-census:changed -- --base HEAD
+
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 1fa1dde6759aa69b4394792c2d9ceafce46c58b0
+    Changed paths seen: 24
+    Excluded (20):
+      .claude/agents/executor.md  [outside-src]
+      .claude/hooks/sonnet-executor-bootstrap.ps1  [outside-src]
+      .claude/skills/execute-task/SKILL.md  [outside-src]
+      docs/ai-behavior.md  [outside-src]
+      docs/component-rules.md  [outside-src]
+      docs/governance-checklists.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-locale-leak.mjs  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      src/design-system/mantine/patterns/MantineListingCardTrack.module.css  [not-ts-tsx]
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css  [not-ts-tsx]
+      src/modules/listings/components/LightboxView.module.css  [not-ts-tsx]
+      src/stories/mantine/primitives/DimensionTokens.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/LightboxView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx  [story-or-test-file]
+      tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md  [outside-src]
+    Included surfaces (5):
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/theme.ts
+      src/modules/listings/components/ListingGallery.tsx
+    Surfaces censused: 5
+    Blocks baselined (recorded debt, does not fail): 9
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 667
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+
+EXIT_CODE=0

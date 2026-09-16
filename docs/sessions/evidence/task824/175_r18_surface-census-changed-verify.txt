@@ -1,0 +1,8 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:surface-census:changed:verify
+
+8/8 arms PASS.
+
+EXIT_CODE=0

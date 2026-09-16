@@ -1,0 +1,37 @@
+cmd: git status --short
+ M .claude/agents/executor.md
+ M .claude/hooks/sonnet-executor-bootstrap.ps1
+ M .claude/skills/execute-task/SKILL.md
+ M docs/ai-behavior.md
+ M docs/component-rules.md
+ M docs/governance-checklists.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-locale-leak.mjs
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/design-system/media/AppImage.module.css
+ M src/design-system/media/appImageConfig.ts
+ M src/modules/listings/components/LightboxView.module.css
+ M src/modules/listings/components/LightboxView.tsx
+ M src/stories/mantine/primitives/DimensionTokens.stories.tsx
+ M src/stories/mantine/primitives/LightboxView.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+?? docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md
+?? docs/sessions/evidence/task824/
+?? src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+?? src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+?? src/design-system/mantine/patterns/GalleryThumbnailButton.tsx
+?? src/hooks/useSwipeTrackSync.ts
+?? src/stories/mantine/primitives/ActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+?? src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+?? src/stories/mantine/primitives/UnstyledButton.stories.tsx

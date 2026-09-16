@@ -1,0 +1,12 @@
+platform: win32
+v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe harness_r20_ab.mjs (ARM_LABEL=MINW0_ONLY / STRIPFIX_ONLY / BOTH_FINAL) - three sequential local edits to LightboxView.tsx's desktop wrapper/strip classes, storybook-static rebuilt fresh for each arm, restored to the final (both) state afterward
+---
+ARM=MINW0_ONLY wrapperRect={"className":"relative w-full h-full max-w-5xl mx-16 min-w-0 flex flex-col min-h-0","top":0,"bottom":900,"left":64,"right":960,"width":896,"height":900}
+ARM=MINW0_ONLY stripInfo={"clientWidth":896,"scrollWidth":1076,"scrollLeft":0,"stripLeft":64,"firstLeft":-108,"firstRight":-64,"strandedBeforeOrigin":true}
+ARM=STRIPFIX_ONLY wrapperRect={"className":"relative w-full h-full max-w-5xl mx-16 flex flex-col min-h-0","top":0,"bottom":900,"left":0,"right":1024,"width":1024,"height":900}
+ARM=STRIPFIX_ONLY stripInfo={"clientWidth":1024,"scrollWidth":1256,"scrollLeft":0,"stripLeft":0,"firstLeft":8,"firstRight":52,"strandedBeforeOrigin":false}
+ARM=BOTH_FINAL wrapperRect={"className":"relative w-full h-full max-w-5xl mx-16 min-w-0 flex flex-col min-h-0","top":0,"bottom":900,"left":64,"right":960,"width":896,"height":900}
+ARM=BOTH_FINAL stripInfo={"clientWidth":896,"scrollWidth":1256,"scrollLeft":0,"stripLeft":64,"firstLeft":72,"firstRight":116,"strandedBeforeOrigin":false}
+EXIT_CODE=0

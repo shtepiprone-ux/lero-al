@@ -1,0 +1,7 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git --no-optional-locks diff --stat -- scripts/check-rendered-scope.mjs scripts/check-surface-census.mjs scripts/check-surface-census-changed.mjs scripts/map-changed-surfaces.mjs scripts/audit-design-system-patterns.mjs scripts/check-pattern-enrolment.mjs scripts/check-media-enrolment.mjs
+
+
+EXIT_CODE=0

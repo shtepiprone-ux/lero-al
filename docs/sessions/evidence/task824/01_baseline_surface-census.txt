@@ -1,0 +1,33 @@
+
+> lero-al@0.1.0 check:surface-census
+> node scripts/check-surface-census.mjs --surface src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+    Nodes visited: 3
+    Local import edges resolved (from tier-1 nodes): 13
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 11
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 0
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as RENDERED, non-type-only import bindings in that node's own file resolving
+    under src/components/ui/* (a co-located .module.css or hook sibling is never a rendered JSX tag).
+    story:yes means a canonical Mantine story imports the node directly OR through a single-hop index.ts(x)
+    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).
+    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): 0
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Canonical Mantine story files consulted: 92 (of 141 total *.stories.ts(x)).
+
+NODES (3):
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  tier:tier1  manifest:yes  story:yes  className:9  ui-imports:0  parent:(root surface)
+    src/modules/listings/components/LightboxView.tsx  tier:tier1  manifest:no  story:yes  className:12  ui-imports:0  parent:src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+    src/design-system/media/AppImage.tsx  tier:tier1  manifest:yes  story:yes  className:2  ui-imports:0  parent:src/modules/listings/components/LightboxView.tsx
+
+FAIL  src/modules/listings/components/LightboxView.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+
+GR-1 CENSUS BLOCKED — src/modules/listings/components/LightboxView.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.
+EXIT_CODE=1

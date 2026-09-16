@@ -160,7 +160,6 @@ function buildBaseProps(l: string) {
       prev: storyT(l, 'storybook.mantine.lightbox_prev'),
       next: storyT(l, 'storybook.mantine.lightbox_next'),
       counter: (index: number, total: number) => `${index} / ${total}`,
-      photoCountSuffix: storyT(l, 'storybook.mantine.listing_detail_photo_count_suffix'),
     },
     data: {
       title: storyT(l, 'storybook.mantine.card_title_1'),

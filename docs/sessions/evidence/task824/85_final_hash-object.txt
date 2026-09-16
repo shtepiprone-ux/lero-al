@@ -1,0 +1,15 @@
+=== Final hash-object of every changed/new file (my scope only) ===
+73f0d1cc4d058b41b9de823127e01e559d6d93d2  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+fbf261c92e49b2ac0a3a4a01ee0aa62d813f7961  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+ae0890fd5d05f01e316785d92146807b8fc77e11  src/modules/listings/components/LightboxView.tsx
+fa38a0ff9c2751780d6a17a5ec91a3a8ed1b655c  src/modules/listings/components/LightboxView.module.css
+b3c10b5420f924336d51335a2850196ce26d8c89  src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+679f52f915efea1edf4c47ec14d8a30783f7d0be  src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+0f034af92bb6a08f2a261a6a6ff46cf18c43faf2  src/stories/mantine/primitives/ActionIcon.stories.tsx
+332e79eefa328f4a5abb9ed674019f37906efa51  src/hooks/useHasFinePointer.ts
+1d23c01a14c4c5ed7c19cb709ccfac57ced39215  src/hooks/useSwipeTrackSync.ts
+163f46de5d67626772fa51fbbdbba451507284d2  messages/en.json
+04aa1ae588010ca23f62baedc626367f9cf113ca  messages/uk.json
+a216811d25b31fff3f2aedead3adf88e0ff819b0  messages/sq.json
+3fa2a5933be7a9f252f08ab1ce85674115ff45db  messages/it.json
+03ea666eece55ae2b430696127ae264f7f267f2c  docs/backlog.md

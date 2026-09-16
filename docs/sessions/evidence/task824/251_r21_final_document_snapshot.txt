@@ -1,0 +1,137 @@
++platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: final document snapshot — git status; hash-object on docs/backlog.md, session log, kickoff, and LightboxView.tsx; six Select-String citation checks; check:file-integrity; check:mojibake
+---
+win32
+v22.22.3
+
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\Nox/.config/git/ignore': Permission denied
+ M .claude/agents/executor.md
+ M .claude/hooks/sonnet-executor-bootstrap.ps1
+ M .claude/skills/execute-task/SKILL.md
+ M .gitignore
+ M docs/ai-behavior.md
+ M docs/backlog.md
+ M docs/component-rules.md
+ M docs/governance-checklists.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-locale-leak.mjs
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/modules/listings/components/LightboxView.module.css
+ M src/modules/listings/components/LightboxView.tsx
+ M src/stories/mantine/primitives/DimensionTokens.stories.tsx
+ M src/stories/mantine/primitives/LightboxView.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+?? docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md
+?? docs/sessions/evidence/task824/
+?? src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+?? src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+?? src/design-system/mantine/patterns/GalleryThumbnailButton.tsx
+?? src/hooks/useSwipeTrackSync.ts
+?? src/stories/mantine/primitives/ActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+?? src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+?? src/stories/mantine/primitives/UnstyledButton.stories.tsx
+423865a6eeb00da43fc8e668d6262e84259f2a4e
+75e2db546ff4f67c32b796befb1599ff84133353
+ed74b2e6e5da3b935c31f59c6417b894425d0c24
+0640ae0337046cbdba989b39c3f0973f995bae8f
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 289 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 289 file(s) clean
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 4841 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 4841 files
+Path
+----
+C:\Claude_Code_Projects\lero-al
+
+IgnoreCase : True
+LineNumber : 7
+Line       : ARM=MINW0_ONLY stripInfo={"clientWidth":896,"scrollWidth":1076,"scrollLeft":0,"stripLeft":64,"firstLeft":-
+             108,"firstRight":-64,"strandedBeforeOrigin":true}
+Filename   : 219_r20_ab_three_arms.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\219_r20_ab_three_arms.txt
+Pattern    : ARM=MINW0_ONLY stripInfo={"clientWidth":896,"scrollWidth":1076,"scrollLeft":0
+Context    : 
+Matches    : {}
+
+
+IgnoreCase : True
+LineNumber : 7
+Line       : ARM=MINW0_ONLY stripInfo={"clientWidth":896,"scrollWidth":1076,"scrollLeft":0,"stripLeft":64,"firstLeft":-
+             108,"firstRight":-64,"strandedBeforeOrigin":true}
+Filename   : 219_r20_ab_three_arms.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\219_r20_ab_three_arms.txt
+Pattern    : "firstLeft":-108,"firstRight":-64,"strandedBeforeOrigin":true
+Context    : 
+Matches    : {}
+
+
+IgnoreCase : True
+LineNumber : 24
+Line       : AC41 strip info at scrollLeft=0: 
+             {"clientWidth":896,"scrollWidth":1256,"scrollLeft":0,"rectLeft":64,"childCount":24}
+Filename   : 193_r19_ac37_ac41_ac38_measurements.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\193_r19_ac37_ac41_ac38_measurements.txt
+Pattern    : AC41 strip info at scrollLeft=0: {"clientWidth":896,"scrollWidth":1256
+Context    : 
+Matches    : {}
+
+
+IgnoreCase : True
+LineNumber : 25
+Line       : AC41 first thumbnail at scrollLeft=0: {"left":72,"right":116,"stripLeft":64,"strandedBeforeOrigin":false}
+Filename   : 193_r19_ac37_ac41_ac38_measurements.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\193_r19_ac37_ac41_ac38_measurements.txt
+Pattern    : AC41 first thumbnail at scrollLeft=0: {"left":72,"right":116
+Context    : 
+Matches    : {}
+
+
+IgnoreCase : True
+LineNumber : 26
+Line       : AC41 scrolled to scrollLeft=360, last thumbnail: 
+             {"left":908,"right":952,"stripRight":960,"scrollLeft":360,"scrollWidth":1256,"clientWidth":896}
+Filename   : 193_r19_ac37_ac41_ac38_measurements.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\193_r19_ac37_ac41_ac38_measurements.txt
+Pattern    : AC41 scrolled to scrollLeft=360, last thumbnail: {"left":908,"right":952
+Context    : 
+Matches    : {}
+
+
+IgnoreCase : True
+LineNumber : 27
+Line       : AC41 back to scrollLeft=0, first thumbnail fully visible: 
+             {"scrollLeft":0,"firstLeft":72,"firstRight":116,"stripLeft":64,"stripRight":960,"firstFullyVisible":true}
+Filename   : 193_r19_ac37_ac41_ac38_measurements.txt
+Path       : C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task824\193_r19_ac37_ac41_ac38_measurements.txt
+Pattern    : AC41 back to scrollLeft=0, first thumbnail fully visible: {"scrollLeft":0
+Context    : 
+Matches    : {}
+
+
+EXIT_CODE=0
+

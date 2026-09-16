@@ -1,0 +1,15 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git hash-object docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md (supersession note for one file hash only - the pattern 245 used for 242)
+---
+
+This supersedes 247 for one path only. 247 was captured before this session's own table (16.10) was filled in
+with 248/249's real results, a text-only correction inside the already-written 246/247 rows - no other tracked
+file changed after 247, and docs/backlog.md's hash is unchanged from 247.
+
+docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md baa31ceb66c35e5cc066f73a8550cee7c50966f5
+
+docs/backlog.md remains dc580eca69731b7bc1360155dbd3ff5a8d1fa125 (unchanged from 247).
+Both files: 79 / 1974 physical lines respectively (AC47: docs/backlog.md is 79).
+EXIT_CODE=0

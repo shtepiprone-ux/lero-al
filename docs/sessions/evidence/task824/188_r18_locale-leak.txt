@@ -1,0 +1,22 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:locale-leak:mantine-only
+
+Locale leak detector — full mode (mantine-only)
+Mantine selected: 138; non-Mantine excluded: 211
+Stories: 138 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+Output: .screenshots/locale-leak/2026-09-13T09-02/
+
+Locale leak detector: 158 leak(s) found (full detail in report.json and the console listing).
+
+Reconciled against 160_r22_locale-leak.txt (session §12.9, 2026-09-12): 158 leaks there too — identical
+count. 0 leaks trace to any file this task's §18 changes touched (LightboxView.tsx, appImageConfig.ts,
+AppImage.module.css). check:locale-leak:mantine-only has no baseline/ceiling of its own in this task's
+requirement ledger (R6 binds check:design-tokens:strict and check:tailwind-runtime-tokens only) — AC22's
+"completes and its result is quoted" is satisfied: the run completed (did not hang, matching session-log
+§10.11/§12.10's carried-forward concern) and its number is unchanged from every prior measurement in this
+task's history.
+
+EXIT_CODE=1 (expected — the gate fails whenever any leak exists; this run's completion and count, not
+the exit code, are what AC22 requires quoted)

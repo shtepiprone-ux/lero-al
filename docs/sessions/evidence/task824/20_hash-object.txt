@@ -1,0 +1,8 @@
+=== git hash-object of changed files (post-edit) ===
+633b70dfc06e5e1a22f18795673b37b37fb1e8b2
+5682be0d169f171a45b80576638e12891a0cd89c
+53a7420f800fc80e90d24168507fbe5f4146323c
+=== pre-edit hashes (from git, HEAD version) ===
+6e2d8bd421441ef493a38e8f92cfbee8ffcade8e
+2e0c3a06349c3ec8018532b6a97b15c21c40c6bd
+bfc8308da8fb13809e71512661b030851424cb31

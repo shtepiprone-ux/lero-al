@@ -1,0 +1,54 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git --no-optional-locks status --short ; git hash-object over every changed/new tracked-content path, one call per path, no pipe (final state, kickoff §20 pass, captured after session-log §15 was fully written, nothing tracked edited afterward)
+
+git status --short: identical 35-path set to 215 (docs/sessions/evidence/task824/ counted as one
+untracked directory entry, not enumerated file-by-file).
+
+9c1078acd419527913ae2627fa1cd2d65bfa1c44  .claude/agents/executor.md
+3f342f7f4a49851c6e6d3ea5687c6b5bbd375bd7  .claude/hooks/sonnet-executor-bootstrap.ps1
+8fe5c410b62739c74a6d32e02642144d77e24905  .claude/skills/execute-task/SKILL.md
+74a26bd7ed347d07382d4738a4be70e4862cae4e  docs/ai-behavior.md
+b1878c847ce9f80224f397299277a950577e1f94  docs/backlog.md
+b64d932b11942ebd15a067cb6bd8835ccf1c6455  docs/component-rules.md
+7185c77dcdadcc42ebed2a8a668f255c7370c813  docs/governance-checklists.md
+661f5b8261c1b6404a4fd7fff06e2f1915bc089b  messages/en.json
+c1f5d6aa3f9dfd3e789b19dd52552e82eb2fd027  messages/it.json
+80bc65e2d3905d3f27baeeb78a0b1ccc7ee7b29f  messages/sq.json
+00ff878647f9516155816549c1cf62c69b6daa4d  messages/uk.json
+9c037f1a477a2c93ee0cd28b523277cb0692bd94  scripts/check-locale-leak.mjs
+f8ee97661f01216b331fb33e57c2d3651ee5dffe  scripts/mantine-migration-scope.json
+dac185b8099721ef5ab59b700a9fd7183fa81e89  src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+06365bd2e9c042746df801ed3397a2ebc000e928  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+08251c2af7d630afd6cb27da9697635ff304d8a3  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+9895851cae3a533a67e29a3423102c624046db9a  src/design-system/mantine/patterns/index.ts
+5f798aef2e6ff61192b9e4ee24e3533c44797593  src/design-system/mantine/theme.ts
+ca8aeb0f6d7140e34f3c5311c303745420539fed  src/modules/listings/components/LightboxView.module.css
+0640ae0337046cbdba989b39c3f0973f995bae8f  src/modules/listings/components/LightboxView.tsx
+81a341dd9706f54a181fd087a51697d209bb9efb  src/stories/mantine/primitives/DimensionTokens.stories.tsx
+ca1a22d8a570a4b51d4f44df011e1293c6d3dd87  src/stories/mantine/primitives/LightboxView.stories.tsx
+679f52f915efea1edf4c47ec14d8a30783f7d0be  src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+3218009d528e416caf0af04ef26b60b7917f03ad  src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+d76f5e28c73e7f79308bbfff9770b3018610e054  tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+cd1ebf4a03d834133f295716a797465ebec3a895  docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md
+9de09a1e4c338dc89ceb89d5b65530dbf1b7e98e  src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+219b7f2d828198dc4af9883c67e7928aa6356c0f  src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+a3bd82e4994813546da5d5412ba30582d58302de  src/design-system/mantine/patterns/GalleryThumbnailButton.tsx
+ffca6a7ea8e19f49d8c46b12b85e3828a1ce8e52  src/hooks/useSwipeTrackSync.ts
+dcd5ad9e309081f0178aaa783f81244701acf9d2  src/stories/mantine/primitives/ActionIcon.stories.tsx
+e4fec57c1cedefc742d80f76f0cb2255828ff30c  src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+dc8b240e2011f270dcce6976ed9ece71e9ccaee7  src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+75dd5f08d19ec78ef714eab1d9bf904047e408de  src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+12700193d4ed70d10265ed121c5397ba841afd85  src/stories/mantine/primitives/UnstyledButton.stories.tsx
+
+Count: 35 unique paths, no duplicates, no deleted path.
+Changed since 215 (kickoff §19's closing block): docs/backlog.md (e5569a8e... -> b1878c84..., this
+session's row append, still one physical line, file still 79 lines), src/modules/listings/components/
+LightboxView.tsx (b7fbfe07... -> 0640ae03..., R38 comment correction only - no functional/class change),
+and docs/sessions/2026-09-12-task824-...md (462d8212... -> cd1ebf4a..., this session's own §15 plus the
+R37/R38/R39/R40 in-place corrections to §14.2/§14.3/§14.6/§14.9). Every other path is byte-identical to
+215. Nothing tracked was edited after this capture.
+
+This session's evidence range: 218-242.
+EXIT_CODE=0

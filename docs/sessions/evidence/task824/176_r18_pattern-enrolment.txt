@@ -1,0 +1,11 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:pattern-enrolment
+
+Pattern files found: 36
+Manifest entries (total, all surfaces): 70
+
+PASS check:pattern-enrolment — every .tsx under src/design-system/mantine/patterns/ is enrolled, and every manifest entry under it exists.
+
+EXIT_CODE=0

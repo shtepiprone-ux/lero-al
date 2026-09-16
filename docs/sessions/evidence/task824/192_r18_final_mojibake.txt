@@ -1,0 +1,10 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:mojibake (re-run after 190's hash-object block, to report the true final count)
+
+Scanning 4779 text file(s). check:mojibake: 0 artifacts in 4779 files.
+(185's earlier run in this session reported 4773; the +6 delta is this session's own evidence
+transcripts written since that run.)
+
+EXIT_CODE=0

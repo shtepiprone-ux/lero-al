@@ -1,0 +1,20 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:design-tokens:strict
+
+Scanning 458 production src/**/*.{tsx,ts,css} files + 96 canonical Mantine stories for Tailwind
+dimension utilities.
+
+Total: 50 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s)
+By category: raw-dimension-prop 33, raw-inline-dimension 17
+
+R6/AC9 ceiling: 56 (measured 2026-09-11). This run: 50 <= 56 — no new debt from this task.
+None of the 50 violations are in any file this task changed (LightboxView.tsx, appImageConfig.ts,
+AppImage.module.css, MantineListingGalleryPattern.tsx, theme.ts, the new patterns/*.tsx files, or
+their Stories) — every finding above is pre-existing, unrelated debt (Tasks 822/823).
+
+check:design-tokens STRICT exits non-zero whenever ANY violation exists (its own designed behavior,
+independent of this task) — the R6/AC9 pass condition is the count (<=56), not the exit code.
+
+EXIT_CODE=1 (expected: strict mode fails on any violation; count is what R6/AC9 measure)

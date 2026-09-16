@@ -1,0 +1,9 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:file-integrity
+
+Checking 220 file(s) — NUL bytes / BOM / JSON parse / node --check / truncation.
+check:file-integrity PASSED — all 220 file(s) clean.
+
+EXIT_CODE=0

@@ -1,0 +1,32 @@
+platform: win32
+v22.22.3
+cwd: /c/Claude_Code_Projects/lero-al
+command: node scratch_task824_measure_18.mjs (Playwright harness against storybook-static served on :4471; throwaway script, deleted after use per session-log precedent)
+---
+AC30 [w=1024 h=700] media={"top":0,"bottom":640,"left":64,"right":960,"width":896,"height":640} strip.top=640 bottom<=top: true
+AC30 [w=1024 h=700] mediaRect index0={"top":0,"bottom":640,"left":64,"right":960,"width":896,"height":640} index1={"top":0,"bottom":640,"left":64,"right":960,"width":896,"height":640} identical: true
+AC30 [w=1024 h=800] media={"top":0,"bottom":740,"left":64,"right":960,"width":896,"height":740} strip.top=740 bottom<=top: true
+AC30 [w=1024 h=800] mediaRect index0={"top":0,"bottom":740,"left":64,"right":960,"width":896,"height":740} index1={"top":0,"bottom":740,"left":64,"right":960,"width":896,"height":740} identical: true
+AC30 [w=1024 h=900] media={"top":0,"bottom":840,"left":64,"right":960,"width":896,"height":840} strip.top=840 bottom<=top: true
+AC30 [w=1024 h=900] mediaRect index0={"top":0,"bottom":840,"left":64,"right":960,"width":896,"height":840} index1={"top":0,"bottom":840,"left":64,"right":960,"width":896,"height":840} identical: true
+AC30 [w=1440 h=700] media={"top":0,"bottom":640,"left":208,"right":1232,"width":1024,"height":640} strip.top=640 bottom<=top: true
+AC30 [w=1440 h=700] mediaRect index0={"top":0,"bottom":640,"left":208,"right":1232,"width":1024,"height":640} index1={"top":0,"bottom":640,"left":208,"right":1232,"width":1024,"height":640} identical: true
+AC30 [w=1440 h=800] media={"top":0,"bottom":740,"left":208,"right":1232,"width":1024,"height":740} strip.top=740 bottom<=top: true
+AC30 [w=1440 h=800] mediaRect index0={"top":0,"bottom":740,"left":208,"right":1232,"width":1024,"height":740} index1={"top":0,"bottom":740,"left":208,"right":1232,"width":1024,"height":740} identical: true
+AC30 [w=1440 h=900] media={"top":0,"bottom":840,"left":208,"right":1232,"width":1024,"height":840} strip.top=840 bottom<=top: true
+AC30 [w=1440 h=900] mediaRect index0={"top":0,"bottom":840,"left":208,"right":1232,"width":1024,"height":840} index1={"top":0,"bottom":840,"left":208,"right":1232,"width":1024,"height":840} identical: true
+AC31 [w=320] plain tap on main photo opens lightbox (expect >=1): 1
+AC31 [w=320] lightbox open immediately after drag settle (must be 0): 0
+AC31 [w=320] lightbox open after ONE real touchscreen.tap following a drag (must be >=1, first tap): 1
+AC31 [w=390] plain tap on main photo opens lightbox (expect >=1): 1
+AC31 [w=390] lightbox open immediately after drag settle (must be 0): 0
+AC31 [w=390] lightbox open after ONE real touchscreen.tap following a drag (must be >=1, first tap): 1
+AC33 transform after axis-lock move: translate3d(-405px, 0px, 0px)
+AC33 transform mid-drag OUTSIDE container, before release (raw): translate3d(-605px, 0px, 0px)
+AC33 slideWidth=390
+AC33 transform mid-drag OUTSIDE container, before release: {"raw":"translate3d(-605px, 0px, 0px)","x":-605,"ratio":-1.5512820512820513,"whole":false}
+AC33 transform AFTER release: {"raw":"translate3d(-780px, 0px, 0px)","x":-780,"ratio":-2,"whole":true}
+AC33 discriminates (mid-drag-outside NOT whole-slide AND after-release IS whole-slide): true
+
+--- DONE ---
+EXIT_CODE=0

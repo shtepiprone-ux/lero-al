@@ -1,0 +1,8 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:pattern-enrolment:verify
+
+5/5 arms PASS. Real directory (36 files) vs. real manifest -> clean (0 unenrolled, 0 ghost).
+
+EXIT_CODE=0

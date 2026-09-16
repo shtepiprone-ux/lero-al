@@ -1,0 +1,34 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 9f2d4e6c9a5475bf8188b192ee7f9b22405e1cec
+    Changed paths seen: 16
+    Excluded (14):
+      .claude/agents/executor.md  [outside-src]
+      .claude/hooks/sonnet-executor-bootstrap.ps1  [outside-src]
+      .claude/skills/execute-task/SKILL.md  [outside-src]
+      docs/ai-behavior.md  [outside-src]
+      docs/backlog.md  [outside-src]
+      docs/component-rules.md  [outside-src]
+      docs/governance-checklists.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css  [not-ts-tsx]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx  [story-or-test-file]
+    Included surfaces (3):
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+      src/modules/listings/components/ListingGallery.tsx
+    Surfaces censused: 3
+    Blocks baselined (recorded debt, does not fail): 7
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 669
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

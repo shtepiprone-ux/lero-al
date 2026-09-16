@@ -1,0 +1,18 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:tailwind-runtime-tokens
+
+Tailwind-owned references found: 1 | baseline entries: 0
+[module-css] src/design-system/mantine/patterns/MantineListingCardTrack.module.css:208  --shadow-sm
+
+Reconciled against 03_baseline_tailwind-runtime-tokens.txt (2026-09-11, before this task began):
+identical finding — same file, same property (--shadow-sm), line 209 there vs. 208 here (a 1-line
+shift from an unrelated earlier edit in the same file, not a second violation). Still exactly 1
+finding. AC9/R6's "gains no new debt row" is satisfied — this is the same pre-existing row, not a
+new one, and this task's own changes (LightboxView.tsx, appImageConfig.ts, AppImage.module.css,
+MantineListingGalleryPattern.tsx, theme.ts, the new patterns/*.tsx files) touch none of
+MantineListingCardTrack.module.css.
+
+EXIT_CODE=1 (expected — the gate fails whenever any un-baselined reference exists; the row count,
+not the exit code, is what R6/AC9 measure and it is unchanged from the 2026-09-11 baseline)

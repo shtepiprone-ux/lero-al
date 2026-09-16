@@ -18,6 +18,8 @@ const meta: Meta<typeof MantineListingGalleryPattern> = {
 export default meta;
 type Story = StoryObj<typeof MantineListingGalleryPattern>;
 
+// 9 images (1 main + 8 thumbnails) exercises the "many photos (>= 8)" negative flow: the
+// thumbnail row must scroll, and neither the row nor the page may grow to fit them.
 const DEMO_IMAGES = [
   { url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80' },
   { url: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80' },
@@ -25,6 +27,9 @@ const DEMO_IMAGES = [
   { url: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80' },
   { url: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&q=80' },
   { url: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1200&q=80' },
+  { url: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1200&q=80' },
+  { url: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80&sat=-100' },
+  { url: 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=1200&q=80' },
 ];
 
 export const Default: Story = {
@@ -38,7 +43,6 @@ export const Default: Story = {
       // No i18n key — pure digits/slash, matches the real ListingGallery counter format
       // (LightboxView.stories.tsx precedent, Task 612).
       counter: (index: number, total: number) => `${index} / ${total}`,
-      photoCountSuffix: storyT(l, 'storybook.mantine.listing_detail_photo_count_suffix'),
     };
 
     return (
@@ -63,6 +67,9 @@ export const Default: Story = {
     const l = (globals?.locale as string) ?? 'en';
     const title = storyT(l, 'storybook.mantine.card_title_1');
     const canvas = within(canvasElement);
+    // The main-photo button's accessible name is exactly `title`; every thumbnail's is
+    // `"${title} ${index + 1}"`. `getByRole` name-matching is exact, so this uniquely resolves the
+    // main-photo trigger without ambiguity against the thumbnail row.
     const mainPhoto = await canvas.findByRole('button', { name: title });
     await userEvent.click(mainPhoto);
   },

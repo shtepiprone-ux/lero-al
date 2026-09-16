@@ -1,0 +1,9 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:rendered-scope:verify
+
+Arm 1 PASS, Arm 2 PASS, Arm 3 PASS, Arm 4 PASS, Arm 5 PASS
+Self-test: 5 passed, 0 failed
+
+EXIT_CODE=0

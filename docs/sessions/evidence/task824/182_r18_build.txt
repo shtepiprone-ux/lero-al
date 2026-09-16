@@ -1,0 +1,8 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run build
+
+Next.js 15.5.18 — Compiled successfully in 74s. Type-check within build: OK. 40/40 static pages generated.
+
+EXIT_CODE=0

@@ -1,0 +1,10 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run build-storybook
+
+prebuild-storybook: check:stories PASSED — 151 files checked, 0 violations.
+Storybook v10.4.2 build: Vite built in 20.53s. Output directory: storybook-static.
+Storybook build completed successfully.
+
+EXIT_CODE=0

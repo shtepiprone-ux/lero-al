@@ -1,0 +1,26 @@
+├ ƒ /api/cron/saved-searches               376 B         185 kB
+├ ○ /api/exchange-rate                     377 B         185 kB          1h      1y
+├ ƒ /api/listings                          374 B         185 kB
+├ ƒ /api/listings/[slug]/view              375 B         185 kB
+├ ƒ /api/presence                          375 B         185 kB
+├ ƒ /api/property-types                    375 B         185 kB
+├ ƒ /api/upload-avatar                     375 B         185 kB
+├ ƒ /api/upload-company-logo               375 B         185 kB
+├ ƒ /api/upload-popular-location-photo     376 B         185 kB
+├ ƒ /auth/callback                         375 B         185 kB
+└ ƒ /auth/confirm                          376 B         185 kB
++ First Load JS shared by all             184 kB
+  ├ chunks/3434-047d2f97fb654fe5.js       126 kB
+  ├ chunks/4bd1b696-ad216e4073dcea52.js  54.4 kB
+  └ other shared chunks (total)          4.37 kB
+
+
+ƒ Middleware                              165 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT_CODE=0
+
+[exited with code 0]
+EXIT_CODE=0

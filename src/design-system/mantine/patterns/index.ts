@@ -112,3 +112,12 @@ export type { MantineFilterSectionProps } from './MantineFilterSection'
 
 export { MantineAddItemPanel } from './MantineAddItemPanel'
 export type { MantineAddItemPanelProps } from './MantineAddItemPanel'
+
+export { GalleryNavActionIcon } from './GalleryNavActionIcon'
+export type { GalleryNavActionIconProps } from './GalleryNavActionIcon'
+
+export { GalleryDesktopNavigation } from './GalleryDesktopNavigation'
+export type { GalleryDesktopNavigationProps } from './GalleryDesktopNavigation'
+
+export { GalleryThumbnailButton } from './GalleryThumbnailButton'
+export type { GalleryThumbnailButtonProps } from './GalleryThumbnailButton'

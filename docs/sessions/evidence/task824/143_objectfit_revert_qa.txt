@@ -1,0 +1,13 @@
+width=390 [{"objectFit":"contain","imgW":390,"imgH":900,"frameW":390,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":390,"imgH":900,"frameW":390,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":390,"imgH":900,"frameW":390,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":390,"imgH":900,"frameW":390,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":390,"imgH":900,"frameW":390,"frameH":900,"imgFillsFrame":true}]
+width=390 slide-canvas rects (must be IDENTICAL): [{"w":390,"h":900},{"w":390,"h":900},{"w":390,"h":900},{"w":390,"h":900},{"w":390,"h":900}]
+width=390 errors: []
+width=480 [{"objectFit":"contain","imgW":480,"imgH":900,"frameW":480,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":480,"imgH":900,"frameW":480,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":480,"imgH":900,"frameW":480,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":480,"imgH":900,"frameW":480,"frameH":900,"imgFillsFrame":true},{"objectFit":"contain","imgW":480,"imgH":900,"frameW":480,"frameH":900,"imgFillsFrame":true}]
+width=480 slide-canvas rects (must be IDENTICAL): [{"w":480,"h":900},{"w":480,"h":900},{"w":480,"h":900},{"w":480,"h":900},{"w":480,"h":900}]
+width=480 errors: []
+width=640 [{"objectFit":"contain","imgW":512,"imgH":765,"frameW":512,"frameH":765,"imgFillsFrame":true},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false}]
+width=640 errors: []
+width=1024 [{"objectFit":"contain","imgW":896,"imgH":765,"frameW":896,"frameH":765,"imgFillsFrame":true},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false}]
+width=1024 errors: []
+width=1440 [{"objectFit":"contain","imgW":1024,"imgH":765,"frameW":1024,"frameH":765,"imgFillsFrame":true},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false},{"objectFit":"cover","imgW":40,"imgH":40,"frameW":44,"frameH":44,"imgFillsFrame":false}]
+width=1440 errors: []
+EXIT_CODE=0

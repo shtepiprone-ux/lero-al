@@ -1,0 +1,14 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:stories
+
+storybook.* sq — 693 keys (matches en)
+storybook.* uk — 693 keys (matches en)
+storybook.* it — 693 keys (matches en)
+storybook.* en  — 693 keys (reference)
+uk.json Cyrillic check complete
+
+check:stories PASSED — 151 files checked, 0 violations.
+
+EXIT_CODE=0

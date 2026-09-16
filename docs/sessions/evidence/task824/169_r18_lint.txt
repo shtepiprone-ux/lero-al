@@ -1,0 +1,14 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run lint
+
+> lero-al@0.1.0 lint
+> eslint
+
+72 pre-existing warnings across .artifacts/.screenshots/docs scratch scripts and pre-existing src files
+(unrelated to this task's changed files: LightboxView.tsx, appImageConfig.ts, AppImage.module.css).
+✖ 72 problems (0 errors, 72 warnings)
+0 errors and 21 warnings potentially fixable with the `--fix` option.
+
+EXIT_CODE=0

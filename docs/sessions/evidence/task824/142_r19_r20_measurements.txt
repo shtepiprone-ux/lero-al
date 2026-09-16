@@ -1,0 +1,80 @@
+ensureClosed: wasOpen= true nowOpen= false
+AC13 [w=320] closed-gallery track rect: {"x":16,"y":60,"width":288,"height":340,"top":60,"right":304,"bottom":400,"left":16}
+AC13 [w=320] closed-gallery after touch-drag counters: ["2 / 9"] anyPrevented(x-axis, must be true): true
+AC13 [w=320] closed-gallery after ArrowRight counters: ["3 / 9"]
+AC13 [w=320] closed-gallery vertical-drag anyPrevented (must be FALSE): false perStep: [{"dxNow":0,"dyNow":6.666666666666657,"prevented":false},{"dxNow":0,"dyNow":13.333333333333343,"prevented":false},{"dxNow":0,"dyNow":20,"prevented":false},{"dxNow":0,"dyNow":26.666666666666686,"prevented":false},{"dxNow":0,"dyNow":33.333333333333314,"prevented":false},{"dxNow":0,"dyNow":40,"prevented":false}]
+AC13 [w=320] lightbox opened via click: false
+AC13 [w=320] open-lightbox after touch-drag counters: ["4 / 9"]
+AC13 [w=320] open-lightbox after ArrowRight counters: ["5 / 9"]
+AC13 [w=320] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC13 [w=390] closed-gallery track rect: {"x":16,"y":60,"width":358,"height":340,"top":60,"right":374,"bottom":400,"left":16}
+AC13 [w=390] closed-gallery after touch-drag counters: ["2 / 9"] anyPrevented(x-axis, must be true): true
+AC13 [w=390] closed-gallery after ArrowRight counters: ["3 / 9"]
+AC13 [w=390] closed-gallery vertical-drag anyPrevented (must be FALSE): false perStep: [{"dxNow":0,"dyNow":6.666666666666657,"prevented":false},{"dxNow":0,"dyNow":13.333333333333343,"prevented":false},{"dxNow":0,"dyNow":20,"prevented":false},{"dxNow":0,"dyNow":26.666666666666686,"prevented":false},{"dxNow":0,"dyNow":33.333333333333314,"prevented":false},{"dxNow":0,"dyNow":40,"prevented":false}]
+AC13 [w=390] lightbox opened via click: false
+AC13 [w=390] open-lightbox after touch-drag counters: ["4 / 9"]
+AC13 [w=390] open-lightbox after ArrowRight counters: ["5 / 9"]
+AC13 [w=390] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC18 [forward] after driving to boundary, counters: ["9 / 9"]
+AC18 [forward] wrap-swipe released, transform immediately after release: translate3d(-3580px, 0px, 0px) translateX= -3580
+AC18 [forward] after interrupting touchstart+second-swipe, transform: translate3d(-716px, 0px, 0px) translateX= -716
+AC18 [forward] FINAL counters (expect 2/9 forward or 8/9 backward): ["2 / 9"] final transform: translate3d(-716px, 0px, 0px) translateX= -716 valid range check [-(10)*w,0]= [-3580,0] in range: true
+AC18 [forward] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC18 [backward] starting counters (should be 1/9): ["1 / 9"]
+AC18 [backward] wrap-swipe released, transform immediately after release: translate3d(0px, 0px, 0px) translateX= 0
+AC18 [backward] after interrupting touchstart+second-swipe, transform: translate3d(-2864px, 0px, 0px) translateX= -2864
+AC18 [backward] FINAL counters (expect 2/9 forward or 8/9 backward): ["8 / 9"] final transform: translate3d(-2864px, 0px, 0px) translateX= -2864 valid range check [-(10)*w,0]= [-3580,0] in range: true
+AC18 [backward] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC19 lightbox open immediately after the swipe itself (must be false): false
+AC19 lightbox open after ONE subsequent tap (must be TRUE, first tap): false
+AC19 console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC20 thumbnail buttons found: [{"label":"Modern Apartment in Tirana 1","current":"true"},{"label":"Modern Apartment in Tirana 2","current":null},{"label":"Modern Apartment in Tirana 3","current":null},{"label":"Modern Apartment in Tirana 4","current":null},{"label":"Modern Apartment in Tirana 5","current":null},{"label":"Modern Apartment in Tirana 6","current":null},{"label":"Modern Apartment in Tirana 7","current":null},{"label":"Modern Apartment in Tirana 8","current":null},{"label":"Modern Apartment in Tirana 9","current":null}]
+AC20 counters BEFORE thumbnail click: ["1 / 9"]
+AC20 counters AFTER clicking thumbnail #3 (expect 3/9): ["3 / 9"] lightbox opened (must be FALSE): false
+AC20 all thumbnail computed borders: [{"label":"Modern Apartment in Tirana 1","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 2","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 3","current":"true","borderWidth":"2px","borderColor":"rgb(236, 84, 71)"},{"label":"Modern Apartment in Tirana 4","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 5","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 6","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 7","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 8","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"},{"label":"Modern Apartment in Tirana 9","current":null,"borderWidth":"2px","borderColor":"rgba(0, 0, 0, 0)"}]
+AC20 console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC21 [w=320] main-photo-trigger accessible-name set (must contain exactly ONE distinct value, repeats of the SAME value across sibling clones are fine since only the visible one is un-hidden): ["Modern Apartment in Tirana"]
+AC21 [w=320] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC21 [w=390] main-photo-trigger accessible-name set (must contain exactly ONE distinct value, repeats of the SAME value across sibling clones are fine since only the visible one is un-hidden): ["Modern Apartment in Tirana"]
+AC21 [w=390] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC21 [w=480] main-photo-trigger accessible-name set (must contain exactly ONE distinct value, repeats of the SAME value across sibling clones are fine since only the visible one is un-hidden): ["Modern Apartment in Tirana"]
+AC21 [w=480] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC21 [w=1440] main-photo-trigger accessible-name set (must contain exactly ONE distinct value, repeats of the SAME value across sibling clones are fine since only the visible one is un-hidden): ["Modern Apartment in Tirana"]
+AC21 [w=1440] console errors: []
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=320] thumbnail count: 0 sizes: []
+AC5 [w=320] scrollWidth/clientWidth: {"scrollWidth":320,"clientWidth":320} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=390] thumbnail count: 0 sizes: []
+AC5 [w=390] scrollWidth/clientWidth: {"scrollWidth":390,"clientWidth":390} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=480] thumbnail count: 0 sizes: []
+AC5 [w=480] scrollWidth/clientWidth: {"scrollWidth":480,"clientWidth":480} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=768] thumbnail count: 9 sizes: [{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44}]
+AC5 [w=768] scrollWidth/clientWidth: {"scrollWidth":768,"clientWidth":768} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=1024] thumbnail count: 9 sizes: [{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44}]
+AC5 [w=1024] scrollWidth/clientWidth: {"scrollWidth":1024,"clientWidth":1024} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC4a [w=1440] thumbnail count: 9 sizes: [{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44},{"w":44,"h":44}]
+AC5 [w=1440] scrollWidth/clientWidth: {"scrollWidth":1440,"clientWidth":1440} overflow: false
+ensureClosed: wasOpen= true nowOpen= false
+AC26 transform while cursor is OUTSIDE the container, before mouseup: translate3d(-358px, 0px, 0px) translateX= -358
+AC26 transform AFTER mouseup (outside container): translate3d(-358px, 0px, 0px) translateX= -358 counters: ["1 / 9"]
+AC26 console errors: []
+LightboxView SwipeTrackMode track rect: {"x":0,"y":0,"width":390,"height":844,"top":0,"right":390,"bottom":844,"left":0}
+LightboxView geometry AT REST: {"trackWidth":"390px","trackHeight":"844px","slideCount":5,"slides":[{"w":390,"h":844,"minHeight":"0px","overflow":"hidden","imgObjectFit":"cover","imgW":"390px","imgH":"844px"},{"w":390,"h":844,"minHeight":"0px","overflow":"hidden","imgObjectFit":"cover","imgW":"390px","imgH":"844px"},{"w":390,"h":844,"minHeight":"0px","overflow":"hidden","imgObjectFit":"cover","imgW":"390px","imgH":"844px"},{"w":390,"h":844,"minHeight":"0px","overflow":"hidden","imgObjectFit":"cover","imgW":"390px","imgH":"844px"},{"w":390,"h":844,"minHeight":"0px","overflow":"hidden","imgObjectFit":"cover","imgW":"390px","imgH":"844px"}]}
+LightboxView geometry MID-DRAG (two adjacent slides expected visible): {"trackTransform":"translate3d(-585px, 0px, 0px)","trackWidth":"390px","trackHeight":"844px","visibleSlides":[{"i":1,"w":390,"h":844,"top":0,"bottom":844,"minHeight":"0px","intersectsViewport":true},{"i":2,"w":390,"h":844,"top":0,"bottom":844,"minHeight":"0px","intersectsViewport":true}]}
+LightboxView console errors: []
+=== DONE ALL PHASES ===
+EXIT_CODE=0

@@ -1,0 +1,51 @@
+win32
+v22.22.3
+/c/Claude_Code_Projects/lero-al
+cmd: node scripts/check-surface-census-changed.mjs --base HEAD
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 518ec81d6ff8c39326ceb2c982096674c19fd484
+    Changed paths seen: 25
+    Excluded (20):
+      .claude/agents/executor.md  [outside-src]
+      .claude/hooks/sonnet-executor-bootstrap.ps1  [outside-src]
+      .claude/skills/execute-task/SKILL.md  [outside-src]
+      docs/ai-behavior.md  [outside-src]
+      docs/component-rules.md  [outside-src]
+      docs/governance-checklists.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-locale-leak.mjs  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      src/design-system/mantine/patterns/MantineListingCardTrack.module.css  [not-ts-tsx]
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css  [not-ts-tsx]
+      src/design-system/media/AppImage.module.css  [not-ts-tsx]
+      src/modules/listings/components/LightboxView.module.css  [not-ts-tsx]
+      src/stories/mantine/primitives/DimensionTokens.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/LightboxView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx  [story-or-test-file]
+    Included surfaces (6):
+      src/app/[locale]/ci/click-shield-modal/page.tsx
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/theme.ts
+      src/design-system/media/appImageConfig.ts
+      src/modules/listings/components/ListingGallery.tsx
+    Surfaces censused: 6
+    Blocks baselined (recorded debt, does not fail): 9
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 667
+    Blocks new (not in baseline): 1
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+FAIL  1 block(s) not in the baseline:
+    src/design-system/media/appImageConfig.ts :: src/design-system/media/appImageConfig.ts  [tier1-unenrolled-or-unstoried]
+      Migrate this component, give it its own canonical Mantine Story, and add it to scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+
+Docs: docs/storybook-governance.md §15.7, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

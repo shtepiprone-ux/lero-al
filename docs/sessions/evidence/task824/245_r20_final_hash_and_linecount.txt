@@ -1,0 +1,28 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git hash-object docs/backlog.md ; git hash-object docs/sessions/2026-09-12-task824-...md ; wc -l docs/backlog.md (git-bash) ; awk 'END{print NR}' docs/backlog.md (git-bash) ; (Select-String -Path docs\backlog.md -Pattern '.*').Count (native PowerShell)
+
+This supersedes 242 for two paths only. 242 was captured before this session's own two final range-citation
+fixes (218-241 -> 218-244, in both docs/backlog.md and the session log) and before session-log 15.1's
+hash-reproduction clarification note were written. Both edits are text-only corrections of the evidence
+range/citation; no other tracked file changed after 242.
+
+docs/backlog.md                                                          4c0a541884db971a5c8d2f8e4d5555543b44c6bc  (changed from b1878c847ce9f80224f397299277a950577e1f94 in 242 - the 218-241 -> 218-244 range fix, still one physical line)
+docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md  61792e9a1bdc2d9dffc0a15d965f8a0c2dbbcf20  (changed from cd1ebf4a03d834133f295716a797465ebec3a895 in 242 - the range fix plus 15.1's clarification note)
+
+docs/backlog.md physical line count (AC47):
+  git-bash wc -l:                79
+  git-bash awk END{print NR}:    79
+  PowerShell Select-String count: 79
+  (PowerShell Get-Content | Measure-Object -Line reported 61 for this file - a Windows PowerShell 5.1
+  Get-Content buffering quirk with this file's very long lines (up to ~25,380 characters), not a real
+  discrepancy; two independent counting methods, one native PowerShell, agree on 79.)
+
+All 33 other tracked paths are unchanged since 242 and their 242-recorded hashes remain current. Nothing
+tracked was edited after this capture. This is a supersession note for two file hashes only (the same
+pattern as 190 superseding 189) - it does not reopen the evidence range. The session's stated range
+(218-244, in the session log and in docs/backlog.md) stands: it names every command/measurement transcript
+this session produced, all of which exist. 245 itself is a closing verification note, not a new
+requirement-bearing artifact, so it is not folded into that range.
+EXIT_CODE=0

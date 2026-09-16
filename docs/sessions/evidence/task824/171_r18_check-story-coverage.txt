@@ -1,0 +1,13 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:story-coverage
+
+Canonical Mantine story files: 97 (of 146 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+Manifest entries (migration scope): 70
+70 covered (statically imported by >=1 canonical Mantine story)
+0 enrolled but unproven
+
+check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+
+EXIT_CODE=0

@@ -1,0 +1,14 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:rendered-scope
+
+Enrolled roots walked: 70 (of 70 manifest entries)
+Distinct rendered frontier edges: 28
+Baselined edges (recorded debt, does not fail): 28
+New edges (not in baseline): 0
+Stale baseline entries (no matching measured edge): 0
+
+PASS check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+
+EXIT_CODE=0

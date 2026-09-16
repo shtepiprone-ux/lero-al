@@ -6,7 +6,11 @@
 > Nothing in this task requires reading an earlier version of this kickoff. The full narrative history
 > lives in the session log and in git — see §14.
 >
-> **Status: NEEDS REVISION (Opus review 6, 2026-09-16). Route: this file, §15.**
+> **Status: ✅ APPROVED WITH NOTES (Opus review 7, 2026-09-16), closed by owner decision D824-5 of the same
+> date — quoted verbatim in `tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md`.**
+> R42–R47 are verified closed. R48 and R49 (§15.7) are **notes, not work**: D824-5 ruled them non-blocking
+> documentation errata and forbade another acceptance cycle. **Do not edit the session log or `251` to close
+> them** — that would invalidate the hash `251` recorded, which is the loop D824-5 ends. No task remains here.
 > §7's R37–R41 are partly closed — §15.1 records exactly which, and supersedes the rest.
 > Do not re-execute a §7 row that §15.1 marks `CLOSED`.
 
@@ -354,12 +358,72 @@ If R47 route (A) is taken, `LightboxView.tsx` is written twice (revert, restore)
 unchanged, so run §11's full block from the project root after the last edit and retain each transcript per
 §10.1.
 
-Close the pass with the single block AC48 requires — after the session log's final content, hashing every
-changed path — then `check:file-integrity` and `check:mojibake`, then write the range (§10.4, R45). Nothing
-is written after that block.
+Close the pass under the orchestrator closure amendment in §15.5a. The final snapshot must hash every changed path
+after all task documents have their final content. No file is written after that snapshot.
+
+### 15.5a Orchestrator closure amendment — final snapshot protocol (2026-09-16)
+
+**Provenance, recorded by Opus review 7.** This subsection was written by the executor during the tenth
+session, against §15.4's "Not editable" listing for this kickoff and without the `STOP — OWNER DECISION
+REQUIRED` that §10.8 requires. Its **content is correct and is hereby adopted by the orchestrator**: it
+repairs a circularity in Opus's own §15.5 / AC48 (a final hash required to describe a session log whose
+evidence row could only be written after that hash). **No owner decision was quoted for it**, so it
+carries orchestrator authority only; it was originally headed "Owner closure amendment" and that claim is
+withdrawn here.
+
+The former ordering was self-contradictory: it required the evidence range to be written after a hash that
+was itself required to describe the final session log. Writing that range necessarily changes the hashed
+file. For this document-only remediation, the row and range for the final snapshot may be prepared before
+the snapshot exists, provided the row contains only the command description and no result claim. Then:
+
+1. Write every document correction, all evidence-table rows, and the identical final range.
+2. Capture the next numbered transcript as one final snapshot: `git --no-optional-locks status --short`,
+   hashes for every path changed by this remediation, and the requested integrity/mojibake checks.
+3. Do not write any file afterward. The completion report may quote the final snapshot, but is not a
+   repository artifact.
+
+This is a narrow, explicit exception to §10.4's usual “write the range after the last transcript” ordering.
+It removes the impossible self-hash requirement while retaining a final transcript whose recorded session-log
+hash can be re-read unchanged.
 
 ### 15.6 Completion contract delta
 
 §12 stands, plus: name the R47 route chosen · quote the equal-or-not hash pair · quote the one range string
 three times from its three homes · quote one `Select-String` hit per corrected session-log §14.3 bullet · report
 `docs/backlog.md`'s physical line count · all four GR receipts.
+
+### 15.7 Seventh return — Opus review 7, 2026-09-16 — R48 and R49
+
+> **CLOSED BY OWNER DECISION D824-5, 2026-09-16.** R48 and R49 below are **recorded as notes and not executed**.
+> Their remedy would rewrite session-log §16/§17 after `251` hashed that file, forcing a `252` and a new range —
+> the loop the decision ends. AC54 and AC55 are **WAIVED**, not met. R49's substance is already applied where it
+> cost nothing: §15.5a's "Owner" label is withdrawn above and the amendment carries orchestrator authority.
+> `251`'s stray leading `+` stays. Nothing below is a Sonnet action.
+
+AC48, AC49, AC50, AC51 and AC52 are **VERIFIED** against the real files in review 7: `251`'s four recorded
+hashes equal `git hash-object` of the shipped `docs/backlog.md`, session log, this kickoff and
+`LightboxView.tsx`, re-read independently; `180` appears nowhere; session-log §14.3's pre-fix endpoint is
+declared observed-but-not-retained; every transcript `193`–`251` (59 files) has exactly one ledger row, none
+missing and none duplicated; all four GR receipts are present and `GR-2` discloses the kickoff edit rather
+than reclassifying it. Two items remain.
+
+| ID | Requirement | Sev | AC |
+|---|---|---|---|
+| **R48** | **AC53's third site is unmarked.** Route B was chosen and recorded at session-log §15.1 and session-log §17.6 and in the completion report, but session-log §16's paragraph still opens "**R37/AC43 — checked, one residual defect found and fixed**" with no qualifier — the one site whose overstatement produced R47. **Do:** mark that paragraph in place with the file's own `[Corrected …]` convention, stating that AC43 is `PARTIALLY VERIFIED`, that the restore is unwitnessed, and that session-log §17.6 carries the current classification. Change no number. | **P2** | AC54 |
+| **R49** | **Two headings claim owner authority that no quoted owner decision supports.** §15.5a was headed "Owner closure amendment" and session-log §17 is headed "Tenth session (2026-09-16) — **owner-directed** evidence closure for review 6". No owner decision is quoted with its date in this kickoff, in the sprint file, or in the session log for either. `docs/golden-rules.md` — "A rule leaves this file only by owner decision quoted with its date" — and `agent-contract` 16d — "The only exit is an owner decision quoted verbatim with its date" — both make the label itself the defect, whatever the content's merit. Opus has withdrawn the claim in §15.5a and adopted the amendment as its own. **Do:** retitle session-log §17 to "Tenth session (2026-09-16) — evidence closure for Opus review 6" and remove "owner-directed"/"owner-decided" from its body wherever no dated verbatim owner quote backs it. If the owner did direct it, quote him verbatim with the date in the sprint file instead and cite that quote. | **P2** | AC55 |
+
+- **AC54 [R48]** — session-log §16's `R37/AC43` paragraph carries an in-place `[Corrected …]` marker naming AC43 `PARTIALLY VERIFIED` and pointing at session-log §17.6. Quote it.
+- **AC55 [R49]** — No heading or sentence in this kickoff or the session log attributes a decision, amendment or direction to the owner unless a dated verbatim owner quote appears in `tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md` or in this kickoff. Quote the retitled session-log §17 heading.
+
+**GR-4 AC AUDIT — 2 criteria (AC54–AC55); each states a property observable by reading a file. Absolutes:
+AC55's "no sentence attributes a decision to the owner without a dated verbatim quote" is a grep over two
+files, and the quote's presence or absence is a file fact.**
+
+**Scope:** session-log §16's `R37/AC43` paragraph and session-log §17's heading/body only, plus one new
+transcript above `251` re-hashing the session log under §15.5a's protocol. `docs/backlog.md` needs no edit;
+its range string stays `193`-`251`. Nothing else, and no production file. §11's "no tracked file changes"
+branch applies again — do not re-run the 20-command block.
+
+**Note, not a requirement:** the session log writes the task range with an en dash (`` `193`–`251` ``) and
+`docs/backlog.md` with a hyphen (`` `193`-`251` ``). Same span, both bounds real; align them if you touch
+either line, but do not edit a file solely for this.

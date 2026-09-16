@@ -1,0 +1,45 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git --no-optional-locks status --short ; git hash-object docs/backlog.md docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md src/modules/listings/components/LightboxView.tsx (closing block, captured after this session's session-log edit, nothing tracked edited afterward)
+---
+ M .claude/agents/executor.md
+ M .claude/hooks/sonnet-executor-bootstrap.ps1
+ M .claude/skills/execute-task/SKILL.md
+ M .gitignore
+ M docs/ai-behavior.md
+ M docs/component-rules.md
+ M docs/governance-checklists.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-locale-leak.mjs
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/modules/listings/components/LightboxView.module.css
+ M src/modules/listings/components/LightboxView.tsx
+ M src/stories/mantine/primitives/DimensionTokens.stories.tsx
+ M src/stories/mantine/primitives/LightboxView.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+?? docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md
+?? docs/sessions/evidence/task824/
+?? src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+?? src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+?? src/design-system/mantine/patterns/GalleryThumbnailButton.tsx
+?? src/hooks/useSwipeTrackSync.ts
+?? src/stories/mantine/primitives/ActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+?? src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+?? src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+?? src/stories/mantine/primitives/UnstyledButton.stories.tsx
+docs/backlog.md bb17a40d2433bf73508ff7c9b8b672c95ce39985
+docs/sessions/2026-09-12-task824-gallery-thumbnail-squares-and-nav-controls.md 0c65f3bcb64a6291b71e9baa085a54c867d4d7b1
+src/modules/listings/components/LightboxView.tsx 0640ae0337046cbdba989b39c3f0973f995bae8f
+EXIT_CODE=0

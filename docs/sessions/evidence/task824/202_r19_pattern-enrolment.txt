@@ -1,0 +1,23 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:pattern-enrolment
+
+
+> lero-al@0.1.0 check:pattern-enrolment
+> node scripts/check-pattern-enrolment.mjs
+
+check:pattern-enrolment — one rule for the pattern directory (Task 820, Decision 5)
+    Scanned: every top-level *.tsx directly under src/design-system/mantine/patterns/
+    NOT scanned (stated, never implicit): index.ts (the barrel, not .tsx), any __tests__/
+    subdirectory, *.module.css, and any .tsx this directory does not itself contain — a pattern
+    added anywhere else is invisible to this check by construction.
+    Cannot see: a pattern file this script cannot read (permissions/symlink) — skipped, never
+    silently treated as compliant.
+
+    Pattern files found: 36
+    Manifest entries (total, all surfaces): 70
+
+PASS  check:pattern-enrolment — every .tsx under src/design-system/mantine/patterns/ is enrolled, and every manifest entry under it exists.
+
+EXIT_CODE=0

@@ -1,0 +1,24 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe scripts\check-surface-census.mjs --surface src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+
+Nodes visited: 6
+  MantineListingGalleryPattern.tsx      manifest:yes story:yes
+  GalleryDesktopNavigation.tsx          manifest:yes story:yes
+  GalleryThumbnailButton.tsx            manifest:yes story:yes
+  LightboxView.tsx                      manifest:no  story:yes  <-- the sole FAIL
+  GalleryNavActionIcon.tsx              manifest:yes story:yes
+  AppImage.tsx                          manifest:yes story:yes
+
+FAIL src/modules/listings/components/LightboxView.tsx [tier1-unenrolled-or-unstoried]
+GR-1 CENSUS BLOCKED — src/modules/listings/components/LightboxView.tsx
+
+AC14a reconciliation: identical in shape and cause to 01_baseline_surface-census.txt (captured before
+this task began) and to every intermediate measurement of this exact command in this task's history
+(137, 163, now 186). Relocating GalleryNavActionIcon/GalleryDesktopNavigation/GalleryThumbnailButton
+(D824-2) could never clear a FAIL whose subject is LightboxView.tsx itself, since that file was never
+one of the three relocated components. LightboxView.tsx's own manifest enrolment is Task 825's,
+untouched by this task.
+
+EXIT_CODE=1 (expected and reconciled — AC14a's own defined outcome, not a pass to report as green)

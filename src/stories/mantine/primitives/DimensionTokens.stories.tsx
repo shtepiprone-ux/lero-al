@@ -104,12 +104,17 @@ function IconSizePreview() {
 function BoxSizePreview() {
   const theme = useMantineTheme()
   const PX_BY_KEY: Record<string, number> = {
+    paginationSegmentThickness: 2,
     statusDot: 8,
+    paginationSegment: 16,
+    galleryThumb: 44,
     thumbnail: 112,
     truncateLabel: 120,
     dropdownPanel: 220,
+    galleryNavDemoHeight: 270,
     compactTrigger: 280,
     emptyState: 360,
+    galleryNavDemoWidth: 480,
     prose: 576,
     ctaSection: 672,
     content: 768,

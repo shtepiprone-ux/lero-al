@@ -1,0 +1,11 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:file-integrity (re-run after 190's hash-object block, to report the true final count)
+
+Checking 227 file(s) — NUL bytes / BOM / JSON parse / node --check / truncation.
+check:file-integrity PASSED — all 227 file(s) clean.
+(184's earlier run in this session reported 220; the +7 delta is this session's own evidence
+transcripts 184-190 written since that run — the growing evidence directory, as in every prior session.)
+
+EXIT_CODE=0

@@ -1,0 +1,16 @@
+
+> lero-al@0.1.0 check:media-enrolment:verify
+> node scripts/check-media-enrolment.mjs --verify-gate
+
+check:media-enrolment gate self-test (--verify-gate, Task 813) — running 5 arms
+
+  PASS  Arm 1 — .tsx in the directory, absent from the manifest -> reported unenrolled
+  PASS  Arm 2 — manifest entry under the directory, file no longer exists -> reported a ghost entry
+  PASS  Arm 3 — directory and manifest agree exactly (manifest entries outside the directory ignored) -> zero findings
+  PASS  Arm 4 — exit-code wiring: an unenrolled or a ghost finding drives evaluateGateExitCode to 1, the clean state to 0
+  PASS  Arm 5 — real directory (1 files) vs. real manifest -> clean (0 unenrolled, 0 ghost)
+
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:media-enrolment:verify — all 5 arms behave correctly.
+EXIT_CODE=0

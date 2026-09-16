@@ -201,6 +201,10 @@ const PER_STORY_TOKENS = {
   // FilterControls: storybook.filtercontrols.price_max renders via common.max — it keeps "Max"
   // identical to en (genuine Italian cognate), verified against messages/it.json (Task 626).
   'mantine-primitives-filtercontrols': ['Max'],
+  // UnstyledButton: mirrors 'primitives-button's own "Link" entry above — Italian "Link" is the
+  // same loanword, verified against messages/it.json's own dozens of unmodified "Link" usages
+  // (e.g. auth.link_copied, admin.field_nav_links).
+  'mantine-primitives-unstyledbutton': ['Link'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

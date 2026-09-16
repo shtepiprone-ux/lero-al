@@ -69,15 +69,32 @@ declare module '@mantine/core' {
     // strings (Mantine's own `getSpacing`/dimension-prop convention — matches `theme.spacing`/
         // `theme.other.touchTarget` above), consumed via Mantine's size props which accept a CSS length
     // string directly.
+    // Task 824 R17 revision (owner decision 2026-09-12, D824-4) — the project's first `borderWidth`
+    // role. `GalleryThumbnailButton`'s active-state brand border, previously a raw `2px solid ...`
+    // string. `hairline` is a second, distinct role for the generic 1px demo border AC17's audit
+    // found in `UnstyledButton.stories.tsx` — a different value from `galleryThumbActive`, so no
+    // rule-3 collision. Grows the same way `boxSize`/`iconSize` did, one documented role at a time.
+    borderWidth: Record<'galleryThumbActive' | 'hairline', string>
     boxSize: Record<
+      | 'paginationSegmentThickness' // 2px — Task 824 R17 revision (owner decision 2026-09-12,
+                                     // D824-4): the mobile lightbox pagination indicator's thickness.
+                                     // A DIFFERENT role from `borderWidth.galleryThumbActive` despite
+                                     // the equal 2px value (rule 3: same value, different owner).
       | 'statusDot'       // 8px  — NotificationItem unread-status dot (h=w)
+      | 'paginationSegment' // 16px — Task 824 R17 revision (D824-4): the same indicator's long axis
       | 'galleryThumb'    // 44px — Task 813 R17 Revision 4 (owner decision 2026-09-11): AppImage
                           // Story's gallery-strip row + no-src square; Task 824's gallery thumbnail row
       | 'thumbnail'       // 112px — PopularLocationsView location-card height
       | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
+      | 'galleryNavDemoHeight' // 270px — Task 824 R17 revision (D824-4, AC17 audit): the
+                               // `GalleryNavActionIcon`/`GalleryDesktopNavigation` canonical Stories'
+                               // own demo backdrop height. Storybook fixture chrome, not a shipped
+                               // production dimension, but AC17 scopes "no raw literal" to story
+                               // fixtures too.
       | 'compactTrigger'  // 280px — RangeDatePicker compact trigger width
       | 'emptyState'      // 360px — MantineEmptyLoadingErrorState stack max-width
+      | 'galleryNavDemoWidth'  // 480px — the same two Stories' demo backdrop width
       | 'prose'           // 576px — homepage hero subtitle max-width
       | 'ctaSection'       // 672px — homepage CTA box max-width
       | 'content',        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
@@ -444,10 +461,18 @@ export const theme = createTheme({
       spotlight: 56,
       colossal: 64,
     },
+    // Task 824 R17 revision (owner decision 2026-09-12, D824-4) — the project's first `borderWidth`
+    // role, replacing `GalleryThumbnailButton`'s raw `2px solid ...` literal.
+    borderWidth: {
+      galleryThumbActive: '0.125rem', // 2px
+      hairline: '0.0625rem',          // 1px — Task 824 R17 revision, D824-4/AC17 audit
+    },
     // Task 782 — canonical layout/container dimension scale (D69-6). Rem strings — see the
     // `MantineThemeOther` augmentation above for the full role-name rationale.
     boxSize: {
+      paginationSegmentThickness: '0.125rem', // 2px — Task 824 R17 revision, D824-4
       statusDot: '0.5rem',       //   8px
+      paginationSegment: '1rem', //  16px — Task 824 R17 revision, D824-4
       galleryThumb: '2.75rem',   //  44px — Task 813 R17 Revision 4, owner decision 2026-09-11:
                                  // AppImage Story gallery-strip row + no-src square; Task 824
                                  // gallery thumbnail row. Same value as `touchTarget`/
@@ -455,8 +480,10 @@ export const theme = createTheme({
       thumbnail: '7rem',         // 112px
       truncateLabel: '7.5rem',   // 120px
       dropdownPanel: '13.75rem', // 220px
+      galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
       compactTrigger: '17.5rem', // 280px
       emptyState: '22.5rem',     // 360px
+      galleryNavDemoWidth: '30rem', // 480px — Task 824 R17 revision, D824-4/AC17 audit
       prose: '36rem',            // 576px
       ctaSection: '42rem',       // 672px
       content: '48rem',          // 768px

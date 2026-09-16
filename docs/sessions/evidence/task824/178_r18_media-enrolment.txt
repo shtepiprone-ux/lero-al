@@ -1,0 +1,11 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:media-enrolment
+
+Media files found: 1
+Manifest entries (total, all surfaces): 70
+
+PASS check:media-enrolment — every .tsx under src/design-system/media/ is enrolled, and every manifest entry under it exists.
+
+EXIT_CODE=0

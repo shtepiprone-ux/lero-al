@@ -1,0 +1,234 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:locale-leak:mantine-only
+
+
+> lero-al@0.1.0 check:locale-leak:mantine-only
+> node scripts/check-locale-leak.mjs --mantine-only
+
+🔍  Locale leak detector — full mode (mantine-only)
+Mantine selected: 138; non-Mantine excluded: 211
+    Stories: 138 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-13T10-25/
+
+......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+npm.cmd : ❌  Locale leak detector: 158 leak(s) found:
+At line:1 char:309
++ ... } } }; $out = npm.cmd run check:locale-leak:mantine-only 2>&1 | Out-S ...
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  Locale leak ... leak(s) found::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  Story: Admin/AdminUsersTable/Default
+    [sq] "Moderator"
+    [sq] "Administrator"
+    [sq] "Tirana Real Estate Group"
+    [sq] "Online"
+    [sq] "Gentiana Hoxha"
+    [uk] "Tirana Real Estate Group"
+    [uk] "Gentiana Hoxha"
+    [it] "Tirana Real Estate Group"
+    [it] "Online"
+    [it] "Gentiana Hoxha"
+    [sq] "Tirana Real Estate Group · #101"
+    [uk] "Tirana Real Estate Group · #101"
+    [it] "Tirana Real Estate Group · #101"
+
+  Story: Mantine/Primitives/CollectionsSection/Populated
+    [sq] "Vacation homes"
+    [sq] "City apartments"
+    [sq] "Investment properties"
+    [uk] "Vacation homes"
+    [uk] "City apartments"
+    [uk] "Investment properties"
+    [it] "Vacation homes"
+    [it] "City apartments"
+    [it] "Investment properties"
+
+  Story: Mantine/Primitives/CollectionsSection/Create Dialog Open
+    [sq] "Vacation homes"
+    [sq] "City apartments"
+    [sq] "Investment properties"
+    [uk] "Vacation homes"
+    [uk] "City apartments"
+    [uk] "Investment properties"
+    [it] "Vacation homes"
+    [it] "City apartments"
+    [it] "Investment properties"
+
+  Story: Mantine/Primitives/CountButton/Default
+    [sq] "Task 783 — default-variant filter-trigger boundary states (0 / 1 / 12), the exact composition consumed by 
+the real production Advanced filters control (`ListingsFilterBar`): `variant="default"` + sliders icon `leftSection` + 
+`count` inline in `rightSection`. 0 renders no badge; 12 proves the two-digit count stays content-sized and in-flow, 
+never clipped or overhanging the button edge."
+    [uk] "Task 783 — default-variant filter-trigger boundary states (0 / 1 / 12), the exact composition consumed by 
+the real production Advanced filters control (`ListingsFilterBar`): `variant="default"` + sliders icon `leftSection` + 
+`count` inline in `rightSection`. 0 renders no badge; 12 proves the two-digit count stays content-sized and in-flow, 
+never clipped or overhanging the button edge."
+    [it] "Task 783 — default-variant filter-trigger boundary states (0 / 1 / 12), the exact composition consumed by 
+the real production Advanced filters control (`ListingsFilterBar`): `variant="default"` + sliders icon `leftSection` + 
+`count` inline in `rightSection`. 0 renders no badge; 12 proves the two-digit count stays content-sized and in-flow, 
+never clipped or overhanging the button edge."
+
+  Story: Mantine/Primitives/FilterControls/Default
+    [sq] "FilterChoiceGroup — vertical branch (mobile filters drawer, orientation="vertical")"
+    [sq] "FilterChoiceGroup — mode="single" (no deselect, filled/centered — type/market_type)"
+    [sq] "FilterChoiceGroup — mode="single" allowDeselect, variant="light" justify="flex-start" (property_type)"
+    [uk] "FilterChoiceGroup — vertical branch (mobile filters drawer, orientation="vertical")"
+    [uk] "FilterChoiceGroup — mode="single" (no deselect, filled/centered — type/market_type)"
+    [uk] "FilterChoiceGroup — mode="single" allowDeselect, variant="light" justify="flex-start" (property_type)"
+    [it] "FilterChoiceGroup — vertical branch (mobile filters drawer, orientation="vertical")"
+    [it] "FilterChoiceGroup — mode="single" (no deselect, filled/centered — type/market_type)"
+    [it] "FilterChoiceGroup — mode="single" allowDeselect, variant="light" justify="flex-start" (property_type)"
+
+  Story: Patterns/Mantine/AuthSheet/Login
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+  Story: Patterns/Mantine/AuthSheet/Login Validation Error
+    [sq] "Google"
+    [uk] "Google"
+    [it] "Google"
+
+  Story: Patterns/Mantine/ListingCardTrack/Grid
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Rail
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Grid Single Item
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Rail Single Item
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Rail No Overflow
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Rail Mixed Title Lengths
+    [sq] "Studio"
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingCardTrack/Grid Mixed Title Lengths
+    [sq] "Studio"
+    [it] "Tirana, Albania"
+
+  Story: Patterns/Mantine/ListingDetailView/Public Listing
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Patterns/Mantine/ListingDetailView/Staff Preview Unpublished
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Patterns/Mantine/ListingDetailView/Staff Preview Published
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Patterns/Mantine/ListingDetailView/Archived Listing
+    [sq] "Marker"
+    [sq] "Close popup"
+    [sq] "Zoom in"
+    [sq] "Zoom out"
+    [sq] "A JavaScript library for interactive maps"
+    [sq] "Leaflet"
+    [sq] "OpenStreetMap"
+    [sq] "Elira Hoxha"
+    [uk] "Marker"
+    [uk] "Close popup"
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Patterns/Mantine/ListingsPageFrame/Default
+    [it] "Home"
+
+  Story: Patterns/Mantine/SaveSearchButton/Pending
+    [sq] "Unauthorized"
+    [uk] "Unauthorized"
+    [it] "Unauthorized"
+
+    Report: .screenshots/locale-leak/2026-09-13T10-25/report.json
+
+EXIT_CODE=1

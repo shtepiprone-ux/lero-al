@@ -1,0 +1,8 @@
+platform: win32
+v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe harness_r20_ab.mjs (ARM_LABEL=NEITHER) — temporary local revert of LightboxView.tsx's min-w-0 and justify-start/mx-auto changes, storybook-static rebuilt from that reverted markup, then restored (verified below)
+---
+ARM=NEITHER wrapperRect={"className":"relative w-full h-full max-w-5xl mx-16 flex flex-col min-h-0","top":0,"bottom":900,"left":0,"right":1024,"width":1024,"height":900}
+ARM=NEITHER stripInfo={"clientWidth":1024,"scrollWidth":1140,"scrollLeft":0,"stripLeft":0,"firstLeft":-108,"firstRight":-64,"strandedBeforeOrigin":true}
+EXIT_CODE=0

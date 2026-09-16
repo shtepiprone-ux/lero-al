@@ -1,0 +1,24 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:surface-census:changed -- --base HEAD
+
+Base: HEAD  Head: (working tree)  Merge base: 518ec81d6ff8c39326ceb2c982096674c19fd484
+Changed paths seen: 26
+Included surfaces (5): src/app/[locale]/ci/click-shield-modal/page.tsx,
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx,
+  src/design-system/mantine/patterns/index.ts, src/design-system/mantine/theme.ts,
+  src/modules/listings/components/ListingGallery.tsx
+Surfaces censused: 5
+Blocks baselined (recorded debt, does not fail): 9
+Blocks carried: 667
+Blocks new (not in baseline): 0    <-- AC32: was 1 (appImageConfig.ts) in 150_r22_surface-census-changed.txt, now 0
+Stale baseline entries: 0
+
+src/design-system/media/appImageConfig.ts and src/design-system/media/AppImage.module.css do not appear
+anywhere in this run's Changed paths / Excluded / Included lists — the R27 revert to HEAD removed them
+from the diff entirely.
+
+PASS check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+
+EXIT_CODE=0

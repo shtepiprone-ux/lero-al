@@ -1,0 +1,7 @@
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+src/hooks/useSwipeTrackSync.ts(166,17): error TS18047: 'container' is possibly 'null'.
+src/hooks/useSwipeTrackSync.ts(174,17): error TS18047: 'container' is possibly 'null'.
+EXIT_CODE=2

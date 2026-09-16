@@ -1,29 +1,36 @@
 /*
- * Task 748 — the 1 `--color-overlay*`-derived Tailwind utility site in LightboxView.tsx,
- * reproduced as a CSS-module rule reading the `:root` `--overlay-foreground` variable (never
- * `--color-overlay-foreground`, which Task 695 removes — see globals.css:70-85/:459-471).
- *
- * D34 (2026-08-13): measured cascade WINNER — the counter `div` is a plain child of
- * `Modal.Body`'s inner flex wrapper; no Mantine component sets `color` directly on this specific
- * element (only `color` inheritance from ancestors exists, which always loses to any explicit
- * rule on the element itself, layered or not). Stays unlayered, same as
- * MantineListingCardPattern.module.css's D34-winning rules.
- *
- * D35: `text-overlay-foreground/80` reproduces Tailwind's own compiled two-rule form — static
- * fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
- * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
- *
- * Note for Task 695 (R11): this file's `LIGHTBOX_ACTION_ICON_STYLE` comment block above the
- * component (`bg-overlay/95 equivalent`, `bg-overlay/95 className` mentions) still contains the
- * literal string `bg-overlay/95` — Tailwind's scanner reads comments too, so that utility keeps
- * being generated though nothing renders it. Left untouched; 695 decides whether to rewrite it.
+ * Reproduces Tailwind's compiled two-rule opacity-modifier form: a static hex fallback, then a
+ * color-mix upgrade behind @supports, values verbatim from the real build output. Unlayered — no
+ * Mantine component sets `color` directly on this element, only inherited color, which always
+ * loses to an explicit rule regardless of layering.
  */
-
 .counter {
-  color: #fffc; /* text-overlay-foreground/80 static fallback */ /* design-tokens-allow: #fffc — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+  color: #fffc; /* design-tokens-allow: #fffc — Tailwind's compiled opacity-modifier static fallback, reproduced exactly */
 }
 @supports (color: color-mix(in lab, red, red)) {
   .counter {
     color: color-mix(in oklab, var(--overlay-foreground) 80%, transparent);
   }
+}
+
+/*
+ * Mobile lightbox pagination indicators — position-only line segments, not clickable thumbnails
+ * and not dots/pills. Owner-specified geometry: a thin rectangle, >= 8:1 width:height, square
+ * corners. Active and inactive segments share the exact same width/height — only the fill color
+ * changes — so paging never shifts the rail's layout. Width/height are registered
+ * `theme.other.boxSize.paginationSegment(Thickness)` tokens, consumed as style props in
+ * `LightboxView.tsx` (this module keeps only what has no dimension role).
+ */
+.paginationRail {
+  gap: var(--mantine-spacing-xs);
+  align-items: center;
+}
+
+.paginationSegment {
+  border-radius: 0;
+  background-color: color-mix(in oklab, var(--mantine-color-gray-2) 45%, transparent);
+}
+
+.paginationSegmentActive {
+  background-color: var(--mantine-primary-color-filled);
 }

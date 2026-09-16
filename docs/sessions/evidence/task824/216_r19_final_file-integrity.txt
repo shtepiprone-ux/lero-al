@@ -1,0 +1,11 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:file-integrity (re-run after 215's hash-object block, to report the true final count)
+
+Checking 252 file(s) - NUL bytes / BOM / JSON parse / node --check / truncation.
+check:file-integrity PASSED - all 252 file(s) clean.
+(211's earlier run in this session reported 227; the +25 delta is this session's own evidence
+transcripts 193-215 plus the retained harness_r19_measure.mjs, written since that run.)
+
+EXIT_CODE=0

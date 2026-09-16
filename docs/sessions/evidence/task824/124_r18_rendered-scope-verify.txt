@@ -1,0 +1,20 @@
+win32
+v22.22.3
+/c/Claude_Code_Projects/lero-al
+cmd: npm.cmd run check:rendered-scope:verify
+
+> lero-al@0.1.0 check:rendered-scope:verify
+> node scripts/check-rendered-scope.mjs --verify-gate
+
+check:rendered-scope gate self-test (--verify-gate, Task 818 R6/R15) — running 5 arms
+
+  PASS  Arm 1 — new tier1-unenrolled edge absent from baseline -> reported new
+  PASS  Arm 2 — new tier2-legacy-primitive edge -> gate reports new, --update-baseline refuses it
+  PASS  Arm 3 — baseline entry with no matching measured edge -> reported stale
+  PASS  Arm 4 — unplanted tree vs. committed baseline -> clean (0 new, 0 stale)
+  PASS  Arm 5 — exit-code wiring: a synthetic new edge drives evaluateGateExitCode to 1, the clean state to 0
+
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:rendered-scope:verify — all 5 arms (R6 + R15) behave correctly.
+EXIT_CODE=0

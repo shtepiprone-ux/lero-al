@@ -1,0 +1,9 @@
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run check:mojibake
+
+Scanning 4773 text file(s) under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md.
+check:mojibake: 0 artifacts in 4773 files.
+
+EXIT_CODE=0

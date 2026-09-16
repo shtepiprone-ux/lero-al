@@ -1,0 +1,31 @@
+== hash-object before: fa8338634f8d34bf59deb70101e9e959eee28238 ==
+== entries before: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ==
+
+> lero-al@0.1.0 check:rendered-scope:update-baseline
+> node scripts/check-rendered-scope.mjs --update-baseline
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 72 (of 72 manifest entries)
+    Local import edges resolved: 315
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 196
+    Allowlisted edges (tier3, owner-filed): 0
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 28 (deduped from 29 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+Baseline updated -> scripts\rendered-scope-baseline.json
+    version: 1
+    entries written: 28
+PASS  check:rendered-scope:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0
+== hash-object after: fa8338634f8d34bf59deb70101e9e959eee28238 ==
+== entries after: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ==
+== git diff --stat (expect empty = idempotent) ==

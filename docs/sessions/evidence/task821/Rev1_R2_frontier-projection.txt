@@ -1,0 +1,59 @@
+=== Task 821 R2 — read-only frontier projection (scratch, no tracked file written) ===
+Base manifest entries: 70
+Projected manifest entries: 72 (+2: src/modules/listings/components/ListingFeatureIcon.tsx, src/modules/listings/components/FavoriteButton.tsx)
+
+Roots walked: 72 (of 72 projected manifest entries)
+Edges resolved: 315
+Non-rendered skipped: 196
+Allowlisted edges matched (tier3): 0
+
+Distinct rendered frontier edges (projected): 28
+  tier1-unenrolled findings: 28
+    src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx  [tier1-unenrolled]
+    src/components/shared/HeroSearchView.tsx -> src/components/shared/PropertyTypeCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRangeInputs.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx  [tier1-unenrolled]
+    src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterRoomsRow.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx  [tier1-unenrolled]
+    src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/YearCombobox.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRangeInputs.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterChoiceGroup.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsFilters.tsx -> src/components/shared/FilterRoomsRow.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingsActionRow.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryStaticFrame.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/GalleryIsland.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/SimilarListings.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/components/shared/MapWrapper.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ViewTracker.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedTracker.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/RecentlyViewedSection.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingReportDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/ListingShareButton.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingReportDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/ListingInquiryDialog.tsx  [tier1-unenrolled]
+    src/modules/listings/components/SimilarListingsView.tsx -> src/components/shared/ViewAllLink.tsx  [tier1-unenrolled]
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx -> src/modules/listings/components/LightboxView.tsx  [tier1-unenrolled]
+  tier2-legacy-primitive findings: 1
+    src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx  [tier2-legacy-primitive]
+
+Baseline (unmodified, current committed) baselined: 28
+New edges vs. current committed baseline: 0
+Stale baseline entries vs. this projection: 0
+
+=== Allowlist entry fate under this projection ===
+  src/modules/listings/components/ListingFeatureIcon.tsx
+    in allowlist: true
+    matched by a real frontier edge this run (allowlistMatched): false
+    => WOULD GO STALE under check-rendered-scope.mjs's allowlistStale rule
+  src/modules/listings/components/FavoriteButton.tsx
+    in allowlist: true
+    matched by a real frontier edge this run (allowlistMatched): false
+    => WOULD GO STALE under check-rendered-scope.mjs's allowlistStale rule
+
+EXPLICIT tier2-legacy-primitive count (both new roots + whole projected graph): 1
+
+EXIT_CODE=0

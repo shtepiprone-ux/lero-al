@@ -1,0 +1,14 @@
+== git status --short (final, before docs close-out) ==
+ M docs/backlog.md
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-allowlist.json
+?? docs/sessions/2026-09-16-task821-blocked-allowlist-stale-conflict.md
+?? docs/sessions/evidence/task821/
+?? src/stories/mantine/primitives/FavoriteButton.stories.tsx
+?? src/stories/mantine/primitives/ListingFeatureIcon.stories.tsx
+
+== AC8: git diff --stat, the 7 R7-named gate scripts (expect empty) ==
+(empty above = untouched)
+
+== AC9: git diff --stat, both component sources (expect empty) ==
+(empty above = untouched)

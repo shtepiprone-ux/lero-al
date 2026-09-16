@@ -1,0 +1,29 @@
+== Task 820 verified commit (pre-req, re-stated) ==
+d5031fa4a1f0742688df69cbd3f735586ab040a6
+committed blob hash (pre-req): bf09fd2f63b542faa14a63bfb44253203422b026
+
+== working-tree hash-object BEFORE this task's edit (captured in Rev1) ==
+bf09fd2f63b542faa14a63bfb44253203422b026
+
+== working-tree hash-object AFTER this task's edit ==
+a3e48ab38f722bc2160df08ed9971adfb9e7868c
+
+== git diff (must show exactly two changed lines, owner field only) ==
+diff --git a/scripts/rendered-scope-allowlist.json b/scripts/rendered-scope-allowlist.json
+index bf09fd2f6..a3e48ab38 100644
+--- a/scripts/rendered-scope-allowlist.json
++++ b/scripts/rendered-scope-allowlist.json
+@@ -2,11 +2,11 @@
+   {
+     "path": "src/modules/listings/components/ListingFeatureIcon.tsx",
+     "reason": "Shared feature-icon renderer used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
+-    "owner": "813"
++    "owner": "821"
+   },
+   {
+     "path": "src/modules/listings/components/FavoriteButton.tsx",
+     "reason": "Shared favorite-toggle control used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
+-    "owner": "813"
++    "owner": "821"
+   }
+ ]

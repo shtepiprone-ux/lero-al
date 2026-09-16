@@ -1,0 +1,24 @@
+== git status --short (final) ==
+ M docs/backlog.md
+?? docs/sessions/2026-09-16-task821-blocked-allowlist-stale-conflict.md
+?? docs/sessions/evidence/task821/
+
+== git diff --stat (working tree vs HEAD, all files) ==
+ docs/backlog.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+== hash-object: changed/new files ==
+docs/backlog.md  aaf615835ccbba70dd1ca105bda899c20546d9fd
+docs/sessions/2026-09-16-task821-blocked-allowlist-stale-conflict.md  0918a25fba4e13e89c9c9860f889afaeddef7ec1
+docs/sessions/evidence/task821/Rev1_baseline.txt  fa6e807447a226cb29c59f6a57c9a85b198c7e52
+docs/sessions/evidence/task821/Rev1_check-rendered-scope.txt  964ac752ca982fe56775705243563601f231c3a2
+docs/sessions/evidence/task821/Rev1_check-story-coverage.txt  131c047f335a9b87135f68c7ad32bef21d9ecdaa
+docs/sessions/evidence/task821/Rev1_check-surface-census.txt  178f18f9420da73d1cfa42db05c07a69377b5d19
+docs/sessions/evidence/task821/Rev1_hygiene-gates.txt  7a30c59dd32ccbc874b001091327974cf96108b1
+docs/sessions/evidence/task821/Rev1_R2_frontier-projection.txt  ed91060fba2e192162b04b00e5ca711788e61a73
+
+== confirm scripts/ untouched (R7 scope) ==
+(empty above = untouched)
+
+== confirm components untouched (R8 scope) ==
+(empty above = untouched)

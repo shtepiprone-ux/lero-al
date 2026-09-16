@@ -243,3 +243,28 @@ manifest entry, enforced by a new, independent, directory-listing-driven gate, `
 `docs/storybook-governance.md` §15.9 for the full mechanism). `AppImage.tsx` and its co-located siblings
 (`appImageConfig.ts`, `useAdaptiveImageConfig.ts`, `AppImage.module.css`) moved byte-identically; every external
 importer was rewritten to the new path; `scripts/mantine-migration-scope.json` grew 66 → 67.
+
+## 9. Task 821 implementation record (2026-09-16) — the last two Task 813 tier-3 entries close out
+
+The two `scripts/rendered-scope-allowlist.json` entries Task 820's §7 left in place (`ListingFeatureIcon.tsx`,
+`FavoriteButton.tsx`, "owned outside the design system") were transferred to Task 821 per the 2026-09-11 owner
+amendment quoted in that task's kickoff §2, then resolved:
+
+1. `owner` on both entries moved `"813"` → `"821"` (the amendment's required first tracked-file write, verified
+   against Task 820's committed blob `bf09fd2f…`).
+2. Each component gained its own canonical Mantine Story — `Mantine/Primitives/ListingFeatureIcon` and
+   `Mantine/Primitives/FavoriteButton` (`src/stories/mantine/primitives/`) — statically importing its own path, not
+   the `ListingCardPattern.stories.tsx` composition that had previously been the only story to import
+   `FavoriteButton` (GR-3/16d: a composition Story is not a component Story).
+3. Both paths were added to `scripts/mantine-migration-scope.json` (70 → 72).
+
+Enrolling the target paths made both allowlist entries **stale** — a live consequence Task 821's kickoff had
+predicted as a possible stop condition: their only two rendering surfaces, `ListingCard.tsx` and
+`ListingDetailView.tsx`, were already enrolled, so once the target itself was also enrolled the edge resolved
+enrolled-to-enrolled and never reached the allowlist. **Owner decision, 2026-09-16** (quoted verbatim in
+`docs/sessions/evidence/task821/Rev2_00_owner-decision.txt`): the two stale entries are removed rather than kept,
+because the 2026-09-11 "keep them governed by their explicit entries" instruction applied to the transitional
+pre-enrolment state, not to a resolved tier-3 exception. `scripts/rendered-scope-allowlist.json` is now `[]` (2 → 0)
+— the file that once tracked 13, then 2, transitional tier-3 exceptions now tracks none. `check:rendered-scope` and
+`check:surface-census:changed` both exit 0 with 0 new / 0 stale on the resulting tree. Task 821 did not modify any of
+the seven scripts named in Task 812/818/819/820/813's own gate set, and did not modify either component's source.

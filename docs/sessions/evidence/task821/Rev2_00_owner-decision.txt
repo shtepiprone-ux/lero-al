@@ -1,0 +1,49 @@
+OWNER DECISION — 2026-09-16 — Task 821, quoted verbatim, received in chat after the Rev1 BLOCKED handoff.
+
+---
+
+OWNER DECISION — 2026-09-16 — Task 821
+
+Task 821 is APPROVED TO RESUME.
+
+R2 has triggered the explicit stale-allowlist stop condition defined by the task: after enrolling
+ListingFeatureIcon and FavoriteButton, both existing tier-3 allowlist entries become stale because their
+consuming surfaces and the target components are all enrolled.
+
+Decision: the two stale allowlist entries are authorized for removal as part of Task 821.
+
+The 2026-09-11 instruction to "keep them governed by their explicit entries" applies to the transitional
+pre-enrolment state. It does not require stale allowlist records to remain after the underlying tier-3
+exception has been resolved.
+
+Accordingly:
+
+* do not add a gate exception;
+* do not modify check-rendered-scope.mjs or any other gate logic;
+* preserve the required owner: "813" -> "821" transfer as the first tracked-file write and retain its
+  hash/diff evidence;
+* after Stories and manifest enrolment make the two entries stale, remove both entries from
+  scripts/rendered-scope-allowlist.json;
+* final state must report 0 new and 0 stale;
+* neither production component source is authorized for modification.
+
+R5 / AC6 are amended only insofar as they previously required the two allowlist entries to remain in the
+final tree. AC6a's sequencing and ownership-transfer evidence remains required.
+
+All other Task 821 scope, acceptance criteria, Q3 verification, baseline-writer requirements, and owner
+visual QA remain unchanged.
+
+Owner status: UNBLOCKED — APPROVED TO PROCEED.
+
+---
+
+Effect on execution order (unchanged steps in bold are load-bearing per kickoff §10.1, amended step marked):
+
+1. Allowlist owner field edit 813 -> 821 (unchanged, first tracked-file write) — R5/AC6a.
+2. Stories for both components (unchanged) — R3/AC3/AC4.
+3. scripts/mantine-migration-scope.json +2 (unchanged) — R4/AC5.
+4. AMENDED: remove both now-stale scripts/rendered-scope-allowlist.json entries (second edit to that file,
+   authorized above) instead of keeping them — amended R5/AC6.
+5. Both baselines via their own --update-baseline (unchanged) — R6/AC7.
+6. Docs (backlog.md, design-system-pattern-ownership.md) — R9/AC10, amended to describe removal rather than
+   retention.

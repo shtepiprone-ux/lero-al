@@ -1,0 +1,11 @@
+== platform/node/pwd ==
+win32
+v22.22.3
+C:\Claude_Code_Projects\lero-al
+== git status --short ==
+?? docs/sessions/evidence/task821/
+== git log -1 allowlist ==
+d5031fa4a feat(Task820): enrol all 33 pattern-directory files, retire the 11 transitional tier-3 allowlist entries, add the blocking check:pattern-enrolment gate
+d5031fa4a1f0742688df69cbd3f735586ab040a6
+== hash-object allowlist ==
+bf09fd2f63b542faa14a63bfb44253203422b026

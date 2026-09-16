@@ -1,0 +1,309 @@
+=== typecheck ===
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+EXIT_CODE=0
+
+=== lint ===
+
+> lero-al@0.1.0 lint
+> eslint
+
+
+C:\Claude_Code_Projects\lero-al\.artifacts\_to_delete\homepage-detailwind-census.mjs
+  105:3  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\.artifacts\measure-text.mjs
+  27:7  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\sortbar-audit.mjs
+  48:13  warning  'countText' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  57:15  warning  'cs' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\worstcase-audit.mjs
+  31:13  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task673-delta\capture-computed-styles.mjs
+   66:7   warning  'SITES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  157:22  warning  'sel' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\capture-computed-styles.mjs
+   23:37  warning  'readFileSync' is defined but never used                                     @typescript-eslint/no-unused-vars
+   99:10  warning  'readProps' is defined but never used                                        @typescript-eslint/no-unused-vars
+  100:3   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  131:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  149:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  163:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:31  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:66  warning  Expected an assignment or function call and instead saw an expression        @typescript-eslint/no-unused-expressions
+  181:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  189:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  200:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  226:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  249:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  269:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\compare-manifests.mjs
+  96:9  warning  'md5DeltaByStory' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task690-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\extract-candidate-rules.mjs
+  2:25  warning  'resolve' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task693-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task748-overlay\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task695\real-before-after-comparator.mjs
+  58:31  warning  'readdir' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\real-before-after-comparator.mjs
+  154:16  warning  'resolvePartAElementBefore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-round2\g1-gate-blindness-probe.mjs
+   92:9   warning  'overlayLostAfter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  100:11  warning  'baseId' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748\executor-comparator\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task763\capture-appimage-styles.mjs
+   63:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  106:9  warning  'root' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\compare-phase-c.mjs
+  110:9  warning  'postT0' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task765\capture-appimage-styles.mjs
+  65:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\AdminUsersTable.tsx
+  164:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\__tests__\AdminUsersTable.smoke.test.tsx
+   93:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   94:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   98:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  139:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  191:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  194:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  200:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantinePagination.tsx
+  238:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\__tests__\MantineListingCardPattern.smoke.test.tsx
+  138:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\lib\__tests__\visibility.test.ts
+    3:32  warning  'vi' is defined but never used                 @typescript-eslint/no-unused-vars
+    4:13  warning  'visibilityModule' is defined but never used   @typescript-eslint/no-unused-vars
+  184:11  warning  'original' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 72 problems (0 errors, 72 warnings)
+  0 errors and 21 warnings potentially fixable with the `--fix` option.
+
+EXIT_CODE=0
+
+=== check:story-coverage ===
+
+> lero-al@0.1.0 check:story-coverage
+> node scripts/check-story-coverage.mjs
+
+📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)
+    Canonical Mantine story files: 99 (of 148 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+    Manifest entries (migration scope): 72
+    ✅ 72 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+EXIT_CODE=0
+
+=== check:stories ===
+
+> lero-al@0.1.0 check:stories
+> node scripts/check-stories.mjs
+
+── Check 1: Banned layout values ──────────────────────────────────
+── Check 2: Raw HTML controls ──────────────────────────────────────
+── Check 3: Locale-NAME export families ─────────────────────────────
+── Check 4: Hardcoded locale pins (globals + args + props) ─────────
+── Check 5: Hardcoded title literals in fixtures ───────────────────
+── Check 6: storybook.* namespace key parity ───────────────────────
+  ✅ storybook.* sq — 693 keys (matches en)
+  ✅ storybook.* uk — 693 keys (matches en)
+  ✅ storybook.* it — 693 keys (matches en)
+  ✅ storybook.* en  — 693 keys (reference)
+── Check 7: Inline locale maps (uk:/sq:/it: in stories) ───────────────
+── Check 8: uk.json Latin-only values (non-Cyrillic check) ────────────
+  ✅ uk.json Cyrillic check complete
+── Check 9: Runtime component hardcoded literals ────────────────────
+── Check 10: English JSX string-prop literals in stories ───────────
+── Check 11: sm:flex-row sm:flex-wrap (toolbar 640px overflow) ────────
+── Check 12: Viewport/width-named exports ────────────────────────────
+── Check 13: Duplicate-family export names ─────────────────────────────
+── Check 14: Mantine Button size="lg"|"xl" (off-scale, Task 520) ──────
+── Check 15: Unregistered Mantine colour prop (Task 685/686) ────────
+── Check 16: Wall-clock fixture values (Task 697/698, §14.10) ─────────
+── Stale allowlist entry check ──────────────────────────────────────
+
+✅ check:stories PASSED — 153 files checked, 0 violations.
+EXIT_CODE=0
+
+=== check:rendered-scope ===
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 72 (of 72 manifest entries)
+    Local import edges resolved: 315
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 196
+    Allowlisted edges (tier3, owner-filed): 0
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 28 (deduped from 29 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+EXIT_CODE=0
+
+=== check:rendered-scope:verify ===
+
+> lero-al@0.1.0 check:rendered-scope:verify
+> node scripts/check-rendered-scope.mjs --verify-gate
+
+check:rendered-scope gate self-test (--verify-gate, Task 818 R6/R15) — running 5 arms
+
+  PASS  Arm 1 — new tier1-unenrolled edge absent from baseline -> reported new
+  PASS  Arm 2 — new tier2-legacy-primitive edge -> gate reports new, --update-baseline refuses it
+  PASS  Arm 3 — baseline entry with no matching measured edge -> reported stale
+  PASS  Arm 4 — unplanted tree vs. committed baseline -> clean (0 new, 0 stale)
+  PASS  Arm 5 — exit-code wiring: a synthetic new edge drives evaluateGateExitCode to 1, the clean state to 0
+
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:rendered-scope:verify — all 5 arms (R6 + R15) behave correctly.
+EXIT_CODE=0
+
+=== check:surface-census:changed (base HEAD) ===
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: ed8598da8c297ceb1e4ab2daeeacb4bf9be3155b
+    Changed paths seen: 3
+    Excluded (3):
+      docs/backlog.md  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-allowlist.json  [outside-src]
+    Included surfaces (0):
+    Surfaces censused: 0
+    Blocks baselined (recorded debt, does not fail): 0
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 653
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0
+
+=== check:surface-census:changed:verify ===
+
+> lero-al@0.1.0 check:surface-census:changed:verify
+> node scripts/check-surface-census-changed.mjs --verify-gate
+
+check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running 8 arms
+
+  PASS  Arm 1 — changed file resolves upward to a known (manifest) surface -> included
+  PASS  Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero
+  PASS  Arm 3 — changed-file limit set below the real diff size -> fail-closed, drives exit non-zero
+  PASS  Arm 4 — new (un-baselined) block on a censused surface -> drives exit non-zero
+  PASS  Arm 5 — baselined block is recorded debt -> does not fail
+  PASS  Arm 6 — real pipeline, base===head (empty diff) -> clean (0 changed, 0 surfaces)
+  PASS  Arm 7 — baseline entry for an un-censused surface -> carried, not stale, does not fail
+  PASS  Arm 8 — block missing from a censused surface -> stale, drives exit non-zero
+
+Arms run: 8
+Self-test: 8 passed, 0 failed
+PASS  check:surface-census:changed:verify — all 8 arms (R7) behave correctly.
+EXIT_CODE=0
+
+=== check:pattern-enrolment:verify ===
+
+> lero-al@0.1.0 check:pattern-enrolment:verify
+> node scripts/check-pattern-enrolment.mjs --verify-gate
+
+check:pattern-enrolment gate self-test (--verify-gate, Task 820) — running 5 arms
+
+  PASS  Arm 1 — .tsx in the directory, absent from the manifest -> reported unenrolled
+  PASS  Arm 2 — manifest entry under the directory, file no longer exists -> reported a ghost entry
+  PASS  Arm 3 — directory and manifest agree exactly (manifest entries outside the directory ignored) -> zero findings
+  PASS  Arm 4 — exit-code wiring: an unenrolled or a ghost finding drives evaluateGateExitCode to 1, the clean state to 0
+  PASS  Arm 5 — real directory (36 files) vs. real manifest -> clean (0 unenrolled, 0 ghost)
+
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:pattern-enrolment:verify — all 5 arms behave correctly.
+EXIT_CODE=0
+
+=== check:media-enrolment:verify ===
+
+> lero-al@0.1.0 check:media-enrolment:verify
+> node scripts/check-media-enrolment.mjs --verify-gate
+
+check:media-enrolment gate self-test (--verify-gate, Task 813) — running 5 arms
+
+  PASS  Arm 1 — .tsx in the directory, absent from the manifest -> reported unenrolled
+  PASS  Arm 2 — manifest entry under the directory, file no longer exists -> reported a ghost entry
+  PASS  Arm 3 — directory and manifest agree exactly (manifest entries outside the directory ignored) -> zero findings
+  PASS  Arm 4 — exit-code wiring: an unenrolled or a ghost finding drives evaluateGateExitCode to 1, the clean state to 0
+  PASS  Arm 5 — real directory (1 files) vs. real manifest -> clean (0 unenrolled, 0 ghost)
+
+Arms run: 5
+Self-test: 5 passed, 0 failed
+PASS  check:media-enrolment:verify — all 5 arms behave correctly.
+EXIT_CODE=0
+

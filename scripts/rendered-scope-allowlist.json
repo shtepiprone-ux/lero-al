@@ -1,12 +1,1 @@
-[
-  {
-    "path": "src/modules/listings/components/ListingFeatureIcon.tsx",
-    "reason": "Shared feature-icon renderer used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
-    "owner": "813"
-  },
-  {
-    "path": "src/modules/listings/components/FavoriteButton.tsx",
-    "reason": "Shared favorite-toggle control used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
-    "owner": "813"
-  }
-]
+[]

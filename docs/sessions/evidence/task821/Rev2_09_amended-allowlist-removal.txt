@@ -1,0 +1,24 @@
+== hash-object BEFORE removal (post owner-field edit) ==
+a3e48ab38f722bc2160df08ed9971adfb9e7868c
+== hash-object AFTER removal ==
+fe51488c7066f6687ef680d6bfaa4f7768ef205c
+
+== git diff -- scripts/rendered-scope-allowlist.json (cumulative: owner field + removal) ==
+diff --git a/scripts/rendered-scope-allowlist.json b/scripts/rendered-scope-allowlist.json
+index bf09fd2f6..fe51488c7 100644
+--- a/scripts/rendered-scope-allowlist.json
++++ b/scripts/rendered-scope-allowlist.json
+@@ -1,12 +1 @@
+-[
+-  {
+-    "path": "src/modules/listings/components/ListingFeatureIcon.tsx",
+-    "reason": "Shared feature-icon renderer used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
+-    "owner": "813"
+-  },
+-  {
+-    "path": "src/modules/listings/components/FavoriteButton.tsx",
+-    "reason": "Shared favorite-toggle control used by ListingCard and ListingDetailView; filed by Task 809 as a tier-3 node owned separately.",
+-    "owner": "813"
+-  }
+-]
++[]

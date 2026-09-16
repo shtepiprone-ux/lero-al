@@ -1,0 +1,19 @@
+scripts/rendered-scope-allowlist.json  fe51488c7066f6687ef680d6bfaa4f7768ef205c
+scripts/mantine-migration-scope.json  9320321d638bf3775a1e8cc966bc82962bebdf0a
+scripts/rendered-scope-baseline.json  fa8338634f8d34bf59deb70101e9e959eee28238
+scripts/surface-census-baseline.json  2faf21bac845b1d468c0d01806c79e785806cb42
+src/stories/mantine/primitives/ListingFeatureIcon.stories.tsx  295481528a3163c8eca64d684949f3adb066b9d3
+src/stories/mantine/primitives/FavoriteButton.stories.tsx  c9558f196e4f1d2359fe6318606f9b785611dfa1
+docs/backlog.md  4f9ddb874cbac1b899fb5b562d952d7cfce2ae17
+docs/design-system-pattern-ownership.md  951c320e6fac1d5f0ae425c4c63807a62d4a9142
+docs/sessions/2026-09-16-task821-blocked-allowlist-stale-conflict.md  0918a25fba4e13e89c9c9860f889afaeddef7ec1
+
+== git status --short (final) ==
+ M docs/backlog.md
+ M docs/design-system-pattern-ownership.md
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-allowlist.json
+?? docs/sessions/2026-09-16-task821-blocked-allowlist-stale-conflict.md
+?? docs/sessions/evidence/task821/
+?? src/stories/mantine/primitives/FavoriteButton.stories.tsx
+?? src/stories/mantine/primitives/ListingFeatureIcon.stories.tsx

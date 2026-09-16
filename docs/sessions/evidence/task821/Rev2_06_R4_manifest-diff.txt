@@ -1,0 +1,17 @@
+== git diff -- scripts/mantine-migration-scope.json ==
+diff --git a/scripts/mantine-migration-scope.json b/scripts/mantine-migration-scope.json
+index f8ee97661..9320321d6 100644
+--- a/scripts/mantine-migration-scope.json
++++ b/scripts/mantine-migration-scope.json
+@@ -68,5 +68,7 @@
+   "src/design-system/media/AppImage.tsx",
+   "src/design-system/mantine/patterns/GalleryNavActionIcon.tsx",
+   "src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx",
+-  "src/design-system/mantine/patterns/GalleryThumbnailButton.tsx"
++  "src/design-system/mantine/patterns/GalleryThumbnailButton.tsx",
++  "src/modules/listings/components/ListingFeatureIcon.tsx",
++  "src/modules/listings/components/FavoriteButton.tsx"
+ ]
+
+After count: 72
+Before count: 70 (Rev1 measured)

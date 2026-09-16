@@ -2,7 +2,7 @@
 
 Sprint 75 · P1 · QA profile **Q3**
 
-**Status: `READY FOR SONNET`, sequenced after Task 820's commit.** Split out of Task 813 by owner decision §5.1 (B1),
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-16 — see §16. R5/AC6 amended by the owner decision of 2026-09-16 quoted there.** Originally `READY FOR SONNET`, sequenced after Task 820's commit. Split out of Task 813 by owner decision §5.1 (B1),
 2026-09-11, quoted verbatim in §2 — so that Task 820's critical path is not held by two components unrelated to its
 blocking tier-2 hop.
 
@@ -324,3 +324,30 @@ mutating git command.
 | Can this task start immediately? | **No** — not until Task 820's final approved commit for `scripts/rendered-scope-allowlist.json` exists and that committed blob still hashes to `bf09fd2f…`. §5's first bullet gives both checks; a working-tree read does not satisfy them. |
 | What is this task's first tracked-file write? | **The `owner` `813` → `821` field edit** — owner amendment 2026-09-11, evidenced by AC6a. R1's census and R2's projection are read-only and precede it. |
 | Why does the JSON still say `813` today? | It is a **documented transitional snapshot**, recorded in this kickoff, in Task 813 §5.1, in the sprint file and in `docs/backlog.md`. Ownership already sits with 821 in every state artifact; the field lags on purpose so Task 820's AC6 hash survives to its commit. |
+
+## 16. Review closure — 2026-09-16
+
+**Decision: `APPROVED WITH NOTES`** (Opus implementation review, after one `PARTIALLY VERIFIED` pass awaiting AC10).
+
+### 16.1 Owner decision, 2026-09-16 — amends R5 / AC6 (quoted verbatim; full text in `docs/sessions/evidence/task821/Rev2_00_owner-decision.txt`)
+
+> Decision: the two stale allowlist entries are authorized for removal as part of Task 821.
+>
+> The 2026-09-11 instruction to "keep them governed by their explicit entries" applies to the transitional
+> pre-enrolment state. It does not require stale allowlist records to remain after the underlying tier-3
+> exception has been resolved.
+>
+> R5 / AC6 are amended only insofar as they previously required the two allowlist entries to remain in the
+> final tree. AC6a's sequencing and ownership-transfer evidence remains required.
+
+Wherever §4 R5, §12 AC6, §5 and §15 say the entries "stay", read "are removed after enrolment makes them stale".
+
+### 16.2 AC10 — owner visual QA
+
+Owner, 2026-09-16, on all six tuples (Story blobs `295481528a3163c8eca64d684949f3adb066b9d3` /
+`c9558f196e4f1d2359fe6318606f9b785611dfa1`): "візуально все ок, підтверджую." — **ACCEPTED**.
+
+### 16.3 Notes carried
+
+Two P3 findings, filed as **826**: both Stories' JSDoc still claim `owner: "821"` in an allowlist that is `[]`;
+`FavoriteButton.stories.tsx` cites `ListingDetailView.tsx:248-254` as a reproduced call site but does not render it.

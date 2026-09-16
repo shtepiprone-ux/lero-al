@@ -1,0 +1,25 @@
+== hash-object before: 2faf21bac845b1d468c0d01806c79e785806cb42 ==
+
+> lero-al@0.1.0 check:surface-census:changed:update-baseline
+> node scripts/check-surface-census-changed.mjs --update-baseline --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: ed8598da8c297ceb1e4ab2daeeacb4bf9be3155b
+    Changed paths seen: 3
+    Excluded (3):
+      docs/backlog.md  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-allowlist.json  [outside-src]
+    Included surfaces (0):
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 653 (carried-forward entries for the 653-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0
+== hash-object after: 2faf21bac845b1d468c0d01806c79e785806cb42 ==
+== git diff --stat (expect empty = idempotent) ==

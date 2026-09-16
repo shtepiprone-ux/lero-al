@@ -1,0 +1,12 @@
+# measured 2026-09-16, win32, Node v22.22.3, cwd C:Claude_Code_Projectslero-al, HEAD 1ed5cd2a5 + uncommitted Task 815 work in progress (comment-only edits to MantineListingCardTrack.module.css and _MantineStoryShell.tsx)
+# command: node scripts/check-css-var-resolvability.mjs --globals-path <scratch copy of src/app/globals.css with line 336 `--motion-duration-slow: 300ms;` removed, mtime set equal to the real file>
+
+🔍  check:css-vars — owned custom properties (globals.css @theme/@theme inline/:root): 296
+    Arm A (shipped CSS) — owned names referenced: 92
+    Arm B (src/**/*.{css,tsx,ts}, excl. globals.css) — owned names referenced: 127
+    Dynamic var() construction sites: 8 raw, 0 in-class (prefix could name an owned token)
+
+ℹ️   0 fallback-bearing owned reference(s) — non-blocking (R10):
+
+✅  check:css-vars — 0 violations, 0 in-class dynamic sites.
+EXIT=0

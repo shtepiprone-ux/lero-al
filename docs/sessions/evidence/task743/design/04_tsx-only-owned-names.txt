@@ -1,0 +1,21 @@
+# measured 2026-09-16, win32, Node v22.22.3; command: node.exe 90_tsx-only-owned-names.mjs
+owned names parsed: 297; TSX-only referenced: 19
+--color-status-success <- src/components/shared/PerfDevOverlay.tsx
+--color-status-warning <- src/components/shared/PerfDevOverlay.tsx
+--radius-md <- src/components/ui/button.tsx
+--space-16 <- src/stories/mantine/primitives/HeroSearch.stories.tsx
+--space-24 <- src/stories/mantine/primitives/HeroSearch.stories.tsx
+--width-page-max <- src/modules/listings/components/ListingsPageFrame.tsx, src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+--listing-gallery-h-mobile <- src/app/[locale]/listings/[slug]/loading.tsx, src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx, src/modules/listings/components/GalleryStaticFrame.tsx, src/modules/listings/components/ListingGallery.tsx
+--listing-gallery-h-tablet <- src/app/[locale]/listings/[slug]/loading.tsx, src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx, src/modules/listings/components/GalleryStaticFrame.tsx, src/modules/listings/components/ListingGallery.tsx
+--listing-gallery-h-desktop <- src/app/[locale]/listings/[slug]/loading.tsx, src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx, src/modules/listings/components/GalleryStaticFrame.tsx, src/modules/listings/components/ListingGallery.tsx
+--homepage-runtime-font-size-2xl <- src/app/[locale]/page.tsx
+--homepage-runtime-font-size-3xl <- src/app/[locale]/page.tsx
+--homepage-runtime-font-size-4xl <- src/app/[locale]/page.tsx
+--homepage-runtime-font-size-5xl <- src/app/[locale]/page.tsx
+--homepage-runtime-search-max-width <- src/components/shared/HeroSearchView.tsx
+--homepage-runtime-space-24 <- src/app/[locale]/page.tsx
+--homepage-runtime-section-py-base <- src/design-system/mantine/patterns/MantineHomeSection.tsx
+--homepage-runtime-section-py-md <- src/design-system/mantine/patterns/MantineHomeSection.tsx
+--homepage-runtime-section-py-lg <- src/design-system/mantine/patterns/MantineHomeSection.tsx
+--hero-bg <- src/app/[locale]/page.tsx, src/stories/mantine/primitives/HeroSearch.stories.tsx

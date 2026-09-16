@@ -1,0 +1,15 @@
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { extname, join } from 'node:path';
+import { createRequire } from 'node:module';
+const ROOT = process.cwd();
+const { chromium } = createRequire(join(ROOT, 'package.json'))('playwright');
+const STATIC = join(ROOT, 'storybook-static');
+const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json' };
+const server = createServer(async (req, res) => { let p = req.url.split('?')[0]; if (p === '/') p = '/index.html'; try { const d = await readFile(join(STATIC, decodeURIComponent(p))); res.writeHead(200, { 'Content-Type': MIME[extname(p)] ?? 'application/octet-stream' }); res.end(d); } catch { res.writeHead(404); res.end(); } });
+await new Promise((r) => server.listen(6047, '127.0.0.1', r));
+const b = await chromium.launch(); const pg = await b.newPage();
+await pg.goto('http://127.0.0.1:6047/iframe.html?id=mantine-primitives-phonefield--default&viewMode=story&globals=locale:en', { waitUntil: 'load' });
+await pg.waitForTimeout(1000);
+console.log(JSON.stringify(await pg.evaluate(() => { const cs = getComputedStyle(document.documentElement); return Object.fromEntries(['--mantine-spacing-micro','--mantine-spacing-tight','--mantine-spacing-compact','--mantine-spacing-2xl','--mantine-spacing-sm','--mantine-font-size-micro','--mantine-font-size-md','--mantine-scale'].map(k => [k, cs.getPropertyValue(k).trim()])); }), null, 1));
+await b.close(); server.close();

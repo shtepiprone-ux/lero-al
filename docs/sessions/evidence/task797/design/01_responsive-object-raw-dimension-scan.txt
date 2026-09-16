@@ -1,0 +1,7 @@
+# measured 2026-09-16, win32, Node v22.22.3, cwd C:Claude_Code_Projectslero-al, HEAD 1ed5cd2a5 + uncommitted Task 815 work in progress (comment-only edits to MantineListingCardTrack.module.css and _MantineStoryShell.tsx)
+# command: node.exe 797_scan.mjs (retained as 90_797_scan.mjs)
+
+HITS 3 FILES 3
+src/components/shared/HeroSearchFallback.tsx:24  h={{ base: 279, sm: 175, md: 123 }}  raw=["279","175","123"]
+src/components/shared/PhoneField.tsx:164  triggerWidth={{ base: '7rem', sm: '7rem' }}  raw=["7rem","7rem"]
+src/design-system/mantine/patterns/MantineAuthFormPattern.tsx:29  maw={{ base: '100%', sm: 400 }}  raw=["400"]

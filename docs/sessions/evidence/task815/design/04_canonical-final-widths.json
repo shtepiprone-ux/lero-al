@@ -1,0 +1,2924 @@
+{
+  "mantine-primitives-favoritesshell--populated": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 576,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 703,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 670,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 925,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 926,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1181,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1182,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1341,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1342,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1437,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1438,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1822,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2462,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "mantine-primitives-listingcard--favorites-composition": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 576,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 703,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 670,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 925,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 926,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1181,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1182,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1341,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1342,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1437,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1438,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1822,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2462,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "mantine-primitives-recentlyviewedgridview--populated": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 576,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 703,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 670,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 925,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 926,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1181,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1182,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1341,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1342,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1437,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1438,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1822,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2462,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "mantine-primitives-similarlistingsview--default": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 576,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 703,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 670,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 925,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 926,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1181,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1182,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1341,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1342,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1437,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1438,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1822,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2462,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "mantine-primitives-similarlistingsview--fewer-than-eight": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 576,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 703,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 670,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 925,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 926,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1181,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1182,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1341,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1342,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1437,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1438,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1822,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2462,
+          "v": 4
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-homepagelistinggrids--default": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 592,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 592,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 719,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 719,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 720,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 720,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 975,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 975,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 960,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 960,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1215,
+          "v": 4
+        },
+        {
+          "mode": "rail",
+          "width": 1215,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1216,
+          "v": 4
+        },
+        {
+          "mode": "rail",
+          "width": 1216,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1344,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1344,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 5
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-homepagelistinggrids--loading": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        },
+        {
+          "mode": "rail",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 592,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 592,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 719,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 719,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 720,
+          "v": 2
+        },
+        {
+          "mode": "rail",
+          "width": 720,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 975,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 975,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 960,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 960,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1215,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1215,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1216,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1216,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1344,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1344,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 3
+        },
+        {
+          "mode": "rail",
+          "width": 1312,
+          "v": 4
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--grid": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 480,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 768,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1024,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1280,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1535,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1536,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1920,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2560,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--rail": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 480,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 768,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1024,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1280,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1439,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1440,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1535,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1536,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1920,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2560,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--grid-single-item": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 480,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 768,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1024,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1280,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1535,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1536,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1920,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2560,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--rail-single-item": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 480,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 639,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 640,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 767,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 768,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1023,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1024,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1279,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1280,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1439,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1440,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1535,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1536,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1920,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2560,
+          "v": 1
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--rail-no-overflow": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 480,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 768,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1023,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1024,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1279,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1280,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1439,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1440,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1535,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1536,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1920,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2560,
+          "v": 2
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--rail-mixed-title-lengths": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 480,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 768,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1024,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1280,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1535,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1536,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 1920,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "rail",
+          "width": 2560,
+          "v": 4
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--grid-mixed-title-lengths": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 480,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 768,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1024,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1280,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1535,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1536,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1920,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2560,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingcardtrack--empty": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 320,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 479,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 480,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 639,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 640,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 767,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 768,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1023,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1024,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1279,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1280,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1535,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1536,
+          "v": 5
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1920,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2560,
+          "v": 8
+        }
+      ]
+    }
+  ],
+  "patterns-mantine-listingsshellview--default": [
+    {
+      "w": 320,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 288,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 479,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 447,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 480,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 448,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "w": 639,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 607,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 640,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 592,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 767,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 719,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 768,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 720,
+          "v": 2
+        }
+      ]
+    },
+    {
+      "w": 1023,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 975,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1024,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 960,
+          "v": 3
+        }
+      ]
+    },
+    {
+      "w": 1279,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1215,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1280,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1216,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1439,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1375,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1440,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1344,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1535,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1439,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1536,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1440,
+          "v": 4
+        }
+      ]
+    },
+    {
+      "w": 1920,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 1824,
+          "v": 6
+        }
+      ]
+    },
+    {
+      "w": 2560,
+      "tracks": [
+        {
+          "mode": "grid",
+          "width": 2464,
+          "v": 8
+        }
+      ]
+    }
+  ]
+}

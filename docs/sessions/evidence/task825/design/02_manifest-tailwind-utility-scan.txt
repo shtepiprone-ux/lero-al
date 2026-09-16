@@ -1,0 +1,7 @@
+# measured 2026-09-16, win32, Node v22.22.3, cwd C:Claude_Code_Projectslero-al, HEAD 1ed5cd2a5 + uncommitted Task 815 work in progress (comment-only edits to MantineListingCardTrack.module.css and _MantineStoryShell.tsx)
+# command: heuristic node scan of className string literals in every scripts/mantine-migration-scope.json entry (see kickoff 825 §3.5)
+
+manifest entries 72 files with Tailwind-utility className literals 3
+9 src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+4 src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+1 src/modules/listings/components/ListingDetailView.tsx

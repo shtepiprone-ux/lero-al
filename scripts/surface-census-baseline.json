@@ -163,9 +163,6 @@
     "src/app/[locale]/favorites/page.tsx :: src/app/[locale]/favorites/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/favorites/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/layout.tsx :: src/app/[locale]/layout.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -229,9 +226,6 @@
     "src/app/[locale]/listings/[slug]/page.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/listings/[slug]/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/listings/[slug]/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -251,6 +245,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -283,9 +280,6 @@
     "src/app/[locale]/listings/page.tsx :: src/app/[locale]/listings/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/listings/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/listings/page.tsx :: src/modules/listings/components/ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -306,9 +300,6 @@
     },
     "src/app/[locale]/page.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/[locale]/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/[locale]/page.tsx :: src/modules/listings/components/FeaturedListings.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -547,9 +538,6 @@
     "src/app/admin/listings/[id]/preview/page.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/listings/[id]/preview/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/admin/listings/[id]/preview/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -569,6 +557,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -988,9 +979,6 @@
     "src/app/admin/users/page.tsx :: src/components/admin/AdminUsersTable.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/users/page.tsx :: src/design-system/mantine/patterns/MantineDataTableToCards.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
     "src/app/api/auth-email-hook/route.ts :: src/app/api/auth-email-hook/route.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -1222,58 +1210,10 @@
     "src/design-system/mantine/notificationVariants.ts :: src/design-system/mantine/notificationVariants.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: src/design-system/mantine/patterns/MantineDataTableToCards.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineAppShellFoundation.tsx :: src/design-system/mantine/patterns/MantineAppShellFoundation.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineAuthFormPattern.tsx :: src/design-system/mantine/patterns/MantineAuthFormPattern.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx :: src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: tier1-unenrolled-or-unstoried": {
+    "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineNotificationPattern.tsx :: src/design-system/mantine/patterns/MantineNotificationPattern.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx :: src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineProgress.tsx :: src/design-system/mantine/patterns/MantineProgress.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx :: src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineSelect.tsx :: src/design-system/mantine/patterns/MantineSelect.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineSelect.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineTooltip.tsx :: src/design-system/mantine/patterns/MantineTooltip.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineTooltip.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/design-system/mantine/patterns/MantineTwoColumnForm.tsx :: src/design-system/mantine/patterns/MantineTwoColumnForm.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/design-system/mantine/patterns/index.ts :: src/design-system/mantine/patterns/index.ts :: tier1-unenrolled-or-unstoried": {
@@ -1283,6 +1223,12 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/design-system/mantine/typography.ts :: src/design-system/mantine/typography.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/media/appImageConfig.ts :: src/design-system/media/appImageConfig.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/media/useAdaptiveImageConfig.ts :: src/design-system/media/useAdaptiveImageConfig.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/hooks/useAdminPageFreshness.ts :: src/hooks/useAdminPageFreshness.ts :: tier1-unenrolled-or-unstoried": {
@@ -1298,6 +1244,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/hooks/usePropertyTypes.ts :: src/hooks/usePropertyTypes.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useSwipeTrackSync.ts :: src/hooks/useSwipeTrackSync.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/hooks/useUnsavedChangesGuard.ts :: src/hooks/useUnsavedChangesGuard.ts :: tier1-unenrolled-or-unstoried": {
@@ -1540,17 +1489,8 @@
     "src/modules/listings/actions/updateListing.ts :: src/modules/listings/actions/updateListing.ts :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/FavoritesShell.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/FeaturedListingsView.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/modules/listings/components/FeaturedListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/modules/listings/components/LatestListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/modules/listings/components/ListingContact.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
@@ -1579,9 +1519,6 @@
     "src/modules/listings/components/ListingDetailView.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/ListingDetailView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/ListingDetailView.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1601,6 +1538,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -1693,20 +1633,11 @@
     "src/modules/listings/components/ListingsFilters.tsx :: src/components/shared/YearCombobox.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/ListingsShellView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/ListingsShellView.tsx :: src/modules/listings/components/ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/modules/listings/components/RecentlyViewedGridView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/SimilarListingsView.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/modules/listings/components/SimilarListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/modules/listings/components/form/AreaPairField.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"

@@ -1,0 +1,8 @@
+Task 820 Revision 4 — environment and immutable refs
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+BASE=02d975f945159df38c23a0caab43e1c7a96faa58
+HEAD=177454322207e340c6c942a6f8467a0c5b9046fc
+merge-base=02d975f945159df38c23a0caab43e1c7a96faa58
+CI defaults unchanged: maxChangedFiles=300; maxSurfaces=60

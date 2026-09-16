@@ -1,0 +1,7 @@
+Task 820 Revision 4 — baseline before/after
+before blocks: 676
+after blocks: 653
+before SHA-256: 8f35700ea856acb40e4fa85c5b598da8fc0f12f6b37cca5c2ad05eb85be5bb88
+after SHA-256: 459a04a1c88afa4f9ab740a1fac803eab82e5296b1e30bd781e3945e3ca5df69
+added: 7
+removed: 30

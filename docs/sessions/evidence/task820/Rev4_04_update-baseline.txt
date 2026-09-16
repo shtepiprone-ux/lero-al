@@ -1,0 +1,8 @@
+Task 820 Revision 4 — idempotence receipt after the sanctioned baseline write
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Command: C:\Program Files\nodejs\node.exe scripts/check-surface-census-changed.mjs --base 02d975f945159df38c23a0caab43e1c7a96faa58 --head 177454322207e340c6c942a6f8467a0c5b9046fc --max-changed-files 5397 --max-surfaces 198 --update-baseline
+Exit code: 0
+Raw stdout: Rev4_04_update-baseline.stdout.txt
+Raw stderr: Rev4_04_update-baseline.stderr.txt

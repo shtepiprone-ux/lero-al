@@ -1,0 +1,19 @@
+CAPTURED_AT=2026-09-16T10:36:21.762Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=npx.cmd eslint scripts/check-pattern-enrolment.mjs
+STDOUT_BEGIN
+
+C:\Claude_Code_Projects\lero-al\scripts\check-pattern-enrolment.mjs
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+✖ 1 problem (0 errors, 1 warning)
+
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

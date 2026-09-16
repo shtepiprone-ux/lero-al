@@ -1,0 +1,14 @@
+CAPTURED_AT=2026-09-16T10:36:21.762Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=Get-Location
+STDOUT_BEGIN
+
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

@@ -1,0 +1,17 @@
+CAPTURED_AT=2026-09-16T10:36:21.762Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=npm.cmd run typecheck
+STDOUT_BEGIN
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

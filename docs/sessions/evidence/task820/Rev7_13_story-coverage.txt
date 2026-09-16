@@ -1,0 +1,24 @@
+CAPTURED_AT=2026-09-16T10:36:21.762Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=npm.cmd run check:story-coverage
+STDOUT_BEGIN
+
+> lero-al@0.1.0 check:story-coverage
+> node scripts/check-story-coverage.mjs
+
+📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)
+    Canonical Mantine story files: 97 (of 146 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+    Manifest entries (migration scope): 70
+    ✅ 70 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

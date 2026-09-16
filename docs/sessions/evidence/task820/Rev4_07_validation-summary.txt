@@ -1,0 +1,13 @@
+Task 820 Revision 4 — final direct validation summary
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+npm.cmd run typecheck — exit 0
+npm.cmd run check:pattern-enrolment — exit 0 (36 pattern files; 70 manifest entries)
+npm.cmd run check:pattern-enrolment:verify — exit 0 (5/5 arms)
+npm.cmd run audit:design-system-patterns — exit 0 (36 enrolled / 0 allowlisted / 0 ungoverned)
+npm.cmd run check:rendered-scope — exit 0 (0 new / 0 stale)
+npm.cmd run check:rendered-scope:verify — exit 0 (5/5 arms)
+npm.cmd run check:story-coverage — exit 0 (70 covered / 0 unproven)
+npm.cmd run check:stories — exit 0 (151 files / 0 violations)
+These commands were run directly in the execution session; no PowerShell redirection was used for their output.

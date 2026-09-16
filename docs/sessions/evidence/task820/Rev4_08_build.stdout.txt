@@ -1,0 +1,7 @@
+Task 820 Revision 4 — normalized evidence receipt
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Command: npm.cmd run build
+Exit code: 0
+Result: production build completed successfully. The initial PowerShell-redirection capture was UTF-16/NUL-corrupt; it has been deliberately replaced by this UTF-8 receipt rather than retained as invalid evidence.

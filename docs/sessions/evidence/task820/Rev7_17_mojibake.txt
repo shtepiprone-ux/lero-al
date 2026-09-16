@@ -1,0 +1,20 @@
+CAPTURED_AT=2026-09-16T10:42:43.557Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=npm.cmd run check:mojibake
+STDOUT_BEGIN
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 4885 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 4885 files
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

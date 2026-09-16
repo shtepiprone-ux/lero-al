@@ -2,7 +2,7 @@
 
 Task path: `tasks/Sprints/Sprint_75_kickoff_prompt_Task_820_One_Rule_For_The_Pattern_Directory.md`
 
-Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
+Status: ✅ `APPROVED WITH NOTES` — Opus implementation review Revision 5, 2026-09-16 (kickoff §17.10)
 
 Evidence directory: `docs/sessions/evidence/task820/`
 
@@ -84,9 +84,9 @@ New file: `src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx`.
   — direct file import, resolves to `src/design-system/mantine/patterns/responsiveBottomSheet.tsx` exactly.
 - Render: `<ResponsiveBottomSheet opened={...} onClose={...} title={t('sheet_title')}><SheetContent><Text>{t('sheet_body')}</Text></SheetContent></ResponsiveBottomSheet>` — the real production composition. `DragHandle` is not imported/placed manually; it is rendered unconditionally inside `ResponsiveBottomSheet`'s own `title` slot (`responsiveBottomSheet.tsx:142-150`), so it is present in the real composition without a stand-in.
 - **AC3 — four tuples.** One exported `Default` story renders both a `ClosedSection` (resting, trigger
-  button, `opened=false`) and an `OpenedSection` (`opened` fixed `true`, showing the full composition)
-  stacked together — the same "multiple sections in one Default story" shape `Drawer.stories.tsx` already
-  uses. `OWNER VISUAL QA REQUIRED` tuples (owner rule, `screenshots:assert` retired): `(ResponsiveBottomSheet/
+  button, `opened=false`) and an `OpenedSection` (local state initially `true`, then dismissible through its real
+  `onClose`) stacked together — the same "multiple sections in one Default story" shape `Drawer.stories.tsx`
+  already uses. `OWNER VISUAL QA REQUIRED` tuples (owner rule, `screenshots:assert` retired): `(ResponsiveBottomSheet/
   Default — ClosedSection, en, 390)`, `(ResponsiveBottomSheet/Default — OpenedSection, en, 390)`,
   `(ResponsiveBottomSheet/Default — ClosedSection, en, 1440)`, `(ResponsiveBottomSheet/Default —
   OpenedSection, en, 1440)`.
@@ -228,6 +228,112 @@ affected files via a Node script (never PowerShell `-Raw`). Re-run: exit 0.
 `git hash-object` of every changed/added file: `Rev2_hash-object_primary-files.txt` (13 entries) and
 `Rev2_hash-object_story-imports.txt` (27 entries).
 
+## Revision 3 — historical stop recorded after the fact
+
+Historical status at the Revision 3 stop: `PARTIALLY IMPLEMENTED — BLOCKED, OWNER DECISION REQUIRED (§17.6)`.
+The widened window used base `02d975f945159df38c23a0caab43e1c7a96faa58`, head
+`794403a8b9cd416786310703997b17303876b52f`, and its measured limits `4991 / 193`.
+
+The sanctioned writer exited 1 after refusing these two new tier-2 blocks:
+
+- `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+
+The partial 675-entry write was restored byte-identically (`bfa1076f3ba97fea44f708c14a226164a014df24` before and
+after). This was the real owner-decision stop, not a green run. Indexed evidence: `Rev3_00_env-and-shas.txt`,
+`Rev3_01_baseline-hash-before.txt`, `Rev3_02_pre-write-20entry-15surface-witness.txt`,
+`Rev3_03_dry-run-mapping.txt`, `Rev3_03b_dry-run-mapping-json.txt`, `Rev3_04_update-baseline.txt`,
+`Rev3_05_tier2-refusal-and-restore.txt`, `Rev3_06_mojibake.txt`, and `Rev3_07_file-integrity.txt`.
+
+## Revision 4 — Task 813 dependency cleared; exact-window reconciliation
+
+Revision 4 status: `PARTIALLY IMPLEMENTED — OWNER VISUAL QA REQUIRED (AC3)`. The execution head and environment are
+recorded in `Rev4_00_env-and-shas.txt`; the owner-selected base remains
+`02d975f945159df38c23a0caab43e1c7a96faa58`. The exact mapping measured **5,397 changed paths** and **198 affected
+surfaces**, therefore the one-off command used `--max-changed-files 5397 --max-surfaces 198`. These are measured
+reconciliation values only; CI remains at its unchanged 300-path / 60-surface defaults.
+
+The sanctioned writer reconciled the baseline **676 → 653** without a tier-2 refusal. The full same-window gate then
+exited 0: 198 surfaces censused, 531 recorded-debt blocks, 122 carried blocks, **0 new** and **0 stale**. Its
+self-test exited 0 with **8/8** arms. The retained raw transcripts show exact stdout, stderr and exit code; the
+compact receipts name their raw counterparts.
+
+Every baseline delta is explicit below (also machine-readable in `Rev4_02_baseline-delta.json`).
+
+Added (7):
+
+- `src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried`
+- `src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/media/appImageConfig.ts :: src/design-system/media/appImageConfig.ts :: tier1-unenrolled-or-unstoried`
+- `src/design-system/media/useAdaptiveImageConfig.ts :: src/design-system/media/useAdaptiveImageConfig.ts :: tier1-unenrolled-or-unstoried`
+- `src/hooks/useSwipeTrackSync.ts :: src/hooks/useSwipeTrackSync.ts :: tier1-unenrolled-or-unstoried`
+- `src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried`
+
+Removed (30):
+
+- `src/app/[locale]/favorites/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/app/[locale]/listings/[slug]/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/app/[locale]/listings/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/app/[locale]/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/app/admin/listings/[id]/preview/page.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/app/admin/users/page.tsx :: src/design-system/mantine/patterns/MantineDataTableToCards.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx :: src/design-system/mantine/patterns/MantineDataTableToCards.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineAppShellFoundation.tsx :: src/design-system/mantine/patterns/MantineAppShellFoundation.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineAuthFormPattern.tsx :: src/design-system/mantine/patterns/MantineAuthFormPattern.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx :: src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: src/design-system/mantine/patterns/MantineFormSectionStack.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineNavigationMenu.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineNotificationPattern.tsx :: src/design-system/mantine/patterns/MantineNotificationPattern.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx :: src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineProgress.tsx :: src/design-system/mantine/patterns/MantineProgress.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx :: src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineSelect.tsx :: src/design-system/mantine/patterns/MantineSelect.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineSelect.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineTooltip.tsx :: src/design-system/mantine/patterns/MantineTooltip.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineTooltip.tsx :: src/design-system/mantine/patterns/responsiveBottomSheet.tsx :: tier1-unenrolled-or-unstoried`
+- `src/design-system/mantine/patterns/MantineTwoColumnForm.tsx :: src/design-system/mantine/patterns/MantineTwoColumnForm.tsx :: tier1-unenrolled-or-unstoried`
+- `src/modules/listings/components/FavoritesShell.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/FeaturedListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/LatestListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/ListingDetailView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/ListingsShellView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/RecentlyViewedGridView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+- `src/modules/listings/components/SimilarListingsView.tsx :: src/components/ui/AppImage.tsx :: tier2-legacy-primitive`
+
+Indexed evidence: `Rev4_00_env-and-shas.txt`, `Rev4_01_baseline-before-after.txt`,
+`Rev4_02_baseline-delta.json`, `Rev4_03_window-measurement.json`, `Rev4_04_update-baseline.txt`,
+`Rev4_04_update-baseline.stdout.txt`, `Rev4_04_update-baseline.stderr.txt`,
+`Rev4_04_update-baseline.exit.txt`, `Rev4_05_gate.txt`, `Rev4_05_gate.stdout.txt`,
+`Rev4_05_gate.stderr.txt`, `Rev4_05_gate.exit.txt`, `Rev4_06_surface-census-verify.txt`,
+`Rev4_07_validation-summary.txt`, `Rev4_08_build.txt`, `Rev4_08_build.stdout.txt`,
+`Rev4_08_build.stderr.txt`, `Rev4_08_build.exit.txt`, `Rev4_09_file-integrity-all.txt`,
+`Rev4_09_file-integrity-all.stdout.txt`, `Rev4_09_file-integrity-all.stderr.txt`, and
+`Rev4_09_file-integrity-all.exit.txt`. The final changed/untracked integrity run is clean; the whole-tree
+integrity run retains exactly the pre-existing 57 failures under task765/, task767/, and task778/.
+
+At Revision 4, AC3 remained owner-only: `Default / ClosedSection / en / 390`, `Default / OpenedSection / en / 390`,
+`ClosedSection / en / 1440`, and `OpenedSection / en / 1440` required an actual owner accept/return result.
+
+## Revision 5 — owner-reported opened-sheet close defect
+
+The owner observed that `OpenedSection` was not a real interactive open state: it passed `opened` as a constant and
+`onClose` as a no-op, so the initially-opened sheet could never dismiss. The Story now owns local `opened` state,
+initialised to `true`, and passes `onClose={() => setOpened(false)}`. A backdrop tap or Escape therefore dismisses
+the opened sheet; `ClosedSection` remains the reopen fixture. `Rev5_00_opened-section-close-fix.txt` records the
+finding, patch and passing typecheck / story checks. The refreshed visual result is recorded in Revision 6.
+
+## Revision 6 — owner visual acceptance for AC3
+
+The owner reviewed `Mantine/Primitives/ResponsiveBottomSheet → Default` and accepted all four required tuples:
+`ClosedSection / en / 390`, `OpenedSection / en / 390`, `ClosedSection / en / 1440`, and
+`OpenedSection / en / 1440`. The owner also confirmed that controls are clickable and the sheet opens and closes.
+
+Evidence: `docs/sessions/evidence/task820/Rev6_00_owner-visual-acceptance.md`. The task is implemented and awaits
+orchestrator review; this owner acceptance does not self-approve the task.
+
 ## Files Changed
 
 | Path | Reason |
@@ -235,11 +341,11 @@ affected files via a Node script (never PowerShell `-Raw`). Re-run: exit 0.
 | `scripts/mantine-migration-scope.json` | +28 pattern paths (R4) |
 | `scripts/rendered-scope-allowlist.json` | −11 retired tier-3 entries (R5) |
 | `scripts/rendered-scope-baseline.json` | +1 new tier-1 frontier edge, via `--update-baseline` (R6) |
-| `scripts/surface-census-baseline.json` | re-run via `--update-baseline`; byte-identical (690=690) — no production surface in this task's diff |
+| `scripts/surface-census-baseline.json` | Revision 1 no-op (690=690); Revision 3 partial 675-entry write restored byte-identically; Revision 4 sanctioned reconciliation 676 → 653 (7 added / 30 removed) |
 | `scripts/check-pattern-enrolment.mjs` | new — the parity check (R7) |
 | `package.json` | +2 npm scripts for the parity check |
 | `.github/workflows/governance-pr.yml` | +2 blocking CI steps for the parity check (R7/AC11) |
-| `src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx` | new canonical Story for `responsiveBottomSheet.tsx` (R2) |
+| `src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx` | new canonical Story for `responsiveBottomSheet.tsx` (R2); Revision 5 fixes `OpenedSection` so its initially-open state is dismissible through the real `onClose` handler; Revision 6 records the owner's visual acceptance |
 | `messages/{en,sq,uk,it}.json` | +3 locale keys each for the new Story's fixture text (agent-contract 7) |
 | 27 existing `*.stories.tsx` under `src/stories/mantine/primitives/` and `src/stories/patterns/mantine/` | switched each pattern's own canonical Story from the shared barrel import to a direct file import — required for `check:story-coverage` to recognize them once enrolled (§2 above); zero behavior/visual change |
 | `docs/golden-rules.md` | GR-1 Enforcement status row only |
@@ -252,8 +358,8 @@ affected files via a Node script (never PowerShell `-Raw`). Re-run: exit 0.
 No pattern's visible markup, tokens, or styling changed. `responsiveBottomSheet.tsx` (source) is untouched;
 its new Story consumes it as-is. The 27 import-path edits change only which module path a story's own
 `import` statement resolves through — the runtime binding, render output, and DOM are identical either way
-(barrel vs. direct import of the same named export). No visible artifact requires `OWNER VISUAL QA REQUIRED`
-beyond §4's four `ResponsiveBottomSheet` tuples.
+(barrel vs. direct import of the same named export). The four §4 `ResponsiveBottomSheet` visual tuples required
+owner QA and were accepted in Revision 6.
 
 ## Canonical UI decision record
 
@@ -274,21 +380,57 @@ component's own existing `bottomSheetDrawerStyles`/`theme.other.overlay.dragHand
 - **Assumption (stated):** "every current and future `.tsx`" (decision 5) excludes `index.ts` (not `.tsx`),
   `__tests__/`, `.module.css` — the directory currently has no subdirectories or excluded files, so this
   exclusion is stated but not yet exercised.
-- **Limitation:** `check:surface-census:changed`'s baseline (690 entries) still carries debt naming
-  now-enrolled-and-storied patterns for surfaces this task's diff did not touch (e.g. `layout.tsx`). Not a
-  defect — see §8 — but it means the 690 number will not visibly shrink until a future PR's diff reaches
-  those surfaces.
+- **Revision 4 correction:** the exact widened reconciliation removed all stale entries in the affected window;
+  `check:surface-census:changed` now exits 0 there. The baseline is 653 entries, not 690, and any remaining debt is
+  either currently produced or correctly carried for an uncensused surface.
 - **Limitation (pre-existing, out of scope):** `npm run check:file-integrity --all` fails on **57** files,
   across `docs/sessions/evidence/task765/` (24), `docs/sessions/evidence/task767/` (1) and
   `docs/sessions/evidence/task778/` (32, including `plant-T6.txt`) — all pre-existing, committed evidence,
   untouched by this session. Reported, not fixed (Revision 1 R12).
-- No `CONFLICT`/`BLOCKED — OWNER DECISION REQUIRED` fired — R3 measured 0 new tier-2 edges.
+- **Historical correction:** Revision 3 did fire `BLOCKED — OWNER DECISION REQUIRED` when its widened writer refused
+  two new AppImage tier-2 blocks; it restored the partial write. Revision 4, after Task 813, completed without a
+  tier-2 refusal.
 
 ## Opus handoff
 
 Evidence root: `docs/sessions/evidence/task820/`. Please independently verify: (1) the barrel-import
 discovery in §2 — re-derive at least 2-3 of the 27 story-file diffs directly; (2) the AC10 planted-failure
-witness (`AC10_planted-failure_probe.txt` + `AC10_restore-verification.txt`); (3) that
-`surface-census-baseline.json`'s 690=690 no-op is genuinely explained by zero production-surface changes in
-this diff, not a mis-run `--update-baseline`; (4) the five named scripts' empty `git diff --stat`; (5) the
-`Rev2_file-integrity_all.txt` pre-existing-defect claim against `git log`/`git status` for that exact path.
+witness (`AC10_planted-failure_probe.txt` + `AC10_restore-verification.txt`); (3) Revision 4's complete
+676 → 653 baseline delta and same-window `0 new / 0 stale` receipt (`Rev4_02` through `Rev4_06`); (4) the
+five named scripts' empty `git diff --stat`; (5) the `Rev2_file-integrity_all.txt` pre-existing-defect claim
+against `git log`/`git status`; and (6) the Revision 6 owner visual acceptance — it is recorded in
+`Rev6_00_owner-visual-acceptance.md`, not inferred from a static check.
+
+## Revision 7 — §13.2 re-run in full on the final tree (2026-09-16)
+
+Written for kickoff §17.9's R14–R16. Every command below ran in native Windows PowerShell (`powershell.exe -NoProfile`, `[Console]::OutputEncoding = UTF8`) spawned from Node, so no PowerShell redirection touched the output — that redirection is what produced the UTF-16/NUL corruption in Revision 4 and the repo-wide hazard recorded in `orchestrator-procedures.md`. Each transcript carries `CAPTURED_AT`, platform, node, cwd, host, the exact command, delimited verbatim stdout/stderr and a real `EXIT_CODE`.
+
+| Transcript | Command | Result | Size |
+|---|---|---|---|
+| `Rev7_00_platform.txt` | `node.exe -p process.platform` | exit 0 | 238 B |
+| `Rev7_01_node-version.txt` | `node.exe --version` | exit 0 | 232 B |
+| `Rev7_02_cwd.txt` | `Get-Location` | exit 0 | 218 B |
+| `Rev7_03_node-check.txt` | `node.exe --check scripts\check-pattern-enrolment.mjs` | exit 0 | 256 B |
+| `Rev7_04_typecheck.txt` | `npm.cmd run typecheck` | exit 0 | 268 B |
+| `Rev7_05_eslint.txt` | `npx.cmd eslint scripts/check-pattern-enrolment.mjs` | exit 0 | 530 B |
+| `Rev7_06_pattern-enrolment.txt` | `npm.cmd run check:pattern-enrolment` | exit 0 | 1102 B |
+| `Rev7_07_pattern-enrolment-verify.txt` | `npm.cmd run check:pattern-enrolment:verify` | exit 0 | 1081 B |
+| `Rev7_08_audit-design-system-patterns.txt` | `npm.cmd run audit:design-system-patterns` | exit 0 | 8473 B |
+| `Rev7_09_rendered-scope.txt` | `npm.cmd run check:rendered-scope` | exit 0 | 1396 B |
+| `Rev7_10_rendered-scope-verify.txt` | `npm.cmd run check:rendered-scope:verify` | exit 0 | 1010 B |
+| `Rev7_11_surface-census-changed.txt` | `npm.cmd run check:surface-census:changed -- --base 02d975f945159df38c23a0caab43e1c7a96faa58 --head 177454322207e340c6c942a6f8467a0c5b9046fc --max-changed-files 5397 --max-surfaces 198` | exit 0 | 477574 B |
+| `Rev7_12_surface-census-changed-verify.txt` | `npm.cmd run check:surface-census:changed:verify` | exit 0 | 1302 B |
+| `Rev7_13_story-coverage.txt` | `npm.cmd run check:story-coverage` | exit 0 | 813 B |
+| `Rev7_14_check-stories.txt` | `npm.cmd run check:stories` | exit 0 | 2521 B |
+| `Rev7_15_build.txt` | `npm.cmd run build` | exit 0 | 5004 B |
+| `Rev7_16_file-integrity.txt` | `npm.cmd run check:file-integrity` | exit 0 | 528 B |
+| `Rev7_17_mojibake.txt` | `npm.cmd run check:mojibake` | exit 0 | 503 B |
+
+**Two defects found while doing this, both in the kickoff, both reported rather than worked around.**
+
+1. §13.1 and §13.2 both listed `npm run check:surface-census:changed` with no `--base`. Run verbatim it exits 1, because the gate fails closed when it cannot determine a merge base. Reproduced, reported, and corrected in the kickoff by the orchestrator to the exact-window invocation with `$head` read at run time.
+2. `Rev4_07_validation-summary.txt` and `Rev4_08_build.stdout.txt` were executor summaries, not transcripts. They are **superseded** by this table and closed nothing.
+
+`RESPONSIVE_BOTTOM_SHEET_STORY_SHA1=47fa4b0562f361e84bbd5db65c256a07f0e8d234` is recorded inside `Rev7_15_build.txt` and equals the shipped `src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx`, so the build transcript describes the shipped tree. Every tracked source and data file predates the block: the baseline was last written 09:58, the Story 10:08, the block captured 10:42–10:43.
+
+AC3 is closed by owner acceptance recorded verbatim in `Rev6_00_owner-visual-acceptance.md`; no screenshot artifact is retained in this repository.

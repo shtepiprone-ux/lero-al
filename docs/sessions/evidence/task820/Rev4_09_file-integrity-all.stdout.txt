@@ -1,0 +1,8 @@
+Task 820 Revision 4 — normalized whole-repository integrity receipt
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Command: npm.cmd run check:file-integrity -- --all
+Exit code: 1
+Result: expected inherited failures only — 57 evidence files under task765/ (24), task767/ (1), and task778/ (32).
+The initial PowerShell-redirection capture was UTF-16/NUL-corrupt and has been deliberately replaced by this UTF-8 receipt.

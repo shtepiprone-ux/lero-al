@@ -1,0 +1,7 @@
+Task 820 Revision 4 — normalized evidence receipt
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Command: npm.cmd run build
+Exit code: 0
+See Rev4_08_build.stdout.txt for the normalized UTF-8 receipt.

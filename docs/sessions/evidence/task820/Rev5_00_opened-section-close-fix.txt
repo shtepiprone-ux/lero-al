@@ -1,0 +1,10 @@
+Task 820 Revision 5 — owner-reported opened-sheet close defect
+platform: win32
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Finding: OpenedSection rendered ResponsiveBottomSheet with opened as a constant and onClose as a no-op; a Storybook user could not dismiss the initially-open sheet.
+Fix: OpenedSection now owns local opened state initialized to true and passes onClose={() => setOpened(false)}. Backdrop tap or Escape now dismisses it; ClosedSection remains the reopen fixture.
+Validation: npm.cmd run typecheck — exit 0.
+Validation: npm.cmd run check:stories — exit 0 (151 files, 0 violations).
+Validation: npm.cmd run check:story-coverage — exit 0 (70 covered, 0 unproven).
+AC3 remains owner visual QA: refresh the Storybook story and verify the four mobile/desktop, closed/opened tuples.

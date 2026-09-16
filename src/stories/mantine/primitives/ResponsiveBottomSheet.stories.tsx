@@ -41,6 +41,7 @@ function ClosedSection({ locale }: { locale: string }) {
 }
 
 function OpenedSection({ locale }: { locale: string }) {
+  const [opened, setOpened] = useState(true)
   const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
   return (
@@ -48,7 +49,7 @@ function OpenedSection({ locale }: { locale: string }) {
       <Text size="xs" c="gray.5" fw={500}>
         opened — the real production composition: DragHandle (centered, top of header) + title + SheetContent-gutter body
       </Text>
-      <ResponsiveBottomSheet opened onClose={() => {}} title={t('sheet_title')}>
+      <ResponsiveBottomSheet opened={opened} onClose={() => setOpened(false)} title={t('sheet_title')}>
         <SheetBody locale={locale} />
       </ResponsiveBottomSheet>
     </Stack>

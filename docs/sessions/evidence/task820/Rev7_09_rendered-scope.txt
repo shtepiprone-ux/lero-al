@@ -1,0 +1,35 @@
+CAPTURED_AT=2026-09-16T10:36:21.762Z
+PLATFORM=win32
+NODE=v22.22.3
+CWD=C:\Claude_Code_Projects\lero-al
+HOST=powershell.exe -NoProfile
+COMMAND=npm.cmd run check:rendered-scope
+STDOUT_BEGIN
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 70 (of 70 manifest entries)
+    Local import edges resolved: 307
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 188
+    Allowlisted edges (tier3, owner-filed): 4
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 26
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 28 (deduped from 29 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 28
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0

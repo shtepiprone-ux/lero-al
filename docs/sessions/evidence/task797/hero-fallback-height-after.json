@@ -1,0 +1,20 @@
+[
+  {
+    "viewportWidth": 390,
+    "found": true,
+    "height": 279,
+    "elementWidth": 326
+  },
+  {
+    "viewportWidth": 640,
+    "found": true,
+    "height": 175,
+    "elementWidth": 528
+  },
+  {
+    "viewportWidth": 1440,
+    "found": true,
+    "height": 123,
+    "elementWidth": 768
+  }
+]

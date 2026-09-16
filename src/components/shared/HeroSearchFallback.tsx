@@ -21,7 +21,15 @@ export function HeroSearchFallback() {
   const theme = useMantineTheme()
   return (
     <Box maw={theme.other.boxSize.content} mx="auto" w="100%">
-      <Skeleton data-testid="hero-search-fallback" radius="lg" h={{ base: 279, sm: 175, md: 123 }} />
+      <Skeleton
+        data-testid="hero-search-fallback"
+        radius="lg"
+        h={{
+          base: theme.other.layout.heroSearchFallbackHeight.base,
+          sm: theme.other.layout.heroSearchFallbackHeight.sm,
+          md: theme.other.layout.heroSearchFallbackHeight.md,
+        }}
+      />
     </Box>
   )
 }

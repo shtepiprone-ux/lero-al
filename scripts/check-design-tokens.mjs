@@ -178,6 +178,13 @@ export function filterFilesForScope(files, scopeMantine, manifestSet) {
 // NOT flagged by design: var(--token) (no # or rgb() in it), named Tailwind
 // utilities (p-4 = no bracket, z-50 = no bracket, shadow-md = no bracket,
 // duration-200 = no bracket), token definitions in globals.css (file excluded).
+
+// Single source for the dimension/layout JSX prop name list, shared by the numeric (`={N}`) and
+// unit-bearing (`="Npx|Nrem|Nem"`) single-brace arms below AND the Task 797 responsive-object arm
+// further down (which reuses this list minus `offset` — see RESPONSIVE_DIMENSION_PROP_NAMES: in
+// object form `offset` is `Grid.Col`'s column-offset COUNT, not Popover's px offset).
+const DIMENSION_PROP_NAMES = 'size|miw|maw|mih|mah|w|h|width|height|minWidth|maxWidth|minHeight|maxHeight|gap|rowGap|columnGap|spacing|verticalSpacing|horizontalSpacing|m|mt|mb|ms|me|mx|my|p|pt|pb|ps|pe|px|py|top|right|bottom|left|inset|insetX|insetY|offset|separatorMargin|triggerWidth|dropdownMinWidth|dropdownMaxHeight|scrollbarSize|thumbSize|radius';
+
 export const DETECTION_PATTERNS = [
   // Color literals — hex (3/6/8 digit)
   {
@@ -268,7 +275,7 @@ export const DETECTION_PATTERNS = [
   // such as `count`, `page`, `maxLength`, and `lineClamp` are deliberately absent.
   // A token reference remains valid because this matches only a bare numeric literal.
   {
-    re: /\b(?:size|miw|maw|mih|mah|w|h|width|height|minWidth|maxWidth|minHeight|maxHeight|gap|rowGap|columnGap|spacing|verticalSpacing|horizontalSpacing|m|mt|mb|ms|me|mx|my|p|pt|pb|ps|pe|px|py|top|right|bottom|left|inset|insetX|insetY|offset|separatorMargin|triggerWidth|dropdownMinWidth|dropdownMaxHeight|scrollbarSize|thumbSize|radius)=\{-?(?:\d+\.\d+|\d+|\.\d+)\}/g,
+    re: new RegExp(`\\b(?:${DIMENSION_PROP_NAMES})=\\{-?(?:\\d+\\.\\d+|\\d+|\\.\\d+)\\}`, 'g'),
     cat: 'raw-dimension-prop',
     label: 'raw numeric dimension/layout prop',
     filter: (m) => !/=\{-?0(?:\.0+)?\}$/.test(m),
@@ -278,7 +285,7 @@ export const DETECTION_PATTERNS = [
   // raw `"2.75rem"`, compound `"0.25rem 0.75rem"`, and calc strings with a raw
   // unit bypass that scale just as much as a numeric prop does.
   {
-    re: /\b(?:size|miw|maw|mih|mah|w|h|width|height|minWidth|maxWidth|minHeight|maxHeight|gap|rowGap|columnGap|spacing|verticalSpacing|horizontalSpacing|m|mt|mb|ms|me|mx|my|p|pt|pb|ps|pe|px|py|top|right|bottom|left|inset|insetX|insetY|offset|separatorMargin|triggerWidth|dropdownMinWidth|dropdownMaxHeight|scrollbarSize|thumbSize|radius|lh|fz|letterSpacing)=(["'])[^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*\1/g,
+    re: new RegExp(`\\b(?:${DIMENSION_PROP_NAMES}|lh|fz|letterSpacing)=(["'])[^"']*-?(?:\\d+\\.\\d+|\\d+|\\.\\d+)(?:px|rem|em)[^"']*\\1`, 'g'),
     cat: 'raw-dimension-prop',
     label: 'raw unit-bearing dimension/layout prop',
     tsxOnly: true,
@@ -382,6 +389,148 @@ export const DETECTION_PATTERNS = [
     },
   },
 ];
+
+// ── Responsive-object dimension prop coverage (Task 797) ─────────────────────
+//
+// Mantine's responsive-prop object form — `prop={{ base: 176, md: 80 }}` — bypasses every arm
+// above: the numeric single-brace arm ends `=\{-?(?:\d+\.\d+|\d+|\.\d+)\}` (exactly one brace,
+// one literal); the unit single-brace arm requires a quoted string directly after `=`; the inline
+// arm's property alternation is CSS property names (`width`, `marginTop`…), not breakpoint keys
+// (`base`, `md`…). An expression beginning `={{` satisfies none of the three (Task 797 kickoff
+// §3.1). This is a small bracket-aware scanner, not a single regex, because the object body can
+// span multiple physical lines and can itself nest braces (the `unparsed-object` case below).
+//
+// Prop list: DIMENSION_PROP_NAMES minus `offset` — in object form `offset` is `Grid.Col`'s
+// column-offset COUNT, not Popover's px offset (§3.2 of the kickoff); `span`/`order`/`cols` were
+// never in DIMENSION_PROP_NAMES, so they are excluded the same way every other non-dimension prop
+// already is.
+const RESPONSIVE_DIMENSION_PROP_NAMES = DIMENSION_PROP_NAMES
+  .split('|')
+  .filter((name) => name !== 'offset')
+  .join('|');
+const RESPONSIVE_PROP_OPEN_RE = new RegExp(`\\b(?:${RESPONSIVE_DIMENSION_PROP_NAMES})=\\{\\{`, 'g');
+const RAW_NUMBER_VALUE_RE = /^-?(?:\d+\.\d+|\d+|\.\d+)$/;
+const RAW_UNIT_STRING_VALUE_RE = /^(["'])[^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*\1$/;
+
+// Splits a `{{ ... }}` responsive-object body into its top-level `key: value` entries. The body is
+// already proven brace-free by the caller (a body containing "{" is reported as `unparsed-object`
+// before this ever runs), so only quote state and paren/bracket depth need tracking to keep a
+// comma inside a string or a `calc(...)`/array value from splitting an entry early.
+function splitTopLevelObjectEntries(body) {
+  const entries = [];
+  let depth = 0;
+  let quote = null;
+  let start = 0;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (quote) {
+      if (ch === '\\') { i++; continue; }
+      if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") { quote = ch; continue; }
+    if (ch === '(' || ch === '[') { depth++; continue; }
+    if (ch === ')' || ch === ']') { if (depth > 0) depth--; continue; }
+    if (ch === ',' && depth === 0) {
+      entries.push({ text: body.slice(start, i), offset: start });
+      start = i + 1;
+    }
+  }
+  const last = body.slice(start);
+  if (last.trim() !== '') entries.push({ text: last, offset: start });
+  return entries;
+}
+
+// Finds every raw-dimension entry inside a Mantine responsive-object prop across the WHOLE file.
+// Runs on the same JSX-comment-stripped source (`strippedLines`) the other tsxOnly arms already
+// use, with each line ALSO passed through `shouldSkipLine` — so a JSDoc `*` continuation line
+// (e.g. MantineAuthFormPattern.tsx:29's `maw={{ base: '100%', sm: 400 }}` inside a `/** */` block)
+// is blanked exactly like the main per-line loop already blanks it via `continue`, and the same
+// trailing `// comment` is stripped per physical line before the whole-file scan.
+export function findResponsiveDimensionFindings(lines, strippedLines) {
+  const blankedLines = lines.map((line, i) => {
+    if (shouldSkipLine(line, false, null)) return '';
+    return strippedLines[i].replace(/\s*\/\/.*$/, '');
+  });
+  const content = blankedLines.join('\n');
+  const lineStartOffsets = [];
+  let runningOffset = 0;
+  for (const l of blankedLines) {
+    lineStartOffsets.push(runningOffset);
+    runningOffset += l.length + 1; // +1 for the '\n' joiner
+  }
+  function lineNumberAt(absOffset) {
+    let lo = 0, hi = lineStartOffsets.length - 1, ans = 0;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (lineStartOffsets[mid] <= absOffset) { ans = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    return ans + 1;
+  }
+
+  const findings = [];
+  RESPONSIVE_PROP_OPEN_RE.lastIndex = 0;
+  let m;
+  while ((m = RESPONSIVE_PROP_OPEN_RE.exec(content)) !== null) {
+    const propName = m[0].slice(0, m[0].indexOf('='));
+    const bodyStart = m.index + m[0].length;
+    let depth = 2; // the two "{" already consumed by the match ("prop={{")
+    let bodyEnd = -1;
+    let matchEnd = -1;
+    for (let i = bodyStart; i < content.length; i++) {
+      const ch = content[i];
+      if (ch === '{') depth++;
+      else if (ch === '}') {
+        depth--;
+        if (depth === 1 && bodyEnd === -1) bodyEnd = i;
+        if (depth === 0) { matchEnd = i + 1; break; }
+      }
+    }
+    if (matchEnd === -1) break; // unterminated on this content — nothing more to scan safely
+
+    const bodyText = content.slice(bodyStart, bodyEnd);
+    const openLine = lineNumberAt(m.index);
+
+    if (bodyText.includes('{')) {
+      // R2: a nested object body is not skipped silently — it is reported so the gap stays
+      // visible, using the same rawValue the kickoff documents for a marker to suppress it.
+      findings.push({
+        line: openLine,
+        cat: 'raw-dimension-responsive-prop',
+        label: 'raw dimension in Mantine responsive object prop (unparsed nested object)',
+        match: `${propName}: unparsed-object`,
+      });
+      RESPONSIVE_PROP_OPEN_RE.lastIndex = matchEnd;
+      continue;
+    }
+
+    for (const entry of splitTopLevelObjectEntries(bodyText)) {
+      const colonIdx = entry.text.indexOf(':');
+      if (colonIdx === -1) continue;
+      const key = entry.text.slice(0, colonIdx).trim();
+      const value = entry.text.slice(colonIdx + 1).trim();
+      if (!key || !value) continue;
+
+      const isRawNumber = RAW_NUMBER_VALUE_RE.test(value) && Number(value) !== 0;
+      const isRawUnitString = RAW_UNIT_STRING_VALUE_RE.test(value);
+      if (!isRawNumber && !isRawUnitString) continue;
+
+      const leadingWs = entry.text.match(/^\s*/)[0].length;
+      const entryLine = lineNumberAt(bodyStart + entry.offset + leadingWs);
+      findings.push({
+        line: entryLine,
+        cat: 'raw-dimension-responsive-prop',
+        label: 'raw dimension in Mantine responsive object prop',
+        match: `${propName}.${key}: ${value}`,
+      });
+    }
+
+    RESPONSIVE_PROP_OPEN_RE.lastIndex = matchEnd;
+  }
+
+  return findings;
+}
 
 // Categories landed report-only by Task 714 (§23.6): detected and printed under
 // their own heading, but never counted toward the strict/blocking exit code.
@@ -904,6 +1053,17 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
   // Task 718, R4 resolution source 2: custom properties defined anywhere in
   // THIS file (position-independent — see extractCssCustomPropertyDefinitions).
   const localDefinedProps = isCssFile ? extractCssCustomPropertyDefinitions(content) : new Set();
+  // Task 797: Mantine responsive-object dimension entries, pre-scanned once per file (not
+  // per-line) since the object body can span multiple physical lines. A "regular" (non-storyOnly)
+  // category, like every DETECTION_PATTERNS entry without storyOnly: true — never runs for the
+  // canonical-story-only pass, and never runs against .css content (no JSX there).
+  const responsiveDimensionByLine = new Map();
+  if (!isCssFile && !storyOnly) {
+    for (const f of findResponsiveDimensionFindings(lines, strippedLines)) {
+      if (!responsiveDimensionByLine.has(f.line)) responsiveDimensionByLine.set(f.line, []);
+      responsiveDimensionByLine.get(f.line).push(f);
+    }
+  }
   const findings = [];
 
   for (let i = 0; i < lines.length; i++) {
@@ -937,6 +1097,14 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
           match: m[0],
           area: getArea(relPath),
         });
+      }
+    }
+
+    // Task 797: responsive-object dimension findings pre-scanned above for this physical line.
+    const responsiveExtra = responsiveDimensionByLine.get(lineNum);
+    if (responsiveExtra) {
+      for (const { cat, label, match } of responsiveExtra) {
+        rawMatches.push({ file: relPath, line: lineNum, cat, label, match, area: getArea(relPath) });
       }
     }
 

@@ -3,7 +3,7 @@
 Sprint 75 · P2 · QA profile **Q4** (was `Q2` in the reservation — a detector arm is a gate claim and needs planted
 proof)
 
-**Status: `READY FOR SONNET`** — filed 2026-09-16. **Sequenced after Task 822's approved commit**: both edit
+**Status: ✅ `APPROVED WITH NOTES`** 2026-09-16 (Opus implementation review; ledger `docs/reviews/2026-09-16-task797-responsive-object-raw-dimension-detector.review-ledger.json`; P3 notes → Task **830**). Filed 2026-09-16. **Sequenced after Task 822's approved commit**: both edit
 `scripts/check-design-tokens.mjs`, its test file, `src/design-system/mantine/theme.ts` and `PhoneField.tsx`.
 
 ## 1. Mode and task type

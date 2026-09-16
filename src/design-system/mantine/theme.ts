@@ -87,6 +87,11 @@ declare module '@mantine/core' {
       | 'mainViewportOffset' // 64px — Task 822 (§3.3): `src/app/[locale]/layout.tsx:52`'s
                              // `mih="calc(100vh - 4rem)"` main-content min-block-size offset
       | 'thumbnail'       // 112px — PopularLocationsView location-card height
+      | 'phoneCountryTrigger' // 112px (7rem) — Task 797: `PhoneField.tsx`'s `triggerWidth`
+                              // compact dial-code trigger, owner-specified (Task 556
+                              // STOP-AND-ASK #1, legacy `w-28`). Same value as `thumbnail`
+                              // but a DIFFERENT rendered role (rule 3: same value, different
+                              // owner) — a phone-field trigger width, not a card thumbnail.
       | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
       | 'galleryNavDemoHeight' // 270px — Task 824 R17 revision (D824-4, AC17 audit): the
@@ -178,6 +183,10 @@ declare module '@mantine/core' {
     //   notificationPopoverOffset (4) — `NotificationBellView.tsx:36`'s `offset={4}`.
     //   notificationPanelWidth (320) — `NotificationBellView.tsx:46`'s `width={320}`.
     //   notificationPanelMaxHeight (480) — `NotificationBellView.tsx:48`'s `maxHeight: 480`.
+    // Task 797 — `heroSearchFallbackHeight`: `HeroSearchFallback.tsx`'s `Skeleton` `h={{ base,
+    //   sm, md }}` responsive-object triple, MEASURED (`scripts/task670-qa-hero-fallback-geometry.mjs
+    //   --baseline`, per `HeroSearchFallback.tsx`'s own docblock) — a per-breakpoint geometry, so it
+    //   is its own nested shape, not three flat `layout` keys.
     layout: {
       authFormMaxWidth: number
       emptyStateMinBlockSize: number
@@ -189,6 +198,7 @@ declare module '@mantine/core' {
       notificationPopoverOffset: number
       notificationPanelWidth: number
       notificationPanelMaxHeight: number
+      heroSearchFallbackHeight: { base: number; sm: number; md: number }
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -511,6 +521,9 @@ export const theme = createTheme({
                                  // `iconSize.touch` but a distinct, documented owner (rule 3).
       mainViewportOffset: '4rem', // 64px — Task 822: `layout.tsx:52` main-content offset
       thumbnail: '7rem',         // 112px
+      phoneCountryTrigger: '7rem', // 112px — Task 797: PhoneField.tsx triggerWidth (owner-specified,
+                                    // Task 556 STOP-AND-ASK #1). Same value as `thumbnail`, distinct
+                                    // rendered role (rule 3).
       truncateLabel: '7.5rem',   // 120px
       dropdownPanel: '13.75rem', // 220px
       galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
@@ -565,6 +578,9 @@ export const theme = createTheme({
       notificationPopoverOffset: 4,
       notificationPanelWidth: 320,
       notificationPanelMaxHeight: 480,
+      heroSearchFallbackHeight: { base: 279, sm: 175, md: 123 }, // Task 797: HeroSearchFallback.tsx
+                                                                  // Skeleton h — measured (see the
+                                                                  // component's own docblock)
     },
     overlay: {
       dragHandle: {

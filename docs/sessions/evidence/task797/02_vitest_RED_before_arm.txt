@@ -1,0 +1,158 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts (144 tests | 6 failed) 39ms
+     × flags each raw numeric entry in a responsive-object prop 6ms
+     × flags each raw unit-bearing quoted entry in a responsive-object prop 1ms
+     × a nested object body is NOT skipped silently — it reports unparsed-object 0ms
+     × a marker for one entry of three suppresses only that entry 2ms
+     × a multi-line responsive object reports each finding on the entry's own physical line 1ms
+     × two-armed plant: pb={{ base: 176, md: 80, lg: 32 }} produces exactly 3 findings 0ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run scripts/__tests__/check-design-tokens. ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > flags each raw numeric entry in a responsive-object prop
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:903:22
+    901|   it('flags each raw numeric entry in a responsive-object prop', () =>…
+    902|     const findings = responsive(`<Box mt={{ base: 12, md: 24 }} />`)
+    903|     expect(findings).toHaveLength(2)
+       |                      ^
+    904|     expect(findings.map(f => f.match)).toEqual(expect.arrayContaining(…
+    905|     expect(findings.every(f => f.cat === 'raw-dimension-responsive-pro…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > flags each raw unit-bearing quoted entry in a responsive-object prop
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:910:22
+    908|   it('flags each raw unit-bearing quoted entry in a responsive-object …
+    909|     const findings = responsive(`<MantineCombobox triggerWidth={{ base…
+    910|     expect(findings).toHaveLength(2)
+       |                      ^
+    911|     expect(findings.map(f => f.match)).toEqual(
+    912|       expect.arrayContaining([`triggerWidth.base: '7rem'`, `triggerWid…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > a nested object body is NOT skipped silently — it reports unparsed-object
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:960:22
+    958|   it('a nested object body is NOT skipped silently — it reports unpars…
+    959|     const findings = responsive(`<Box mt={{ base: someFn({ x: 1 }) }} …
+    960|     expect(findings).toHaveLength(1)
+       |                      ^
+    961|     expect(findings[0]).toMatchObject({ match: 'mt: unparsed-object' })
+    962|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > a marker for one entry of three suppresses only that entry
+AssertionError: expected [] to deeply equal [ 'mt.base: 12', 'mt.lg: 36' ]
+
+- Expected
++ Received
+
+- [
+-   "mt.base: 12",
+-   "mt.lg: 36",
+- ]
++ []
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:970:40
+    968|       `<Box mt={{ base: 12, md: 24, lg: 36 }} /> // design-tokens-allo…
+    969|     )
+    970|     expect(findings.map(f => f.match)).toEqual(['mt.base: 12', 'mt.lg:…
+       |                                        ^
+    971|   })
+    972|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > a multi-line responsive object reports each finding on the entry's own physical line
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     "line": 4,
+-     "match": "mt.base: 12",
+-   },
+-   ObjectContaining {
+-     "line": 5,
+-     "match": "mt.md: 24",
+-   },
+- ]
++ []
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:985:22
+    983|     ].join('\n')
+    984|     const findings = responsive(content)
+    985|     expect(findings).toEqual(expect.arrayContaining([
+       |                      ^
+    986|       expect.objectContaining({ match: 'mt.base: 12', line: 4 }),
+    987|       expect.objectContaining({ match: 'mt.md: 24', line: 5 }),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-dimension-responsive-prop — Task 797, Mantine 
+responsive-object coverage > two-armed plant: pb={{ base: 176, md: 80, lg: 32 }} produces exactly 3 findings
+AssertionError: expected [] to have a length of 3 but got +0
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:995:22
+    993|   it('two-armed plant: pb={{ base: 176, md: 80, lg: 32 }} produces exa…
+    994|     const findings = responsive(`pb={{ base: 176, md: 80, lg: 32 }}`)
+    995|     expect(findings).toHaveLength(3)
+       |                      ^
+    996|     expect(findings.map(f => f.match)).toEqual(
+    997|       expect.arrayContaining(['pb.base: 176', 'pb.md: 80', 'pb.lg: 32'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 138 passed (144)
+   Start at  22:46:35
+   Duration  436ms (transform 77ms, setup 89ms, import 75ms, tests 39ms, environment 0ms)
+
+EXIT_CODE=1

@@ -162,7 +162,10 @@ export function PhoneField({
           noResultsLabel={tc('no_results')}
           triggerAriaLabel={t('country')}
           sheetTitle={t('country')}
-          triggerWidth={{ base: '7rem', sm: '7rem' }} // design-tokens-allow: : '7rem' — owner-specified (Task 556 STOP-AND-ASK #1), matches the legacy w-28 compact country-trigger width (112px = 7rem) verbatim
+          triggerWidth={{
+            base: theme.other.boxSize.phoneCountryTrigger,
+            sm: theme.other.boxSize.phoneCountryTrigger,
+          }}
           dropdownMinWidth={theme.other.layout.phoneCountryDropdownMinWidth}
         />
         <TextInput

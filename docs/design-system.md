@@ -907,6 +907,50 @@ are syntactically identical); they are resolved per-site with a same-line `desig
 and never a path-level allowlist entry, which would hide a real future style value at the same
 path.
 
+### §23.1.d — `raw-dimension-responsive-prop`: Mantine's responsive-object form (Task 797)
+
+`FACT` (measured 2026-09-16) — Mantine's responsive-prop object form, `prop={{ base: 176, md: 80 }}`,
+satisfied none of the three existing dimension arms: the numeric single-brace arm ends
+`=\{-?(?:\d+\.\d+|\d+|\.\d+)\}` (one brace, one literal); the unit single-brace arm requires a
+quoted string directly after `=`; the inline-style arm's property alternation is CSS property names
+(`width`, `marginTop`…), not breakpoint keys (`base`, `md`…). A value written this way passed
+`check:design-tokens:strict` at exit 0 regardless of its raw literal content.
+
+**What it detects.** A dedicated blocking category, `raw-dimension-responsive-prop`, added by a
+small bracket-aware scanner (not a single regex, because the object body can span multiple physical
+lines and can itself nest braces) — not one of the per-line `DETECTION_PATTERNS` entries. It matches
+`<prop>={{ <body> }}` where `<prop>` is exactly the numeric/unit single-brace arms' own prop list
+(`DIMENSION_PROP_NAMES` in the script) **minus `offset`** — in object form, `offset` is `Grid.Col`'s
+column-offset COUNT, not Popover's px offset, so it is excluded from this arm only. `span`/`order`/
+`cols` were never in that list, so they are excluded the same way every other non-dimension prop
+already is. It reports one finding per object entry whose value is a non-zero bare number or a
+quoted string containing a `px`/`rem`/`em` number, with `rawValue` reported as `<prop>.<key>: <value>`
+exactly as written (e.g. `h.base: 279`, `triggerWidth.sm: '7rem'`) — a same-line
+`design-tokens-allow: <that string> — <reason>` marker suppresses exactly that one entry. For a
+multi-line object, the finding's reported line is the entry's own physical line, not the prop's
+opening line.
+
+**Boundary.** Never fires for: a token string (`'md'`), `0`, a percentage string (`'100%'`), a
+`theme.*`/identifier value, or any prop outside the (minus-`offset`) list — including
+`span`/`order`/`offset`/`cols` object props, which are `Grid.Col` column semantics, not a dimension.
+Never fires inside a `{/* ... */}` JSX comment or a `/** */` JSDoc block (the real
+`MantineAuthFormPattern.tsx:29` case — a documented `maw={{ base: '100%', sm: 400 }}` example inside
+its own docblock, never live code). A body containing a nested `{` is **not** skipped silently: it
+produces one finding with `rawValue` `<prop>: unparsed-object`, so the gap stays visible instead of
+being invisibly exempted.
+
+**What it still cannot see:** a responsive-object value built by a variable or function call
+(`{ base: getSize() }`), a spread object (`{ ...sizes }`), or a responsive object passed through a
+prop name not in the list above. These are the same class of blind spot §23.1.c already documents
+for `raw-inline-dimension` — resolved per-site with a `design-tokens-allow` marker naming *why*, or
+a detector-list change proposed as its own task, never invented ad hoc.
+
+**Tokenized by this task:** `HeroSearchFallback.tsx`'s `h={{ base: 279, sm: 175, md: 123 }}` now
+reads `theme.other.layout.heroSearchFallbackHeight.{base,sm,md}`; `PhoneField.tsx`'s
+`triggerWidth={{ base: '7rem', sm: '7rem' }}` now reads `theme.other.boxSize.phoneCountryTrigger` at
+both keys (its now-unneeded `design-tokens-allow` marker removed — the literal it suppressed no
+longer exists).
+
 ### §23.2 — Allowlist mechanisms (path-level + exact-value inline)
 
 Two complementary suppression mechanisms cover genuinely un-tokenizable values. Both require

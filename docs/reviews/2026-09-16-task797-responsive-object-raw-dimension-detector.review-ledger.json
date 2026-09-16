@@ -1,0 +1,418 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-797 — check:design-tokens sees a raw dimension in Mantine's responsive object form: new raw-dimension-responsive-prop category, tested boundary, two-armed plant, 2 live sites tokenized (Sprint 75), Revision 0",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "5ea1e2fe5c5e3680d00a5ca3c402f9bc3b0f5281",
+    "reviewedRevision": "uncommitted worktree on top of 5ea1e2fe5c5e3680d00a5ca3c402f9bc3b0f5281 (main). Every status path belongs to Task 797: the 7 files in the session log's Files Changed table, the session log, and docs/sessions/evidence/task797/. Reviewer blob hashes in 32_review_hash_object.txt equal the git diff index hashes of the reviewed tree.",
+    "reviewedPaths": [
+      "scripts/check-design-tokens.mjs",
+      "scripts/__tests__/check-design-tokens.test.ts",
+      "src/design-system/mantine/theme.ts",
+      "src/components/shared/HeroSearchFallback.tsx",
+      "src/components/shared/PhoneField.tsx",
+      "docs/design-system.md",
+      "docs/sessions/2026-09-16-task797-responsive-object-raw-dimension-detector.md",
+      "docs/sessions/evidence/task797"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 5,
+      "verified": 5,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-09-16-task797-responsive-object-raw-dimension-detector.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-design-tokens.mjs",
+        "symbol": "DIMENSION_PROP_NAMES, RESPONSIVE_DIMENSION_PROP_NAMES, findResponsiveDimensionFindings, scanContent responsiveDimensionByLine",
+        "diffHunks": [
+          "scripts/check-design-tokens.mjs:182-186 — DIMENSION_PROP_NAMES extracted; both single-brace arms now new RegExp over it (reviewer compared the prop list with HEAD's two regex literals: identical, 322 chars)",
+          "scripts/check-design-tokens.mjs:393-533 — responsive-object scanner, prop list minus offset",
+          "scripts/check-design-tokens.mjs:1056-1110 — per-file prescan merged into the per-line rawMatches, regular pass only"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "new R1-R4 tests fail against the unmodified detector and pass after the arm; the category blocks --strict"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI detector is not parameterised by any Storybook story.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic source scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task797/02_vitest_RED_before_arm.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (detector restored from git show HEAD)",
+          "observable": "144 tests | 6 failed — the positive R1 numeric/unit tests, R2 unparsed-object, R3 marker and multi-line, R4 planted arm; negative boundary tests pass trivially, as expected for a detector that sees nothing; EXIT_CODE=1.",
+          "freshness": "pre-arm run; 03_vitest_GREEN_after_arm Start 22:46:45 follows the detector write 22:46:39",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new R1-R4 tests fail against the unmodified detector and pass after the arm; the category blocks --strict"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task797/30_review_vitest.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (reviewer re-executed natively, win32, Node v22.22.3)",
+          "observable": "Tests 144 passed (144), EXIT_CODE=0; category is not in the report-only set, so it counts toward --strict.",
+          "freshness": "reviewer run 2026-09-16 23:04 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new R1-R4 tests fail against the unmodified detector and pass after the arm; the category blocks --strict"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The DIMENSION_PROP_NAMES extraction changed what the two existing single-brace arms match.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-design-tokens.mjs",
+          "result": "REFUTED. The reviewer extracted the prop alternation from both HEAD regex literals and compared it with the new constant: case-sensitive equal, 322 characters each; the pre-existing tests stay green (01, 30)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility or generated CSS is involved."
+      }
+    },
+    {
+      "id": "AC2 / R2 R3 R4 R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/__tests__/check-design-tokens.test.ts",
+        "symbol": "describe raw-dimension-responsive-prop — Task 797",
+        "diffHunks": [
+          "scripts/__tests__/check-design-tokens.test.ts:893-1004 — 14 named tests: R1 ×3, R2 boundary ×7 (token, 0, %, theme identifier, span/order/offset/cols, JSX comment, JSDoc), unparsed-object, R3 marker and multi-line, R4 two arms"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "one named test per R2 boundary case, the R3 marker and multi-line cases, and both R4 arms; MantineAuthFormPattern.tsx JSDoc untouched"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI detector.",
+          "locales": "CLI detector.",
+          "viewports": "CLI detector.",
+          "states": "Deterministic scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task797/33_review_adversarial_probe.txt",
+          "command": "node.exe scratchpad probe797.mjs (11 scanContent edge cases) + census797.mjs (instrumented copy recording every unterminated responsive object over src/**/*.ts(x))",
+          "observable": "Multi-line marker suppresses its own entry with no stale marker; a stale responsive marker is reported; negative and .5 values flagged, 0.0 not. Edge cases outside R2's tested set: a '{' inside a string or an unmatched 'prop={{' text ends the scan of the rest of that file with no finding (latent — 0 of 651 real src files hit it); a template-literal unit value and a line carrying '//' inside a string are not seen. Filed as P3 notes, Task 830.",
+          "freshness": "reviewer run 2026-09-16 23:04 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "one named test per R2 boundary case, the R3 marker and multi-line cases, and both R4 arms; MantineAuthFormPattern.tsx JSDoc untouched"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task797/30_review_vitest.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts; git --no-optional-locks diff --stat",
+          "observable": "All 14 named tests pass; MantineAuthFormPattern.tsx absent from git status.",
+          "freshness": "reviewer run 2026-09-16 23:04",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "one named test per R2 boundary case, the R3 marker and multi-line cases, and both R4 arms; MantineAuthFormPattern.tsx JSDoc untouched"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A marker on a multi-line object entry is blanked or reported stale because markers are parsed per physical line while the scanner reads the whole file.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task797/33_review_adversarial_probe.txt",
+          "result": "REFUTED. Case H (marker on the entry's own line inside a multi-line object) yields 0 findings and 0 stale markers."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC3 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/theme.ts",
+        "symbol": "boxSize.phoneCountryTrigger, layout.heroSearchFallbackHeight; HeroSearchFallback Skeleton h; PhoneField triggerWidth",
+        "diffHunks": [
+          "src/design-system/mantine/theme.ts: +boxSize.phoneCountryTrigger '7rem', +layout.heroSearchFallbackHeight { base: 279, sm: 175, md: 123 }, both typed with source comments",
+          "src/components/shared/HeroSearchFallback.tsx:24-32 — h reads the role per key",
+          "src/components/shared/PhoneField.tsx:165-168 — triggerWidth reads the role at both keys; marker removed"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no raw-dimension-responsive-prop finding on the real tree; role values exact; component diffs value-expression only; HeroSearch Fallback Skeleton height equal before and after"
+        ],
+        "stories": [
+          "mantine-primitives-herosearch--fallback"
+        ],
+        "viewports": [
+          "390",
+          "640",
+          "1440"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "locales": "A Skeleton has no text; height does not depend on locale.",
+          "states": "The Fallback story is the only state rendering HeroSearchFallback."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task797/hero-fallback-height-before.json",
+          "command": "node.exe docs/sessions/evidence/task797/92_hero_fallback_height_check.mjs before (storybook-static built with HeroSearchFallback.tsx at HEAD content, 07_build_storybook_before exit 0)",
+          "observable": "390 → 279, 640 → 175, 1440 → 123 (getBoundingClientRect().height).",
+          "freshness": "written 22:50:48; the component was restored at 22:50:53 and its hash equals the diff index d4b9ff82d",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no raw-dimension-responsive-prop finding on the real tree; role values exact; component diffs value-expression only; HeroSearch Fallback Skeleton height equal before and after"
+            ],
+            "stories": [
+              "mantine-primitives-herosearch--fallback"
+            ],
+            "viewports": [
+              "390",
+              "640",
+              "1440"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task797/31_review_strict.txt",
+          "command": "npm.cmd run check:design-tokens:strict (reviewer re-executed natively); reviewer read of hero-fallback-height-after.json and the component diffs",
+          "observable": "Total: 0 | 0 stale-marker(s), exit 0; after JSON identical to before (279/175/123); role values exact; the instrumented census reports 0 responsive findings across 651 src files.",
+          "freshness": "reviewer run 2026-09-16 23:04",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no raw-dimension-responsive-prop finding on the real tree; role values exact; component diffs value-expression only; HeroSearch Fallback Skeleton height equal before and after"
+            ],
+            "stories": [
+              "mantine-primitives-herosearch--fallback"
+            ],
+            "viewports": [
+              "390",
+              "640",
+              "1440"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Removing PhoneField's marker exposes the generic length arm's ': '7rem'' match, or the new role leaves the trigger width unmeasured.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task797/31_review_strict.txt",
+          "result": "REFUTED for the gate: strict reports 0 violations and 0 stale markers, so no literal remains. The trigger width is not rendered-measured; the role holds the identical '7rem' string the prop previously received, so Mantine receives the same input (INFERENCE from source equality)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Mantine responsive style props; no Tailwind candidate compiled."
+      }
+    },
+    {
+      "id": "AC4 / R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/design-system.md",
+        "symbol": "§23.1.d raw-dimension-responsive-prop",
+        "diffHunks": [
+          "docs/design-system.md:910-952 — new §23.1.d"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "§23 records the category, prop list, boundary and what it cannot see"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Documentation.",
+          "locales": "Documentation.",
+          "viewports": "Documentation.",
+          "states": "Documentation."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/design-system.md",
+          "command": "git --no-optional-locks diff -- docs/design-system.md (reviewer read)",
+          "observable": "Names the category, DIMENSION_PROP_NAMES minus offset, the R2 boundary, and the R7 blind spots (variable/function value, spread, unlisted prop).",
+          "freshness": "reviewer read 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "§23 records the category, prop list, boundary and what it cannot see"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The section lists every class the scanner cannot see.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task797/33_review_adversarial_probe.txt",
+          "result": "PARTIALLY REFUTED, non-blocking: R7's required list is present, but template-literal values, lines truncated at a '//' inside a string, and the silent stop after an unterminated object are not stated. P3 note carried by Task 830."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation."
+      }
+    },
+    {
+      "id": "§13.2 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task797",
+        "symbol": "09-22 final transcripts; 32_review_hash_object.txt",
+        "diffHunks": [
+          "whole reviewed diff; reviewer blob hashes equal the git diff index hashes"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "detector vitest, strict, typecheck, lint, mantine __tests__, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Gate block.",
+          "locales": "Gate block.",
+          "viewports": "Gate block.",
+          "states": "Gate block."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task797/15_final_build.txt",
+          "command": "npm.cmd run build; typecheck (12); lint (13); build-storybook (09); check:file-integrity (17); check:mojibake (22)",
+          "observable": "Each EXIT_CODE=0; final vitest Start 22:51:47 follows the last source write 22:50:53.",
+          "freshness": "retained transcripts of the final tree; the session log says hashes are 'quoted above' but none are retained, so the reviewer captured 32_review_hash_object.txt, equal to the diff index hashes",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "detector vitest, strict, typecheck, lint, mantine __tests__, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task797/14_final_mantine_tests.txt",
+          "command": "npx.cmd vitest run src/design-system/mantine/__tests__",
+          "observable": "EXIT_CODE=1: 1 of 55 — theme.d69-18 'FooterView.tsx resolves theme.other.layout.footerGridGap', a source-text assertion against a file this diff does not touch.",
+          "freshness": "final block run after the last source write",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "detector vitest, strict, typecheck, lint, mantine __tests__, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The theme.d69-18 failure is caused by this diff's theme.ts additions.",
+          "kind": "EXECUTED",
+          "path": "src/components/layout/FooterView.tsx",
+          "result": "REFUTED. The test's mustContain is the literal 'theme.other.layout.footerGridGap'; FooterView.tsx:71 reads theme.other!.layout!.footerGridGap, unchanged at HEAD, so it fails at the base revision by construction; the same failure is recorded in Task 822's review ledger and owned by reserved Task 790."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate block."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC2 / R2 R3 R4 R6",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed the detector vitest suite (144/144), check:design-tokens:strict (Total 0, exit 0), hash-object, an 11-case adversarial probe and an instrumented unterminated-object census (0 of 651 files). Build, typecheck, lint, build-storybook, mantine __tests__, file-integrity and mojibake are accepted from retained transcripts with EXIT_CODE recorded, timed after the last source write. Notes (P3, non-blocking, filed as Task 830): the scanner's 'if (matchEnd === -1) break' silently ends the scan of the file when a responsive opener never balances (a '{' inside a string, or 'prop={{' text in a string), contrary to R2's 'not skipped silently' intent — latent, 0 real occurrences; §23.1.d omits template-literal values and '//'-in-string line truncation; the session log claims hash-object values 'quoted above' but retains none; kickoff §13.2 expected exit 0 from a mantine __tests__ command already red at base (orchestrator kickoff defect, owned by Task 790)."
+  }
+}

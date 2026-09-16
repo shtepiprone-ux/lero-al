@@ -1,0 +1,12 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al reviewer=Opus 2026-09-16T23:04:21
+npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  144 passed (144)
+   Start at  23:04:19
+   Duration  388ms (transform 74ms, setup 86ms, import 73ms, tests 29ms, environment 0ms)
+
+EXIT_CODE=0

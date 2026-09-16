@@ -1,0 +1,6 @@
+label=before
+  viewportWidth=390 found=true height=279
+  viewportWidth=640 found=true height=175
+  viewportWidth=1440 found=true height=123
+written: C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task797\hero-fallback-height-before.json
+EXIT_CODE=0

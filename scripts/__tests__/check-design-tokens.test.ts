@@ -890,6 +890,119 @@ describe('raw-inline-dimension — Task 822 Kind A boundary fix (media-query str
   })
 })
 
+describe('raw-dimension-responsive-prop — Task 797, Mantine responsive-object coverage', () => {
+  // Filters to this category only: the pre-existing generic "length" pattern (`:\s*['"][\d.]+
+  // (?:px|rem)['"]/g`) also incidentally matches a quoted `'7rem'`-shaped value INSIDE a
+  // responsive-object body (its own rawValue is the generic `: '7rem'`, not this task's
+  // `prop.key: value` contract) — filtering keeps these tests about the new arm only.
+  const responsive = (content: string) => regular(content).filter(f => f.cat === 'raw-dimension-responsive-prop')
+
+  // R1 — new blocking category, one finding per flagged object entry.
+  it('flags each raw numeric entry in a responsive-object prop', () => {
+    const findings = responsive(`<Box mt={{ base: 12, md: 24 }} />`)
+    expect(findings).toHaveLength(2)
+    expect(findings.map(f => f.match)).toEqual(expect.arrayContaining(['mt.base: 12', 'mt.md: 24']))
+    expect(findings.every(f => f.cat === 'raw-dimension-responsive-prop')).toBe(true)
+  })
+
+  it('flags each raw unit-bearing quoted entry in a responsive-object prop', () => {
+    const findings = responsive(`<MantineCombobox triggerWidth={{ base: '7rem', sm: '7rem' }} />`)
+    expect(findings).toHaveLength(2)
+    expect(findings.map(f => f.match)).toEqual(
+      expect.arrayContaining([`triggerWidth.base: '7rem'`, `triggerWidth.sm: '7rem'`])
+    )
+  })
+
+  it('the numeric single-brace arm does NOT see the responsive-object form (the blind spot this task closes)', () => {
+    // Same 279 value the numeric arm already catches in single-brace form (`h={279}`) — but in
+    // object form it produced 0 findings before this task (Task 797 kickoff §3.1/§3.2).
+    expect(regular(`<Skeleton h={{ base: 279 }} />`).filter(f => f.cat === 'raw-dimension-prop')).toHaveLength(0)
+  })
+
+  // R2 — false-positive boundary. Every case here must never fire.
+  it('does NOT flag a token string value', () => {
+    expect(responsive(`<Box mt={{ base: 'md', md: 'lg' }} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag zero', () => {
+    expect(responsive(`<Box mt={{ base: 0, md: 0 }} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a percentage string', () => {
+    expect(responsive(`<Paper maw={{ base: '100%', sm: '50%' }} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a theme.* identifier value', () => {
+    expect(responsive(`<Paper maw={{ base: '100%', sm: theme.other.layout.authFormMaxWidth }} />`)).toHaveLength(0)
+  })
+
+  it('does NOT flag span/order/offset/cols object props (Grid.Col column semantics, not a dimension)', () => {
+    expect(responsive(
+      `<Grid.Col span={{ base: 12, md: 6 }} order={{ base: 2, md: 1 }} offset={{ base: 8, md: 12 }} cols={{ base: 1, md: 2 }} />`
+    )).toHaveLength(0)
+  })
+
+  it('does NOT flag inside a {/* ... */} JSX comment', () => {
+    expect(responsive(`{/* <Box mt={{ base: 12 }} /> */}`)).toHaveLength(0)
+  })
+
+  it('does NOT flag inside a /** */ JSDoc comment (the real MantineAuthFormPattern.tsx:29 shape — R6)', () => {
+    const content = [
+      '/**',
+      " * - Paper maw={{ base: '100%', sm: 400 }} for contained width on desktop.",
+      ' */',
+    ].join('\n')
+    expect(responsive(content)).toHaveLength(0)
+  })
+
+  it('a nested object body is NOT skipped silently — it reports unparsed-object', () => {
+    const findings = responsive(`<Box mt={{ base: someFn({ x: 1 }) }} />`)
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ match: 'mt: unparsed-object' })
+  })
+
+  // R3 — marker contract: rawValue is `prop.key: value` exactly as written; one marker
+  // suppresses exactly that one entry; a multi-line object reports on the entry's own line.
+  it('a marker for one entry of three suppresses only that entry', () => {
+    const findings = responsive(
+      `<Box mt={{ base: 12, md: 24, lg: 36 }} /> // design-tokens-allow: mt.md: 24 — placeholder reason`
+    )
+    expect(findings.map(f => f.match)).toEqual(['mt.base: 12', 'mt.lg: 36'])
+  })
+
+  it('a multi-line responsive object reports each finding on the entry\'s own physical line', () => {
+    const content = [
+      'const x = (',       // line 1
+      '  <Box',             // line 2
+      '    mt={{',          // line 3
+      '      base: 12,',    // line 4
+      '      md: 24,',      // line 5
+      '    }}',              // line 6
+      '  />',                // line 7
+      ')',                   // line 8
+    ].join('\n')
+    const findings = responsive(content)
+    expect(findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ match: 'mt.base: 12', line: 4 }),
+      expect.objectContaining({ match: 'mt.md: 24', line: 5 }),
+    ]))
+  })
+
+  // R4 — two-armed plant (reservation): introducing then reverting the exact literal flips the
+  // finding count. This is the planted-failure proof AC1/Q4 require for a governance gate claim.
+  it('two-armed plant: pb={{ base: 176, md: 80, lg: 32 }} produces exactly 3 findings', () => {
+    const findings = responsive(`pb={{ base: 176, md: 80, lg: 32 }}`)
+    expect(findings).toHaveLength(3)
+    expect(findings.map(f => f.match)).toEqual(
+      expect.arrayContaining(['pb.base: 176', 'pb.md: 80', 'pb.lg: 32'])
+    )
+  })
+
+  it('two-armed plant reverted: pb={{ base: \'md\', lg: 0 }} produces 0 findings', () => {
+    expect(responsive(`pb={{ base: 'md', lg: 0 }}`)).toHaveLength(0)
+  })
+})
+
 describe('canonical Mantine stories — Tailwind dimension utilities', () => {
   const STORY_PATH = 'src/stories/mantine/primitives/__fixture__.stories.tsx'
 

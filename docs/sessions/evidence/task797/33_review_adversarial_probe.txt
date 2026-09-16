@@ -1,0 +1,20 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al reviewer=Opus 2026-09-16T21:06:19.781Z
+reviewer adversarial probe (scanContent edge cases) + instrumented silent-break census over src/**/*.ts(x)
+
+$ node.exe probe797.mjs
+platform win32 v22.22.3
+A_url_same_line [] []
+B_unterminated_then_later [] []
+C_template_literal_unit [] []
+D_negative ["0"] [[1,"raw-dimension-responsive-prop","mt.base: -12"]]
+E_after_unparsed ["0","1"] [[1,"raw-dimension-responsive-prop","mt: unparsed-object"],[1,"raw-dimension-responsive-prop","h.base: 40"]]
+F_brace_in_string [] []
+G_comment_line_inside_object ["0","1"] [[4,"raw-dimension-responsive-prop","mt.base: 12"],[7,"raw-dimension-responsive-prop","h.base: 40"]]
+H_marker_multiline [] []
+I_stale_marker ["0"] [[1,"stale-marker","mt.base: 12"]]
+J_prefixed_prop ["0"] [[1,"raw-dimension-responsive-prop","h.base: 40"]]
+K_shorthand_zero_float ["0"] [[1,"raw-dimension-responsive-prop","mt.md: .5"]]
+
+$ node.exe census797.mjs
+{ files: 651, findings: 0, filesWithSilentBreak: 0 }
+EXIT_CODE=0

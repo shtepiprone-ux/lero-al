@@ -589,7 +589,11 @@ All fixes must resolve the root architectural issue.
 ### Component Catalog Rules (enforced from 2026-05-18)
 
 Before creating ANY new UI component:
-- DO NOT create a new component before running `npm run governance:components` and checking `docs/component-catalog.md`
+- DO NOT create a new component until the mandatory duplication audit in `docs/component-rules.md` is recorded:
+  search `src/components/`, `src/design-system/`, `src/modules/**/components/`, and `src/stories/` by the required
+  purpose/behavior; inspect every plausible candidate's source and Story; then record `reuse`, `extend`, or
+  evidenced `create canonical`. `npm run governance:components` and a filename-only search are not substitutes for
+  that audit.
 - DO NOT create local primitive clones (local button, local dialog, local sheet, local tabs)
 - DO NOT bypass canonical components — always use `src/components/ui/` primitives
 - DO NOT add untracked components without updating catalog via `npm run catalog:components`
@@ -601,7 +605,9 @@ Before creating ANY new UI component:
 When completing any UI task that adds/modifies components:
 - DO update catalog: `npm run catalog:components`
 - DO confirm no new `MANUAL_REVIEW` flags were introduced
-- DO add Storybook story if type is `canonical-primitive` or `shared-ui`
+- DO NOT integrate a new visible component until its real production source has a direct standalone canonical
+  Story. If one does not exist, create it and perform the applicable registration in the same task. A parent or
+  composition Story, similarly named demo, or opaque slot is not a substitute; inspect the Story import to prove it.
 
 ### Storybook Anti-Patterns (enforced from 2026-05-18)
 

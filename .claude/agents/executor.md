@@ -59,6 +59,20 @@ decision record is completed from inspected canonical stories and source. Reuse 
 otherwise extend or create the shared canonical source, story, and registration named by the task. A missing record,
 uncited "no story" claim, or unproven style value is a blocker to Opus, never permission for a local hardcode.
 
+## STOP — component-creation and Story gate
+
+Before creating any production UI component, including a new named visible UI component in an existing file, record a
+duplication audit in session evidence. Search `src/components/`, `src/design-system/`,
+`src/modules/**/components/`, and `src/stories/` by purpose and behavior; open every plausible candidate's source and
+Story. The receipt names the queries, paths inspected, candidate coverage, and one disposition: `reuse`, `extend`, or
+`create canonical`. A filename-only zero-result search is invalid.
+
+Reuse or extend any candidate covering 70% or more of the requirement. If — and only if — the audit proves
+`create canonical`, create the real production source plus its own direct standalone canonical Story and required
+registration before integrating it into a parent, route, or consumer. Inspect the Story's import: a parent/composition
+Story, demo stand-in, or opaque slot is not proof for the new component. Without this receipt or direct Story, stop
+feature integration and return `BLOCKED — COMPONENT/STORY GATE`; never defer the Story to a later task.
+
 Sonnet has no approval authority. Never approve, accept, or describe your own work as ready to merge, release-ready,
 or equivalent; only Opus acting as orchestrator and reviewer may issue an approval verdict after its review. Never
 run, emit, suggest, or ask the owner to run mutating Git commands, including any `git push` variant. Update

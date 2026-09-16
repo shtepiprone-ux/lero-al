@@ -101,6 +101,22 @@ Before editing code:
    the gap by extending or creating the canonical native Mantine source and standalone story first; do not report it
    as a request for custom styling. A scanner allowlist does not authorize an uncited one-off style.
 
+7. **STOP — component-creation and Story gate.** Before creating a production UI component, including a new named
+   visible UI component in an existing file, perform and record a duplication audit. Search `src/components/`,
+   `src/design-system/`, `src/modules/**/components/`, and `src/stories/` with task-specific purpose/behavior terms;
+   then open the source and canonical Story of every plausible candidate. Record the purpose, queries, inspected
+   paths, candidate coverage, and exactly one disposition: `reuse`, `extend`, or `create canonical`.
+
+   - If a candidate covers 70% or more of the required behavior, reuse or extend it. A different filename, local
+     markup, or copied styling is not evidence of a new need.
+   - A filename-only search with zero hits is not a duplication audit. A Story filename is not proof either: inspect
+     its import and confirm it renders the real production source.
+   - If `create canonical` is the evidenced result, create the smallest real production source together with its own
+     direct standalone canonical Story and required registration **before integrating it into any parent, route, or
+     consumer**. A parent/composition Story, demo stand-in, or opaque slot does not replace that Story.
+   - If the audit receipt or the component's direct Story is absent, stop feature integration and return
+     `BLOCKED — COMPONENT/STORY GATE`; do not write a local substitute or defer the Story to a later task.
+
 ### Story-first composition gate — blocking
 
 For every changed user-visible UI component, work from the lowest visible unit upward:
@@ -188,6 +204,10 @@ Before reporting, perform the following implementation validation against every 
    automation, governance scripts, catalogs, allowlists, CI/configuration, and current operational documentation.
    Update every active consumer and run its relevant gate. Record every command's actual exit status. A known active
    broken reference or non-zero required gate is in scope for the change; it cannot be deferred as cleanup.
+10. For every production UI component created by the task — including named components added to an existing file —
+    re-check the final diff against the component-creation and Story gate. The handoff must name its duplication-audit
+    receipt, disposition, direct Story path, and applicable registration. A missing receipt or Story makes
+    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` unavailable.
 
 ### Owner visual-review rule — `screenshots:assert` retired (owner decision 2026-09-03)
 

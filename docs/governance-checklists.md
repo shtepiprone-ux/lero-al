@@ -369,7 +369,8 @@ HUGE DESKTOP SAFETY (spot-check)
 
 ## CHECKLIST I — New Component Story Gate (Phase 4)
 
-Run when adding a new shared component that requires a story.
+Run when adding any new production UI component or named visible UI subcomponent. It is a stop gate: a parent or
+composition Story cannot replace the component's own direct Story.
 
 ```
 NEW COMPONENT STORY GATE
@@ -378,7 +379,15 @@ Component: _______________
 Story file: _______________
 Task: _______________
 
+DUPLICATION AUDIT — COMPLETE BEFORE CREATING THE COMPONENT
+[ ] Searched `src/components/`, `src/design-system/`, `src/modules/**/components/`, and `src/stories/` using purpose/behavior terms
+[ ] Opened the source and Story for every plausible candidate (a filename-only zero-result search is invalid)
+[ ] Recorded queries, inspected paths, coverage assessment, and one disposition: reuse / extend / create canonical
+[ ] Reused or extended every candidate that covers >=70% of the required behavior
+[ ] If create canonical: recorded the concrete absence/reason that makes a new source necessary
+
 STORY REQUIREMENTS
+[ ] Story directly imports and renders this real production component (not a parent/composition Story, demo, or opaque slot)
 [ ] Default state story created
 [ ] All variants covered (if variant prop exists)
 [ ] Disabled state covered (if applicable)
@@ -403,6 +412,7 @@ RUN
 [ ] npm run governance passes (no new HIGH/CRITICAL)
 [ ] npm run lint passes (0 errors)
 [ ] Story renders correctly in Storybook locally (after npm install)
+[ ] Applicable story-coverage or enrolment gate run and recorded
 ```
 
 ---
@@ -466,8 +476,9 @@ Component name: _______________
 Intended location: _______________
 
 CATALOG CHECK
-[ ] Ran npm run catalog:components
-[ ] Searched docs/component-catalog.md — no equivalent component found
+[ ] Used docs/component-catalog.md as supporting evidence (not as the sole audit)
+[ ] Searched `src/components/`, `src/design-system/`, `src/modules/**/components/`, and `src/stories/` by purpose/behavior
+[ ] Opened every plausible candidate source and Story; recorded paths, coverage, and reuse / extend / create canonical decision
 [ ] Confirmed existing canonical primitives cannot satisfy requirement
 [ ] Confirmed existing shared components cannot be composed to satisfy requirement
 
@@ -492,6 +503,7 @@ PRIMITIVE USAGE
 
 POST-CREATION
 [ ] npm run catalog:components re-run to include new component
-[ ] If shared-ui or canonical-primitive: Storybook story queued/created
+[ ] Direct standalone canonical Story created/updated, importing the real production source (not merely a parent or demo)
+[ ] Required Story registration completed before consumer/route integration
 [ ] docs/component-catalog.md reviewed to confirm new component appears
 ```

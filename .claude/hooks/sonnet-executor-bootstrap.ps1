@@ -45,6 +45,15 @@ canonical' with the shared token/style path. Do not write a local style because 
 canonical source or approved value exists, create the shared source/story/registration named by the task or stop for
 'CANONICAL UI SPECIFICATION GAP' / 'CANONICAL STYLE DECISION REQUIRED'.
 
+NON-NEGOTIABLE COMPONENT/STORY GATE: before creating a production UI component (including a new named visible
+component in an existing file), search `src/components/`, `src/design-system/`, `src/modules/**/components/`, and
+`src/stories/` by the required purpose and behavior. Open every plausible candidate's source and Story; a
+filename-only search or a parent/composition Story is not proof. Record the purpose, queries, inspected paths,
+candidate coverage, and exactly one decision: `reuse`, `extend`, or `create canonical`. Reuse or extend a candidate
+that covers at least 70%. Only an evidenced `create canonical` permits a new source, and it requires that source's
+own direct standalone Story and required registration before the component is integrated into any parent or route.
+Without the audit receipt or direct Story, STOP and return `BLOCKED - COMPONENT/STORY GATE`; never defer the Story.
+
 $body
 "@
 

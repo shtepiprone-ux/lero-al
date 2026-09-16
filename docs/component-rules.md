@@ -25,11 +25,24 @@
 - After implementation, verify by switching locale at runtime — if any string does not change, it is hardcoded and the task is NOT complete.
 
 ### No Duplicate Components Rule (MANDATORY)
-- **BEFORE creating any new component**, audit existing components in `src/components/` for a functionally equivalent or similar component.
+- **Before creating any production UI component or named UI subcomponent**, complete a duplication audit. Search the
+  whole UI component surface — `src/components/`, `src/design-system/`, `src/modules/**/components/`, and canonical
+  stories under `src/stories/` — using task-specific purpose/behavior terms, not only a proposed new filename.
+  Open every plausible candidate's source and Story before deciding.
 - If an existing component covers ≥70% of the required behavior, extend or adapt it — do NOT create a new one.
-- Creating a new component with different UI but identical purpose/logic as an existing one is considered a task failure.
-- Duplication audit is a required pre-condition — skipping it is a rule violation.
-- Document the audit result: either "reused `ComponentName`" or "no suitable component found because [reason]".
+  A different filename, markup shape, or local styling does not make an equivalent component new.
+- The pre-edit receipt is mandatory in the task/session evidence: purpose and search queries; every inspected
+  candidate path and its canonical Story path (or confirmed absence); coverage assessment; and one disposition:
+  `reuse`, `extend`, or `create canonical` with the concrete reason. "No results" from a filename-only search is not
+  an audit.
+- **A new visible component may not be integrated into a consumer until its own direct canonical Story exists.** If
+  the audit chooses `create canonical`, create the real production source, its standalone Story, and required
+  registration in the same task before parent/route integration. Inspect the Story's import: a parent/composition
+  Story, a similarly named demo, or a Story that reaches the component only through an opaque slot is not that
+  component's Story.
+- Creating a new component with different UI but identical purpose/logic as an existing one, omitting this receipt,
+  or deferring a required Story is a task failure. A task cannot be reported implemented while any of these facts is
+  missing.
 
 ### Container / Presentational Primitive Split (MANDATORY — OWNER P0, 2026-07-10)
 - **Every component that consumes hooks, React context, or fetches data MUST separate its UI into its own

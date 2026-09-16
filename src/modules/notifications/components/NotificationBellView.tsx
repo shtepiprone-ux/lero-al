@@ -33,19 +33,19 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
           label={unreadCount > 99 ? '99+' : unreadCount}
           color="red.5"
           size={theme.other.iconSize.standard}
-          offset={4}
+          offset={theme.other.layout.notificationPopoverOffset}
           disabled={unreadCount === 0}
         >
-          <ActionIcon variant="default" aria-label={t('title')} mih="2.75rem" miw="2.75rem">
+          <ActionIcon variant="default" aria-label={t('title')} mih={theme.other.touchTarget} miw={theme.other.touchTarget}>
             <Bell size={theme.other.iconSize.roomy} />
           </ActionIcon>
         </Indicator>
       }
       iconOnlyTrigger
       position="bottom-end"
-      width={320}
+      width={theme.other.layout.notificationPanelWidth}
     >
-      <Box style={{ display: 'flex', flexDirection: 'column', maxHeight: 480, overflow: 'hidden' }}>
+      <Box style={{ display: 'flex', flexDirection: 'column', maxHeight: theme.other.layout.notificationPanelMaxHeight, overflow: 'hidden' }}>
         <NotificationCenter notifications={notifications} onRead={onRead} />
       </Box>
     </MantinePopover>

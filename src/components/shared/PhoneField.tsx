@@ -21,7 +21,7 @@
 
 import { useState, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { Group, InputLabel, Stack, TextInput } from '@mantine/core'
+import { Group, InputLabel, Stack, TextInput, useMantineTheme } from '@mantine/core'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
 import {
   COUNTRY_CODES,
@@ -67,6 +67,7 @@ export function PhoneField({
   const t = useTranslations('phone')
   const tc = useTranslations('common')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const parsed = parsePhoneValue(value)
   const [dialCode, setDialCode] = useState(parsed.dialCode)
   const [iso2, setIso2] = useState(parsed.iso2)
@@ -142,7 +143,7 @@ export function PhoneField({
   )
 
   return (
-    <Stack gap={6}>
+    <Stack gap="compact">
       {label && <InputLabel>{label}</InputLabel>}
       {/* Always inline row: [compact country selector] [national input flex-1]
           The PhoneField container inherits its parent's full width (clause 11) — the
@@ -162,7 +163,7 @@ export function PhoneField({
           triggerAriaLabel={t('country')}
           sheetTitle={t('country')}
           triggerWidth={{ base: '7rem', sm: '7rem' }} // design-tokens-allow: : '7rem' — owner-specified (Task 556 STOP-AND-ASK #1), matches the legacy w-28 compact country-trigger width (112px = 7rem) verbatim
-          dropdownMinWidth={240}
+          dropdownMinWidth={theme.other.layout.phoneCountryDropdownMinWidth}
         />
         <TextInput
           type="tel"

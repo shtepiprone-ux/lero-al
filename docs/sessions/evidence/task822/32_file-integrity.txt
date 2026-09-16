@@ -1,0 +1,37 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 45 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+npm.cmd : ❌  check:file-integrity FAILED — 7 corrupt / invalid file(s):
+At line:4 char:1
++ npm.cmd run check:file-integrity *> "$evidence\32_file-integrity.txt"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:file-i...nvalid file(s)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  docs/sessions/evidence/task822/18_build-storybook-explore.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task822/20_build-storybook-r5-before.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task822/21_r5_before.json
+    → Unparseable JSON: Unexpected non-whitespace character after JSON at position 2092 (line 84 column 1)
+  docs/sessions/evidence/task822/22_build-storybook-r5-after.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task822/23_r5_after.json
+    → Unparseable JSON: Unexpected non-whitespace character after JSON at position 2092 (line 84 column 1)
+  docs/sessions/evidence/task822/31_build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task822/32_file-integrity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

@@ -26,10 +26,10 @@ export function HowItWorksSteps({ heading, steps }: HowItWorksStepsProps) {
   const theme = useMantineTheme()
   return (
     <>
-      <Title order={2} ta="center" fw={700} fz={SECTION_HEADING_FZ} mb={40}>
+      <Title order={2} ta="center" fw={700} fz={SECTION_HEADING_FZ} mb={theme.other.layout.headingBlockGap}>
         {heading}
       </Title>
-      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={32} maw={theme.other.boxSize.content} mx="auto">
+      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="2xl" maw={theme.other.boxSize.content} mx="auto">
         {steps.map((step, index) => {
           const Icon = STEP_ICONS[index]
           return (

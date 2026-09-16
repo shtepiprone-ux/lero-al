@@ -1,0 +1,564 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-822 — check:design-tokens:strict inherited violations: Kind A detector boundary fix, 4 Kind B markers, 38 Kind C sites onto identical-value tokens and 11 theme.other roles (Sprint 75), Revision 0",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "f199a6aa63f355cbb6bcb7934da1a0846bb071a7",
+    "reviewedRevision": "uncommitted worktree on top of f199a6aa63f355cbb6bcb7934da1a0846bb071a7 (main). Every status path belongs to Task 822: the 21 modified files in the session log's Files Changed table, the session log, and docs/sessions/evidence/task822/. Final blob hashes in 37_hash-object.txt equal the git diff index hashes of the reviewed tree.",
+    "reviewedPaths": [
+      "scripts/check-design-tokens.mjs",
+      "scripts/__tests__/check-design-tokens.test.ts",
+      "src/design-system/mantine/theme.ts",
+      "src/app/[locale]/layout.tsx",
+      "src/app/[locale]/page.tsx",
+      "src/app/[locale]/listings/[slug]/page.tsx",
+      "src/components/admin/AdminUserAvatar.tsx",
+      "src/components/admin/AdminUsersTable.tsx",
+      "src/components/auth/CaptchaWidget.tsx",
+      "src/components/shared/FilterChoiceGroup.tsx",
+      "src/components/shared/HowItWorksSteps.tsx",
+      "src/components/shared/PhoneField.tsx",
+      "src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx",
+      "src/components/ui/PasswordRequirementsHint.tsx",
+      "src/modules/listings/components/FavoriteButton.tsx",
+      "src/modules/listings/components/ListingMobileCTA.tsx",
+      "src/modules/listings/components/ListingsShell.tsx",
+      "src/modules/notifications/components/NotificationBellView.tsx",
+      "src/modules/notifications/components/NotificationCenter.tsx",
+      "src/modules/notifications/components/NotificationItem.tsx",
+      "docs/design-system.md",
+      "docs/sessions/2026-09-16-task822-design-tokens-strict-inherited-violations.md",
+      "docs/sessions/evidence/task822"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 7,
+      "verified": 7,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-09-16-task822-design-tokens-strict-inherited-violations.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-design-tokens.mjs",
+        "symbol": "DETECTION_PATTERNS raw-inline-dimension re",
+        "diffHunks": [
+          "scripts/check-design-tokens.mjs:285-300 — (?<!-) lookbehind before the property-name alternation; alternation, value arm and filter unchanged",
+          "scripts/__tests__/check-design-tokens.test.ts:845-891 — 6 Kind A negative tests, 3 positive boundary tests"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "6 Kind A media-query strings from kickoff §3.2 produce 0 findings; maxWidth: 480, width: 256, style={{ width: 40 }} each still produce 1 finding"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI detector is not parameterised by any Storybook story.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Pure regex scan over a source string."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task822/15_vitest-red.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (unmodified detector)",
+          "observable": "129 tests | 6 failed — exactly the six 'does NOT flag' Kind A tests; EXIT_CODE=1; Start at 21:59:18, before the detector write at 21:59:31.",
+          "freshness": "detector source mtime 21:59:31 is after this run and before 16_vitest-green (21:59:40)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "6 Kind A media-query strings from kickoff §3.2 produce 0 findings; maxWidth: 480, width: 256, style={{ width: 40 }} each still produce 1 finding"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task822/25_vitest-detector-final.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (reviewer re-executed natively, win32, Node v22.22.3)",
+          "observable": "Test Files 1 passed, Tests 129 passed (129), exit 0 — retained transcript and reviewer run agree.",
+          "freshness": "reviewer run 2026-09-16 22:29:50 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "6 Kind A media-query strings from kickoff §3.2 produce 0 findings; maxWidth: 480, width: 256, style={{ width: 40 }} each still produce 1 finding"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The lookbehind narrows a real style match (a style key legitimately preceded by '-').",
+          "kind": "EXECUTED",
+          "path": "scripts/__tests__/check-design-tokens.test.ts",
+          "result": "REFUTED. The three positive tests pass after the change; a JS/TSX object key or JSX style key cannot be immediately preceded by a literal '-' (a CSS custom property '--x-width:' sits in CSS files scanned by other categories, not this inline-object arm). The full 120 pre-existing tests in the file still pass."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility or generated CSS is involved."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/admin/AdminUserAvatar.tsx",
+        "symbol": "handleCropConfirm console.log; generateMetadata openGraph.images[0] in src/app/[locale]/listings/[slug]/page.tsx",
+        "diffHunks": [
+          "src/components/admin/AdminUserAvatar.tsx:83 — two same-line markers (width: 256, height: 256) with log-payload reasons",
+          "src/app/[locale]/listings/[slug]/page.tsx:125-126 — one marker per line with OG-image-asset reasons"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "4 Kind B sites carry reasoned exact-value markers and no other change"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Log payload and route metadata render no component.",
+          "locales": "Marker text is a source comment.",
+          "viewports": "No rendered output changes.",
+          "states": "Static source annotation."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task822/26_check-design-tokens-strict-final.txt",
+          "command": "git --no-optional-locks diff -- the two Kind B files; npm.cmd run check:design-tokens:strict (reviewer re-executed natively)",
+          "observable": "Diff shows only the four markers. Strict gate: 0 stale-marker(s), 0 missing-reason error(s), so each marker matched its exact rawValue and carries a reason.",
+          "freshness": "reviewer run 2026-09-16 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "4 Kind B sites carry reasoned exact-value markers and no other change"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Two markers concatenated on one line make the first marker's reason swallow the second marker, leaving height: 256 unsuppressed or stale.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-design-tokens.mjs",
+          "result": "REFUTED. The reviewer's strict run reports Total 0 and 0 stale markers; a non-matching second marker would surface as either a violation or a stale marker."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Comment-only change."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/theme.ts",
+        "symbol": "MantineThemeOther lineHeight/radius/layout/boxSize augmentation and createTheme other values; 38 consumer sites",
+        "diffHunks": [
+          "src/design-system/mantine/theme.ts: +lineHeight {passwordHintRow '1rem', authNoteParagraph '1.21875rem', notificationGlyph '1.5rem'}, +radius.favoritePill '1.125rem', +boxSize.mainViewportOffset '4rem', +layout {headingBlockGap 40, phoneCountryDropdownMinWidth 240, listingsFiltersSkeletonRowHeight 32, notificationPopoverOffset 4, notificationPanelWidth 320, notificationPanelMaxHeight 480}",
+          "14 Kind C files: one hunk per kickoff §3.2 row plus theme imports"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "11 roles with kickoff §3.3 values; 38 Kind C rows each replaced exactly as its row says"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Rendered preservation is R5's row; this row is the static source ledger.",
+          "locales": "No locale-dependent value.",
+          "viewports": "Static source comparison.",
+          "states": "Static source comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-16-task822-design-tokens-strict-inherited-violations.md",
+          "command": "git --no-optional-locks diff -- scripts src docs/design-system.md (reviewer read in full) compared row-by-row with kickoff §3.2/§3.3",
+          "observable": "All 11 role values equal §3.3; each of rows 1-38 maps to exactly its prescribed token; no additional role or token; numbers stay numbers, rem strings stay rem strings.",
+          "freshness": "reviewer diff read 2026-09-16 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "11 roles with kickoff §3.3 values; 38 Kind C rows each replaced exactly as its row says"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A client component reads theme through a binding that does not exist or shadows another name (CaptchaWidget's theme prop, PasswordRequirementsHint's two components).",
+          "kind": "EXECUTED",
+          "path": "src/components/auth/CaptchaWidget.tsx",
+          "result": "REFUTED. CaptchaDevFallback binds mantineTheme (no shadowing of the outer theme prop); PasswordRequirementsHint adds useMantineTheme() to the component that lacked it; 27_typecheck.txt exit 0 and 31_build.txt exit 0 were produced after the last source write (22:20:02)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Mantine style props and inline style objects, not Tailwind utilities; value equivalence is R5's row."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-design-tokens.mjs",
+        "symbol": "--strict run over production src",
+        "diffHunks": [
+          "whole-tree result; scripts/design-tokens-allowlist.json unchanged"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "check:design-tokens:strict Total 0 exit 0 with an unchanged allowlist"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI gate.",
+          "locales": "CLI gate.",
+          "viewports": "CLI gate.",
+          "states": "Deterministic scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task822/13_check-design-tokens-strict-before.txt",
+          "command": "npm.cmd run check:design-tokens:strict (baseline)",
+          "observable": "Total: 50 raw style-value violation(s), EXIT_CODE=1.",
+          "freshness": "captured 21:57, before the first source write (21:59:06)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:design-tokens:strict Total 0 exit 0 with an unchanged allowlist"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task822/26_check-design-tokens-strict-final.txt",
+          "command": "npm.cmd run check:design-tokens:strict (reviewer re-executed natively); git diff --stat -- scripts/design-tokens-allowlist.json",
+          "observable": "Total: 0 | 0 stale-marker(s) | 0 missing-reason error(s), exit 0; allowlist absent from git status.",
+          "freshness": "reviewer run 2026-09-16 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:design-tokens:strict Total 0 exit 0 with an unchanged allowlist"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Green was reached by suppressing a Kind C style value with a marker instead of a token.",
+          "kind": "EXECUTED",
+          "path": "src/modules/notifications/components/NotificationItem.tsx",
+          "result": "REFUTED. The diff adds markers only at the 4 Kind B sites and deletes the one pre-existing Kind C marker at NotificationItem.tsx:198 (row 32); no allowlist path change."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/components/shared/FilterChoiceGroup.tsx",
+        "symbol": "FilterChoiceGroup vertical Stack, HowItWorksSteps, PhoneField, FavoriteButton, NotificationBellView changed props",
+        "diffHunks": [
+          "FilterChoiceGroup.tsx:106, HowItWorksSteps.tsx:29/32, PhoneField.tsx:146/166, FavoriteButton.tsx:179, NotificationBellView.tsx:36/39/46/48"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "computed gap, margin-bottom, column/row gap, min-width, border-radius, min-height/min-width, popover width, max-height of each changed element"
+        ],
+        "stories": [
+          "mantine-primitives-filtercontrols--default",
+          "mantine-primitives-howitworkssteps--default",
+          "mantine-primitives-phonefield--default",
+          "mantine-primitives-favoritebutton--default",
+          "mantine-primitives-notificationbellview--default"
+        ],
+        "locales": [
+          "en"
+        ],
+        "viewports": [
+          "390x900",
+          "1440x900"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "states": "One Story state per component that renders the changed element, as the kickoff's R5 requires; the dropdown/popover at 390 is a pre-existing bottom-sheet branch that renders no Combobox.Dropdown/Popover.Dropdown in either phase."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task822/21_r5_before.json",
+          "command": "node.exe docs/sessions/evidence/task822/19_r5_probe.mjs against storybook-static built from the five components' pre-822 literals (20_build-storybook-r5-before.txt exit 0)",
+          "observable": "gap 6px, marginBottom 40px, column/row gap 32px, dropdown minWidth 240px (1440), borderRadius 18px, trigger 44x44, popover 320px / max-height 480px (1440).",
+          "freshness": "captured after a temporary literal revert of the five components (deviation recorded in the session log); the five component sources were last written 22:16:07-22:16:24 when the tokens were restored",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "computed gap, margin-bottom, column/row gap, min-width, border-radius, min-height/min-width, popover width, max-height of each changed element"
+            ],
+            "stories": [
+              "mantine-primitives-filtercontrols--default",
+              "mantine-primitives-howitworkssteps--default",
+              "mantine-primitives-phonefield--default",
+              "mantine-primitives-favoritebutton--default",
+              "mantine-primitives-notificationbellview--default"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "390x900",
+              "1440x900"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task822/23_r5_after.json",
+          "command": "node.exe docs/sessions/evidence/task822/19_r5_probe.mjs against storybook-static rebuilt from the final source (22_build-storybook-r5-after.txt exit 0); reviewer cmp against 21_r5_before.json",
+          "observable": "Reviewer cmp: identical (md5 be40e8195b859691d4412346a98a3ea5 both). The after values equal the pixel value of every replaced literal, so preservation holds independently of how the before tree was produced.",
+          "freshness": "reviewer comparison 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "computed gap, margin-bottom, column/row gap, min-width, border-radius, min-height/min-width, popover width, max-height of each changed element"
+            ],
+            "stories": [
+              "mantine-primitives-filtercontrols--default",
+              "mantine-primitives-howitworkssteps--default",
+              "mantine-primitives-phonefield--default",
+              "mantine-primitives-favoritebutton--default",
+              "mantine-primitives-notificationbellview--default"
+            ],
+            "locales": [
+              "en"
+            ],
+            "viewports": [
+              "390x900",
+              "1440x900"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The recovered before capture silently reproduced the after tree, so byte-equality is vacuous.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task822/23_r5_after.json",
+          "result": "REFUTED as a threat to R5. Each after value was checked against the literal it replaced (gap={6} → 6px, mb={40} → 40px, spacing={32} → 32px, dropdownMinWidth={240} → 240px, radius 1.125rem → 18px, 2.75rem → 44px, width={320} → 320px, maxHeight 480 → 480px) at --mantine-scale 1; the after capture alone proves the rendered values are unchanged."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Mantine style props resolved to CSS variables at runtime; no Tailwind candidate compiled."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/design-system.md",
+        "symbol": "§23.1.c raw-inline-dimension hyphen boundary (Task 822)",
+        "diffHunks": [
+          "docs/design-system.md:885-909 — new §23.1.c"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "§23 records the Kind A fix and the Kind B blind spot"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Documentation.",
+          "locales": "Documentation.",
+          "viewports": "Documentation.",
+          "states": "Documentation."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/design-system.md",
+          "command": "git --no-optional-locks diff -- docs/design-system.md (reviewer read)",
+          "observable": "§23.1.c states the (?<!-) fix and that a data object with a width/height key is textually indistinguishable from a style object, resolved per-site by reasoned marker, never by detector change or path allowlist.",
+          "freshness": "reviewer read 2026-09-16",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "§23 records the Kind A fix and the Kind B blind spot"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The section claims the fix closes more than it does.",
+          "kind": "EXECUTED",
+          "path": "docs/design-system.md",
+          "result": "REFUTED. The section explicitly names the Kind B class as not closed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation."
+      }
+    },
+    {
+      "id": "§13.2 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task822",
+        "symbol": "24-37 final transcripts",
+        "diffHunks": [
+          "whole reviewed diff; 37_hash-object.txt blob hashes equal the git diff index hashes"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "typecheck, lint, affected vitest, check:stories, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Gate block, not a story capture.",
+          "locales": "Gate block.",
+          "viewports": "Gate block.",
+          "states": "Gate block."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task822/31_build.txt",
+          "command": "npm.cmd run build; npm.cmd run typecheck (27); npm.cmd run lint (28); npm.cmd run check:stories (30); npm.cmd run build-storybook (22); check:file-integrity (34); check:mojibake (33)",
+          "observable": "Each EXIT_CODE=0; typecheck/lint/vitest Start times 22:18-22:20:46 follow the last source write 22:20:02 (filter smoke test) and 22:16:24 (last component).",
+          "freshness": "retained transcripts of the final tree; hashes in 37 match the reviewed diff",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "typecheck, lint, affected vitest, check:stories, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task822/29_vitest-affected.txt",
+          "command": "npx.cmd vitest run src/design-system/mantine/__tests__ src/modules/notifications src/components/shared src/modules/listings/components",
+          "observable": "EXIT_CODE=1: 3 files / 7 tests — theme.d69-18 FooterView footerGridGap source-text assertion, ListingCard.smoke archived ×2, ListingGallery.portal.smoke ×4 (jsdom ResizeObserver undefined). None touches a changed path; the only failure the diff caused (filterLeafComponents.smoke) was updated and the reviewer's run of that file is 20/20.",
+          "freshness": "Start at 22:20:46, after the last source write",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "typecheck, lint, affected vitest, check:stories, build-storybook, build, file-integrity, mojibake, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 7 vitest failures are caused by this diff (new theme.other keys or the gap token change), not pre-existing.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task788/13-vitest.log",
+          "result": "REFUTED. The identical footerGridGap and ListingCard archived failures appear as × in retained transcripts of Tasks 775, 782, 788, 791, 803, 807, 808, 809, 810 and 813, all before this diff; ResizeObserver-is-not-defined appears in 803 and 807 full-suite runs. HEAD's FooterView.tsx:71 reads theme.other!.layout!.footerGridGap, so that assertion fails at the base revision by construction. The footerGridGap and ListingCard failures are already owned by reserved Task 790."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate block."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC5 / R5",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed the detector vitest suite (129/129), check:design-tokens:strict (Total 0, exit 0) and filterLeafComponents.smoke (20/20), and compared the R5 JSON pair. Build, typecheck, lint, check:stories, build-storybook, file-integrity and mojibake are accepted from retained transcripts with EXIT_CODE recorded, timed after the last source write. Notes (P3, non-blocking): ListingsShell.tsx new comment is attributed to 'Task 782' instead of Task 822; kickoff §13.2 demanded exit 0 from an affected-vitest command that was already red before the task (kickoff-design defect, owned by Task 790); R5 before was recovered by a temporary literal revert after the edits instead of captured first."
+  }
+}

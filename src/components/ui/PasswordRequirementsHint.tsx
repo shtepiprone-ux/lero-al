@@ -21,17 +21,17 @@ function RuleRow({ met, label }: RuleRowProps) {
   return (
     <Group
       component="li"
-      gap={6}
+      gap="compact"
       wrap="nowrap"
       align="flex-start"
       fz="xs"
-      lh="1rem"
+      lh={theme.other.lineHeight.passwordHintRow}
       c={met ? 'var(--status-success)' : 'var(--muted-foreground)'}
     >
       {met ? (
-        <Check size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+        <Check size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 'var(--mantine-spacing-micro)' }} />
       ) : (
-        <X size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+        <X size={theme.other.iconSize.compact} aria-hidden="true" style={{ flexShrink: 0, marginTop: 'var(--mantine-spacing-micro)' }} />
       )}
       <span>{label}</span>
     </Group>
@@ -44,18 +44,19 @@ interface PasswordRequirementsHintProps {
 
 export function PasswordRequirementsHint({ value }: PasswordRequirementsHintProps) {
   const t = useTranslations('auth')
+  const theme = useMantineTheme()
   const rules = checkPasswordRules(value)
   const hasInput = value.length > 0
   const allMet = Object.values(rules).every(Boolean)
 
   return (
-    <Stack data-testid="password-requirements-hint" gap={4} mt={4}>
+    <Stack data-testid="password-requirements-hint" gap="tight" mt="tight">
       {hasInput && !allMet && (
         // lh matches the pre-migration <p>'s measured 19.5px (globals.css `p { @apply
         // leading-relaxed }` base rule), not text-xs's paired 16px — see CaptchaWidget.tsx.
-        <Text size="xs" lh="19.5px" c="var(--destructive)">{t('password_requirements_error')}</Text>
+        <Text size="xs" lh={theme.other.lineHeight.authNoteParagraph} c="var(--destructive)">{t('password_requirements_error')}</Text>
       )}
-      <Stack component="ul" gap={4} style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+      <Stack component="ul" gap="tight" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         <RuleRow met={rules.length}    label={t('password_rule_length')} />
         <RuleRow met={rules.uppercase} label={t('password_rule_uppercase')} />
         <RuleRow met={rules.lowercase} label={t('password_rule_lowercase')} />

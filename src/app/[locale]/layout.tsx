@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Box } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
@@ -49,7 +50,7 @@ export default async function LocaleLayout({
           {/* Task 787 — the fixed mobile bottom bar is deleted (burger-menu-only mobile nav), so
               <main> no longer reserves 56px of bottom clearance for it (was --homepage-runtime-space-14,
               Task 770). */}
-          <Box component="main" mih="calc(100vh - 4rem)">
+          <Box component="main" mih={`calc(100vh - ${theme.other!.boxSize!.mainViewportOffset})`}>
             {children}
           </Box>
           <Footer />

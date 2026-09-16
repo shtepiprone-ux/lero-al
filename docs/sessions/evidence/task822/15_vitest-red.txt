@@ -1,0 +1,147 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts (129 tests | 6 failed) 35ms
+     × does NOT flag a max-width media-query string (useIsMobile.ts:18) 6ms
+     × does NOT flag a max-width media-query string with an em unit (AdminUsersTable.tsx:93) 1ms
+     × does NOT flag two max-width media-query strings on one line (imageDelivery.ts:20) 0ms
+     × does NOT flag two min-width media-query strings on one line (imageDelivery.ts:80) 0ms
+     × does NOT flag a min-width media-query string (imageDelivery.ts:92) 1ms
+     × does NOT flag a min-width media-query string (imageDelivery.ts:100) 0ms
+npx.cmd : 
+At line:4 char:1
++ npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts *> " ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag a max-width media-query string (useIsMobile.ts:18)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:850:65
+    848|   // Each of these is one of the kickoff's 8 real inherited false-posi…
+    849|   it('does NOT flag a max-width media-query string (useIsMobile.ts:18)…
+    850|     expect(regular(`window.matchMedia('(max-width: 1023px)')`)).toHave…
+       |                                                                 ^
+    851|   })
+    852|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag a max-width media-query string with an em unit 
+(AdminUsersTable.tsx:93)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:854:59
+    852|
+    853|   it('does NOT flag a max-width media-query string with an em unit (Ad…
+    854|     expect(regular(`useMediaQuery('(max-width: 40em)')`)).toHaveLength…
+       |                                                           ^
+    855|   })
+    856|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag two max-width media-query strings on one line (imageDelivery.ts:20)
+AssertionError: expected [ { …(6) }, { …(6) } ] to have a length of +0 but got 2
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:858:104
+    856|
+    857|   it('does NOT flag two max-width media-query strings on one line (ima…
+    858|     expect(regular(`GALLERY_MAIN_SIZES = '(max-width: 767px) 100vw, (m…
+       |                                                                                                        ^
+    859|   })
+    860|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag two min-width media-query strings on one line (imageDelivery.ts:80)
+AssertionError: expected [ { …(6) }, { …(6) } ] to have a length of +0 but got 2
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:862:83
+    860|
+    861|   it('does NOT flag two min-width media-query strings on one line (ima…
+    862|     expect(regular(`'(min-width: 1024px) 33vw, (min-width: 640px) 50vw…
+       |                                                                                   ^
+    863|   })
+    864|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag a min-width media-query string (imageDelivery.ts:92)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:866:71
+    864|
+    865|   it('does NOT flag a min-width media-query string (imageDelivery.ts:9…
+    866|     expect(regular(`'(min-width: 640px) 360px, calc(100vw - 32px)'`)).…
+       |                                                                       ^
+    867|   })
+    868|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > raw-inline-dimension — Task 822 Kind A boundary fix 
+(media-query string false positive) > does NOT flag a min-width media-query string (imageDelivery.ts:100)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:870:70
+    868|
+    869|   it('does NOT flag a min-width media-query string (imageDelivery.ts:1…
+    870|     expect(regular(`'(min-width: 374px) 280px, calc(82vw - 26px)'`)).t…
+       |                                                                      ^
+    871|   })
+    872|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 123 passed (129)
+   Start at  21:59:18
+   Duration  2.22s (transform 73ms, setup 1.51s, import 71ms, tests 35ms, environment 0ms)
+
+EXIT_CODE=1

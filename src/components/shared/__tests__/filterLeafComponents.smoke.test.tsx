@@ -301,8 +301,10 @@ describe('FilterChoiceGroup — orientation prop (Task 778)', () => {
     //
     // What THIS jsdom test proves instead, reliably: `orientation="vertical"` and the legacy
     // `className="flex-col gap-1.5"` path are not just "expected to render the same" — they
-    // execute the exact same `return <Stack {...rootProps} gap={6} className={className}
-    // data-testid="filter-chip-row">{buttons}</Stack>` statement in `FilterChoiceGroup.tsx`. Since
+    // execute the exact same `return <Stack {...rootProps} gap="compact" className={className}
+    // data-testid="filter-chip-row">{buttons}</Stack>` statement in `FilterChoiceGroup.tsx`
+    // (Task 822 replaced the raw `gap={6}` literal with the identical-value `"compact"` named
+    // token — same 6px, different `--stack-gap` string form, see below). Since
     // that statement is reached whenever `vertical` is true regardless of which condition produced
     // it, the real-browser measurement of the className call site above is definitionally identical
     // to what orientation="vertical" renders — there is no second code path to separately measure.
@@ -328,9 +330,13 @@ describe('FilterChoiceGroup — orientation prop (Task 778)', () => {
     // none while the legacy path passes the literal string; that is the ONE intentional
     // divergence AC9's "className path keeps working unchanged" requires, not a defect).
     expect(rootA.style.getPropertyValue('--stack-gap')).toBe(rootB.style.getPropertyValue('--stack-gap'))
-    // 0.375rem * scale(1) = 6px at the default root font-size — the real-browser measurement
-    // above confirms this resolves to a computed 6px rowGap/columnGap.
-    expect(rootA.style.getPropertyValue('--stack-gap')).toBe('calc(0.375rem * var(--mantine-scale))')
+    // Task 822 — `gap="compact"` resolves to the named-token custom-property reference, not the
+    // `calc(0.375rem * var(--mantine-scale))` form a bare `gap={6}` numeric literal produced; both
+    // resolve to the identical computed 6px rowGap/columnGap (var(--mantine-spacing-compact):
+    // 0.375rem at the default root font-size, scale 1) — the real-browser measurement above
+    // confirms it, and `docs/sessions/evidence/task822/21_r5_before.json`/`23_r5_after.json`
+    // record the byte-equal proof.
+    expect(rootA.style.getPropertyValue('--stack-gap')).toBe('var(--mantine-spacing-compact)')
     // Strip the one expected attribute difference (className) and confirm the remaining markup
     // (tag, other attributes, children) is byte-identical — proving one shared render path, not
     // two independently-written ones that merely happen to agree today.

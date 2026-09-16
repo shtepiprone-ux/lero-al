@@ -77,7 +77,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
       {/* List */}
       <div className={styles.list} style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
         {notifications.length === 0 ? (
-          <Text size="sm" c="var(--muted-foreground)" ta="center" lh={1.625} px="md" py={32}>
+          <Text size="sm" c="var(--muted-foreground)" ta="center" lh={1.625} px="md" py="2xl">
             {t('empty')}
           </Text>
         ) : (

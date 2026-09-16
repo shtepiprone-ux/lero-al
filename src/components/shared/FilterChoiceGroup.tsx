@@ -103,7 +103,7 @@ export function FilterChoiceGroup(props: FilterChoiceGroupProps) {
 
   if (vertical) {
     return (
-      <Stack {...rootProps} gap={6} className={className} data-testid="filter-chip-row">
+      <Stack {...rootProps} gap="compact" className={className} data-testid="filter-chip-row">
         {buttons}
       </Stack>
     )

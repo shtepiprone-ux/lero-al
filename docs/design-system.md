@@ -882,6 +882,31 @@ Audited and locked with tests (`scripts/__tests__/check-design-tokens.test.ts`):
 | `*-[var(--token)]` (any utility, e.g. `h-[var(--listing-gallery-h-mobile)]`) | **NOT FLAGGED** — the approved token-consumption form. No detection pattern starts a match on `var(...)`. Locked with a test so future regex changes can't regress it. | Resolved |
 | `*-[calc(...)]`, `*-[min(...)]`, `*-[max(...)]`, `*-[clamp(...)]` containing a raw `px`/`rem` literal AND no `var(--…)` reference (e.g. `w-[calc(100px+2rem)]`, `min-h-[calc(100vh-4rem)]`, `max-w-[calc(100vw-2rem)]`) | **FLAGGED** (Task 408 rework, owner decision: pure-literal forms only, no broad viewport exemption). Same form WITH a `var(--…)` reference anywhere in the brackets (e.g. `rounded-[min(var(--radius-md),10px)]`, `rounded-[calc(var(--radius)-5px)]`) is **NOT FLAGGED** (token-anchored exemption). The 6 pre-existing pure-literal occurrences (5 distinct values: `min-h-[calc(100vh-4rem)]` in `layout.tsx`, `max-h-[calc(90dvh-2.5rem)]` in `Combobox.tsx`, `translate-x-[calc(100%-2px)]` ×2 in `switch.tsx`, `h-[calc(100%-1px)]` in `tabs.tsx`, `max-w-[calc(100vw-2rem)]` in `SaveSearchButton.tsx`) are exact-suppressed with `design-tokens-allow` markers + reasons. `button.tsx`/`input-group.tsx` `rounded-[min/calc(var(--radius...),...)]` clamps remain clean without markers (var-anchored). All 4 lock tests pass. | **Resolved (Task 408 rework)** |
 
+### §23.1.c — `raw-inline-dimension` hyphen boundary (Task 822)
+
+`FACT` (measured 2026-09-16) — `raw-inline-dimension`'s property-name alternation started with a
+bare `\b`, and `\b` matches between a `-` and a following word character. This made an unguarded
+`\bwidth`/`\bheight` also match "width"/"height" **inside a media-query STRING**, e.g.
+`'(max-width: 1023px)'` (`src/hooks/useIsMobile.ts`) and `'(min-width: 640px) 360px, calc(100vw -
+32px)'` (`src/lib/imageDelivery.ts`) — 8 sites total, none of them a style. Fixed with a negative
+lookbehind, `(?<!-)`, immediately before the property-name alternation: the character directly
+before the property name must not be `-`. No real style property name in the scanned set is ever
+preceded by a literal `-` in valid JS/TSX source, so this closes the false positive without
+narrowing any true positive (`maxWidth: 480`, `width: 256`, `style={{ width: 40 }}` are all still
+flagged — locked by tests, `scripts/__tests__/check-design-tokens.test.ts`, "Task 822 Kind A
+boundary fix").
+
+**What this still cannot tell apart (blind spot, not closed by this fix):** a plain data object
+that happens to carry a `width`/`height` (or any of the other property names in §23.1's table) key
+is indistinguishable, by a source-text regex, from an inline style object with the same key —
+`console.log('...', { width: 256, height: 256 })` and `openGraph.images[0] = { width: 1200, height:
+630 }` (Next.js OG image metadata) both still match the pattern textually. These are **not** false
+positives the detector can be taught to exclude by shape alone (a data literal and a style literal
+are syntactically identical); they are resolved per-site with a same-line `design-tokens-allow: …
+— <reason>` marker naming *why* the key is data, not style (§23.2.b) — never a detector change,
+and never a path-level allowlist entry, which would hide a real future style value at the same
+path.
+
 ### §23.2 — Allowlist mechanisms (path-level + exact-value inline)
 
 Two complementary suppression mechanisms cover genuinely un-tokenizable values. Both require

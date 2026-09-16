@@ -19,6 +19,7 @@ import { theme } from '@/design-system/mantine/theme'
 // runtime guarantee).
 const iconSize = theme.other!.iconSize!
 const boxSize = theme.other!.boxSize!
+const layout = theme.other!.layout!
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -35,7 +36,7 @@ export default async function HomePage() {
       {/* Task 770 — py base/md was @theme inline --space-16/--space-24 (§22.1) */}
       <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--homepage-runtime-space-16)', md: 'var(--homepage-runtime-space-24)' }}>
         <Box className="container-wide">
-          <Box maw={boxSize.content} mx="auto" ta="center" mb={40}>
+          <Box maw={boxSize.content} mx="auto" ta="center" mb={layout.headingBlockGap}>
             <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: 'var(--homepage-runtime-font-size-3xl)', sm: 'var(--homepage-runtime-font-size-4xl)', md: 'var(--homepage-runtime-font-size-5xl)' }} mb="md">
               {t('hero_title')}
             </Title>

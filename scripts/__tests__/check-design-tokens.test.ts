@@ -842,6 +842,54 @@ describe('raw-dimension-prop — Task 782 detector, expanded layout coverage', (
   })
 })
 
+describe('raw-inline-dimension — Task 822 Kind A boundary fix (media-query string false positive)', () => {
+  // §3.2 Kind A: the regex started `\b(?:width|…)`, and `\b` matches between `-` and `w`, so
+  // `'(max-width: 1023px)'` — a media-query STRING, not a style — was read as `width: 1023`.
+  // Each of these is one of the kickoff's 8 real inherited false-positive sites, reproduced verbatim.
+  it('does NOT flag a max-width media-query string (useIsMobile.ts:18)', () => {
+    expect(regular(`window.matchMedia('(max-width: 1023px)')`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a max-width media-query string with an em unit (AdminUsersTable.tsx:93)', () => {
+    expect(regular(`useMediaQuery('(max-width: 40em)')`)).toHaveLength(0)
+  })
+
+  it('does NOT flag two max-width media-query strings on one line (imageDelivery.ts:20)', () => {
+    expect(regular(`GALLERY_MAIN_SIZES = '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw'`)).toHaveLength(0)
+  })
+
+  it('does NOT flag two min-width media-query strings on one line (imageDelivery.ts:80)', () => {
+    expect(regular(`'(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a min-width media-query string (imageDelivery.ts:92)', () => {
+    expect(regular(`'(min-width: 640px) 360px, calc(100vw - 32px)'`)).toHaveLength(0)
+  })
+
+  it('does NOT flag a min-width media-query string (imageDelivery.ts:100)', () => {
+    expect(regular(`'(min-width: 374px) 280px, calc(82vw - 26px)'`)).toHaveLength(0)
+  })
+
+  // The fix must not widen the boundary into a false negative: a property name NOT preceded by
+  // `-` must still be caught, whether numeric, unit-bearing, or inside a style object.
+  it('still flags maxWidth: 480 (not preceded by a hyphen)', () => {
+    const findings = regular(`maxWidth: 480`)
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'raw-inline-dimension' })
+  })
+
+  it('still flags width: 256 (not preceded by a hyphen)', () => {
+    const findings = regular(`width: 256`)
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'raw-inline-dimension' })
+  })
+
+  it('still flags style={{ width: 40 }} (not preceded by a hyphen)', () => {
+    const findings = regular(`style={{ width: 40 }}`)
+    expect(findings.filter(f => f.cat === 'raw-inline-dimension')).toHaveLength(1)
+  })
+})
+
 describe('canonical Mantine stories — Tailwind dimension utilities', () => {
   const STORY_PATH = 'src/stories/mantine/primitives/__fixture__.stories.tsx'
 

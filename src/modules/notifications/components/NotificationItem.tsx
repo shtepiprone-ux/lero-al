@@ -193,9 +193,9 @@ export function NotificationItem({ notification, onRead }: Props) {
           `span`), reproduced explicitly since Mantine Text's own default would otherwise differ. */}
       <Text
         component="span"
-        fz="1rem"
-        lh="1.5rem"
-        style={{ flexShrink: 0, marginTop: '0.125rem' }} // design-tokens-allow: : '0.125rem' — reproduces the original mt-0.5 (2px) icon offset, px-equal literal per Task 752/753 precedent
+        fz="md"
+        lh={theme.other.lineHeight.notificationGlyph}
+        style={{ flexShrink: 0, marginTop: 'var(--mantine-spacing-micro)' }}
         aria-hidden
       >
         {TYPE_ICON[notification.type] ?? '🔔'}
@@ -219,7 +219,7 @@ export function NotificationItem({ notification, onRead }: Props) {
           c="var(--muted-foreground)"
           lh={1.625}
           lineClamp={2}
-          mt={2}
+          mt="micro"
           style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
         >
           {displayBody}
@@ -229,10 +229,10 @@ export function NotificationItem({ notification, onRead }: Props) {
             color-mix() Tailwind itself compiles to (verified in the built CSS), not aliased to a
             bare var() and not approximated to a flat color. */}
         <Text
-          fz="0.625rem"
+          fz="micro"
           c="color-mix(in oklab, var(--muted-foreground) 60%, transparent)"
           lh={1.625}
-          mt="0.25rem"
+          mt="tight"
         >
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}
         </Text>
@@ -243,7 +243,7 @@ export function NotificationItem({ notification, onRead }: Props) {
           w={theme.other.boxSize.statusDot}
           bdrs="pill"
           bg="var(--primary)"
-          mt={6}
+          mt="compact"
           style={{ flexShrink: 0 }}
           aria-label={t('unread_count', { count: 1 })}
         />

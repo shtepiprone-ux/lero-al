@@ -176,7 +176,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     // props (not Tailwind classes — the unlayered-CSS rule), so the migrated pill's radius/border
     // visually match its legacy neighbor exactly (Task 653 R2). Height does NOT match the sibling's
     // 36px — see `PILL_SIZE_MAP` above and the R2 deviation note in the session log.
-    <Button {...commonProps} variant="default" size={PILL_SIZE_MAP[size ?? 'default']} radius="1.125rem" bd="1px solid var(--border)">
+    <Button {...commonProps} variant="default" size={PILL_SIZE_MAP[size ?? 'default']} radius={theme.other.radius.favoritePill} bd="1px solid var(--border)">
       {icon}
     </Button>
   )

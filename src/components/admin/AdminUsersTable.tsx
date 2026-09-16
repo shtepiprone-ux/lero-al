@@ -143,8 +143,8 @@ export function AdminUsersTable({
                 variant="subtle"
                 color={u.is_verified ? 'red' : 'green'}
                 size="sm"
-                mih="2.75rem"
-                miw="2.75rem"
+                mih={theme.other.touchTarget}
+                miw={theme.other.touchTarget}
                 title={u.is_verified ? t('revoke_verify') : t('verify')}
                 onClick={() => withLoading(u.id, async () => {
                   await toggleUserVerified(u.id, !u.is_verified)
@@ -159,8 +159,8 @@ export function AdminUsersTable({
           <ActionIcon
             variant="subtle"
             size="sm"
-            mih="2.75rem"
-            miw="2.75rem"
+            mih={theme.other.touchTarget}
+            miw={theme.other.touchTarget}
             component={Link as any}
             href={`/admin/users/${u.id}`}
             data-testid="user-detail-link"

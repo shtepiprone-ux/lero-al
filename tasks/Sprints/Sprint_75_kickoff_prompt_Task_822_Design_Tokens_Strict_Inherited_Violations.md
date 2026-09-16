@@ -3,7 +3,7 @@
 Sprint 75 · P1 · QA profile **Q4** (was `Q2` in the reservation — this task corrects a detector arm, which is a gate
 claim needing planted proof)
 
-**Status: `READY FOR SONNET`** — filed 2026-09-16. Task **797** is sequenced after this task's commit (same detector,
+**Status: `APPROVED WITH NOTES`** — reviewed 2026-09-16, archived (review ledger `docs/reviews/2026-09-16-task822-design-tokens-strict-inherited-violations.review-ledger.json`). Filed 2026-09-16. Task **797** is sequenced after this task's commit (same detector,
 test file, `theme.ts` and `PhoneField.tsx`).
 
 ## 1. Mode and task type

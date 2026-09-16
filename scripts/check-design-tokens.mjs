@@ -285,8 +285,15 @@ export const DETECTION_PATTERNS = [
   },
   // Numeric and unit-bearing dimensions in inline style/style-slot objects.
   // Zero is intentionally excluded: flex and reset semantics commonly require it.
+  //
+  // Task 822, Kind A — `\b` matches between `-` and a following word character, so an unguarded
+  // `\bwidth` also matched "width" inside "max-width"/"min-width" media-query STRINGS (e.g.
+  // `'(max-width: 1023px)'`), which are not styles at all. `(?<!-)` requires the character
+  // immediately before the property name NOT be a hyphen, closing that false positive without
+  // narrowing any real style match (no real style property name in this list is ever preceded by
+  // a literal `-` in valid JS/TSX source).
   {
-    re: /\b(?:width|height|minWidth|maxWidth|minHeight|maxHeight|margin|marginTop|marginRight|marginBottom|marginLeft|marginInline|marginBlock|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|paddingInline|paddingBlock|gap|rowGap|columnGap|top|right|bottom|left|inset|insetInline|insetBlock|borderRadius|fontSize|lineHeight|letterSpacing)\s*:\s*(?:-?(?:\d+\.\d+|\d+|\.\d+)|["'][^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*["'])/g,
+    re: /(?<!-)\b(?:width|height|minWidth|maxWidth|minHeight|maxHeight|margin|marginTop|marginRight|marginBottom|marginLeft|marginInline|marginBlock|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|paddingInline|paddingBlock|gap|rowGap|columnGap|top|right|bottom|left|inset|insetInline|insetBlock|borderRadius|fontSize|lineHeight|letterSpacing)\s*:\s*(?:-?(?:\d+\.\d+|\d+|\.\d+)|["'][^"']*-?(?:\d+\.\d+|\d+|\.\d+)(?:px|rem|em)[^"']*["'])/g,
     cat: 'raw-inline-dimension',
     label: 'raw inline style dimension',
     filter: (m) => {

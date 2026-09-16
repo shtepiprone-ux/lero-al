@@ -4,6 +4,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { Stack, Skeleton } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+
+// Task 782 — used inside next/dynamic's `loading` fallback, not a component body proper; see
+// page.tsx for the `!` rationale (createTheme()'s own return type is deep-partial, not this
+// project's runtime guarantee).
+const listingsFiltersSkeletonRowHeight = theme.other!.layout!.listingsFiltersSkeletonRowHeight
 
 // ListingsFilters renders <Input> elements in the desktop sidebar.
 // ssr:false ensures those inputs are never in the server HTML.
@@ -12,8 +18,8 @@ const ListingsFilters = dynamic(
   {
     ssr: false,
     loading: () => (
-      <Stack gap="sm" pt={4}>
-        {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} height={32} radius="lg" />)}
+      <Stack gap="sm" pt="tight">
+        {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} height={listingsFiltersSkeletonRowHeight} radius="lg" />)}
       </Stack>
     ),
   }

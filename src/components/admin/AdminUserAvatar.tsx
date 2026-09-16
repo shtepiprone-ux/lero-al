@@ -80,7 +80,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
 
   async function handleCropConfirm(blob: Blob): Promise<void> {
     console.log('[AvatarFlow] crop_save_clicked', { mode })
-    console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size, width: 256, height: 256 })
+    console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size, width: 256, height: 256 }) // design-tokens-allow: width: 256 — console.log payload field describing the cropped blob's pixel size, not a style value // design-tokens-allow: height: 256 — console.log payload field describing the cropped blob's pixel size, not a style value
 
     if (mode === 'create') {
       const previewUrl = URL.createObjectURL(blob)

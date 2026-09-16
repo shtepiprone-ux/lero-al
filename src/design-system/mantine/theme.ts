@@ -84,6 +84,8 @@ declare module '@mantine/core' {
       | 'paginationSegment' // 16px — Task 824 R17 revision (D824-4): the same indicator's long axis
       | 'galleryThumb'    // 44px — Task 813 R17 Revision 4 (owner decision 2026-09-11): AppImage
                           // Story's gallery-strip row + no-src square; Task 824's gallery thumbnail row
+      | 'mainViewportOffset' // 64px — Task 822 (§3.3): `src/app/[locale]/layout.tsx:52`'s
+                             // `mih="calc(100vh - 4rem)"` main-content min-block-size offset
       | 'thumbnail'       // 112px — PopularLocationsView location-card height
       | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
@@ -104,6 +106,20 @@ declare module '@mantine/core' {
     // section headings. Source: the pre-D69-16 `MantineFilterSection.tsx`/`ListingsFilters.tsx`
     // `letterSpacing: '0.05em'` value (identical in both consumers — one shared role, not two).
     letterSpacing: Record<'filterHeading', string>
+    // Task 822 (§3.3) — one-off body-text line-heights that name a rendered row/paragraph, a
+    // different semantic owner from the heading `lineHeights` scale above (which is keyed by t-shirt
+    // size, not by consumer). Each value is the exact pre-822 literal it replaces:
+    //   passwordHintRow (1rem) — `PasswordRequirementsHint.tsx:28`'s `lh="1rem"` requirement row.
+    //   authNoteParagraph (1.21875rem, 19.5px) — the measured pre-migration `<p>` value both
+    //     `PasswordRequirementsHint.tsx:56` and `CaptchaWidget.tsx:35` cite (`lh="19.5px"`, same
+    //     value, same auth-note-paragraph role — one shared role, not two).
+    //   notificationGlyph (1.5rem) — `NotificationItem.tsx:197`'s `lh="1.5rem"` icon/glyph row.
+    lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph', string>
+    // Task 822 (§3.3) — `FavoriteButton.tsx:179`'s `radius="1.125rem"` (Task 653 R2 sibling-match
+    // pill radius). A DIFFERENT namespace from the top-level `theme.radius` scale (xs..2xl/pill),
+    // which has no 1.125rem rung — this is a one-off consumer-specific role, the same pattern as
+    // `boxSize`/`iconSize` above.
+    radius: Record<'favoritePill', string>
     // Task 784 Revision 3 (D69-18) — `MantineTooltip`'s two §6k-documented chrome values that have
     // no existing named contract. Source: docs/mantine-responsive-design-system.md §25.2/§25.4
     // (Task 524's own canonical documentation, cited verbatim: "px=\"0.875rem\" (14px — no theme
@@ -152,11 +168,27 @@ declare module '@mantine/core' {
     //   footerGridGap (40) — docs/sessions/2026-08-01-task673-footerview-de-hybrid.md §5.2
     //     ("`spacing={40}` reproduces the measured `gap-10` = 40px column/row gap"), the exact
     //     pre-D69-16 `FooterView.tsx` `SimpleGrid` `spacing={40}` value.
+    // Task 822 (§3.3) — six more one-off layout geometries added the same way, each cited to its
+    // own exact pre-822 literal (`footerGridGap` is NOT reused for any of these — same value class,
+    // different rendered role per rule 3):
+    //   headingBlockGap (40) — `HowItWorksSteps.tsx:29`'s `mb={40}` and `page.tsx:38`'s `mb={40}`
+    //     (identical value, identical "space below a section heading" role — one shared role).
+    //   phoneCountryDropdownMinWidth (240) — `PhoneField.tsx:165`'s `dropdownMinWidth={240}`.
+    //   listingsFiltersSkeletonRowHeight (32) — `ListingsShell.tsx:16`'s `height={32}`.
+    //   notificationPopoverOffset (4) — `NotificationBellView.tsx:36`'s `offset={4}`.
+    //   notificationPanelWidth (320) — `NotificationBellView.tsx:46`'s `width={320}`.
+    //   notificationPanelMaxHeight (480) — `NotificationBellView.tsx:48`'s `maxHeight: 480`.
     layout: {
       authFormMaxWidth: number
       emptyStateMinBlockSize: number
       listingContactStickyOffset: number
       footerGridGap: number
+      headingBlockGap: number
+      phoneCountryDropdownMinWidth: number
+      listingsFiltersSkeletonRowHeight: number
+      notificationPopoverOffset: number
+      notificationPanelWidth: number
+      notificationPanelMaxHeight: number
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -477,6 +509,7 @@ export const theme = createTheme({
                                  // AppImage Story gallery-strip row + no-src square; Task 824
                                  // gallery thumbnail row. Same value as `touchTarget`/
                                  // `iconSize.touch` but a distinct, documented owner (rule 3).
+      mainViewportOffset: '4rem', // 64px — Task 822: `layout.tsx:52` main-content offset
       thumbnail: '7rem',         // 112px
       truncateLabel: '7.5rem',   // 120px
       dropdownPanel: '13.75rem', // 220px
@@ -493,6 +526,15 @@ export const theme = createTheme({
     // source, never a fresh detector-driven invention.
     letterSpacing: {
       filterHeading: '0.05em',
+    },
+    // Task 822 (§3.3) — see the `MantineThemeOther` augmentation above for full per-role provenance.
+    lineHeight: {
+      passwordHintRow: '1rem',        // 16px
+      authNoteParagraph: '1.21875rem', // 19.5px
+      notificationGlyph: '1.5rem',    // 24px
+    },
+    radius: {
+      favoritePill: '1.125rem', // 18px — Task 653 R2 sibling-match pill radius
     },
     tooltip: {
       inlinePadding: '0.875rem',  // 14px — §25.2 §6k chrome (px-3.5)
@@ -517,6 +559,12 @@ export const theme = createTheme({
       emptyStateMinBlockSize: 200,
       listingContactStickyOffset: 80,
       footerGridGap: 40,
+      headingBlockGap: 40,
+      phoneCountryDropdownMinWidth: 240,
+      listingsFiltersSkeletonRowHeight: 32,
+      notificationPopoverOffset: 4,
+      notificationPanelWidth: 320,
+      notificationPanelMaxHeight: 480,
     },
     overlay: {
       dragHandle: {

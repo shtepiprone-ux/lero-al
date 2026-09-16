@@ -1,0 +1,82 @@
+{
+  "w390": {
+    "filterChoiceGroup_verticalGap": {
+      "gap": "6px"
+    },
+    "howItWorksSteps": {
+      "titleMarginBottom": "40px",
+      "gridColumnGap": "32px",
+      "gridRowGap": "32px"
+    },
+    "phoneField": {
+      "outerStack": {
+        "gap": "6px",
+        "className": "m_6d731127 mantine-Stack-root",
+        "childCount": 2
+      },
+      "dropdown": {
+        "found": false
+      }
+    },
+    "favoriteButton_pillRadius": [
+      {
+        "ariaLabel": "Add to favorites",
+        "borderRadius": "18px"
+      },
+      {
+        "ariaLabel": "Remove from favorites",
+        "borderRadius": "18px"
+      }
+    ],
+    "notificationBellView": {
+      "trigger": {
+        "mih": "44px",
+        "miw": "44px"
+      },
+      "popover": {
+        "found": false
+      }
+    }
+  },
+  "w1440": {
+    "filterChoiceGroup_verticalGap": {
+      "gap": "6px"
+    },
+    "howItWorksSteps": {
+      "titleMarginBottom": "40px",
+      "gridColumnGap": "32px",
+      "gridRowGap": "32px"
+    },
+    "phoneField": {
+      "outerStack": {
+        "gap": "6px",
+        "className": "m_6d731127 mantine-Stack-root",
+        "childCount": 2
+      },
+      "dropdown": {
+        "minWidth": "240px",
+        "inlineStyle": "border: 1px solid var(--mantine-color-gray-2); padding: 0.75rem; --popover-radius: var(--mantine-radius-2xl); --popover-shadow: var(--mantine-shadow-lg); z-index: 300; top: 160px; left: 5px; --combobox-option-fz: var(--mantine-font-size-sm); --combobox-option-padding: var(--combobox-option-padding-sm); min-width: 240px; width: 112px;"
+      }
+    },
+    "favoriteButton_pillRadius": [
+      {
+        "ariaLabel": "Add to favorites",
+        "borderRadius": "18px"
+      },
+      {
+        "ariaLabel": "Remove from favorites",
+        "borderRadius": "18px"
+      }
+    ],
+    "notificationBellView": {
+      "trigger": {
+        "mih": "44px",
+        "miw": "44px"
+      },
+      "popover": {
+        "ddWidth": "320px",
+        "innerMaxHeight": "480px"
+      }
+    }
+  }
+}

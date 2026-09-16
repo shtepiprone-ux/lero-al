@@ -122,8 +122,8 @@ export async function generateMetadata({ params }: Props) {
       images: [
         {
           url: ogImageUrl,
-          width: 1200,
-          height: 630,
+          width: 1200, // design-tokens-allow: width: 1200 — Next.js OG image metadata, the pixel size of the image asset, not a style value
+          height: 630, // design-tokens-allow: height: 630 — Next.js OG image metadata, the pixel size of the image asset, not a style value
           alt: safeText(data.title, 100),
         },
       ],

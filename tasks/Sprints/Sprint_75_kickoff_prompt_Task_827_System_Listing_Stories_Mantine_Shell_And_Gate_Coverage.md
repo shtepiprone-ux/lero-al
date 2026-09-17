@@ -2,8 +2,8 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `NEEDS REVISION` 2026-09-17 — the owner rejected the task (review 3). The ONLY executable route is §18.
-§1–§17 are history. Do not follow their migration, enrolment, story-shell or visual-matrix instructions, except where §18
+**Status: `NEEDS REVISION` 2026-09-17 (review 4). The §18 run is verified and kept. The ONLY remaining executor work is
+§19 (remediation). §1–§17 are history. Do not follow their migration, enrolment, story-shell or visual-matrix instructions, except where §18
 explicitly keeps something.** The §5.1 route is superseded by the owner decision in §18.1. **Folds reserved Task 735**
 (its enrolment half is moot, because §18 deletes the story instead).
 
@@ -594,3 +594,111 @@ Session log: add a `Revision 2` section with the owner quote, the R11–R18 ledg
 census, the consumer table as actually edited, and the §18.8 matrix handed over. Its `Files Changed` table covers the
 whole task diff: deleted, restored, kept and new. Update the `docs/backlog.md` 827 row. Status
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Do not self-approve or run any git command.
+
+## 19. Review 4 — `NEEDS REVISION` 2026-09-17 — remediation route
+
+**Verified and kept (do not redo):**
+- R11–R13, R15, R17 and R18 hold against the real diff:
+  - `git rev-parse HEAD:scripts/lib/mantine-story-scope.mjs` equals `git hash-object` (`4a226255…`);
+  - `storybook-static/index.json` has `patterns-mantine-homepagelistinggrids--empty` and 0 IDs from the four retired families;
+  - the `Empty` export and every consumer edit match §18.3/§18.4.
+- Artifacts `47_`–`84_` are kept.
+- **Re-entry mode: `remediation`.** New artifacts start at `85_`. Do not touch the deleted stories, `HomepageListingGrids.stories.tsx`, the restored enrolment files or `check-design-tokens.mjs`/its test. Rebuild Storybook only as step 3 below.
+
+### 19.1 Findings
+
+**F4 — P1 — §18.4 R14 blocked AC10 (orchestrator defect).** `extractTrackSelectors`
+(`scripts/check-card-track-monotonicity.mjs:121-146`) anchors on a **file name**, `/^MantineListingCardTrack-.*\.css$/`.
+- *Observed (reviewer, built tree):* the track module's CSS is still emitted, with the same content hash and the same
+  classes, but Rollup now names the chunk after its first importer: `storybook-static/assets/ListingCard-BsCj8UXA.css`
+  contains `_grid_xgvr5_5`, `_rail_xgvr5_32`, `_wrapper_xgvr5_45` and `_control_xgvr5_204`. Before the deletion the
+  same `…-BsCj8UXA.css` was named `MantineListingCardTrack-…`.
+- *Impact:* a Rollup chunk-naming decision, not a regression in the track, now switches off a blocking CI gate
+  (`governance-pr.yml:205-208`). R14's "gate logic unchanged" forbade the fix, so the executor was right to stop.
+- *Resolution — authorized here (supersedes R14's boundary for this function only):* replace the file-name anchor with a
+  **content anchor**.
+  1. Read the track's own local class names from its source,
+     `src/design-system/mantine/patterns/MantineListingCardTrack.module.css`: top-level selectors `.grid`, `.wrapper`,
+     `.rail`, `.control`, found by parsing `^\.([a-zA-Z]+)\b`. Never hard-code a hashed name.
+  2. Scan every `storybook-static/assets/*.css`. For each CSS-Module hash token `<h>` in `_<local>_<h>_<n>`, collect
+     the set of local names present with that `<h>`.
+  3. Accept only hash groups that contain **every** source-parsed local name that actually has declarations: at
+     minimum `grid`, `rail`, `wrapper` and `control`. There must be **exactly one** such hash token across all
+     assets; zero or more than one is a failure naming the candidates. The same group appearing in several assets is
+     one token.
+  4. Return `{ ok, asset: <every asset file containing it, comma-joined>, gridClass, railClass }`. The printed
+     `CSS asset:` line lists them.
+  5. `runGate`'s `assetPattern` option becomes a `localNames` override (an array, default = source-parsed). Arm (d)
+     of `--verify-gate` passes a set that no module has (`['__task827_absent__']`) and must still see a non-zero exit
+     and the `cannot see:` line.
+  6. `DEFAULT_ASSET_PATTERN` and every "asset pattern" mention in comments and printed text are removed or renamed.
+
+  No other gate logic changes: discovery, sweep, `evaluateSweep`, widths and arms (a)–(c) stay as they are.
+- *Verification:* see §19.2.
+
+**F5 — P3 — census tension (orchestrator defect, accepted as the executor stated).** R16's "prints nothing" conflicts
+with R15's required deletion-record rows and negative-assertion tests. **R16 is restated:** the census may print
+only these lines, and each must be listed in the session log with a category:
+- `docs/mantine-responsive-design-system.md` "Removed — Task 827" rows;
+- `docs/responsive-storybook-inventory.md` struck-through `DELETED (Task 827 …)` rows and its dated Task 420 result log;
+- `scripts/__tests__/rendered-run-mode.test.ts` `.not.toContain` assertions;
+- `docs/backlog-reserved.md` 735 fold row;
+- `docs/storybook-governance.md:2281-2290`.
+
+Any other line is a failure.
+
+**F6 — P3 — unlisted live reference.** `docs/storybook-governance.md:341`: the §10 directory-tree illustration still lists
+`FeaturedListings.stories.tsx`. *Resolution:* delete that one tree line. Authorized here.
+
+**F7 — P3 — incorrect comment.** `scripts/check-card-track-monotonicity.mjs` header says the remaining legacy `System/*`
+stories "that still render the track (e.g. `Containers`)". I0 (`02_i0-monotonicity.txt`) showed the only `System/*`
+track renderers were the 11 exports of the four deleted files, and the printed text already says no `System/*`
+story renders the track. *Resolution:* the comment says the same as the printed line: no `System/*` story renders
+the track, and non-canonical stories stay excluded by the owner rule of 2026-09-17.
+
+**Accepted deviation — `catalog:components`.** R15's "regenerate via `catalog:components`" was an orchestrator
+defect, because regeneration also rewrites `docs/component-catalog.md` and `docs/component-risk-register.md` with two
+months of deliberately deferred, unrelated drift. The executor's hand-patch of the single line in
+`docs/component-coverage-matrix.md`, and the revert of the other two files to `HEAD`, are accepted. `governance:components`
+exit 0 (`68_`) stands.
+
+### 19.2 Verification (remediation)
+
+1. **Red first (F4):** run `npm.cmd run check:card-track-monotonicity` on the current tree before editing. Expected:
+   exit 1, `found 0` (retain as `85_red-monotonicity.txt`; `61_` is equivalent evidence if it is byte-identical in
+   the extraction lines).
+2. Apply F4, F6 and F7 with Node UTF-8 I/O. Record `git hash-object` of the three files before and after.
+3. Run the block below. Each command writes its own unpiped transcript with `EXIT_CODE=`:
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npm.cmd run build-storybook
+npm.cmd run check:card-track-monotonicity
+npm.cmd run check:card-track-monotonicity:verify
+npm.cmd run check:homepage-grid
+npm.cmd run check:stories
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep -n -i -E "system-(featuredlistings|latestlistings|similarlistings|recentlyviewedsection)|System/(FeaturedListings|LatestListings|SimilarListings|RecentlyViewedSection)|(Featured|Latest|Similar)Listings\.stories|RecentlyViewedSection\.stories" -- . ":!docs/reviews" ":!docs/sessions" ":!docs/governance-reports" ":!docs/backlog-archive.md" ":!tasks"
+git --no-optional-locks hash-object scripts/check-card-track-monotonicity.mjs docs/storybook-governance.md
+git --no-optional-locks status --porcelain
+```
+
+**Acceptance:**
+- **AC10′ [F4]** — `check:card-track-monotonicity` exits 0. `CSS asset:` names the asset(s) that actually contain the
+  track classes, `in scope` lists no `system-*` ID, and `of N canonical` is 142 (another count is a stop).
+- **AC13′ [F4]** — `:verify` exits 0, with arms (a)–(d) each PASS and `Tree fully restored`. Arm (d) proves the content
+  anchor fails closed.
+- **AC14 [F5, F6]** — every census line belongs to a category in the F5 list, and `docs/storybook-governance.md:341`'s
+  line is gone.
+- The other commands in the block exit 0, and the census `git grep` is judged by AC14.
+
+### 19.3 Completion
+
+Session log: add a `Revision 3` section with F4–F7, the red and green transcripts, the before/after hashes, the
+categorized census and an updated whole-task `Files Changed` table. Update the `docs/backlog.md` 827 row. Status
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. The §18.8 owner visual matrix is still owed. No self-approval, no git.

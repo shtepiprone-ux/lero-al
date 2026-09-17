@@ -1,0 +1,202 @@
+
+===== 10.3 pre-migration, no baseline (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (missing) — 0 entries
+    Enrolled files with a Tailwind-compiling finding: 4 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingContactPattern.tsx: animate-spin(2)
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx: shrink-0(4) text-muted-foreground(4)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  30 new Tailwind-utility finding(s) not in the baseline:
+    src/modules/listings/components/ListingDetailView.tsx :: hidden  count=1
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx :: animate-spin  count=2
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: shrink-0  count=4
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: text-muted-foreground  count=4
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: flex  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: items-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: justify-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bg-muted  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-[var(--listing-gallery-h-mobile)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: sm:h-[var(--listing-gallery-h-tablet)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: md:h-[var(--listing-gallery-h-desktop)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-muted-foreground  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: relative  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: overflow-hidden  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-lg  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: absolute  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: inset-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: block  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-full  count=5
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-full  count=4
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: shrink-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: pointer-events-none  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bottom-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: left-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-full  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: px-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: py-0.5  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1
+
+===== 10.3 seed refused (--seed-baseline) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (missing) — 0 entries
+    Enrolled files with a Tailwind-compiling finding: 4 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingContactPattern.tsx: animate-spin(2)
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx: shrink-0(4) text-muted-foreground(4)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  --seed-baseline refused — 3 finding(s) exist outside SEEDABLE_FILES:
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx :: animate-spin
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: shrink-0
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: text-muted-foreground
+baseline exists after refused seed: false
+
+===== 10.4 post-migration, no baseline (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (missing) — 0 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  27 new Tailwind-utility finding(s) not in the baseline:
+    src/modules/listings/components/ListingDetailView.tsx :: hidden  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: flex  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: items-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: justify-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bg-muted  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-[var(--listing-gallery-h-mobile)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: sm:h-[var(--listing-gallery-h-tablet)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: md:h-[var(--listing-gallery-h-desktop)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-muted-foreground  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: relative  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: overflow-hidden  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-lg  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: absolute  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: inset-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: block  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-full  count=5
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-full  count=4
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: shrink-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: pointer-events-none  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bottom-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: left-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-full  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: px-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: py-0.5  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1
+
+===== 10.5 seed (--seed-baseline) EXIT_CODE=0
+    Baseline: scripts\enrolled-tailwind-baseline.json (missing) — 0 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+PASS  --seed-baseline — wrote 27 entr(ies) to scripts\enrolled-tailwind-baseline.json:
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: absolute  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bg-muted  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: block  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bottom-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: flex  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-[var(--listing-gallery-h-mobile)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-full  count=5
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: inset-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: items-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: justify-center  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: left-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: md:h-[var(--listing-gallery-h-desktop)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: overflow-hidden  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: pointer-events-none  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: px-2  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: py-0.5  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: relative  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-full  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-lg  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: shrink-0  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: sm:h-[var(--listing-gallery-h-tablet)]  count=2
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-muted-foreground  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-10  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-full  count=4
+    src/modules/listings/components/ListingDetailView.tsx :: hidden  count=1
+seeded == repo baseline bytes: true
+
+===== 10.5 gate green (gate) EXIT_CODE=0
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+PASS  check:enrolled-tailwind — every enrolled file's Tailwind-utility findings match the versioned baseline exactly.
+plant applied: true
+
+===== 10.6 plant p-2 (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Enrolled files with a Tailwind-compiling finding: 3 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx: p-2(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  1 new Tailwind-utility finding(s) not in the baseline:
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: p-2  count=1
+restore hash equal: true
+
+===== 10.6 restored (gate) EXIT_CODE=0
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+PASS  check:enrolled-tailwind — every enrolled file's Tailwind-utility findings match the versioned baseline exactly.
+stale plant applied: true
+
+===== extra stale (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1)
+FAIL  1 stale baseline entr(ies) — the count dropped or the finding vanished:
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  current=0 baseline=1
+
+===== extra update-baseline (--update-baseline) EXIT_CODE=0
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1)
+PASS  --update-baseline — scripts\enrolled-tailwind-baseline.json updated, 26 entr(ies) written.
+
+===== extra gate after update (gate) EXIT_CODE=0
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 26 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1)
+PASS  check:enrolled-tailwind — every enrolled file's Tailwind-utility findings match the versioned baseline exactly.
+
+===== extra re-add after update (must fail new) (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 26 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  1 new Tailwind-utility finding(s) not in the baseline:
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1
+
+===== extra R1 missing path (gate) EXIT_CODE=2
+FAIL  1 manifest path(s) do not exist on disk (fail-closed, R1):
+    src/does/not/Exist.tsx
+
+===== extra template plant (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 26 entries
+    Enrolled files with a Tailwind-compiling finding: 3 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx: mt-1(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  2 new Tailwind-utility finding(s) not in the baseline:
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: mt-1  count=1
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1
+
+===== extra oracle failure (gate) EXIT_CODE=2
+FAIL  Tailwind compiler oracle unavailable: Can't resolve 'task829-review-nonexistent-package' in 'C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\af087056-b78c-4adb-a7ac-66c36919f200\scratchpad\r829\src\app'
+
+===== extra oracle restored (gate) EXIT_CODE=1
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 26 entries
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+FAIL  1 new Tailwind-utility finding(s) not in the baseline:
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs  count=1

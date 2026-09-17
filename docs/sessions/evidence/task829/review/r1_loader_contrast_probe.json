@@ -1,0 +1,82 @@
+{
+  "390": [
+    {
+      "text": "Call",
+      "disabled": true,
+      "buttonBg": "rgb(228, 231, 236)",
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderColorVar": "#fff",
+      "loaderColor": "rgb(102, 112, 133)",
+      "loaderBorderColor": "rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgba(0, 0, 0, 0)",
+      "rect": {
+        "x": 37,
+        "y": 815,
+        "width": 286,
+        "height": 44,
+        "top": 815,
+        "right": 323,
+        "bottom": 859,
+        "left": 37
+      }
+    },
+    {
+      "text": "WhatsApp",
+      "disabled": true,
+      "buttonBg": "rgb(228, 231, 236)",
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderColorVar": "#fff",
+      "loaderColor": "rgb(102, 112, 133)",
+      "loaderBorderColor": "rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgba(0, 0, 0, 0)",
+      "rect": {
+        "x": 37,
+        "y": 857,
+        "width": 286,
+        "height": 44,
+        "top": 857,
+        "right": 323,
+        "bottom": 901,
+        "left": 37
+      }
+    }
+  ],
+  "1440": [
+    {
+      "text": "Call",
+      "disabled": true,
+      "buttonBg": "rgb(228, 231, 236)",
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderColorVar": "#fff",
+      "loaderColor": "rgb(102, 112, 133)",
+      "loaderBorderColor": "rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgba(0, 0, 0, 0)",
+      "rect": {
+        "x": 37,
+        "y": 759,
+        "width": 137,
+        "height": 44,
+        "top": 759,
+        "right": 174,
+        "bottom": 803,
+        "left": 37
+      }
+    },
+    {
+      "text": "WhatsApp",
+      "disabled": true,
+      "buttonBg": "rgb(228, 231, 236)",
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderColorVar": "#fff",
+      "loaderColor": "rgb(102, 112, 133)",
+      "loaderBorderColor": "rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgba(0, 0, 0, 0)",
+      "rect": {
+        "x": 186,
+        "y": 759,
+        "width": 137,
+        "height": 44,
+        "top": 759,
+        "right": 323,
+        "bottom": 803,
+        "left": 186
+      }
+    }
+  ]
+}

@@ -2,8 +2,9 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Route fixed by owner decision 2026-09-17 (§5.1). **Sequence after Task
-830** (both edit `docs/design-system.md`).
+**Status: `NEEDS REVISION` 2026-09-17 (review 1).** Re-entry is **§16** — read it first; it overrides R6, R7, AC7 and
+§13.2 where they differ. Route fixed by owner decision 2026-09-17 (§5.1). **Sequence after Task 830** (both edit
+`docs/design-system.md`).
 
 ## 1. Mode and task type
 
@@ -93,8 +94,8 @@ the last subsection is §23.9 (`:1568`).
 | **R3** | §3.1 | Oracle: a token is a Tailwind utility iff the project design system (`@tailwindcss/node` `__unstable__loadDesignSystem` over `src/app/globals.css`) returns non-null CSS for it (`candidatesToCss`). If that API is missing or throws, the gate exits 2 naming it. It never passes on a failed oracle. | **P0** | AC3 | Confirmed |
 | **R4** | §5.1, §3.2 | Baseline `scripts/enrolled-tailwind-baseline.json`: `{ "version": 1, "entries": { "<file> :: <token>": { "count": n, "owner": "794", "reason": "…" } } }`. `count` = occurrences of the token in that file's extracted set. The real run fails (exit 1) on a key not in the baseline, on a count above baseline (**new**), or on a baseline key whose count dropped or vanished (**stale**, with the command to fix it). | **P0** | AC2, AC3 | Confirmed |
 | **R5** | §5.1 | Writers. `--seed-baseline` runs only when the baseline file does not exist. It writes only findings in `SEEDABLE_FILES = [MantineListingGalleryPattern.tsx, ListingDetailView.tsx]` (constant, with the owner decision date in a comment), and refuses with no write if any finding exists outside them. `--update-baseline` may only lower counts or delete keys; any key or count increase is refused with no write. | **P0** | AC3 | Confirmed |
-| **R6** | §3.3 | `MantineListingContactPattern.tsx`: both loading icons become `<Loader size={theme.other.iconSize.comfortable} color="white" />` (Mantine `Loader`, precedent §3.3). `Loader2` import removed if unused. | **P0** | AC4, AC5 | Confirmed |
-| **R7** | §3.3 | `MantineListingDetailPattern.tsx`: the three lucide icons use `color="var(--muted-foreground)"` and `style={{ flexShrink: 0 }}` with no `className`. The features `<span>` becomes `<Box component="span" c="var(--muted-foreground)" style={{ flexShrink: 0 }}>`. Computed `color` and `flex-shrink` of all four are identical before and after (value-preserving). | **P0** | AC4, AC5 | Confirmed |
+| **R6** | §3.3, §16 | `MantineListingContactPattern.tsx`: both loading icons become `<Loader size={theme.other.iconSize.comfortable} color="currentColor" />` (Mantine `Loader`). **Revision 1:** not `color="white"` — the button is `disabled` while loading, and white arcs measured ≈1.24:1 on its background (§16.1). `Loader2` import removed if unused. | **P0** | AC4, AC5, AC7 | Confirmed |
+| **R7** | §3.3, §16 | `MantineListingDetailPattern.tsx`: the three lucide icons use `style={{ color: 'var(--muted-foreground)', flexShrink: 0 }}` with no `className` (**Revision 1:** the lucide `color` prop sets the `stroke` attribute and does not set the CSS `color` property, measured §16.1). The features `<span>` becomes `<Box component="span" c="var(--muted-foreground)" style={{ flexShrink: 0 }}>`. Computed `color` and `flex-shrink` of all four are identical before and after (value-preserving). | **P0** | AC4, AC5 | Confirmed |
 | **R8** | GR-2 | Every run prints: scope (manifest path + entry count), oracle (Tailwind version + CSS entry), baseline path and entry count, and **cannot see**: class strings built in another module and imported, runtime-computed strings (function returns), Tailwind applied through CSS (`@apply` in `.module.css`), non-enrolled files (owned by `check:surface-census:changed`), and `class`/other attribute names. | P1 | AC1 | Confirmed |
 | **R9** | Q4 | `--verify-gate`, synthetic in-memory fixtures (no tracked writes): (1) literal Tailwind `className` → finding; (2) `container-wide listing-card` → none; (3) `className={styles.x}` → none; (4) module const string used via `cn(A, 'p-2')` → both tokens found; (5) `classNames={{ root: 'flex' }}` → finding; (6) key absent from baseline → exit 1; (7) baseline key with count above current → stale, exit 1; (8) `--seed-baseline` with a finding outside `SEEDABLE_FILES` → refused, no write; (9) oracle loader injected to throw → exit 2; (10) the `--update-baseline` decision function given a current count above the prior baseline → refused, and the write function is not called. | **P0** | AC3 | Confirmed |
 | **R10** | CI | `package.json`: `check:enrolled-tailwind`, `check:enrolled-tailwind:verify`, `check:enrolled-tailwind:update-baseline`. `governance-pr.yml` `governance` job: the gate and its `:verify` as two blocking steps immediately after `check:rendered-scope:verify`. | **P0** | AC6 | Confirmed |
@@ -201,6 +202,9 @@ file and `mt-2`. A PR in 794 removes the gallery Tailwind and runs `--update-bas
   two 794 files. `git diff` of both patterns shows only the R6/R7 substitutions. Quote both.
 - **AC5 [R7]** — before/after JSON: the four detail elements' computed `color` and `flex-shrink` strings are byte-equal.
   The contact loading `Button`'s rect height is unchanged (±0.5px). Quote the values.
+- **AC7 [R6]** — in `patterns-mantine-listingcontactpattern--default` at 390 and 1440 (`en`), for every loading `Button`
+  (each one containing `.mantine-Loader-root`): the computed `border-top-color` of the Loader's `::after` equals the
+  button's computed `color`, and the button is still `disabled`. Quote both values per button.
 - **AC6 [R10–R12]** — quote the workflow diff (two new steps after `check:rendered-scope:verify`), the three
   `package.json` lines, the §23.10 heading and its 794 paragraph, and a Node one-liner printing the baseline key count next to the "27" stated
   in the two 794 rows.
@@ -239,7 +243,7 @@ npm.cmd run check:design-tokens:strict
 npm.cmd run check:tailwind-runtime-tokens
 npm.cmd run check:story-coverage
 npm.cmd run check:rendered-scope
-npm.cmd run check:surface-census:changed -- --base HEAD
+node.exe scripts/check-surface-census.mjs --surface src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
 npm.cmd run typecheck
 npm.cmd run lint
 npx.cmd vitest run src/design-system/mantine
@@ -299,3 +303,48 @@ Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or 
 | 4 seed | seeded baseline + green run | key outside 794 files → not done |
 | 5 plant | plant run + restore hash | hash differs → not done |
 | 6 final | §13.2 | any unexplained non-zero → not `IMPLEMENTED` |
+
+## 16. Revision 1 — review 1, 2026-09-17 (re-entry: `remediation`)
+
+### 16.1 What review 1 measured
+
+- `FACT` — **R6 regression.** `docs/sessions/evidence/task829/review/r1_loader_contrast_probe.json` (`win32`, the
+  executor's final `storybook-static`): every loading `Button` is `disabled`, background `rgb(228, 231, 236)`, text
+  `color` `rgb(102, 112, 133)`; the Loader's `--loader-color` is `#fff` and its `::after` arcs are
+  `rgb(255, 255, 255)`. White on that background is ≈1.24:1 (WCAG 1.4.11 asks 3:1 for a graphical indicator).
+  Screenshots: `review/r1_loading_button_{1440,390}_{0,1}.png`. Before migration `Loader2` painted with
+  `stroke="currentColor"` (`93_probe_before_meta.json` `strokeAttr`), i.e. the button's own `rgb(102, 112, 133)`,
+  ≈4.1:1. The `color="white"` idiom in §3.3 was copied from precedents that share the defect — filed as **835**,
+  out of scope here.
+- `FACT` — **R7 route correction accepted.** `92_probe_after.json` (lucide `color` prop) gives `svgColor`
+  `oklch(0.145 0 0)` against `oklch(0.556 0 0)` before; `exec/13_r7_final_probe.json` (`style.color`) is byte-equal
+  to `93_probe_before_meta.json` on `svgColor`, `svgStroke` and flex-shrink for all four elements. R7 now names the
+  `style` route (§4). The shipped R7 diff stays as it is.
+- `FACT` — **gate, baseline and arms verified.** `review/r1_gate_replay.txt` (`review/r1_gate_replay.mjs`, an
+  isolated scratch copy, no repo writes) reproduces §10.3 (30 findings, seed refused, no file), §10.4 (27), §10.5
+  (seeded bytes equal `scripts/enrolled-tailwind-baseline.json`), §10.6 on the **final** tree (`p-2` exit 1, restore
+  hash equal, exit 0), plus stale → `--update-baseline` → green, R1 missing path exit 2 and a real oracle failure
+  exit 2. **Do not re-run §10.3–§10.6 and do not touch the baseline or the gate script.**
+- `FACT` — §13.2's former `check:surface-census:changed -- --base HEAD` compares committed refs and saw 0 paths on
+  an uncommitted diff. §13.2 now runs `check-surface-census.mjs --surface` on the DetailPattern root (8 nodes; it
+  renders ContactPattern). Review 1's run printed `GR-1 CENSUS COMPLETE — 8 nodes; tier1 8 …`.
+
+### 16.2 Required change (only this)
+
+1. `MantineListingContactPattern.tsx`, both `<Loader size={theme.other.iconSize.comfortable} color="white" />`:
+   `color="white"` → `color="currentColor"`. Nothing else in `src/`.
+2. **Stop:** if AC7 does not hold with `currentColor`, return `BLOCKED` with both values. Do not pick another color.
+
+### 16.3 Verification
+
+`npm.cmd run build-storybook`; then an AC7 probe (reuse `review/r1_loader_contrast_probe.mjs`'s selectors, add the
+button `color` vs `::after` `border-top-color` comparison) writing only under `docs/sessions/evidence/task829/rev1/`;
+then the full §13.2 block into `rev1/`, one unpiped transcript per command with `EXIT_CODE=`, ending with the
+`git hash-object` line. §10.x arms are not re-run (§16.1). Update the session log (Files Changed, AC7 quote, R6/R7 as
+amended) and 829's state in `docs/backlog.md` line 47. §13.3 owner visual review is still owed and follows this
+revision.
+
+### 16.4 Preserved artifacts — do not overwrite
+
+`scripts/enrolled-tailwind-baseline.json` · `scripts/check-enrolled-tailwind.mjs` · `docs/sessions/evidence/task829/*.json`
+· `exec/` · `review/` · `design/`.

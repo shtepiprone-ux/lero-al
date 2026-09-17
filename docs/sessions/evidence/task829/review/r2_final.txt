@@ -1,0 +1,67 @@
+=== node -p process.platform 
+win32
+=== check:enrolled-tailwind:verify 
+
+> lero-al@0.1.0 check:enrolled-tailwind:verify
+> node scripts/check-enrolled-tailwind.mjs --verify-gate
+
+check:enrolled-tailwind gate self-test (--verify-gate, Task 829 R9) — running 10 arms
+
+  PASS  Arm 1 — literal Tailwind className ("mt-2 flex") -> finding
+  PASS  Arm 2 — global non-Tailwind classes ("container-wide listing-card") -> no finding
+  PASS  Arm 3 — className={styles.x} -> no token extracted
+  PASS  Arm 4 — module const via cn(A, "p-2") -> both tokens extracted and found
+  PASS  Arm 5 — classNames={{root:"flex"}} -> finding on the value ("flex"), never the key ("root")
+  PASS  Arm 6 — key absent from baseline -> new finding, exit 1
+  PASS  Arm 7 — baseline count above current measured count -> stale, exit 1
+  PASS  Arm 8 — --seed-baseline finding outside SEEDABLE_FILES -> refused, writer never called
+  PASS  Arm 9 — oracle loader throws -> classified as failed (drives exit 2)
+  PASS  Arm 10 — --update-baseline count increase above prior baseline -> refused, writer never called
+
+Arms run: 10
+Self-test: 10 passed, 0 failed
+PASS  check:enrolled-tailwind:verify — all 10 arms (R9) behave correctly.
+=== check:enrolled-tailwind 
+
+> lero-al@0.1.0 check:enrolled-tailwind
+> node scripts/check-enrolled-tailwind.mjs
+
+check:enrolled-tailwind — compiler-backed Tailwind-utility detector for enrolled files (Task 829)
+    Scope: scripts\mantine-migration-scope.json — 73 entries
+    Oracle: tailwindcss 4.3.0 (@tailwindcss/node __unstable__loadDesignSystem(globals.css).candidatesToCss)
+    Oracle liveness sample: candidatesToCss(['hidden']) -> .hidden { display: none; }
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Cannot see:
+      - class strings built in another module and imported (only a same-file module-level const resolves)
+      - runtime-computed strings (function return values)
+      - Tailwind applied through CSS (@apply in a .module.css file)
+      - non-enrolled files (owned by check:surface-census:changed)
+      - any attribute name other than className/classNames (e.g. a plain `class`)
+
+    Enrolled files with a Tailwind-compiling finding: 2 (of 73 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+
+PASS  check:enrolled-tailwind — every enrolled file's Tailwind-utility findings match the versioned baseline exactly.
+=== check:file-integrity 
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 57 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 57 file(s) clean
+=== check:mojibake 
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 5634 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 5634 files
+=== hash-object 
+c14a541f290bc1f354338fbeceb045a5951fab59
+7d1cd65120a903ac2dd0f09d7b041463be2e6ae5
+2d9990cfae649bea93887062bd2ec511b32aa4c2
+3ef3ca8d77a00299669c3697ad7f00afcd95e798

@@ -1,0 +1,20 @@
+ M .github/workflows/governance-pr.yml
+ M docs/backlog-reserved.md
+ M docs/backlog.md
+ M docs/design-system.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+ M tasks/Sprints/Sprint_75_kickoff_prompt_Task_829_Enrolled_Files_Tailwind_Utility_Detector.md
+?? docs/sessions/2026-09-17-task829-enrolled-files-tailwind-utility-detector.md
+?? docs/sessions/evidence/task829/91_probe829.mjs
+?? docs/sessions/evidence/task829/92_probe_after.json
+?? docs/sessions/evidence/task829/93_probe_before_meta.json
+?? docs/sessions/evidence/task829/94_probe_after_fixed.json
+?? docs/sessions/evidence/task829/95_probe_before_contact.json
+?? docs/sessions/evidence/task829/exec/
+?? docs/sessions/evidence/task829/rev1/
+?? docs/sessions/evidence/task829/review/
+?? scripts/check-enrolled-tailwind.mjs
+?? scripts/enrolled-tailwind-baseline.json

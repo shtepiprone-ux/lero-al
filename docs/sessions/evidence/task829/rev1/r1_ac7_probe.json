@@ -1,0 +1,35 @@
+{
+  "390": [
+    {
+      "text": "Call",
+      "disabled": true,
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderAfterBorderTopColor": "rgb(102, 112, 133)",
+      "ac7Pass": true
+    },
+    {
+      "text": "WhatsApp",
+      "disabled": true,
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderAfterBorderTopColor": "rgb(102, 112, 133)",
+      "ac7Pass": true
+    }
+  ],
+  "1440": [
+    {
+      "text": "Call",
+      "disabled": true,
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderAfterBorderTopColor": "rgb(102, 112, 133)",
+      "ac7Pass": true
+    },
+    {
+      "text": "WhatsApp",
+      "disabled": true,
+      "buttonColor": "rgb(102, 112, 133)",
+      "loaderAfterBorderTopColor": "rgb(102, 112, 133)",
+      "ac7Pass": true
+    }
+  ],
+  "allPass": true
+}

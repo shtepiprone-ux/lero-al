@@ -124,6 +124,12 @@ jobs:
       - name: Rendered-scope gate self-test (verifies gate detects violations — CI-safe, Task 818)
         run: npm run check:rendered-scope:verify
 
+      - name: Enrolled-files Tailwind-utility gate (Task 829 — blocking, compiler-backed, remove-only baseline)
+        run: npm run check:enrolled-tailwind
+
+      - name: Enrolled-files Tailwind-utility gate self-test (verifies gate detects violations — CI-safe, Task 829)
+        run: npm run check:enrolled-tailwind:verify
+
       - name: Diff-mapped per-surface GR-1 census gate (Task 819 — blocking, baselined fail-on-new)
         env:
           SURFACE_CENSUS_BASE_SHA: ${{ github.event.pull_request.base.sha }}

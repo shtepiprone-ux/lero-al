@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "entries": {
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: absolute": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bg-muted": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: block": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: bottom-2": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: flex": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-10": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-[var(--listing-gallery-h-mobile)]": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-full": {
+      "count": 5,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: inset-0": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: items-center": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: justify-center": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: left-2": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: md:h-[var(--listing-gallery-h-desktop)]": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: overflow-hidden": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: pointer-events-none": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: px-2": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: py-0.5": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: relative": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-full": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: rounded-lg": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: shrink-0": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: sm:h-[var(--listing-gallery-h-tablet)]": {
+      "count": 2,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-muted-foreground": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: text-xs": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-10": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-full": {
+      "count": 4,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    },
+    "src/modules/listings/components/ListingDetailView.tsx :: hidden": {
+      "count": 1,
+      "owner": "794",
+      "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+    }
+  }
+}

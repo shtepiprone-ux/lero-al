@@ -1686,6 +1686,65 @@ declared in any shipped CSS file was enumerated once (a project-looking orphan i
 required stopping for an owner decision, since blind spot 1 above means such an orphan predating the
 snapshot would otherwise never surface). Measured 2026-09-16: zero such names existed at that time.
 
+### §23.10 — Enrolled files carry no Tailwind utilities: `check:enrolled-tailwind` (Task 829)
+
+**Manifest enrolment is not a Tailwind check.** `scripts/mantine-migration-scope.json` enrolment tells
+every other gate a file is "migrated", but nothing checked that an enrolled file had actually stopped
+RENDERING Tailwind utilities — Task 825's regex heuristic found 3 of the 4 files that genuinely carried
+one and missed `MantineListingContactPattern.tsx`'s `animate-spin`
+(`docs/sessions/evidence/task825/design/02_manifest-tailwind-utility-scan.txt`).
+`scripts/check-enrolled-tailwind.mjs` (`npm run check:enrolled-tailwind`, blocking in CI) replaces the
+heuristic with the project's own Tailwind v4 compiler as the oracle.
+
+**Detects.** For every `scripts/mantine-migration-scope.json` entry (a listed path that does not exist
+is a fail-closed error, exit 2), the TypeScript AST is walked for every `className`/`classNames` JSX
+attribute. Inside their expressions it collects string literals, no-substitution template literals,
+template-literal static parts, and the string LEAVES of object/array literals (never an object key —
+`classNames={{ root: 'flex' }}` finds `flex`, never `root`). Conditional (`? :`) and logical (`&&`,
+`||`, `??`) expressions and every call-expression argument (`cn(...)`, `clsx(...)`, or any other call)
+are recursed into. A plain identifier resolves to a SAME-FILE module-level `const` initializer
+(recursively, cycle-guarded), including a property/element access on such a const — `OBJ.key` takes the
+whole `OBJ`, the same rule the design-time measurement script used. An identifier that does not resolve
+this way (imported from elsewhere, a prop, a hook return) yields nothing — a blind spot, not a bug.
+
+**Oracle.** A token is a Tailwind utility iff `@tailwindcss/node`'s
+`__unstable__loadDesignSystem(globals.css).candidatesToCss` returns real CSS for it, never a
+name-pattern guess. If that API is missing or throws, the gate exits 2 naming it — it never passes on a
+failed oracle.
+
+**Baseline — remove-only, `scripts/enrolled-tailwind-baseline.json`.** `{ version: 1, entries: {
+"<file> :: <token>": { count, owner, reason } } }`, `count` = the token's actual occurrence count in
+that file's extracted set (not a distinct-token count — repeating an already-baselined utility a second
+time in the same file is itself new debt). A key absent from the baseline, or a key whose measured count
+is now HIGHER than the baseline's, is new debt and fails the gate (exit 1); a baseline key whose measured
+count is now LOWER, or has vanished entirely, is STALE — paid-down debt that must be recorded via
+`--update-baseline`, and also fails until it is.
+
+Two writers, both refuse WHOLESALE (no partial write) rather than silently launder debt: `--seed-baseline`
+(never wired into an npm script — the one-time initial write, house pattern from
+`check-surface-census-changed.mjs`) runs only when the baseline file does not exist, and only ever writes
+findings whose file is in the fixed `SEEDABLE_FILES` constant — a finding anywhere else refuses the whole
+write with no write performed. `npm run check:enrolled-tailwind:update-baseline` runs only against an
+EXISTING baseline, and may only lower a count or drop a key entirely — any count/key increase refuses
+the whole write; increased debt is never something a baseline updater can absorb.
+
+**The 794 ownership quote (owner decision 2026-09-17, Task 829 kickoff §5.1, verbatim):** "Детектор + 3
+токени, галерея в 794" — Task 829 built the detector and migrated the 3 tokens it owned
+(`MantineListingContactPattern.tsx`'s `animate-spin`, `MantineListingDetailPattern.tsx`'s
+`shrink-0`/`text-muted-foreground`) to canonical Mantine sources. The remaining 27 tokens — 26 in
+`MantineListingGalleryPattern.tsx`, 1 (`hidden`) in `ListingDetailView.tsx`, the LCP static-frame/
+interactive-shell mechanism (`docs/backlog-reserved.md:18`, Sprint 71 Task 794) — are seeded into the
+baseline with `owner: "794"`. Task 794 is obliged to empty it; the baseline is remove-only, so a widened
+`SEEDABLE_FILES` set or a raised count can only ever happen by a new, dated owner decision, never
+silently.
+
+**Blind spots (R8, printed every run):** class strings built in another module and imported (only a
+same-file module-level const resolves); runtime-computed strings (function return values); Tailwind
+applied through CSS (`@apply` inside a `.module.css` file — this gate never reads CSS files);
+non-enrolled files (that gap belongs to `check:surface-census:changed`, not this gate); and any JSX
+attribute name other than `className`/`classNames` (a bare `class`, or a differently-named prop, is
+invisible here).
+
 > **This clause is BINDING and OVERRIDES any weaker local wording. Any pattern listed here
 > applied in a task without an approved exception entry is a FAIL — do not approve or commit.**
 

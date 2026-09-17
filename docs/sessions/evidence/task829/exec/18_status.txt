@@ -1,0 +1,13 @@
+ M .github/workflows/governance-pr.yml
+ M docs/design-system.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+?? docs/sessions/evidence/task829/91_probe829.mjs
+?? docs/sessions/evidence/task829/92_probe_after.json
+?? docs/sessions/evidence/task829/93_probe_before_meta.json
+?? docs/sessions/evidence/task829/94_probe_after_fixed.json
+?? docs/sessions/evidence/task829/95_probe_before_contact.json
+?? docs/sessions/evidence/task829/exec/
+?? scripts/check-enrolled-tailwind.mjs
+?? scripts/enrolled-tailwind-baseline.json

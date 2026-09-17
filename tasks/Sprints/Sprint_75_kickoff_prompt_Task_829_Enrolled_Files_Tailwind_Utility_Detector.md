@@ -2,7 +2,7 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `NEEDS REVISION` 2026-09-17 (review 1).** Re-entry is **§16** — read it first; it overrides R6, R7, AC7 and
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-17 (review 3, after Revision 1). Archived.** Owner visual review §13.3, 2026-09-17, verbatim: "Візуальне рев'ю пройдено, всі 8 комбінацій прийнято". Review 1 re-entry was **§16**; it overrides R6, R7, AC7 and
 §13.2 where they differ. Route fixed by owner decision 2026-09-17 (§5.1). **Sequence after Task 830** (both edit
 `docs/design-system.md`).
 

@@ -1,8 +1,8 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, Box, ThemeIcon, useMantineTheme } from '@mantine/core'
-import { Phone, MessageCircle, CheckCircle, UserX, LogIn, Loader2 } from 'lucide-react'
+import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, Box, ThemeIcon, Loader, useMantineTheme } from '@mantine/core'
+import { Phone, MessageCircle, CheckCircle, UserX, LogIn } from 'lucide-react'
 
 export interface MantineListingContactAgent {
   name: string
@@ -202,7 +202,7 @@ export function MantineListingContactPattern({
                 disabled={loading || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
-                leftSection={loading ? <Loader2 size={theme.other.iconSize.comfortable} className="animate-spin" /> : <Phone size={theme.other.iconSize.comfortable} />}
+                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <Phone size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
@@ -216,7 +216,7 @@ export function MantineListingContactPattern({
                 disabled={loading || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
-                leftSection={loading ? <Loader2 size={theme.other.iconSize.comfortable} className="animate-spin" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
+                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
                 style={{ flex: 1, minWidth: 0 }}
                 styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >

@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, useMantineTheme } from '@mantine/core'
+import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, Box, useMantineTheme } from '@mantine/core'
 import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
 import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
@@ -217,20 +217,20 @@ export function MantineListingDetailPattern({
             <Group gap="md" wrap="wrap">
               {data.location && (
                 <Group gap="tight" wrap="nowrap">
-                  <MapPin size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
+                  <MapPin size={theme.other.iconSize.standard} style={{ color: 'var(--muted-foreground)', flexShrink: 0 }} />
                   <Text size="sm" c="dimmed">
                     {data.location}
                   </Text>
                 </Group>
               )}
               <Group gap="tight" wrap="nowrap">
-                <Eye size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
+                <Eye size={theme.other.iconSize.standard} style={{ color: 'var(--muted-foreground)', flexShrink: 0 }} />
                 <Text size="sm" c="dimmed">
                   {data.views} {data.viewsLabel}
                 </Text>
               </Group>
               <Group gap="tight" wrap="nowrap">
-                <CalendarDays size={theme.other.iconSize.standard} className="shrink-0 text-muted-foreground" />
+                <CalendarDays size={theme.other.iconSize.standard} style={{ color: 'var(--muted-foreground)', flexShrink: 0 }} />
                 <Text size="sm" c="dimmed">
                   {data.date}
                 </Text>
@@ -247,7 +247,7 @@ export function MantineListingDetailPattern({
                 {features.map((f, i) => (
                   <Stack key={i} gap="micro">
                     <Group gap="tight" wrap="nowrap">
-                      <span className="shrink-0 text-muted-foreground">{f.icon}</span>
+                      <Box component="span" c="var(--muted-foreground)" style={{ flexShrink: 0 }}>{f.icon}</Box>
                       <Text size="xs" c="dimmed">
                         {f.label}
                       </Text>

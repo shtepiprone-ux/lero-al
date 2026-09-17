@@ -1,0 +1,17 @@
+check:enrolled-tailwind gate self-test (--verify-gate, Task 829 R9) — running 10 arms
+
+  PASS  Arm 1 — literal Tailwind className ("mt-2 flex") -> finding
+  PASS  Arm 2 — global non-Tailwind classes ("container-wide listing-card") -> no finding
+  PASS  Arm 3 — className={styles.x} -> no token extracted
+  PASS  Arm 4 — module const via cn(A, "p-2") -> both tokens extracted and found
+  PASS  Arm 5 — classNames={{root:"flex"}} -> finding on the value ("flex"), never the key ("root")
+  PASS  Arm 6 — key absent from baseline -> new finding, exit 1
+  PASS  Arm 7 — baseline count above current measured count -> stale, exit 1
+  PASS  Arm 8 — --seed-baseline finding outside SEEDABLE_FILES -> refused, writer never called
+  PASS  Arm 9 — oracle loader throws -> classified as failed (drives exit 2)
+  PASS  Arm 10 — --update-baseline count increase above prior baseline -> refused, writer never called
+
+Arms run: 10
+Self-test: 10 passed, 0 failed
+PASS  check:enrolled-tailwind:verify — all 10 arms (R9) behave correctly.
+EXIT_CODE=0

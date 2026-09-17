@@ -1,0 +1,356 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-829 — check:enrolled-tailwind: a compiler-backed Tailwind-utility detector for enrolled files, the 3 non-gallery tokens migrated, the 27 gallery tokens baselined to Task 794 (Sprint 75), Revision 1",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "1b4590b629b6c6a3ca6065b650a4a0076db72ff8",
+    "reviewedRevision": "uncommitted worktree on top of 1b4590b629b6c6a3ca6065b650a4a0076db72ff8 (main; that commit is this review's own review-1 orchestration commit, no implementation). Non-frontend scope of this ledger: scripts/check-enrolled-tailwind.mjs, scripts/enrolled-tailwind-baseline.json, package.json, .github/workflows/governance-pr.yml, docs/design-system.md §23.10. The two Mantine pattern files (R6/R7) are frontend work recorded in the session log and the owner visual matrix per the frontend-ledger exception. Blob hashes in docs/sessions/evidence/task829/rev1/18_hashes.txt equal the reviewer's own hash-object run in review/r2_final.txt.",
+    "reviewedPaths": [
+      "scripts/check-enrolled-tailwind.mjs",
+      "scripts/enrolled-tailwind-baseline.json",
+      "package.json",
+      ".github/workflows/governance-pr.yml",
+      "docs/design-system.md",
+      "docs/backlog.md",
+      "docs/sessions/2026-09-17-task829-enrolled-files-tailwind-utility-detector.md",
+      "docs/sessions/evidence/task829"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 4,
+      "verified": 4,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-09-17-task829-enrolled-files-tailwind-detector.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC3 / R1 R2 R3 R4 R5 R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-enrolled-tailwind.mjs",
+        "symbol": "extractTokenCounts/collectClassStrings (R2), loadOracle/classifyTokens (R3), compareToBaseline/evaluateGateExitCode (R4), computeSeedWrite/computeUpdateWrite/runSeedBaseline/runUpdateBaseline (R5), runSelfTest 10 arms (R9), main() manifest-existence branch (R1)",
+        "diffHunks": [
+          "scripts/check-enrolled-tailwind.mjs:1-752 — whole new file, blob c14a541f290bc1f354338fbeceb045a5951fab59",
+          "scripts/enrolled-tailwind-baseline.json — 27 keys, blob 7d1cd65120a903ac2dd0f09d7b041463be2e6ae5, every key's file in SEEDABLE_FILES"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the gate fails on new debt and on stale (paid-down) debt, refuses to seed a finding outside SEEDABLE_FILES, refuses an increase through --update-baseline, exits 2 on a missing manifest path and on a failed oracle, and the 10 self-test arms pass"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI gate renders nothing and is not parameterised by a Storybook story.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic source scan over a fixed manifest."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "command": "node.exe docs/sessions/evidence/task829/review/r1_gate_replay.mjs <scratch> <repo> — reviewer replay in an isolated copy (repo files read-only), native win32",
+          "observable": "Pre-migration tree (files from git show HEAD:) exit 1 with 30 findings across 4 files; --seed-baseline refused naming the 3 non-794 keys and no baseline file created; post-migration tree exit 1 with exactly the 27 gallery/ListingDetailView findings; --seed-baseline writes 27 keys whose bytes equal scripts/enrolled-tailwind-baseline.json; gate then exit 0; planting className=\"p-2\" on the FINAL DetailPattern exits 1 naming MantineListingDetailPattern.tsx :: p-2 and the restored file's sha1 equals the pre-plant value, gate exit 0; removing one baselined token gives 1 stale entry exit 1, --update-baseline lowers to 26 and the gate is green, re-adding it fails as new; an extra non-existent manifest path exits 2; an unresolvable @import in the scratch globals.css makes the oracle throw and the gate exits 2 rather than reporting 0 findings.",
+          "freshness": "reviewer run 2026-09-17 against the submitted script/baseline blobs (c14a541f2 / 7d1cd6512), re-confirmed unchanged in review/r2_final.txt after Revision 1",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate fails on new debt and on stale (paid-down) debt, refuses to seed a finding outside SEEDABLE_FILES, refuses an increase through --update-baseline, exits 2 on a missing manifest path and on a failed oracle, and the 10 self-test arms pass"
+            ],
+            "phases": [
+              "before",
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task829/review/r2_final.txt",
+          "command": "npm.cmd run check:enrolled-tailwind:verify; npm.cmd run check:enrolled-tailwind; git --no-optional-locks hash-object (reviewer, native win32, after every review edit)",
+          "observable": "10 arms PASS / 0 failed, exit 0; gate PASS exit 0; script blob c14a541f2 and baseline blob 7d1cd6512 unchanged from the review-1 replay.",
+          "freshness": "reviewer run 2026-09-17 after the last write of this review",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate fails on new debt and on stale (paid-down) debt, refuses to seed a finding outside SEEDABLE_FILES, refuses an increase through --update-baseline, exits 2 on a missing manifest path and on a failed oracle, and the 10 self-test arms pass"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The gate is green because it finds nothing — a planted utility in an enrolled file would pass too.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "result": "REFUTED. className=\"p-2\" planted on the final MantineListingDetailPattern.tsx exits 1 naming the exact key, and a Tailwind token reached only through a template literal (className={`${\"x\"} mt-1`}) is also reported, so extraction is not literal-only. Restore sha1 equals the pre-plant value."
+        },
+        {
+          "claim": "A failed Tailwind oracle would be read as zero violations (the gate would pass silently).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "result": "REFUTED. With an unresolvable @import in globals.css the run prints 'Tailwind compiler oracle unavailable' and exits 2; self-test arm 9 only classifies the loader failure, so this end-to-end exit code was measured by the reviewer, not taken from the arm."
+        },
+        {
+          "claim": "The baseline can absorb new debt, making it a waiver rather than a remove-only ledger.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "result": "REFUTED. --seed-baseline refuses wholesale on the 3 non-SEEDABLE_FILES findings with no file written; after a key is paid down and dropped, re-adding the same token fails as new; arm 10 shows --update-baseline never calls the writer on an increase."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The gate reads existing CSS through the Tailwind compiler as an oracle; it emits no CSS, selector or cascade rule of its own. The two Tailwind-to-Mantine substitutions are frontend work, measured as computed values in docs/sessions/evidence/task829/{93_probe_before_meta,94_probe_after_fixed}.json and exec/13_r7_final_probe.json."
+      }
+    },
+    {
+      "id": "AC1 AC2 / R8 R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-enrolled-tailwind.mjs",
+        "symbol": "printHeader/printCannotSee; BASELINE_PATH key-count print",
+        "diffHunks": [
+          "scripts/check-enrolled-tailwind.mjs:410-427 — header prints manifest path + entry count, tailwind version, candidatesToCss(['hidden']) liveness sample, baseline path/state/count, and the five 'Cannot see' lines"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every run prints scope (73 manifest entries), the oracle version, baseline path and count, and all five blind spots; the baseline's 27 keys name only the two Task 794 files"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI output.",
+          "locales": "CLI output.",
+          "viewports": "CLI output.",
+          "states": "Deterministic run."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task829/rev1/02_gate.txt",
+          "command": "npm.cmd run check:enrolled-tailwind (executor's Revision 1 final block; reviewer re-ran the same command in review/r2_final.txt)",
+          "observable": "Scope: scripts\\mantine-migration-scope.json — 73 entries; Oracle: tailwindcss 4.3.0 (@tailwindcss/node __unstable__loadDesignSystem(globals.css).candidatesToCss); liveness sample .hidden { display: none; }; Baseline: scripts\\enrolled-tailwind-baseline.json (present) — 27 entries; all five 'Cannot see' lines; findings only in ListingDetailView.tsx and MantineListingGalleryPattern.tsx; EXIT_CODE=0.",
+          "freshness": "Revision 1 final block; reviewer re-execution after all review edits gives the same header",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every run prints scope (73 manifest entries), the oracle version, baseline path and count, and all five blind spots; the baseline's 27 keys name only the two Task 794 files"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "scripts/enrolled-tailwind-baseline.json",
+          "command": "reviewer read of the file plus the replay's seed comparison in docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "observable": "version 1, 27 entries, every key prefixed by MantineListingGalleryPattern.tsx (26) or ListingDetailView.tsx (1), each with owner \"794\" and the dated owner-decision reason; the bytes are exactly what --seed-baseline regenerates.",
+          "freshness": "blob 7d1cd65120a903ac2dd0f09d7b041463be2e6ae5, unchanged through Revision 1",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every run prints scope (73 manifest entries), the oracle version, baseline path and count, and all five blind spots; the baseline's 27 keys name only the two Task 794 files"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The printed 'Cannot see' list overstates coverage — the gate actually sees a CSS-module class or an imported class string.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/review/r1_gate_replay.txt",
+          "result": "CONFIRMED AS PRINTED. Arms 2/3 and the enrolled tree agree: className={styles.x} yields no token (LightboxView, 10 className sites, all styles.*, reports nothing), and global classes container-wide/listing-card compile to nothing, so they are correctly not findings — the blind spots are real and stated, not hidden."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Printed scope statement; no generated CSS."
+      }
+    },
+    {
+      "id": "AC6 / R10 R11 R12",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": ".github/workflows/governance-pr.yml",
+        "symbol": "governance job — two new blocking steps; package.json scripts; docs/design-system.md §23.10",
+        "diffHunks": [
+          ".github/workflows/governance-pr.yml:127-132 — check:enrolled-tailwind and check:enrolled-tailwind:verify immediately after the rendered-scope self-test, no continue-on-error",
+          "package.json:79-81 — check:enrolled-tailwind, :update-baseline, :verify",
+          "docs/design-system.md:1689-1747 — §23.10 detects/oracle/baseline/writers/794 quote/blind spots"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "the gate and its self-test are blocking CI steps placed after check:rendered-scope:verify, the three npm scripts exist, §23.10 documents the contract including the 794 ownership quote, and the 27-key count matches the two Task 794 rows"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Workflow and documentation.",
+          "locales": "Workflow and documentation.",
+          "viewports": "Workflow and documentation.",
+          "states": "Workflow and documentation."
+        }
+      },
+      "evidence": [
+        {
+          "path": ".github/workflows/governance-pr.yml",
+          "command": "git --no-optional-locks diff -- .github/workflows/governance-pr.yml package.json docs/design-system.md (reviewer read)",
+          "observable": "Two added steps in the governance job directly below 'Rendered-scope gate self-test', both plain run: with no continue-on-error; the three package.json scripts resolve to the new file; §23.10 states the detection rule, the compiler oracle, the remove-only baseline semantics, the verbatim owner decision and the five blind spots.",
+          "freshness": "reviewer read 2026-09-17; workflow blob c564bcf35 and design-system blob fcabc6751 unchanged since review 1",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate and its self-test are blocking CI steps placed after check:rendered-scope:verify, the three npm scripts exist, §23.10 documents the contract including the 794 ownership quote, and the 27-key count matches the two Task 794 rows"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/backlog-reserved.md",
+          "command": "reviewer read of the Task 794 row and tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.md's 794 row (R12)",
+          "observable": "Both rows state 27 keys and name npm run check:enrolled-tailwind:update-baseline as 794's route to empty the baseline; the seeded baseline holds exactly 27 keys, so no correction was owed and neither file was modified.",
+          "freshness": "reviewer read 2026-09-17; both blobs untouched by the task (git status)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "the gate and its self-test are blocking CI steps placed after check:rendered-scope:verify, the three npm scripts exist, §23.10 documents the contract including the 794 ownership quote, and the 27-key count matches the two Task 794 rows"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "@tailwindcss/node is not a declared dependency, so the new CI steps would fail to resolve it on a clean npm ci.",
+          "kind": "EXECUTED",
+          "path": "package-lock.json",
+          "result": "REFUTED as a blocker. package-lock.json:7605 pins node_modules/@tailwindcss/node 4.3.0 (dev, hoisted top-level via @tailwindcss/postcss), and scripts/check-review-ledger.mjs already imports the same package in CI. Recorded as a P3 note: the import is transitive, so a future hoisting change would surface as the gate's own exit 2, never as a false pass."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Workflow wiring and documentation."
+      }
+    },
+    {
+      "id": "§13.2 final gate block (Revision 1)",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task829/rev1",
+        "symbol": "01..18 transcripts, r1_ac7_probe.json, 18_hashes.txt",
+        "diffHunks": [
+          "whole reviewed diff; rev1/18_hashes.txt blobs equal the reviewer's hash-object run in review/r2_final.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "on the final tree: the gate and self-test, the design-time scan, design-tokens strict, tailwind-runtime-tokens, story-coverage, rendered-scope, the per-surface GR-1 census, typecheck, lint, vitest, build-storybook, build, file-integrity, mojibake and hash-object all report their real exit codes"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Gate block.",
+          "locales": "Gate block.",
+          "viewports": "Gate block.",
+          "states": "Gate block."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task829/rev1/13_build.txt",
+          "command": "npm.cmd run build (Revision 1 final block; sibling transcripts 01-18 each carry EXIT_CODE=)",
+          "observable": "EXIT_CODE=0 with the full route table; 01/02 gate and self-test exit 0; 03 scan reports only the two 794 files; 04-08 and 09/10/12/14/15 exit 0; 08_surface_census.txt prints 'GR-1 CENSUS COMPLETE — 8 nodes; tier1 8 migrated+enrolled+story'; 11_vitest.txt exits 1 with exactly one failure, theme.d69-18 FooterView (Task 790).",
+          "freshness": "Revision 1 block ran after the last src write (Storybook build 20:06 vs pattern write 20:04); 18_hashes.txt matches the worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "on the final tree: the gate and self-test, the design-time scan, design-tokens strict, tailwind-runtime-tokens, story-coverage, rendered-scope, the per-surface GR-1 census, typecheck, lint, vitest, build-storybook, build, file-integrity, mojibake and hash-object all report their real exit codes"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task829/review/r2_final.txt",
+          "command": "node.exe -p process.platform; npm.cmd run check:enrolled-tailwind:verify; check:enrolled-tailwind; check:file-integrity; check:mojibake; git hash-object (reviewer, after all review and state edits)",
+          "observable": "win32; 10/10 arms; gate PASS; check:file-integrity PASSED all 57 files clean; check:mojibake 0 artifacts in 5634 files; the four task blobs unchanged.",
+          "freshness": "reviewer run 2026-09-17 after the last write of this review, including the closure edits to backlog, archive, sprint plan, kickoff and session log",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "on the final tree: the gate and self-test, the design-time scan, design-tokens strict, tailwind-runtime-tokens, story-coverage, rendered-scope, the per-surface GR-1 census, typecheck, lint, vitest, build-storybook, build, file-integrity, mojibake and hash-object all report their real exit codes"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The vitest failure is caused by this diff.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/rev1/11_vitest.txt",
+          "result": "REFUTED. The single failure is theme.d69-18.test.tsx asserting FooterView source strings; neither pattern file nor any script in this diff is read by that test, it is the pre-existing failure tracked as Task 790, and it was already failing in the pre-revision run exec/11_vitest.txt with the same assertion."
+        },
+        {
+          "claim": "check:surface-census:changed was green because the change is safe.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task829/exec/08_surface_census_changed.txt",
+          "result": "REFUTED as evidence. Its base and head both resolved to the same commit and it saw 0 changed paths, so it proved nothing about the uncommitted tree; the kickoff's §13.2 was corrected in review 1 to run check-surface-census.mjs --surface, whose run (rev1/08_surface_census.txt, re-run by the reviewer) is the evidence actually used."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate block."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC6 / R10 R11 R12",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. The reviewer replayed every failing arm of the gate in an isolated scratch copy with a node_modules junction (no repo writes): pre/post-migration runs, the refused seed, the seed byte-comparison, the plant-and-restore on the final file with a sha1 witness, stale/update-baseline, a missing manifest path and a real oracle failure. The reviewer also measured the loading Loader's computed color against the button's own color at 390 and 1440 on the built Storybook (review/r1_loader_contrast_probe.json before Revision 1, re-probed after it), and re-ran the gate, self-test, file-integrity, mojibake and hash-object after every review edit. Build, typecheck, lint, vitest and build-storybook were accepted from the Revision 1 transcripts, whose hashes match the worktree. Owner visual review, 2026-09-17, verbatim: \"Візуальне рев'ю пройдено, всі 8 комбінацій прийнято\" (both stories x en/uk x 390/1440). Notes (P3, no blocking action): the executor did not retain the §10.3-§10.6 failing-arm transcripts and ran the plant against an intermediate file version, so the reviewer's own replay supplies that evidence; self-test arm 9 asserts oracle-failure classification rather than the exit code, measured end-to-end by the reviewer instead; @tailwindcss/node is a hoisted transitive dev dependency; the white-Loader precedent in SaveSearchButton/SaveToCollectionButton, which is what the kickoff copied, is filed as Task 835."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "label": "after",
+  "detail": {
+    "mapPin": {
+      "svgColor": "oklch(0.145 0 0)",
+      "svgStroke": "oklch(0.556 0 0)",
+      "svgFlexShrink": "0",
+      "wrapperColor": "oklch(0.145 0 0)",
+      "wrapperFlexShrink": "1",
+      "strokeAttr": "var(--muted-foreground)",
+      "classAttr": "lucide lucide-map-pin"
+    },
+    "eye": {
+      "svgColor": "oklch(0.145 0 0)",
+      "svgStroke": "oklch(0.556 0 0)",
+      "svgFlexShrink": "0",
+      "wrapperColor": "oklch(0.145 0 0)",
+      "wrapperFlexShrink": "1",
+      "strokeAttr": "var(--muted-foreground)",
+      "classAttr": "lucide lucide-eye"
+    },
+    "calendarDays": {
+      "svgColor": "oklch(0.145 0 0)",
+      "svgStroke": "oklch(0.556 0 0)",
+      "svgFlexShrink": "0",
+      "wrapperColor": "oklch(0.145 0 0)",
+      "wrapperFlexShrink": "1",
+      "strokeAttr": "var(--muted-foreground)",
+      "classAttr": "lucide lucide-calendar-days"
+    },
+    "featureIcon": {
+      "svgColor": "oklch(0.556 0 0)",
+      "svgStroke": "oklch(0.556 0 0)",
+      "svgFlexShrink": "1",
+      "wrapperColor": "oklch(0.556 0 0)",
+      "wrapperFlexShrink": "0",
+      "strokeAttr": "currentColor",
+      "classAttr": "lucide lucide-bed-double"
+    },
+    "totalSvgCount": 89
+  },
+  "contact": {
+    "height": 44,
+    "width": 137,
+    "text": "Call",
+    "hasLoader": true,
+    "outerHTMLSnippet": "<button class=\"mantine-focus-auto m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root\" data-size=\"sm\" data-disabled=\"true\" data-with-left-section=\"true\" type=\"button\" disabled=\"\" style=\"min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: var(--man"
+  }
+}

@@ -1,0 +1,17 @@
+cwd: C:\Claude_Code_Projects\lero-al
+note: JSON quote characters were stripped by PowerShell argument passing when this file was written; values are unchanged
+probe: scratchpad copy of scripts/check-click-shield.mjs (main() stripped) + 3 fixtures at 400x300; builder r1_build_probe.mjs
+
+== WORKING TREE (hash a58ce81647b1bc5062cc7bb09bf90662c60a7a48) ==
+platform=win32 node=v22.22.3
+/p1-multiband-edge-clean {sh:1000,ih:300,r:{x:40,y:299,width:120,height:1,top:299,right:160,bottom:300,left:40}} checked=0 violations=0 cleared=0 excluded=[{reason:above-fold,docTop:299}] 
+/p2-multiband-edge-intercepted {sh:1000,ih:300,r:{x:40,y:299,width:120,height:1,top:299,right:160,bottom:300,left:40}} checked=0 violations=0 cleared=0 excluded=[{reason:above-fold,docTop:299}] 
+/p0-control-mid-intercepted {sh:1000,ih:300,r:{x:40,y:150,width:120,height:1,top:150,right:160,bottom:151,left:40}} checked=1 violations=1 cleared=0 excluded=[] interceptor span
+EXIT_CODE=0
+
+== HEAD 31a58bf4c script (git show HEAD:scripts/check-click-shield.mjs) ==
+platform=win32 node=v22.22.3
+/p1-multiband-edge-clean {sh:1000,ih:300,r:{x:40,y:299,width:120,height:1,top:299,right:160,bottom:300,left:40}} checked=1 violations=1 cleared=0 excluded=[] elementFromPoint returned null inside the viewport
+/p2-multiband-edge-intercepted {sh:1000,ih:300,r:{x:40,y:299,width:120,height:1,top:299,right:160,bottom:300,left:40}} checked=1 violations=1 cleared=0 excluded=[] elementFromPoint returned null inside the viewport
+/p0-control-mid-intercepted {sh:1000,ih:300,r:{x:40,y:150,width:120,height:1,top:150,right:160,bottom:151,left:40}} checked=1 violations=1 cleared=0 excluded=[] interceptor span
+EXIT_CODE=0

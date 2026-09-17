@@ -2,8 +2,9 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Independent of every other open Sprint 75 task (touches only
-`scripts/check-click-shield.mjs`).
+**Status: `NEEDS REVISION` 2026-09-17 (Opus implementation review 1).** Re-entry: **§16** is the executor's only
+next action. Sections 1–15 stay binding except where §16 amends them. Independent of every other open Sprint 75 task
+(touches only `scripts/check-click-shield.mjs`).
 
 ## 1. Mode and task type
 
@@ -150,7 +151,7 @@ hit-tests the page with the sheet open: 0 interceptions.
 
 | Negative flow | Applicable | Expected |
 |---|---|---|
-| Trigger label missing in a locale file | Yes | scenario-open failure naming the missing key (R2) |
+| Trigger label missing in a locale file | Yes | fatal exit 2 naming the missing key, before any cell of that locale runs (amended in review 1, §16.4) |
 | Only the nav drawer opens | Yes | scenario-open failure (R2), proven by arm (c) |
 | Candidate centre in last half-pixel row, resolvable later | Yes | clean (R3/R4), arm (a) |
 | Candidate never resolvable | Yes | violation (R4), arm (b) |
@@ -261,3 +262,113 @@ exit code and path · assumptions · deviations · limitations. Status `IMPLEMEN
 | 3 R1/R2 | live gate run | any drawer cell not opened → not done |
 | 4 stability | three live runs | any non-zero → not done |
 | 5 final | §13.2 | any non-zero → not `IMPLEMENTED` |
+
+## 16. Review 1 — `NEEDS REVISION` (Opus, 2026-09-17)
+
+### 16.1 Finding F1 — P1 HIGH — R4 is not fail-closed: a deferred candidate can end as a benign exclusion, including a genuinely intercepted one
+
+**Location.** `scripts/check-click-shield.mjs` (working tree `a58ce81647b1bc5062cc7bb09bf90662c60a7a48`),
+`hitTestPage`: the `edgeBand` flag is decided **per band**, and the post-loop conversion
+(`finalExcluded.filter((e) => e.edgeBand)`) reads only the flag of the **final** band's entry.
+
+**Mechanism.** Consecutive `scanOffsets` are exactly `innerHeight` apart, except the last one (`maxScrollY`). A
+candidate whose centre is in `[innerHeight − 0.5, innerHeight)` at band *k* is deferred (R3). At band *k+1* its
+centre is in `[−0.5, 0)`, so it is `above-fold` with `edgeBand: false`. At every later band it is further above. If
+band *k+1* is not the final band, the final band records it as an ordinary `above-fold` exclusion. It is never
+hit-tested and never reported as a violation. Arm (a) cannot see this: its page has `maxScrollY = 150 < innerHeight`,
+so the band after the edge band is always the final band.
+
+**Evidence, executed (native `win32`, Node v22.22.3).**
+`docs/sessions/evidence/task832/review1/r1_multiband_edge_probe.txt`, builder `r1_build_probe.mjs`. At 400×300, the
+body is 1000px tall (offsets 0/300/600/700) and the target is the same `EDGE_TARGET_STYLE` button at `top:299px`:
+
+| Fixture | Working tree `a58ce816` | `HEAD` `31a58bf4c` |
+|---|---|---|
+| p1 — edge at band 0, nothing covering it | `checked=0 violations=0 excluded=[above-fold]` | `violations=1` (null, the original false positive) |
+| p2 — same, **covered by a `z-index:5` span** (a real interception) | `checked=0 violations=0 excluded=[above-fold]` — **missed** | `violations=1` |
+| p0 — control: same cover, target mid-viewport | `violations=1, interceptor span` | `violations=1` |
+
+**Impact.** The change turns a false positive into a **false negative** on a blocking CI gate. Any element whose
+centre falls within half a pixel of a band boundary (other than the last) is silently dropped, even when it is really
+blocked. That contradicts R4 ("It never silently passes") and §15's first row.
+
+### 16.2 Requirement R8 (P0) — deferral is sticky per candidate, and a deferred candidate is re-tested where it can be measured
+
+Supersedes the post-loop part of R4. R3 and the rest of R4 are unchanged.
+
+1. `hitTestPage` keeps a `deferred` set of candidate indices. An index is added whenever any band records it as an
+   `edgeBand` or `null-hit` entry.
+2. After the band loop, and before phase 2, every index in `deferred` that is not in `resolved` gets **one targeted
+   recheck**. Scroll (`behavior: 'instant'`) to `clamp(round(docCentreY − innerHeight / 2), 0, maxScrollY)`. Then
+   re-read the element (same `CANDIDATE_SELECTOR` + index), recompute its centre, and apply the R3 bounds:
+   - centre inside the R3 bounds and `hit === el || el.contains(hit) || hit.contains(el)`, or the shared
+     `N6_EXEMPT_PREDICATE_BODY` predicate exempts it → **clean** (not in `violations`, not in `excluded`);
+   - centre inside the R3 bounds and a non-exempt element is hit → **violation** with that interceptor
+     (`describe(hit)`) and reason `intercepted at targeted recheck offset <offset>`;
+   - centre still outside the R3 bounds (e.g. a right-edge `cx`, which vertical scroll cannot fix), `hit` is `null`,
+     or the element is gone → **violation**, reason `elementFromPoint returned null at every band`.
+3. A deferred index never appears in the returned `excluded`, whatever its final band's reason was. A candidate that
+   was never deferred keeps today's exclusion behavior (R7).
+4. Restore the start scroll position afterwards, as the function already does.
+
+### 16.3 Requirement R9 (P0) — two more planted arms, red first
+
+Add to `--verify-gate`, reusing `EDGE_TARGET_STYLE` and the 400×300 self-test viewport:
+
+- **(d) `/edge-multiband-clean`**: body `height:1000px`, target at `top:299px`, nothing covering it. Expected:
+  `violations = 0` **and** `excluded.length = 0`. The self-test case table needs an `expectExcludedZero` field; its
+  runner must print `excluded=` and fail the case when the field is set and `excluded.length > 0`.
+- **(e) `/edge-multiband-intercepted`**: the same page plus a covering span
+  (`position:absolute;top:290px;left:30px;width:140px;height:20px;z-index:5`). Expected: `violations ≥ 1` with a
+  non-null interceptor.
+
+Both arms must fail on the current working tree (`a58ce816…`) before the R8 change. The review probe predicts (d)
+fails on `excluded=1` and (e) fails on `violations=0`. If either passes on that code, stop with
+`BLOCKED — TEST BLIND`. Arms (a), (b), (c) and every older arm must still pass after R8.
+
+### 16.4 §11 amendment — missing locale label
+
+`loadDrawerTriggerLabels(locale)` runs in `runChecks`' locale loop, outside the per-cell `try`. A missing key throws
+an `Error` naming both keys, which reaches `main().catch` → exit 2. That is fail-closed and names the key, so §11's
+row now expects exactly that. No code change is required. Do not move the call inside the per-cell `try`.
+
+### 16.5 Acceptance criteria added
+
+- **AC6 [R9]** — `--verify-gate` transcript taken **after** adding arms (d)/(e) and **before** the R8 change: arm (d)
+  fails with `excluded=1`, arm (e) fails with `violations=0`, exit non-zero. Quote both lines.
+- **AC7 [R8, R9]** — after R8: every `--verify-gate` arm, (a)–(e) included, passes, and the command exits 0. Quote
+  the (a)–(e) lines.
+- **AC8 [R7, R8]** — the complete §13.2 final block re-run on the final script. `check:click-shield` exits 0 three
+  times, with drawer and modal 16/16 `dialog present: true` and `Scenario-open failures: 0`. Quote the three summaries
+  and the `git hash-object` line from the same block. If a live run now reports a violation with reason
+  `intercepted at targeted recheck offset` or `null at every band`, **stop and report it with the element and
+  interceptor**. Do not widen R3 or add an exemption: that is either a real interception or a defect in R8's recheck,
+  and Opus decides which.
+
+`GR-4 AC AUDIT — 3 added criteria; each states an observable property; absolutes: AC8 "exit 0" is the gate's own
+contract on an unmodified product.`
+
+### 16.6 Re-entry mode — `remediation`
+
+- **Start step:** add arms (d)/(e) → AC6 red transcript → R8 → AC7 → AC8.
+- **Reuse, do not re-run:** `I0_*`, `10_redarms_verify-gate.txt`, `11_afterR3R4_verify-gate.txt` and
+  `04_probe832d.*` stay the evidence for AC1–AC4's pre-change arms.
+- **Superseded by this revision:** `12_*`–`32_*` described script hash `a58ce816…`, which R8 changes. Keep the files,
+  and mark them superseded in the session log.
+- **New transcripts:** `docs/sessions/evidence/task832/40_r1_redarms_verify-gate.txt` (AC6), then `41_r1_*` onward for
+  AC7 and the §13.2 block. Never write into `design/` or `review1/`; those belong to Opus.
+- R1/R2 (drawer trigger), R3, R5 (a)/(b)/(c) and R6 were inspected in review 1 and are **not** reopened. Do not
+  change `openDrawerScenario`, `isAuthSheetSettled` or `loadDrawerTriggerLabels`.
+- Write set is unchanged: `scripts/check-click-shield.mjs`, `docs/backlog.md` (the 832 line), the session log (add a
+  "Revision 1" section and update Files Changed), and new evidence under `docs/sessions/evidence/task832/`.
+- Server hygiene (from the first pass): after stopping `npm run start`, confirm nothing listens on :3000
+  (`Get-NetTCPConnection -LocalPort 3000`) before building and restarting. Kill the listening PID, not the npm
+  wrapper.
+
+### 16.7 Checkpoints added
+
+| Checkpoint | Producer / artifact | Comparator / failure |
+|---|---|---|
+| R1-a red | `40_r1_redarms_verify-gate.txt` | (d) or (e) passes on `a58ce816…` → `BLOCKED — TEST BLIND` |
+| R1-b R8 | `--verify-gate` after R8 | any arm fails → not done |
+| R1-c final | §13.2 block, `41_r1_*`… | any non-zero, or a new violation reason in a live run → stop and report (AC8) |

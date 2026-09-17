@@ -1,0 +1,27 @@
+Task 832 review 1 (§16.7 checkpoint "R1-a red") — AC6 evidence.
+
+Method: arms (d)/(e) are new fixtures added in this revision; they cannot be run through a
+standalone `npm run check:click-shield:verify` invocation of the PRE-R8 code (that exact code no
+longer exists as a runnable file — R8 has already landed in the working tree). Reused Opus's own
+review-1 methodology (docs/sessions/evidence/task832/review1/r1_build_probe.mjs): extract the exact
+working-tree blob the review inspected (`git cat-file -p a58ce81647b1bc5062cc7bb09bf90662c60a7a48`,
+hash matches §16.1's "Location" line and this task's own 12_/21_/32_ pre-R8 transcripts), strip its
+`main()` entry point, and call its own `hitTestPage()` directly against the new arm (d)/(e) fixture
+pages. Builder: 40_r1_build_redarms_probe.mjs (this directory). Command:
+
+  node docs/sessions/evidence/task832/40_r1_build_redarms_probe.mjs
+  node <builder output path>
+
+Result — both arms fail on the pre-R8 code, exactly as the review's own probe predicted (§16.3:
+"The review probe predicts (d) fails on `excluded=1` and (e) fails on `violations=0`"):
+
+== blob a58ce81647b1bc5062cc7bb09bf90662c60a7a48 (pre-R8) ==
+platform=win32 node=v22.22.3
+   FAIL Task 832 R9 arm (d) — multiband deferral, nothing covering (must be clean AND unexcluded): checked=0, violations=0, cleared=0, excluded=1["above-fold"]
+   FAIL Task 832 R9 arm (e) — multiband deferral, real interceptor (must FAIL with a real interceptor): checked=0, violations=0, cleared=0, excluded=1["above-fold"]
+AT_LEAST_ONE_ARM_FAILED
+EXIT_CODE=1
+
+Not `BLOCKED — TEST BLIND`: both required arms genuinely fail pre-fix, matching the exact predicted
+failure shape (arm d: excluded=1 instead of 0; arm e: violations=0 instead of >=1, the real
+interceptor silently missed).

@@ -2,8 +2,8 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `NEEDS REVISION` 2026-09-17 (Opus implementation review 1).** Re-entry: **§16** is the executor's only
-next action. Sections 1–15 stay binding except where §16 amends them. Independent of every other open Sprint 75 task
+**Status: `APPROVED WITH NOTES` 2026-09-17 (Opus implementation review 2, §17) — archived.** Review 1 (§16)
+returned `NEEDS REVISION`; Revision 1 closed it. Independent of every other open Sprint 75 task
 (touches only `scripts/check-click-shield.mjs`).
 
 ## 1. Mode and task type
@@ -372,3 +372,11 @@ contract on an unmodified product.`
 | R1-a red | `40_r1_redarms_verify-gate.txt` | (d) or (e) passes on `a58ce816…` → `BLOCKED — TEST BLIND` |
 | R1-b R8 | `--verify-gate` after R8 | any arm fails → not done |
 | R1-c final | §13.2 block, `41_r1_*`… | any non-zero, or a new violation reason in a live run → stop and report (AC8) |
+
+## 17. Review 2 — `APPROVED WITH NOTES` (Opus, 2026-09-17)
+
+Script reviewed: `scripts/check-click-shield.mjs` at hash `6de5dd7604d480794c14b9e838c10c6ee15c3d9a` (diffed against the review 1 blob `a58ce816…`).
+
+- **F1 closed.** The reviewer re-ran both checks natively (`win32`, Node v22.22.3). `--verify-gate` exits 0, and arm (e) reports `intercepted at targeted recheck offset 150` with interceptor `span`. The review 1 probe now gives p1 clean with `excluded=[]` and p2 `violations=1`. AC6 is `40_r1_*`; AC7 is `41_r1_` and `43_r1_`; AC8 is `42_r1_` (build) plus `44_r1_` to `46_r1_` (exit 0 ×3, 32 `dialog present: true` each, no new violation reasons). `53_r1_` matches the final hash.
+- **Note N1 (P3, accepted, no follow-up).** The arm (e) runner asserts `violations > 0` but not the non-null interceptor §16.3 names. A regression to `null` would still be a violation, so the gate stays fail-closed; only the reason text would change.
+- **Note N2 (NOTE).** AC6 was produced by running the pre-R8 blob's `hitTestPage` against fixture bodies identical to arms (d)/(e), not by a pre-R8 `--verify-gate` run. That is equivalent evidence, and the session log discloses it.

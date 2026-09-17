@@ -1,0 +1,44 @@
+
+> lero-al@0.1.0 check:click-shield:verify
+> node scripts/check-click-shield.mjs --verify-gate
+
+
+🔬 Click-shield gate self-test (--verify-gate)
+   Purpose: prove the gate is NOT a no-op by planting the Task 723 defect shape.
+
+   ✅ Planted shield (transparent div over a button): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (40,40)
+      interceptor: div.
+   ✅ Clean page (no shield): checked=1, violations=0, cleared=0 (expected violations=0)
+   ✅ N6 exemption (mantine-Overlay-root shield): checked=1, violations=0, cleared=0 (expected violations=0)
+   ✅ R12 arm② — fixed bar, tall page (scroll clears it): checked=1, violations=0, cleared=1 (expected cleared>0, violations=0)
+      cleared: button. @ scrollY=51
+   ✅ R12 arm① — fixed bar, page height == viewport (no scroll offset exists): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (40,250)
+      interceptor: span.
+   ✅ Task 739 — overhanging interceptor, tall page (scroll clears it): checked=1, violations=0, cleared=1 (expected cleared>0, violations=0)
+      cleared: button. @ scrollY=16
+   ✅ Task 739 — overhanging interceptor, page height == viewport (no scroll offset exists): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (40,225)
+      interceptor: span.
+   ✅ Task 739 attempt 2 — contained interceptor, tall page (scroll clears it): checked=1, violations=0, cleared=1 (expected cleared>0, violations=0)
+      cleared: button. @ scrollY=20
+   ✅ Task 739 attempt 2 — contained interceptor, page height == viewport (no scroll offset exists): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (40,233)
+      interceptor: span.
+   ✅ Task 740 — over-extension control, tall page (decoration excluded, scroll clears it): checked=1, violations=0, cleared=1 (expected cleared>0, violations=0)
+      cleared: button. @ scrollY=51
+   ✅ Task 740 — over-extension control, page height == viewport (no scroll offset exists): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (40,250)
+      interceptor: span.
+   ✅ Contextual N6 — candidate INSIDE [role="dialog"] intercepted by its own Overlay backdrop (must now FAIL): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (60,60)
+      interceptor: div.mantine-Overlay-root
+   ✅ Contextual N6 — candidate INSIDE [role="dialog"], no shield (must PASS): checked=1, violations=0, cleared=0 (expected violations=0)
+   ✅ Contextual N6 — candidate INSIDE [role="alertdialog"] intercepted by Overlay (rule covers both roles, must FAIL): checked=1, violations=1, cleared=0 (expected violations>0)
+      blocked: button. @ (60,60)
+      interceptor: div.mantine-Overlay-root
+
+✅ GATE IS FUNCTIONAL — planted shield detected, clean page passes, N6 overlay exemption works.
+
+EXIT_CODE=0

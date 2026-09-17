@@ -1,0 +1,122 @@
+
+> lero-al@0.1.0 check:click-shield
+> node scripts/check-click-shield.mjs
+
+
+🔍 Click-shield hit-test gate
+   Target: http://localhost:3000
+   Scenarios: base, drawer, modal
+   Locales: sq, en, uk, it
+   Viewports: mobile-320, mobile-375, mobile-390, desktop-1024
+
+
+── Scenario: base — Base route (untouched) ──
+   [base] /sq × mobile-320: ✅ PASS (4 transient, scroll-cleared) — checked=29, excluded(below/above-fold)=16
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_24_"> "Shiko të gjitha" @ scrollY=746 (fixed/sticky interceptor <div class="HeaderView_rightCluster__AwD7l mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7Qira · Shtëpi / Vilë1+1 поверх у приват" @ scrollY=1371 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12Qira · ApartamentApartament ne Lungoma" @ scrollY=1371 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1536 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+   [base] /sq × mobile-375: ✅ PASS (5 transient, scroll-cleared) — checked=28, excluded(below/above-fold)=17
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_6l_"> "Shiko të gjitha" @ scrollY=716 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7Qira · Shtëpi / Vilë1+1 поверх у приват" @ scrollY=1382 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12Qira · ApartamentApartament ne Lungoma" @ scrollY=1382 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1546 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+   [base] /sq × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=28, excluded(below/above-fold)=17
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <svg class="lucide lucide-menu">, nearest positioned ancestor: <button class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root mantine-hidd"> @ (330,10 44x44))
+   [base] /sq × desktop-1024: ✅ PASS — checked=36, excluded(below/above-fold)=12, 0 interceptions
+   [base] /en × mobile-320: ✅ PASS (4 transient, scroll-cleared) — checked=29, excluded(below/above-fold)=16
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_24_"> "View all" @ scrollY=746 (fixed/sticky interceptor <div class="HeaderView_rightCluster__AwD7l mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7For rent · House / Villa1+1 поверх у пр" @ scrollY=1365 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12For rent · ApartmentApartament ne Lung" @ scrollY=1365 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1530 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+   [base] /en × mobile-375: ✅ PASS (5 transient, scroll-cleared) — checked=29, excluded(below/above-fold)=16
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_6l_"> "View all" @ scrollY=716 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7For rent · House / Villa1+1 поверх у пр" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12For rent · ApartmentApartament ne Lung" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1540 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+   [base] /en × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=28, excluded(below/above-fold)=17
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <svg class="lucide lucide-menu">, nearest positioned ancestor: <button class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root mantine-hidd"> @ (330,10 44x44))
+   [base] /en × desktop-1024: ✅ PASS — checked=36, excluded(below/above-fold)=12, 0 interceptions
+   [base] /uk × mobile-320: ✅ PASS (4 transient, scroll-cleared) — checked=30, excluded(below/above-fold)=16
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_24_"> "Переглянути всі" @ scrollY=783 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7Оренда · Будинок / Вілла1+1 поверх у пр" @ scrollY=1403 (fixed/sticky interceptor <div class="HeaderView_rightCluster__AwD7l mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12Оренда · КвартираApartament ne Lungoma" @ scrollY=1403 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 320x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1567 (fixed/sticky interceptor <svg class="lucide lucide-menu">, nearest positioned ancestor: <button class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root mantine-hidd"> @ (260,44 44x44))
+   [base] /uk × mobile-375: ✅ PASS (5 transient, scroll-cleared) — checked=30, excluded(below/above-fold)=16
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_24_"> "Переглянути всі" @ scrollY=716 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7Оренда · Будинок / Вілла1+1 поверх у пр" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12Оренда · КвартираApartament ne Lungoma" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1540 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+   [base] /uk × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=30, excluded(below/above-fold)=16
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <svg class="lucide lucide-menu">, nearest positioned ancestor: <button class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root mantine-hidd"> @ (330,10 44x44))
+   [base] /uk × desktop-1024: ✅ PASS — checked=37, excluded(below/above-fold)=12, 0 interceptions
+   [base] /it × mobile-320: ❌ FAIL — checked=29, excluded(below/above-fold)=16, 1 interception(s)
+      blocked:      <a class="FooterView_footerLink__SWOcW mantine-Text-root mantine-Anchor-root"> "Chi siamo" @ (16,802 64x20)
+      interceptor:  <? class="?"> @ (undefined,undefined undefinedxundefined)
+      reason:       elementFromPoint returned null inside the viewport
+   [base] /it × mobile-375: ✅ PASS (5 transient, scroll-cleared) — checked=28, excluded(below/above-fold)=17
+      cleared:      <a class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_24_"> "Vedi tutti" @ scrollY=716 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "7In affitto · Casa / Villa1+1 поверх у п" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <a class="listing-card listing-card--vertical ListingCard_card__GGTfF ListingCard_cardVertical__gXiq1"> "12In affitto · AppartamentoApartament ne" @ scrollY=1376 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+      cleared:      <button class="mantine-focus-auto mantine-active MantineListingCardTrack_control__oEtLo MantineListingCardTrack_controlNext__IZgwH m_8d"> "" @ scrollY=1540 (fixed/sticky interceptor <div class="container-wide HeaderView_bar__KoEir mantine-Group-root">, nearest positioned ancestor: <header class="site-header HeaderView_header__ZkGWD"> @ (0,0 375x97))
+   [base] /it × mobile-390: ✅ PASS (1 transient, scroll-cleared) — checked=28, excluded(below/above-fold)=17
+      cleared:      <button class="mantine-focus-auto mantine-active FavoriteButton_control__N63qO ListingCard_overlayFavorite__5ZHxu m_8d3f4000 mantine-Ac"> "" @ scrollY=793 (fixed/sticky interceptor <svg class="lucide lucide-menu">, nearest positioned ancestor: <button class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root mantine-hidd"> @ (330,10 44x44))
+   [base] /it × desktop-1024: ✅ PASS — checked=36, excluded(below/above-fold)=12, 0 interceptions
+
+── Scenario: drawer — AuthSheet open (Mantine Drawer, role="dialog") ──
+   [drawer] /sq × mobile-320: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /sq × mobile-375: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /sq × mobile-390: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /sq × desktop-1024: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /en × mobile-320: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /en × mobile-375: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /en × mobile-390: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /en × desktop-1024: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /uk × mobile-320: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /uk × mobile-375: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /uk × mobile-390: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /uk × desktop-1024: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /it × mobile-320: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /it × mobile-375: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /it × mobile-390: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+   [drawer] /it × desktop-1024: ❌ SCENARIO OVERLAY NEVER OPENED — trigger not found: header button:has(svg.lucide-heart) (A2: a zero-violation result here would mean nothing)
+
+── Scenario: modal — LightboxView open (Mantine Modal, role="dialog") ──
+   [modal] /sq/ci/click-shield-modal × mobile-320: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × mobile-375: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × mobile-390: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /sq/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=19, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-320: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-375: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × mobile-390: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /en/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=19, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-320: ✅ PASS — checked=16, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-375: ✅ PASS — checked=16, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × mobile-390: ✅ PASS — checked=16, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /uk/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=20, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-320: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-375: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × mobile-390: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+   [modal] /it/ci/click-shield-modal × desktop-1024: ✅ PASS — checked=19, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+
+── Summary ──────────────────────────────────────────────────
+   Scenarios: 3  Cells: 48  Elements checked: 751  Excluded (below/above-fold): 245  Interceptions: 1  Cleared (transient): 38  Empty-candidate cells: 0  Scenario-open failures: 16
+   [base] cells=16  checked=491  excluded=245  violations=1
+   [drawer] cells=16  checked=0  excluded=0  violations=0
+   [modal] cells=16  checked=260  excluded=0  violations=0
+npm.cmd : 
+At line:4 char:1
++ npm.cmd run check:click-shield *> "docs\sessions\evidence\task832\I0_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+❌ At least one triggered scenario never got its overlay open (dialog absent from the DOM) —
+   a zero-violation result from that cell would mean nothing (Task 727 A2). This is a harness
+   failure, not a clean pass.
+
+EXIT_CODE=2

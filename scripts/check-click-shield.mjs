@@ -52,6 +52,25 @@
  */
 
 import { createServer } from 'node:http';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const MESSAGES_DIR = path.join(SCRIPT_DIR, '..', 'messages');
+
+// Task 832 R1 — trigger labels loaded fresh from messages/<locale>.json (Node UTF-8 read, never a
+// hard-coded string or a lucide icon class) so the drawer scenario's trigger tracks whatever the
+// live guest opener's accessible name actually is.
+function loadDrawerTriggerLabels(locale) {
+  const messages = JSON.parse(readFileSync(path.join(MESSAGES_DIR, `${locale}.json`), 'utf8'));
+  const loginLabel = messages?.nav?.login;
+  const openMenuLabel = messages?.common?.aria_open_menu;
+  if (!loginLabel || !openMenuLabel) {
+    throw new Error(`missing required label(s) in messages/${locale}.json: nav.login=${loginLabel}, common.aria_open_menu=${openMenuLabel}`);
+  }
+  return { loginLabel, openMenuLabel };
+}
 
 const args = process.argv.slice(2);
 const VERIFY_GATE = args.includes('--verify-gate');
@@ -151,13 +170,18 @@ const N6_EXEMPT_PREDICATE_BODY = `
 // real Modal.Root/Modal.Content interaction without making CI depend on a database row.
 
 // Task 727 R5 — three scenarios driven against the running app (replacing the synthetic
-// self-test as the source of "did the fix work" evidence for CI). `trigger` is a Playwright
-// locator clicked before the hit-test runs; `null` for the untouched base scenario. Every
-// triggered scenario's cell is a HARD FAILURE (see openScenarioOverlay below) if the trigger
-// cannot be found/clicked or `[role="dialog"]` never appears — a scenario that silently failed to
-// open the overlay would report zero violations and look exactly like a clean pass, which is the
-// false-success shape this task's own kickoff (A2) pre-declares as the likeliest way this work
-// goes wrong.
+// self-test as the source of "did the fix work" evidence for CI). `trigger` is a single Playwright
+// locator clicked before the hit-test runs; `null` for the untouched base scenario;
+// `isDrawerScenario: true` (Task 832) instead runs the drawer's own per-viewport-class trigger
+// sequence (openDrawerScenario below). Every triggered scenario's cell is a HARD FAILURE (see
+// openScenarioOverlay below) if the trigger cannot be found/clicked or the required dialog never
+// appears — a scenario that silently failed to open the overlay would report zero violations and
+// look exactly like a clean pass, which is the false-success shape this task's own kickoff (A2)
+// pre-declares as the likeliest way this work goes wrong.
+function isTriggerScenario(scenario) {
+  return !!(scenario.trigger || scenario.isDrawerScenario);
+}
+
 const SCENARIOS = [
   {
     name: 'base',
@@ -169,14 +193,19 @@ const SCENARIOS = [
     name: 'drawer',
     label: 'AuthSheet open (Mantine Drawer, role="dialog")',
     // AuthSheet (src/modules/auth/components/AuthSheet.tsx) is a real controlled MantineDrawer
-    // mounted globally via Header.tsx on every route, including the homepage. Its trigger is the
-    // header Favorites heart ActionIcon — the ONE control in HeaderActions that opens it and
-    // stays visible at every click-shield viewport while logged out (the header's own
-    // login/register Buttons are `visibleFrom="md"`, invisible at 320/375/390 — see
-    // HeaderActions.tsx). Selector keys on lucide's stable icon class, not the translated
-    // aria-label, so it works identically across all 4 locales.
+    // mounted globally via Header.tsx on every route, including the homepage. Task 832 — the
+    // Favorites-heart guest opener this scenario used to click was removed by the owner's
+    // 2026-09-04 "скрізь" decision (Task 787, HeaderActions.tsx: guests never see Favorites) and
+    // has rendered nothing for guests since. The live guest openers are per-viewport-class:
+    // >=768px (this gate's desktop-1024 cell) — the header's own guest login Button
+    // (HeaderActions.tsx, `visibleFrom="md"`); <768px (this gate's mobile-320/375/390 cells) — the
+    // hamburger ActionIcon (HeaderView.tsx) opens MobileNavDrawer (itself a dialog), whose own
+    // guest login Button closes the drawer and opens AuthSheet (MobileNavDrawer.tsx:31-34,100).
+    // Both buttons are located by accessible name loaded from messages/<locale>.json
+    // (`nav.login`/`common.aria_open_menu`), never a lucide class or hard-coded text — see
+    // openDrawerScenario/loadDrawerTriggerLabels below.
     route: (locale) => `/${locale}`,
-    trigger: 'header button:has(svg.lucide-heart)',
+    isDrawerScenario: true,
   },
   {
     name: 'modal',
@@ -190,7 +219,8 @@ const SCENARIOS = [
 // genuinely present in the DOM before the caller hit-tests — never inferred from "the click
 // didn't throw". Returns `dialogPresent: false` (a hard scenario failure at the call site, not a
 // soft skip) when the trigger is missing, unclickable, or no dialog appears in time.
-async function openScenarioOverlay(page, scenario) {
+async function openScenarioOverlay(page, scenario, vp, labels) {
+  if (scenario.isDrawerScenario) return openDrawerScenario(page, vp, labels);
   if (!scenario.trigger) return { opened: true, dialogPresent: false, error: null };
   const trigger = page.locator(scenario.trigger).first();
   if ((await trigger.count()) === 0) {
@@ -204,6 +234,63 @@ async function openScenarioOverlay(page, scenario) {
   }
   await page.waitForTimeout(300);
   const dialogPresent = await page.evaluate((sel) => !!document.querySelector(sel), DIALOG_SELECTOR);
+  return { opened: true, dialogPresent, error: null };
+}
+
+// Task 832 R1/R2 — the drawer scenario's real per-viewport-class trigger path. `vp.width >= 768`
+// (this gate's only desktop cell, desktop-1024) clicks the header's own guest login Button
+// directly (HeaderActions.tsx, `visibleFrom="md"`); a narrower cell (320/375/390) opens the
+// hamburger's MobileNavDrawer first, then clicks ITS guest login Button (MobileNavDrawer.tsx),
+// which closes the nav drawer and opens AuthSheet. Both buttons are found by accessible name
+// only — never a lucide icon class or hard-coded text (R1). `dialogPresent` uses
+// isAuthSheetSettled (R2): exactly one dialog left in the DOM, containing input[type="email"] —
+// MobileNavDrawer is also a dialog, so a trigger that stopped after the hamburger must not read as
+// "opened".
+async function openDrawerScenario(page, vp, labels) {
+  const isDesktop = vp.width >= 768;
+  try {
+    if (isDesktop) {
+      const loginButton = page.locator('header.site-header').getByRole('button', { name: labels.loginLabel, exact: true }).first();
+      if ((await loginButton.count()) === 0) {
+        return { opened: false, dialogPresent: false, error: `desktop trigger not found: header login button named "${labels.loginLabel}"` };
+      }
+      await loginButton.click({ timeout: 10000 });
+    } else {
+      const hamburger = page.locator('header.site-header').getByRole('button', { name: labels.openMenuLabel, exact: true }).first();
+      if ((await hamburger.count()) === 0) {
+        return { opened: false, dialogPresent: false, error: `hamburger trigger not found: aria-label "${labels.openMenuLabel}"` };
+      }
+      await hamburger.click({ timeout: 10000 });
+      try {
+        await page.waitForSelector(DIALOG_SELECTOR, { timeout: 5000 });
+      } catch (err) {
+        return { opened: false, dialogPresent: false, error: `nav drawer never opened: ${String(err.message ?? err).slice(0, 150)}` };
+      }
+      const drawerLoginButton = page.locator(DIALOG_SELECTOR).getByRole('button', { name: labels.loginLabel, exact: true }).first();
+      if ((await drawerLoginButton.count()) === 0) {
+        return { opened: false, dialogPresent: false, error: `drawer login button not found: name "${labels.loginLabel}" inside the nav drawer` };
+      }
+      await drawerLoginButton.click({ timeout: 10000 });
+    }
+  } catch (err) {
+    return { opened: false, dialogPresent: false, error: String(err.message ?? err).slice(0, 200) };
+  }
+
+  try {
+    await page.waitForFunction(
+      () => {
+        const dialogs = document.querySelectorAll('[role="dialog"], [role="alertdialog"]');
+        return dialogs.length === 1 && !!dialogs[0].querySelector('input[type="email"]');
+      },
+      { timeout: 5000 }
+    );
+  } catch {
+    const dialogCount = await page.evaluate(() => document.querySelectorAll('[role="dialog"], [role="alertdialog"]').length);
+    return { opened: true, dialogPresent: false, error: `AuthSheet did not settle: dialogCount=${dialogCount} (need exactly 1 with input[type=email])` };
+  }
+
+  await page.waitForTimeout(300);
+  const dialogPresent = await isAuthSheetSettled(page);
   return { opened: true, dialogPresent, error: null };
 }
 
@@ -320,6 +407,11 @@ async function hitTestPage(page) {
   const allResults = [];
   let checked = 0;
   let finalExcluded = [];
+  // Task 832 R8 — every candidate index that was EVER flagged `edgeBand` (viewport-edge rounding
+  // or a null hit away from the edge) by ANY scanned band, keyed to its latest snapshot. Sticky
+  // per candidate: an index added here is resolved exactly once, below, by a targeted recheck —
+  // never by re-inspecting whatever the LAST band happened to classify it as (review 1 F1).
+  const deferredInfo = new Map();
 
   // One hit-test pass at whatever scroll offset the page is currently at, skipping any candidate
   // index already resolved by an earlier band. Identical hit-test logic to the pre-729 single-pass
@@ -472,20 +564,46 @@ async function hitTestPage(page) {
 
           const cx = rect.x + rect.width / 2;
           const cy = rect.y + rect.height / 2;
-          if (cx < 0 || cy < 0 || cx >= window.innerWidth || cy >= window.innerHeight) {
+          const farOutside = cx < 0 || cy < 0 || cx >= window.innerWidth || cy >= window.innerHeight;
+          // Task 832 R3 — a candidate whose centre is within the last half-pixel row/column of the
+          // bottom/right viewport edge is ALSO treated as outside the viewport at this band, same
+          // path as farOutside above: Chromium's elementFromPoint returns null for a centre in
+          // [innerHeight-0.5, innerHeight) (measured,
+          // docs/sessions/evidence/task832/design/03_probe832c.txt — a rounding artefact of the
+          // viewport boundary, not a real click interception, since nothing receives a click at a
+          // point outside the viewport). Only the trailing/bottom-right edges get this padding —
+          // the leading/top-left edges (cx<0, cy<0) have no equivalent rounding gap.
+          const edgeBand = !farOutside && (cy >= window.innerHeight - 0.5 || cx >= window.innerWidth - 0.5);
+          if (farOutside || edgeBand) {
             // Task 729 R1/R2 — still outside the viewport AT THIS BAND. Recorded with identifying
             // detail + document-space position; only the FINAL band's leftover list (a candidate
             // outside the viewport at every scanned band) is reported as genuinely excluded — see
             // the caller. `checked=N` must stop silently implying full-page coverage regardless of
-            // which §7.3 branch the measurement selects.
+            // which §7.3 branch the measurement selects. Task 832 R4 — an `edgeBand` entry is NOT
+            // simply "genuinely excluded" like a real below/above/left/right-of-viewport candidate:
+            // it stays unresolved for later bands (same as before, via the resolvedSet skip) and,
+            // if still unresolved after the FINAL band, the caller converts it into a violation
+            // instead of a benign exclusion (fail-closed — an unresolvable candidate never silently
+            // passes).
             const reason =
-              cy >= window.innerHeight ? 'below-fold' : cy < 0 ? 'above-fold' : cx >= window.innerWidth ? 'right-of-viewport' : 'left-of-viewport';
+              cy >= window.innerHeight - (edgeBand ? 0.5 : 0)
+                ? 'below-fold'
+                : cy < 0
+                  ? 'above-fold'
+                  : cx >= window.innerWidth - (edgeBand ? 0.5 : 0)
+                    ? 'right-of-viewport'
+                    : 'left-of-viewport';
             excluded.push({
               index: i,
               reason,
               element: describe(el),
               docTop: Math.round(rect.top + window.scrollY),
               docLeft: Math.round(rect.left + window.scrollX),
+              // Task 832 R8 — document-space vertical centre, invariant under scroll for this
+              // static/absolute candidate; the caller uses it to compute a targeted recheck offset
+              // for every candidate that was EVER deferred here, not just the final band's.
+              docCentreY: rect.top + window.scrollY + rect.height / 2,
+              edgeBand,
             });
             continue;
           }
@@ -493,7 +611,20 @@ async function hitTestPage(page) {
           checked++;
           const hit = document.elementFromPoint(cx, cy);
           if (!hit) {
-            results.push({ index: i, kind: 'violation', element: describe(el), interceptor: null, reason: 'elementFromPoint returned null inside the viewport' });
+            // Task 832 R4 — a null this far from any edge is deferred rather than an instant
+            // violation, same unresolved/retry mechanism as the edgeBand case above (not added to
+            // `results`, so the caller's resolvedSet does not mark this index resolved and a later
+            // band retries it). Task 832 R8 — resolution now happens via the caller's targeted
+            // recheck (sticky per candidate), not by inspecting only the final band's classification.
+            excluded.push({
+              index: i,
+              reason: 'null-hit',
+              element: describe(el),
+              docTop: Math.round(rect.top + window.scrollY),
+              docLeft: Math.round(rect.left + window.scrollX),
+              docCentreY: rect.top + window.scrollY + rect.height / 2,
+              edgeBand: true,
+            });
             continue;
           }
           if (hit === el || el.contains(hit) || hit.contains(el)) {
@@ -574,7 +705,84 @@ async function hitTestPage(page) {
       resolved.add(r.index);
       if (r.kind !== 'clean') allResults.push(r);
     }
+    for (const e of band.excluded) {
+      if (e.edgeBand) deferredInfo.set(e.index, e);
+    }
     finalExcluded = band.excluded;
+  }
+
+  // Task 832 R8 — one targeted recheck per deferred candidate not already resolved some other way
+  // (e.g. hit-tested cleanly at a later band before ever needing this). Scrolls to centre the
+  // candidate's document-space midpoint in the viewport — the best chance of landing it away from
+  // any edge — then re-reads the SAME candidate (by selector + index, same pattern as phase 2
+  // below) and classifies once, deterministically: clean if it (or an N6-exempt context) is hit;
+  // a real interceptor if a genuine other element is hit; otherwise (still outside the R3 bounds
+  // after centering, a null hit, or the element is gone) a violation naming that it was never
+  // resolved. This replaces inspecting only the FINAL band's classification, which review 1 (F1)
+  // proved silently drops a real interception whenever the band right after the deferral band
+  // isn't itself the final one.
+  for (const [idx, info] of deferredInfo) {
+    if (resolved.has(idx)) continue;
+    const targetOffset = Math.max(0, Math.min(initialMaxScrollY, Math.round(info.docCentreY - innerHeight / 2)));
+    const recheck = await page.evaluate(
+      ({ selector, index, offset, overlaySelector, dialogSelector, predicateBody }) => {
+        window.scrollTo({ top: offset, left: 0, behavior: 'instant' });
+        const el = Array.from(document.querySelectorAll(selector))[index];
+        if (!el) return { outcome: 'gone' };
+        const rect = el.getBoundingClientRect();
+        const cx = rect.x + rect.width / 2;
+        const cy = rect.y + rect.height / 2;
+        const insideR3 = cx >= 0 && cy >= 0 && cx < window.innerWidth - 0.5 && cy < window.innerHeight - 0.5;
+        if (!insideR3) return { outcome: 'stillOutside' };
+        const hit = document.elementFromPoint(cx, cy);
+        if (!hit) return { outcome: 'null' };
+        if (hit === el || el.contains(hit) || hit.contains(el)) return { outcome: 'clean' };
+        const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
+        if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { outcome: 'clean' };
+        function realClass(elx) {
+          const attr = elx.getAttribute && elx.getAttribute('class');
+          return attr ?? '';
+        }
+        const hr = hit.getBoundingClientRect();
+        const hcs = window.getComputedStyle(hit);
+        return {
+          outcome: 'intercepted',
+          interceptor: {
+            tag: hit.tagName.toLowerCase(),
+            class: realClass(hit).slice(0, 120),
+            text: (hit.textContent ?? '').trim().slice(0, 40),
+            rect: { x: Math.round(hr.x), y: Math.round(hr.y), width: Math.round(hr.width), height: Math.round(hr.height) },
+            position: hcs.position,
+            zIndex: hcs.zIndex,
+            nearestPositionedAncestor: null,
+          },
+        };
+      },
+      {
+        selector: CANDIDATE_SELECTOR,
+        index: idx,
+        offset: targetOffset,
+        overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
+        dialogSelector: DIALOG_SELECTOR,
+        predicateBody: N6_EXEMPT_PREDICATE_BODY,
+      }
+    );
+    resolved.add(idx);
+    if (recheck.outcome === 'intercepted') {
+      allResults.push({
+        element: info.element,
+        interceptor: recheck.interceptor,
+        kind: 'violation',
+        reason: `intercepted at targeted recheck offset ${targetOffset}`,
+      });
+    } else if (recheck.outcome !== 'clean') {
+      allResults.push({
+        element: info.element,
+        interceptor: null,
+        kind: 'violation',
+        reason: 'elementFromPoint returned null at every band',
+      });
+    }
   }
 
   const violations = allResults.filter((r) => r.kind === 'violation');
@@ -636,9 +844,12 @@ async function hitTestPage(page) {
   await page.evaluate((y) => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), startScrollY);
 
   // Task 729 R1/R2 — only a candidate outside the viewport at EVERY scanned band (the final
-  // band's leftover list) is a genuine exclusion; strip the internal band-dedupe `index` before
-  // returning.
-  const excluded = finalExcluded.map(({ index, ...rest }) => rest);
+  // band's leftover list) is a genuine exclusion. Task 832 R8 — a candidate that was EVER
+  // deferred (`deferredInfo`, review 1 F1) never appears in `excluded`, whatever its own LAST
+  // band's reason happened to be — it was already resolved, one way or the other, by the targeted
+  // recheck above. A genuine below/above/left/right-of-viewport entry that was never deferred
+  // keeps today's behavior unchanged.
+  const excluded = finalExcluded.filter((e) => !deferredInfo.has(e.index)).map(({ index, edgeBand, docCentreY, ...rest }) => rest);
 
   return { checked, violations, cleared, excluded };
 }
@@ -870,6 +1081,107 @@ const ALERTDIALOG_VIOLATION_PAGE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Task 832 R5a/R5b — the viewport-edge rounding fixtures (§3.3; measured
+// docs/sessions/evidence/task832/design/03_probe832c.txt at a 320×812 viewport and re-measured at
+// this self-test's own 400×300 viewport, docs/sessions/evidence/task832/04_probe832d.txt-adjacent
+// probe: null begins exactly at cy=innerHeight-0.5=299.5). Both fixtures place a target button
+// whose centre sits EXACTLY at that measured threshold at scroll=0:
+//   - EDGE_RESOLVED_PAGE_HTML: body 450px tall (maxScrollY=450-300=150) — the scan's own final
+//     band lands at scroll=150, where the SAME element's centre is 149.5 (nowhere near either
+//     edge). Must resolve CLEAN, not a violation (R5a) — pre-fix it wrongly reports a violation
+//     from band 1 (elementFromPoint literally returns null at cy=299.5), because band 1 resolves
+//     it before band 2 ever runs.
+//   - EDGE_PERMANENT_PAGE_HTML: body exactly 300px tall (maxScrollY=0, only one band ever exists)
+//     — the element's centre can NEVER leave the last half-pixel row. Must FAIL as a violation
+//     (R5b) in both the pre-fix and post-fix gate — same C5 generosity-is-bounded shape as the
+//     other permanent-twin fixtures above.
+// Task 832 — the target's style is deliberately over-specified (box-sizing/padding/border/margin/
+// line-height/font-size/min-height/min-width all zeroed): a bare `height:1px` on a native
+// `<button>` renders at Chromium's UA-stylesheet intrinsic minimum control height (~6px) instead,
+// which pushes the box past body's declared height and inflates `document.documentElement.
+// scrollHeight` by the overflow amount (measured empirically — a plain `height:1px` button gave
+// `scrollHeight=304` against a `height:300px` body, corrupting the "page height == viewport, no
+// scroll possible" premise EDGE_PERMANENT_PAGE_HTML depends on). This exact style makes
+// `getBoundingClientRect()` match the literal CSS box (top:299/height:1/bottom:300) with zero
+// overflow, keeping `maxScrollY` exactly 0 for the permanent fixture and exactly 150 for the
+// resolved one.
+const EDGE_TARGET_STYLE =
+  'position:absolute;top:299px;left:40px;width:120px;height:1px;box-sizing:border-box;padding:0;border:0;margin:0;line-height:1;font-size:0;min-height:0;min-width:0;';
+
+const EDGE_RESOLVED_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (viewport-edge rounding, resolved at a later band)</title></head>
+<body style="margin:0;height:450px;position:relative;">
+  <button id="target" style="${EDGE_TARGET_STYLE}">Click me</button>
+</body>
+</html>`;
+
+const EDGE_PERMANENT_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (viewport-edge rounding, never resolvable)</title></head>
+<body style="margin:0;height:300px;position:relative;">
+  <button id="target" style="${EDGE_TARGET_STYLE}">Click me</button>
+</body>
+</html>`;
+
+// Task 832 R9 (review 1, §16.3) — the multiband deferral fixtures F1 found missing: a body tall
+// enough that the band AFTER the edge-deferral band is NOT itself the final band (1000px → bands
+// at 0/300/600/700, vs. EDGE_RESOLVED_PAGE_HTML's 450px → only [0, 150]). Pre-R8, the candidate is
+// deferred at band 0 (edgeBand), lands in `above-fold` at band 300, and that ordinary exclusion
+// survives unquestioned to the final band 700 — silently dropping the case even when something
+// really does cover the candidate (arm e). Same `EDGE_TARGET_STYLE` target (top:299px, centre
+// 299.5 = innerHeight-0.5 at this self-test's 400×300 viewport).
+const EDGE_MULTIBAND_CLEAN_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (R9 arm d — multiband deferral, nothing covering)</title></head>
+<body style="margin:0;height:1000px;position:relative;">
+  <button id="target" style="${EDGE_TARGET_STYLE}">Click me</button>
+</body>
+</html>`;
+
+const EDGE_MULTIBAND_INTERCEPTED_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (R9 arm e — multiband deferral, real interceptor)</title></head>
+<body style="margin:0;height:1000px;position:relative;">
+  <button id="target" style="${EDGE_TARGET_STYLE}">Click me</button>
+  <span style="position:absolute;top:290px;left:30px;width:140px;height:20px;z-index:5;"></span>
+</body>
+</html>`;
+
+// Task 832 R5c — the drawer-scenario dialog-settle check (R2): a fixture simulating the exact
+// failure mode described in §3.2 — a two-step trigger that stopped after opening ONLY the nav
+// drawer (a role="dialog" with ordinary nav buttons, no email field) must not be accepted as
+// AuthSheet having opened. The companion fixture is the correct shape: a single dialog containing
+// input[type="email"] (AuthSheet.tsx:111, the login view's identifying field).
+const WRONG_DIALOG_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (R5c — wrong dialog, no email field)</title></head>
+<body style="margin:0">
+  <div role="dialog" aria-modal="true"><button>Login</button><button>Register</button></div>
+</body>
+</html>`;
+
+const RIGHT_DIALOG_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (R5c — AuthSheet, email field present)</title></head>
+<body style="margin:0">
+  <div role="dialog" aria-modal="true"><input type="email" /></div>
+</body>
+</html>`;
+
+// Task 832 R2 — single source of truth for "did the drawer scenario actually open AuthSheet, not
+// just the nav drawer": exactly one [role="dialog"]/[role="alertdialog"] in the DOM (the nav
+// drawer, itself a dialog, must have closed) AND that one dialog contains input[type="email"].
+// Shared verbatim between the live gate's openDrawerScenario and this self-test's R5c arm, so the
+// two cannot silently drift apart (same reasoning as N6_EXEMPT_PREDICATE_BODY above).
+async function isAuthSheetSettled(page) {
+  return page.evaluate(() => {
+    const dialogs = document.querySelectorAll('[role="dialog"], [role="alertdialog"]');
+    if (dialogs.length !== 1) return false;
+    return !!dialogs[0].querySelector('input[type="email"]');
+  });
+}
+
 async function runGateSelfTest() {
   console.log('\n🔬 Click-shield gate self-test (--verify-gate)');
   console.log('   Purpose: prove the gate is NOT a no-op by planting the Task 723 defect shape.\n');
@@ -897,6 +1209,12 @@ async function runGateSelfTest() {
       else if (req.url === '/dialog-violation') res.end(DIALOG_VIOLATION_PAGE_HTML);
       else if (req.url === '/dialog-clean') res.end(DIALOG_CLEAN_PAGE_HTML);
       else if (req.url === '/alertdialog-violation') res.end(ALERTDIALOG_VIOLATION_PAGE_HTML);
+      else if (req.url === '/edge-resolved') res.end(EDGE_RESOLVED_PAGE_HTML);
+      else if (req.url === '/edge-permanent') res.end(EDGE_PERMANENT_PAGE_HTML);
+      else if (req.url === '/edge-multiband-clean') res.end(EDGE_MULTIBAND_CLEAN_PAGE_HTML);
+      else if (req.url === '/edge-multiband-intercepted') res.end(EDGE_MULTIBAND_INTERCEPTED_PAGE_HTML);
+      else if (req.url === '/wrong-dialog') res.end(WRONG_DIALOG_PAGE_HTML);
+      else if (req.url === '/right-dialog') res.end(RIGHT_DIALOG_PAGE_HTML);
       else res.end(CLEAN_PAGE_HTML);
     });
     server.listen(0, '127.0.0.1', () => {
@@ -945,6 +1263,15 @@ async function runGateSelfTest() {
     { url: `${baseUrl}/dialog-violation`, label: 'Contextual N6 — candidate INSIDE [role="dialog"] intercepted by its own Overlay backdrop (must now FAIL)', expectFail: true },
     { url: `${baseUrl}/dialog-clean`, label: 'Contextual N6 — candidate INSIDE [role="dialog"], no shield (must PASS)', expectFail: false },
     { url: `${baseUrl}/alertdialog-violation`, label: 'Contextual N6 — candidate INSIDE [role="alertdialog"] intercepted by Overlay (rule covers both roles, must FAIL)', expectFail: true },
+    // Task 832 R5a/R5b — viewport-edge rounding (§3.3).
+    { url: `${baseUrl}/edge-resolved`, label: 'Task 832 R5a — viewport-edge rounding, resolved at a later band (scroll clears it)', expectFail: false },
+    { url: `${baseUrl}/edge-permanent`, label: 'Task 832 R5b — viewport-edge rounding, page height == viewport (never resolvable)', expectFail: true },
+    // Task 832 R9 (review 1) — the multiband deferral cases F1 found missing. Arm (d) must show
+    // BOTH zero violations AND zero exclusions (`expectExcludedZero`) — pre-R8 it wrongly lands as
+    // an `above-fold` exclusion. Arm (e) must show a real, non-null interceptor — pre-R8 it is
+    // silently dropped (violations=0) by the same defect.
+    { url: `${baseUrl}/edge-multiband-clean`, label: 'Task 832 R9 arm (d) — multiband deferral, nothing covering (must be clean AND unexcluded)', expectFail: false, expectExcludedZero: true },
+    { url: `${baseUrl}/edge-multiband-intercepted`, label: 'Task 832 R9 arm (e) — multiband deferral, real interceptor (must FAIL with a real interceptor)', expectFail: true },
   ];
 
   let allOk = true;
@@ -953,8 +1280,11 @@ async function runGateSelfTest() {
     const result = await hitTestPage(page);
     const failed = result.violations.length > 0;
     const clearedOk = c.expectCleared ? result.cleared.length > 0 : true;
-    const ok = failed === c.expectFail && clearedOk;
-    console.log(`   ${ok ? '✅' : '❌'} ${c.label}: checked=${result.checked}, violations=${result.violations.length}, cleared=${result.cleared.length} (expected ${c.expectFail ? 'violations>0' : c.expectCleared ? 'cleared>0, violations=0' : 'violations=0'})`);
+    // Task 832 R9 — an explicit zero-exclusion assertion: a candidate that was ever deferred must
+    // never resurface as a benign `excluded` entry (R8), so arm (d) fails loudly if it does.
+    const excludedOk = c.expectExcludedZero ? result.excluded.length === 0 : true;
+    const ok = failed === c.expectFail && clearedOk && excludedOk;
+    console.log(`   ${ok ? '✅' : '❌'} ${c.label}: checked=${result.checked}, violations=${result.violations.length}, cleared=${result.cleared.length}, excluded=${result.excluded.length} (expected ${c.expectFail ? 'violations>0' : c.expectCleared ? 'cleared>0, violations=0' : 'violations=0'}${c.expectExcludedZero ? ', excluded=0' : ''})`);
     if (failed) {
       for (const v of result.violations) {
         console.log(`      blocked: ${v.element.tag}.${v.element.class} @ (${v.element.rect.x},${v.element.rect.y})`);
@@ -969,6 +1299,21 @@ async function runGateSelfTest() {
     }
     if (!ok) allOk = false;
   }
+
+  // Task 832 R5c — drawer-scenario dialog-settle check (R2), tested directly against
+  // isAuthSheetSettled rather than through hitTestPage (a different unit than the cases above).
+  console.log('\n   — Task 832 R5c: drawer-scenario dialog-settle check (R2) —');
+  await page.goto(`${baseUrl}/wrong-dialog`, { waitUntil: 'domcontentloaded' });
+  const wrongSettled = await isAuthSheetSettled(page);
+  const wrongOk = wrongSettled === false;
+  console.log(`   ${wrongOk ? '✅' : '❌'} wrong dialog (nav drawer only, no email field) must be rejected: settled=${wrongSettled} (expected false)`);
+  if (!wrongOk) allOk = false;
+
+  await page.goto(`${baseUrl}/right-dialog`, { waitUntil: 'domcontentloaded' });
+  const rightSettled = await isAuthSheetSettled(page);
+  const rightOk = rightSettled === true;
+  console.log(`   ${rightOk ? '✅' : '❌'} AuthSheet dialog (single dialog, email field present) must be accepted: settled=${rightSettled} (expected true)`);
+  if (!rightOk) allOk = false;
 
   await browser.close();
   await new Promise((r) => server.close(r));
@@ -1045,11 +1390,14 @@ async function runChecks() {
 
   for (const scenario of scenariosToRun) {
     console.log(`\n── Scenario: ${scenario.name} — ${scenario.label} ──`);
+    const triggered = isTriggerScenario(scenario);
     for (const locale of LOCALES) {
       // `--route=` remains a base-scenario-only manual debug override (its pre-existing purpose,
       // Task 723) — the drawer/modal scenarios always drive their own named route since that
       // route IS the scenario (a drawer/modal reachable there is the thing being proven).
       const route = SINGLE_ROUTE && scenario.name === 'base' ? SINGLE_ROUTE : scenario.route(locale);
+      // Task 832 R1 — loaded once per locale (not per cell); only the drawer scenario consumes it.
+      const labels = scenario.isDrawerScenario ? loadDrawerTriggerLabels(locale) : null;
       for (const vp of VIEWPORTS) {
         const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
         const url = `${BASE_URL}${route}`;
@@ -1058,8 +1406,8 @@ async function runChecks() {
         try {
           await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
           await page.waitForTimeout(500);
-          openResult = await openScenarioOverlay(page, scenario);
-          if (scenario.trigger && !openResult.dialogPresent) {
+          openResult = await openScenarioOverlay(page, scenario, vp, labels);
+          if (triggered && !openResult.dialogPresent) {
             result = { checked: 0, violations: [], cleared: [], excluded: [], error: openResult.error ?? 'dialog did not appear' };
           } else {
             result = await hitTestPage(page);
@@ -1083,7 +1431,7 @@ async function runChecks() {
 
         const label = `[${scenario.name}] ${route} × ${vp.name}`;
 
-        if (scenario.trigger && !openResult.dialogPresent) {
+        if (triggered && !openResult.dialogPresent) {
           scenarioOpenFailures++;
           console.log(`   ${label}: ❌ SCENARIO OVERLAY NEVER OPENED — ${cell.error} (A2: a zero-violation result here would mean nothing)`);
           continue;
@@ -1098,19 +1446,19 @@ async function runChecks() {
           emptyCandidateCells++;
           console.log(`   ${label}: ❌ EMPTY CANDIDATE SET (checked=0)${excludedSuffix}${cell.error ? ` — ${cell.error}` : ''}`);
         } else if (cell.violations.length > 0) {
-          console.log(`   ${label}: ❌ FAIL — checked=${cell.checked}${excludedSuffix}, ${cell.violations.length} interception(s)${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ❌ FAIL — checked=${cell.checked}${excludedSuffix}, ${cell.violations.length} interception(s)${triggered ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
           for (const v of cell.violations) {
             console.log(`      blocked:      <${v.element.tag} class="${v.element.class}"> "${v.element.text}" @ (${v.element.rect.x},${v.element.rect.y} ${v.element.rect.width}x${v.element.rect.height})`);
             console.log(`      interceptor:  <${v.interceptor?.tag ?? '?'} class="${v.interceptor?.class ?? '?'}"> @ (${v.interceptor?.rect?.x},${v.interceptor?.rect?.y} ${v.interceptor?.rect?.width}x${v.interceptor?.rect?.height})`);
             if (v.reason) console.log(`      reason:       ${v.reason}`);
           }
         } else if (cell.cleared.length > 0) {
-          console.log(`   ${label}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}${excludedSuffix}${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}${excludedSuffix}${triggered ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
           for (const c of cell.cleared) {
             console.log(`      cleared:      <${c.element.tag} class="${c.element.class}"> "${c.element.text}" @ scrollY=${c.clearingScrollOffset} (fixed/sticky interceptor <${c.interceptor.tag} class="${c.interceptor.class}">, nearest positioned ancestor: <${c.interceptor.nearestPositionedAncestor?.tag ?? '?'} class="${c.interceptor.nearestPositionedAncestor?.class ?? '?'}"> @ (${c.interceptor.nearestPositionedAncestor?.rect?.x},${c.interceptor.nearestPositionedAncestor?.rect?.y} ${c.interceptor.nearestPositionedAncestor?.rect?.width}x${c.interceptor.nearestPositionedAncestor?.rect?.height}))`);
           }
         } else {
-          console.log(`   ${label}: ✅ PASS — checked=${cell.checked}${excludedSuffix}, 0 interceptions${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ✅ PASS — checked=${cell.checked}${excludedSuffix}, 0 interceptions${triggered ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
         }
       }
     }

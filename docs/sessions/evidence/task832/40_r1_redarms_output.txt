@@ -1,0 +1,6 @@
+== blob a58ce81647b1bc5062cc7bb09bf90662c60a7a48 (pre-R8) ==
+platform=win32 node=v22.22.3
+   FAIL Task 832 R9 arm (d) — multiband deferral, nothing covering (must be clean AND unexcluded): checked=0, violations=0, cleared=0, excluded=1["above-fold"]
+   FAIL Task 832 R9 arm (e) — multiband deferral, real interceptor (must FAIL with a real interceptor): checked=0, violations=0, cleared=0, excluded=1["above-fold"]
+AT_LEAST_ONE_ARM_FAILED
+EXIT_CODE=1

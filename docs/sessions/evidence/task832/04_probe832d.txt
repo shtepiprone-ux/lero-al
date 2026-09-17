@@ -1,0 +1,175 @@
+[
+  {
+    "locale": "sq",
+    "vp": "mobile-320",
+    "loginLabel": "Hyr",
+    "openMenuLabel": "Hap menunë",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "sq",
+    "vp": "mobile-375",
+    "loginLabel": "Hyr",
+    "openMenuLabel": "Hap menunë",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "sq",
+    "vp": "mobile-390",
+    "loginLabel": "Hyr",
+    "openMenuLabel": "Hap menunë",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "sq",
+    "vp": "desktop-1024",
+    "loginLabel": "Hyr",
+    "openMenuLabel": "Hap menunë",
+    "desktopLoginCount": 1,
+    "desktopLoginDisplay": "flex",
+    "dialogCountAfterClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "en",
+    "vp": "mobile-320",
+    "loginLabel": "Login",
+    "openMenuLabel": "Open menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "en",
+    "vp": "mobile-375",
+    "loginLabel": "Login",
+    "openMenuLabel": "Open menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "en",
+    "vp": "mobile-390",
+    "loginLabel": "Login",
+    "openMenuLabel": "Open menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "en",
+    "vp": "desktop-1024",
+    "loginLabel": "Login",
+    "openMenuLabel": "Open menu",
+    "desktopLoginCount": 1,
+    "desktopLoginDisplay": "flex",
+    "dialogCountAfterClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "uk",
+    "vp": "mobile-320",
+    "loginLabel": "Увійти",
+    "openMenuLabel": "Відкрити меню",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "uk",
+    "vp": "mobile-375",
+    "loginLabel": "Увійти",
+    "openMenuLabel": "Відкрити меню",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "uk",
+    "vp": "mobile-390",
+    "loginLabel": "Увійти",
+    "openMenuLabel": "Відкрити меню",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "uk",
+    "vp": "desktop-1024",
+    "loginLabel": "Увійти",
+    "openMenuLabel": "Відкрити меню",
+    "desktopLoginCount": 1,
+    "desktopLoginDisplay": "flex",
+    "dialogCountAfterClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "it",
+    "vp": "mobile-320",
+    "loginLabel": "Accedi",
+    "openMenuLabel": "Apri menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "it",
+    "vp": "mobile-375",
+    "loginLabel": "Accedi",
+    "openMenuLabel": "Apri menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "it",
+    "vp": "mobile-390",
+    "loginLabel": "Accedi",
+    "openMenuLabel": "Apri menu",
+    "hamburgerCount": 1,
+    "dialogCountAfterHamburger": 1,
+    "drawerLoginCount": 1,
+    "dialogCountAfterLoginClick": 1,
+    "emailFieldPresent": true
+  },
+  {
+    "locale": "it",
+    "vp": "desktop-1024",
+    "loginLabel": "Accedi",
+    "openMenuLabel": "Apri menu",
+    "desktopLoginCount": 1,
+    "desktopLoginDisplay": "flex",
+    "dialogCountAfterClick": 1,
+    "emailFieldPresent": true
+  }
+]
+EXIT_CODE=0

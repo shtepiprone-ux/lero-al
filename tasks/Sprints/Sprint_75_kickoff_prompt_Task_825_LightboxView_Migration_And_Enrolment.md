@@ -374,7 +374,7 @@ is reserved as **Task 831** (Sprint 75) and is not fixed in 825.
 |---|---|---|---|---|
 | **R10** | §16.2 ①② | **Mobile pagination rail is an inset, scrollable, single-row carousel.** Outer scroller: `pos="absolute"`, `bottom`/`left`/`right` = `resolveGalleryOffset(theme, 'md')`, horizontal overflow scrolls. The segment row inside it uses 824 R35's `justify-content: flex-start` scroller + `margin-inline: auto` row pattern, so a rail that fits stays centred and a rail that overflows starts at `scrollLeft 0`. Segments are `flex-shrink: 0`, width `boxSize.paginationSegment`, height `boxSize.paginationSegmentThickness`, row gap `var(--mantine-spacing-xs)`: all unchanged. The `.centerX` translate is removed from the rail only; the counter keeps it. `Modal.Content` never overflows sideways. | **P0** | AC7, AC11 |
 | **R11** | §16.2 ③ | **Keep-active-in-view, nearest.** One shared hook, `src/hooks/useKeepActiveInView.ts`, with a pure exported helper `computeNearestScrollLeft({ scrollLeft, clientWidth, itemStart, itemEnd })` → the new `scrollLeft`. `itemStart`/`itemEnd` are the item's offsets in the scroller's scroll coordinates. It returns `itemStart` when `itemStart < scrollLeft`, `itemEnd − clientWidth` when `itemEnd > scrollLeft + clientWidth`, and `scrollLeft` unchanged otherwise. The hook runs when `activeIndex` changes and calls `scroller.scrollTo({ left, behavior })` on **that scroller only**. `behavior` is `'smooth'`, or `'auto'` under `prefers-reduced-motion: reduce` and on the first run after mount, so a lightbox opened on photo 18 shows thumbnail 18 at once. **`scrollIntoView` is forbidden**: it also scrolls ancestors (`Modal.Content`, the page). The hook finds item *i* as the scroller's row's *i*-th element child; no new DOM attribute is needed. | **P0** | AC8, AC9, AC12 |
-| **R12** | §16.2 ③ | `LightboxView` applies R11 to the desktop strip scroller (thumbnails) and the mobile rail scroller (segments). Wrap-around works like any other step: from 24 to 1 the carousel scrolls back to 0, from 1 to 24 it scrolls to the end. | **P0** | AC8, AC9 |
+| **R12** | §16.2 ③ | `LightboxView` applies R11 to the desktop strip scroller (thumbnails) and the mobile rail scroller (segments). Wrap-around: from 24 to 1 the carousel ends at 0, from 1 to 24 it ends at the far end — **without an animated pass through the row; amended by §17 R17 (review 2), which supersedes "like any other step"**. | **P0** | AC8, AC9, AC15, AC16 |
 | **R13** | §16.2 ④ | Both scrollers get one `LightboxView.module.css` class, `.hiddenScrollbar { scrollbar-width: none }` plus `.hiddenScrollbar::-webkit-scrollbar { display: none }`. The legacy `globals.css` `.no-scrollbar` utility is **not** used: this is a migrated Mantine surface, and Tailwind-layer utilities are what R1 removed. `overflow-x` stays scrollable. | **P0** | AC10 |
 | **R14** | 16c | `LightboxView.stories.tsx` covers both rail states at mobile width with the real component: **overflowing** (existing `SwipeTrackMode`, 24 photos) and **fitting**, a new `SwipeTrackModeFewPhotos` export with 4 photos drawn from `DEMO_IMAGES`, `opened` always true, no play function. This is a changed visible state of the production component, not a probe (orchestrator-procedures corollary 726). | **P0** | AC11, AC13 |
 | **R15** | §16.3 (amends R5) | For each of the 7 parent surfaces on lines 133, 250, 562, 1213, 1216, 1543 and 1615, run `node.exe scripts\check-surface-census.mjs --surface <parent> --json` and retain the output. Remove a baseline entry **only** if that surface's census has `LightboxView.tsx` with `manifest:yes story:yes` and no blocking tier. Use one Node script (UTF-8 I/O) that ① prints the exact 7 keys it will delete, ② refuses to write (`SCOPE GUARD FAILED`) if any key is missing, extra, or not in that set, ③ removes only those keys, keeps every other byte, and writes the result as JSON with the same indentation. Record `git hash-object` before and after. Then `check:surface-census:changed -- --base HEAD` and `check:surface-census:changed:verify` must both exit 0. The script is a scratch file under the session scratchpad, not committed. | **P1** | AC14 |
@@ -426,7 +426,7 @@ sub-pixel layout.`
 |---|---|
 | Single photo | no rail, no strip scrolling, hook is a no-op (`images.length ≤ 1`) |
 | Rail/strip fits (4 photos) | centred, `scrollLeft` stays 0 on every step (AC11 + AC8 unchanged-rule) |
-| Wrap 24 → 1 and 1 → 24 | carousel jumps to the matching end (AC8/AC9) |
+| Wrap 24 → 1 and 1 → 24 | carousel jumps **instantly** to the matching end, no visible scroll animation (§17 R17, AC15/AC16) |
 | Reduced motion | `behavior: 'auto'` (AC12) |
 | Ancestor scroll | `Modal.Content` and page never scroll (AC8/AC9) |
 | Probe blind to scrollbars | `BLOCKED — PROBE BLIND` (AC10 failing arm) |
@@ -472,3 +472,114 @@ each cell.
 
 Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when AC7–AC14 and the whole §13.2 block are green and the
 §16.9 matrix is handed over. AC10's failing arm reading 0 → `BLOCKED — PROBE BLIND`. No self-approval, no git.
+
+## 17. Revision 2 — Opus implementation review 2, 2026-09-17 (`NEEDS REVISION`)
+
+### 17.0 Re-entry mode
+
+`remediation`. **Keep** every Revision 0 and Revision 1 change and every transcript `01`–`57` (plus `40_r15_census/`)
+under `docs/sessions/evidence/task825/`; never overwrite or renumber one. New transcripts start at `58`. Do not revert
+R10–R16: the owner accepted them visually ("Візуально все виправлено"). Do not re-run R15 (the census rows are gone,
+AC14). Start at §17.5 step 1.
+
+### 17.1 Why it was returned — owner return and cause
+
+Owner return, 2026-09-17, quoted verbatim:
+
+> "Візуально все виправлено, але якщо перемикатись між першим і останнім фото, або між останнім та першим фото -
+> каресель прокручується в реальному часі до потрібного фото. Це не треба показувати користувачеві, карусель має
+> прокручуватись непомітно, бо виходить так, що користувач бачить, як 30 фото перемотуються з останньої до першої і
+> навпаки. Якщо користувач знаходиться на останньому фото і клікає праворуч, то система має його перенести до першого
+> фото, не показуючи як перемотується вся карусель."
+
+`FACT` — cause, `src/hooks/useKeepActiveInView.ts`: `behavior` is `wasFirstRun || prefersReducedMotion ? 'auto' :
+'smooth'`. A wrap step (last → first, first → last) is a later `activeIndex` change, so it is `'smooth'`. The browser
+then animates `scrollLeft` across the whole row. The thumbnail strip and the mobile rail both show this.
+
+`FACT` — **this is a kickoff defect, not an executor deviation.** §16.4 R12 said "Wrap-around works like any other
+step", and §16.6 said "carousel jumps", which contradicted it. The executor followed R11/R12 as written. R12 and the
+§16.6 row are amended in place to point here.
+
+`FACT` — the main photo track is not the defect. `useSwipeTrackSync.ts` wraps through clone slides (one-step
+animation, then an invisible rebase), and the desktop media is a static swap. It stays unchanged and out of scope.
+
+### 17.2 Requirements (add to §4 and §16.4)
+
+| ID | Source | Observable requirement | P | AC |
+|---|---|---|---|---|
+| **R17** | §17.1 owner return | **A wrap step never animates the carousel.** `useKeepActiveInView` keeps the previous `activeIndex` in a ref. The item count is the scroller row's element-child count (`row.children.length`), so the signature does not change. A step is a **wrap** when `count ≥ 3` and either (previous = `count − 1` and next = 0) or (previous = 0 and next = `count − 1`). A wrap uses `behavior: 'auto'`. **Also `'auto'`** (Opus decision derived from the same return: the user must not watch the row run past): any step where `Math.abs(nextScrollLeft − scroller.scrollLeft) > scroller.clientWidth`. Everything else is unchanged from R11: the first run and reduced motion use `'auto'`, and an adjacent non-wrap step that needs a scroll uses `'smooth'`. Put the rule in a pure exported helper, `resolveScrollBehavior({ isFirstRun, prefersReducedMotion, previousIndex, nextIndex, count, scrollLeft, nextScrollLeft, clientWidth })` → `'auto' \| 'smooth'`, next to `computeNearestScrollLeft`. Update the hook's JSDoc so it no longer says every later change is `'smooth'`. | **P0** | AC15, AC16 |
+| **R18** | R17 regression | The nearest-scroll geometry (R11), containment (AC8/AC9), no ancestor scroll, and `scrollIntoView` ban all stay unchanged. The only new behaviour is the choice of `behavior`. | **P0** | AC8, AC9, AC12, AC16 |
+
+`count ≥ 3` is deliberate. With 2 photos, every step is both adjacent and a wrap, and the row fits, so the hook
+makes no scroll call (R11 unchanged rule).
+
+### 17.3 Acceptance criteria (add to §12 and §16.5)
+
+- **AC15 [R17]** — `vitest`, `src/hooks/__tests__/useKeepActiveInView.test.ts`, new `describe('resolveScrollBehavior')`:
+  ① wrap forward (prev 23 → next 0, count 24, delta > 0) → `'auto'`; ② wrap backward (0 → 23) → `'auto'`; ③ adjacent
+  non-wrap step, |delta| ≤ clientWidth → `'smooth'`; ④ non-wrap jump with |delta| > clientWidth → `'auto'`; ⑤ count 2,
+  1 → 0 with |delta| ≤ clientWidth → `'smooth'` (not a wrap); ⑥ first run → `'auto'`; ⑦ reduced motion on a
+  non-wrap step → `'auto'`. Also a new **hook** test using the existing `buildScroller` pattern with ≥ 3 overflowing items: step to
+  the last index, clear the mock, rerender to index 0 → `scrollTo` called with `{ left: 0, behavior: 'auto' }`; and
+  the reverse. The four AC12 hook tests stay and pass unchanged. **Failing arm, required first:** add the hook
+  wrap test before R17 lands and retain its failing run (`expected 'auto', received 'smooth'`). If it passes on the
+  unrevised hook, stop with `BLOCKED — TEST BLIND`.
+- **AC16 [R17, R18]** — Playwright against served `build-storybook`, same launch as §16.5
+  (`ignoreDefaultArgs: ['--hide-scrollbars']`, `locale:en`, reduced motion **not** emulated). Cells:
+  `swipe-track-mode` at 390×844 (rail scroller, `ArrowRight`/`ArrowLeft`) and `default` at 1440×900 and 640×900 (strip
+  scroller, Next/Prev buttons). In each cell: step to the last photo and wait for a stable `scrollLeft`. Record `S0`.
+  Start a `requestAnimationFrame` sampler of the scroller's `scrollLeft`, press forward once, and sample for 600 ms.
+  **Wrap forward passes when** every sample is `S0` or `0` (±0.5 px), no sample lies strictly between them, and the
+  final value is `0`. Then do the same backward from photo 1: every sample is `0` or `Send` (±0.5 px), where `Send` is
+  the final value and equals `scrollWidth − clientWidth` ±0.5 px. **Smooth arm, same cells:** from the photo whose next
+  step needs a scroll (first step where the active item leaves the right edge), an adjacent step records **at least
+  one** sample strictly between the start and final values. This proves R17 did not make every step instant. Retain
+  raw per-cell sample arrays as JSON. After the walk, the AC8/AC9 containment and ancestor-`scrollLeft/scrollTop = 0`
+  checks are re-run on the final code and pass.
+
+`GR-4 AC AUDIT — 2 criteria (AC15–AC16); each states an observable property; absolutes: none — AC16 bounds samples by
+±0.5 px and states the smooth arm as "at least one intermediate sample", which a correct implementation satisfies.`
+
+### 17.4 Scope (amends §16.7)
+
+**Edited:** `src/hooks/useKeepActiveInView.ts`, `src/hooks/__tests__/useKeepActiveInView.test.ts`, the session log
+(append a `Revision 2` section and a Files Changed update), and `docs/backlog.md` (825 row only). **Not edited:**
+`LightboxView.tsx` (the call sites keep their signature), `useSwipeTrackSync.ts`, `MantineListingGalleryPattern.tsx`,
+`theme.ts`, Stories, manifests, baselines.
+
+### 17.5 Verification plan
+
+Order: 1. AC15 failing arm (hook wrap test on unrevised hook) → 2. R17 helper + hook → 3. AC15 green →
+4. `build-storybook` → 5. AC16 probe (wrap arms, smooth arm, AC8/AC9 re-check) → 6. final block below → 7.
+`git hash-object` for every changed path in the same pass.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe -v
+npx.cmd vitest run src/hooks/__tests__/useKeepActiveInView.test.ts src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens:strict
+npm.cmd run build-storybook
+npm.cmd run build
+npm.cmd run check:surface-census:changed:verify
+npm.cmd run check:rendered-scope:verify
+```
+
+Expected: `win32`; vitest all pass; every other command exits 0. `task612` and `check:click-shield` are **not**
+re-run. R17 changes no DOM and no event handling, only a `scrollTo` option, and Revision 1's `52`/`53` stay the
+evidence. If `LightboxView.tsx` or any DOM changes, re-run both per §13.2. Transcripts are unpiped with exit codes.
+
+### 17.6 Owner visual review — re-handed (`OWNER VISUAL QA REQUIRED`)
+
+| Story | Widths | Locale | Owner checks |
+|---|---|---|---|
+| `mantine-primitives-lightboxview--swipe-track-mode` | 320, 390 | en | last → next: the rail is at the start at once, no visible run; first → prev: at the end at once; ordinary steps still glide |
+| `mantine-primitives-lightboxview--default` | 640, 1440 | en | same three checks on the thumbnail strip, with the arrow buttons |
+
+### 17.7 Completion contract (amends §16.10)
+
+Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when AC15 (with its retained failing arm) and AC16 are
+green, the §17.5 block exits 0, and the §17.6 matrix is handed over. AC15's failing arm passing → `BLOCKED — TEST
+BLIND`. No self-approval, no git.

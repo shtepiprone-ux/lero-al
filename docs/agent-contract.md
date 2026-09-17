@@ -174,6 +174,15 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     production component or an equivalent canonical composition; otherwise update the Story or create that
     composition Story. Stop for an owner decision if the required Story boundary is genuinely ambiguous.
 
+    **Story-creation preflight is mandatory.** Before creating a `*.stories.*` file, a Storybook title, or a Story
+    export for visible UI — and before retaining a legacy Story alongside a Mantine migration — the orchestrator and
+    executor must search canonical Stories for a direct import of the production component or an equivalent canonical
+    composition, compare the requested state plus toolbar locale/viewport proof, and record the result through the
+    `GR-3a STORY PREFLIGHT` receipt in `docs/golden-rules.md`. If a matching canonical Story exists, reuse it or add
+    only the missing distinct state there; creating or retaining a parallel Story/page is forbidden. `CREATE` is
+    permitted only when the receipt records zero canonical candidates. A missing, malformed, or ambiguous preflight
+    is `BLOCKED — GR-3a PREFLIGHT MISSING`; no Story-related write may follow it.
+
 16d. **No component rendered by an in-scope surface may be excluded from it. Owner rule, 2026-09-10, written after
     Task 809 shipped `/favorites` with 53 `className` and two shadcn `Dialog`s still on the page.** Clause 16c
     forbids declaring a *Story* out of scope. Task 809 obeyed that wording and broke the rule anyway, by declaring

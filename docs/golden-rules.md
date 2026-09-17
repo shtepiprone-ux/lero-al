@@ -54,6 +54,30 @@ canonical Mantine Story exists for a changed visible component, **create it** �
 **Receipt:** `GR-3 STORY PROVEN — <component> ← <its own story file>` per changed visible component. The word "own" is
 literal: the file must import that component by name.
 
+## GR-3a — A Story existence preflight precedes every Story/page/export creation
+
+Binds: `agent-contract` **16c**. Applies before creating a `*.stories.*` file, Storybook title, or Story export for
+visible UI, and before retaining a legacy Story alongside a Mantine migration.
+
+**Forbidden:** creating or retaining a parallel Storybook page when a canonical Story already directly imports the
+same production component, or when an equivalent canonical composition renders that real component in the requested
+state. A different title, folder, wrapper, gate enrolment, locale variant, or viewport variant is not a new proof
+surface. Missing states extend the existing canonical Story; they do not justify another page. Locale and viewport
+proof for Mantine remains toolbar-driven.
+
+**Preflight — before any Story-related write:** search `src/stories/**` and colocated `*.stories.*` files for the
+production component's direct import; inspect every canonical candidate's Storybook title, rendered states, and
+locale/viewport mechanism. Record one candidate row per match. `CREATE` is allowed only when the search returns no
+canonical candidate. If the component boundary, equivalence, or state coverage is unclear, stop for an owner decision.
+
+**Receipt — task design, execution and review alike:**
+
+`GR-3a STORY PREFLIGHT — <production component> × <requested state>; canonical candidates: <Story IDs | NONE>; direct-import evidence: <path:line | NONE>; toolbar coverage: locale=<mechanism>, viewport=<mechanism>; decision: <REUSE | EXTEND | CREATE | STOP>; target: <existing Story ID | NONE>; rationale: <why>.`
+
+No receipt, a receipt with an uninspected candidate, or `CREATE` with any canonical candidate makes the task invalid.
+The executor must emit `BLOCKED — GR-3a PREFLIGHT MISSING` and make no Story-related write; the reviewer returns
+`NEEDS REVISION`.
+
 ## GR-4 — An acceptance criterion asserts an observable property, never an absolute
 
 **Forbidden:** "byte-unchanged", "within N px", "zero hits" and similar, when a correct implementation can violate
@@ -92,6 +116,7 @@ task-design block for documents the same response authored. Conflating the two i
 | GR-1 | `scripts/check-rendered-scope.mjs` (`npm run check:rendered-scope`, **blocking**, Task 818), `scripts/check-surface-census-changed.mjs` (`npm run check:surface-census:changed`, **blocking**, Task 819 — maps the PR's own base..head diff to affected surfaces via `scripts/map-changed-surfaces.mjs` and censuses each with `scripts/check-surface-census.mjs --json`), `scripts/check-pattern-enrolment.mjs` (`npm run check:pattern-enrolment`, **blocking**, Task 820), **and** `scripts/check-media-enrolment.mjs` (`npm run check:media-enrolment`, **blocking**, Task 813) | **Enforced for both halves: the enrolled subgraph and pre-enrolment — and, for two directories, at the source.** Task 813 (2026-09-11) moved the project's canonical `<img>` render site, `AppImage.tsx` (and its co-located siblings), out of `src/components/ui/` — the literal path prefix both `check-rendered-scope.mjs` and `check-surface-census.mjs` classify as `tier2-legacy-primitive` — to `src/design-system/media/`, closing the tier-2 edge at its source for every consumer at once, and added `check:media-enrolment` (same shape as `check:pattern-enrolment`, directory-listing-driven, never a hard-coded name list) so that new directory does not ship ungoverned. Task 818 (2026-09-11) made `check:rendered-scope` blocking against a versioned, edge-keyed baseline (`scripts/rendered-scope-baseline.json`) — every component an *enrolled* surface renders is blocked from silently growing unmigrated. Task 819 (2026-09-11) closes the other half: `check-surface-census.mjs` (Task 817) censuses one named surface but took a `--surface` argument no CI job supplied, so a wholly unenrolled surface (the exact Task 809 shape) was invisible to every gate. `check:surface-census:changed` now runs in the same `governance` job, immediately after `check:rendered-scope:verify`: it fails closed (never a silent skip) when the merge base cannot be determined, either limit is exceeded, a changed file resolves to no surface, or a mapped surface's own census is unusable; every blocking node it finds is compared against its own versioned baseline (`scripts/surface-census-baseline.json`) the same way — baselined debt does not fail, a new block fails naming it, a stale entry fails, and a new `tier2-legacy-primitive` block can never be baselined away. Task 820 (2026-09-11, owner decision 5) closes GR-1's remaining gap for one directory by construction rather than by frontier-walking: every `.tsx` under `src/design-system/mantine/patterns/` must be a `scripts/mantine-migration-scope.json` entry, checked against the live directory listing (never a hard-coded name list), with the eleven Task 816 tier-3 allowlist entries retired as no longer needed — the manifest now enrols all 33 patterns directly. GR-1's `Command` block above (the by-hand, single-surface form) is unchanged and stays useful for ad-hoc inspection; it is not what CI runs. |
 | GR-2 | reviewer inspection + receipt | active |
 | GR-3 | `check:story-coverage` for enrolled components; `check-rendered-scope` blocking in CI for the enrolled-subgraph frontier (Task 818); `check-surface-census.mjs`/`check:surface-census:changed` blocking in CI for the pre-enrolment case (Task 819) — both check, per node, whether a canonical Mantine story imports it directly or through a single-hop `index.ts(x)` barrel re-export, never merely its parent, via the `story:<yes\|no>` column/field | **enforced for both halves** (Task 818, Task 819) — a rendered, unstoried component reachable from an enrolled root, or from any surface the current PR's diff actually touches, now blocks the PR. |
+| GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **`Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks the response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **`Stop` hook** — blocks the response when a `tasks/**` or governance doc is written and uncommitted with no `git add` block, and blocks `git push` outside an approved review | **enforced** |

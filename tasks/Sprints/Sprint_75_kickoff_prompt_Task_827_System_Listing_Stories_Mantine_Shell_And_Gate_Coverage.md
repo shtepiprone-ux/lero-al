@@ -702,3 +702,40 @@ git --no-optional-locks status --porcelain
 Session log: add a `Revision 3` section with F4–F7, the red and green transcripts, the before/after hashes, the
 categorized census and an updated whole-task `Files Changed` table. Update the `docs/backlog.md` 827 row. Status
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. The §18.8 owner visual matrix is still owed. No self-approval, no git.
+
+## 20. Review 5 — `PARTIALLY VERIFIED` 2026-09-17
+
+**No executor work is owed.** §19 holds against the real diff:
+- **AC10′** `88_`: exit 0, `CSS asset: ListingCard-BsCj8UXA.css`, `of 142 canonical`, and no `system-*` ID in scope.
+  `extractTrackSelectors` parses `grid, wrapper, rail, control, controlPrev, controlNext` from the source. All six are
+  present in exactly one hash group (`xgvr5`) of the built assets (reviewer grep).
+- **AC13′** `89_`: exit 0. Arms (a) through (e) PASS, and arm (d) fails closed on `['__task827_absent__']`. `Tree fully restored`.
+- **Red-first** `85_`: `found 0` and exit 1 against the file-name anchor.
+- **Hashes** of `check-card-track-monotonicity.mjs` and `docs/storybook-governance.md` equal `86_`. R13's two files equal
+  `HEAD`. `94_` (build) is newer than the last source write.
+
+**AC14 amended (orchestrator defect, same kind as F5).** F5's list could not be satisfied together with R13. R13 requires
+`scripts/__tests__/mantine-story-scope.test.ts` to be byte-identical to `HEAD`, and that file names
+`System/FeaturedListings` at `:16` and `:44` as a negative-case fixture. **A sixth allowed category is added:
+`scripts/__tests__/mantine-story-scope.test.ts` `HEAD` negative fixtures.** The `docs/storybook-governance.md` narrative
+now starts at `:2280` because F6 removed one line above it. `99_` has no line outside the six categories. The §15.4
+rewording of `docs/responsive-storybook-inventory.md` is accepted.
+
+**Open, blocks approval:** the §18.8 owner visual matrix (`agent-contract` 12, owner rule 2026-09-03). Once the owner
+records every tuple as accepted, the next review closes the task. A returned tuple becomes a revision.
+
+**GR-1 (reviewer run).** `LatestListingsView` has 8 nodes, all tier 1 migrated, enrolled and storied. `FeaturedListingsView`
+is blocked on `ViewAllLink`, which has no Story of its own and no manifest entry. That debt was already baselined and
+predates 827. The `Empty` state does not render it (`FeaturedListingsView.tsx:63`), so it does not block 827. It had no
+owning task, and it is now **filed as reserved Task 834**.
+
+## 21. Review 6 — `APPROVED WITH NOTES` 2026-09-17
+
+**§18.8 owner visual matrix: accepted.** Owner decision, 2026-09-17, quoted verbatim:
+
+> Візуально все ок. У System/ сторіси видалені, все ок.
+
+This records every tuple (`HomepageListingGrids` → `Empty` × 320/768/1440/1920 × en/sq/uk/it) and the sidebar check as
+accepted. §20 is unchanged: every executor requirement is verified and no executor work is owed. The notes are
+P3 and are filed separately: **833** (story-title reader fails open on an apostrophe) and **834** (`ViewAllLink` has no Story
+of its own). Task closed and archived.

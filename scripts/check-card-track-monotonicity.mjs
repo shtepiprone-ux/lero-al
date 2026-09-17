@@ -18,13 +18,26 @@
  *      shrinking the track as the viewport grows, so a column (or a rail card) disappears.
  *
  * Owner decision (2026-09-16, kickoff §5.1, quoted verbatim there): scope is canonical Mantine/
- * Patterns Stories ONLY. The 11 legacy `System/*` stories that also render the track are excluded —
- * printed on every run, not silently dropped — and their own measured 1535->1536 rail drop is Task
- * 827's to fix, not this gate's to catch.
+ * Patterns Stories, including titles enrolled via `MANTINE_STORY_ENROLLED_TITLES` (Task 678). Task
+ * 827 (2026-09-17, owner rejection §18) deleted the four System-prefixed listing story files
+ * (Featured, Latest, Similar and RecentlyViewedSection titles) instead of enrolling them — every
+ * state they rendered now lives on `Patterns/Mantine/HomepageListingGrids` and on
+ * `Mantine/Primitives/SimilarListingsView`/`RecentlyViewedGridView`. No `System/*` story renders
+ * the track any more (F7, review 4: the I0 baseline, `02_i0-monotonicity.txt`, showed the only
+ * `System/*` track renderers were the 11 exports of those four deleted files — no other `System/*`
+ * story, including `Containers`, ever rendered it). Non-canonical stories stay excluded by the
+ * owner rule of 2026-09-17 (Tailwind stories are excluded from tests) — printed on every run, not
+ * silently dropped.
  *
  * The track's CSS Module classes are hashed per build (kickoff §3.3) — this script extracts the
- * grid/rail class names from the one matching built CSS asset at runtime. No literal hashed class
- * name is ever written here (R2).
+ * grid/rail class names by CONTENT (F4, review 4), not by a built asset's file name: it reads the
+ * track's own top-level local class names statically from its source
+ * (`src/design-system/mantine/patterns/MantineListingCardTrack.module.css`), then finds the one
+ * CSS-Module hash group, across every built `storybook-static/assets/*.css` file, whose local names
+ * are a superset of that source set — because which chunk Rollup names the shared CSS after is a
+ * bundler decision, not part of the track's identity, and Task 827 changed it once already
+ * (`MantineListingCardTrack-*.css` → `ListingCard-*.css`, byte-identical content, only the chunk's
+ * name changed). No literal hashed class name is ever written here (R2) — the local names are.
  *
  * Two modes:
  *   node scripts/check-card-track-monotonicity.mjs                Assert the real tree. Exit 0 iff
@@ -110,10 +123,47 @@ function startStaticServer(staticDir, port) {
   });
 }
 
-// ── R2 — derive the track's selectors from the built CSS. Reads only the one matching asset under
-// `storybook-static/assets/`; no baseline file, no allowlist (AC5). ──
+// ── F4 (review 4, kickoff §19.1) — derive the track's selectors from the built CSS by CONTENT, not
+// file name. A Rollup chunk-naming decision (which component a shared CSS Module chunk gets named
+// after) is not part of this gate's contract — Task 827 deleting the four `System/*` listing
+// stories left `MantineListingCardTrack.module.css` bundled into `ListingCard-*.css` instead of its
+// own `MantineListingCardTrack-*.css` chunk, with byte-identical class content, and the old
+// file-name anchor went blind. The content anchor: read the track's own top-level local class names
+// from its SOURCE file, then find the one CSS-Module hash group, across every built asset, whose
+// local names are a superset of that source set. No literal hashed class name is ever written here
+// (R2 — still true; the local names are, not the hashes).
 
-async function extractTrackSelectors(staticDir, assetPattern = /^MantineListingCardTrack-.*\.css$/) {
+const TRACK_SOURCE_CSS_PATH = join(ROOT, 'src', 'design-system', 'mantine', 'patterns', 'MantineListingCardTrack.module.css');
+
+// Top-level (column-0, never inside @media/@container) local class names declared in the track's
+// own source CSS Module, parsed statically — never hand-maintained. `^\.([a-zA-Z]+)\b` matches only
+// a bare leading class token per physical line (`.grid {`, `.rail > a,`, `.controlPrev {`…); a
+// selector indented inside an at-rule never starts at column 0, so nested/media-scoped rules are
+// excluded by construction, not by an allowlist.
+function parseTrackSourceLocalNames(cssSource) {
+  const names = new Set();
+  for (const line of cssSource.split('\n')) {
+    const m = line.match(/^\.([a-zA-Z]+)\b/);
+    if (m) names.add(m[1]);
+  }
+  return names;
+}
+
+async function extractTrackSelectors(staticDir, localNames) {
+  let sourceNames;
+  if (localNames) {
+    sourceNames = new Set(localNames);
+  } else {
+    let sourceCss;
+    try {
+      sourceCss = await readFile(TRACK_SOURCE_CSS_PATH, 'utf8');
+    } catch (err) {
+      return { ok: false, reason: `cannot read track source ${TRACK_SOURCE_CSS_PATH}: ${err instanceof Error ? err.message : String(err)}` };
+    }
+    sourceNames = parseTrackSourceLocalNames(sourceCss);
+  }
+  const requiredNames = [...sourceNames];
+
   const assetsDir = join(staticDir, 'assets');
   let files;
   try {
@@ -121,23 +171,40 @@ async function extractTrackSelectors(staticDir, assetPattern = /^MantineListingC
   } catch (err) {
     return { ok: false, reason: `cannot read ${assetsDir}: ${err instanceof Error ? err.message : String(err)}` };
   }
-  const matches = files.filter((f) => assetPattern.test(f));
-  if (matches.length !== 1) {
+  const cssFiles = files.filter((f) => f.endsWith('.css'));
+
+  // hash -> { tokens: Map<localName, fullClassToken>, assets: Set<fileName> }
+  const groups = new Map();
+  const tokenRe = /\.(_([A-Za-z][\w]*)_([a-z0-9]+)_(\d+))\b/g;
+  for (const file of cssFiles) {
+    const css = await readFile(join(assetsDir, file), 'utf8');
+    tokenRe.lastIndex = 0;
+    let m;
+    while ((m = tokenRe.exec(css)) !== null) {
+      const [, fullToken, local, hash] = m;
+      if (!groups.has(hash)) groups.set(hash, { tokens: new Map(), assets: new Set() });
+      const g = groups.get(hash);
+      g.tokens.set(local, fullToken);
+      g.assets.add(file);
+    }
+  }
+
+  const matching = [...groups.entries()].filter(([, g]) => requiredNames.every((n) => g.tokens.has(n)));
+  if (matching.length !== 1) {
+    const candidates = matching.map(([hash, g]) => `${hash} (${[...g.assets].sort().join(',')})`);
     return {
       ok: false,
-      reason: `expected exactly 1 asset matching ${assetPattern} in ${assetsDir}, found ${matches.length}: ${JSON.stringify(matches)}`,
+      reason: `expected exactly 1 CSS-Module hash group in ${assetsDir} containing every local name [${requiredNames.join(', ')}], found ${matching.length}${matching.length ? ': ' + candidates.join('; ') : ''}`,
     };
   }
-  const css = await readFile(join(assetsDir, matches[0]), 'utf8');
-  const gridClasses = [...new Set([...css.matchAll(/\.(_grid_[a-z0-9]+_\d+)/g)].map((m) => m[1]))];
-  const railClasses = [...new Set([...css.matchAll(/\.(_rail_[a-z0-9]+_\d+)/g)].map((m) => m[1]))];
-  if (gridClasses.length !== 1) {
-    return { ok: false, reason: `expected exactly 1 grid class in ${matches[0]}, found ${gridClasses.length}: ${JSON.stringify(gridClasses)}` };
+  const [, group] = matching[0];
+  const asset = [...group.assets].sort().join(',');
+  const gridClass = group.tokens.get('grid');
+  const railClass = group.tokens.get('rail');
+  if (!gridClass || !railClass) {
+    return { ok: false, reason: `matched hash group is missing a required grid/rail token: ${JSON.stringify([...group.tokens.keys()])}` };
   }
-  if (railClasses.length !== 1) {
-    return { ok: false, reason: `expected exactly 1 rail class in ${matches[0]}, found ${railClasses.length}: ${JSON.stringify(railClasses)}` };
-  }
-  return { ok: true, asset: matches[0], gridClass: gridClasses[0], railClass: railClasses[0] };
+  return { ok: true, asset, gridClass, railClass };
 }
 
 // ── In-page evaluation. Classes are passed in as arguments — never a literal hashed name (R2). ──
@@ -360,8 +427,9 @@ function printScopeReport(log, { total, canonicalCount, inScope }) {
   for (const s of inScope) log(`  - ${s.id}`);
   const excludedCount = total - canonicalCount;
   log(
-    `excluded (owner decision 2026-09-16): ${excludedCount} non-canonical stories, including the ` +
-    'System/* stories — Task 827 owns the known 1535->1536 drop there',
+    `excluded (owner rule 2026-09-17, Task 827 §5.1/§18, quoted verbatim there): ${excludedCount} ` +
+    'non-canonical Tailwind stories. Task 827 (2026-09-17) deleted the four System/* listing ' +
+    'story files rather than enrolling them, so no System/* story renders the track any more.',
   );
 }
 
@@ -379,23 +447,23 @@ function printStoryResult(log, storyId, result) {
 
 // ── Normal mode ──
 
-const DEFAULT_ASSET_PATTERN = /^MantineListingCardTrack-.*\.css$/;
-
 // §16.3 — R6 requires the scope-and-blind-spot block on EVERY exit path, not only the happy one.
 // The `finally` below is what guarantees `CANNOT_SEE` prints even when the function returns early
 // (selector extraction failure) — `main()`'s missing-build exit is a one-line error and is
 // deliberately NOT routed through here (kickoff §16.3).
 //
-// §17.5 item 2 — `assetPattern` and `log` replace Rev 1's evidence-only CLI test-hook flag.
-// `--verify-gate`'s arm (d) calls this function directly with a non-matching pattern and a
-// collecting `log`, so AC13 is re-provable on every CI run without any script-level test hook.
-async function runGate(baseUrl, browser, staticDir, { assetPattern = DEFAULT_ASSET_PATTERN, log = console.log } = {}) {
+// §17.5 item 2 — `localNames` and `log` replace Rev 1's evidence-only CLI test-hook flag (F4,
+// review 4: renamed from `assetPattern` now that extraction is content-anchored, not file-name-
+// anchored). `--verify-gate`'s arm (d) calls this function directly with a local-name set no
+// module has and a collecting `log`, so AC13′ is re-provable on every CI run without any
+// script-level test hook.
+async function runGate(baseUrl, browser, staticDir, { localNames, log = console.log } = {}) {
   log('check-card-track-monotonicity.mjs — asserting the real tree\n');
 
   let inScope = [];
   let anyFailure = false;
   try {
-    const selectors = await extractTrackSelectors(staticDir, assetPattern);
+    const selectors = await extractTrackSelectors(staticDir, localNames);
     if (!selectors.ok) {
       log(`Selector extraction failed: ${selectors.reason}`);
       log('scope: not discovered — selector extraction failed');
@@ -599,12 +667,12 @@ async function runVerifyGate(baseUrl, browser, staticDir) {
     }
   }
 
-  console.log('── Arm (d): selector fail-closed — runGate itself, via a non-matching asset pattern (§17.5) ──');
+  console.log('── Arm (d): selector fail-closed — runGate itself, via a local-name set no module has (§17.5, F4) ──');
   {
     const collected = [];
     const collectingLog = (msg) => collected.push(String(msg));
     const badExit = await runGate(baseUrl, browser, staticDir, {
-      assetPattern: /^DOES-NOT-EXIST-TASK815-.*\.css$/,
+      localNames: ['__task827_absent__'],
       log: collectingLog,
     });
     const joined = collected.join('\n');

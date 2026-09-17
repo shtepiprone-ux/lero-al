@@ -1,0 +1,13 @@
+ docs/backlog.md                                    |   2 +-
+ scripts/__tests__/check-design-tokens.test.ts      |  97 +++++++++++++++
+ scripts/__tests__/mantine-story-scope.test.ts      |  14 ++-
+ scripts/check-card-track-monotonicity.mjs          |  20 +++-
+ scripts/check-design-tokens.mjs                    | 130 +++++++++++++++++++--
+ scripts/lib/mantine-story-scope.mjs                |  22 ++++
+ src/stories/FeaturedListings.stories.tsx           |  21 ++--
+ src/stories/LatestListings.stories.tsx             |  21 ++--
+ src/stories/RecentlyViewedSection.stories.tsx      |  22 ++--
+ src/stories/SimilarListings.stories.tsx            |  13 ++-
+ ...es_That_Report_Green_On_What_They_Cannot_See.md |   2 +-
+ ...ting_Stories_Mantine_Shell_And_Gate_Coverage.md |  91 ++++++++++++++-
+ 12 files changed, 400 insertions(+), 55 deletions(-)

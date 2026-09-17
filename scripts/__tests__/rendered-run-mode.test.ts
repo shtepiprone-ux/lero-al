@@ -51,11 +51,13 @@ describe('describeRunMode — Task 742', () => {
     expect(result.phasesSkipped).toEqual(['phase1-assert-stories', 'phase2-geometry-only']);
     expect(result.noteLine).toContain('Phase 1');
     expect(result.noteLine).toContain('Phase 2');
-    // AC3 — the console NOT RUN line derived from noteLine must name all 4 .listing-card anchors.
-    expect(result.noteLine).toContain('system-featuredlistings--default');
-    expect(result.noteLine).toContain('system-latestlistings--default');
-    expect(result.noteLine).toContain('system-similarlistings--default');
+    // AC3 — the console NOT RUN line derived from noteLine must name the remaining .listing-card
+    // anchor. Task 827 (2026-09-17, owner rejection §18) deleted the FeaturedListings/
+    // LatestListings/SimilarListings listing story files, so their IDs must no longer appear.
     expect(result.noteLine).toContain('patterns-mantine-homepagelistinggrids--default');
+    expect(result.noteLine).not.toContain('system-featuredlistings--default');
+    expect(result.noteLine).not.toContain('system-latestlistings--default');
+    expect(result.noteLine).not.toContain('system-similarlistings--default');
   });
 
   it('mantine-only header contains neither "Global enumeration" nor "Full global-enumeration run." (AC2)', () => {

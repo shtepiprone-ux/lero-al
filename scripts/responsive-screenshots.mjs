@@ -97,25 +97,28 @@ const STORY_TARGETS = [
   { id: 'primitives-skeleton--listing-card',   label: 'Skeleton/ListingCard' },
   // System — huge desktop & responsive grid
   // Task 665 R13.1/R13.2: ListingGrid.stories.tsx was deleted (fake-card cleanup); the 4-column
-  // responsive-grid proof re-points at the surviving System/FeaturedListings/Default story (the
-  // only export — no --desktop/--mobile/etc IDs exist for it), preserving equivalent
-  // viewport/locale coverage incl. the uk stress cell and huge-2560.
-  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Desktop',  viewports: ['desktop-1280', 'desktop-1440'] },
-  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/HugeDesktop', viewports: ['huge-2560'] },
-  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Mobile',   viewports: ['mobile-320', 'mobile-375'] },
-  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Ukrainian', locales: ['uk'] },
+  // responsive-grid proof re-pointed at the deleted FeaturedListings story's Default export. Task
+  // 827 (2026-09-17, owner rejection, kickoff §18) deleted that story file — retargeted here at
+  // its canonical replacement, `Patterns/Mantine/HomepageListingGrids` `Default` (§18.3),
+  // preserving the same viewport/locale coverage incl. the uk stress cell and huge-2560.
+  { id: 'patterns-mantine-homepagelistinggrids--default',    label: 'FeaturedListings/Desktop',  viewports: ['desktop-1280', 'desktop-1440'] },
+  { id: 'patterns-mantine-homepagelistinggrids--default',    label: 'FeaturedListings/HugeDesktop', viewports: ['huge-2560'] },
+  { id: 'patterns-mantine-homepagelistinggrids--default',    label: 'FeaturedListings/Mobile',   viewports: ['mobile-320', 'mobile-375'] },
+  { id: 'patterns-mantine-homepagelistinggrids--default',    label: 'FeaturedListings/Ukrainian', locales: ['uk'] },
   { id: 'system-containers--container-wide',   label: 'Containers/Wide',      viewports: ['desktop-1280', 'huge-2560'] },
   { id: 'system-containers--all-containers',   label: 'Containers/All',       viewports: ['desktop-1280'] },
   { id: 'system-emptystate--no-listings',      label: 'EmptyState/NoListings' },
   { id: 'system-emptystate--mobile-empty-state', label: 'EmptyState/Mobile',  viewports: ['mobile-375'] },
   { id: 'system-emptystate--ukrainian-locale', label: 'EmptyState/Ukrainian', locales: ['uk'] },
   { id: 'system-adminlayout--admin-toolbar',   label: 'Admin/Toolbar',        viewports: ['desktop-1280'] },
-  // Recently-viewed section — Task 165 responsive evidence (7 required breakpoints)
+  // Recently-viewed section — Task 165 responsive evidence (7 required breakpoints). Task 827
+  // (2026-09-17, owner rejection §18) deleted the RecentlyViewedSection story — retargeted at its
+  // canonical replacement, `Mantine/Primitives/RecentlyViewedGridView` (§18.3).
   // Note: mobile-390 is in FULL_MATRIX only; run `screenshots:responsive -- --full` to capture all 7.
-  { id: 'system-recentlyviewedsection--populated',   label: 'RecentlyViewedSection/Populated',   viewports: ['mobile-320', 'mobile-375', 'mobile-390', 'tablet-768', 'desktop-1280', 'desktop-1440', 'huge-2560'] },
-  { id: 'system-recentlyviewedsection--mobile-scroll', label: 'RecentlyViewedSection/MobileScroll', viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
-  { id: 'system-recentlyviewedsection--empty-state', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
-  { id: 'system-recentlyviewedsection--ukrainian-locale', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
+  { id: 'mantine-primitives-recentlyviewedgridview--populated',   label: 'RecentlyViewedSection/Populated',   viewports: ['mobile-320', 'mobile-375', 'mobile-390', 'tablet-768', 'desktop-1280', 'desktop-1440', 'huge-2560'] },
+  { id: 'mantine-primitives-recentlyviewedgridview--populated', label: 'RecentlyViewedSection/MobileScroll', viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  { id: 'mantine-primitives-recentlyviewedgridview--empty', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
+  { id: 'mantine-primitives-recentlyviewedgridview--populated', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
   // Task 427 rework AC R4 — targeted rendered proof for the 2 density-changed surfaces
   { id: 'admin-adminlistingstable--preview-dialog-sold-status-actions', label: 'AdminListingsTable/PreviewDialogSoldStatusActions', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
   { id: 'listings-listingformshellview--staff-status-control-open', label: 'ListingFormShellView/StaffStatusControlOpen', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
@@ -160,7 +163,7 @@ async function runCheck() {
 
   // 3. Stories present?
   const storiesExist = existsSync(join(ROOT, 'src', 'components', 'ui', 'button.stories.tsx'))
-    && existsSync(join(ROOT, 'src', 'stories', 'FeaturedListings.stories.tsx'));
+    && existsSync(join(ROOT, 'src', 'stories', 'patterns', 'mantine', 'HomepageListingGrids.stories.tsx'));
   if (storiesExist) {
     console.log('✅ story files present');
   } else {

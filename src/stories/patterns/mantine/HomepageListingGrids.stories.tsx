@@ -3,10 +3,12 @@
 /**
  * Canonical Mantine migration-scope story (Task 668) — statically imports the real production
  * `FeaturedListingsView` and `LatestListingsView` DIRECTLY (not the `stories` barrel or any
- * `System/*` re-export) so `check-story-coverage.mjs` resolves both import specifiers to the
- * concrete files registered in `scripts/mantine-migration-scope.json` (kickoff §3.7). The
- * existing `System/FeaturedListings` / `System/LatestListings` stories are unaffected — this is
- * an ADDITIVE enrolment route, not a replacement.
+ * System-prefixed re-export) so `check-story-coverage.mjs` resolves both import specifiers to the
+ * concrete files registered in `scripts/mantine-migration-scope.json` (kickoff §3.7). The four
+ * legacy System-prefixed listing story files (Featured, Latest, Similar, RecentlyViewedSection
+ * titles) were deleted by Task 827 (2026-09-17, owner rejection, kickoff §18) — every state they
+ * proved now lives on this story and on `Mantine/Primitives/SimilarListingsView` /
+ * `Mantine/Primitives/RecentlyViewedGridView` (§18.3).
  */
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
@@ -156,6 +158,45 @@ export const Loading: Story = {
           'Both rails (D74-4) in their loading branch — 3 Featured / 4 Latest skeletons, rendered ' +
           'by the Views\' own loading branches (byte-identical to production). A deliberate, ' +
           'permanent skeleton state — allowlisted in `LOADER_ALLOWLIST`, not a real defect.',
+      },
+    },
+  },
+}
+
+export const Empty: Story = {
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
+        <Stack gap="xl">
+          <FeaturedListingsView
+            listings={[]}
+            loading={false}
+            rates={FIXTURE_RATES}
+            displayCurrency="EUR"
+            favoriteIds={new Set()}
+            locale={locale}
+          />
+          <LatestListingsView
+            listings={[]}
+            loading={false}
+            rates={FIXTURE_RATES}
+            displayCurrency="EUR"
+            favoriteIds={new Set()}
+          />
+        </Stack>
+      </Box>
+    )
+  },
+
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Both sections empty — zero premium/latest listings resolved; rendered by each View\'s ' +
+          'own empty branch (Task 827, kickoff §18.3 — the canonical proof for the deleted ' +
+          'Featured/Latest listing sections\' `Empty` exports, which had no other canonical ' +
+          'Mantine story).',
       },
     },
   },

@@ -1,0 +1,97 @@
+diff --git a/src/stories/FeaturedListings.stories.tsx b/src/stories/FeaturedListings.stories.tsx
+index c4782e43e..2d75ae677 100644
+--- a/src/stories/FeaturedListings.stories.tsx
++++ b/src/stories/FeaturedListings.stories.tsx
+@@ -16,6 +16,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+ import { FeaturedListingsView } from '@/modules/listings/components/FeaturedListingsView'
+ import { AuthContext } from '@/modules/auth/context/AuthContext'
+ import { makeCardListingFixtures } from './fixtures/cardListingData.fixture'
++import { MantineStoryShell } from './mantine/_MantineStoryShell'
+ import type { ExchangeRates } from '@/lib/getExchangeRate'
+ import type { User } from '@/types/database'
+ 
+@@ -23,9 +24,11 @@ const meta: Meta = {
+   title: 'System/FeaturedListings',
+   tags: ['autodocs'],
+   parameters: {
++    skipCanvas: true,
++    layout: 'fullscreen',
+     docs: {
+       description: {
+-        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid, migrated to Mantine (Task 668): `<SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="md">`. Statically imports the real production `FeaturedListingsView`; `Default` renders the signed-in favorited state via a fixed `AuthContext.Provider` fixture (Task 665).',
++        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid, migrated to Mantine (Task 668): `<SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="md">`. Statically imports the real production `FeaturedListingsView`; `Default` renders the signed-in favorited state via a fixed `AuthContext.Provider` fixture (Task 665). Rendered inside the canonical Mantine story shell (Task 827) — zero Tailwind, no double gutter.',
+       },
+     },
+   },
+@@ -81,7 +84,7 @@ export const Default: Story = {
+     const listings = makeCardListingFixtures(locale)
+     const favoriteIds = new Set([listings[0]!.id])
+     return (
+-      <div className="container-wide mx-auto px-4 py-8">
++      <MantineStoryShell>
+         <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+           <FeaturedListingsView
+             listings={listings}
+@@ -92,7 +95,7 @@ export const Default: Story = {
+             locale={locale}
+           />
+         </AuthContext.Provider>
+-      </div>
++      </MantineStoryShell>
+     )
+   },
+ 
+@@ -114,7 +117,7 @@ export const LocaleStress: Story = {
+     const listings = makeCardListingFixtures(locale).slice(0, 4)
+     const favoriteIds = new Set([listings[0]!.id])
+     return (
+-      <div className="container-wide mx-auto px-4 py-8">
++      <MantineStoryShell>
+         <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+           <FeaturedListingsView
+             listings={listings}
+@@ -125,7 +128,7 @@ export const LocaleStress: Story = {
+             locale={locale}
+           />
+         </AuthContext.Provider>
+-      </div>
++      </MantineStoryShell>
+     )
+   },
+ 
+@@ -145,7 +148,7 @@ export const Loading: Story = {
+   render: (_, context) => {
+     const locale = (context?.globals?.locale as string) ?? 'en'
+     return (
+-      <div className="container-wide mx-auto px-4 py-8">
++      <MantineStoryShell>
+         <FeaturedListingsView
+           listings={[]}
+           loading
+@@ -154,7 +157,7 @@ export const Loading: Story = {
+           favoriteIds={new Set()}
+           locale={locale}
+         />
+-      </div>
++      </MantineStoryShell>
+     )
+   },
+ 
+@@ -167,7 +170,7 @@ export const Empty: Story = {
+   render: (_, context) => {
+     const locale = (context?.globals?.locale as string) ?? 'en'
+     return (
+-      <div className="container-wide mx-auto px-4 py-8">
++      <MantineStoryShell>
+         <FeaturedListingsView
+           listings={[]}
+           loading={false}
+@@ -176,7 +179,7 @@ export const Empty: Story = {
+           favoriteIds={new Set()}
+           locale={locale}
+         />
+-      </div>
++      </MantineStoryShell>
+     )
+   },
+ 

@@ -1,0 +1,26 @@
+ M docs/component-coverage-matrix.md
+ M docs/governance-enforcement.md
+ M docs/maintenance-playbook.md
+ M docs/mantine-responsive-design-system.md
+ M docs/responsive-screenshot-governance.md
+ M docs/responsive-screenshot-matrix.md
+ M docs/responsive-storybook-inventory.md
+ M docs/storybook-governance.md
+ M scripts/__tests__/check-design-tokens.test.ts
+ M scripts/__tests__/rendered-run-mode.test.ts
+ M scripts/check-card-track-monotonicity.mjs
+ M scripts/check-design-tokens.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/governance/component-catalog.mjs
+ M scripts/governance/tailwind-entropy.allowlist.json
+ M scripts/lib/rendered-run-mode.mjs
+ M scripts/responsive-screenshots.mjs
+ M scripts/story-realmode-allowlist.json
+ D src/stories/FeaturedListings.stories.tsx
+ D src/stories/LatestListings.stories.tsx
+ D src/stories/RecentlyViewedSection.stories.tsx
+ D src/stories/SimilarListings.stories.tsx
+ M src/stories/fixtures/cardListingData.fixture.ts
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+?? docs/sessions/2026-09-17-task827-system-listing-stories-mantine-shell-gate-coverage.md
+?? docs/sessions/evidence/task827/

@@ -130,10 +130,12 @@ function analyzeFile(absPath, rel) {
   const SCREENSHOT_TARGETS = new Set([
     'button', 'input', 'tabs', 'dialog', 'sheet', 'badge', 'skeleton',
     // Task 665 R13.3: ListingGrid.stories.tsx was deleted (fake-card cleanup); the responsive
-    // grid screenshot target re-points at the story filename token for the surviving
-    // System/FeaturedListings story (the token this generator derives from a story's filename,
-    // not the extracted FeaturedListingsView presentational component).
-    'FeaturedListings', 'Containers', 'EmptyState', 'AdminLayout', 'checkbox',
+    // grid screenshot target re-pointed at the story filename token for the deleted FeaturedListings
+    // story. Task 827 (2026-09-17, owner rejection, kickoff §18) deleted that story file — the
+    // token now names its canonical replacement's story filename, HomepageListingGrids
+    // (`src/stories/patterns/mantine/HomepageListingGrids.stories.tsx`), the token this generator
+    // derives from a story's filename, not a production component's.
+    'HomepageListingGrids', 'Containers', 'EmptyState', 'AdminLayout', 'checkbox',
   ]);
   const inScreenshotMatrix = SCREENSHOT_TARGETS.has(name);
 
@@ -443,7 +445,7 @@ function generateCatalogSummary(entries, storyFiles, stamp) {
   matrixLines.push('| `primitives-sheet--*` | mobile-375, tablet-768 | all 4 locales |');
   matrixLines.push('| `primitives-badge--*` | desktop-1280 | all 4 locales |');
   matrixLines.push('| `primitives-skeleton--*` | desktop-1280 | all 4 locales |');
-  matrixLines.push('| `system-featuredlistings--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
+  matrixLines.push('| `patterns-mantine-homepagelistinggrids--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-containers--*` | desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-emptystate--*` | mobile-375, desktop-1280 | all 4 locales |');
   matrixLines.push('| `system-adminlayout--*` | desktop-1280 | all 4 locales |');

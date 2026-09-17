@@ -1,0 +1,42 @@
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g5
+  @1536: t0=g5
+  @1920: t0=g6
+  @2560: t0=g8
+patterns-mantine-listingsshellview--default: PASS
+  @320: t0=g1
+  @479: t0=g1
+  @480: t0=g1
+  @639: t0=g2
+  @640: t0=g2
+  @767: t0=g2
+  @768: t0=g2
+  @1023: t0=g3
+  @1024: t0=g3
+  @1279: t0=g4
+  @1280: t0=g4
+  @1439: t0=g4
+  @1440: t0=g4
+  @1535: t0=g4
+  @1536: t0=g4
+  @1920: t0=g6
+  @2560: t0=g8
+
+cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint; a Story whose track mounts only after its Storybook render reaches finished.
+✅ Tree fully restored — 0 drops after all plants.
+
+EXIT_CODE=0
+
+[exited with code 0]

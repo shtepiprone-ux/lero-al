@@ -1,0 +1,172 @@
+diff --git a/scripts/check-design-tokens.mjs b/scripts/check-design-tokens.mjs
+index 7d7074fb3..a7319663c 100644
+--- a/scripts/check-design-tokens.mjs
++++ b/scripts/check-design-tokens.mjs
+@@ -96,6 +96,7 @@
+ import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from 'node:fs';
+ import { resolve, join, dirname, relative } from 'node:path';
+ import { fileURLToPath } from 'node:url';
++import { isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+ 
+ const __dirname = dirname(fileURLToPath(import.meta.url));
+ const ROOT = resolve(__dirname, '..');
+@@ -126,6 +127,107 @@ const CANONICAL_MANTINE_STORY_PATH = /^src\/stories\/(?:mantine|patterns\/mantin
+ // regardless of manifest membership.
+ const MANTINE_DESIGN_SYSTEM_ROOT = 'src/design-system/mantine/';
+ 
++// Task 827, F1 (review 1) — the previous version returned the FIRST `title:` string literal
++// anywhere in the file. That premise ("every story declares exactly one meta.title") is false: 6
++// of 148 story files have a fixture object with its own `title:` field BEFORE `meta` (e.g. a
++// listing/notification fixture), which a fail-open reading would misattribute as the story's own
++// title. Read the title only from the default-exported `meta` object's own TOP LEVEL.
++
++function escapeRegExp(s) {
++  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++}
++
++// Scans forward from `openIndex` (which must point at a `{`) and returns the index of its
++// matching `}`, skipping brace characters that appear inside string/template literals. Returns -1
++// if the content ends before the brace balances (malformed/truncated input).
++function findMatchingBraceIndex(content, openIndex) {
++  let depth = 0;
++  let inString = null;
++  for (let i = openIndex; i < content.length; i++) {
++    const ch = content[i];
++    if (inString) {
++      if (ch === '\\') { i++; continue; }
++      if (ch === inString) inString = null;
++      continue;
++    }
++    if (ch === "'" || ch === '"' || ch === '`') { inString = ch; continue; }
++    if (ch === '{') depth++;
++    else if (ch === '}') {
++      depth--;
++      if (depth === 0) return i;
++    }
++  }
++  return -1;
++}
++
++// `objectContent` is a balanced `{...}` object-literal source slice. Returns the string value of
++// a `title:` key at the object's own top level (depth 1), or null if absent. A `title:` nested
++// inside a property value (e.g. `parameters.docs.title`) is at depth ≥2 and is never matched.
++function readTopLevelTitle(objectContent) {
++  let depth = 0;
++  let inString = null;
++  for (let i = 0; i < objectContent.length; i++) {
++    const ch = objectContent[i];
++    if (inString) {
++      if (ch === '\\') { i++; continue; }
++      if (ch === inString) inString = null;
++      continue;
++    }
++    if (ch === "'" || ch === '"' || ch === '`') { inString = ch; continue; }
++    if (ch === '{') { depth++; continue; }
++    if (ch === '}') { depth--; continue; }
++    if (depth === 1 && objectContent.startsWith('title', i)) {
++      const before = i === 0 ? '' : objectContent[i - 1];
++      if (/[A-Za-z0-9_$]/.test(before)) continue;
++      const rest = objectContent.slice(i + 'title'.length);
++      const m = rest.match(/^\s*:\s*(['"])((?:(?!\1).)*)\1/);
++      if (m) return m[2];
++    }
++  }
++  return null;
++}
++
++// Locates the default-exported `meta` object and reads its top-level `title:` value, statically
++// (no import/execution). Supports the two forms observed in this repo: a named
++// `const <name>(: Type…)? = {…}` object whose identifier is the target of a later
++// `export default <name>`, and an inline `export default {…}` (optionally `satisfies`/`as`
++// suffixed — only the object's own opening `{` matters, so a trailing type suffix after the
++// matching `}` never affects extraction). Returns null when no default-exported object or its
++// top-level `title:` literal can be located — the caller treats that as non-canonical by title,
++// and the path rule still applies.
++function readStaticStoryTitle(content) {
++  const namedExportMatch = content.match(/export\s+default\s+([A-Za-z_$][\w$]*)\s*;?/);
++  if (namedExportMatch) {
++    const name = namedExportMatch[1];
++    const constRe = new RegExp(`\\bconst\\s+${escapeRegExp(name)}\\b[^=]*=\\s*\\{`);
++    const constMatch = constRe.exec(content);
++    if (!constMatch) return null;
++    const openIndex = constMatch.index + constMatch[0].length - 1;
++    const closeIndex = findMatchingBraceIndex(content, openIndex);
++    if (closeIndex === -1) return null;
++    return readTopLevelTitle(content.slice(openIndex, closeIndex + 1));
++  }
++  const inlineExportMatch = content.match(/export\s+default\s*\{/);
++  if (inlineExportMatch) {
++    const openIndex = inlineExportMatch.index + inlineExportMatch[0].length - 1;
++    const closeIndex = findMatchingBraceIndex(content, openIndex);
++    if (closeIndex === -1) return null;
++    return readTopLevelTitle(content.slice(openIndex, closeIndex + 1));
++  }
++  return null;
++}
++
++// Task 827, R5 — canonical-story membership for the Tailwind-dimension-utility rule becomes the
++// path rule (CANONICAL_MANTINE_STORY_PATH, unchanged) OR a `.stories.tsx` whose statically-read
++// `meta.title` satisfies `isCanonicalMantineTitle` (imported from mantine-story-scope.mjs, never
++// re-implemented). A title that cannot be read statically is non-canonical by title and still
++// subject to the path rule.
++export function isCanonicalMantineStoryFile(relPath, content) {
++  if (CANONICAL_MANTINE_STORY_PATH.test(relPath)) return true;
++  const title = readStaticStoryTitle(content);
++  return title != null && isCanonicalMantineTitle(title);
++}
++
+ // ── --scope=mantine membership (Task 784, R1) ─────────────────────────────────
+ //
+ // Reads scripts/mantine-migration-scope.json (the SAME manifest the rest of the project already
+@@ -1201,7 +1303,7 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
+ }
+ 
+ export function scanCanonicalMantineStoryContent(content, relPath, allowlist = {}, globalsDefinedProps = new Set()) {
+-  if (!CANONICAL_MANTINE_STORY_PATH.test(relPath)) return [];
++  if (!isCanonicalMantineStoryFile(relPath, content)) return [];
+   return scanContent(content, relPath, allowlist, globalsDefinedProps, { storyOnly: true });
+ }
+ 
+@@ -1229,13 +1331,21 @@ function run() {
+   const mantineScopeManifest = SCOPE_MANTINE ? loadMantineScopeManifest() : new Set();
+   const collectedFiles = collectFiles(srcDir, ['.tsx', '.ts', '.css']);
+   const allStoryFiles = collectFiles(srcDir, ['.stories.tsx'], true);
+-  // canonicalMantineStoryFiles is already exactly §3.2 union member #3 (the
+-  // CANONICAL_MANTINE_STORY_PATH test below is byte-identical to isMantineScopeFile's own story
+-  // check) — every canonical Mantine story is in scope regardless of --scope=mantine, so this list
+-  // is never additionally filtered.
+-  const canonicalMantineStoryFiles = allStoryFiles.filter((filePath) =>
+-    CANONICAL_MANTINE_STORY_PATH.test(relative(ROOT, filePath).replace(/\\/g, '/'))
+-  );
++  // Task 827, R5 — canonical-story membership for the Tailwind-dimension-utility rule is the path
++  // rule (CANONICAL_MANTINE_STORY_PATH — byte-identical to isMantineScopeFile's own story check,
++  // and still exactly §3.2 union member #3 for --scope=mantine purposes) OR a `.stories.tsx` whose
++  // statically-read `meta.title` is enrolled via `isCanonicalMantineTitle`
++  // (`scripts/lib/mantine-story-scope.mjs`). The title-enrolled arm is additive to this rule only —
++  // it does NOT widen the separate --scope=mantine §3.2 union (isMantineScopeFile, unchanged).
++  // Every canonical Mantine story is in scope regardless of --scope=mantine, so this list is never
++  // additionally filtered.
++  const canonicalMantineStoryFiles = allStoryFiles.filter((filePath) => {
++    const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
++    if (CANONICAL_MANTINE_STORY_PATH.test(relPath)) return true;
++    let content;
++    try { content = readFileSync(filePath, 'utf8'); } catch { return false; }
++    return isCanonicalMantineStoryFile(relPath, content);
++  });
+   // filterFilesForScope's predicate expects relPath strings; collectedFiles holds absolute paths
+   // keyed 1:1 to their own relPath, so filter the relPath projection and re-derive the absolute
+   // list from the surviving relPaths (both sides use the identical relative()/replace() call, so
+@@ -1247,11 +1357,11 @@ function run() {
+   if (SCOPE_MANTINE) {
+     console.log(`🔍  check:design-tokens --scope=mantine — scanning ${allFiles.length} of ${collectedFiles.length} production src/**/*.{tsx,ts,css} files`);
+     console.log(`    (§3.2 union: scripts/mantine-migration-scope.json ∪ src/design-system/mantine/** ∪ canonical Mantine stories)`);
+-    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
++    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)`);
+     console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
+   } else {
+     console.log(`🔍  check:design-tokens — scanning ${allFiles.length} production src/**/*.{tsx,ts,css} files`);
+-    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities`);
++    console.log(`    + ${canonicalMantineStoryFiles.length} canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)`);
+     console.log(`    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)`);
+   }
+   console.log('');

@@ -1,0 +1,25 @@
+ docs/component-coverage-matrix.md                  |   2 +-
+ docs/governance-enforcement.md                     |   2 +-
+ docs/maintenance-playbook.md                       |   2 +-
+ docs/mantine-responsive-design-system.md           |   6 +-
+ docs/responsive-screenshot-governance.md           |   2 +-
+ docs/responsive-screenshot-matrix.md               |  14 +-
+ docs/responsive-storybook-inventory.md             |  15 +-
+ docs/storybook-governance.md                       |   9 +-
+ scripts/__tests__/check-design-tokens.test.ts      |  97 +++++++++++
+ scripts/__tests__/rendered-run-mode.test.ts        |  10 +-
+ scripts/check-card-track-monotonicity.mjs          | 130 ++++++++++----
+ scripts/check-design-tokens.mjs                    | 130 ++++++++++++--
+ scripts/check-stories-rendered.mjs                 |  16 +-
+ scripts/governance/component-catalog.mjs           |  12 +-
+ scripts/governance/tailwind-entropy.allowlist.json |  10 --
+ scripts/lib/rendered-run-mode.mjs                  |   5 +-
+ scripts/responsive-screenshots.mjs                 |  29 ++--
+ scripts/story-realmode-allowlist.json              |   1 -
+ src/stories/FeaturedListings.stories.tsx           | 186 ---------------------
+ src/stories/LatestListings.stories.tsx             | 176 -------------------
+ src/stories/RecentlyViewedSection.stories.tsx      | 143 ----------------
+ src/stories/SimilarListings.stories.tsx            |  90 ----------
+ src/stories/fixtures/cardListingData.fixture.ts    |   8 +-
+ .../mantine/HomepageListingGrids.stories.tsx       |  49 +++++-
+ 24 files changed, 427 insertions(+), 717 deletions(-)

@@ -576,7 +576,7 @@ npm run build-storybook
 npm run screenshots:responsive -- --full
 ```
 Then manually review:
-- `system-featuredlistings--default__*__huge-2560.png` — must show 4 columns
+- `patterns-mantine-homepagelistinggrids--default__*__huge-2560.png` — must show 4 columns
 - `system-containers--container-wide__*__huge-2560.png` — must not stretch full width
 
 ### Violations

@@ -1,0 +1,15 @@
+ M docs/backlog-reserved.md
+ M docs/backlog.md
+ M scripts/__tests__/check-design-tokens.test.ts
+ M scripts/__tests__/mantine-story-scope.test.ts
+ M scripts/check-card-track-monotonicity.mjs
+ M scripts/check-design-tokens.mjs
+ M scripts/lib/mantine-story-scope.mjs
+ M src/stories/FeaturedListings.stories.tsx
+ M src/stories/LatestListings.stories.tsx
+ M src/stories/RecentlyViewedSection.stories.tsx
+ M src/stories/SimilarListings.stories.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+ M tasks/Sprints/Sprint_75_kickoff_prompt_Task_827_System_Listing_Stories_Mantine_Shell_And_Gate_Coverage.md
+?? docs/sessions/2026-09-17-task827-system-listing-stories-mantine-shell-gate-coverage.md
+?? docs/sessions/evidence/task827/

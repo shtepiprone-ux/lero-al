@@ -1,7 +1,9 @@
 /**
- * Stable `CardListingData` fixture for the Task 665 View-split stories
- * (`System/FeaturedListings`, `System/LatestListings`, `System/RecentlyViewedSection`,
- * `System/SimilarListings`). Deterministic data — no random IDs, no live API calls.
+ * Stable `CardListingData` fixture for the Task 665 View-split stories, now consumed by
+ * `Patterns/Mantine/HomepageListingGrids` (FeaturedListingsView/LatestListingsView),
+ * `Mantine/Primitives/SimilarListingsView` and `Mantine/Primitives/RecentlyViewedGridView`
+ * (Task 827, 2026-09-17, owner rejection §18 — the original `System/*` listing story files that
+ * used this fixture were deleted). Deterministic data — no random IDs, no live API calls.
  *
  * Reuses the existing `storybook.listing.grid_0..7` message keys (Task 380 namespace) so no
  * new i18n keys/parity work is required. `location.name_al` is a real Albanian proper noun

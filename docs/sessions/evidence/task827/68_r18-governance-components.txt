@@ -1,0 +1,12 @@
+
+> lero-al@0.1.0 governance:components
+> node scripts/governance/component-catalog.mjs --check
+
+✅ src/components/ui/button.tsx
+✅ src/components/shared/Combobox.tsx
+✅ src/modules/listings/components/ListingCard.tsx
+✅ docs/component-catalog-governance.md
+✅ component-catalog.mjs script present
+
+✅ Component catalog infrastructure ready. Run: npm run catalog:components
+EXIT_CODE=0

@@ -1,0 +1,11 @@
+
+> lero-al@0.1.0 check:card-track-monotonicity
+> node scripts/check-card-track-monotonicity.mjs
+
+check-card-track-monotonicity.mjs — asserting the real tree
+
+Selector extraction failed: expected exactly 1 asset matching /^MantineListingCardTrack-.*\.css$/ in C:\Claude_Code_Projects\lero-al\storybook-static\assets, found 0: []
+scope: not discovered — selector extraction failed
+
+cannot see: a breakpoint not in the width list; locales other than en; a track rendered only after interaction; a drop that recovers between two sampled widths not at a declared breakpoint; a Story whose track mounts only after its Storybook render reaches finished.
+EXIT_CODE=1

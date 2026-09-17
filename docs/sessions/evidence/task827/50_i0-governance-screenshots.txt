@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 governance:screenshots
+> node scripts/responsive-screenshots.mjs --check
+
+✅ playwright package installed
+✅ .storybook/main.ts present
+✅ story files present
+✅ .screenshots/ is gitignored
+✅ Chromium browser available
+
+✅ Screenshot infrastructure ready.
+   Run: npm run screenshots:responsive
+   (requires: npx playwright install chromium)
+EXIT_CODE=0

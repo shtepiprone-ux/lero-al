@@ -1,0 +1,42 @@
+
+> lero-al@0.1.0 check:design-tokens:strict
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 460 production src/**/*.{tsx,ts,css} files
+    + 103 canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── OTHER  (14 findings) ──
+  src/stories/FeaturedListings.stories.tsx  (4)
+    :84  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :117  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :148  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :170  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+  src/stories/LatestListings.stories.tsx  (4)
+    :84  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :116  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :144  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :162  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+  src/stories/RecentlyViewedSection.stories.tsx  (4)
+    :50  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :78  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="py-4 px-4""
+    :103  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :122  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+  src/stories/SimilarListings.stories.tsx  (2)
+    :41  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+    :69  [tailwind-dimension-utility:Tailwind dimension utility in canonical Mantine story]  "className="container-wide mx-auto px-4 py-8""
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 14 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    tailwind-dimension-utility 14
+
+❌  check:design-tokens STRICT — 14 raw style-value violation(s) + 0 stale-marker(s) found.
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+EXIT_CODE=1

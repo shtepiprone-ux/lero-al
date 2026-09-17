@@ -18,9 +18,8 @@
 /** @type {Record<string, string>} */
 export const PHASE_LABELS = {
   'phase1-assert-stories':
-    'Phase 1 (ASSERT_STORIES — including the 4 `.listing-card` anchor rows: ' +
-    'system-featuredlistings--default, system-latestlistings--default, ' +
-    'system-similarlistings--default, patterns-mantine-homepagelistinggrids--default)',
+    'Phase 1 (ASSERT_STORIES — including the `.listing-card` anchor row: ' +
+    'patterns-mantine-homepagelistinggrids--default)',
   'phase2-geometry-only': 'Phase 2 (geometry-only sweep)',
 };
 

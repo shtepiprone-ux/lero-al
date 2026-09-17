@@ -304,16 +304,6 @@
       "why_safe": "Numeric count badge. Not translated text. Canonical badge size."
     },
     {
-      "rule": "arbitrary-font-size",
-      "file": "src/stories/RecentlyViewedSection.stories.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Storybook story fixture: Premium badge in recently viewed listing card. Stories mirror production ListingCard badge pattern; text-[10px] is canonical for badges.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Story file only. Mirrors ListingCard premium badge pattern (already allowlisted in ListingCard.tsx)."
-    },
-    {
       "rule": "nowrap-unsafe",
       "file": "src/components/admin/AdminReportsManager.tsx",
       "pattern": "whitespace-nowrap",

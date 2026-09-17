@@ -66,14 +66,12 @@ are struck below.)
 
 #### Layout (0 story files — was 4; all deleted, Task 788, 2026-09-05, zero production consumers)
 
-#### System (5 story files)
+#### System (3 story files — `FeaturedListings`/`RecentlyViewedSection` deleted, Task 827, 2026-09-17, owner rejection §18; their canonical replacements are listed under Mantine/Patterns, not here)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
 | `src/stories/AdminLayout.stories.tsx` | ✅ `system-adminlayout--admin-toolbar` | Product-rendering story |
 | `src/stories/Containers.stories.tsx` | ✅ `system-containers--container-wide` | Product-rendering story |
 | `src/stories/EmptyState.stories.tsx` | ✅ `system-emptystate--no-listings` | Product-rendering story |
-| `src/stories/FeaturedListings.stories.tsx` | ✅ `system-featuredlistings--default` | Product-rendering story |
-| `src/stories/RecentlyViewedSection.stories.tsx` | ✅ `system-recentlyviewedsection--populated` | Product-rendering story |
 
 #### Non-story files in src/stories/ (helper/fixture — NOT story files)
 | File | Classification |
@@ -156,8 +154,8 @@ Legend for "Needs fix?":
 | `AdminLayout.stories.tsx` | `system-adminlayout--admin-toolbar` | System | AdminLayout (admin shell demo: sidebar + main area + toolbar) | sq/en/uk/it | HIGH | OPEN DECISION | Shell demo; action buttons in toolbar NOT machine-checked for full-width. Manual QA: toolbar at mobile. §9, §26.1 |
 | `Containers.stories.tsx` | `system-containers--container-wide` + multi | System | Containers (container-wide, container-admin, content-container) | sq/en/uk/it | HIGH | NO | Container max-width at 1408/1792px. Machine PASS. Wide-desktop visual QA: no stretch at 2560. §4 |
 | `EmptyState.stories.tsx` | `system-emptystate--no-listings` + multi | System | EmptyState (no listings, Ukrainian locale stress, mobile) | sq/en/uk/it | MEDIUM | NO | CTA button full-width — Task 372 fixed. Machine PASS. §6, §12b |
-| `FeaturedListings.stories.tsx` | `system-featuredlistings--default` (single export) | System | FeaturedListings (card grid: 1→2→3→4 columns, uk titles, huge desktop) | sq/en/uk/it | HIGH | YES — Task 665 R14 | Task 665: replaces the deleted `ListingGrid.stories.tsx` as the 4-column responsive-grid proof (statically imports the real `FeaturedListingsView`, no fake card). 4-column at 2xl. §13 |
-| `RecentlyViewedSection.stories.tsx` | `system-recentlyviewedsection--populated` | System | RecentlyViewedSection (horizontal-scroll listing card section) | sq/en/uk/it | MEDIUM | NO | Task 409 fixed pricing/dates. Horizontal scroll intentional (section-level). Machine PASS. §13 |
+| ~~`FeaturedListings.stories.tsx`~~ | ~~`system-featuredlistings--default`~~ | System | **DELETED (Task 827, 2026-09-17, owner rejection §18) — canonical: `patterns-mantine-homepagelistinggrids--default`** | — | — | — | — |
+| ~~`RecentlyViewedSection.stories.tsx`~~ | ~~`system-recentlyviewedsection--populated`~~ | System | **DELETED (Task 827, 2026-09-17, owner rejection §18) — canonical: `mantine-primitives-recentlyviewedgridview--populated`** | — | — | — | — |
 
 ---
 
@@ -347,7 +345,6 @@ primitives-sheet--filter-sheet-right       primitives-skeleton--listing-card-ske
 primitives-tabs--default                   shared-combobox--button-variant
 system-adminlayout--admin-toolbar          system-containers--container-wide
 system-emptystate--no-listings             system-listinggrid--desktop
-system-recentlyviewedsection--populated
 ```
 
 ### Non-ASSERT generated IDs (160) — by category
@@ -450,7 +447,7 @@ shared-combobox--input-variant             shared-combobox--long-label-locale-st
 shared-combobox--no-selection
 ```
 
-**System — variant exports (16):**
+**System — variant exports (12 — 4 RecentlyViewedSection-related variants removed, Task 827, 2026-09-17, owner rejection §18; the story file was deleted):**
 ```
 system-adminlayout--admin-cards            system-adminlayout--admin-loading-state
 system-adminlayout--admin-table-wrapper    system-containers--admin-container
@@ -459,9 +456,7 @@ system-emptystate--locale-stress           system-emptystate--mobile-empty-state
 system-emptystate--no-favorites            system-emptystate--no-search-results
 system-listinggrid--currency-usd           system-listinggrid--huge-desktop
 system-listinggrid--locale-stress          system-listinggrid--mobile
-system-listinggrid--old-price-wrap         system-recentlyviewedsection--empty-state
-system-recentlyviewedsection--huge-desktop system-recentlyviewedsection--locale-stress
-system-recentlyviewedsection--mobile-scroll
+system-listinggrid--old-price-wrap
 ```
 
 ### Confirmation

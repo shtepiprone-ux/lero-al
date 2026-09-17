@@ -1,0 +1,56 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts (154 tests | 2 failed) 42ms
+     × (d) an enrolled meta.title is found even when a fixture title: literal precedes it 6ms
+     × (e) a non-enrolled meta.title is NOT flagged even when a fixture title: literal for an enrolled title precedes it (fails closed both ways) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > canonical Mantine stories — title-enrolled membership (Task 827, R5/R6) > (d) an enrolled meta.title is found even when a fixture title: literal precedes it
+AssertionError: expected [] to deeply equal [ 'className="px-4"' ]
+
+- Expected
++ Received
+
+- [
+-   "className=\"px-4\"",
+- ]
++ []
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:1130:40
+    1128|       {},
+    1129|     )
+    1130|     expect(findings.map(f => f.match)).toEqual(['className="px-4"'])
+       |                                        ^
+    1131|     expect(findings.every(f => f.cat === 'tailwind-dimension-utility')…
+    1132|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > canonical Mantine stories — title-enrolled membership (Task 827, R5/R6) > (e) a non-enrolled meta.title is NOT flagged even when a fixture title: literal for an enrolled title precedes it (fails closed both ways)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:1145:8
+    1143|       'src/stories/__fixture-preceding-enrolled-title__.stories.tsx',
+    1144|       {},
+    1145|     )).toHaveLength(0)
+       |        ^
+    1146|   })
+    1147|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 152 passed (154)
+   Start at  17:25:23
+   Duration  488ms (transform 87ms, setup 109ms, import 86ms, tests 42ms, environment 0ms)
+
+EXIT_CODE=1

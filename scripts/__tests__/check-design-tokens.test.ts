@@ -1068,6 +1068,103 @@ describe('canonical Mantine stories — Tailwind dimension utilities', () => {
   })
 })
 
+describe('canonical Mantine stories — title-enrolled membership (Task 827, R5/R6)', () => {
+  // R5: canonical-story membership for the tailwind-dimension-utility rule is the path rule
+  // (CANONICAL_MANTINE_STORY_PATH) OR a statically-read `meta.title` enrolled via
+  // isCanonicalMantineTitle (scripts/lib/mantine-story-scope.mjs). None of these 3 fixtures live
+  // under src/stories/mantine/ or src/stories/patterns/mantine/, so the path rule alone would miss
+  // arms (a) and (c) — only the title arm brings them into scope.
+  const enrolledTitleContent = `
+const meta = { title: 'Admin/AdminUsersTable' }
+export default meta
+export const Default = () => <Icon className="px-4" />
+`
+  const nonEnrolledTitleContent = `
+const meta = { title: 'System/Containers' }
+export default meta
+export const Default = () => <Icon className="px-4" />
+`
+
+  it('(a) flags a title-enrolled story outside the canonical path (enrolled title, className="px-4")', () => {
+    const findings = scanCanonicalMantineStoryContent(
+      enrolledTitleContent,
+      'src/stories/__fixture-enrolled-title__.stories.tsx',
+      {},
+    )
+    expect(findings.map(f => f.match)).toEqual(['className="px-4"'])
+    expect(findings.every(f => f.cat === 'tailwind-dimension-utility')).toBe(true)
+  })
+
+  it('(b) does not flag the identical content under a non-enrolled System/* title', () => {
+    expect(scanCanonicalMantineStoryContent(
+      nonEnrolledTitleContent,
+      'src/stories/__fixture-nonenrolled-title__.stories.tsx',
+      {},
+    )).toHaveLength(0)
+  })
+
+  it('(c) a path-canonical story stays in scope regardless of its (non-enrolled) title — path rule unchanged', () => {
+    const findings = scanCanonicalMantineStoryContent(
+      nonEnrolledTitleContent,
+      'src/stories/mantine/primitives/__fixture-path-canonical__.stories.tsx',
+      {},
+    )
+    expect(findings.map(f => f.match)).toEqual(['className="px-4"'])
+  })
+
+  // Review 1, F1 — a fixture object with its own `title:` field appearing BEFORE the
+  // default-exported `meta` must never be read as the story's own title. Arms (d)-(f) prove the
+  // title reader locates only the default-exported `meta` object's own top-level `title:`.
+  it('(d) an enrolled meta.title is found even when a fixture title: literal precedes it', () => {
+    const content = `
+const FIXTURE = { title: 'Apartament 2+1' }
+const meta = { title: 'Admin/AdminUsersTable' }
+export default meta
+export const Default = () => <Icon className="px-4" />
+`
+    const findings = scanCanonicalMantineStoryContent(
+      content,
+      'src/stories/__fixture-preceding-title__.stories.tsx',
+      {},
+    )
+    expect(findings.map(f => f.match)).toEqual(['className="px-4"'])
+    expect(findings.every(f => f.cat === 'tailwind-dimension-utility')).toBe(true)
+  })
+
+  it('(e) a non-enrolled meta.title is NOT flagged even when a fixture title: literal for an enrolled title precedes it (fails closed both ways)', () => {
+    const content = `
+const FIXTURE = { title: 'Admin/AdminUsersTable' }
+const meta = { title: 'System/Containers' }
+export default meta
+export const Default = () => <Icon className="px-4" />
+`
+    expect(scanCanonicalMantineStoryContent(
+      content,
+      'src/stories/__fixture-preceding-enrolled-title__.stories.tsx',
+      {},
+    )).toHaveLength(0)
+  })
+
+  it('(f) a title: literal with no locatable default-exported meta object is non-canonical by title, no throw', () => {
+    const content = `
+const x = { title: 'Something' }
+export const Default = () => <Icon className="px-4" />
+`
+    expect(() =>
+      scanCanonicalMantineStoryContent(
+        content,
+        'src/stories/__fixture-no-default-export__.stories.tsx',
+        {},
+      ),
+    ).not.toThrow()
+    expect(scanCanonicalMantineStoryContent(
+      content,
+      'src/stories/__fixture-no-default-export__.stories.tsx',
+      {},
+    )).toHaveLength(0)
+  })
+})
+
 describe('§K — --scope=mantine membership (Task 784, R1/§3.2/§3.3)', () => {
   // The real manifest — the same file the rest of the project already treats as the Mantine
   // migration surface (Task 784 does not hand-maintain a second copy). Read once per-suite.

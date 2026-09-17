@@ -1,0 +1,17 @@
+    "component": "Latest",
+    "locale": "en",
+    "width": 1024,
+    "pass": false,
+    "reasons": [
+      "nested-grid inside Latest track"
+    ]
+  }
+]
+✅ I-G-Nested-Grid: plant correctly tripped its own invariant, no unrelated row affected.
+
+── Post-plant re-check: negative arm again, confirming full restore ──
+✅ Tree fully restored — 0 FAIL after all six plants.
+
+EXIT_CODE=0
+
+[exited with code 0]

@@ -53,7 +53,7 @@ Stories in Phase 5 screenshot target list:
 | `primitives-sheet--*` | mobile-375, tablet-768 | all 4 locales |
 | `primitives-badge--*` | desktop-1280 | all 4 locales |
 | `primitives-skeleton--*` | desktop-1280 | all 4 locales |
-| `system-featuredlistings--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |
+| `patterns-mantine-homepagelistinggrids--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |
 | `system-containers--*` | desktop-1280, huge-2560 | all 4 locales |
 | `system-emptystate--*` | mobile-375, desktop-1280 | all 4 locales |
 | `system-adminlayout--*` | desktop-1280 | all 4 locales |

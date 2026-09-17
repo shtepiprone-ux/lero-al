@@ -1,0 +1,2780 @@
+{
+  "generatedAt": "2026-09-17T13:51:34.335Z",
+  "widths": [
+    1440,
+    1535,
+    1536,
+    1920
+  ],
+  "locale": "en",
+  "storyIds": [
+    "system-featuredlistings--default",
+    "system-featuredlistings--locale-stress",
+    "system-featuredlistings--loading",
+    "system-featuredlistings--empty",
+    "system-latestlistings--default",
+    "system-latestlistings--locale-stress",
+    "system-latestlistings--loading",
+    "system-latestlistings--empty",
+    "system-similarlistings--default",
+    "system-similarlistings--locale-stress",
+    "system-recentlyviewedsection--populated",
+    "system-recentlyviewedsection--mobile-scroll",
+    "system-recentlyviewedsection--empty-state",
+    "system-recentlyviewedsection--locale-stress"
+  ],
+  "results": [
+    {
+      "storyId": "system-featuredlistings--default",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--default",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--default",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--default",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--locale-stress",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--locale-stress",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--locale-stress",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--locale-stress",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--loading",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 featured-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--loading",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 featured-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--loading",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 featured-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--loading",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 featured-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--empty",
+      "width": 1440,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--empty",
+      "width": 1535,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--empty",
+      "width": 1536,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-featuredlistings--empty",
+      "width": 1920,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--default",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--default",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--default",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--default",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--locale-stress",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--locale-stress",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--locale-stress",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--locale-stress",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--loading",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 latest-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--loading",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 latest-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--loading",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 latest-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--loading",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45 latest-listings",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--empty",
+      "width": 1440,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--empty",
+      "width": 1535,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--empty",
+      "width": 1536,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-latestlistings--empty",
+      "width": 1920,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--default",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--default",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--default",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--default",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--locale-stress",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--locale-stress",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--locale-stress",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-similarlistings--locale-stress",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--populated",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--populated",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--populated",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--populated",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--mobile-scroll",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--mobile-scroll",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--mobile-scroll",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--mobile-scroll",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--empty-state",
+      "width": 1440,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--empty-state",
+      "width": 1535,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--empty-state",
+      "width": 1536,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--empty-state",
+      "width": 1920,
+      "source": "view-root",
+      "chain": [
+        {
+          "tagName": "style",
+          "className": "",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--locale-stress",
+      "width": 1440,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--locale-stress",
+      "width": 1535,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--locale-stress",
+      "width": 1536,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    },
+    {
+      "storyId": "system-recentlyviewedsection--locale-stress",
+      "width": 1920,
+      "source": "track",
+      "chain": [
+        {
+          "tagName": "div",
+          "className": "_rail_xgvr5_32",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "_wrapper_xgvr5_45",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "recently-viewed",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_3_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_2_",
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "paddingTop": "24px",
+          "paddingBottom": "24px"
+        },
+        {
+          "tagName": "div",
+          "className": "__m__-_r_1_",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        },
+        {
+          "tagName": "div",
+          "className": "min-h-screen bg-background text-foreground",
+          "paddingLeft": "0px",
+          "paddingRight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px"
+        }
+      ],
+      "containerWideAncestor": null
+    }
+  ]
+}

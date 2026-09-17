@@ -121,10 +121,10 @@ Each cell requires actual rendered inspection (OWNER QA REQUIRED until visually 
 
 | Story ID | Label | Viewport override | Locale override | Priority |
 |---|---|---|---|---|
-| `system-featuredlistings--default` | FeaturedListings/Desktop | desktop-1280, desktop-1440 | all | HIGH |
-| `system-featuredlistings--default` | FeaturedListings/HugeDesktop | huge-2560 | all | **CRITICAL** |
-| `system-featuredlistings--default` | FeaturedListings/Mobile | mobile-320, mobile-375 | all | HIGH |
-| `system-featuredlistings--default` | FeaturedListings/Ukrainian | — | uk only | HIGH |
+| `patterns-mantine-homepagelistinggrids--default` | FeaturedListings/Desktop | desktop-1280, desktop-1440 | all | HIGH |
+| `patterns-mantine-homepagelistinggrids--default` | FeaturedListings/HugeDesktop | huge-2560 | all | **CRITICAL** |
+| `patterns-mantine-homepagelistinggrids--default` | FeaturedListings/Mobile | mobile-320, mobile-375 | all | HIGH |
+| `patterns-mantine-homepagelistinggrids--default` | FeaturedListings/Ukrainian | — | uk only | HIGH |
 | `system-containers--container-wide` | Containers/Wide | desktop-1280, huge-2560 | all | **CRITICAL** |
 | `system-containers--all-containers` | Containers/All | desktop-1280 | all | MEDIUM |
 | `system-emptystate--no-listings` | EmptyState/NoListings | — | all | MEDIUM |
@@ -168,7 +168,7 @@ Story targets with `viewports: ['huge-2560']`:
 
 | Story | What to check |
 |---|---|
-| `system-featuredlistings--default` (FeaturedListings/HugeDesktop) | Must show 4 columns (`2xl:grid-cols-4`) |
+| `patterns-mantine-homepagelistinggrids--default` (FeaturedListings/HugeDesktop) | Must show 4 columns (`2xl:grid-cols-4`) |
 | `system-containers--container-wide` | Content must not stretch full 2560px width |
 | `primitives-button--default` | Buttons must not expand to fill viewport |
 | `primitives-tabs--default` | Tab bar must not stretch unbounded |
@@ -187,7 +187,7 @@ Priority captures for Ukrainian overflow detection:
 | `primitives-sheet--filter-sheet-right` | mobile-375 | Filter label stack |
 | `primitives-dialog--default` | tablet-768 | Dialog heading wrap |
 | `system-emptystate--ukrainian-locale` | mobile-375 | Empty state body wrap |
-| `system-featuredlistings--default` (FeaturedListings/Ukrainian) | desktop-1280 | Card title clipping |
+| `patterns-mantine-homepagelistinggrids--default` (FeaturedListings/Ukrainian) | desktop-1280 | Card title clipping |
 
 ---
 
@@ -200,7 +200,7 @@ Priority captures for Ukrainian overflow detection:
 Examples:
 ```
 primitives-button--mobile-safe__uk__mobile-375.png
-system-featuredlistings--default__en__huge-2560.png
+patterns-mantine-homepagelistinggrids--default__en__huge-2560.png
 system-containers--container-wide__sq__desktop-1280.png
 ```
 

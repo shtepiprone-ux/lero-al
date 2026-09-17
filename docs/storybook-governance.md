@@ -166,7 +166,7 @@ For any story demonstrating containers, grids, or page layouts:
 - Verify listing grids show `2xl:grid-cols-4` (4 columns at 2560px)
 - Verify admin layouts don't stretch full viewport
 
-Reference stories: `System/Containers`, `System/FeaturedListings`
+Reference stories: `System/Containers`, `Patterns/Mantine/HomepageListingGrids`
 
 ---
 
@@ -338,7 +338,6 @@ src/
       listing.fixture.ts     — Stable test data
     EmptyState.stories.tsx
     Containers.stories.tsx
-    FeaturedListings.stories.tsx
     AdminLayout.stories.tsx
 ```
 
@@ -769,9 +768,9 @@ fast local iteration and for the anti-no-op planted-break proofs below — it do
 when the flag is absent.
 
 **An acceptance criterion that depends on Phase 1 anchors cannot be proven by `--mantine-only`** — that flag skips
-Phase 1 for every story, including the 4 `.listing-card` anchor rows (`system-featuredlistings--default`,
-`system-latestlistings--default`, `system-similarlistings--default`, `patterns-mantine-homepagelistinggrids--default`
-— `check-stories-rendered.mjs:173-175,181`). Task 702 AC2 required those anchor rows to be green while its own
+Phase 1 for every story, including the `.listing-card` anchor row (`patterns-mantine-homepagelistinggrids--default`
+— `check-stories-rendered.mjs:173-175,181`; the 3 `System/*` listing-story anchor rows this line once named were
+deleted by Task 827, 2026-09-17, owner rejection, kickoff §18). Task 702 AC2 required those anchor rows to be green while its own
 §13.2 prescribed `--mantine-only`, the one invocation that cannot produce them (filed as Task 742 C3).
 `manifest.json`'s `runMode`/`phasesSkipped` fields and the inventory header (Task 742,
 `scripts/lib/rendered-run-mode.mjs`) now state which phases a given run actually executed — check them before

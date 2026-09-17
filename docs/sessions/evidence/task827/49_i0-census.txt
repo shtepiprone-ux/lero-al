@@ -1,0 +1,75 @@
+docs/backlog-reserved.md:44:*Folded 2026-09-17:* **735** (enrol `System/FeaturedListings` via Task 678 + a `wide-1440` `MANTINE_STORY_EXTRA_VIEWPORTS` entry, filed by 678) → **Task 827**. After the owner rejected it on 2026-09-17, 827 deletes the four `System/*` listing Stories instead of enrolling them. `FeaturedListingsView` is proven by `Patterns/Mantine/HomepageListingGrids` (kickoff §18), so the enrolment half is moot. The extra-viewport half belonged to the retired `screenshots:assert` (owner decision 2026-09-03) and is obsolete.
+docs/component-coverage-matrix.md:56:| `system-featuredlistings--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |
+docs/governance-enforcement.md:579:- `system-featuredlistings--default__*__huge-2560.png` — must show 4 columns
+docs/maintenance-playbook.md:516:3. `system-featuredlistings--default__*__huge-2560.png` — 4-column grid check
+docs/mantine-responsive-design-system.md:512:| `src/stories/FeaturedListings.stories.tsx` | Featured listings | Real production `FeaturedListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+docs/mantine-responsive-design-system.md:513:| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | Real production `RecentlyViewedGridView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+docs/mantine-responsive-design-system.md:514:| `src/stories/SimilarListings.stories.tsx` | Similar listings | Real production `SimilarListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+docs/responsive-screenshot-governance.md:185:Files: `system-featuredlistings--default__*__huge-2560.png` and `system-containers--container-wide__*__huge-2560.png`
+docs/responsive-screenshot-matrix.md:124:| `system-featuredlistings--default` | FeaturedListings/Desktop | desktop-1280, desktop-1440 | all | HIGH |
+docs/responsive-screenshot-matrix.md:125:| `system-featuredlistings--default` | FeaturedListings/HugeDesktop | huge-2560 | all | **CRITICAL** |
+docs/responsive-screenshot-matrix.md:126:| `system-featuredlistings--default` | FeaturedListings/Mobile | mobile-320, mobile-375 | all | HIGH |
+docs/responsive-screenshot-matrix.md:127:| `system-featuredlistings--default` | FeaturedListings/Ukrainian | — | uk only | HIGH |
+docs/responsive-screenshot-matrix.md:171:| `system-featuredlistings--default` (FeaturedListings/HugeDesktop) | Must show 4 columns (`2xl:grid-cols-4`) |
+docs/responsive-screenshot-matrix.md:190:| `system-featuredlistings--default` (FeaturedListings/Ukrainian) | desktop-1280 | Card title clipping |
+docs/responsive-screenshot-matrix.md:203:system-featuredlistings--default__en__huge-2560.png
+docs/responsive-storybook-inventory.md:75:| `src/stories/FeaturedListings.stories.tsx` | ✅ `system-featuredlistings--default` | Product-rendering story |
+docs/responsive-storybook-inventory.md:76:| `src/stories/RecentlyViewedSection.stories.tsx` | ✅ `system-recentlyviewedsection--populated` | Product-rendering story |
+docs/responsive-storybook-inventory.md:159:| `FeaturedListings.stories.tsx` | `system-featuredlistings--default` (single export) | System | FeaturedListings (card grid: 1→2→3→4 columns, uk titles, huge desktop) | sq/en/uk/it | HIGH | YES — Task 665 R14 | Task 665: replaces the deleted `ListingGrid.stories.tsx` as the 4-column responsive-grid proof (statically imports the real `FeaturedListingsView`, no fake card). 4-column at 2xl. §13 |
+docs/responsive-storybook-inventory.md:160:| `RecentlyViewedSection.stories.tsx` | `system-recentlyviewedsection--populated` | System | RecentlyViewedSection (horizontal-scroll listing card section) | sq/en/uk/it | MEDIUM | NO | Task 409 fixed pricing/dates. Horizontal scroll intentional (section-level). Machine PASS. §13 |
+docs/responsive-storybook-inventory.md:263:**Result (Task 420, 2026-06-12):** Re-ran the §8.3 grid-cols sweep across `src/modules`/`src/components/layout`/`src/app`. Two §8.3 divergences found and fixed: (1) `FeaturedListings.tsx:61,80` (`lg:grid-cols-3` → `xl:grid-cols-3`, both the loading skeleton and the populated grid — 3-col step now at 1280px instead of 1024px); (2) `SimilarListings.tsx:89` (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` → `grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4` — added the missing 3-col step, moved the 4-col step from `lg` (1024px) to `2xl` (1536px)). `CollectionsSection`/`FavoritesShell`/`ListingsShell` confirmed already canonical (0 edits). `RecentlyViewedGrid`/`RecentlyViewedSection` mobile-carousel pattern and `PopularLocations` location tiles confirmed out of scope/exempt (0 edits). `PageShell.tsx` confirmed `.container-wide` (1408px cap) with `2xl:py-20` present, no wider `max-w-*` override (0 edits). Re-sweep also found `LatestListings.tsx:40,53` (`grid-cols-1 md:grid-cols-2 2xl:grid-cols-3`, horizontal-card variant, 3-col cap) — flagged as a deliberate different pattern (not a §8.3 divergence), **not modified**, diff stayed SMALL so no STOP & SPLIT. Added two minimal canonical stories (`System/FeaturedListings`, `System/SimilarListings`, reusing `StoryListingCard`/`makeStoryListings`) and a standalone focused QA script `scripts/task420-qa-grid-step.mjs` (2 stories × 4 locales × 11 viewports = 88 cells, asserting column-track count, no h-scroll, 1408px container cap): **88/88 PASS**. `scripts/check-stories-rendered.mjs`/`ASSERT_STORIES` untouched (Slice 6 remains owner-gated) — the global 2520-cell matrix is unchanged in size by this diff. Sandbox `screenshots:assert` (after a slow run, ~62% mid-session) completed = 2520/2520 PASS, 0 FAIL, 0 flaky-recovered — a SCREEN per clause 14, not the final verdict; owner-native re-run remains the authoritative gate. Session: `docs/sessions/2026-06-12-task420-slice5-public-grid-step.md`.
+docs/responsive-storybook-inventory.md:350:system-recentlyviewedsection--populated
+docs/responsive-storybook-inventory.md:462:system-listinggrid--old-price-wrap         system-recentlyviewedsection--empty-state
+docs/responsive-storybook-inventory.md:463:system-recentlyviewedsection--huge-desktop system-recentlyviewedsection--locale-stress
+docs/responsive-storybook-inventory.md:464:system-recentlyviewedsection--mobile-scroll
+docs/storybook-governance.md:169:Reference stories: `System/Containers`, `System/FeaturedListings`
+docs/storybook-governance.md:341:    FeaturedListings.stories.tsx
+docs/storybook-governance.md:772:Phase 1 for every story, including the 4 `.listing-card` anchor rows (`system-featuredlistings--default`,
+docs/storybook-governance.md:773:`system-latestlistings--default`, `system-similarlistings--default`, `patterns-mantine-homepagelistinggrids--default`
+docs/storybook-governance.md:2281:`FeaturedListingsView` (`System/FeaturedListings`) and the page.tsx `{tl('latest')}` heading (labelled by its
+docs/storybook-governance.md:2282:nearest story, `System/LatestListings`) as candidates. Investigation found they are not symmetric:
+docs/storybook-governance.md:2284:- **`System/LatestListings` cannot prove its associated heading at all.** `LatestListingsView.tsx` does not render
+docs/storybook-governance.md:2287:  in the 678 kickoff §8, owned by Task 667's route inventory). Enrolling `System/LatestListings` would add cells
+docs/storybook-governance.md:2290:- **`System/FeaturedListings` genuinely can prove its heading** — `FeaturedListingsView.tsx` renders
+scripts/__tests__/mantine-story-scope.test.ts:31:    expect(isCanonicalMantineTitle('System/FeaturedListings')).toBe(true);
+scripts/__tests__/mantine-story-scope.test.ts:32:    expect(isCanonicalMantineTitle('System/LatestListings')).toBe(true);
+scripts/__tests__/mantine-story-scope.test.ts:33:    expect(isCanonicalMantineTitle('System/SimilarListings')).toBe(true);
+scripts/__tests__/mantine-story-scope.test.ts:34:    expect(isCanonicalMantineTitle('System/RecentlyViewedSection')).toBe(true);
+scripts/__tests__/rendered-run-mode.test.ts:55:    expect(result.noteLine).toContain('system-featuredlistings--default');
+scripts/__tests__/rendered-run-mode.test.ts:56:    expect(result.noteLine).toContain('system-latestlistings--default');
+scripts/__tests__/rendered-run-mode.test.ts:57:    expect(result.noteLine).toContain('system-similarlistings--default');
+scripts/check-card-track-monotonicity.mjs:22: * 827 (2026-09-17) enrolled the 4 `System/FeaturedListings|LatestListings|SimilarListings|
+scripts/check-card-track-monotonicity.mjs:367:    `enrolled (Task 827, 2026-09-17): System/FeaturedListings, System/LatestListings, ` +
+scripts/check-card-track-monotonicity.mjs:368:    'System/SimilarListings, System/RecentlyViewedSection — canonical Mantine story shell, zero ' +
+scripts/check-stories-rendered.mjs:171:  { id: 'system-featuredlistings--default',        label: 'FeaturedListings/Default',         anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+scripts/check-stories-rendered.mjs:172:  { id: 'system-latestlistings--default',          label: 'LatestListings/Default',           anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+scripts/check-stories-rendered.mjs:173:  { id: 'system-similarlistings--default',         label: 'SimilarListings/Default',          anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+scripts/check-stories-rendered.mjs:174:  { id: 'system-recentlyviewedsection--populated', label: 'RVS/Populated',                   anchors: [{ type: 'selector', value: '.recently-viewed', label: 'rvs' }] },
+scripts/governance/component-catalog.mjs:134:    // System/FeaturedListings story (the token this generator derives from a story's filename,
+scripts/governance/component-catalog.mjs:446:  matrixLines.push('| `system-featuredlistings--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
+scripts/governance/tailwind-entropy.allowlist.json:308:      "file": "src/stories/RecentlyViewedSection.stories.tsx",
+scripts/lib/mantine-story-scope.mjs:41:  'System/FeaturedListings':
+scripts/lib/mantine-story-scope.mjs:47:  'System/LatestListings':
+scripts/lib/mantine-story-scope.mjs:52:  'System/SimilarListings':
+scripts/lib/mantine-story-scope.mjs:57:  'System/RecentlyViewedSection':
+scripts/lib/rendered-run-mode.mjs:22:    'system-featuredlistings--default, system-latestlistings--default, ' +
+scripts/lib/rendered-run-mode.mjs:23:    'system-similarlistings--default, patterns-mantine-homepagelistinggrids--default)',
+scripts/responsive-screenshots.mjs:100:  // responsive-grid proof re-points at the surviving System/FeaturedListings/Default story (the
+scripts/responsive-screenshots.mjs:103:  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Desktop',  viewports: ['desktop-1280', 'desktop-1440'] },
+scripts/responsive-screenshots.mjs:104:  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/HugeDesktop', viewports: ['huge-2560'] },
+scripts/responsive-screenshots.mjs:105:  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Mobile',   viewports: ['mobile-320', 'mobile-375'] },
+scripts/responsive-screenshots.mjs:106:  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Ukrainian', locales: ['uk'] },
+scripts/responsive-screenshots.mjs:115:  { id: 'system-recentlyviewedsection--populated',   label: 'RecentlyViewedSection/Populated',   viewports: ['mobile-320', 'mobile-375', 'mobile-390', 'tablet-768', 'desktop-1280', 'desktop-1440', 'huge-2560'] },
+scripts/responsive-screenshots.mjs:116:  { id: 'system-recentlyviewedsection--mobile-scroll', label: 'RecentlyViewedSection/MobileScroll', viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+scripts/responsive-screenshots.mjs:117:  { id: 'system-recentlyviewedsection--empty-state', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
+scripts/responsive-screenshots.mjs:118:  { id: 'system-recentlyviewedsection--ukrainian-locale', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
+scripts/responsive-screenshots.mjs:163:    && existsSync(join(ROOT, 'src', 'stories', 'FeaturedListings.stories.tsx'));
+scripts/story-realmode-allowlist.json:16:  { "file": "src/stories/RecentlyViewedSection.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal card scroll on mobile." },
+src/stories/FeaturedListings.stories.tsx:24:  title: 'System/FeaturedListings',
+src/stories/LatestListings.stories.tsx:24:  title: 'System/LatestListings',
+src/stories/RecentlyViewedSection.stories.tsx:25:  title: 'System/RecentlyViewedSection',
+src/stories/SimilarListings.stories.tsx:22:  title: 'System/SimilarListings',
+src/stories/fixtures/cardListingData.fixture.ts:3: * (`System/FeaturedListings`, `System/LatestListings`, `System/RecentlyViewedSection`,
+src/stories/fixtures/cardListingData.fixture.ts:4: * `System/SimilarListings`). Deterministic data — no random IDs, no live API calls.
+src/stories/patterns/mantine/HomepageListingGrids.stories.tsx:8: * existing `System/FeaturedListings` / `System/LatestListings` stories are unaffected — this is
+EXIT_CODE=0

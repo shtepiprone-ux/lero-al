@@ -1,0 +1,49 @@
+
+> lero-al@0.1.0 catalog:components
+> node scripts/governance/component-catalog.mjs --write
+
+
+📦  Component Catalog — Lero.al
+
+Total components scanned: 243
+  with Storybook stories:   85
+  locale-aware (i18n):      108
+  with arbitrary Tailwind:  26
+  with raw <button>:        19
+  grids missing 2xl step:   24
+
+By type:
+  admin-shared                 35
+  auth-feature                 4
+  cabinet-feature              7
+  canonical-primitive          30
+  layout                       6
+  listings-feature             77
+  locations-feature            1
+  notifications-feature        21
+  page                         12
+  shared-ui                    26
+  unknown                      24
+
+By status:
+  APPROVED                     162
+  CANONICAL                    12
+  MANUAL_REVIEW                42
+  NEEDS_STORY                  27
+
+⚠️  42 components with flags:
+  src/app/[locale]/auth/verified/VerifiedCard.tsx → ARBITRARY_TW
+  src/app/[locale]/listings/[slug]/loading.tsx → ARBITRARY_TW
+  src/components/admin/AdminCompaniesManager.tsx → RAW_BUTTON
+  src/components/admin/AdminCurrenciesManager.tsx → RAW_BUTTON
+  src/components/admin/AdminDashboardRecentListings.tsx → ARBITRARY_TW
+  src/components/admin/AdminExchangeProvidersManager.tsx → RAW_BUTTON
+  src/components/admin/AdminFooterManager.tsx → RAW_BUTTON
+  src/components/admin/AdminInquiriesManager.tsx → ARBITRARY_TW
+  src/components/admin/AdminLegalManager.tsx → RAW_BUTTON
+  src/components/admin/AdminListingsTable.tsx → RAW_BUTTON, ARBITRARY_TW
+  ... and 32 more
+
+✅ JSON catalog written: scripts/governance/reports/component-catalog.latest.json
+✅ Docs updated: docs/component-catalog.md, docs/component-coverage-matrix.md, docs/component-risk-register.md
+EXIT_CODE=0

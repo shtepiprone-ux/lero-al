@@ -161,20 +161,18 @@ const ASSERT_STORIES = [
   { id: 'admin-adminuserprofile--default',         label: 'AdminUserProfile/Default',         anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
   // ── Layout (0) — FilterBar/PageHeader/PageShell/Section deleted (Task 788, 2026-09-05):
   // zero production consumers, stories removed with the components ──
-  // ── System (7) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7);
-  // Featured/Latest/Similar added (Task 665 §16 R14 — these 3 rebuilt System/* stories previously
-  // had no rendered-proof at all; anchored on '.listing-card', rendered by the real ListingCard
-  // each View statically imports and renders in its Default/loaded state) ──
+  // ── System (3) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7).
+  // FeaturedListings/LatestListings/SimilarListings/RecentlyViewedSection stories (added Task 665
+  // §16 R14) were DELETED by Task 827 (2026-09-17, owner rejection, kickoff §18) — every state they
+  // proved now lives on `patterns-mantine-homepagelistinggrids--default` below (anchored on the
+  // same `.listing-card` selector) and on `Mantine/Primitives/SimilarListingsView`/
+  // `RecentlyViewedGridView` ──
   { id: 'system-adminlayout--admin-toolbar',       label: 'AdminLayout/AdminToolbar',         anchors: [{ type: 'testid', value: 'admin-toolbar', label: 'toolbar' }] },
   { id: 'system-containers--container-wide',       label: 'Containers/Wide',                  anchors: [{ type: 'testid', value: 'container', label: 'container' }] },
   { id: 'system-emptystate--no-listings',          label: 'EmptyState/NoListings',            anchors: [{ type: 'testid', value: 'empty-state', label: 'empty-state' }] },
-  { id: 'system-featuredlistings--default',        label: 'FeaturedListings/Default',         anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
-  { id: 'system-latestlistings--default',          label: 'LatestListings/Default',           anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
-  { id: 'system-similarlistings--default',         label: 'SimilarListings/Default',          anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
-  { id: 'system-recentlyviewedsection--populated', label: 'RVS/Populated',                   anchors: [{ type: 'selector', value: '.recently-viewed', label: 'rvs' }] },
   // Task 668 — new canonical Patterns/Mantine/* story enrolling FeaturedListingsView/
   // LatestListingsView in the Mantine migration scope (§3.7). Only `--default` is asserted here
-  // (anchored on `.listing-card`, same anchor as the System/* rows above); `--loading` has no
+  // (anchored on `.listing-card`, same anchor the deleted System/* rows used); `--loading` has no
   // `.listing-card` to anchor on by design and is allowlisted in LOADER_ALLOWLIST instead.
   { id: 'patterns-mantine-homepagelistinggrids--default', label: 'HomepageListingGrids/Default', anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
   // Task 670 — `HeroSearch`'s `ssr:false` first-paint fallback, extracted into `HeroSearchFallback`

@@ -509,9 +509,9 @@ UI governance docs.
 | `src/stories/Containers.stories.tsx` | Container governance story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Delete after Phase 6 | Phase 6 | — |
 | `src/stories/AdminLayout.stories.tsx` | Admin layout story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Migrate to Mantine AppShell story | Phase 5 | — |
 | `src/stories/EmptyState.stories.tsx` | Empty state story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineEmptyLoadingErrorState | Phase 5 | — |
-| `src/stories/FeaturedListings.stories.tsx` | Featured listings | Real production `FeaturedListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
-| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | Real production `RecentlyViewedGridView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
-| `src/stories/SimilarListings.stories.tsx` | Similar listings | Real production `SimilarListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+| `src/stories/FeaturedListings.stories.tsx` | Removed — Task 827 (2026-09-17); canonical: `Patterns/Mantine/HomepageListingGrids` | — | Removed | — | — | — | — |
+| `src/stories/RecentlyViewedSection.stories.tsx` | Removed — Task 827 (2026-09-17); canonical: `Mantine/Primitives/RecentlyViewedGridView` | — | Removed | — | — | — | — |
+| `src/stories/SimilarListings.stories.tsx` | Removed — Task 827 (2026-09-17); canonical: `Mantine/Primitives/SimilarListingsView` | — | Removed | — | — | — | — |
 | `src/stories/VerifiedPage.stories.tsx` | Verified page | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Mantine page pattern | Phase 5 | — |
 | `src/stories/PlantedVisualViolations.stories.tsx` | QA violation reference | Governance | Active | KEEP TEMPORARILY AS LEGACY | Update with Mantine violation patterns | Phase 5 | — |
 | `src/stories/patterns/mantine/**` (14 files) | Mantine canonical patterns | Mantine native proof | Active — Default export | REPLACE WITH MANTINE | Already done | Phase 1 ✅ | None |

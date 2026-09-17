@@ -1,0 +1,19 @@
+
+> lero-al@0.1.0 check:media-enrolment
+> node scripts/check-media-enrolment.mjs
+
+check:media-enrolment — one rule for the media directory (Task 813, decision §5.1 (C))
+    Scanned: every top-level *.tsx directly under src/design-system/media/
+    NOT scanned (stated, never implicit): *.module.css, non-.tsx siblings (hooks/config, e.g.
+    appImageConfig.ts, useAdaptiveImageConfig.ts), any __tests__/ subdirectory, and any .tsx this
+    directory does not itself contain — a file added anywhere else is invisible to this check by
+    construction.
+    Cannot see: a file this script cannot read (permissions/symlink) — skipped, never silently
+    treated as compliant. Canonical-Story coverage is check:story-coverage's job, not this
+    check's — enrolment here does not imply a Story exists.
+
+    Media files found: 1
+    Manifest entries (total, all surfaces): 73
+
+PASS  check:media-enrolment — every .tsx under src/design-system/media/ is enrolled, and every manifest entry under it exists. Canonical-Story coverage is check:story-coverage's job, not this check's.
+EXIT_CODE=0

@@ -130,6 +130,9 @@
     "src/app/[locale]/ci/click-shield-modal/page.tsx :: src/components/ci/ClickShieldModalFixture.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/app/[locale]/ci/click-shield-modal/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/app/[locale]/contact/page.tsx :: src/app/[locale]/contact/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -242,6 +245,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -551,6 +557,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -970,6 +979,54 @@
     "src/app/admin/users/page.tsx :: src/components/admin/AdminUsersTable.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/app/api/auth-email-hook/route.ts :: src/app/api/auth-email-hook/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/auth/me/route.ts :: src/app/api/auth/me/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/cron/inactivity/route.ts :: src/app/api/cron/inactivity/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/cron/listings-expiry/route.ts :: src/app/api/cron/listings-expiry/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/cron/price-alerts/route.ts :: src/app/api/cron/price-alerts/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/cron/saved-searches/route.ts :: src/app/api/cron/saved-searches/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/exchange-rate/route.ts :: src/app/api/exchange-rate/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/listings/[slug]/view/route.ts :: src/app/api/listings/[slug]/view/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/listings/route.ts :: src/app/api/listings/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/presence/route.ts :: src/app/api/presence/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/property-types/route.ts :: src/app/api/property-types/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/upload-avatar/route.ts :: src/app/api/upload-avatar/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/upload-company-logo/route.ts :: src/app/api/upload-company-logo/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/api/upload-popular-location-photo/route.ts :: src/app/api/upload-popular-location-photo/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/auth/callback/route.ts :: src/app/auth/callback/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/app/auth/confirm/route.ts :: src/app/auth/confirm/route.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/app/global-error.tsx :: src/app/global-error.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -1105,6 +1162,9 @@
     "src/components/shared/Map.tsx :: src/components/shared/Map.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/components/shared/useHomepageFilters.ts :: src/components/shared/useHomepageFilters.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/components/ui/appImageConfig.ts :: src/components/ui/appImageConfig.ts :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1144,6 +1204,210 @@
     "src/components/ui/useAdaptiveImageConfig.ts :: src/components/ui/useAdaptiveImageConfig.ts :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
+    "src/design-system/brand.ts :: src/design-system/brand.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/notificationVariants.ts :: src/design-system/mantine/notificationVariants.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/patterns/index.ts :: src/design-system/mantine/patterns/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/theme.ts :: src/design-system/mantine/theme.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/mantine/typography.ts :: src/design-system/mantine/typography.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/media/appImageConfig.ts :: src/design-system/media/appImageConfig.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/design-system/media/useAdaptiveImageConfig.ts :: src/design-system/media/useAdaptiveImageConfig.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useAdminPageFreshness.ts :: src/hooks/useAdminPageFreshness.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useExchangeRate.ts :: src/hooks/useExchangeRate.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useIsMobile.ts :: src/hooks/useIsMobile.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/usePresence.ts :: src/hooks/usePresence.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/usePropertyTypes.ts :: src/hooks/usePropertyTypes.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useSwipeTrackSync.ts :: src/hooks/useSwipeTrackSync.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/hooks/useUnsavedChangesGuard.ts :: src/hooks/useUnsavedChangesGuard.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/i18n/request.ts :: src/i18n/request.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/i18n/routing.ts :: src/i18n/routing.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/instrumentation-client.ts :: src/instrumentation-client.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/instrumentation.ts :: src/instrumentation.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/admin/getAdminLocale.ts :: src/lib/admin/getAdminLocale.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/authSheet.ts :: src/lib/auth/authSheet.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/blockCheck.ts :: src/lib/auth/blockCheck.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/browser.ts :: src/lib/auth/browser.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/controller.ts :: src/lib/auth/controller.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/middleware.ts :: src/lib/auth/middleware.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/permissionKeys.ts :: src/lib/auth/permissionKeys.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/permissions.ts :: src/lib/auth/permissions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/auth/server.ts :: src/lib/auth/server.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/captcha/verifyTurnstile.ts :: src/lib/captcha/verifyTurnstile.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/cloudinaryDelete.ts :: src/lib/cloudinaryDelete.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/cloudinaryUpload.ts :: src/lib/cloudinaryUpload.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/footer-route-allowlist.ts :: src/lib/footer-route-allowlist.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/formatters.ts :: src/lib/formatters.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/getExchangeRate.ts :: src/lib/getExchangeRate.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/getExchangeRateServer.ts :: src/lib/getExchangeRateServer.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/i18n/listingStatusLabel.ts :: src/lib/i18n/listingStatusLabel.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/imageDelivery.ts :: src/lib/imageDelivery.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/passwordRules.ts :: src/lib/passwordRules.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/budgets.ts :: src/lib/performance/budgets.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/collector.ts :: src/lib/performance/collector.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/imageGuard.ts :: src/lib/performance/imageGuard.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/predictive.ts :: src/lib/performance/predictive.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/reporter.ts :: src/lib/performance/reporter.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/store.ts :: src/lib/performance/store.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/performance/tier.ts :: src/lib/performance/tier.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/phone/index.ts :: src/lib/phone/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/reserved-slugs.ts :: src/lib/reserved-slugs.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/siteUrl.ts :: src/lib/siteUrl.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/slug-validator.ts :: src/lib/slug-validator.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/supabase/admin.ts :: src/lib/supabase/admin.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/supabase/client.ts :: src/lib/supabase/client.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/supabase/server.ts :: src/lib/supabase/server.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/toast.ts :: src/lib/toast.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/lib/utils.ts :: src/lib/utils.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/middleware.ts :: src/middleware.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/clearHistory.ts :: src/modules/admin/actions/clearHistory.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/currencies.ts :: src/modules/admin/actions/currencies.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/exchangeProviders.ts :: src/modules/admin/actions/exchangeProviders.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/footer.ts :: src/modules/admin/actions/footer.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/index.ts :: src/modules/admin/actions/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/locale.ts :: src/modules/admin/actions/locale.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/permissions.ts :: src/modules/admin/actions/permissions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/actions/propertyTypes.ts :: src/modules/admin/actions/propertyTypes.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/lib/propertyTypes.ts :: src/modules/admin/lib/propertyTypes.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/admin/lib/settings.ts :: src/modules/admin/lib/settings.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/auth/actions/captcha.ts :: src/modules/auth/actions/captcha.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/auth/actions/recovery.ts :: src/modules/auth/actions/recovery.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/modules/auth/components/AuthSheet.tsx :: src/components/auth/CaptchaWidget.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -1152,6 +1416,78 @@
     },
     "src/modules/auth/components/AuthSheet.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
+    },
+    "src/modules/auth/hooks/useUser.ts :: src/modules/auth/hooks/useUser.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/auth/lib/sanitizeReturnTo.ts :: src/modules/auth/lib/sanitizeReturnTo.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/auth/validations/index.ts :: src/modules/auth/validations/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/cabinet/actions/index.ts :: src/modules/cabinet/actions/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/cabinet/hooks/useCabinetListingsRealtime.ts :: src/modules/cabinet/hooks/useCabinetListingsRealtime.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/cabinet/lib/queries.ts :: src/modules/cabinet/lib/queries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/companies/actions.ts :: src/modules/companies/actions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/companies/hooks/useCompanies.ts :: src/modules/companies/hooks/useCompanies.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/companies/lib/queries.ts :: src/modules/companies/lib/queries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/contacts/actions/index.ts :: src/modules/contacts/actions/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/currency/hooks/useCurrencies.ts :: src/modules/currency/hooks/useCurrencies.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/currency/lib/queries.ts :: src/modules/currency/lib/queries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/applyListingTransition.ts :: src/modules/listings/actions/applyListingTransition.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/changeListingStatus.ts :: src/modules/listings/actions/changeListingStatus.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/collectionActions.ts :: src/modules/listings/actions/collectionActions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/contactEvents.ts :: src/modules/listings/actions/contactEvents.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/createListing.ts :: src/modules/listings/actions/createListing.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/deleteListing.ts :: src/modules/listings/actions/deleteListing.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/favoriteActions.ts :: src/modules/listings/actions/favoriteActions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/getListingOwnerContact.ts :: src/modules/listings/actions/getListingOwnerContact.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/recentlyViewedActions.ts :: src/modules/listings/actions/recentlyViewedActions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/reportListing.ts :: src/modules/listings/actions/reportListing.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/submitListingInquiry.ts :: src/modules/listings/actions/submitListingInquiry.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/actions/updateListing.ts :: src/modules/listings/actions/updateListing.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/FeaturedListingsView.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -1202,6 +1538,9 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/GalleryStaticFrame.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/ListingReportDialog.tsx :: tier1-unenrolled-or-unstoried": {
@@ -1272,6 +1611,9 @@
     },
     "src/modules/listings/components/ListingGallery.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
+    },
+    "src/modules/listings/components/ListingGallery.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/listings/components/ListingGallery.tsx :: src/modules/listings/components/ListingGallery.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
@@ -1381,6 +1723,9 @@
     "src/modules/listings/components/form/YearComboboxField.tsx :: src/modules/listings/components/form/YearComboboxField.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/modules/listings/components/form/fieldRegistry.ts :: src/modules/listings/components/form/fieldRegistry.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/modules/listings/components/steps/StepBasicInfo.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
     },
@@ -1435,6 +1780,99 @@
     "src/modules/listings/components/steps/StepPreview.tsx :: src/modules/listings/components/steps/StepPreview.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
+    "src/modules/listings/constants/index.ts :: src/modules/listings/constants/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/filterEngine.ts :: src/modules/listings/domain/filterEngine.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/index.ts :: src/modules/listings/domain/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingConstants.ts :: src/modules/listings/domain/listingConstants.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingFields.ts :: src/modules/listings/domain/listingFields.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingFormMode.ts :: src/modules/listings/domain/listingFormMode.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingPermissions.ts :: src/modules/listings/domain/listingPermissions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingSemanticHelpers.ts :: src/modules/listings/domain/listingSemanticHelpers.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingSemanticLayer.ts :: src/modules/listings/domain/listingSemanticLayer.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/listingTransitionEngine.ts :: src/modules/listings/domain/listingTransitionEngine.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/presentationEngine.ts :: src/modules/listings/domain/presentationEngine.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/propertyTypeSchema.ts :: src/modules/listings/domain/propertyTypeSchema.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/domain/similarity.ts :: src/modules/listings/domain/similarity.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/hooks/useFavoritesRealtime.ts :: src/modules/listings/hooks/useFavoritesRealtime.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/hooks/useListings.ts :: src/modules/listings/hooks/useListings.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/hooks/useListingsUrlFilters.ts :: src/modules/listings/hooks/useListingsUrlFilters.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/favoritesQueries.ts :: src/modules/listings/lib/favoritesQueries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/listingSelect.ts :: src/modules/listings/lib/listingSelect.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/loadUserFavoriteListingIds.ts :: src/modules/listings/lib/loadUserFavoriteListingIds.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/queries.ts :: src/modules/listings/lib/queries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/recentlyViewedConstants.ts :: src/modules/listings/lib/recentlyViewedConstants.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/recentlyViewedQueries.ts :: src/modules/listings/lib/recentlyViewedQueries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/savedSearchCanonicalize.ts :: src/modules/listings/lib/savedSearchCanonicalize.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/lib/visibility.ts :: src/modules/listings/lib/visibility.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/types/form.ts :: src/modules/listings/types/form.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/listings/validations/index.ts :: src/modules/listings/validations/index.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/locations/actions/popularLocationActions.ts :: src/modules/locations/actions/popularLocationActions.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/locations/hooks/useLocations.ts :: src/modules/locations/hooks/useLocations.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/locations/lib/queries.ts :: src/modules/locations/lib/queries.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/actions/emailTemplates.ts :: src/modules/notifications/actions/emailTemplates.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/hooks/useNotifications.ts :: src/modules/notifications/hooks/useNotifications.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
     "src/modules/notifications/lib/emails/InactivityFinalEmail.tsx :: src/modules/notifications/lib/emails/BaseEmail.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -1481,6 +1919,48 @@
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/modules/notifications/lib/emails/VerifyEmail.tsx :: src/modules/notifications/lib/emails/VerifyEmail.tsx :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/contactInquiry.ts :: src/modules/notifications/lib/emails/contactInquiry.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/emailChange.ts :: src/modules/notifications/lib/emails/emailChange.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/listingInquiry.ts :: src/modules/notifications/lib/emails/listingInquiry.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/passwordChanged.ts :: src/modules/notifications/lib/emails/passwordChanged.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/resolveUserLocale.ts :: src/modules/notifications/lib/emails/resolveUserLocale.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/emails/send.ts :: src/modules/notifications/lib/emails/send.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/mutations.ts :: src/modules/notifications/lib/mutations.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/modules/notifications/lib/sendTemplatedEmail.ts :: src/modules/notifications/lib/sendTemplatedEmail.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/proxy.ts :: src/proxy.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/tests/next-cache-stub.ts :: src/tests/next-cache-stub.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/tests/server-only-stub.ts :: src/tests/server-only-stub.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/tests/setup.ts :: src/tests/setup.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/types/database.ts :: src/types/database.ts :: tier1-unenrolled-or-unstoried": {
+      "reasonCode": "tier1-unenrolled-or-unstoried"
+    },
+    "src/fake/task831/DeletedParent.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     }
   }

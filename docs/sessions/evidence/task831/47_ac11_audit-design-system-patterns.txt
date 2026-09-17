@@ -1,0 +1,53 @@
+
+> lero-al@0.1.0 audit:design-system-patterns
+> node scripts/audit-design-system-patterns.mjs
+
+audit:design-system-patterns — design-system pattern census (Task 816)
+    Patterns directory: src\design-system\mantine\patterns
+    Pattern files (derived from the directory at execution): 36
+    Enrolled: 36  Tier-3 allowlisted: 0  Ungoverned (neither): 0
+    Consumer counts are whole-src (every file under src/ that renders it), not only enrolled roots;
+    "enrolled-only" reconstructs check:rendered-scope:report's narrower, enrolled-root-scoped view.
+    Cannot see: a consumer reached only through dynamic import()/React.lazy(), or one under a
+    directory the render graph never walks into (node_modules/.next/storybook-static/__tests__/stories).
+
+CENSUS (36):
+    src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+    src/design-system/mantine/patterns/GalleryNavActionIcon.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+    src/design-system/mantine/patterns/GalleryThumbnailButton.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+    src/design-system/mantine/patterns/MantineAddItemPanel.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/patterns/mantine/AddItemPanel.stories.tsx
+    src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx
+    src/design-system/mantine/patterns/MantineAppShellFoundation.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AppShellFoundation.stories.tsx
+    src/design-system/mantine/patterns/MantineAuthFormPattern.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineCombobox.tsx  state:enrolled  edges:8  consumers:8  (enrolled-only:5)  story:yes  story-file:src/stories/mantine/primitives/Combobox.stories.tsx
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/CopyIdButton.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineCountButton.tsx  state:enrolled  edges:4  consumers:4  (enrolled-only:4)  story:yes  story-file:src/stories/mantine/primitives/CountButton.stories.tsx
+    src/design-system/mantine/patterns/MantineDataTableToCards.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/Table.stories.tsx
+    src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/DialogDrawerPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineDrawer.tsx  state:enrolled  edges:4  consumers:4  (enrolled-only:4)  story:yes  story-file:src/stories/mantine/primitives/Drawer.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineDropdownMenu.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/DropdownMenu.stories.tsx
+    src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/patterns/mantine/EmptyLoadingErrorState.stories.tsx
+    src/design-system/mantine/patterns/MantineFilterSection.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/FilterSection.stories.tsx
+    src/design-system/mantine/patterns/MantineFormSectionStack.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/FormSectionStack.stories.tsx
+    src/design-system/mantine/patterns/MantineHomeSection.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/HomeSection.stories.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  state:enrolled  edges:8  consumers:8  (enrolled-only:7)  story:yes  story-file:src/stories/mantine/primitives/ListingCard.stories.tsx (+1 more)
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  state:enrolled  edges:1  consumers:1  (enrolled-only:1)  story:yes  story-file:src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+    src/design-system/mantine/patterns/MantineModal.tsx  state:enrolled  edges:3  consumers:3  (enrolled-only:3)  story:yes  story-file:src/stories/mantine/primitives/Modal.stories.tsx
+    src/design-system/mantine/patterns/MantineNavigationMenu.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/NavigationMenu.stories.tsx
+    src/design-system/mantine/patterns/MantineNotificationPattern.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/NotificationPattern.stories.tsx
+    src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+    src/design-system/mantine/patterns/MantinePagination.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/Pagination.stories.tsx
+    src/design-system/mantine/patterns/MantinePopover.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:1)  story:yes  story-file:src/stories/mantine/primitives/Popover.stories.tsx
+    src/design-system/mantine/patterns/MantineProgress.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Progress.stories.tsx
+    src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/ResponsiveActionFooter.stories.tsx
+    src/design-system/mantine/patterns/MantineSelect.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Select.stories.tsx
+    src/design-system/mantine/patterns/MantineTooltip.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/mantine/primitives/Tooltip.stories.tsx
+    src/design-system/mantine/patterns/MantineTwoColumnForm.tsx  state:enrolled  edges:0  consumers:0  (enrolled-only:0)  story:yes  story-file:src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+    src/design-system/mantine/patterns/RangeDatePicker.tsx  state:enrolled  edges:2  consumers:2  (enrolled-only:2)  story:yes  story-file:src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+    src/design-system/mantine/patterns/responsiveBottomSheet.tsx  state:enrolled  edges:12  consumers:8  (enrolled-only:8)  story:yes  story-file:src/stories/mantine/primitives/ResponsiveBottomSheet.stories.tsx
+
+PASS  audit:design-system-patterns — every allowlisted pattern is shared, has its own canonical Story, and is not double-governed.
+EXIT_CODE=0

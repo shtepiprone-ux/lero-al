@@ -1,0 +1,11 @@
+removed (7):
+  src/app/[locale]/ci/click-shield-modal/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/modules/listings/components/ListingGallery.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+added (1):
+  src/hooks/useKeepActiveInView.ts :: src/hooks/useKeepActiveInView.ts :: tier1-unenrolled-or-unstoried
+EXIT_CODE=0

@@ -1,0 +1,21 @@
+hash before canonical re-run: 5afcd688064f9404a3bd4b78b2b2df45a98c15fd
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: HEAD  Merge base: 30dcb5d989ca7f69390335e09673761411859b91
+    Changed paths seen: 0
+    Excluded (0):
+    Included surfaces (0):
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 494 (carried-forward entries for the 494-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0
+hash after canonical re-run: 5afcd688064f9404a3bd4b78b2b2df45a98c15fd
+MATCH: true

@@ -1,0 +1,530 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-831 — check:surface-census:changed re-censuses baseline-named parents (R1-R7), a missing parent retires its rows (R8), printed rule (R9), a .ts root is not a component (R11), 152 false .ts self rows retired (R13), arms 9-12 (Sprint 75), Revision 1",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "30dcb5d989ca7f69390335e09673761411859b91",
+    "reviewedRevision": "uncommitted worktree on top of 30dcb5d989ca7f69390335e09673761411859b91 (main). Blobs: scripts/check-surface-census-changed.mjs 787a3efd, scripts/map-changed-surfaces.mjs 6b92875d, scripts/check-surface-census.mjs c800fd7d, scripts/surface-census-baseline.json 5afcd688, docs/backlog.md 84e9b912 (pre-review-closure).",
+    "reviewedPaths": [
+      "scripts/check-surface-census-changed.mjs",
+      "scripts/map-changed-surfaces.mjs",
+      "scripts/check-surface-census.mjs",
+      "scripts/surface-census-baseline.json",
+      "docs/sessions/2026-09-17-task831-census-changed-retires-stale-parent-rows.md",
+      "docs/sessions/evidence/task831"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-17-task831-census-changed-retires-stale-parent-rows.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC2 AC3 AC4 / R1 R2 R3 R4 R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-surface-census-changed.mjs",
+        "symbol": "computeReCensusSurfaces, runPipeline, main gate and --update-baseline branches",
+        "diffHunks": [
+          "scripts/check-surface-census-changed.mjs runPipeline (R1 set, R3 limit) and main() censusedSurfaces union"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "historical range ce0a9afb0..c177a0920 on the scratch baseline: parents re-censused, stale set, writer removal, surface limit"
+        ],
+        "phases": [
+          "pre-fix",
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/43_ac2_postfix_gate.txt",
+          "command": "node.exe scripts/check-surface-census-changed.mjs --base ce0a9afb0 --head c177a0920 --baseline-path scratch-baseline-ce0a9afb0.json (executor final + reviewer native rerun)",
+          "observable": "Blocks new 0; stale 8 = 7 LightboxView parent keys + theme.ts self key; exit 1. Reviewer rerun printed the same new 0 / stale 8 / theme.ts key.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "historical range ce0a9afb0..c177a0920 on the scratch baseline: parents re-censused, stale set, writer removal, surface limit"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/45_ac3_keyset_diff.txt",
+          "command": "Node key-set difference scratch-writer-postfix2 before minus after",
+          "observable": "removed 8 = the AC2 stale set, added 0.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "historical range ce0a9afb0..c177a0920 on the scratch baseline: parents re-censused, stale set, writer removal, surface limit"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/09_ac4_max-surfaces.txt",
+          "command": "--max-surfaces 5 on the same range",
+          "observable": "surface-limit-exceeded: 12 mapped+re-censused exceeds 5, exit 1.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "historical range ce0a9afb0..c177a0920 on the scratch baseline: parents re-censused, stale set, writer removal, surface limit"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The pre-fix code already removed the LightboxView rows, so the fix is untested.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task831/36_ac8_prefix_keyset.txt",
+          "result": "REFUTED. Hash-witnessed pre-fix writer (R2 union reverted) kept all 7 LightboxView keys (35/36); 04 pre-fix gate stale 0."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    },
+    {
+      "id": "AC7 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-surface-census-changed.mjs",
+        "symbol": "surfaceExistsOnDisk, runPipeline missingSurfaces",
+        "diffHunks": [
+          "scripts/check-surface-census-changed.mjs runPipeline existsFn split and zero-block push"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "a re-censused parent missing on disk: never censused, rows stale, writer drops them, no census-exit-2"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/32_ac7_missing-parent_gate.txt",
+          "command": "gate on scratch-missing-parent.json with planted DeletedParent.tsx row",
+          "observable": "DeletedParent.tsx listed with [missing on disk — rows retired], key stale, no census-exit-2.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "a re-censused parent missing on disk: never censused, rows stale, writer drops them, no census-exit-2"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/34_ac7_keyset_diff.txt",
+          "command": "Node key-set difference for the writer run 33",
+          "observable": "removed set contains the DeletedParent key.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "a re-censused parent missing on disk: never censused, rows stale, writer drops them, no census-exit-2"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A missing mapped surface or an existing parent that exits 2 is now silently skipped.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-surface-census-changed.mjs",
+          "result": "REFUTED. Reviewer read runPipeline in full: mapping.failClosed still returns first; only reCensusSurfaces are split by existsFn; existing surfaces still go through censusFn and a non-ok result still returns census-exit-2; arm 11 E path censused."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    },
+    {
+      "id": "AC9 / R11",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-surface-census.mjs",
+        "symbol": "rootIsNonComponentTs, node.tier, --json scope.tsRootRule, human scope line",
+        "diffHunks": [
+          "scripts/check-surface-census.mjs:439-444, :468, :580, :618-619"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "a depth-0 .ts root is root-non-component and never self-blocks; .tsx and depth>=1 nodes unchanged"
+        ],
+        "phases": [
+          "pre-fix",
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/38_ac9_hook_post.txt",
+          "command": "node.exe scripts/check-surface-census.mjs --surface src/hooks/useKeepActiveInView.ts --json (executor + reviewer native rerun)",
+          "observable": "exit 0, nodes[0].tier root-non-component, blocking []; 37 pre: exit 1 with a self block.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "a depth-0 .ts root is root-non-component and never self-blocks; .tsx and depth>=1 nodes unchanged"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/39b_ac9_tsx_control_diff.txt",
+          "command": "ListingGallery.tsx census pre/post key-set comparison",
+          "observable": "pre 2 post 2, equal key sets.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "a depth-0 .ts root is root-non-component and never self-blocks; .tsx and depth>=1 nodes unchanged"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new tier value leaks into recursion or tier counts and hides children of a .ts root.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-surface-census.mjs",
+          "result": "REFUTED. Recursion gate (:490) reads classification.tier, not node.tier; blocking (:534-547) only fires for tier1/tier2; tier2/tier3 roots excluded by the classification.tier === tier1 condition; a .ts file has no JSX render edges to walk."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    },
+    {
+      "id": "AC10 / R13",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/surface-census-baseline.json",
+        "symbol": "blocks",
+        "diffHunks": [
+          "scripts/surface-census-baseline.json 456 deleted lines, 0 added"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "retire exactly T = surface===node, .ts, tier1-unenrolled-or-unstoried; each T surface censused clean first; canonical serializer"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/41_ac10_T_census.txt",
+          "command": "post-R11 census --json of every T surface",
+          "observable": "TOTAL 152, BAD 0.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retire exactly T = surface===node, .ts, tier1-unenrolled-or-unstoried; each T surface censused clean first; canonical serializer"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/42_ac10_retire.txt",
+          "command": "Node retirement through writeBaselineFile",
+          "observable": "before 646, |T| 152, after 494, match true.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retire exactly T = surface===node, .ts, tier1-unenrolled-or-unstoried; each T surface censused clean first; canonical serializer"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/43_ac10_canonical.txt",
+          "command": "--update-baseline --base HEAD --head HEAD after retirement",
+          "observable": "hash 5afcd688 before and after, MATCH true.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "retire exactly T = surface===node, .ts, tier1-unenrolled-or-unstoried; each T surface censused clean first; canonical serializer"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The retirement removed a non-T key or missed a T key (155 at review vs 152).",
+          "kind": "EXECUTED",
+          "path": "scripts/surface-census-baseline.json",
+          "result": "REFUTED. Reviewer Node recompute vs git show HEAD: removed 152, added 0, removed-not-in-T 0, T-not-removed 0; the 3 remaining .ts self rows are tier2-legacy-primitive (outside T by its reasonCode filter), which explains 155 vs 152."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    },
+    {
+      "id": "AC1 AC6 AC5 / R7 R9 R10 R12",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-surface-census-changed.mjs",
+        "symbol": "runSelfTest arms 9-12, printScopeBlock rule line",
+        "diffHunks": [
+          "scripts/check-surface-census-changed.mjs runSelfTest ARM_COUNT 12, arms 9-12; printScopeBlock R9 lines"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "self-test red then green; rule line printed at n=0"
+        ],
+        "phases": [
+          "pre-fix",
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/30_verify_red.txt",
+          "command": "npm.cmd run check:surface-census:changed:verify with R8/R11 planted out (hash-witnessed)",
+          "observable": "arms 11-12 FAIL, 1-10 PASS, exit 1.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "self-test red then green; rule line printed at n=0"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/48_ac11_empty-diff.txt",
+          "command": "npm.cmd run check:surface-census:changed -- --base HEAD --head HEAD",
+          "observable": "Re-censused parent surfaces (0) followed by the Rule: line; PASS exit 0.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "self-test red then green; rule line printed at n=0"
+            ],
+            "phases": [
+              "pre-fix",
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The green self-test is stale relative to the shipped script.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-surface-census-changed.mjs",
+          "result": "REFUTED. Reviewer native rerun on blob 787a3efd: Arms run 12, 12 passed, exit 0; empty-diff run printed the Rule line, exit 0; working-tree --base HEAD run new 0 stale 0 exit 0."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    },
+    {
+      "id": "§16.5 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-17-task831-census-changed-retires-stale-parent-rows.md",
+        "symbol": "§10 revision delta",
+        "diffHunks": [
+          "docs/sessions/evidence/task831/46-57"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "media-enrolment, audit patterns, rendered-scope verify, lint, build, file-integrity, mojibake, hash-object"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "CLI governance script; no UI stories, locales, viewports or states.",
+          "locales": "CLI governance script; no UI stories, locales, viewports or states.",
+          "viewports": "CLI governance script; no UI stories, locales, viewports or states.",
+          "states": "CLI governance script; no UI stories, locales, viewports or states."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task831/52_final_build.txt",
+          "command": "npm.cmd run build",
+          "observable": "EXIT_CODE=0.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "media-enrolment, audit patterns, rendered-scope verify, lint, build, file-integrity, mojibake, hash-object"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/56_final_file-integrity_with-session-log.txt",
+          "command": "npm.cmd run check:file-integrity",
+          "observable": "69 files clean, EXIT_CODE=0; 57 mojibake 0 artifacts; 51 lint 0 errors; 50 rendered-scope verify PASS; 46/47 PASS.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "media-enrolment, audit patterns, rendered-scope verify, lint, build, file-integrity, mojibake, hash-object"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task831/55_final_diff-stat_and_hashes.txt",
+          "command": "git hash-object of the four scripts/baseline and backlog",
+          "observable": "equal to the reviewer hash-object run.",
+          "freshness": "final worktree 2026-09-17; hashes in 55_final_diff-stat_and_hashes.txt equal the reviewer hash-object run",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "media-enrolment, audit patterns, rendered-scope verify, lint, build, file-integrity, mojibake, hash-object"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "AC11 lacks a before run, so a regression in check:media-enrolment or audit:design-system-patterns is unobserved.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-media-enrolment.mjs",
+          "result": "REFUTED. Reviewer grep: neither check-media-enrolment.mjs nor audit-design-system-patterns.mjs imports check-surface-census.mjs or reads surface-census-baseline.json (comment references only), so no touched file is an input to either."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node governance script and JSON baseline; no generated CSS."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC1 AC6 AC5 / R7 R9 R10 R12",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-ran :verify (12/12), the hook census, the empty-diff and working-tree gates, the ce0a9afb0 historical gate, hash-object, and recomputed T and the baseline key-set difference against git show HEAD. Red-first for arms 11-12 was recovered by a hash-witnessed plant-and-restore after R8/R11 were written, accepted as the lowest-evidence row."
+  }
+}

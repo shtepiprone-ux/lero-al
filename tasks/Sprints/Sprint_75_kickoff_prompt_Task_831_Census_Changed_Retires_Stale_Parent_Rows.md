@@ -2,7 +2,7 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `NEEDS REVISION` 2026-09-17 (review 1).** Re-entry: **§16** — it supersedes any conflicting text above.
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-17 (review 2, after Revision 1 per §16).** Archived in `docs/backlog-archive.md`.
 Task 825 is committed (`c177a0920`), which was this task's precondition.
 
 ## 1. Mode and task type

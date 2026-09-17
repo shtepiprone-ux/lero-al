@@ -1,0 +1,17 @@
+ docs/backlog.md                                    |   4 +-
+ scripts/check-surface-census-changed.mjs           | 297 ++++++++++++--
+ scripts/check-surface-census.mjs                   |  12 +-
+ scripts/map-changed-surfaces.mjs                   |   4 +
+ scripts/surface-census-baseline.json               | 456 ---------------------
+ ...es_That_Report_Green_On_What_They_Cannot_See.md |   2 +-
+ 6 files changed, 290 insertions(+), 485 deletions(-)
+---BASELINE-DIFF-STAT---
+ scripts/surface-census-baseline.json | 456 -----------------------------------
+ 1 file changed, 456 deletions(-)
+---HASH---
+787a3efddf5bbbd2a58f240636089c8fdafd701f
+6b92875ddde508c6274927ceec03f480adbacb9c
+c800fd7dfe3619f6b8152e6ee9f277ca7351ba0e
+5afcd688064f9404a3bd4b78b2b2df45a98c15fd
+84e9b91213a20a38776ef790cad157cc5bb88976
+EXIT_CODE=0

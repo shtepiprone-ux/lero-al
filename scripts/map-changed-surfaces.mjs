@@ -427,6 +427,10 @@ export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CH
     changedCount: entries.length,
     excluded,
     included: includedSorted,
+    // Task 831 R5: the sorted changed src candidates this run resolved (pre-climb), so a caller (the
+    // Task 831 parent re-census) can match them against baseline child nodes without re-deriving them.
+    // Additive only — no existing field changes meaning, behaviour/exit codes are unchanged.
+    candidates,
     limits: { maxChangedFiles, maxSurfaces },
     graphFileCount,
   };

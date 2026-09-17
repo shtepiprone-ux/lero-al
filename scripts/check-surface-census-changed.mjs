@@ -58,7 +58,7 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const CENSUS_SCRIPT = join(ROOT, 'scripts', 'check-surface-census.mjs');
-const BASELINE_PATH = join(ROOT, 'scripts', 'surface-census-baseline.json');
+const DEFAULT_BASELINE_PATH = join(ROOT, 'scripts', 'surface-census-baseline.json');
 const BASELINE_VERSION = 1;
 
 // ── CLI flags ────────────────────────────────────────────────────────────────
@@ -76,6 +76,10 @@ const CLI_BASE = argVal('--base') ?? process.env.SURFACE_CENSUS_BASE_SHA ?? null
 const CLI_HEAD = argVal('--head') ?? process.env.SURFACE_CENSUS_HEAD_SHA ?? null;
 const CLI_MAX_CHANGED = argVal('--max-changed-files') ? Number(argVal('--max-changed-files')) : DEFAULT_MAX_CHANGED_FILES;
 const CLI_MAX_SURFACES = argVal('--max-surfaces') ? Number(argVal('--max-surfaces')) : DEFAULT_MAX_SURFACES;
+// Task 831 R6: optional --baseline-path, used for reading in every mode and writing in
+// --update-baseline. Omitted, the default run is byte-for-byte the same command CI runs — resolved
+// against ROOT so a relative path behaves the same regardless of the invoking shell's cwd.
+const BASELINE_PATH = argVal('--baseline-path') ? resolve(ROOT, argVal('--baseline-path')) : DEFAULT_BASELINE_PATH;
 
 // ── Census one surface via subprocess, --json mode ──────────────────────────
 
@@ -129,6 +133,35 @@ export function dedupeBlocks(perSurfaceBlocks) {
  *  ` :: ` separator, so the first segment is always exactly the surface. */
 function surfaceOfKey(key) {
   return key.split(' :: ')[0];
+}
+
+/** The node (blocking child) segment of a block key. Same separator guarantee as `surfaceOfKey`. */
+function nodeOfKey(key) {
+  return key.split(' :: ')[1];
+}
+
+/**
+ * Task 831 R1 — the diff-scoped mapper climb stops at a manifest root, so a baseline row
+ * `<parent> :: <child> :: reasonCode` is invisible whenever `<child>` becomes a manifest root itself
+ * (Task 825's 7 LightboxView rows). This is the pure computation of "which baseline-named parent
+ * surfaces does this diff's enrolment retire": every surface S with a baseline key `S :: N :: *`
+ * where N is a changed candidate file or a mapped-included surface, and S itself is not mapped-
+ * included. Returns a `Map<surface, Set<node>>` — the node set is every child key segment that pulled
+ * that surface in, printed by R4 and otherwise unused by the caller (dedup is by surface).
+ */
+export function computeReCensusSurfaces(baselineBlocks, candidates, mappingIncluded) {
+  const includedSet = new Set(mappingIncluded);
+  const changedOrIncluded = new Set([...candidates, ...mappingIncluded]);
+  const bySurface = new Map();
+  for (const key of Object.keys(baselineBlocks)) {
+    const surface = surfaceOfKey(key);
+    if (includedSet.has(surface)) continue; // already mapped this run — not R1's concern
+    const node = nodeOfKey(key);
+    if (!changedOrIncluded.has(node)) continue;
+    if (!bySurface.has(surface)) bySurface.set(surface, new Set());
+    bySurface.get(surface).add(node);
+  }
+  return bySurface;
 }
 
 /**
@@ -246,19 +279,84 @@ export function evaluateGateExitCode({ newBlocksCount, staleKeysCount, failClose
 
 // ── The whole pipeline: mapping -> per-surface census -> aggregate ──────────
 
+/** Default existence check for a re-census surface — relative to ROOT, matching how every surface
+ *  path elsewhere in this file is spelled (Task 831 R8). Injectable so a self-test arm can simulate a
+ *  deleted parent without touching the filesystem. */
+function surfaceExistsOnDisk(relPath) {
+  return existsSync(join(ROOT, relPath));
+}
+
 /**
- * mapping -> census each included surface -> aggregate. Returns `{ failClosed: true, stage, ... }`
- * the moment R5 fires; otherwise `{ failClosed: false, mapping, perSurfaceBlocks }`.
+ * mapping -> load baseline -> compute R1's re-census set -> split by on-disk existence (R8) -> census
+ * every mapped + existing-re-census surface -> aggregate. Returns `{ failClosed: true, stage, ... }`
+ * the moment a fail-closed condition fires (`mapping`, `baseline`, or `census-exit-2`); otherwise
+ * `{ failClosed: false, mapping, perSurfaceBlocks, reCensusSurfaces, reCensusMap, missingSurfaces,
+ * baseline }`.
+ *
+ * `baselinePath` defaults to the real committed baseline (R6). `mappingFn`/`loadBaselineFn` default to
+ * the real `runMapping`/`loadBaselineFile(baselinePath)` calls; a self-test arm (R10) overrides them
+ * with synthetic results so the exact same pipeline code drives the assertion — no parallel
+ * reimplementation of the union/split logic inside the arm.
  */
-export function runPipeline({ base, head, maxChangedFiles, maxSurfaces }, censusFn = censusSurface) {
-  const mapping = runMapping({ base, head, maxChangedFiles, maxSurfaces });
+export function runPipeline(
+  { base, head, maxChangedFiles, maxSurfaces, baselinePath = BASELINE_PATH },
+  censusFn = censusSurface,
+  existsFn = surfaceExistsOnDisk,
+  mappingFn = runMapping,
+  loadBaselineFn = () => loadBaselineFile(baselinePath),
+) {
+  const mapping = mappingFn({ base, head, maxChangedFiles, maxSurfaces });
   if (mapping.failClosed) {
     return { failClosed: true, stage: 'mapping', mapping };
   }
 
+  const baseline = loadBaselineFn();
+  if (baseline.error) {
+    return { failClosed: true, stage: 'baseline', mapping, baseline };
+  }
+
+  // Task 831 R1: baseline parent surfaces this diff's enrolment retires — not mapped this run, but a
+  // baseline row names them as a parent of a node that IS a changed candidate or mapped-included.
+  const reCensusMap = computeReCensusSurfaces(baseline.blocks, mapping.candidates ?? [], mapping.included);
+  const reCensusSurfaces = [...reCensusMap.keys()].sort();
+
+  // R8: a re-census surface that no longer exists on disk (its baseline parent was deleted) is never
+  // passed to censusFn — check-surface-census.mjs exits 2 on a missing --surface, which would
+  // otherwise fail the whole run closed for a genuinely paid-off row. It still joins censusedSurfaces
+  // with zero measured blocks, so every baseline key naming it goes stale and the writer drops it; it
+  // still counts toward --max-surfaces below. A missing MAPPED surface is not this concern — the
+  // mapper's own diff-filter already excludes a deleted (`D`) path from `mapping.included`.
+  const missingSurfaces = reCensusSurfaces.filter((s) => !existsFn(s));
+  const missingSet = new Set(missingSurfaces);
+  const existingReCensusSurfaces = reCensusSurfaces.filter((s) => !missingSet.has(s));
+
+  // R3: R1's surfaces (existing AND missing — a missing one is still "re-censused", just not walked)
+  // count toward --max-surfaces — the existing surface-limit-exceeded fail-closed result, reusing the
+  // mapping-stage shape so the CLI's existing 'mapping' branch prints it unchanged.
+  const totalSurfaceCount = mapping.included.length + reCensusSurfaces.length;
+  if (totalSurfaceCount > maxSurfaces) {
+    return {
+      failClosed: true,
+      stage: 'mapping',
+      mapping: {
+        ...mapping,
+        failClosed: true,
+        reason: 'surface-limit-exceeded',
+        detail: `${totalSurfaceCount} mapped+re-censused surface(s) exceeds the limit of ${maxSurfaces} (${mapping.included.length} mapped, ${reCensusSurfaces.length} re-censused)`,
+        surfaceCount: totalSurfaceCount,
+        limit: maxSurfaces,
+      },
+      reCensusSurfaces,
+      reCensusMap,
+      missingSurfaces,
+    };
+  }
+
   const perSurfaceBlocks = [];
   const censusFailures = [];
-  for (const surface of mapping.included) {
+  // R1: every EXISTING re-census surface is censused with the same call and failure handling as a
+  // mapped one.
+  for (const surface of [...mapping.included, ...existingReCensusSurfaces]) {
     const c = censusFn(surface);
     if (!c.ok) {
       censusFailures.push({ surface, exitCode: c.exitCode, detail: c.detail });
@@ -266,12 +364,17 @@ export function runPipeline({ base, head, maxChangedFiles, maxSurfaces }, census
     }
     perSurfaceBlocks.push({ surface, blocking: c.result.blocking });
   }
-
-  if (censusFailures.length > 0) {
-    return { failClosed: true, stage: 'census-exit-2', mapping, censusFailures };
+  // R8: a missing re-census surface is never censused, but still measured as "zero blocks" so its
+  // baseline rows are seen as paid off (stale) rather than merely carried.
+  for (const surface of missingSurfaces) {
+    perSurfaceBlocks.push({ surface, blocking: [] });
   }
 
-  return { failClosed: false, mapping, perSurfaceBlocks };
+  if (censusFailures.length > 0) {
+    return { failClosed: true, stage: 'census-exit-2', mapping, censusFailures, reCensusSurfaces, reCensusMap, missingSurfaces };
+  }
+
+  return { failClosed: false, mapping, perSurfaceBlocks, reCensusSurfaces, reCensusMap, missingSurfaces, baseline };
 }
 
 // ── Self-test (--verify-gate, R7) ───────────────────────────────────────────
@@ -281,7 +384,7 @@ export function runPipeline({ base, head, maxChangedFiles, maxSurfaces }, census
 // pipeline end-to-end with `--base HEAD --head HEAD` (an empty diff, real git + real fs, no server) to
 // prove the unplanted/empty-diff path is clean.
 function runSelfTest() {
-  const ARM_COUNT = 8;
+  const ARM_COUNT = 12;
   console.log(`check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running ${ARM_COUNT} arms\n`);
   let passed = 0;
   let failed = 0;
@@ -402,6 +505,133 @@ function runSelfTest() {
     );
   }
 
+  // Arm 9 (Task 831 R1/R2/R7) — a baseline row `P :: C :: tier1-...` where C is changed/enrolled and P
+  // is not mapped: P must be re-censused, and when the re-census finds nothing (the child's now
+  // enrolled, the row is paid off) the row is `stale` and the exit decision is non-zero.
+  {
+    const parent = 'src/fake/verify/Parent.tsx';
+    const child = 'src/fake/verify/Child.tsx';
+    const key = `${parent} :: ${child} :: tier1-unenrolled-or-unstoried`;
+    const priorBaseline = { [key]: { reasonCode: 'tier1-unenrolled-or-unstoried' } };
+    const candidates = [child];
+    const mappingIncluded = []; // P itself is not mapped by this diff
+    const reCensus = computeReCensusSurfaces(priorBaseline, candidates, mappingIncluded);
+    const reCensusSurfaces = [...reCensus.keys()].sort();
+    const censusedSurfaces = new Set([...mappingIncluded, ...reCensusSurfaces]);
+    const current = new Map(); // P re-censused this run and found nothing blocking -> paid off
+    const { staleKeys } = compareToBaseline(current, priorBaseline, censusedSurfaces);
+    const exitCode = evaluateGateExitCode({ newBlocksCount: 0, staleKeysCount: staleKeys.length, failClosedCount: 0 });
+    record(
+      reCensusSurfaces.length === 1 && reCensusSurfaces[0] === parent &&
+        staleKeys.length === 1 && staleKeys[0] === key && exitCode === 1,
+      'Arm 9 — baseline row whose child is changed/enrolled and whose parent is unmapped -> parent re-censused, row stale, exit non-zero'
+    );
+  }
+
+  // Arm 10 (Task 831 R2/R7) — the writer, given the same inputs as arm 9, drops the paid-off parent
+  // row and keeps an unrelated un-censused surface's row byte-identical (the mirror of arm 7).
+  {
+    const parent = 'src/fake/verify/Parent.tsx';
+    const child = 'src/fake/verify/Child.tsx';
+    const key = `${parent} :: ${child} :: tier1-unenrolled-or-unstoried`;
+    const unrelatedKey = 'src/fake/verify/Other.tsx :: src/fake/verify/OtherChild.tsx :: tier1-unenrolled-or-unstoried';
+    const priorBaseline = {
+      [key]: { reasonCode: 'tier1-unenrolled-or-unstoried' },
+      [unrelatedKey]: { reasonCode: 'tier1-unenrolled-or-unstoried' },
+    };
+    const candidates = [child];
+    const mappingIncluded = [];
+    const reCensus = computeReCensusSurfaces(priorBaseline, candidates, mappingIncluded);
+    const reCensusSurfaces = [...reCensus.keys()].sort();
+    const censusedSurfaces = new Set([...mappingIncluded, ...reCensusSurfaces]);
+    const current = new Map();
+    const { blocks } = computeBaselineUpdate(current, priorBaseline, censusedSurfaces);
+    record(
+      !Object.prototype.hasOwnProperty.call(blocks, key) &&
+        Object.prototype.hasOwnProperty.call(blocks, unrelatedKey) &&
+        JSON.stringify(blocks[unrelatedKey]) === JSON.stringify(priorBaseline[unrelatedKey]),
+      'Arm 10 — writer drops the paid-off parent row and keeps an unrelated un-censused surface row byte-identical'
+    );
+  }
+
+  // Arm 11 (Task 831 R8/R10) — a re-censused parent that no longer exists on disk (P) is never passed
+  // to censusFn; its baseline row goes stale and the writer drops it. A re-censused parent that DOES
+  // exist (E) behaves normally: censused, its row stays baselined. Drives the real `runPipeline` with
+  // injected `mappingFn`/`loadBaselineFn`/`existsFn`/`censusFn` — no parallel reimplementation of the
+  // union/split logic here.
+  {
+    const parent = 'src/fake/verify/DeletedParentR8.tsx';
+    const child = 'src/fake/verify/ChildR8.tsx';
+    const existing = 'src/fake/verify/ExistingParentR8.tsx';
+    const keyP = `${parent} :: ${child} :: tier1-unenrolled-or-unstoried`;
+    const keyE = `${existing} :: ${child} :: tier1-unenrolled-or-unstoried`;
+    const priorBlocks = {
+      [keyP]: { reasonCode: 'tier1-unenrolled-or-unstoried' },
+      [keyE]: { reasonCode: 'tier1-unenrolled-or-unstoried' },
+    };
+    let calledWithP = false;
+    const mappingFn = () => ({
+      failClosed: false, base: 'x', head: 'y', mergeBase: 'z', changedCount: 1,
+      excluded: [], included: [], candidates: [child], limits: { maxChangedFiles: 300, maxSurfaces: 60 }, graphFileCount: 0,
+    });
+    const loadBaselineFn = () => ({ version: 1, blocks: priorBlocks });
+    const existsFn = (s) => s !== parent;
+    const censusFn = (surface) => {
+      if (surface === parent) {
+        calledWithP = true;
+        throw new Error('arm 11: censusFn must never be called for a missing R1 surface');
+      }
+      if (surface === existing) {
+        return { ok: true, exitCode: 0, result: { blocking: [{ path: child, reasonCode: 'tier1-unenrolled-or-unstoried', correction: 'fix it' }] } };
+      }
+      return { ok: true, exitCode: 0, result: { blocking: [] } };
+    };
+    let threw = false;
+    let result;
+    try {
+      result = runPipeline({ base: 'x', head: 'y', maxChangedFiles: 300, maxSurfaces: 60 }, censusFn, existsFn, mappingFn, loadBaselineFn);
+    } catch {
+      threw = true;
+    }
+    let staleKeys = [];
+    let baselinedCount = -1;
+    let exitCode = -1;
+    let updatedBlocks = null;
+    if (!threw && result && !result.failClosed) {
+      const currentBlocks = dedupeBlocks(result.perSurfaceBlocks);
+      const censusedSurfaces = new Set([...result.mapping.included, ...result.reCensusSurfaces]);
+      const cmp = compareToBaseline(currentBlocks, priorBlocks, censusedSurfaces);
+      staleKeys = cmp.staleKeys;
+      baselinedCount = cmp.baselinedCount;
+      exitCode = evaluateGateExitCode({ newBlocksCount: cmp.newBlocks.length, staleKeysCount: cmp.staleKeys.length, failClosedCount: 0 });
+      updatedBlocks = computeBaselineUpdate(currentBlocks, priorBlocks, censusedSurfaces).blocks;
+    }
+    record(
+      !threw && !calledWithP &&
+        staleKeys.length === 1 && staleKeys[0] === keyP &&
+        baselinedCount === 1 &&
+        exitCode === 1 &&
+        !!updatedBlocks && !Object.prototype.hasOwnProperty.call(updatedBlocks, keyP) && Object.prototype.hasOwnProperty.call(updatedBlocks, keyE),
+      'Arm 11 — R8: a missing re-censused parent is never censused, its row goes stale and the writer drops it; an existing re-censused parent still behaves normally'
+    );
+  }
+
+  // Arm 12 (Task 831 R11/R12) — real subprocess, real fs, no git (same shape as arm 6). A .ts root is
+  // never self-blocking; a control .tsx surface still blocks normally (proves R11 did not neuter the
+  // ordinary tier-1 rule).
+  {
+    const hookSurface = 'src/hooks/useKeepActiveInView.ts';
+    const controlSurface = 'src/modules/listings/components/ListingGallery.tsx';
+    const hookCensus = censusSurface(hookSurface);
+    const hookSelfBlocked = hookCensus.ok && hookCensus.result.blocking.some((b) => b.path === hookSurface);
+    const controlCensus = censusSurface(controlSurface);
+    const controlHasBlocking = controlCensus.ok && controlCensus.result.blocking.length > 0;
+    record(
+      hookCensus.ok && !hookSelfBlocked && controlCensus.ok && controlHasBlocking,
+      `Arm 12 — real census: '${hookSurface}' (a .ts root) is not self-blocking; '${controlSurface}' (a .tsx control) still blocks normally`
+    );
+  }
+
   console.log(`\nArms run: ${ARM_COUNT}`);
   console.log(`Self-test: ${passed} passed, ${failed} failed`);
   if (failed > 0) {
@@ -414,7 +644,7 @@ function runSelfTest() {
 
 // ── CLI: gate mode / --update-baseline ──────────────────────────────────────
 
-function printScopeBlock(mapping, extra) {
+function printScopeBlock(mapping, extra, reCensus) {
   console.log('check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)');
   if (mapping.base !== undefined) {
     console.log(`    Base: ${mapping.base}  Head: ${mapping.head ?? '(n/a)'}  Merge base: ${mapping.mergeBase ?? '(n/a)'}`);
@@ -424,6 +654,21 @@ function printScopeBlock(mapping, extra) {
   for (const e of mapping.excluded ?? []) console.log(`      ${e.path}  [${e.reason}]`);
   console.log(`    Included surfaces (${(mapping.included ?? []).length}):`);
   for (const s of mapping.included ?? []) console.log(`      ${s}`);
+  // Task 831 R4/R9: a baseline parent surface is re-censused when a baseline row names it as the
+  // parent of a node that is itself a changed candidate file or a mapped-included surface this run —
+  // even though the parent itself was never directly touched or mapped by the diff. R8: a re-census
+  // surface missing on disk is never censused; its rows are retired (stale) instead.
+  const reCensusSurfaces = reCensus?.surfaces ?? [];
+  const missingSurfaces = new Set(reCensus?.missing ?? []);
+  console.log(`    Re-censused parent surfaces (${reCensusSurfaces.length}):`);
+  for (const s of reCensusSurfaces) {
+    const via = [...(reCensus.map.get(s) ?? [])].sort().join(', ');
+    const suffix = missingSurfaces.has(s) ? '  [missing on disk — rows retired]' : '';
+    console.log(`      ${s}${suffix}  <- ${via}`);
+  }
+  // R9: printed in every mode, including when the re-census set is empty.
+  console.log('    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an');
+  console.log('    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).');
   if (extra) {
     console.log(`    Surfaces censused: ${extra.censused}`);
     console.log(`    Blocks baselined (recorded debt, does not fail): ${extra.baselinedCount}`);
@@ -511,16 +756,18 @@ function main() {
       process.exit(1);
     }
 
-    const pipeline = runPipeline({ base: CLI_BASE, head: CLI_HEAD, maxChangedFiles: CLI_MAX_CHANGED, maxSurfaces: CLI_MAX_SURFACES });
+    const pipeline = runPipeline({ base: CLI_BASE, head: CLI_HEAD, maxChangedFiles: CLI_MAX_CHANGED, maxSurfaces: CLI_MAX_SURFACES, baselinePath: BASELINE_PATH });
     if (pipeline.failClosed) {
       console.error(`FAIL  check:surface-census:changed:update-baseline — mapping/census failed closed (${pipeline.stage}); cannot seed a baseline from a failed run.`);
       console.error(JSON.stringify(pipeline, null, 2));
       process.exit(1);
     }
 
-    printScopeBlock(pipeline.mapping);
+    printScopeBlock(pipeline.mapping, null, { surfaces: pipeline.reCensusSurfaces, map: pipeline.reCensusMap, missing: pipeline.missingSurfaces });
     const currentBlocks = dedupeBlocks(pipeline.perSurfaceBlocks);
-    const censusedSurfaces = new Set(pipeline.mapping.included);
+    // R2: censusedSurfaces is mapping.included ∪ R1's re-census set — a paid-off row on either kind of
+    // surface this run actually censused drops from the written baseline.
+    const censusedSurfaces = new Set([...pipeline.mapping.included, ...pipeline.reCensusSurfaces]);
     const { blocks, refusedTier2 } = computeBaselineUpdate(currentBlocks, loaded.blocks, censusedSurfaces);
     writeBaselineFile(BASELINE_PATH, BASELINE_VERSION, blocks);
 
@@ -541,40 +788,40 @@ function main() {
   }
 
   // ── Gate mode ──
-  const pipeline = runPipeline({ base: CLI_BASE, head: CLI_HEAD, maxChangedFiles: CLI_MAX_CHANGED, maxSurfaces: CLI_MAX_SURFACES });
+  const pipeline = runPipeline({ base: CLI_BASE, head: CLI_HEAD, maxChangedFiles: CLI_MAX_CHANGED, maxSurfaces: CLI_MAX_SURFACES, baselinePath: BASELINE_PATH });
 
   if (pipeline.failClosed) {
+    const reCensus = { surfaces: pipeline.reCensusSurfaces ?? [], map: pipeline.reCensusMap ?? new Map(), missing: pipeline.missingSurfaces ?? [] };
     if (pipeline.stage === 'mapping') {
       const m = pipeline.mapping;
       console.error(`FAIL  check:surface-census:changed — ${m.reason}: ${typeof m.detail === 'string' ? m.detail : JSON.stringify(m.detail)}`);
-      if (m.excluded || m.included) printScopeBlock(m);
+      if (m.excluded || m.included) printScopeBlock(m, null, reCensus);
+    } else if (pipeline.stage === 'baseline') {
+      console.error(pipeline.baseline.message);
+      printScopeBlock(pipeline.mapping, null, reCensus);
     } else {
       console.error('FAIL  check:surface-census:changed — one or more mapped surfaces made their own census exit 2 (invocation unusable):');
       for (const f of pipeline.censusFailures) console.error(`    ${f.surface}  [exit ${f.exitCode}]  ${f.detail}`);
-      printScopeBlock(pipeline.mapping);
+      printScopeBlock(pipeline.mapping, null, reCensus);
     }
     console.error('Docs: docs/storybook-governance.md §15.7, docs/golden-rules.md GR-1/GR-3.');
     process.exit(1);
   }
 
-  const loaded = loadBaselineFile(BASELINE_PATH);
-  if (loaded.error) {
-    console.error(loaded.message);
-    console.error('Docs: docs/storybook-governance.md §15.7, docs/golden-rules.md GR-1/GR-3.');
-    process.exit(1);
-  }
+  const loaded = pipeline.baseline;
 
   const currentBlocks = dedupeBlocks(pipeline.perSurfaceBlocks);
-  const censusedSurfaces = new Set(pipeline.mapping.included);
+  // R2: censusedSurfaces is mapping.included ∪ R1's re-census set.
+  const censusedSurfaces = new Set([...pipeline.mapping.included, ...pipeline.reCensusSurfaces]);
   const { newBlocks, staleKeys, carriedKeys, baselinedCount } = compareToBaseline(currentBlocks, loaded.blocks, censusedSurfaces);
 
   printScopeBlock(pipeline.mapping, {
-    censused: pipeline.mapping.included.length,
+    censused: censusedSurfaces.size,
     baselinedCount,
     carriedCount: carriedKeys.length,
     newCount: newBlocks.length,
     staleCount: staleKeys.length,
-  });
+  }, { surfaces: pipeline.reCensusSurfaces, map: pipeline.reCensusMap, missing: pipeline.missingSurfaces });
 
   if (newBlocks.length > 0) {
     console.error(`FAIL  ${newBlocks.length} block(s) not in the baseline:`);

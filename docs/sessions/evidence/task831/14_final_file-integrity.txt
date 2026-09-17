@@ -1,0 +1,49 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 19 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+npm.cmd : ❌  check:file-integrity FAILED — 13 corrupt / invalid file(s):
+At line:3 char:1
++ npm.cmd run check:file-integrity > $out1 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:file-i...nvalid file(s)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  docs/sessions/evidence/task831/01_verify_i0.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/02_prefix_gate_repro.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/03_verify_red_arms9-10.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/04_prefix_gate_repro.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/05_verify_green_10of10.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/06_postfix_gate_repro.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/07_postfix_writer.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/09_ac4_max-surfaces.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/10_ac5_default_empty-diff.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/11_final_rendered-scope-verify.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/12_final_lint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/13_final_build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task831/14_final_file-integrity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

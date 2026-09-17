@@ -1,0 +1,11 @@
+ docs/backlog.md                          |   3 +-
+ scripts/check-surface-census-changed.mjs | 177 ++++++++++++++++++++++++++-----
+ scripts/map-changed-surfaces.mjs         |   4 +
+ 3 files changed, 159 insertions(+), 25 deletions(-)
+---BASELINE-DIFF---
+---HASH---
+4d07cee3da70c73b5a87529d7ac053eba593de5d
+6b92875ddde508c6274927ceec03f480adbacb9c
+7d7aa142baa7e080ce281028eb24a78d77372e21
+14bdb8a682c39e17b32c9a818b369e3a21fcd6e9
+EXIT_CODE=0

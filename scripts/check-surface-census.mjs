@@ -436,6 +436,12 @@ function main() {
 
     const absPath = join(ROOT, path);
     const classification = classify(path);
+    // Task 831 R11: a .ts (never .tsx) file cannot contain JSX, so the depth-0 root of a census that
+    // targets one is never a component — only ever a hook, util, route handler, or similar module.
+    // Recorded with its own marker instead of the ordinary tier so it is never pushed to blockingNodes
+    // as `tier1-unenrolled-or-unstoried`. tier2/tier3 classification (rare for a root, but possible)
+    // is untouched — this only overrides what would otherwise be a plain tier1 verdict.
+    const rootIsNonComponentTs = depth === 0 && path.endsWith('.ts') && classification.tier === 'tier1';
 
     // R16: the root was already parsed and validated before this loop (exit 2 on failure, never
     // reaching here) — reuse that result rather than re-parsing. A child is parsed fresh with the
@@ -459,7 +465,7 @@ function main() {
       path,
       depth,
       parentPath,
-      tier: classification.tier,
+      tier: rootIsNonComponentTs ? 'root-non-component' : classification.tier,
       owner: classification.owner ?? null,
       reason: classification.reason ?? null,
       invalidAllowlistEntry: !!classification.invalidAllowlistEntry,
@@ -571,6 +577,8 @@ function main() {
         parseFailedCount,
         canonicalStoryCount,
         storyFileCount,
+        // Task 831 R11 — additive only.
+        tsRootRule: 'a .ts root is not a component; a .ts module that renders through createElement or re-exports a component under a non-barrel name is not walked',
       },
       nodes: orderedNodes.map((n) => ({
         path: n.path,
@@ -607,6 +615,8 @@ function main() {
   console.log('    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).');
   console.log(`    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): ${parseFailedCount}`);
   console.log('    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.');
+  console.log('    Task 831 R11: a .ts root is not a component; a .ts module that renders through createElement or');
+  console.log('    re-exports a component under a non-barrel name is not walked.');
   console.log(`    Canonical Mantine story files consulted: ${canonicalStoryCount} (of ${storyFileCount} total *.stories.ts(x)).`);
   console.log('');
 

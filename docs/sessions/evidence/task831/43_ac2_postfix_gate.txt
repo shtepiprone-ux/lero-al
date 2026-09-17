@@ -1,0 +1,160 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: ce0a9afb0  Head: c177a0920  Merge base: ce0a9afb0fe41c1d04ddaf3b1ab1050e3c0b147c
+    Changed paths seen: 122
+    Excluded (117):
+      docs/backlog-archive.md  [outside-src]
+      docs/backlog.md  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__en__1280.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__320.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__375.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__390.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/manifest.after.json  [outside-src]
+      docs/sessions/2026-09-16-task825-lightboxview-migration-and-enrolment.md  [outside-src]
+      docs/sessions/evidence/task825/01_baseline_surface-census.txt  [outside-src]
+      docs/sessions/evidence/task825/02_baseline_vitest_portal-smoke.txt  [outside-src]
+      docs/sessions/evidence/task825/02b_baseline_vitest_portal-smoke_after-resizeobserver-stub.txt  [outside-src]
+      docs/sessions/evidence/task825/02c_baseline_vitest_portal-smoke_fixed.txt  [outside-src]
+      docs/sessions/evidence/task825/03_baseline_design-tokens-strict.txt  [outside-src]
+      docs/sessions/evidence/task825/04_baseline_build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task825/05_final_vitest.txt  [outside-src]
+      docs/sessions/evidence/task825/06_final_design-tokens-strict.txt  [outside-src]
+      docs/sessions/evidence/task825/07_final_check-stories.txt  [outside-src]
+      docs/sessions/evidence/task825/08_final_check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task825/09_final_surface-census.txt  [outside-src]
+      docs/sessions/evidence/task825/10_pre-baseline-update_rendered-scope.txt  [outside-src]
+      docs/sessions/evidence/task825/11_rendered-scope_update-baseline.txt  [outside-src]
+      docs/sessions/evidence/task825/12_final_rendered-scope.txt  [outside-src]
+      docs/sessions/evidence/task825/13_final_rendered-scope-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/14_pre-baseline-update_surface-census-changed.txt  [outside-src]
+      docs/sessions/evidence/task825/15_surface-census-changed_update-baseline.txt  [outside-src]
+      docs/sessions/evidence/task825/16_final_surface-census-changed-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/17_final_check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task825/18_final_build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task825/19_final_build-storybook_v2.txt  [outside-src]
+      docs/sessions/evidence/task825/20_r6_before.json  [outside-src]
+      docs/sessions/evidence/task825/21_r6_after.json  [outside-src]
+      docs/sessions/evidence/task825/22_final_vitest_v2.txt  [outside-src]
+      docs/sessions/evidence/task825/23_final_build.txt  [outside-src]
+      docs/sessions/evidence/task825/24_final_click-shield.txt  [outside-src]
+      docs/sessions/evidence/task825/25_final_task612.txt  [outside-src]
+      docs/sessions/evidence/task825/26_final_task612_realslug.txt  [outside-src]
+      docs/sessions/evidence/task825/27_final_file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task825/28_final_mojibake.txt  [outside-src]
+      docs/sessions/evidence/task825/29_final_diff_stat.txt  [outside-src]
+      docs/sessions/evidence/task825/30_final_hash-object.txt  [outside-src]
+      docs/sessions/evidence/task825/31_ac10_failing-arm_before-r13.json  [outside-src]
+      docs/sessions/evidence/task825/32_rev1_check-stories.txt  [outside-src]
+      docs/sessions/evidence/task825/33_rev1_check-story-coverage.txt  [outside-src]
+      docs/sessions/evidence/task825/34_rev1_design-tokens-strict.txt  [outside-src]
+      docs/sessions/evidence/task825/35_rev1_build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task825/36_ac10_after-r13.json  [outside-src]
+      docs/sessions/evidence/task825/37_rev1_build-storybook_v2.txt  [outside-src]
+      docs/sessions/evidence/task825/38_rev1_build-storybook_v3.txt  [outside-src]
+      docs/sessions/evidence/task825/39_ac7-11_final-report.json  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/1.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/2.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/3.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/4.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/5.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/6.txt  [outside-src]
+      docs/sessions/evidence/task825/40_r15_census/7.txt  [outside-src]
+      docs/sessions/evidence/task825/41_r15_surface-census-changed.txt  [outside-src]
+      docs/sessions/evidence/task825/42_r15_surface-census-changed-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/43_r15_removal-script-output.txt  [outside-src]
+      docs/sessions/evidence/task825/44_rev1_typecheck.txt  [outside-src]
+      docs/sessions/evidence/task825/45_rev1_lint.txt  [outside-src]
+      docs/sessions/evidence/task825/46_rev1_vitest_targeted.txt  [outside-src]
+      docs/sessions/evidence/task825/47_rev1_vitest_full.txt  [outside-src]
+      docs/sessions/evidence/task825/48_rev1_surface-census.txt  [outside-src]
+      docs/sessions/evidence/task825/49_rev1_rendered-scope.txt  [outside-src]
+      docs/sessions/evidence/task825/50_rev1_rendered-scope-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/51_rev1_build.txt  [outside-src]
+      docs/sessions/evidence/task825/52_rev1_click-shield.txt  [outside-src]
+      docs/sessions/evidence/task825/53_rev1_task612.txt  [outside-src]
+      docs/sessions/evidence/task825/54_rev1_file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task825/55_rev1_mojibake.txt  [outside-src]
+      docs/sessions/evidence/task825/56_rev1_final_diff_stat.txt  [outside-src]
+      docs/sessions/evidence/task825/57_rev1_final_hash-object.txt  [outside-src]
+      docs/sessions/evidence/task825/58_ac15_failing-arm_before-r17.txt  [outside-src]
+      docs/sessions/evidence/task825/59_ac15_green_after-r17.txt  [outside-src]
+      docs/sessions/evidence/task825/60_ac15_green_after-r17-and-ac12-fixture-fix.txt  [outside-src]
+      docs/sessions/evidence/task825/61_platform.txt  [outside-src]
+      docs/sessions/evidence/task825/62_rev2_vitest_targeted.txt  [outside-src]
+      docs/sessions/evidence/task825/63_rev2_typecheck.txt  [outside-src]
+      docs/sessions/evidence/task825/64_rev2_lint.txt  [outside-src]
+      docs/sessions/evidence/task825/65_rev2_design-tokens-strict.txt  [outside-src]
+      docs/sessions/evidence/task825/66_rev2_build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task825/67_rev2_build.txt  [outside-src]
+      docs/sessions/evidence/task825/68_rev2_surface-census-changed-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/69_rev2_rendered-scope-verify.txt  [outside-src]
+      docs/sessions/evidence/task825/70_ac16_rail-390.json  [outside-src]
+      docs/sessions/evidence/task825/71_ac16_strip-1440.json  [outside-src]
+      docs/sessions/evidence/task825/72_ac16_strip-640.json  [outside-src]
+      docs/sessions/evidence/task825/73_ac16_summary.json  [outside-src]
+      docs/sessions/evidence/task825/74_ac16_probe_run.txt  [outside-src]
+      docs/sessions/evidence/task825/75_rev2_final_diff_stat.txt  [outside-src]
+      docs/sessions/evidence/task825/76_rev2_final_hash-object.txt  [outside-src]
+      docs/sessions/evidence/task825/77_rev2_file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task825/78_rev2_mojibake.txt  [outside-src]
+      docs/sessions/evidence/task825/79_rev2_file-integrity_final.txt  [outside-src]
+      docs/sessions/evidence/task825/80_owner-pb-fix_typecheck.txt  [outside-src]
+      docs/sessions/evidence/task825/81_owner-pb-fix_lint.txt  [outside-src]
+      docs/sessions/evidence/task825/82_owner-pb-fix_design-tokens-strict.txt  [outside-src]
+      docs/sessions/evidence/task825/83_owner-pb-fix_vitest_portal-smoke.txt  [outside-src]
+      docs/sessions/evidence/task825/84_owner-pb-fix_build.txt  [outside-src]
+      docs/sessions/evidence/task825/85_owner-pb-fix_build-storybook.txt  [outside-src]
+      docs/sessions/evidence/task825/86_owner-pb-fix_file-integrity.txt  [outside-src]
+      docs/sessions/evidence/task825/87_owner-pb-fix_mojibake.txt  [outside-src]
+      docs/sessions/evidence/task825/88_owner-pb-fix_file-integrity_final.txt  [outside-src]
+      docs/sessions/evidence/task825/89_review2_task612.txt  [outside-src]
+      docs/sessions/evidence/task825/90_review2_click-shield.txt  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/design-system/mantine/patterns/GalleryNavActionIcon.module.css  [not-ts-tsx]
+      src/hooks/__tests__/useKeepActiveInView.test.ts  [story-or-test-file]
+      src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx  [story-or-test-file]
+      src/modules/listings/components/LightboxView.module.css  [not-ts-tsx]
+      src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/LightboxView.stories.tsx  [story-or-test-file]
+      tasks/Sprints/Sprint_75_kickoff_prompt_Task_825_LightboxView_Migration_And_Enrolment.md  [outside-src]
+      tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md  [outside-src]
+    Included surfaces (5):
+      src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+      src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+      src/design-system/mantine/theme.ts
+      src/hooks/useKeepActiveInView.ts
+      src/modules/listings/components/LightboxView.tsx
+    Re-censused parent surfaces (7):
+      src/app/[locale]/ci/click-shield-modal/page.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/app/[locale]/listings/[slug]/page.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/app/admin/listings/[id]/preview/page.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/modules/listings/components/ListingDetailView.tsx  <- src/modules/listings/components/LightboxView.tsx
+      src/modules/listings/components/ListingGallery.tsx  <- src/modules/listings/components/LightboxView.tsx
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 12
+    Blocks baselined (recorded debt, does not fail): 54
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 591
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 8
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+FAIL  8 stale baseline entr(ies) — no matching block exists:
+    src/app/[locale]/ci/click-shield-modal/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/design-system/mantine/theme.ts :: src/design-system/mantine/theme.ts :: tier1-unenrolled-or-unstoried
+    src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+    src/modules/listings/components/ListingGallery.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  Fix: run `npm run check:surface-census:changed:update-baseline` to drop paid-off debt from the baseline.
+
+Docs: docs/storybook-governance.md §15.7, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

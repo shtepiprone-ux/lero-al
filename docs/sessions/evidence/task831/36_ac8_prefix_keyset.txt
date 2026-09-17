@@ -1,0 +1,4 @@
+LightboxView keys in before-scratch: 7
+still present after pre-fix writer run: 7
+all 7 present: true
+EXIT_CODE=0

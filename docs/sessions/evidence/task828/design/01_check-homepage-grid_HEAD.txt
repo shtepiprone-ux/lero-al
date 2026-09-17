@@ -1,0 +1,54 @@
+platform: win32 node: v22.22.3 HEAD: c177a092093ff827a819b05afd8171a29a5ca0f3
+command: npm.cmd run check:homepage-grid (storybook-static built 2026-09-17 09:49)
+
+> lero-al@0.1.0 check:homepage-grid
+> node scripts/check-homepage-grid.mjs
+
+check-homepage-grid.mjs — asserting the real tree
+
+  I-A/supporting (step matrix, task420 source): 0/88 PASS, 88 FAIL
+    ✗ I-A Featured @ sq@320 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@375 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@390 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@640 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@768 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@1024 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@1280 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@1440 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@1536 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@1920 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ sq@2560 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@320 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@375 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@390 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@640 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@768 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@1024 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@1280 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@1440 (system-featuredlistings--default) - grid-not-found
+    ✗ I-A Featured @ en@1536 (system-featuredlistings--default) - grid-not-found
+  I-A/I-B/I-D (gap matrix, task668-grid-1440 source): 0/160 PASS, 160 FAIL
+    ✗ I-A/I-B Featured @ sq@320 (system-featuredlistings--default) - columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@640 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@768 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1024 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1280 (system-featuredlistings--default) - columnCount=1 expected=3; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1439 (system-featuredlistings--default) - columnCount=1 expected=3; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1440 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1535 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1536 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ sq@1920 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@320 (system-featuredlistings--default) - columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@640 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@768 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1024 (system-featuredlistings--default) - columnCount=1 expected=2; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1280 (system-featuredlistings--default) - columnCount=1 expected=3; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1439 (system-featuredlistings--default) - columnCount=1 expected=3; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1440 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1535 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1536 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+    ✗ I-A/I-B Featured @ en@1920 (system-featuredlistings--default) - columnCount=1 expected=4; columnGap=normal expected=16px; rowGap=normal expected=16px
+  I-C (header matrix, task668-header-geometry source): 12/12 PASS, 0 FAIL
+
+TOTAL: 12/260 PASS, 248 FAIL
+EXIT_CODE=1

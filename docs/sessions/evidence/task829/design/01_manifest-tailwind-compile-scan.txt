@@ -1,0 +1,8 @@
+platform: win32 node: v22.22.3 HEAD: c177a092093ff827a819b05afd8171a29a5ca0f3
+command: node.exe docs/sessions/evidence/task829/design/90_scan829.mjs <root>  (tailwindcss 4.3.0, @tailwindcss/node __unstable__loadDesignSystem(globals.css).candidatesToCss)
+manifest entries 73; files with Tailwind-compiling className tokens 4
+1	src/modules/listings/components/ListingDetailView.tsx	hidden
+1	src/design-system/mantine/patterns/MantineListingContactPattern.tsx	animate-spin
+2	src/design-system/mantine/patterns/MantineListingDetailPattern.tsx	shrink-0 text-muted-foreground
+26	src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx	flex items-center justify-center bg-muted h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] h-10 w-10 text-muted-foreground relative overflow-hidden rounded-lg absolute inset-0 block h-full w-full shrink-0 pointer-events-none bottom-2 left-2 rounded-full px-2 py-0.5 text-xs
+EXIT_CODE=0

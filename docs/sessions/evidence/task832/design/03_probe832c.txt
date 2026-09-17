@@ -1,0 +1,4 @@
+platform: win32 node: v22.22.3 HEAD: c177a092093ff827a819b05afd8171a29a5ca0f3 server: next start (build 2026-09-17 09:49, CLICK_SHIELD_CI_FIXTURE=1)
+command: node.exe docs/sessions/evidence/task832/design/9c_probe832c.mjs <root>  (JSON quote characters were stripped by PowerShell argument passing; values unchanged)
+[{cy:810.5,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:t},{cy:811,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:t},{cy:811.25,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:t},{cy:811.5,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null},{cy:811.75,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null},{cy:811.9,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null},{cy:811.99,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null},{cy:812,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null},{cy:812.01,innerHeight:812,clientHeight:3000,dpr:1,vv:812,hit:null}]
+EXIT_CODE=0

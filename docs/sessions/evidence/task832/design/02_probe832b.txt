@@ -1,0 +1,15 @@
+platform: win32 node: v22.22.3 HEAD: c177a092093ff827a819b05afd8171a29a5ca0f3 server: next start (build 2026-09-17 09:49, CLICK_SHIELD_CI_FIXTURE=1)
+command: node.exe docs/sessions/evidence/task832/design/9b_probe832b.mjs <root>  (JSON quote characters were stripped by PowerShell argument passing; values unchanged)
+{loc:sq,w:320,h:812,offsets:[0,812,1624,2436,2709],edge:[]}
+{loc:sq,w:375,h:812,offsets:[0,812,1624,2436,2710],edge:[]}
+{loc:sq,w:390,h:844,offsets:[0,844,1688,2532,2664],edge:[]}
+{loc:en,w:320,h:812,offsets:[0,812,1624,2436,2694],edge:[]}
+{loc:en,w:375,h:812,offsets:[0,812,1624,2436,2704],edge:[]}
+{loc:en,w:390,h:844,offsets:[0,844,1688,2532,2658],edge:[]}
+{loc:uk,w:320,h:812,offsets:[0,812,1624,2436,2791],edge:[]}
+{loc:uk,w:375,h:812,offsets:[0,812,1624,2436,2754],edge:[]}
+{loc:uk,w:390,h:844,offsets:[0,844,1688,2532,2708],edge:[]}
+{loc:it,w:320,h:812,offsets:[0,812,1624,2436,2704],edge:[]}
+{loc:it,w:375,h:812,offsets:[0,812,1624,2436,2724],edge:[]}
+{loc:it,w:390,h:844,offsets:[0,844,1688,2532,2678],edge:[]}
+EXIT_CODE=0

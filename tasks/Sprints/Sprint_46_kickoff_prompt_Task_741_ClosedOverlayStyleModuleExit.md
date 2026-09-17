@@ -1,5 +1,9 @@
 # Task 741 — Retire `CLOSED_OVERLAY_STYLE`'s Tailwind strings into `ListingCard.module.css`
 
+> **Status: `NEEDS REVISION` — reopened by the owner 2026-09-17 (Revision 2). The ONLY executable route is §16 at the
+> end of this file.** §1–§15 are the closed 2026-08-15 migration and are kept as history. Their D28 "nothing rendered may
+> change" constraint does **not** bind §16, because the owner ordered a style change.
+
 **Sprint 46.6. Q4 — Release/Critical Flow** (it edits `ListingCard.tsx`, named in
 `docs/critical-flow-registry.md:57`).
 
@@ -469,3 +473,164 @@ true. 695 hit this exact shape in a file its own kickoff had not inspected and h
 mid-task; here all four sites are named up front, so there is no excuse for a partial census. Ask of
 each artifact you produce: *what would have to be broken for this to redden?* If the answer is
 "nothing", that artifact is the defect.
+
+---
+
+## 16. Revision 2 — one canonical "Sold"/"Rented" style on every listing card, no hardcode (owner reopened 2026-09-17)
+
+Sprint 46 · P1 · QA profile **Q4** (edits `ListingCard.tsx`, which is in the critical-flow registry at
+`docs/critical-flow-registry.md:63`). Every executor action comes from this section alone. New evidence goes to
+`docs/sessions/evidence/task741r2/`.
+
+### 16.1 Owner decision — 2026-09-17, quoted verbatim
+
+> Але я бачу проблемні місця всередині карток. Наприклад, на проді і в Storybook я бачу різні типи карток з різними
+> стилями елементів "Продано" і "Орендовано". Необхідно вияснити все ж таки, які стилі є канонічними і привести вусе до
+> одного стилю, а hardcode видалити.
+
+> Необхідно зробити ревізію на задачу, яка відповідає за картки
+
+This is still in force (2026-08-14, quoted in §2): *"MantineListingCardOverlay зберігає `className?: string` як довільний
+public pass-through. Не замінювати його tone-пропом"*. §16 therefore **adds** a colour field next to `className`, and does
+not replace `className`.
+
+### 16.2 Verified findings (orchestrator, 2026-09-17, working tree)
+
+- **F1 — three status styles on one card.** On a closed grid card, "Sold" is drawn twice, in two different styles:
+  - The top-left badge is a Mantine `Badge variant="filled"` with `color="blueLight"` (rented: `purple`). Source:
+    `ListingCard.tsx:78-98` `getBadges`, rendered at `MantineListingCardPattern.tsx:320-326`.
+  - The centred rotated overlay is a plain `<span>`. Its colour comes from `ListingCard.module.css:102-120`
+    `.closedOverlaySold`/`.closedOverlayRented`: `var(--status-info)`/`var(--status-rented)`, an 80% `color-mix` tier
+    and a border. Its typography, padding, radius and 2px border are hand-copied Tailwind output in
+    `MantineListingCardPattern.module.css:449-460` `.overlayLabel`, with 5 `design-tokens-allow` suppressions. The
+    scrim is `.overlayCenter` (`:440-447`, `#0000004d` plus a `color-mix` tier).
+- **F2 — Storybook differs from production.** `Patterns/Mantine/ListingCardPattern` renders its sold overlay with
+  `className: 'consumer-overlay-hook'` (`ListingCardPattern.stories.tsx:178-180`), which carries no colour. Its "Sold"
+  overlay therefore renders uncoloured, while production's is blue. The story has no rented card at all.
+  `Mantine/Primitives/ListingCard` (`ListingCard.stories.tsx:107-125`) renders the real `ListingCard` sold and rented,
+  so it shows the production look. The two Storybook pages disagree.
+- **F3 — the canonical tone already exists and the overlay bypasses it.** `sold → blueLight`, `rented → purple` is
+  defined in three places:
+  - the theme: `theme.ts:286` `blueLight`, `:327` `purple`;
+  - the canonical Badge story: `Mantine/Primitives/Badge`, Task 617, `Badge.stories.tsx:36-37`;
+  - the two consumers `ListingCard.tsx:91,96` and `ListingStatusBanner.tsx:27-34`, story
+    `Mantine/Primitives/ListingStatusBanner`.
+
+  Only the overlay uses raw `--status-*` CSS variables with its own opacity.
+- **F4 — the tone map is duplicated.** `ListingCard.tsx` `getBadges` and `ListingStatusBanner.tsx` `COLORS` each carry
+  their own copy of the same mapping.
+- **F5 — the card story itself uses Tailwind.** `ListingCardPattern.stories.tsx` has `className` at `:82`
+  (`h-[180px] flex items-center justify-center bg-muted`), `:83` (`text-muted-foreground`), `:119` (`whitespace-nowrap`),
+  `:131` (`text-xs text-muted-foreground`) and `:198` (`shrink-0 -mt-0.5 -mr-1` / `shadow-sm`).
+
+### 16.3 Canonical decision (Opus, binding for this revision; the owner visual matrix can return it)
+
+| Visible artifact | Canonical source (inspected) | Disposition |
+|---|---|---|
+| Closed-status colour, everywhere on a card | Mantine theme colours `blueLight` (sold) / `purple` (rented), proven by `Mantine/Primitives/Badge` and already used by the card badge and `ListingStatusBanner` | **reuse**: one exported map, `LISTING_STATUS_COLOR`, in a new `src/modules/listings/components/listingStatusColors.ts`, consumed by `getBadges`, the overlay and `ListingStatusBanner` |
+| Centred rotated overlay label | Mantine `Badge variant="filled"` with the same `color`, at the size of the pattern's existing status badges (`MantineListingCardPattern.tsx:323`) | **extend** `MantineListingCardPattern`: `MantineListingCardOverlay` gains `color?: string`. With `color`, the label renders as that `Badge`; `className` is still merged onto it. The only local declaration kept is the `-8deg` rotation, in `.overlayLabel`. Remove every hand-copied typography, padding, radius and border declaration and their `design-tokens-allow` markers |
+| Overlay scrim | Mantine `Overlay` (native) with `color="var(--overlay)"` (`globals.css:527`) and `backgroundOpacity={0.3}` | **extend**: replaces `.overlayCenter`'s literal and `color-mix` rules |
+| `.closedOverlaySold` / `.closedOverlayRented` / `CLOSED_OVERLAY_STYLE` | none — hardcode | **delete** |
+
+`GR-3a STORY PREFLIGHT — MantineListingCardPattern × sold/rented overlay; canonical candidates: patterns-mantine-listingcardpattern--default, mantine-primitives-listingcard--default; direct-import evidence: src/stories/patterns/mantine/ListingCardPattern.stories.tsx (MantineListingCardPattern), src/stories/mantine/primitives/ListingCard.stories.tsx:123-124 (ListingCard); toolbar coverage: locale=context.globals.locale, viewport=toolbar (no pin in either file); decision: EXTEND; target: patterns-mantine-listingcardpattern--default (add a rented DemoCard in the existing grid and list sections, no new export) and mantine-primitives-listingcard--default (unchanged, it is already the production proof); rationale: both pages exist and import the real sources; the defect is the missing colour and the missing rented card, not a missing page.`
+
+`GR-1 CENSUS COMPLETE — card surface ListingCard → MantineListingCardPattern plus its slot children; tier1 2 (ListingCard, MantineListingCardPattern — in manifest, own stories, changed here); tier2 0; tier3 re-listed at I0 from the census command, none changed here.` Re-run
+`node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingCard.tsx` at I0 and paste its
+node list into the session log. Stop on any blocking (unmigrated) node.
+
+**Out of scope, by owner decision:** admin status maps (`AdminListingsTable.tsx:79`, `AdminDashboardRecentListings.tsx:35`).
+The owner deferred them to the admin Mantine migration (2026-09-17, same session). **Out of scope, reserved:** the cabinet
+`ListingsTab.stories.tsx` status variants belong to **789**. The legacy `src/components/ui/badge.tsx` `rented` variant is
+a tier-2 primitive consumed outside cards. Re-verify at I0 that the card surface does not import it:
+`git grep -n "components/ui/badge" -- src/modules/listings src/design-system/mantine/patterns`.
+
+### 16.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R20** | `listingStatusColors.ts` exports `LISTING_STATUS_COLOR` covering sold, rented, archived, expired, pending and inactive, with today's values. `ListingCard.tsx` `getBadges` and `ListingStatusBanner.tsx` read it, and neither keeps a local colour literal for these statuses. | P0 |
+| **R21** | `MantineListingCardOverlay` gains `color?: string`. With `color` set, the overlay label is a Mantine `Badge variant="filled" color={color}` at the pattern's status-badge size, rotated by `.overlayLabel`. `overlay.className` is still merged onto the label: the existing smoke test (`MantineListingCardPattern.smoke.test.tsx:112-117`) and the story play test stay green. | P0 |
+| **R22** | The scrim is Mantine `Overlay` with `color="var(--overlay)"` and `backgroundOpacity={0.3}`. `.overlayCenter` is deleted. `.overlayLabel` keeps only the rotation. | P0 |
+| **R23** | `ListingCard.tsx` passes `overlay = { label, color: LISTING_STATUS_COLOR[status] }`. `CLOSED_OVERLAY_STYLE`, its comment block and `.closedOverlaySold`/`.closedOverlayRented` (including their `@supports` block) are deleted. | P0 |
+| **R24** | In Storybook `Patterns/Mantine/ListingCardPattern` → `Default`, the grid and list sections each show a sold and a rented card. Their badge and overlay use `color` from `LISTING_STATUS_COLOR`, and the `consumer-overlay-hook` play test is kept. The file's F5 Tailwind `className` sites are replaced with Mantine style props (`h`, `c`, `fz`, `bg`, `Center`/`Group`). If a replacement needs a value with no Mantine/theme source, stop and report it. | P0 |
+| **R25** | For every closed grid card with an overlay, in both Storybook pages, the overlay label's computed `background-color` equals the top-left status badge's computed `background-color` on the same card. | P0 |
+| **R26** | Smoke tests: `ListingCard.smoke.test.tsx` asserts that a sold card and a rented card pass the same colour to badge and overlay. `MantineListingCardPattern.smoke.test.tsx` asserts that `overlay.color` renders a Mantine Badge while `className` still merges. Both are red against the pre-change tree first. | P0 |
+
+### 16.5 Flows
+
+**Positive.** A sold listing card, in Storybook and on `/listings`, reads "SOLD" twice in the same blue filled badge style:
+top-left and rotated in the centre, over a black 30% scrim. A rented card does the same in purple.
+
+| Negative flow | Applicable | Expected |
+|---|---|---|
+| Active / new / price-reduced card | Yes | no overlay; badges unchanged (`green`, `sale`) |
+| Archived / expired card | Yes | badge only (`gray` / `yellow`), no overlay, as today |
+| List layout | Yes | badge only, same colour as grid (the pattern never renders an overlay in list) |
+| Consumer passes `overlay.className` without `color` | Yes | className still merged (owner decision 2026-08-14); the label has no Badge colour |
+| Long uk / sq label at 320px | Yes | badge does not overflow the image; owner matrix |
+| Detail page `ListingStatusBanner` | Yes | same colours as today, now from the shared map |
+
+### 16.6 Acceptance criteria
+
+- **AC20 [R20]** — `git grep -n "'blueLight'" -- src/modules/listings/components` and the same for `'purple'` list only
+  `listingStatusColors.ts`.
+- **AC21 [R21–R23]** — `git grep -n -E "closedOverlay|CLOSED_OVERLAY_STYLE|overlayCenter" -- src` prints nothing. The
+  `.overlayLabel` rule contains only the rotation and no `design-tokens-allow` marker.
+- **AC22 [R26]** — the new smoke assertions are red on the pre-change tree (`01_red.txt`, non-zero) and green after
+  (exit 0).
+- **AC23 [R25]** — a probe on the built Storybook, `en`, 1440px, covers `mantine-primitives-listingcard--default` (sold
+  and rented grid cards) and `patterns-mantine-listingcardpattern--default` (sold and rented grid cards). It records
+  overlay and badge computed `background-color` per card, and they are equal for every card. Retain the JSON. The probe
+  script lives in the evidence folder and is not a gate.
+- **AC24 [R24]** — `git grep -n "className=" -- src/stories/patterns/mantine/ListingCardPattern.stories.tsx` prints no
+  Tailwind utility; only the `consumer-overlay-hook` contract may remain. `check:stories`, `check:story-coverage`,
+  `check:design-tokens:strict` and `governance:tailwind` exit 0. The `check:locale-leak:mantine-only` `report.json` has no
+  leak for the two card story IDs.
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: the empty greps are the defined end state of deleting named hardcode.`
+
+### 16.7 Verification plan
+
+I0: `git --no-optional-locks status --porcelain`, `git hash-object` of every file you will edit, the §16.3 census and
+`components/ui/badge` grep, and `git grep -n "^\s*--overlay\s*:" -- src/app/globals.css`. Then write the R26 assertions,
+run the two smoke files and retain the red transcript before touching production code.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run governance:tailwind
+npm.cmd run build-storybook
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep -n -E "closedOverlay|CLOSED_OVERLAY_STYLE|overlayCenter" -- src
+git --no-optional-locks status --porcelain
+```
+
+Expected: exit 0 for every command, except:
+- the `git grep` line exits 1 with no output;
+- `check:locale-leak:mantine-only` is judged by AC24's property (it is non-blocking in CI and red on unrelated stories).
+
+Each command gets its own unpiped transcript with `EXIT_CODE=`.
+
+### 16.8 Owner visual review — `OWNER VISUAL QA REQUIRED`
+
+| Story | Toolbar viewports | Toolbar locales | Owner checks |
+|---|---|---|---|
+| `Mantine/Primitives/ListingCard` → `Default` | 320, 768, 1440 | en, uk | sold/rented grid cards: badge and centred overlay share one style and colour; scrim; list card badge |
+| `Patterns/Mantine/ListingCardPattern` → `Default` | 320, 768, 1440 | en, uk | the same look as the page above, for sold and rented in grid and list; no-image placeholder and footer still render |
+| `Mantine/Primitives/ListingStatusBanner` | 1440 | en | sold/rented colours unchanged |
+| production `/uk/listings` after deploy | desktop + mobile | uk | a sold/rented card looks like Storybook |
+
+### 16.9 Completion
+
+Write `docs/sessions/<date>-task741r2-closed-status-canonical-style.md` with the owner quotes, R20–R26, the red and green
+transcripts, the probe JSON, the gate block and a `Files Changed` table. Update the 741 state in `docs/backlog.md`. Status
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval, no git.

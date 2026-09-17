@@ -2,8 +2,10 @@
 
 Sprint 75 · P2 · QA profile **Q4**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Route fixed by owner decision 2026-09-17 (§5.1). **Folds reserved Task
-735** (enrol `System/FeaturedListings` via the Task 678 per-story mechanism, §3.6).
+**Status: `NEEDS REVISION` 2026-09-17 — the owner rejected the task (review 3). The ONLY executable route is §18.
+§1–§17 are history. Do not follow their migration, enrolment, story-shell or visual-matrix instructions, except where §18
+explicitly keeps something.** The §5.1 route is superseded by the owner decision in §18.1. **Folds reserved Task 735**
+(its enrolment half is moot, because §18 deletes the story instead).
 
 ## 1. Mode and task type
 
@@ -212,8 +214,11 @@ story rule, and they pass.
   run exits 0. `git --no-optional-locks grep -c "className" -- src/stories/FeaturedListings.stories.tsx src/stories/LatestListings.stories.tsx src/stories/SimilarListings.stories.tsx src/stories/RecentlyViewedSection.stories.tsx`
   prints no line (`git grep -c` omits files with 0 matches) and exits 1. Quote both gate runs and the grep with its exit code.
 - **AC5 [R1]** — `npm run check:story-coverage` and `npm run check:stories` exit 0 on the final tree. Quote summaries.
-- **AC6 [R8–R10]** — `npm run check:locale-leak:mantine-only` output names the 4 titles in scope and reports no leak
-  in them. `governance:tailwind` and `check:stories` verdicts for the two allowlist rows are quoted with the resulting
+- **AC6 [R8–R10]** — `npm run check:locale-leak:mantine-only` reports `Mantine selected:` equal to the
+  `of N canonical` count printed by the same-tree `check:card-track-monotonicity` run (both select via
+  `isCanonicalMantineTitle`; the monotonicity run lists the `system-*` IDs by name), and its `report.json` `leaks[]` has no
+  `storyId` starting with `system-`. The leak gate's own exit code is not an AC: it is a non-blocking CI job, and leaks in
+  other stories are outside this task (amended by review 1, §16.1 F2). `governance:tailwind` and `check:stories` verdicts for the two allowlist rows are quoted with the resulting
   edit or no-edit. `docs/backlog-reserved.md` 735 row reads folded into 827.
 
 `GR-4 AC AUDIT — 6 criteria; each states an observable property; absolutes: "zero className" and "no ancestor carries
@@ -313,3 +318,279 @@ with exit code and path · assumptions · deviations · limitations · §13.3 ma
 | 3 green | §13.2 | any non-zero → not `IMPLEMENTED` |
 | 4 geometry | AC3 probe JSON | any `container-wide` ancestor → not done |
 | 5 owner | §13.3 | owner-recorded; not self-scored |
+
+## 16. Review 1 — `NEEDS REVISION` 2026-09-17 (re-entry route)
+
+Everything else from the first pass has been verified against the real diff and is kept. Final hashes match
+`23_final-hashes.txt`. The failing arm is red on the 4 drops and 14 findings, and the final gates are green. The AC3
+probe has 56 cells with zero `container-wide` ancestors. **Re-entry mode: `remediation`.** Do not edit the 4 story files,
+`mantine-story-scope.mjs`, its test, or `check-card-track-monotonicity.mjs`. Do not rebuild Storybook, and do not re-run
+monotonicity, the AC3 probe or I0. Keep every artifact `00`–`27`. New artifacts start at `28_`.
+
+### 16.1 Findings
+
+**F1 — P2 MEDIUM — R5, R6, AC1, AC4 · `scripts/check-design-tokens.mjs` `readStaticStoryTitle`.**
+*Observed:* the regex returns the **first** `title:` string literal anywhere in the file. R5 requires "the `title: '…'`
+literal inside the default-exported meta object". The code comment says every story in the repo "declares exactly one
+`meta.title`". That premise is false: in 6 of 148 story files, a fixture `title:` comes before `meta`
+(`src/components/admin/AdminReportsManager.stories.tsx`, `src/modules/cabinet/components/ListingsTab.stories.tsx`,
+`src/modules/listings/components/ListingFormShellView.stories.tsx`,
+`src/modules/notifications/components/NotificationItem.stories.tsx`,
+`src/stories/mantine/primitives/NotificationBellView.stories.tsx`,
+`src/stories/patterns/mantine/ListingDetailView.stories.tsx`).
+*Reviewer probe:* content `const FIXTURE = { title: 'Apartament 2+1' }` followed by
+`const meta = { title: 'System/FeaturedListings' }` and `className="px-4"`, at
+`src/stories/FeaturedListings.stories.tsx`, returns `isCanonicalMantineStoryFile → false` with 0 findings. Without
+the fixture line, it returns `true` with 1 finding.
+*Impact:* when a story with that shape is title-enrolled, it is still selected by monotonicity, story coverage and
+locale leak, because those read titles from the built index. The Tailwind rule silently skips it. That is the
+fail-open blind spot this sprint exists to close. There is no wrong result today, because none of the 4 non-canonical-path
+files above is enrolled.
+*Resolution:* read the title only from the default-exported meta object. Support both repo forms: a
+`const <name>(: Meta…)? = {…}` object whose identifier is the target of `export default <name>`, and an inline
+`export default {…}` (with or without `satisfies`/`as`). Take `title:` only at that object's top level. If the object or its
+title literal cannot be located, return `null` (non-canonical by title, and the path rule still applies). Keep
+`isCanonicalMantineTitle` imported, never re-implemented. Correct the false comment.
+*Verification:* R6 gains arms that must be red against the current `HEAD` implementation before the fix (retain the
+transcript), then green after it:
+- **(d)** a fixture `title: 'Apartament 2+1'` before `const meta = { title: 'Admin/AdminUsersTable' }` + `export default meta` + `className="px-4"` at a non-canonical path → 1 `tailwind-dimension-utility` finding;
+- **(e)** a fixture `title: 'Admin/AdminUsersTable'` before `const meta = { title: 'System/Containers' }` + `export default meta` + `className="px-4"` at a non-canonical path → 0 findings. This fails closed in the other direction too;
+- **(f)** a file with `title:` but no locatable default-exported meta → 0 findings, no throw.
+
+Then run `check:design-tokens:strict`. It must print the same `103 canonical Mantine stories` as `07_` and exit 0. A
+different count is a stop: report which file changed membership.
+
+**F2 — orchestrator defect in AC6 / §13.2, corrected in place (no executor code).** AC6 asked the leak gate's output to
+"name the 4 titles". That output only prints `Mantine selected: N`, and §13.2 expected exit 0 from a non-blocking job
+that is red on other stories. AC6 now states the observable property. The retained `15_` (155 selected, equal to
+`11_`'s `of 155 canonical`, which lists the `system-*` IDs) and its `report.json` (no `system-*` leak) already satisfy it.
+Quote both in the session log. Do not re-run the gate.
+
+**F3 — P3 LOW — session log accuracy.** §1 R5 says "103 canonical stories (was 99 pre-R3)". `03_i0-design-tokens-strict.txt`
+prints **98**. The +5 is the 4 `System/*` files plus `src/components/admin/AdminUsersTable.stories.tsx`, which is now
+correctly under the rule through its existing enrolment. State that. §8 says "`Mantine selected: 155` (was 151)". No
+I0 leak transcript exists. The measured baseline is `02_i0-monotonicity.txt` `of 141 canonical` (+14 stories). Correct
+both. §4 omits `27_final2-file-integrity.txt`. Add it.
+
+### 16.2 Re-entry gate block
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts
+npx.cmd vitest run scripts/__tests__/mantine-story-scope.test.ts scripts/__tests__/check-design-tokens.test.ts
+npm.cmd run check:design-tokens:strict
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks diff --stat
+git --no-optional-locks hash-object scripts/check-design-tokens.mjs scripts/__tests__/check-design-tokens.test.ts docs/backlog.md
+```
+
+Run the first `vitest` line after adding arms (d)–(f) and **before** changing `readStaticStoryTitle`. It must exit
+non-zero on (d) (`28_red-arms.txt`). If it exits 0, stop with `BLOCKED — TEST BLIND`. Every other command must exit 0
+after the fix. Each gets its own unpiped transcript with `EXIT_CODE=`.
+
+### 16.3 Completion
+
+Update the session log with a `Revision 1` section: F1 diff, red/green arm transcripts, F2 quotes and F3 corrections.
+Update the `Files Changed` table. Update the `docs/backlog.md` 827 sentence. Status `IMPLEMENTED - AWAITING ORCHESTRATOR
+REVIEW`. The §13.3 owner visual matrix is still owed and is not affected by this revision.
+
+## 17. Review 2 — `PARTIALLY VERIFIED` 2026-09-17
+
+F1 is fixed. The red-first evidence exists: `28_red-arms.txt` has (d)/(e) failing against the old reader, and `30_` has
+162/162 passing. `31_` still reports 103 canonical stories. A reviewer probe compared the new reader with each file's own
+`meta`/`export default` title across all 148 story files and found 0 differences. The hashes of `check-design-tokens.mjs`,
+its test and `docs/backlog.md` match `42_final2-hashes.txt`. `34_` (build, exit 0) is newer than the last source write. F2
+is closed by `40_` (0 `system-*` leaks out of 167). F3 is corrected.
+
+**Open, blocks approval:** the §13.3 owner visual matrix (`agent-contract` 12, owner rule 2026-09-03). No executor work is
+owed. Once the owner records every tuple as accepted, the next review can close the task. A returned tuple becomes a
+revision.
+
+**P3, filed as Task 833 (not blocking):** `readStaticStoryTitle` treats every `'` as a string opener, including one in a
+`//` comment or JSX text inside `meta` before `title:` (`// don't…`, `<p>It's</p>`). The title then reads `null`, and the
+Tailwind rule fails open for that enrolled file. Reviewer probe: both shapes return `null`. No story file has this shape
+today, because the 148-file comparison found 0 differences.
+
+## 18. Review 3 — owner rejection, `NEEDS REVISION` 2026-09-17 — THE EXECUTABLE ROUTE
+
+### 18.1 Owner decision — 2026-09-17, quoted verbatim
+
+> не приймаю задачу. Всі Minetine Stories знаходяться у розділі Minetine Primitives або у Patterns  Minetine. Також ці
+> нові мігровані story взагалі не так зроблені як всі Minetine Stories, а саме не треба плодити сторінки, story має
+> підтримувати локалізації у навігації  Storybook, а також breakpoints з Storybook. Ці нові story більше схожі на
+> Tailwind hardcode stories
+
+The rejection is correct, and the defect was in this kickoff's design, not the executor's work. §5.1 read "Mantine
+canonical" as "put the shell in place, then enrol the `System/*` titles". The owner's rule, already written in
+`docs/storybook-governance.md:9-15` and `:136`, is different. Mantine stories live under `Mantine/Primitives/` or
+`Patterns/Mantine/`. There are no extra pages: no `LocaleStress`, `MobileScroll` or width-named exports. Locale and
+breakpoint come from the Storybook toolbar, and nothing pins them through `globals.viewport`. After pass 1 the four
+files still had `LocaleStress`/`MobileScroll` exports and five `globals.viewport` pins (`desktop1280`, `mobile320`,
+`mobile375`).
+
+### 18.2 Binding reading (Opus, reversible — the owner can overrule)
+
+1. **Delete the four `System/*` listing story files. Do not retitle them.** Each one duplicates a canonical Mantine story
+   that already renders the same real View (§18.3). Retitling them would create exactly the duplicate pages the owner
+   forbids. The Sprint 48 "do not re-title" constraint (§3.5) is superseded by this decision: the IDs are retired, not
+   kept.
+2. **The one state with no canonical proof moves into its canonical story as a state export.** The Featured/Latest empty
+   branch becomes `Empty` on `Patterns/Mantine/HomepageListingGrids`. No other export, page or story file is added.
+3. **Reverse the enrolment of the four `System/*` titles.**
+4. **Kept from pass 1 and Revision 1 (verified in review 2, do not touch):** the title-aware canonical-story membership
+   in `scripts/check-design-tokens.mjs` (R5) and its test arms (a)–(f). They still serve the existing title-enrolled
+   `Admin/AdminUsersTable` (`src/components/admin/AdminUsersTable.stories.tsx`). Task 833 stays as filed.
+
+### 18.3 Verified context (read 2026-09-17, working tree)
+
+**Canonical coverage of every state the deleted exports showed** — `FACT`, each file opened:
+
+| Deleted export (HEAD) | Canonical proof after §18 |
+|---|---|
+| `System/FeaturedListings` `Default` · `System/LatestListings` `Default` (signed-in, card 0 favorited) | `Patterns/Mantine/HomepageListingGrids` `Default` (`HomepageListingGrids.stories.tsx:84-124`, both Views, `MOCK_SIGNED_IN_AUTH`, card 0 favorited) |
+| Featured/Latest `LocaleStress` | toolbar locale on `HomepageListingGrids` `Default` |
+| Featured/Latest `Loading` | `HomepageListingGrids` `Loading` (`:126-162`) |
+| Featured/Latest `Empty` | **none** — `FeaturedListingsView.tsx:80-87` (header + `t('no_premium_listings')`) and `LatestListingsView.tsx:57-61` (`t('no_listings')`) → **new `HomepageListingGrids` `Empty` (R12)** |
+| `System/SimilarListings` `Default` / `LocaleStress` | `Mantine/Primitives/SimilarListingsView` `Default` (+ `FewerThanEight`, `Empty`) and toolbar locale |
+| `System/RecentlyViewedSection` `Populated` (with `ClearRecentlyViewedButton`) | `Mantine/Primitives/RecentlyViewedGridView` `Populated` (same `clearSlot`) |
+| RecentlyViewed `MobileScroll` / `LocaleStress` | toolbar viewport / locale on `Populated` |
+| RecentlyViewed `EmptyState` (`showEmptyState`) | `RecentlyViewedGridView` `Empty` (same prop) |
+
+`FACT` — all four `messages/{en,sq,it,uk}.json` define `listing.no_premium_listings` and `listing.no_listings` at lines
+50-51. uk reads `Оголошення не знайдено` / `Зараз немає преміум оголошень.`. Re-measure at I0 for freshness only.
+
+`FACT` — `scripts/check-homepage-grid.mjs:84-85` requires only `--default` and `--loading`. An added `--empty` is not
+one of its targets. `scripts/check-card-track-monotonicity.mjs` discovers stories that render the track. The `Empty`
+state renders no track (`FeaturedListingsView.tsx:80-87`, `LatestListingsView.tsx:57-61`).
+
+**Live references to the retiring files/IDs** — `git grep` 2026-09-17. History excluded: `docs/reviews/**`,
+`docs/sessions/**`, `docs/governance-reports/**`, `docs/backlog-archive.md`, `tasks/**`, and the Task 678 narrative at
+`docs/storybook-governance.md:2281-2290`:
+
+| Path:line | Consumer | Required change (R15) |
+|---|---|---|
+| `scripts/lib/mantine-story-scope.mjs:41-62` · `scripts/__tests__/mantine-story-scope.test.ts` | enrolment | restore both byte-identical to `HEAD` (R13) |
+| `scripts/check-card-track-monotonicity.mjs:20-27`, `:364-375` | comment + printed scope | R14 |
+| `scripts/check-stories-rendered.mjs:163-174` | `ASSERT_STORIES` rows + comment | remove the 4 `system-*` rows; the comment names Task 827 and says `patterns-mantine-homepagelistinggrids--default` remains the `.listing-card` anchor |
+| `scripts/lib/rendered-run-mode.mjs:20-23` · `scripts/__tests__/rendered-run-mode.test.ts:55-57` | phase label and its test | label names only the remaining anchor row(s); test asserts the new label and that no `system-featuredlistings`/`latestlistings`/`similarlistings` ID appears |
+| `scripts/responsive-screenshots.mjs:100-118`, `:163` | screenshot targets + `--check` file-presence probe | retarget each row to its §18.3 canonical ID, keeping its viewports/locales (`FeaturedListings/*` → `patterns-mantine-homepagelistinggrids--default`; `RecentlyViewedSection/Populated`, `/MobileScroll`, `/Ukrainian` → `mantine-primitives-recentlyviewedgridview--populated`; `/EmptyState` → `mantine-primitives-recentlyviewedgridview--empty`); merge rows that become identical ID+label duplicates; `:163` probes `src/stories/patterns/mantine/HomepageListingGrids.stories.tsx` |
+| `scripts/governance/component-catalog.mjs:131-137`, `:446` | screenshot-target token + matrix line | token `'FeaturedListings'` → `'HomepageListingGrids'` (update its comment); line 446 ID → `patterns-mantine-homepagelistinggrids--default`; then regenerate with `npm.cmd run catalog:components` |
+| `scripts/story-realmode-allowlist.json:16` | `MobileScroll` Check-12 row | remove |
+| `scripts/governance/tailwind-entropy.allowlist.json:307-315` | `RecentlyViewedSection.stories.tsx` row | remove (JSON stays valid) |
+| `src/stories/fixtures/cardListingData.fixture.ts:3-4` · `src/stories/patterns/mantine/HomepageListingGrids.stories.tsx:5-8` | comments | name the canonical consumers instead |
+| `docs/storybook-governance.md:169`, `:772-773` | live guidance | `:169` reference story → `Patterns/Mantine/HomepageListingGrids`; `:772-773` drop the 3 `system-*` anchors |
+| `docs/mantine-responsive-design-system.md:512-514` | legacy story table | the 3 rows read "Removed — Task 827 (2026-09-17); canonical: `<story>`" |
+| `docs/responsive-screenshot-matrix.md:124-127, 171, 190, 203` · `docs/responsive-storybook-inventory.md:75-76, 159-160, 350, 462-464` · `docs/responsive-screenshot-governance.md:185` · `docs/governance-enforcement.md:579` · `docs/maintenance-playbook.md:516` · `docs/component-coverage-matrix.md:56` (generated) | operational docs | replace each ID with its §18.3 canonical ID, or delete the line where the canonical story already has a row |
+
+Re-run this census at I0. A live hit not in this table is a stop: report it with its path and line before you edit.
+
+### 18.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R11** | `src/stories/FeaturedListings.stories.tsx`, `LatestListings.stories.tsx`, `SimilarListings.stories.tsx`, `RecentlyViewedSection.stories.tsx` do not exist. Delete them through Node (`fs.unlinkSync`), never through git. | P0 |
+| **R12** | `Patterns/Mantine/HomepageListingGrids` gains exactly one export, `Empty`. It renders `FeaturedListingsView` (`listings={[]}`, `loading={false}`, `favoriteIds={new Set()}`, `locale` from `context.globals.locale`) and `LatestListingsView` (`listings={[]}`, `loading={false}`) inside the same `Box` + `Stack gap="xl"` wrapper as `Loading`, with no `AuthContext`. It has a `docs.description.story`, no `globals`, no `className`, and no locale/viewport pin. `Default` and `Loading` stay byte-identical. | P0 |
+| **R13** | `scripts/lib/mantine-story-scope.mjs` and `scripts/__tests__/mantine-story-scope.test.ts` are byte-identical to `HEAD`: write `git show HEAD:<path>` output back through Node, and witness with `git hash-object` = `git rev-parse HEAD:<path>`. | P0 |
+| **R14** | `check-card-track-monotonicity.mjs` comment and `printScopeReport` text: remove the `enrolled (Task 827…)` line and every "Task 827 owns the drop" wording. The exclusion line states that the owner rule of 2026-09-17 excludes non-canonical stories, and that Task 827 deleted the four `System/*` listing stories, so no `System/*` story renders the track. Gate logic unchanged. | P1 |
+| **R15** | Every §18.3 live consumer is updated as its row states. `npm.cmd run catalog:components` regenerates the generated doc. | P0 |
+| **R16** | The final census (§18.7) prints no line. | P0 |
+| **R17** | `check-design-tokens.mjs` and its test are unchanged by this revision: hashes equal `42_final2-hashes.txt` lines 1-2. | P1 |
+| **R18** | No other `*.stories.tsx` changes. `SimilarListingsView.stories.tsx` and `RecentlyViewedGridView.stories.tsx` stay byte-identical to `HEAD`. | P1 |
+
+### 18.5 Flows
+
+**Positive.** In Storybook, `System` shows no `FeaturedListings`, `LatestListings`, `SimilarListings` or
+`RecentlyViewedSection` entry. Open `Patterns/Mantine/HomepageListingGrids` → `Empty` and switch the toolbar locale to
+sq/uk/it: the Featured heading and both empty texts change language. Switch the toolbar viewport: nothing is pinned.
+
+| Negative flow | Applicable | Expected |
+|---|---|---|
+| A retired ID is still referenced by a live consumer | Yes | the red arm (§18.7 step 2): `check:stories` fails with `stale-allowlist-entry` for `RecentlyViewedSection.stories.tsx` until R15 removes the row; the final census is empty |
+| `check:homepage-grid` breaks on the added export | Yes | exit 0 — it targets only `--default`/`--loading` |
+| The new `Empty` leaks untranslated text | Yes | the locale-leak `report.json` has no `patterns-mantine-homepagelistinggrids--empty` leak |
+| A removed state loses proof | Yes | §18.3 table; owner matrix §18.8 |
+| Auth / RLS / data | No | Storybook-only; no production code changes |
+
+### 18.6 Acceptance criteria
+
+- **AC7 [R11, R16]** — `Test-Path` is `False` for the four files, and the §18.7 census prints nothing (quote both).
+- **AC8 [R12, R18]** — `git diff -- src/stories/patterns/mantine/HomepageListingGrids.stories.tsx` shows only the added
+  `Empty` export and the comment update. `storybook-static/index.json` contains
+  `patterns-mantine-homepagelistinggrids--empty` and no ID starting with `system-featuredlistings`, `system-latestlistings`,
+  `system-similarlistings` or `system-recentlyviewedsection`.
+- **AC9 [R13, R17]** — hash witnesses as stated, quoted.
+- **AC10 [R14]** — the final `check:card-track-monotonicity` exits 0. `in scope` lists no `system-*` ID, and the exclusion
+  line carries the R14 wording. Its `of N canonical` count equals `02_i0-monotonicity.txt`'s 141 plus the canonical
+  stories this route adds (expected 142); any other number is a stop.
+- **AC11 [R15]** — the red arm (§18.7 step 2) is retained and non-zero. Every command in §18.7 step 4 exits 0, and
+  `check:locale-leak:mantine-only`, which is exempt from exit 0, meets the AC6 property with `--empty` added to the
+  `system-*` exclusion check.
+- **AC12 [R15]** — `governance:components` and `governance:screenshots` exit 0 (quote summaries).
+
+`GR-4 AC AUDIT — 6 criteria; each states an observable property; absolutes: the empty census and the missing files are the defined end state of a deletion.`
+
+### 18.7 Execution and verification plan (Q3)
+
+**Re-entry mode: `mixed`.** Keep `docs/sessions/evidence/task827/00_`–`46_` as history. New artifacts start at `47_`.
+The worktree starts dirty from the earlier passes. Before any write, record `git --no-optional-locks status --porcelain`
+and the `git hash-object` of every path you will change (`47_`).
+
+1. I0: run the §18.3 census and the `messages\uk.json` check. Run `npm.cmd run governance:screenshots` and
+   `npm.cmd run governance:components` and record their exit codes (they are the baseline for AC12).
+2. **Red arm:** apply R11 only, then run `npm.cmd run check:stories`. It must exit non-zero naming
+   `stale-allowlist-entry` for `src/stories/RecentlyViewedSection.stories.tsx`. If it exits 0, stop with
+   `BLOCKED — TEST BLIND`.
+3. Apply R12–R15. Use Node UTF-8 I/O for every write.
+4. Final gate block. Every command writes its own unpiped transcript with `EXIT_CODE=`:
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npx.cmd vitest run scripts/__tests__/mantine-story-scope.test.ts scripts/__tests__/check-design-tokens.test.ts scripts/__tests__/rendered-run-mode.test.ts
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run build-storybook
+npm.cmd run check:card-track-monotonicity
+npm.cmd run check:card-track-monotonicity:verify
+npm.cmd run check:homepage-grid
+npm.cmd run check:homepage-grid:verify
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run governance:tailwind
+npm.cmd run governance:components
+npm.cmd run governance:screenshots
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep -n -i -E "system-(featuredlistings|latestlistings|similarlistings|recentlyviewedsection)|System/(FeaturedListings|LatestListings|SimilarListings|RecentlyViewedSection)|(Featured|Latest|Similar)Listings\.stories|RecentlyViewedSection\.stories" -- . ":!docs/reviews" ":!docs/sessions" ":!docs/governance-reports" ":!docs/backlog-archive.md" ":!tasks"
+git --no-optional-locks rev-parse HEAD:scripts/lib/mantine-story-scope.mjs HEAD:scripts/__tests__/mantine-story-scope.test.ts
+git --no-optional-locks hash-object scripts/lib/mantine-story-scope.mjs scripts/__tests__/mantine-story-scope.test.ts scripts/check-design-tokens.mjs scripts/__tests__/check-design-tokens.test.ts
+git --no-optional-locks status --porcelain
+```
+
+Expected: exit 0 for every command except `check:locale-leak:mantine-only` (AC11) and the census `git grep`. The census
+must print nothing and exits 1 when there are no matches. It may print only the Task 678 historical narrative at
+`docs/storybook-governance.md:2281-2290`: quote that text if it does, and anything else is a stop. If
+`governance:screenshots` or `governance:components` was non-zero at I0 for a reason unrelated to these files, report
+the I0 and final output and do not change unrelated code.
+
+### 18.8 Owner visual review — `OWNER VISUAL QA REQUIRED`
+
+| Story | Toolbar viewports | Toolbar locales | Owner checks |
+|---|---|---|---|
+| `Patterns/Mantine/HomepageListingGrids` → `Empty` | 320, 768, 1440, 1920 | en, sq, uk, it | Featured heading without "view all", both empty texts localized, same shell as `Default`/`Loading` |
+| Storybook sidebar | — | — | no `System/FeaturedListings`, `System/LatestListings`, `System/SimilarListings`, `System/RecentlyViewedSection` |
+
+### 18.9 Completion
+
+Session log: add a `Revision 2` section with the owner quote, the R11–R18 ledger, the red arm, the gate block, the
+census, the consumer table as actually edited, and the §18.8 matrix handed over. Its `Files Changed` table covers the
+whole task diff: deleted, restored, kept and new. Update the `docs/backlog.md` 827 row. Status
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Do not self-approve or run any git command.

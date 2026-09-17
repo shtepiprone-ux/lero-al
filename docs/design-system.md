@@ -937,13 +937,25 @@ Never fires inside a `{/* ... */}` JSX comment or a `/** */` JSDoc block (the re
 `MantineAuthFormPattern.tsx:29` case — a documented `maw={{ base: '100%', sm: 400 }}` example inside
 its own docblock, never live code). A body containing a nested `{` is **not** skipped silently: it
 produces one finding with `rawValue` `<prop>: unparsed-object`, so the gap stays visible instead of
-being invisibly exempted.
+being invisibly exempted. An opener whose braces never balance — a `{` inside a string value, an
+unmatched `prop={{` text, or a line truncated at a `//` inside a string, so the counter never
+returns to depth 0 — is reported the same way, `<prop>: unparsed-object`, instead of silently ending
+the scan of the rest of the file; the scanner resumes immediately after that opener, so a later
+well-formed responsive-object prop in the same file is still reported (Task 830).
 
 **What it still cannot see:** a responsive-object value built by a variable or function call
-(`{ base: getSize() }`), a spread object (`{ ...sizes }`), or a responsive object passed through a
-prop name not in the list above. These are the same class of blind spot §23.1.c already documents
-for `raw-inline-dimension` — resolved per-site with a `design-tokens-allow` marker naming *why*, or
-a detector-list change proposed as its own task, never invented ad hoc.
+(`{ base: getSize() }`), a spread object (`{ ...sizes }`), a responsive object passed through a
+prop name not in the list above, a template-literal unit value (`` { base: `12px` } ``), or content
+after a `//` inside a string value on the same physical line — the line-stripping step that runs
+before this scanner (the per-line trailing-comment strip at the top of
+`findResponsiveDimensionFindings`) strips a trailing `//…` regardless of string context, so a URL or
+other string containing `//` truncates the rest of that line before scanning ever starts and can
+leave its object unbalanced, surfacing as `unparsed-object` rather than the entry's real value
+(Task 830). A `}` inside a string value is also not seen: the quote-unaware counter closes the
+object early, so the entries after that string (`{ base: '}', md: 24 }` → `md: 24`) are silently
+not scanned and no `unparsed-object` finding is emitted (Task 830 review). These are the same class of blind spot §23.1.c already documents for
+`raw-inline-dimension` — resolved per-site with a `design-tokens-allow` marker naming *why*, or a
+detector-list change proposed as its own task, never invented ad hoc.
 
 **Tokenized by this task:** `HeroSearchFallback.tsx`'s `h={{ base: 279, sm: 175, md: 123 }}` now
 reads `theme.other.layout.heroSearchFallbackHeight.{base,sm,md}`; `PhoneField.tsx`'s

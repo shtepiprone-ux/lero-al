@@ -1,0 +1,15 @@
+platform: win32 | node: v22.22.3 | cwd: C:\Claude_Code_Projects\lero-al
+command: npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts
+run: 2026-09-17T15:10:36
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  148 passed (148)
+   Start at  15:10:36
+   Duration  403ms (transform 97ms, setup 114ms, import 95ms, tests 39ms, environment 0ms)
+
+
+EXIT_CODE=0

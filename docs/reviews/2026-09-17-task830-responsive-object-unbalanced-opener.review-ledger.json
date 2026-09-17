@@ -1,0 +1,325 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-830 — raw-dimension-responsive-prop reports an unbalanced prop={{ opener as unparsed-object and resumes the file scan; §23.1.d records the remaining blind spots (Sprint 75), Revision 0",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "958b8076028b969337fdb8b3ea0d4abfe574e066",
+    "reviewedRevision": "uncommitted worktree on top of 958b8076028b969337fdb8b3ea0d4abfe574e066 (main). Every status path belongs to Task 830: the 4 files in the session log's Files Changed table, the session log, docs/sessions/evidence/task830/, plus the reviewer's §23.1.d amendment, state sync (kickoff, sprint plan, backlog, archive) and this ledger. Script and test blob hashes in review-05-integrity.txt equal the executor's final-hashes.txt.",
+    "reviewedPaths": [
+      "scripts/check-design-tokens.mjs",
+      "scripts/__tests__/check-design-tokens.test.ts",
+      "docs/design-system.md",
+      "docs/backlog.md",
+      "docs/sessions/2026-09-17-task830-unbalanced-responsive-prop-opener.md",
+      "docs/sessions/evidence/task830"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 4,
+      "verified": 4,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm run check:review-ledger -- --file docs/reviews/2026-09-17-task830-responsive-object-unbalanced-opener.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1 R2 R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-design-tokens.mjs",
+        "symbol": "findResponsiveDimensionFindings — matchEnd === -1 branch; describe 'unbalanced/unterminated opener' AC1(a)-(d)",
+        "diffHunks": [
+          "scripts/check-design-tokens.mjs:490-509 — break replaced by one unparsed-object finding at the opener line, lastIndex = bodyStart, continue; openLine hoisted above the branch",
+          "scripts/__tests__/check-design-tokens.test.ts:1005-1041 — AC1(a) one finding, (b) later h.base: 279 still reported, (c) two unbalanced openers two findings, (d) same-line JSX-comment marker suppresses"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "AC1(a)(b)(c) fail on the unmodified detector and all four pass after the fix; marker suppression is real, not vacuous"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "A CLI detector is not parameterised by any Storybook story.",
+          "locales": "No user-facing string.",
+          "viewports": "No rendered output.",
+          "states": "Deterministic source scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task830/red-vitest-pre-fix.txt",
+          "command": "npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (new tests, unmodified detector hash 2dda492c9)",
+          "observable": "148 tests | 3 failed: AC1(a) expected length 1 got 0, AC1(b) expected arrayContaining got [], AC1(c) expected length 2 got 0; EXIT_CODE=1.",
+          "freshness": "Start 15:01:30, before the detector write 15:02:00; the green run Start 15:02:08 follows it",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AC1(a)(b)(c) fail on the unmodified detector and all four pass after the fix; marker suppression is real, not vacuous"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task830/review-03-adversarial-probe.txt",
+          "command": "npx.cmd vitest run (review-01-vitest.txt, 148/148, exit 0) + node.exe adv830.mjs scanContent probes (reviewer, native win32)",
+          "observable": "marker → []; wrong-name marker → stale-marker pt plus the mt: unparsed-object finding, so AC1(d) passes through real suppression; opener at EOF after a good prop → both findings; '//' URL truncation → mt: unparsed-object then h.base: 279; multi-line opener → finding on line 2 (the opener line) and h.base on line 6; nested prop inside an unbalanced body → both reported.",
+          "freshness": "reviewer run 2026-09-17T15:10:37 on the submitted detector (hash 7d7074fb3)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "AC1(a)(b)(c) fail on the unmodified detector and all four pass after the fix; marker suppression is real, not vacuous"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "AC1(d) is vacuous — it also passed before the fix, so the marker path is never exercised.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task830/review-03-adversarial-probe.txt",
+          "result": "REFUTED for the fixed detector. Same content with no marker yields one finding; with a pt: marker the mt finding remains and the marker is reported stale; with the mt: marker both disappear. Suppression is by rawValue match."
+        },
+        {
+          "claim": "Resuming at bodyStart double-reports or hangs when the unbalanced body contains another opener.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task830/review-03-adversarial-probe.txt",
+          "result": "REFUTED. nested-in-unbalanced reports mt: unparsed-object once and the inner h.base: 12 once; the probe process terminated (lastIndex = bodyStart > m.index)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No Tailwind utility or generated CSS is involved."
+      }
+    },
+    {
+      "id": "AC2 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/__tests__/check-design-tokens.test.ts",
+        "symbol": "whole file; check:design-tokens:strict on the real tree",
+        "diffHunks": [
+          "test file: additions only (38 lines), no existing test edited"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "144 existing tests still pass with 4 new (148); strict total equals the I0 total (0) and exits 0"
+        ],
+        "phases": [
+          "before",
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "CLI detector.",
+          "locales": "CLI detector.",
+          "viewports": "CLI detector.",
+          "states": "Deterministic scan."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task830/i0-strict.txt",
+          "command": "npm.cmd run check:design-tokens:strict; npx.cmd vitest run scripts/__tests__/check-design-tokens.test.ts (I0)",
+          "observable": "Total: 0 raw style-value violation(s) | 0 stale-marker(s), EXIT_CODE=0; i0-vitest 144 passed, EXIT_CODE=0.",
+          "freshness": "I0, hashes 2dda492c9 / 5ea2db79b equal HEAD",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "144 existing tests still pass with 4 new (148); strict total equals the I0 total (0) and exits 0"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task830/review-02-strict.txt",
+          "command": "npm.cmd run check:design-tokens:strict; npx.cmd vitest run (review-01-vitest.txt) — reviewer re-executed natively",
+          "observable": "Total: 0 | 0 stale-marker(s), EXIT_CODE=0; Tests 148 passed (148), EXIT_CODE=0.",
+          "freshness": "reviewer run 2026-09-17T15:10 on the submitted worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "144 existing tests still pass with 4 new (148); strict total equals the I0 total (0) and exits 0"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An existing test was weakened to keep the suite green.",
+          "kind": "EXECUTED",
+          "path": "scripts/__tests__/check-design-tokens.test.ts",
+          "result": "REFUTED. git diff shows one hunk of pure additions after line 1003; no removed or changed line."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC3 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/design-system.md",
+        "symbol": "§23.1.d boundary and 'What it still cannot see' paragraphs",
+        "diffHunks": [
+          "docs/design-system.md:940-957 — unbalanced opener reported as unparsed-object with resume; template-literal and '//'-in-string blind spots; stray '}' blind spot (reviewer addition); names Task 830"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "§23.1.d states the unbalanced-opener behaviour, the template-literal and '//'-in-string blind spots, and names Task 830"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Documentation.",
+          "locales": "Documentation.",
+          "viewports": "Documentation.",
+          "states": "Documentation."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/design-system.md",
+          "command": "git --no-optional-locks diff -- docs/design-system.md (reviewer read after the reviewer amendment)",
+          "observable": "All R5 statements present and Task 830 named; reviewer replaced the ambiguous '(§451-454)' line reference (§ is this document's section sign) with the function name, and added the stray-'}' blind spot measured by probe stray-close-brace.",
+          "freshness": "reviewer read 2026-09-17 after the Node UTF-8 write",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "§23.1.d states the unbalanced-opener behaviour, the template-literal and '//'-in-string blind spots, and names Task 830"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "After Task 830, §23.1.d lists every class the scanner silently misses.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task830/review-03-adversarial-probe.txt",
+          "result": "REFUTED for the submitted text: stray-close-brace ({ base: '}', md: 24 }) yields no finding at all — the quote-unaware counter closes the object early. Resolved in review by adding that sentence to §23.1.d; no detector change (quote-aware counting is out of scope per kickoff §5)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Documentation."
+      }
+    },
+    {
+      "id": "§13.2 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task830",
+        "symbol": "final-* transcripts; final-hashes.txt; review-01..05",
+        "diffHunks": [
+          "whole reviewed diff; script and test hashes 7d7074fb3 / 357447acd equal final-hashes.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "vitest, strict, typecheck, lint, build, file-integrity, mojibake, diff --stat, hash-object on the final tree"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Gate block.",
+          "locales": "Gate block.",
+          "viewports": "Gate block.",
+          "states": "Gate block."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task830/final-build.txt",
+          "command": "npm.cmd run build; typecheck; lint; final-vitest; final-strict",
+          "observable": "Each EXIT_CODE=0 (lint 0 errors, 78 warnings in untouched files); final-vitest Start 15:02:36 follows the last source write 15:02:25.",
+          "freshness": "final block after the last script/test/doc write by the executor; later writes are docs only",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vitest, strict, typecheck, lint, build, file-integrity, mojibake, diff --stat, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task830/review-05-integrity.txt",
+          "command": "npm.cmd run check:file-integrity; npm.cmd run check:mojibake; git hash-object (reviewer, after all review edits)",
+          "observable": "file-integrity PASSED and mojibake 0 artifacts, both exit 0, over the final tree including the reviewer's doc and state edits.",
+          "freshness": "reviewer run after the last write of this review",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vitest, strict, typecheck, lint, build, file-integrity, mojibake, diff --stat, hash-object on the final tree"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The first file-integrity failure (16 BOM files) means a task-owned file is corrupt.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task830/final-file-integrity.txt",
+          "result": "REFUTED. All 16 flagged paths are the executor's own PowerShell-redirected evidence transcripts; no scripts/ or docs/ task file was flagged, and the reviewer's final run passes."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Gate block."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC3 / R5",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed the detector vitest suite (148/148), check:design-tokens:strict (Total 0, exit 0), an 8-case scanContent probe, hash-object, file-integrity and mojibake. Build, typecheck and lint accepted from retained transcripts with EXIT_CODE recorded after the last source write. Notes (P3, resolved or non-actionable, no follow-up task): the submitted §23.1.d omitted the stray-'}'-in-string blind spot and cited script lines as '§451-454' — both amended by the reviewer; the executor stripped BOMs from 16 of its own evidence files with python without a printed path manifest (clause 14 procedure) and edited §23.1.d with the Edit tool where kickoff §10.4 named Node UTF-8 I/O — integrity and mojibake gates pass on the final tree."
+  }
+}

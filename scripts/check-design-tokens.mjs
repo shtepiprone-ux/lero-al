@@ -487,10 +487,28 @@ export function findResponsiveDimensionFindings(lines, strippedLines) {
         if (depth === 0) { matchEnd = i + 1; break; }
       }
     }
-    if (matchEnd === -1) break; // unterminated on this content — nothing more to scan safely
+    const openLine = lineNumberAt(m.index);
+
+    if (matchEnd === -1) {
+      // Task 830 R1: the brace counter never returned to depth 0 — a `{` inside a string
+      // value, unmatched `prop={{` text, or a line truncated at a `//` inside a string
+      // (§451-454 strips a trailing `//…` before this scanner ever runs). Report it the
+      // same way the nested-body case above does, `<prop>: unparsed-object`, instead of
+      // `break`ing out of the whole-file loop and losing every later opener in this file.
+      // Resume right after THIS opener (bodyStart), not at file end, so a later
+      // well-formed prop is scanned from its own position (R2) and lastIndex strictly
+      // advances past m.index, so the loop cannot hang (negative-flow row 1).
+      findings.push({
+        line: openLine,
+        cat: 'raw-dimension-responsive-prop',
+        label: 'raw dimension in Mantine responsive object prop (unbalanced/unterminated object)',
+        match: `${propName}: unparsed-object`,
+      });
+      RESPONSIVE_PROP_OPEN_RE.lastIndex = bodyStart;
+      continue;
+    }
 
     const bodyText = content.slice(bodyStart, bodyEnd);
-    const openLine = lineNumberAt(m.index);
 
     if (bodyText.includes('{')) {
       // R2: a nested object body is not skipped silently — it is reported so the gap stays

@@ -1001,6 +1001,44 @@ describe('raw-dimension-responsive-prop — Task 797, Mantine responsive-object 
   it('two-armed plant reverted: pb={{ base: \'md\', lg: 0 }} produces 0 findings', () => {
     expect(responsive(`pb={{ base: 'md', lg: 0 }}`)).toHaveLength(0)
   })
+
+  describe('unbalanced/unterminated opener does not silently end the file scan — Task 830 R1-R3', () => {
+    it('AC1(a): an unbalanced opener produces exactly one unparsed-object finding', () => {
+      const findings = responsive(`<Box mt={{ base: '{' }} />`)
+      expect(findings).toHaveLength(1)
+      expect(findings[0]).toMatchObject({ match: 'mt: unparsed-object' })
+    })
+
+    it('AC1(b): a later well-formed prop in the same file is still reported after an unbalanced opener', () => {
+      const content = [
+        `<Box mt={{ base: '{' }} />`,
+        `<Skeleton h={{ base: 279 }} />`,
+      ].join('\n')
+      const findings = responsive(content)
+      expect(findings.map(f => f.match)).toEqual(
+        expect.arrayContaining(['mt: unparsed-object', 'h.base: 279'])
+      )
+    })
+
+    it('AC1(c): two consecutive unbalanced openers on separate lines produce two findings', () => {
+      const content = [
+        `<Box mt={{ base: '{' }} />`,
+        `<Box pt={{ base: '{' }} />`,
+      ].join('\n')
+      const findings = responsive(content)
+      expect(findings).toHaveLength(2)
+      expect(findings.map(f => f.match)).toEqual(
+        expect.arrayContaining(['mt: unparsed-object', 'pt: unparsed-object'])
+      )
+    })
+
+    it('AC1(d): a same-line design-tokens-allow marker suppresses the unbalanced-opener finding (JSX-comment convention)', () => {
+      const findings = responsive(
+        `<Box mt={{ base: '{' }} /> {/* design-tokens-allow: mt: unparsed-object — test */}`
+      )
+      expect(findings).toHaveLength(0)
+    })
+  })
 })
 
 describe('canonical Mantine stories — Tailwind dimension utilities', () => {

@@ -1,0 +1,14 @@
+platform: win32 | node: v22.22.3 | cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe <scratchpad>/adv830.mjs (scanContent probes: marker, wrong-name marker, EOF, // truncation, multi-line opener, stray }, nested-in-unbalanced)
+run: 2026-09-17T15:10:37
+
+no-marker [[1,"raw-dimension-responsive-prop","mt: unparsed-object"]]
+marker []
+marker-wrong-name [[1,"stale-marker","pt: unparsed-object"],[1,"raw-dimension-responsive-prop","mt: unparsed-object"]]
+eof-after-good [[1,"raw-dimension-responsive-prop","h.base: 279"],[2,"raw-dimension-responsive-prop","mt: unparsed-object"]]
+url-truncation [[1,"raw-dimension-responsive-prop","mt: unparsed-object"],[2,"raw-dimension-responsive-prop","h.base: 279"]]
+multiline-open-line [[2,"raw-dimension-responsive-prop","mt: unparsed-object"],[6,"raw-dimension-responsive-prop","h.base: 279"]]
+stray-close-brace []
+nested-in-unbalanced [[1,"raw-dimension-responsive-prop","mt: unparsed-object"],[1,"raw-dimension-responsive-prop","h.base: 12"]]
+
+EXIT_CODE=0

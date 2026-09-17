@@ -2,7 +2,7 @@
 
 Sprint 75 · P3 · QA profile **Q4** (detector arm change)
 
-**Status: `READY FOR SONNET` 2026-09-17.** Task 797 is committed (`ce0a9afb0`). Sequence **before Task 829**, which
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-17 (Opus implementation review 1) — archived; ledger `docs/reviews/2026-09-17-task830-responsive-object-unbalanced-opener.review-ledger.json`. The review added the stray-`}`-in-string blind spot to §23.1.d and replaced its `§451-454` line reference.** Was: `READY FOR SONNET` 2026-09-17. Task 797 is committed (`ce0a9afb0`). Sequence **before Task 829**, which
 also edits `docs/design-system.md`.
 
 ## 1. Mode and task type

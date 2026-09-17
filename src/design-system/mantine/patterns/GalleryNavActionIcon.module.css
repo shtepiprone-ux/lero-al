@@ -1,0 +1,29 @@
+/*
+ * Task 825 — the two position mechanics `placement` cannot express as a plain Mantine style prop:
+ * vertical centering (a transform, not an offset) and the raised z-index (not a style-prop
+ * property at all). Both variants share these two classes; only the horizontal offset differs
+ * per caller (applied via the `top`/`right`/`bottom`/`left` style props themselves).
+ *
+ * Task 825 Revision 1 — found by AC9's real-click walk (not the R6 rect probe, which only reads
+ * geometry at rest): `translate` here, never `transform`. `@mantine/core`'s global
+ * `.mantine-active:active { transform: translateY(...) }` press-feedback rule (`global.css:30`,
+ * applied to every interactive Mantine component, including this `ActionIcon`) has higher
+ * specificity than a single class (`:active` compound beats a bare class regardless of source
+ * order) and OVERWRITES a `transform`-based centering entirely for the duration of a press,
+ * snapping the icon ~22px off its resting position and out from under the pointer — a real
+ * dropped-click defect, not a cosmetic one. `translate` is a separate CSS property (Transforms
+ * Level 2): the browser composites it with `transform` instead of one replacing the other, so
+ * Mantine's press effect and this centering apply simultaneously without collision. This is the
+ * exact mechanism the pre-825 Tailwind `-translate-y-1/2` utility used too (Tailwind v4 compiles
+ * to the `translate` property, not `transform` — see R6's own `transform: "none"` reading on the
+ * pre-migration build, docs/sessions/evidence/task825/20_r6_before.json), so this is a return to
+ * the original mechanism, not a new one.
+ */
+.centerY {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.raised {
+  z-index: var(--z-dropdown); /* globals.css:257 — 10, same convention as MantineListingCardTrack.module.css */
+}

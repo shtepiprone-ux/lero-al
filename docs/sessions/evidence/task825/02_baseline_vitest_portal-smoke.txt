@@ -1,0 +1,281 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stderr | src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > lightbox dialog is portaled OUTSIDE the gallery ancestor stacking context, with a real (non-auto) resolved z-index greater than the header
+An error occurred in the <LightboxView> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+stderr | src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > closes on the close button and unmounts cleanly
+An error occurred in the <LightboxView> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+stderr | src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > Arrow-key Next/Previous cycle the counter while the dialog stays open; arrows do nothing once closed
+An error occurred in the <LightboxView> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+stderr | src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > Prev/Next buttons cycle the counter
+An error occurred in the <LightboxView> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (4 tests | 4 failed) 4267ms
+     × lightbox dialog is portaled OUTSIDE the gallery ancestor stacking context, with a real (non-auto) resolved z-index greater than the header 1162ms
+     × closes on the close button and unmounts cleanly 1044ms
+     × Arrow-key Next/Previous cycle the counter while the dialog stays open; arrows do nothing once closed 1033ms
+     × Prev/Next buttons cycle the counter 1024ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > lightbox dialog is portaled OUTSIDE the gallery ancestor stacking context, with a real (non-auto) resolved z-index greater than the header
+TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
+     99| async function openLightbox() {
+    100|   fireEvent.click(screen.getAllByRole('button', { name: /all photos/i …
+    101|   return screen.findByRole('dialog', { name: 'Close gallery' })
+       |                 ^
+    102| }
+    103|
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:129:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > closes on the close button and unmounts cleanly
+TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
+     99| async function openLightbox() {
+    100|   fireEvent.click(screen.getAllByRole('button', { name: /all photos/i …
+    101|   return screen.findByRole('dialog', { name: 'Close gallery' })
+       |                 ^
+    102| }
+    103|
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:143:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > Arrow-key Next/Previous cycle the counter while the dialog stays open; arrows do nothing once closed
+TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
+     99| async function openLightbox() {
+    100|   fireEvent.click(screen.getAllByRole('button', { name: /all photos/i …
+    101|   return screen.findByRole('dialog', { name: 'Close gallery' })
+       |                 ^
+    102| }
+    103|
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:150:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > Prev/Next buttons cycle the counter
+TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
+     99| async function openLightbox() {
+    100|   fireEvent.click(screen.getAllByRole('button', { name: /all photos/i …
+    101|   return screen.findByRole('dialog', { name: 'Close gallery' })
+       |                 ^
+    102| }
+    103|
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:168:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 4 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+ReferenceError: ResizeObserver is not defined
+ ❯ src/hooks/useSwipeTrackSync.ts:101:22
+     99|     if (!containerEl) return
+    100|     setWidth(containerEl.clientWidth)
+    101|     const observer = new ResizeObserver((entries) => {
+       |                      ^
+    102|       const w = entries[0]?.contentRect.width
+    103|       if (w) setWidth(w)
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:13213:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13951:13
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13949:11
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:14065:11
+
+This error originated in "src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "lightbox dialog is portaled OUTSIDE the gallery ancestor stacking context, with a real (non-auto) resolved z-index greater than the header". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+ReferenceError: ResizeObserver is not defined
+ ❯ src/hooks/useSwipeTrackSync.ts:101:22
+     99|     if (!containerEl) return
+    100|     setWidth(containerEl.clientWidth)
+    101|     const observer = new ResizeObserver((entries) => {
+       |                      ^
+    102|       const w = entries[0]?.contentRect.width
+    103|       if (w) setWidth(w)
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:13213:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13951:13
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13949:11
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:14065:11
+
+This error originated in "src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "closes on the close button and unmounts cleanly". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+ReferenceError: ResizeObserver is not defined
+ ❯ src/hooks/useSwipeTrackSync.ts:101:22
+     99|     if (!containerEl) return
+    100|     setWidth(containerEl.clientWidth)
+    101|     const observer = new ResizeObserver((entries) => {
+       |                      ^
+    102|       const w = entries[0]?.contentRect.width
+    103|       if (w) setWidth(w)
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:13213:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13951:13
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13949:11
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:14065:11
+
+This error originated in "src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "Arrow-key Next/Previous cycle the counter while the dialog stays open; arrows do nothing once closed". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯⎯ Uncaught Exception ⎯⎯⎯⎯⎯
+ReferenceError: ResizeObserver is not defined
+ ❯ src/hooks/useSwipeTrackSync.ts:101:22
+     99|     if (!containerEl) return
+    100|     setWidth(containerEl.clientWidth)
+    101|     const observer = new ResizeObserver((entries) => {
+       |                      ^
+    102|       const w = entries[0]?.contentRect.width
+    103|       if (w) setWidth(w)
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:13213:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13951:13
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:13949:11
+ ❯ recursivelyTraverseLayoutEffects node_modules/react-dom/cjs/react-dom-client.development.js:15159:11
+ ❯ commitLayoutEffectOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:14065:11
+
+This error originated in "src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "Prev/Next buttons cycle the counter". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+     Errors  4 errors
+   Start at  23:13:40
+   Duration  5.94s (transform 198ms, setup 79ms, import 786ms, tests 4.27s, environment 676ms)
+
+EXIT_CODE=1

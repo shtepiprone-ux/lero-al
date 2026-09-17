@@ -1,0 +1,12 @@
+{
+  "label": "after-R13",
+  "result": {
+    "scrollbarWidth": "none",
+    "offsetHeight": 60,
+    "clientHeight": 60,
+    "delta": 0,
+    "scrollWidth": 1256,
+    "scrollerClientWidth": 512,
+    "overflowX": "auto"
+  }
+}

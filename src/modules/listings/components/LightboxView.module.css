@@ -1,4 +1,67 @@
 /*
+ * Task 825 — the parts of §3.2's Tailwind resolution that have no Mantine style-prop equivalent.
+ * Everything a style prop CAN express (h/w/pos/top/left/right/bottom/maw/mx/gap/px/pt) is a prop
+ * on the JSX element itself; only display/alignment/overflow/flex mechanics and the horizontal
+ * -50% translate land here.
+ */
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* `left: 50%` horizontal-center companion for the counter. Task 825 Revision 1 (R10): the mobile
+   pagination rail no longer uses this — it is now `left`/`right`-inset, not centered. */
+.centerX {
+  transform: translateX(-50%);
+}
+
+/* Desktop media column wrapper — kickoff §19/§20 A/B-verified `min-width`/`min-height` floor fix
+   (see the render-tree comment above); `Stack`'s own `gap={0}` prop cannot express these. */
+.minZero {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Desktop media box — `flex-1 min-h-0` gives it exactly the space left after the strip's own
+   (shrink-0) height, at every viewport height, for every photo aspect ratio. */
+.fill {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Desktop thumbnail-strip scroll container — kept out of the parent Stack's flex sizing and
+   scrollable; `justify`/`px`/`pt` are `Group` props above. */
+.strip {
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+
+/* Mobile swipe viewport — clips the transform-driven track to the visible frame. */
+.clip {
+  overflow: hidden;
+}
+
+/* Mobile swipe slide — never shrinks below its own measured width in the flex track. */
+.noShrink {
+  flex-shrink: 0;
+}
+
+/*
+ * Task 825 Revision 1 (R13, owner decision §16.2 "Сховати скролбар") — hides the native
+ * horizontal-scrollbar chrome on both carousel scrollers (desktop thumbnail strip, mobile
+ * pagination rail) while keeping wheel/trackpad/touch scrolling and `overflow-x: auto` intact.
+ * Not the legacy `globals.css` `.no-scrollbar` Tailwind-layer utility — this is a migrated
+ * Mantine surface (R1 removed exactly that layer for this component).
+ */
+.hiddenScrollbar {
+  scrollbar-width: none;
+}
+.hiddenScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
  * Reproduces Tailwind's compiled two-rule opacity-modifier form: a static hex fallback, then a
  * color-mix upgrade behind @supports, values verbatim from the real build output. Unlayered — no
  * Mantine component sets `color` directly on this element, only inherited color, which always
@@ -20,9 +83,20 @@
  * changes — so paging never shifts the rail's layout. Width/height are registered
  * `theme.other.boxSize.paginationSegment(Thickness)` tokens, consumed as style props in
  * `LightboxView.tsx` (this module keeps only what has no dimension role).
+ *
+ * Task 825 Revision 1 (R10, owner decision §16.2) — the rail is now an inset, scrollable
+ * single-row carousel, the same two-level shape Task 824 R35 already proved for the desktop
+ * thumbnail strip: `.paginationRail` is the OUTER scroller (`flex-shrink:0`/`overflow-x:auto`,
+ * identical to `.strip`), never itself wider than its `left`/`right` insets so `Modal.Content`
+ * never overflows sideways; `.paginationRow` is the INNER row (`align-items:center`) that holds
+ * the segments and centers when it fits, left-aligns from `scrollLeft 0` when it overflows.
  */
 .paginationRail {
-  gap: var(--mantine-spacing-xs);
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+
+.paginationRow {
   align-items: center;
 }
 

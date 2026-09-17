@@ -132,7 +132,7 @@ function LightboxSingleImageSection({ locale }: { locale: string }) {
   )
 }
 
-function LightboxMobileSwipeSection({ locale }: { locale: string }) {
+function LightboxMobileSwipeSection({ locale, images = DEMO_IMAGES }: { locale: string; images?: typeof DEMO_IMAGES }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
@@ -143,7 +143,7 @@ function LightboxMobileSwipeSection({ locale }: { locale: string }) {
       </Text>
       <LightboxView
         opened
-        images={DEMO_IMAGES}
+        images={images}
         activeIndex={activeIndex}
         title={t('lightbox_alt_title')}
         labels={{
@@ -153,8 +153,8 @@ function LightboxMobileSwipeSection({ locale }: { locale: string }) {
           counter: (index, total) => `${index} / ${total}`,
         }}
         onClose={() => {}}
-        onPrev={() => setActiveIndex(i => (i - 1 + DEMO_IMAGES.length) % DEMO_IMAGES.length)}
-        onNext={() => setActiveIndex(i => (i + 1) % DEMO_IMAGES.length)}
+        onPrev={() => setActiveIndex(i => (i - 1 + images.length) % images.length)}
+        onNext={() => setActiveIndex(i => (i + 1) % images.length)}
         onSelect={setActiveIndex}
       />
     </Stack>
@@ -195,6 +195,23 @@ export const SwipeTrackMode: Story = {
     return (
       <MantineStoryShell>
         <LightboxMobileSwipeSection locale={locale} />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Task 825 Revision 1 (R14, AC11) — the pagination rail's OTHER state: few enough photos that the
+// row fits without overflowing, so it stays centered (mx="auto" collapses to 0 only once the row
+// is wider than its scroller) rather than left-aligned from scrollLeft 0 like `SwipeTrackMode`'s
+// 24-photo overflow case. Real production component, first 4 of the same fixture images.
+export const SwipeTrackModeFewPhotos: Story = {
+  globals: { viewport: { value: 'mobile390', isRotated: false } },
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+
+    return (
+      <MantineStoryShell>
+        <LightboxMobileSwipeSection locale={locale} images={DEMO_IMAGES.slice(0, 4)} />
       </MantineStoryShell>
     )
   },

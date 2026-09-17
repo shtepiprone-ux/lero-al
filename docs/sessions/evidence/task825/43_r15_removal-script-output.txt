@@ -1,0 +1,27 @@
+First (successful) run — BEFORE hash-object: 2faf21bac845b1d468c0d01806c79e785806cb42
+
+R15 — will delete exactly 7 key(s):
+  src/app/[locale]/ci/click-shield-modal/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/app/[locale]/listings/[slug]/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/app/admin/listings/[id]/preview/page.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/design-system/mantine/patterns/MantineListingDetailPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/modules/listings/components/ListingDetailView.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+  src/modules/listings/components/ListingGallery.tsx :: src/modules/listings/components/LightboxView.tsx :: tier1-unenrolled-or-unstoried
+Removed exactly 7 key(s). Remaining LightboxView.tsx keys: 0
+
+AFTER hash-object: 7d7aa142baa7e080ce281028eb24a78d77372e21
+
+git diff --stat scripts/surface-census-baseline.json:
+ scripts/surface-census-baseline.json | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+(22 raw "-" lines including the diff header's own "---" marker; 0 "+" lines beyond the diff header)
+
+--- Idempotency re-check (second invocation, same session, AFTER the removal already landed) ---
+Confirms the scope guard is real (refuses a no-op / already-applied state rather than silently
+succeeding a second time), not merely a printed intention:
+
+R15 — will delete exactly 7 key(s):
+  [same 7 keys]
+SCOPE GUARD FAILED
+  missing (expected but not found): [all 7 keys — they were already removed by the first run]

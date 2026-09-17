@@ -1,0 +1,465 @@
+{
+  "cell": "rail-390",
+  "forwardWalk": [
+    {
+      "step": 0,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 1,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 2,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 3,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 4,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 5,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 6,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 7,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 8,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 9,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 10,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 11,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 12,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 13,
+      "before": 0,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 14,
+      "before": 0,
+      "after": 18,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 15,
+      "before": 18,
+      "after": 42,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 16,
+      "before": 42,
+      "after": 66,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 17,
+      "before": 66,
+      "after": 90,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 18,
+      "before": 90,
+      "after": 114,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 19,
+      "before": 114,
+      "after": 138,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 20,
+      "before": 138,
+      "after": 162,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 21,
+      "before": 162,
+      "after": 186,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 22,
+      "before": 186,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    }
+  ],
+  "backwardWalk": [
+    {
+      "step": 0,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 1,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 2,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 3,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 4,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 5,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 6,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 7,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 8,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 9,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 10,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 11,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 12,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 13,
+      "before": 210,
+      "after": 210,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 14,
+      "before": 210,
+      "after": 192,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 15,
+      "before": 192,
+      "after": 168,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 16,
+      "before": 168,
+      "after": 144,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 17,
+      "before": 144,
+      "after": 120,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 18,
+      "before": 120,
+      "after": 96,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 19,
+      "before": 96,
+      "after": 72,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 20,
+      "before": 72,
+      "after": 48,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 21,
+      "before": 48,
+      "after": 24,
+      "containmentOk": true,
+      "ancestorZero": true
+    },
+    {
+      "step": 22,
+      "before": 24,
+      "after": 0,
+      "containmentOk": true,
+      "ancestorZero": true
+    }
+  ],
+  "smoothArm": {
+    "step": 14,
+    "before": 0,
+    "after": 18,
+    "samples": [
+      0,
+      0,
+      6,
+      15,
+      17,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18
+    ],
+    "strictlyBetween": true
+  },
+  "wrapForward": {
+    "S0": 210,
+    "samples": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "final": 0,
+    "ok": true,
+    "containmentOk": true,
+    "ancestorZero": true
+  },
+  "wrapBackward": {
+    "Send": 210,
+    "samples": [
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210,
+      210
+    ],
+    "ok": true,
+    "containmentOk": true,
+    "ancestorZero": true
+  }
+}

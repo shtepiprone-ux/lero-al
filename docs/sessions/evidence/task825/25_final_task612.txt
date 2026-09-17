@@ -1,0 +1,23 @@
+Task 612 — ListingGallery lightbox portal/stacking rendered evidence (MODE=after)
+    Target: http://localhost:3000/[locale]/listings/test-7-molyl9c8
+
+  E sq (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.listing-gallery') to be visible[22m
+
+  E en (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.listing-gallery') to be visible[22m
+
+  E uk (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.listing-gallery') to be visible[22m
+
+  E it (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('.listing-gallery') to be visible[22m
+
+
+Matrix results: 0/28 PASS, 28 FAIL
+Manifest: docs/sessions/2026-07-16-task612-assets/manifest.after.json
+EXIT_CODE=1

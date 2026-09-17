@@ -1,0 +1,37 @@
+platform: win32 node: v22.22.3 cwd: C:\Claude_Code_Projects\lero-al
+command: node.exe scripts/task612-qa-listinggallery-lightbox-portal.mjs (BASE_URL=http://localhost:3000 SLUG=11-mr7ucly4 MODE=after; server: next start, build 2026-09-17 09:49, CLICK_SHIELD_CI_FIXTURE=1)
+Task 612 — ListingGallery lightbox portal/stacking rendered evidence (MODE=after)
+    Target: http://localhost:3000/[locale]/listings/11-mr7ucly4
+
+  ✓ sq x 320 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 375 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 390 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 768 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 1280 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 1440 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ sq x 2560 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ en x 320 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ en x 375 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ en x 390 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ en x 768 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ en x 1280 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ en x 1440 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ en x 2560 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 320 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 375 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 390 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 768 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 1280 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 1440 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ uk x 2560 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ it x 320 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ it x 375 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ it x 390 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ it x 768 bodyChild=true headerCovered=true contactVisible=false contactCovered=null dialogCoversViewport=true pageOverflow=false
+  ✓ it x 1280 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ it x 1440 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+  ✓ it x 2560 bodyChild=true headerCovered=true contactVisible=true contactCovered=true dialogCoversViewport=true pageOverflow=false
+
+Matrix results: 28/28 PASS, 0 FAIL
+Manifest: docs/sessions/2026-07-16-task612-assets/manifest.after.json
+EXIT_CODE=0

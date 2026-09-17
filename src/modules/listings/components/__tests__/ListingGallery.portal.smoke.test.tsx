@@ -54,11 +54,30 @@ beforeAll(() => {
   // @ts-expect-error -- test-only global stub, jsdom has no IntersectionObserver
   global.IntersectionObserver = IntersectionObserverStub
 
-  // jsdom has no matchMedia — MantineProvider's color-scheme detection needs it.
+  // Task 825 — the fixed matchMedia stub below always reports `matches: false`, so Mantine's
+  // `useMatches({ base: true, sm: false })` in `LightboxView` resolves to `base` (mobile) in this
+  // environment, which mounts `useSwipeTrackSync`'s container-measuring effect and constructs a
+  // real ResizeObserver. jsdom has no ResizeObserver (same stub convention as
+  // `MantinePagination.smoke.test.tsx`) — this was a pre-existing gap surfaced, not caused, by
+  // Task 825; Task 824 added the swipe hook without updating this file.
+  class ResizeObserverStub {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  vi.stubGlobal('ResizeObserver', ResizeObserverStub)
+
+  // jsdom has no matchMedia — MantineProvider's color-scheme detection needs it. This suite
+  // predates Task 824's mobile/desktop split in `LightboxView`/`GalleryDesktopNavigation`
+  // (`useMatches({ base: true, sm: false })`); it was written to exercise the desktop
+  // Prev/Next-button flow (see "Prev/Next buttons cycle the counter" below), so the `sm`
+  // (min-width: 40em) breakpoint query must report matched here — a real browser at any width
+  // >= 640px would. Every other query still reports unmatched (Task 825 — a pre-existing gap
+  // surfaced, not caused, by this task).
   vi.stubGlobal(
     'matchMedia',
     vi.fn().mockImplementation((query: string) => ({
-      matches: false,
+      matches: query.includes('40em'),
       media: query,
       onchange: null,
       addListener: vi.fn(),

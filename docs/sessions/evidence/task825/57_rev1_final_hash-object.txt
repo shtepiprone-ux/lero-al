@@ -1,0 +1,14 @@
+40429088d732150bf9278315d89bd5af69e9b64d  src/modules/listings/components/LightboxView.tsx
+fae9abba107d2effd2aa24f54556bf5da3d6b5ad  src/modules/listings/components/LightboxView.module.css
+1d04a53b1b73f6d101ee18dbd2444318198250ec  src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+820f8c653b1b95bb1cf88b2cf1f639000e18bff3  src/design-system/mantine/patterns/GalleryNavActionIcon.module.css
+edb435f2f64d56b446776b9fd4f03204d241d012  src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+69a028b2f38bd773622e96b48ff2523e88f57ddb  src/design-system/mantine/theme.ts
+ff2f05f5bd4711908859a034bff2e9ebf392ba85  src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+16e7237d00ca817b44c99d7e3d171307c715da8d  src/stories/mantine/primitives/LightboxView.stories.tsx
+b614ca21f70c20c36095b365715d7b6c02b8a9e5  src/hooks/useKeepActiveInView.ts
+156d4b3e813412411d6728f86176af833bc9290e  src/hooks/__tests__/useKeepActiveInView.test.ts
+d06c6e2811a98346338a4d5470f22491e61cade8  scripts/mantine-migration-scope.json
+7d7aa142baa7e080ce281028eb24a78d77372e21  scripts/surface-census-baseline.json
+09e252e68d363e4a9be30c55d6ee38010399a231  scripts/rendered-scope-baseline.json
+7646b7d4eda24ce15f779231839edb8c54d96d59  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx

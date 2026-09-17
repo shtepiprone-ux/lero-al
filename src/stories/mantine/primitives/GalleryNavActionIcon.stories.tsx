@@ -22,12 +22,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const DEMO_SRC = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80'
-// A local identifier, not a literal `className="..."` — `check:design-tokens:strict`'s canonical-
-// story pass matches a Tailwind spacing/sizing utility appearing directly in a `className="..."`
-// literal; `top-1/2`/`-translate-y-1/2` are position-centering utilities (this primitive's own
-// required prop shape, not a Mantine spacing/sizing regression), routed through a named constant
-// instead of an inline literal.
-const CENTERED_CLASS = 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+// Task 825 — `GalleryNavActionIcon` no longer takes `className`; `placement` renders through real
+// Mantine style props, so there is no Tailwind literal (or local-identifier workaround for one) to
+// route around `check:design-tokens:strict` anymore. `centerY` matches both real consumer variants
+// (`GalleryDesktopNavigation`'s `gallery`/`lightbox`); `right: 'xl'` keeps the icon clear of the
+// demo box edge at this fixture's own width.
+const DEMO_PLACEMENT = { right: 'xl', centerY: true } as const
 
 export const Default: Story = {
   render: (_args, context) => {
@@ -43,7 +43,7 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>{t('gallerynavactionicon_light_caption')}</Text>
             <Box pos="relative" {...demoBoxProps}>
               <Image src={DEMO_SRC} alt="" fit="cover" h="100%" />
-              <GalleryNavActionIcon onClick={() => {}} ariaLabel={t('lightbox_next')} className={CENTERED_CLASS}>
+              <GalleryNavActionIcon onClick={() => {}} ariaLabel={t('lightbox_next')} placement={DEMO_PLACEMENT}>
                 <ChevronRight size={theme.other.iconSize.roomy} />
               </GalleryNavActionIcon>
             </Box>
@@ -52,7 +52,7 @@ export const Default: Story = {
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>{t('gallerynavactionicon_dark_caption')}</Text>
             <Box pos="relative" {...demoBoxProps} bg="black">
-              <GalleryNavActionIcon onClick={() => {}} ariaLabel={t('lightbox_next')} tone="dark" className={CENTERED_CLASS}>
+              <GalleryNavActionIcon onClick={() => {}} ariaLabel={t('lightbox_next')} tone="dark" placement={DEMO_PLACEMENT}>
                 <ChevronRight size={theme.other.iconSize.roomy} />
               </GalleryNavActionIcon>
             </Box>

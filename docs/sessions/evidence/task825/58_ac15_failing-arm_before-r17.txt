@@ -1,0 +1,50 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/hooks/__tests__/useKeepActiveInView.test.ts (10 tests | 1 failed) 57ms
+     × a wrap step from the last index to the first never animates (R17) 10ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/hooks/__tests__/useKeepActiveInView.test.ts *> ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/hooks/__tests__/useKeepActiveInView.test.ts > useKeepActiveInView > a wrap step from the last index to the 
+first never animates (R17)
+AssertionError: expected "vi.fn()" to be called with arguments: [ { left: +0, behavior: 'auto' } ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+    {
+-     "behavior": "auto",
++     "behavior": "smooth",
+      "left": 0,
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/hooks/__tests__/useKeepActiveInView.test.ts:148:31
+    146|     vi.mocked(scroller.scrollTo).mockClear()
+    147|     rerender({ activeIndex: 0 })
+    148|     expect(scroller.scrollTo).toHaveBeenCalledWith({ left: 0, behavior…
+       |                               ^
+    149|   })
+    150| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  09:15:22
+   Duration  15.88s (transform 70ms, setup 1.71s, import 1.22s, tests 57ms, environment 12.36s)
+
+EXIT_CODE=1

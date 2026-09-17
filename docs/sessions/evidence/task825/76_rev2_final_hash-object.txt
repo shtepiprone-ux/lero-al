@@ -1,0 +1,20 @@
+=== Revision 2 changed paths (this session) ===
+src/hooks/useKeepActiveInView.ts  79842961fdbee7638db67a574b4226865f045840
+src/hooks/__tests__/useKeepActiveInView.test.ts  e5438b0fdf4d7afe5c9fd41123aa80eb4ca7efc9
+docs/sessions/2026-09-16-task825-lightboxview-migration-and-enrolment.md  eb9c6e47c6717f5d5ee11b4827a79ea2ad5913eb
+docs/backlog.md  5d44834f8fa35136e219a6805071866bee7fc484
+
+=== Confirm no other Revision-2-scoped file changed (LightboxView.tsx, useSwipeTrackSync.ts, MantineListingGalleryPattern.tsx, theme.ts, Stories, manifests, baselines) ===
+src/modules/listings/components/LightboxView.tsx  worktree=40429088d732150bf9278315d89bd5af69e9b64d  HEAD=N/A-untracked-at-HEAD
+src/hooks/useSwipeTrackSync.ts  worktree=ffca6a7ea8e19f49d8c46b12b85e3828a1ce8e52  HEAD=N/A-untracked-at-HEAD
+src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx  worktree=08251c2af7d630afd6cb27da9697635ff304d8a3  HEAD=N/A-untracked-at-HEAD
+src/design-system/mantine/theme.ts  worktree=69a028b2f38bd773622e96b48ff2523e88f57ddb  HEAD=N/A-untracked-at-HEAD
+EXIT_CODE=0
+
+Note: "HEAD:<path>" is not valid git hash-object revision syntax (it hashes worktree file content,
+not a git object) -- the "HEAD=N/A" lines above are a script mistake, not a real comparison.
+Correct verification: LightboxView.tsx and theme.ts hashes above match Revision 1's final recorded
+hashes verbatim (see docs/sessions/evidence/task825/57_rev1_final_hash-object.txt), confirming
+byte-identical, untouched by Revision 2. useSwipeTrackSync.ts and MantineListingGalleryPattern.tsx
+have no baseline hash recorded in that file (they were never in scope for any revision) and are
+confirmed untouched by their total absence from 75_rev2_final_diff_stat.txt's changed-file list.

@@ -1,0 +1,13 @@
+4ef4b1c2890c32c4663035ec32630853fcb68675  src/modules/listings/components/LightboxView.tsx
+b60fdc0772ec3f8e96a8e46926272b549401ba08  src/modules/listings/components/LightboxView.module.css
+1d04a53b1b73f6d101ee18dbd2444318198250ec  src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+c05da641ec96794c967332094b2e42cd67f9ec8a  src/design-system/mantine/patterns/GalleryNavActionIcon.module.css
+edb435f2f64d56b446776b9fd4f03204d241d012  src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+69a028b2f38bd773622e96b48ff2523e88f57ddb  src/design-system/mantine/theme.ts
+ff2f05f5bd4711908859a034bff2e9ebf392ba85  src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+e4fec57c1cedefc742d80f76f0cb2255828ff30c  src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+ca1a22d8a570a4b51d4f44df011e1293c6d3dd87  src/stories/mantine/primitives/LightboxView.stories.tsx
+d06c6e2811a98346338a4d5470f22491e61cade8  scripts/mantine-migration-scope.json
+2faf21bac845b1d468c0d01806c79e785806cb42  scripts/surface-census-baseline.json
+09e252e68d363e4a9be30c55d6ee38010399a231  scripts/rendered-scope-baseline.json
+7646b7d4eda24ce15f779231839edb8c54d96d59  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx

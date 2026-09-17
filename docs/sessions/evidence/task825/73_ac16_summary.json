@@ -1,0 +1,26 @@
+{
+  "rail-390": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  },
+  "strip-1440": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  },
+  "strip-640": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  }
+}

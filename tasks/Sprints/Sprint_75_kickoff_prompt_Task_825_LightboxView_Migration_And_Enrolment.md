@@ -583,3 +583,32 @@ evidence. If `LightboxView.tsx` or any DOM changes, re-run both per §13.2. Tran
 Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when AC15 (with its retained failing arm) and AC16 are
 green, the §17.5 block exits 0, and the §17.6 matrix is handed over. AC15's failing arm passing → `BLOCKED — TEST
 BLIND`. No self-approval, no git.
+
+## 18. Opus implementation review 3, 2026-09-17 — `APPROVED WITH NOTES`
+
+Closes the task. Covers Revision 2 (R17/R18, AC15/AC16) and the owner-requested bottom-padding fix of the same day.
+
+- **R17/R18, AC15 — `VERIFIED`.** `resolveScrollBehavior` in `src/hooks/useKeepActiveInView.ts` returns `'auto'` for
+  the first run, reduced motion, a wrap pair (`count ≥ 3`), and a step longer than one viewport. `computeNearestScrollLeft`
+  and the `scrollTo`-only mechanism are unchanged. The failing arm (`58`, exit 1, `received 'smooth'`) came before the
+  green run (`62`, 22/22). Pure cases ①/② use a delta of 50 px or less against a 100 px viewport, so they isolate the
+  index-pair rule from the distance rule.
+- **AC16 — `VERIFIED`.** In the raw arrays `70`–`72`, no wrap sample lies between its endpoints in any cell. Each
+  smooth arm has intermediate samples (rail `6,15,17`; strip-1440 `7,14`; strip-640 `6`). The containment and
+  ancestor-zero checks are true on all 138 steps.
+- **Owner visual review §17.6 — accepted.** Owner, 2026-09-17: "Візуально тепер все прекрасно."
+- **Owner bottom-padding fix — accepted.** `pb="md"` on the strip `Group` reuses the `pt="md"` token. This edit to
+  `LightboxView.tsx` triggers §17.5's re-run rule. The reviewer re-ran both checks natively against `next start` on the
+  current build: `89_review2_task612.txt` is 28/28 PASS, exit 0. In `90_review2_click-shield.txt` the modal
+  (LightboxView) scenario is 16/16 PASS with 0 interceptions. Its overall exit 2 comes from the drawer trigger, which
+  is missing in all 16 cells, and one footer `elementFromPoint` null on `/it`. Revision 0 and Revision 1 had the same
+  failures, and the failing paths are outside this diff. Filed as **832**.
+
+Notes (kickoff defects, no executor action):
+1. §17.3 "the four AC12 hook tests stay … unchanged" contradicted R17. The old smooth fixture `0 → 2` on 3 items is
+   the wrap pair and also moves 450 px in a 100 px viewport. The executor gave that one test a non-colliding
+   4-item fixture and kept its claim. Accepted.
+2. AC16's literal endpoints `0` and `scrollWidth − clientWidth` assume a scroller with no padding. The strip has
+   `px="xs"`, so its real resting values are `8` and `max − 8`. The probe asserted the real settled endpoints and
+   still required zero intermediate samples. Accepted. GR-4: write endpoints as the settled `computeNearestScrollLeft`
+   target, not as literals.

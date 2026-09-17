@@ -1,0 +1,12 @@
+{
+  "label": "before-R13-failing-arm",
+  "result": {
+    "scrollbarWidth": "auto",
+    "offsetHeight": 66,
+    "clientHeight": 60,
+    "delta": 6,
+    "scrollWidth": 1256,
+    "scrollerClientWidth": 512,
+    "overflowX": "auto"
+  }
+}

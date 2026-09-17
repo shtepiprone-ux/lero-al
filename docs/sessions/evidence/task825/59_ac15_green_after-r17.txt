@@ -1,0 +1,49 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/hooks/__tests__/useKeepActiveInView.test.ts (18 tests | 1 failed) 34ms
+     × a later activeIndex change uses "smooth" 7ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/hooks/__tests__/useKeepActiveInView.test.ts *> ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/hooks/__tests__/useKeepActiveInView.test.ts > useKeepActiveInView > a later activeIndex change uses "smooth"
+AssertionError: expected "vi.fn()" to be called with arguments: [ { left: 450, behavior: 'smooth' } ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+    {
+-     "behavior": "smooth",
++     "behavior": "auto",
+      "left": 450,
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/hooks/__tests__/useKeepActiveInView.test.ts:159:31
+    157|     vi.mocked(scroller.scrollTo).mockClear()
+    158|     rerender({ activeIndex: 2 })
+    159|     expect(scroller.scrollTo).toHaveBeenCalledWith({ left: 450, behavi…
+       |                               ^
+    160|   })
+    161|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  09:17:01
+   Duration  962ms (transform 45ms, setup 79ms, import 86ms, tests 34ms, environment 639ms)
+
+EXIT_CODE=1

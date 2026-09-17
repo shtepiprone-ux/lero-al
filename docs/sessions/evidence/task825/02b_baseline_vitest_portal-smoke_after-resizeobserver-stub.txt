@@ -1,0 +1,261 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (4 tests | 1 failed) 993ms
+     × Prev/Next buttons cycle the counter 80ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — Mantine Modal root-cause fix (Task 612) > Prev/Next buttons cycle the counter
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Next"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Close gallery":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Close gallery"[39m
+    [33mclass[39m=[32m"mantine-focus-auto mantine-active top-4 right-4 z-10 m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"[39m
+    [33mdata-size[39m=[32m"xl"[39m
+    [33mstyle[39m=[32m"--ai-size: var(--ai-size-xl); --ai-radius: 50%; --ai-color: var(--mantine-color-white); background: var(--mantine-color-gray-8); color: var(--mantine-color-gray-2); position: absolute;"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  group:
+
+  Name "Test listing":
+  [36m<div[39m
+    [33maria-label[39m=[32m"Test listing"[39m
+    [33mclass[39m=[32m"h-full w-full overflow-hidden"[39m
+    [33mrole[39m=[32m"group"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  img:
+
+  Name "Test listing":
+  [36m<img[39m
+    [33malt[39m=[32m"Test listing"[39m
+    [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+    [33mdecoding[39m=[32m"async"[39m
+    [33mfetchpriority[39m=[32m"auto"[39m
+    [33mloading[39m=[32m"lazy"[39m
+    [33msrc[39m=[32m"https://example.com/photo-2.jpg"[39m
+  [36m/>[39m
+
+  Name "Test listing":
+  [36m<img[39m
+    [33malt[39m=[32m"Test listing"[39m
+    [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+    [33mdecoding[39m=[32m"async"[39m
+    [33mfetchpriority[39m=[32m"auto"[39m
+    [33mloading[39m=[32m"lazy"[39m
+    [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+  [36m/>[39m
+
+  Name "Test listing":
+  [36m<img[39m
+    [33malt[39m=[32m"Test listing"[39m
+    [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+    [33mdecoding[39m=[32m"async"[39m
+    [33mfetchpriority[39m=[32m"auto"[39m
+    [33mloading[39m=[32m"lazy"[39m
+    [33msrc[39m=[32m"https://example.com/photo-2.jpg"[39m
+  [36m/>[39m
+
+  Name "Test listing":
+  [36m<img[39m
+    [33malt[39m=[32m"Test listing"[39m
+    [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+    [33mdecoding[39m=[32m"async"[39m
+    [33mfetchpriority[39m=[32m"auto"[39m
+    [33mloading[39m=[32m"lazy"[39m
+    [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  presentation:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"_paginationRail_143cb5 absolute bottom-4 left-1/2 -translate-x-1/2 flex"[39m
+    [33mrole[39m=[32m"presentation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<section[39m
+  [33maria-describedby[39m=[32m"mantine-yqmeivv4j-body"[39m
+  [33maria-label[39m=[32m"Close gallery"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"m_fd1ab0aa m_54c44539 mantine-Modal-content m_1b7284a3 mantine-Paper-root"[39m
+  [33mdata-full-screen[39m=[32m"true"[39m
+  [33mdata-modal-content[39m=[32m"true"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl); background-color: color-mix(in oklab, var(--overlay) 95%, transparent); transition-property: opacity, transform; -webkit-backface-visibility: hidden; transition-duration: 200ms; transition-timing-function: ease; opacity: 0; transform: translateY(-30px);"[39m
+  [33mtabindex[39m=[32m"-1"[39m
+[36m>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"m_5df29311 mantine-Modal-body h-full flex items-center justify-center"[39m
+    [33mid[39m=[32m"mantine-yqmeivv4j-body"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"relative w-full h-full flex items-center justify-center"[39m
+    [36m>[39m
+      [36m<button[39m
+        [33maria-label[39m=[32m"Close gallery"[39m
+        [33mclass[39m=[32m"mantine-focus-auto mantine-active top-4 right-4 z-10 m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"[39m
+        [33mdata-size[39m=[32m"xl"[39m
+        [33mstyle[39m=[32m"--ai-size: var(--ai-size-xl); --ai-radius: 50%; --ai-color: var(--mantine-color-white); background: var(--mantine-color-gray-8); color: var(--mantine-color-gray-2); position: absolute;"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-x size-5"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M18 6 6 18"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m6 6 12 12"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</span>[39m
+      [36m</button>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_counter_143cb5 absolute top-4 left-1/2 -translate-x-1/2 text-sm"[39m
+      [36m>[39m
+        [0m1 / 2[0m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-label[39m=[32m"Test listing"[39m
+        [33mclass[39m=[32m"h-full w-full overflow-hidden"[39m
+        [33mrole[39m=[32m"group"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"display: flex; width: 100%; height: 100%; transform: translate3d(0px, 0, 0); transition: transform 280ms ease-out;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative h-full shrink-0"[39m
+            [33mstyle[39m=[32m"flex: 0 0 0px; width: 0px; height: 100%; min-height: 0px; overflow: hidden;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"_frame_f1ba10 _frameFill_f1ba10"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m"Test listing"[39m
+                [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+                [33mdecoding[39m=[32m"async"[39m
+                [33mfetchpriority[39m=[32m"auto"[39m
+                [33mloading[39m=[32m"lazy"[39m
+                [33msrc[39m=[32m"https://example.com/photo-2.jpg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative h-full shrink-0"[39m
+            [33mstyle[39m=[32m"flex: 0 0 0px; width: 0px; height: 100%; min-height: 0px; overflow: hidden;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"_frame_f1ba10 _frameFill_f1ba10"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m"Test listing"[39m
+                [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+                [33mdecoding[39m=[32m"async"[39m
+                [33mfetchpriority[39m=[32m"auto"[39m
+                [33mloading[39m=[32m"lazy"[39m
+                [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative h-full shrink-0"[39m
+            [33mstyle[39m=[32m"flex: 0 0 0px; width: 0px; height: 100%; min-height: 0px; overflow: hidden;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"_frame_f1ba10 _frameFill_f1ba10"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m"Test listing"[39m
+                [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+                [33mdecoding[39m=[32m"async"[39m
+                [33mfetchpriority[39m=[32m"auto"[39m
+                [33mloading[39m=[32m"lazy"[39m
+                [33msrc[39m=[32m"https://example.com/photo-2.jpg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative h-full shrink-0"[39m
+            [33mstyle[39m=[32m"flex: 0 0 0px; width: 0px; height: 100%; min-height: 0px; overflow: hidden;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"_frame_f1ba10 _frameFill_f1ba10"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m"Test listing"[39m
+                [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitContain_f1ba10"[39m
+                [33mdecoding[39m=[32m"async"[39m
+                [33mfetchpriority[39m=[32m"auto"[39m
+                [33mloading[39m=[32m"lazy"[39m
+                [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_paginationRail_143cb5 absolute bottom-4 left-1/2 -translate-x-1/2 flex"[39m
+        [33mrole[39m=[32m"presentation"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"_paginationSegment_143cb5 _paginationSegmentActive_143cb5"[39m
+          [33mstyle[39m=[32m"width: 1rem; height: 0.125rem;"[39m
+        [36m/>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"_paginationSegment_143cb5"[39m
+          [33mstyle[39m=[32m"width: 1rem; height: 0.125rem;"[39m
+        [36m/>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</section>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:183:36
+    181|     const dialog = await openLightbox()
+    182|
+    183|     fireEvent.click(within(dialog).getByRole('button', { name: 'Next' …
+       |                                    ^
+    184|     await waitFor(() => expect(screen.getByText('2 / 2')).toBeInTheDoc…
+    185|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  23:15:00
+   Duration  2.73s (transform 195ms, setup 75ms, import 779ms, tests 993ms, environment 663ms)
+
+EXIT_CODE=1

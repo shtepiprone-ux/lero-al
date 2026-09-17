@@ -1,0 +1,42 @@
+Command: node.exe .tmp-task825/ac16-probe.cjs .tmp-task825/out
+(scratch Playwright probe under a repo-local scratch dir .tmp-task825, deleted before the final
+hash-object pass — kickoff §17.3 AC16)
+Launch: chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] }), locale:en, reduced motion not emulated.
+Cells: rail-390 (swipe-track-mode, ArrowRight/ArrowLeft), strip-1440 and strip-640 (default, Next/Prev buttons).
+Per cell: 23-step forward walk (AC8/AC9 containment + ancestor-scroll recheck, capturing the first
+real-scroll step's raw samples as the smooth-arm proof) -> wrap-forward (23->0, sampled) ->
+wrap-backward (0->23, sampled) -> 23-step backward walk (AC8/AC9 recheck).
+running rail-390...
+rail-390 done
+running strip-1440...
+strip-1440 done
+running strip-640...
+strip-640 done
+{
+  "rail-390": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  },
+  "strip-1440": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  },
+  "strip-640": {
+    "fwdOk": true,
+    "bwdOk": true,
+    "wrapForwardOk": true,
+    "wrapBackwardOk": true,
+    "smoothOk": true,
+    "ok": true
+  }
+}
+AC16_OVERALL=PASS
+EXIT_CODE=0

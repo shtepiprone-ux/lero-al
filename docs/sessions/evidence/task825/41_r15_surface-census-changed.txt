@@ -1,0 +1,37 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: a40e14b92bc84db9ed0ff3f0f6c3b64593293ee6
+    Changed paths seen: 16
+    Excluded (12):
+      docs/sessions/2026-07-16-task612-assets/after__en__1280.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__320.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__375.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/after__uk__390.png  [outside-src]
+      docs/sessions/2026-07-16-task612-assets/manifest.after.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx  [story-or-test-file]
+      src/modules/listings/components/LightboxView.module.css  [not-ts-tsx]
+      src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/LightboxView.stories.tsx  [story-or-test-file]
+    Included surfaces (4):
+      src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx
+      src/design-system/mantine/patterns/GalleryNavActionIcon.tsx
+      src/design-system/mantine/theme.ts
+      src/modules/listings/components/LightboxView.tsx
+    Surfaces censused: 4
+    Blocks baselined (recorded debt, does not fail): 1
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 645
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

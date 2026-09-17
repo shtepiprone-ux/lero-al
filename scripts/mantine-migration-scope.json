@@ -70,5 +70,6 @@
   "src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx",
   "src/design-system/mantine/patterns/GalleryThumbnailButton.tsx",
   "src/modules/listings/components/ListingFeatureIcon.tsx",
-  "src/modules/listings/components/FavoriteButton.tsx"
+  "src/modules/listings/components/FavoriteButton.tsx",
+  "src/modules/listings/components/LightboxView.tsx"
 ]

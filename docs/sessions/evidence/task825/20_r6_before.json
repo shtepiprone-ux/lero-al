@@ -1,0 +1,408 @@
+{
+  "label": "before",
+  "results": {
+    "mantine-primitives-lightboxview--default": {
+      "640x900": {
+        "close": {
+          "rect": {
+            "x": 580,
+            "y": 16,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "counter": {
+          "rect": {
+            "x": 301.8,
+            "y": 16,
+            "width": 36.4,
+            "height": 20
+          },
+          "style": {
+            "font-size": "14px",
+            "line-height": "20px"
+          }
+        },
+        "prev": {
+          "rect": {
+            "x": 24,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "next": {
+          "rect": {
+            "x": 572,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "mediaImgRect": {
+          "x": 64,
+          "y": 0,
+          "width": 512,
+          "height": 840
+        },
+        "firstThumbRect": {
+          "x": 72,
+          "y": 856,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "1024x900": {
+        "close": {
+          "rect": {
+            "x": 964,
+            "y": 16,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "counter": {
+          "rect": {
+            "x": 493.8,
+            "y": 16,
+            "width": 36.4,
+            "height": 20
+          },
+          "style": {
+            "font-size": "14px",
+            "line-height": "20px"
+          }
+        },
+        "prev": {
+          "rect": {
+            "x": 24,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "next": {
+          "rect": {
+            "x": 956,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "mediaImgRect": {
+          "x": 64,
+          "y": 0,
+          "width": 896,
+          "height": 840
+        },
+        "firstThumbRect": {
+          "x": 72,
+          "y": 856,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "1440x900": {
+        "close": {
+          "rect": {
+            "x": 1380,
+            "y": 16,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "counter": {
+          "rect": {
+            "x": 701.8,
+            "y": 16,
+            "width": 36.4,
+            "height": 20
+          },
+          "style": {
+            "font-size": "14px",
+            "line-height": "20px"
+          }
+        },
+        "prev": {
+          "rect": {
+            "x": 24,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "next": {
+          "rect": {
+            "x": 1372,
+            "y": 428,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "auto",
+            "transform": "none"
+          }
+        },
+        "mediaImgRect": {
+          "x": 208,
+          "y": 0,
+          "width": 1024,
+          "height": 840
+        },
+        "firstThumbRect": {
+          "x": 216,
+          "y": 856,
+          "width": 44,
+          "height": 44
+        }
+      }
+    },
+    "mantine-primitives-lightboxview--swipe-track-mode": {
+      "320x800": {
+        "close": {
+          "rect": {
+            "x": 260,
+            "y": 16,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "counter": {
+          "rect": {
+            "x": 141.8,
+            "y": 16,
+            "width": 36.4,
+            "height": 20
+          },
+          "style": {
+            "font-size": "14px",
+            "line-height": "20px"
+          }
+        },
+        "paginationRailRect": {
+          "x": -124,
+          "y": 782,
+          "width": 568,
+          "height": 2
+        },
+        "paginationSegmentCount": 24
+      },
+      "390x800": {
+        "close": {
+          "rect": {
+            "x": 330,
+            "y": 16,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "counter": {
+          "rect": {
+            "x": 176.8,
+            "y": 16,
+            "width": 36.4,
+            "height": 20
+          },
+          "style": {
+            "font-size": "14px",
+            "line-height": "20px"
+          }
+        },
+        "paginationRailRect": {
+          "x": -89,
+          "y": 782,
+          "width": 568,
+          "height": 2
+        },
+        "paginationSegmentCount": 24
+      }
+    },
+    "mantine-primitives-gallerydesktopnavigation--default": {
+      "1024x900": {
+        "prevRects": [
+          {
+            "rect": {
+              "x": 57,
+              "y": 188,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "10"
+            }
+          },
+          {
+            "rect": {
+              "x": 73,
+              "y": 508,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "auto"
+            }
+          }
+        ],
+        "nextRects": [
+          {
+            "rect": {
+              "x": 477,
+              "y": 188,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "10"
+            }
+          },
+          {
+            "rect": {
+              "x": 461,
+              "y": 508,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "auto"
+            }
+          }
+        ]
+      },
+      "1440x900": {
+        "prevRects": [
+          {
+            "rect": {
+              "x": 57,
+              "y": 188,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "10"
+            }
+          },
+          {
+            "rect": {
+              "x": 73,
+              "y": 508,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "auto"
+            }
+          }
+        ],
+        "nextRects": [
+          {
+            "rect": {
+              "x": 477,
+              "y": 188,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "10"
+            }
+          },
+          {
+            "rect": {
+              "x": 461,
+              "y": 508,
+              "width": 44,
+              "height": 44
+            },
+            "style": {
+              "z-index": "auto"
+            }
+          }
+        ]
+      }
+    },
+    "patterns-mantine-listinggallerypattern--default": {
+      "1024x900": {
+        "prev": {
+          "rect": {
+            "x": 24,
+            "y": 270,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "next": {
+          "rect": {
+            "x": 956,
+            "y": 270,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        }
+      },
+      "1440x900": {
+        "prev": {
+          "rect": {
+            "x": 24,
+            "y": 270,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        },
+        "next": {
+          "rect": {
+            "x": 1372,
+            "y": 270,
+            "width": 44,
+            "height": 44
+          },
+          "style": {
+            "z-index": "10"
+          }
+        }
+      }
+    }
+  }
+}

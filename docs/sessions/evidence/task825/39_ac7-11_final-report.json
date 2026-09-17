@@ -1,0 +1,4709 @@
+{
+  "AC7": [
+    {
+      "width": 320,
+      "height": 800,
+      "contentScrollWidth": 320,
+      "contentClientWidth": 320,
+      "contentOverflows": false,
+      "railLeft": 16,
+      "railRight": 304,
+      "viewportWidth": 320,
+      "expectedRailRight": 304,
+      "segmentCount": 24,
+      "firstSegment": {
+        "x": 16,
+        "width": 16,
+        "height": 2
+      },
+      "adjacentDeltas": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ]
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "contentScrollWidth": 360,
+      "contentClientWidth": 360,
+      "contentOverflows": false,
+      "railLeft": 16,
+      "railRight": 344,
+      "viewportWidth": 360,
+      "expectedRailRight": 344,
+      "segmentCount": 24,
+      "firstSegment": {
+        "x": 16,
+        "width": 16,
+        "height": 2
+      },
+      "adjacentDeltas": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "contentScrollWidth": 390,
+      "contentClientWidth": 390,
+      "contentOverflows": false,
+      "railLeft": 16,
+      "railRight": 374,
+      "viewportWidth": 390,
+      "expectedRailRight": 374,
+      "segmentCount": 24,
+      "firstSegment": {
+        "x": 16,
+        "width": 16,
+        "height": 2
+      },
+      "adjacentDeltas": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ]
+    },
+    {
+      "width": 480,
+      "height": 900,
+      "contentScrollWidth": 480,
+      "contentClientWidth": 480,
+      "contentOverflows": false,
+      "railLeft": 16,
+      "railRight": 464,
+      "viewportWidth": 480,
+      "expectedRailRight": 464,
+      "segmentCount": 24,
+      "firstSegment": {
+        "x": 16,
+        "width": 16,
+        "height": 2
+      },
+      "adjacentDeltas": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ]
+    },
+    {
+      "width": 560,
+      "height": 812,
+      "contentScrollWidth": 560,
+      "contentClientWidth": 560,
+      "contentOverflows": false,
+      "railLeft": 16,
+      "railRight": 544,
+      "viewportWidth": 560,
+      "expectedRailRight": 544,
+      "segmentCount": 24,
+      "firstSegment": {
+        "x": 16,
+        "width": 16,
+        "height": 2
+      },
+      "adjacentDeltas": [
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24,
+        24
+      ]
+    }
+  ],
+  "AC8": [
+    {
+      "width": 320,
+      "allContained": true,
+      "allAncestorZero": true,
+      "finalScrollLeftAfterFullForwardWrap": 0,
+      "steps": [
+        {
+          "direction": "fwd",
+          "step": 0,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 1,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 2,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 3,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 4,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 5,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 6,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 7,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 8,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 9,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 10,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 11,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 12,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 13,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 14,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 15,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 16,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 17,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 18,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 19,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 20,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 21,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 22,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 23,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 0,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 1,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 2,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 3,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 4,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 5,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 6,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 7,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 8,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 9,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 10,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 11,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 12,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 13,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 14,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 15,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 16,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 17,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 18,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 19,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 20,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 21,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 22,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 23,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 304
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "allContained": true,
+      "allAncestorZero": true,
+      "finalScrollLeftAfterFullForwardWrap": 0,
+      "steps": [
+        {
+          "direction": "fwd",
+          "step": 0,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 1,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 2,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 3,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 4,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 5,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 6,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 7,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 8,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 9,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 10,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 11,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 12,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 13,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 14,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 15,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 16,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 17,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 18,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 19,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 20,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 21,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 22,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 23,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 0,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 1,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 2,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 3,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 4,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 5,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 6,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 7,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 8,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 9,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 10,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 11,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 12,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 13,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 14,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 15,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 16,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 17,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 18,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 19,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 20,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 21,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 22,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 23,
+          "idx": 0,
+          "railRect": {
+            "left": 16,
+            "right": 374
+          },
+          "segRect": {
+            "left": 16,
+            "right": 32
+          },
+          "railScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        }
+      ]
+    }
+  ],
+  "AC9": [
+    {
+      "width": 640,
+      "allContained": true,
+      "allAncestorZero": true,
+      "steps": [
+        {
+          "direction": "fwd",
+          "step": 0,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 124,
+            "right": 168
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 1,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 176,
+            "right": 220
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 2,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 228,
+            "right": 272
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 3,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 280,
+            "right": 324
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 4,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 332,
+            "right": 376
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 5,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 384,
+            "right": 428
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 6,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 436,
+            "right": 480
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 7,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 488,
+            "right": 532
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 8,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 9,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 60,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 10,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 112,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 11,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 164,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 12,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 216,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 13,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 268,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 14,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 320,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 15,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 372,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 16,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 424,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 17,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 476,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 18,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 528,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 19,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 580,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 20,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 632,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 21,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 684,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 22,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 23,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 0,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 532,
+            "right": 576
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 1,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 480,
+            "right": 524
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 2,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 428,
+            "right": 472
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 3,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 376,
+            "right": 420
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 4,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 324,
+            "right": 368
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 5,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 272,
+            "right": 316
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 6,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 220,
+            "right": 264
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 7,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 168,
+            "right": 212
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 8,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 116,
+            "right": 160
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 9,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 736,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 10,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 684,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 11,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 632,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 12,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 580,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 13,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 528,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 14,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 476,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 15,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 424,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 16,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 372,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 17,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 320,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 18,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 268,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 19,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 216,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 20,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 164,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 21,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 112,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 22,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 60,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 23,
+          "scrollerRect": {
+            "left": 64,
+            "right": 576
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 960,
+      "allContained": true,
+      "allAncestorZero": true,
+      "steps": [
+        {
+          "direction": "fwd",
+          "step": 0,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 124,
+            "right": 168
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 1,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 176,
+            "right": 220
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 2,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 228,
+            "right": 272
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 3,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 280,
+            "right": 324
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 4,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 332,
+            "right": 376
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 5,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 384,
+            "right": 428
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 6,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 436,
+            "right": 480
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 7,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 488,
+            "right": 532
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 8,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 540,
+            "right": 584
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 9,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 592,
+            "right": 636
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 10,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 644,
+            "right": 688
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 11,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 696,
+            "right": 740
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 12,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 748,
+            "right": 792
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 13,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 800,
+            "right": 844
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 14,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 15,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 52,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 16,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 104,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 17,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 156,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 18,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 208,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 19,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 260,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 20,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 312,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 21,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 364,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 22,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 23,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 0,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 852,
+            "right": 896
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 1,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 800,
+            "right": 844
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 2,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 748,
+            "right": 792
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 3,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 696,
+            "right": 740
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 4,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 644,
+            "right": 688
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 5,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 592,
+            "right": 636
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 6,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 540,
+            "right": 584
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 7,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 488,
+            "right": 532
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 8,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 436,
+            "right": 480
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 9,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 384,
+            "right": 428
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 10,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 332,
+            "right": 376
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 11,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 280,
+            "right": 324
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 12,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 228,
+            "right": 272
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 13,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 176,
+            "right": 220
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 14,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 124,
+            "right": 168
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 15,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 72,
+            "right": 116
+          },
+          "scrollerScrollLeft": 416,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 16,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 372,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 17,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 320,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 18,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 268,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 19,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 216,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 20,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 164,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 21,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 112,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 22,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 60,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 23,
+          "scrollerRect": {
+            "left": 64,
+            "right": 896
+          },
+          "thumbRect": {
+            "left": 64,
+            "right": 108
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "allContained": true,
+      "allAncestorZero": true,
+      "steps": [
+        {
+          "direction": "fwd",
+          "step": 0,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 268,
+            "right": 312
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 1,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 320,
+            "right": 364
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 2,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 372,
+            "right": 416
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 3,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 424,
+            "right": 468
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 4,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 476,
+            "right": 520
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 5,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 528,
+            "right": 572
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 6,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 580,
+            "right": 624
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 7,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 632,
+            "right": 676
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 8,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 684,
+            "right": 728
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 9,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 736,
+            "right": 780
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 10,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 788,
+            "right": 832
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 11,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 840,
+            "right": 884
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 12,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 892,
+            "right": 936
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 13,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 944,
+            "right": 988
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 14,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 996,
+            "right": 1040
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 15,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1048,
+            "right": 1092
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 16,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1100,
+            "right": 1144
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 17,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1152,
+            "right": 1196
+          },
+          "scrollerScrollLeft": 0,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 18,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 16,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 19,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 68,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 20,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 120,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 21,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 172,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 22,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "fwd",
+          "step": 23,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 0,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1188,
+            "right": 1232
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 1,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1136,
+            "right": 1180
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 2,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1084,
+            "right": 1128
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 3,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 1032,
+            "right": 1076
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 4,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 980,
+            "right": 1024
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 5,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 928,
+            "right": 972
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 6,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 876,
+            "right": 920
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 7,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 824,
+            "right": 868
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 8,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 772,
+            "right": 816
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 9,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 720,
+            "right": 764
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 10,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 668,
+            "right": 712
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 11,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 616,
+            "right": 660
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 12,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 564,
+            "right": 608
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 13,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 512,
+            "right": 556
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 14,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 460,
+            "right": 504
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 15,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 408,
+            "right": 452
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 16,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 356,
+            "right": 400
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 17,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 304,
+            "right": 348
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 18,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 252,
+            "right": 296
+          },
+          "scrollerScrollLeft": 224,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 19,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 216,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 20,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 164,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 21,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 112,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 22,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 60,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        },
+        {
+          "direction": "back",
+          "step": 23,
+          "scrollerRect": {
+            "left": 208,
+            "right": 1232
+          },
+          "thumbRect": {
+            "left": 208,
+            "right": 252
+          },
+          "scrollerScrollLeft": 8,
+          "docScrollLeft": 0,
+          "docScrollTop": 0,
+          "dialogScrollLeft": 0,
+          "dialogScrollTop": 0,
+          "contained": true
+        }
+      ]
+    }
+  ],
+  "AC10": [
+    {
+      "target": "strip",
+      "width": 640,
+      "scrollbarWidth": "none",
+      "delta": 0
+    },
+    {
+      "target": "strip",
+      "width": 960,
+      "scrollbarWidth": "none",
+      "delta": 0
+    },
+    {
+      "target": "rail",
+      "width": 320,
+      "scrollbarWidth": "none",
+      "delta": 0
+    }
+  ],
+  "AC11": [
+    {
+      "width": 320,
+      "railScrollWidth": 288,
+      "railClientWidth": 288,
+      "rowWidth": 88,
+      "rowCenter": 160,
+      "viewportCenter": 160
+    },
+    {
+      "width": 390,
+      "railScrollWidth": 358,
+      "railClientWidth": 358,
+      "rowWidth": 88,
+      "rowCenter": 195,
+      "viewportCenter": 195
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 115 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+❌  check:file-integrity FAILED — 6 corrupt / invalid file(s):
+
+  docs/sessions/evidence/task825/80_owner-pb-fix_typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task825/81_owner-pb-fix_lint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task825/82_owner-pb-fix_design-tokens-strict.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task825/83_owner-pb-fix_vitest_portal-smoke.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task825/84_owner-pb-fix_build.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task825/85_owner-pb-fix_build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

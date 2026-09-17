@@ -1,0 +1,15 @@
+ .../2026-07-16-task612-assets/after__en__1280.png  | Bin 558911 -> 526438 bytes
+ .../2026-07-16-task612-assets/after__uk__320.png   | Bin 68853 -> 94490 bytes
+ .../2026-07-16-task612-assets/after__uk__375.png   | Bin 95920 -> 121988 bytes
+ .../2026-07-16-task612-assets/after__uk__390.png   | Bin 100725 -> 128451 bytes
+ .../2026-07-16-task612-assets/manifest.after.json  |  84 ++++++++++++++-------
+ scripts/mantine-migration-scope.json               |   3 +-
+ scripts/rendered-scope-baseline.json               |   3 -
+ .../mantine/patterns/GalleryDesktopNavigation.tsx  |  36 ++++-----
+ .../mantine/patterns/GalleryNavActionIcon.tsx      |  61 +++++++++++++--
+ src/design-system/mantine/theme.ts                 |  12 ++-
+ .../listings/components/LightboxView.module.css    |  49 ++++++++++++
+ src/modules/listings/components/LightboxView.tsx   |  74 +++++++++++-------
+ .../__tests__/ListingGallery.portal.smoke.test.tsx |  23 +++++-
+ .../primitives/GalleryNavActionIcon.stories.tsx    |  16 ++--
+ 14 files changed, 266 insertions(+), 95 deletions(-)

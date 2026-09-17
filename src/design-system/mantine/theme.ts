@@ -76,6 +76,10 @@ declare module '@mantine/core' {
     // rule-3 collision. Grows the same way `boxSize`/`iconSize` did, one documented role at a time.
     borderWidth: Record<'galleryThumbActive' | 'hairline', string>
     boxSize: Record<
+      // Task 825 (§3.2) — `LightboxView`'s desktop media column, migrated exactly from the
+      // pre-825 `max-w-5xl`/`mx-16` Tailwind utility values (64rem/4rem).
+      | 'lightboxMediaMaxWidth'    // 64rem (1024px) — desktop column `max-width`
+      | 'lightboxMediaInlineMargin' // 4rem (64px) — desktop column inline margin
       | 'paginationSegmentThickness' // 2px — Task 824 R17 revision (owner decision 2026-09-12,
                                      // D824-4): the mobile lightbox pagination indicator's thickness.
                                      // A DIFFERENT role from `borderWidth.galleryThumbActive` despite
@@ -119,7 +123,10 @@ declare module '@mantine/core' {
     //     `PasswordRequirementsHint.tsx:56` and `CaptchaWidget.tsx:35` cite (`lh="19.5px"`, same
     //     value, same auth-note-paragraph role — one shared role, not two).
     //   notificationGlyph (1.5rem) — `NotificationItem.tsx:197`'s `lh="1.5rem"` icon/glyph row.
-    lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph', string>
+    // Task 825 (§3.2) — `lightboxCounter` = 1.25rem (20px), `LightboxView`'s counter's pre-825
+    // Tailwind `text-sm` compiled line-height (`.text-sm{line-height:var(--tw-leading,1.25rem)}`,
+    // `.next/static/css`, 2026-09-16 build). Same `lineHeight` group as the Task 822 roles above.
+    lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph' | 'lightboxCounter', string>
     // Task 822 (§3.3) — `FavoriteButton.tsx:179`'s `radius="1.125rem"` (Task 653 R2 sibling-match
     // pill radius). A DIFFERENT namespace from the top-level `theme.radius` scale (xs..2xl/pill),
     // which has no 1.125rem rung — this is a one-off consumer-specific role, the same pattern as
@@ -512,6 +519,8 @@ export const theme = createTheme({
     // Task 782 — canonical layout/container dimension scale (D69-6). Rem strings — see the
     // `MantineThemeOther` augmentation above for the full role-name rationale.
     boxSize: {
+      lightboxMediaMaxWidth: '64rem',      // 1024px — Task 825: LightboxView desktop column max-width
+      lightboxMediaInlineMargin: '4rem',   //   64px — Task 825: LightboxView desktop column inline margin
       paginationSegmentThickness: '0.125rem', // 2px — Task 824 R17 revision, D824-4
       statusDot: '0.5rem',       //   8px
       paginationSegment: '1rem', //  16px — Task 824 R17 revision, D824-4
@@ -545,6 +554,7 @@ export const theme = createTheme({
       passwordHintRow: '1rem',        // 16px
       authNoteParagraph: '1.21875rem', // 19.5px
       notificationGlyph: '1.5rem',    // 24px
+      lightboxCounter: '1.25rem',     // 20px — Task 825: LightboxView counter (was text-sm)
     },
     radius: {
       favoritePill: '1.125rem', // 18px — Task 653 R2 sibling-match pill radius

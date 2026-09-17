@@ -1,0 +1,4 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al
+e6e69da8a53f88d8ece2b34a9216dac016ed590e
+487462a12f0a513345166c6fbe54dec1f371e11d
+1e350a65b8152260603301de50d5ec009b25c8b1

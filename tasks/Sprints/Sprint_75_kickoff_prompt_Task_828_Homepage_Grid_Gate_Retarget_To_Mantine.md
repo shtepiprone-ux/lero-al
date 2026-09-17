@@ -2,8 +2,8 @@
 
 Sprint 75 · P1 · QA profile **Q4**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Route fixed by owner decision 2026-09-17 (§5.1). Folds the backlog row
-**Cleanup step 3** (delete the three consolidated probes the gate names).
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-17 (review 2, §17).** Review 1 was `NEEDS REVISION` (§16). Route fixed by owner decision 2026-09-17 (§5.1). Folds the backlog row **Cleanup step 3**
+(delete the three consolidated probes the gate names).
 
 ## 1. Mode and task type
 
@@ -106,7 +106,7 @@ the deletion. The backlog row says: "Must also update `check-homepage-grid.mjs`,
 | **R4** | kept invariant, §3.4 | **I-D skeleton count**: on `--loading` at 320/1024/1440 × 4 locales, the Featured rail (`.featured-listings`) holds exactly 3 skeleton items and the Latest rail (`.latest-listings`) exactly 4. Count the track's item elements, not `.mantine-Skeleton-root` nodes. | **P0** | AC2 | Confirmed |
 | **R5** | kept supporting | **No page-level horizontal scroll**: on `--default` at 320/375/390/640/768/1024/1280/1440/1536/1920/2560 × 4 locales, `document.documentElement.scrollWidth <= document.documentElement.clientWidth + 2`. A rail's own internal scroll is not page scroll. | **P0** | AC2 | Confirmed |
 | **R6** | kept supporting | **1408px page cap**: on `--default` at 1536/1920/2560 × 4 locales, the content box of the story's page-frame element (the element whose computed `max-width` is `1408px`) is ≤ 1408 + 2 px. A missing page-frame element is a failure, never a pass. | P1 | AC2 | Confirmed |
-| **R7** | replaces I-A's guard of D74-4 | **Rail mode**: on `--default` at 320/1024/1440 × 4 locales, both the Featured and the Latest track render their rail scroller (computed `display` is `flex` and `overflow-x` is `auto` or `scroll`) and no `display:grid` card container exists inside either section. A Featured/Latest regression to a grid fails. | **P0** | AC2 | Confirmed |
+| **R7** | replaces I-A's guard of D74-4 | **Rail mode**: on `--default` at 320/1024/1440 × 4 locales, both the Featured and the Latest track render their rail scroller (computed `display` is `flex` and `overflow-x` is `auto` or `scroll`) and no `display:grid` card container exists inside either section. A Featured/Latest regression to a grid fails. **Amended by review 1 → R13 (§16.2) defines how "inside either section" is measured.** | **P0** | AC2, AC7 | Confirmed |
 | **R8** | Q4 | `--verify-gate`: the negative arm passes on the unmodified tree. Each of R3/R4/R5/R6/R7 has one in-page `page.evaluate` plant that trips **that** invariant and no other, restored in `finally`. A plant that does not trip, trips the wrong invariant, or survives exits non-zero. | **P0** | AC3 | Confirmed |
 | **R9** | fail-closed | A story that fails to render, a missing locator (header, rail, page frame), or a story ID absent from `storybook-static/index.json` is a failing cell with a named reason, never a skip. The run exits non-zero if the discovered index lacks either target ID. | **P0** | AC4 | Confirmed |
 | **R10** | §3.4 | `HomepageListingGrids.stories.tsx` docs strings (`component` and each story's `description`) describe rails per D74-4, with no column-step or `SimpleGrid` claim. Render code is byte-unchanged. | P2 | AC5 | Confirmed |
@@ -314,3 +314,88 @@ no git.
 | 4 fail-closed arm | scratch copy outside `scripts/` | scratch only | AC4 transcript + porcelain | scratch path remains → not done |
 | 5 deletions | — | 3 deletions, backlog | AC6 grep | extra live hit → not done |
 | 6 final | — | none | §13.2 | any required non-zero → not `IMPLEMENTED` |
+| R1 revision (§16) | review 1 retained under `evidence/task828/review1/` | gate script, session log, backlog 828 line | §16.4 block under `evidence/task828/revision1/` | nested-grid plant passes, or either plant cross-trips → not done |
+
+## 16. Review 1 — `NEEDS REVISION` 2026-09-17
+
+### 16.1 Finding (P2, R7 / AC2)
+
+`CONTRADICTION` — R7 requires that "no `display:grid` card container exists inside either section".
+`evalRailCell` (`scripts/check-homepage-grid.mjs:411-452`) collects every flex-overflow **or** grid element that
+contains a `.listing-card`, keeps `candidates.slice(0, 2)`, and indexes them by DOM order. Any candidate beyond the
+second is counted in `found` and otherwise ignored; the row logic (`:657`) fails only on `found < 2`.
+
+Executed by the reviewer with the gate's own `evalRailCell` source, on the final Storybook build, 1024/en
+(`docs/sessions/evidence/task828/review1/probe-rail-extra-grid.txt`):
+
+| Plant | `found` | Result | Correct? |
+|---|---|---|---|
+| none | 2 | both rail | yes |
+| last Latest rail item wrapped in a `display:grid` `div` | 3 | **both rows PASS** | **no — fail-open** |
+| last Featured rail item wrapped the same way | 3 | **Latest** row fails `regressed-to-grid`, Featured passes | detected, **wrong section** |
+
+The nested grid is DOM-order candidate 1 (a descendant of the Featured rail precedes the Latest rail), so the real
+Latest rail becomes candidate 2 and is discarded. The retained `--verify-gate` I-G plant flips a top-level track,
+so it cannot see this class.
+
+Everything else was re-run natively by the reviewer and passes on the same blobs (`e6e69da8`, `487462a1`, `1e350a65`):
+`build-storybook`, `check:homepage-grid` 116/116, `check:homepage-grid:verify`, `typecheck`, `lint`, `build`, all
+`EXIT_CODE=0` (`review1/*.txt`). Do **not** redo any other part of the task.
+
+### 16.2 R13 — how I-G measures "inside either section" (replaces the DOM-order slice)
+
+| ID | Requirement | P |
+|---|---|---|
+| **R13** | In `evalRailCell`: (a) collect candidates exactly as now; (b) **top-level tracks** = candidates that have no ancestor in the candidate set; there must be exactly 2, and the row fails `track-count=<n> expected=2` for both components otherwise; index 0 → Featured, 1 → Latest by DOM order; (c) every other candidate is **nested**. Each nested candidate whose computed `display` is `grid` fails the row of the top-level track that `contains()` it, with reason `nested-grid inside <component> track`. A nested rail (flex-overflow) is also a failure of its container's row, reason `nested-rail inside <component> track`. (d) Nothing is dropped silently: return `found`, `topLevel` and `nested` counts, and print them in a failing row's reason. | **P0** |
+| **R14** | `--verify-gate` gains a sixth plant, `I-G-Nested-Grid`: at 1024/en, move the **Latest** rail's last item into a new `div` with inline `display:grid` appended to that rail, measure, then restore the item to its original position and remove the `div` in `finally`. It must trip exactly one row (`I-G Latest`) with reason matching `/nested-grid inside Latest track/`. The existing five plants stay unchanged and must still pass. | **P0** |
+
+The printed scope (R12) and the header comment's invariant list name the nested-grid rule. The I-G cell count stays
+24; the plant count becomes 6.
+
+### 16.3 Acceptance criteria added by review 1
+
+- **AC7 [R13]** — `npm run check:homepage-grid` exits 0 with `I-G rail mode: 24/24 PASS` and `TOTAL: 116/116 PASS`.
+- **AC8 [R13, R14]** — `npm run check:homepage-grid:verify` exits 0; its output shows all six plants with the ✅ line,
+  and the `I-G-Nested-Grid` JSON block shows exactly one failing row, `I-G Latest`, with the nested-grid reason.
+- **AC9 [R13]** — failing arm for the section attribution: re-run the reviewer's probe
+  `docs/sessions/evidence/task828/review1/probe-rail-extra-grid.mjs` unmodified against the revised script. The
+  Latest-plant line must show the Latest track with a nested-grid failure and the Featured-plant line a Featured
+  nested-grid failure, not a Latest one. If the probe's `tracks` shape no longer carries the verdict, write
+  `revision1/probe-rail-nested.mjs` (outside `scripts/`) that calls the revised `evalRailCell` for the same three
+  plants and prints each row's pass/reason. Retain the transcript either way.
+
+### 16.4 Revision verification block
+
+Evidence goes under `docs/sessions/evidence/task828/revision1/`, one unpiped transcript per command with
+`EXIT_CODE=` appended. Node UTF-8 I/O only for every write (§10.5).
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npm.cmd run build-storybook
+npm.cmd run check:homepage-grid
+npm.cmd run check:homepage-grid:verify
+node.exe docs\sessions\evidence\task828\review1\probe-rail-extra-grid.mjs
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks status --porcelain
+git --no-optional-locks hash-object scripts/check-homepage-grid.mjs src/stories/patterns/mantine/HomepageListingGrids.stories.tsx .github/workflows/governance-pr.yml docs/backlog.md
+```
+
+Expected: `win32`; every npm command exit 0; the probe per AC9; `src/stories/...` and `governance-pr.yml` hashes equal
+`487462a12f0a513345166c6fbe54dec1f371e11d` and `1e350a65b8152260603301de50d5ec009b25c8b1` (untouched by the revision).
+
+### 16.5 Completion report
+
+Append a `## Revision 1` section to `docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md`: the
+`evalRailCell` diff, AC7–AC9 quotes, the §16.4 transcripts with exit codes and hashes. Update the 828 line in
+`docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`. No git, no self-approval.
+
+## 17. Review 2 — `APPROVED WITH NOTES` 2026-09-17
+
+R13/R14 verified by the reviewer on script blob `8687d90f` (`docs/sessions/evidence/task828/review2/`): gate 116/116, `:verify` six plants plus restore, the review 1 probe now attributes each nested grid to its own track, typecheck/lint/file-integrity/mojibake exit 0. Ledger: `docs/reviews/2026-09-17-task828-homepage-grid-gate-retarget.review-ledger.json` (check:review-ledger exit 0).
+
+Notes, no follow-up required: (1) the executor's Revision 0 transcripts used single-line `%errorlevel%` capture, which does not reflect the real exit code; they are superseded by the reviewer's `review1/`/`review2/` and the executor's `revision1/` transcripts. (2) The executor saw one `blank-canvas` cell (I-E, sq@1536) on an intermediate `:verify` run; it did not recur in the four later full runs.

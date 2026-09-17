@@ -1,0 +1,18 @@
+
+> lero-al@0.1.0 check:homepage-grid
+> node scripts/check-homepage-grid.mjs
+
+check-homepage-grid.mjs — canonical Mantine scope only
+
+Targets: patterns-mantine-homepagelistinggrids--default, patterns-mantine-homepagelistinggrids--loading
+Invariants: I-C header geometry (12) · I-D loading skeleton count (24) · I-E no page-level horizontal scroll (44) · I-F 1408px page cap (12) · I-G rail mode (24)
+Excluded: legacy System/* Stories (owner rule 2026-09-17 — Tailwind Stories are not covered by tests) · rail visible-card-count monotonicity (covered by `npm run check:card-track-monotonicity`, Task 815, not this gate)
+
+  I-C header: 12/12 PASS, 0 FAIL
+  I-D skeleton count: 24/24 PASS, 0 FAIL
+  I-E no horizontal scroll: 44/44 PASS, 0 FAIL
+  I-F page cap: 12/12 PASS, 0 FAIL
+  I-G rail mode: 24/24 PASS, 0 FAIL
+
+TOTAL: 116/116 PASS, 0 FAIL
+EXIT_CODE=0 

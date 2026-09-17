@@ -1,0 +1,26 @@
+=== git grep (expect only responsive-storybook-inventory.md:263) ===
+docs/responsive-storybook-inventory.md:263:**Result (Task 420, 2026-06-12):** Re-ran the §8.3 grid-cols sweep across `src/modules`/`src/components/layout`/`src/app`. Two §8.3 divergences found and fixed: (1) `FeaturedListings.tsx:61,80` (`lg:grid-cols-3` → `xl:grid-cols-3`, both the loading skeleton and the populated grid — 3-col step now at 1280px instead of 1024px); (2) `SimilarListings.tsx:89` (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` → `grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4` — added the missing 3-col step, moved the 4-col step from `lg` (1024px) to `2xl` (1536px)). `CollectionsSection`/`FavoritesShell`/`ListingsShell` confirmed already canonical (0 edits). `RecentlyViewedGrid`/`RecentlyViewedSection` mobile-carousel pattern and `PopularLocations` location tiles confirmed out of scope/exempt (0 edits). `PageShell.tsx` confirmed `.container-wide` (1408px cap) with `2xl:py-20` present, no wider `max-w-*` override (0 edits). Re-sweep also found `LatestListings.tsx:40,53` (`grid-cols-1 md:grid-cols-2 2xl:grid-cols-3`, horizontal-card variant, 3-col cap) — flagged as a deliberate different pattern (not a §8.3 divergence), **not modified**, diff stayed SMALL so no STOP & SPLIT. Added two minimal canonical stories (`System/FeaturedListings`, `System/SimilarListings`, reusing `StoryListingCard`/`makeStoryListings`) and a standalone focused QA script `scripts/task420-qa-grid-step.mjs` (2 stories × 4 locales × 11 viewports = 88 cells, asserting column-track count, no h-scroll, 1408px container cap): **88/88 PASS**. `scripts/check-stories-rendered.mjs`/`ASSERT_STORIES` untouched (Slice 6 remains owner-gated) — the global 2520-cell matrix is unchanged in size by this diff. Sandbox `screenshots:assert` (after a slow run, ~62% mid-session) completed = 2520/2520 PASS, 0 FAIL, 0 flaky-recovered — a SCREEN per clause 14, not the final verdict; owner-native re-run remains the authoritative gate. Session: `docs/sessions/2026-06-12-task420-slice5-public-grid-step.md`.
+
+=== git diff --stat ===
+ .github/workflows/governance-pr.yml                |   4 +-
+ scripts/check-homepage-grid.mjs                    | 870 +++++++++++----------
+ scripts/task420-qa-grid-step.mjs                   | 302 -------
+ scripts/task668-qa-grid-1440.mjs                   | 385 ---------
+ scripts/task668-qa-header-geometry.mjs             | 397 ----------
+ .../mantine/HomepageListingGrids.stories.tsx       |  23 +-
+ 6 files changed, 465 insertions(+), 1516 deletions(-)
+
+=== git status --porcelain ===
+ M .github/workflows/governance-pr.yml
+ M scripts/check-homepage-grid.mjs
+ D scripts/task420-qa-grid-step.mjs
+ D scripts/task668-qa-grid-1440.mjs
+ D scripts/task668-qa-header-geometry.mjs
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+?? docs/sessions/evidence/task828/execution/
+
+=== git hash-object (post) ===
+e6e69da8a53f88d8ece2b34a9216dac016ed590e
+487462a12f0a513345166c6fbe54dec1f371e11d
+1e350a65b8152260603301de50d5ec009b25c8b1
+7afe276218059a7c10ca1d9b2d86243d13ba04f8

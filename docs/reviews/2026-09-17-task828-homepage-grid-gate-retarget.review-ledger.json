@@ -1,0 +1,444 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-828 — check:homepage-grid retargeted to Patterns/Mantine/HomepageListingGrids only, I-A/I-B removed per D74-1/D74-4, rail-mode guard with nested attribution, three probes deleted (Sprint 75), Revision 1",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "c2907062a39a2bd753400754ad0b448776adab46",
+    "reviewedRevision": "uncommitted worktree on top of c2907062a39a2bd753400754ad0b448776adab46 (main). Task 828 paths: scripts/check-homepage-grid.mjs (blob 8687d90f04d39fa9dce57f3c90a08e70c423763b), src/stories/patterns/mantine/HomepageListingGrids.stories.tsx (blob 487462a12f0a513345166c6fbe54dec1f371e11d, docs strings only), .github/workflows/governance-pr.yml (blob 1e350a65b8152260603301de50d5ec009b25c8b1, step names only), three deleted probes, docs/backlog.md, docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md, docs/sessions/evidence/task828/. Deleted (status D, verified by git status): scripts/task420-qa-grid-step.mjs, scripts/task668-qa-grid-1440.mjs, scripts/task668-qa-header-geometry.mjs.",
+    "reviewedPaths": [
+      "scripts/check-homepage-grid.mjs",
+      "src/stories/patterns/mantine/HomepageListingGrids.stories.tsx",
+      ".github/workflows/governance-pr.yml",
+      "docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md",
+      "docs/sessions/evidence/task828"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-17-task828-homepage-grid-gate-retarget.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1 R2 R12",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-homepage-grid.mjs",
+        "symbol": "DEFAULT_ID, LOADING_ID, header comment, printScope",
+        "diffHunks": [
+          "scripts/check-homepage-grid.mjs:1-67 (header), :83-85 (targets), :775-789 (printScope)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "only canonical Mantine targets, I-A/I-B constants removed, scope printed first on every run"
+        ],
+        "stories": [
+          "patterns-mantine-homepagelistinggrids--default",
+          "patterns-mantine-homepagelistinggrids--loading"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "locales": "Static source and CLI output; the locale matrix belongs to the AC2 row.",
+          "viewports": "Static source and CLI output; the viewport matrix belongs to the AC2 row.",
+          "states": "No UI state; the two story IDs are the enumerated subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task828/review2/check_homepage-grid.txt",
+          "command": "npm.cmd run check:homepage-grid (reviewer, native win32, script blob 8687d90f); reviewer read of the full script",
+          "observable": "First block prints Targets: the two canonical IDs, Invariants: I-C/I-D/I-E/I-F/I-G with counts, Excluded: legacy System/* (owner rule 2026-09-17) and rail monotonicity -> check:card-track-monotonicity. The script source contains no system- ID and no STEP_EXPECTED_COLS/GAP_EXPECTED_COLS/GAP_EXPECTED_PX.",
+          "freshness": "reviewer run 2026-09-17 on the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "only canonical Mantine targets, I-A/I-B constants removed, scope printed first on every run"
+            ],
+            "stories": [
+              "patterns-mantine-homepagelistinggrids--default",
+              "patterns-mantine-homepagelistinggrids--loading"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A legacy story is still reached indirectly through the index check or a plant.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-homepage-grid.mjs",
+          "result": "REFUTED. Every navigateAndCheck call passes DEFAULT_ID or LOADING_ID; main() checks only those two IDs in index.json; no other story ID literal exists in the file."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A Playwright gate script; no generated CSS."
+      }
+    },
+    {
+      "id": "AC2 + AC7 / R3-R7 R13",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-homepage-grid.mjs",
+        "symbol": "evalHeaderCell, evalSkeletonCell, evalNoScrollCell, evalPageCapCell, evalRailCell, run*Matrix",
+        "diffHunks": [
+          "scripts/check-homepage-grid.mjs:437-520 (evalRailCell top-level/nested attribution), :696-751 (runRailMatrix)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "I-C header 12, I-D skeleton 24, I-E no page scroll 44, I-F page cap 12, I-G rail mode with nested attribution 24"
+        ],
+        "stories": [
+          "patterns-mantine-homepagelistinggrids--default",
+          "patterns-mantine-homepagelistinggrids--loading"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "640",
+          "768",
+          "1024",
+          "1280",
+          "1440",
+          "1536",
+          "1920",
+          "2560"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "states": "Populated and loading are the two enumerated stories."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task828/review2/check_homepage-grid.txt",
+          "command": "npm.cmd run check:homepage-grid (reviewer, native win32, Node v22.22.3, script blob 8687d90f)",
+          "observable": "I-C 12/12, I-D 24/24, I-E 44/44, I-F 12/12, I-G 24/24, TOTAL 116/116 PASS, EXIT_CODE=0.",
+          "freshness": "reviewer run 2026-09-17 on the final worktree; storybook-static built after the story docs edit (revision1/02_build-storybook.txt)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "I-C header 12, I-D skeleton 24, I-E no page scroll 44, I-F page cap 12, I-G rail mode with nested attribution 24"
+            ],
+            "stories": [
+              "patterns-mantine-homepagelistinggrids--default",
+              "patterns-mantine-homepagelistinggrids--loading"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "640",
+              "768",
+              "1024",
+              "1280",
+              "1440",
+              "1536",
+              "1920",
+              "2560"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "I-G still passes with a display:grid card container nested inside a rail (review 1 finding).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task828/review2/probe-rail-extra-grid.txt",
+          "result": "REFUTED. The reviewer's unmodified probe on the revised evalRailCell: Latest plant -> topLevelCount 2, nested 1, Latest nestedGrid true, Featured false; Featured plant -> Featured nestedGrid true, Latest false; control -> both false."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS; measurements read computed style at runtime."
+      }
+    },
+    {
+      "id": "AC3 + AC8 / R8 R14",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-homepage-grid.mjs",
+        "symbol": "PLANTS, runVerifyGate",
+        "diffHunks": [
+          "scripts/check-homepage-grid.mjs:~815-854 (six plants), :856-end (runVerifyGate)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "negative arm, six plants each tripping exactly one row with the expected reason, post-plant clean re-run"
+        ],
+        "stories": [
+          "patterns-mantine-homepagelistinggrids--default",
+          "patterns-mantine-homepagelistinggrids--loading"
+        ],
+        "phases": [
+          "planted",
+          "restored"
+        ],
+        "notApplicable": {
+          "locales": "Plants run en only by kickoff R8/R14; the negative arm covers all four locales.",
+          "viewports": "Each plant names its single width; the negative arm covers the full matrix of the AC2 row.",
+          "states": "Plant outcomes are the enumerated subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task828/review2/check_homepage-grid_verify.txt",
+          "command": "npm.cmd run check:homepage-grid:verify (reviewer, native win32, script blob 8687d90f)",
+          "observable": "Negative arm PASS; I-C-Header, I-D-Featured-skeleton-count, I-E-No-Scroll, I-F-Page-Cap, I-G-Rail-Mode, I-G-Nested-Grid each 'correctly tripped its own invariant'; 'Tree fully restored — 0 FAIL after all six plants'; EXIT_CODE=0. runVerifyGate fails on zero trips, more than one tripped row, or a wrong reason regex.",
+          "freshness": "reviewer run 2026-09-17 on the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "negative arm, six plants each tripping exactly one row with the expected reason, post-plant clean re-run"
+            ],
+            "stories": [
+              "patterns-mantine-homepagelistinggrids--default",
+              "patterns-mantine-homepagelistinggrids--loading"
+            ],
+            "phases": [
+              "planted",
+              "restored"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The nested-grid plant is detected only because it also flips a top-level track, so it would not catch a pure nested regression.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task828/review2/probe-rail-extra-grid.txt",
+          "result": "REFUTED. The plant appends a new grid div inside the rail; the probe shows both top-level tracks still isRail true while the containing track reports nestedGrid true."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Runtime in-page plants only."
+      }
+    },
+    {
+      "id": "AC4 / R9",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-homepage-grid.mjs",
+        "symbol": "main (index.json missing-ID exit), per-evaluator named failure reasons",
+        "diffHunks": [
+          "scripts/check-homepage-grid.mjs main(): missingIds check before browser launch"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "missing target ID exits non-zero naming it; missing locator or render failure is a named failing cell"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "The misspelled ID is the subject.",
+          "locales": "Exit precedes any navigation.",
+          "viewports": "Exit precedes any navigation.",
+          "states": "Failure branches are the enumerated subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task828/execution/06_ac4_failclosed_scratch.txt",
+          "command": "node.exe scratch copy with target id patterns-mantine-homepagelistinggrids--defaultXXX (outside scripts/, deleted after)",
+          "observable": "'storybook-static/index.json is missing required story id(s): patterns-mantine-homepagelistinggrids--defaultXXX', EXIT_CODE=1 (the PowerShell NativeCommandError wrapper confirms the native process wrote stderr). main()'s missing-ID block is unchanged by Revision 1. Reviewer read: every evaluator returns a named reason (no-storybook-root, wrapper-not-found, rail-not-found, page-frame-not-found, track-count=n expected=2) that the runners turn into pass=false.",
+          "freshness": "Revision 0 run; main() identical in the final blob",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "missing target ID exits non-zero naming it; missing locator or render failure is a named failing cell"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The scratch copy remained in the tree or under scripts/.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task828/revision1/11_git_block.txt",
+          "result": "REFUTED. Porcelain and the reviewer's own git status list no scratch path; execution/ contains no scratch directory."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "AC5 + AC6 / R10 R11",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/stories/patterns/mantine/HomepageListingGrids.stories.tsx",
+        "symbol": "meta/Default/Loading parameters.docs.description; three deleted probes; workflow step names",
+        "diffHunks": [
+          "src/stories/patterns/mantine/HomepageListingGrids.stories.tsx:26-35, :115-121, :152-159",
+          ".github/workflows/governance-pr.yml:210-214"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "docs-string-only story diff, probes deleted, no live reference left except the historical inventory line, workflow run lines unchanged"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Render code unchanged; docs text is the subject.",
+          "locales": "Docs descriptions are English-only Storybook metadata, not runtime locale strings.",
+          "viewports": "No rendered change.",
+          "states": "Static diff."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md",
+          "command": "reviewer git diff of the story file and workflow; git status; executor AC6 git grep (execution/24_final2_git_block.txt)",
+          "observable": "Story diff: three hunks, all inside description string literals, describing rails per D74-1/D74-4; workflow diff: two name: lines, run: lines unchanged; the three probe files are status D; the grep returns only docs/responsive-storybook-inventory.md:263. build-storybook exit 0 after the edit (review1/build-storybook.txt, revision1/02).",
+          "freshness": "reviewer diff 2026-09-17; story and workflow blobs unchanged since review 1",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "docs-string-only story diff, probes deleted, no live reference left except the historical inventory line, workflow run lines unchanged"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A package.json script or CI file still invokes a deleted probe.",
+          "kind": "EXECUTED",
+          "path": "package.json",
+          "result": "REFUTED. package.json names only check:homepage-grid and check:homepage-grid:verify for this family; the AC6 grep over the repo (excluding sessions, archive, tasks) returns only the historical inventory line."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    },
+    {
+      "id": "§13.2 / §16.4 final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md",
+        "symbol": "Revision 1 verification block",
+        "diffHunks": [
+          "docs/sessions/evidence/task828/revision1/01-13, review1/*, review2/*"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "build-storybook, typecheck, lint, build, file-integrity, mojibake, hash-object"
+        ],
+        "phases": [
+          "post-edit"
+        ],
+        "notApplicable": {
+          "stories": "Command exit codes.",
+          "locales": "Command exit codes.",
+          "viewports": "Command exit codes.",
+          "states": "Command exit codes."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task828/review2/check_file-integrity.txt",
+          "command": "reviewer native reruns: review2 typecheck, lint, check:file-integrity (69 files), check:mojibake on script blob 8687d90f; review1 build-storybook and build on the unchanged src blobs; executor revision1 02/08 with corrected exit capture",
+          "observable": "review2: typecheck, lint, mojibake EXIT_CODE=0; file-integrity first failed only on the reviewer's own 00_env.txt BOM, stripped with Node, rerun 69 files clean EXIT_CODE=0. review1: build-storybook and build EXIT_CODE=0 with story/workflow blobs 487462a1/1e350a65, equal to the final blobs; Revision 1 changed only the gate script, which next build does not compile. revision1/11 hash-object equals the reviewer's.",
+          "freshness": "reviewer runs 2026-09-17",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "build-storybook, typecheck, lint, build, file-integrity, mojibake, hash-object"
+            ],
+            "phases": [
+              "post-edit"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The executor's Revision 0 EXIT_CODE lines were unreliable, so the build evidence is fabricated.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task828/review1/build.txt",
+          "result": "REFUTED for the approval: the reviewer captured every exit code in PowerShell via $LASTEXITCODE after cmd /c returned, not via single-line %errorlevel%; the build, typecheck, lint and both gates pass in the reviewer's own transcripts."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated CSS."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC4 / R9",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-executed check:homepage-grid, check:homepage-grid:verify, typecheck, lint, check:file-integrity, check:mojibake and the rail probe on script blob 8687d90f (review2/), and build-storybook, build on the unchanged src blobs (review1/). AC4's scratch arm is accepted from the executor's Revision 0 transcript because main()'s missing-ID block is unchanged in the final blob."
+  }
+}

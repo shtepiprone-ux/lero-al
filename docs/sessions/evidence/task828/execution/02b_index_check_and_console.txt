@@ -1,0 +1,9 @@
+
+TOTAL: 12/260 PASS, 248 FAIL
+EXIT_CODE=1
+patterns-mantine-homepagelistinggrids--default true
+patterns-mantine-homepagelistinggrids--loading true
+
+
+
+[exited with code 0]

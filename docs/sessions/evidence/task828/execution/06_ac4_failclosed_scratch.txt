@@ -1,0 +1,9 @@
+node.exe : storybook-static/index.json is missing required story id(s): 
+patterns-mantine-homepagelistinggrids--defaultXXX
+At line:2 char:1
++ node.exe docs\sessions\evidence\task828\execution\scratch\check-homep ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (storybook-stati...ids--defaultXXX:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=1

@@ -1,0 +1,25 @@
+=== git diff --stat ===
+ .github/workflows/governance-pr.yml                |   4 +-
+ docs/backlog.md                                    |   1 +
+ scripts/check-homepage-grid.mjs                    | 870 +++++++++++----------
+ scripts/task420-qa-grid-step.mjs                   | 302 -------
+ scripts/task668-qa-grid-1440.mjs                   | 385 ---------
+ scripts/task668-qa-header-geometry.mjs             | 397 ----------
+ .../mantine/HomepageListingGrids.stories.tsx       |  23 +-
+ 7 files changed, 466 insertions(+), 1516 deletions(-)
+
+=== git status --porcelain ===
+ M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M scripts/check-homepage-grid.mjs
+ D scripts/task420-qa-grid-step.mjs
+ D scripts/task668-qa-grid-1440.mjs
+ D scripts/task668-qa-header-geometry.mjs
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+?? docs/sessions/evidence/task828/execution/
+
+=== git hash-object (final) ===
+check-homepage-grid.mjs: e6e69da8a53f88d8ece2b34a9216dac016ed590e
+HomepageListingGrids.stories.tsx: 487462a12f0a513345166c6fbe54dec1f371e11d
+governance-pr.yml: 1e350a65b8152260603301de50d5ec009b25c8b1
+backlog.md: e789aeb7b7926bd07a7110113fc65fe77e21b29e

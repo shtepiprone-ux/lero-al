@@ -26,12 +26,12 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'Homepage Featured/Latest listing grids (Task 668) — migrated from raw Tailwind grid ' +
-          'containers to Mantine `SimpleGrid`, with the large-desktop column step moved from ' +
-          'Tailwind `2xl` (1536px) to Mantine `xxl` (1440px), an owner-approved adaptive change ' +
-          '(2026-07-26). Statically imports the real production `FeaturedListingsView` and ' +
-          '`LatestListingsView` by direct file path — the canonical coverage story for the ' +
-          'Mantine migration-scope enrolment of both Views.',
+          'Homepage Featured/Latest listing sections — both render `MantineListingCardTrack ' +
+          'mode="rail"` (D74-1/D74-4, owner decisions 2026-09-10): one shared horizontal-scroll ' +
+          'rail track, not a column-stepped grid. Statically imports the real production ' +
+          '`FeaturedListingsView` and `LatestListingsView` by direct file path — the canonical ' +
+          'coverage story for the Mantine migration-scope enrolment of both Views, and the sole ' +
+          'target of `npm run check:homepage-grid` (Task 828).',
       },
     },
   },
@@ -115,8 +115,9 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          'Both migrated grids populated — Featured steps 1/2/3/4 cols at </640/640/1280/1440, ' +
-          'Latest steps 1/2/3 cols at </768/768/1440. Card 0 is favorited (signed-in fixture user).',
+          'Both sections populated, each a horizontal-scroll rail (D74-4) rather than a ' +
+          'column-stepped grid — the rail card width and visible count follow one shared track ' +
+          'contract (D74-1) at every viewport. Card 0 is favorited (signed-in fixture user).',
       },
     },
   },
@@ -152,9 +153,9 @@ export const Loading: Story = {
     docs: {
       description: {
         story:
-          'Both grids in their loading branch — 3 Featured / 4 Latest skeletons, rendered by the ' +
-          'Views\' own loading branches (byte-identical to production). A deliberate, permanent ' +
-          'skeleton state — allowlisted in `LOADER_ALLOWLIST`, not a real defect.',
+          'Both rails (D74-4) in their loading branch — 3 Featured / 4 Latest skeletons, rendered ' +
+          'by the Views\' own loading branches (byte-identical to production). A deliberate, ' +
+          'permanent skeleton state — allowlisted in `LOADER_ALLOWLIST`, not a real defect.',
       },
     },
   },

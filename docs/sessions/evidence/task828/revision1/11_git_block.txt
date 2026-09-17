@@ -1,0 +1,39 @@
+=== git status --porcelain ===
+ M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M scripts/check-homepage-grid.mjs
+ D scripts/task420-qa-grid-step.mjs
+ D scripts/task668-qa-grid-1440.mjs
+ D scripts/task668-qa-header-geometry.mjs
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+ M tasks/Sprints/Sprint_75_kickoff_prompt_Task_828_Homepage_Grid_Gate_Retarget_To_Mantine.md
+?? docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md
+?? docs/sessions/evidence/task828/execution/
+?? docs/sessions/evidence/task828/review1/
+?? docs/sessions/evidence/task828/revision1/
+
+=== git hash-object ===
+check-homepage-grid.mjs: 8687d90f04d39fa9dce57f3c90a08e70c423763b
+HomepageListingGrids.stories.tsx: 487462a12f0a513345166c6fbe54dec1f371e11d
+governance-pr.yml: 1e350a65b8152260603301de50d5ec009b25c8b1
+backlog.md: ee0f400bc75a8200c3d0dd3fba802d8f3df5d0a0
+
+=== final git status --porcelain (after backlog.md + session log edits) ===
+ M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M scripts/check-homepage-grid.mjs
+ D scripts/task420-qa-grid-step.mjs
+ D scripts/task668-qa-grid-1440.mjs
+ D scripts/task668-qa-header-geometry.mjs
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+ M tasks/Sprints/Sprint_75_The_Gates_That_Report_Green_On_What_They_Cannot_See.md
+ M tasks/Sprints/Sprint_75_kickoff_prompt_Task_828_Homepage_Grid_Gate_Retarget_To_Mantine.md
+?? docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md
+?? docs/sessions/evidence/task828/execution/
+?? docs/sessions/evidence/task828/review1/
+?? docs/sessions/evidence/task828/revision1/
+
+=== final git hash-object ===
+docs/backlog.md: e37cc6f882c9401ad66e612b93d851ce1fee41c8
+docs/sessions/2026-09-17-task828-homepage-grid-gate-retarget.md: 384ee849883809292f23a14a97b45eddf4d53a67

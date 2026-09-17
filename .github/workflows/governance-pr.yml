@@ -207,10 +207,10 @@ jobs:
       - name: Card-track monotonicity gate self-test (verifies gate detects violations — CI-safe, Task 815)
         run: npm run check:card-track-monotonicity:verify
 
-      - name: Homepage grid invariants gate (column steps, gaps, header geometry)
+      - name: Homepage grid invariants gate (canonical Mantine HomepageListingGrids only, Task 828 — header, skeleton count, no page scroll, page cap, rail mode)
         run: npm run check:homepage-grid
 
-      - name: Homepage grid invariants gate self-test (verifies gate detects violations — CI-safe)
+      - name: Homepage grid invariants gate self-test (verifies gate detects violations — CI-safe, Task 828)
         run: npm run check:homepage-grid:verify
 
   locale-leak:

@@ -1,0 +1,48 @@
+npm run check:locale-leak:mantine-only
+Command: npm.cmd run check:locale-leak:mantine-only
+Report: .screenshots/locale-leak/2026-09-17T18-23/report.json
+Summary from report.json: mode=full, mantineOnly=true, storiesScanned=142, storiesExcluded=0,
+nonMantineExcluded=197, localesChecked=[sq,uk,it], leakCount=392.
+
+Tail of terminal output (last lines before EXIT_CODE):
+    [uk] "Zoom in"
+    [uk] "Zoom out"
+    [uk] "A JavaScript library for interactive maps"
+    [uk] "Leaflet"
+    [uk] "OpenStreetMap"
+    [uk] "Elira Hoxha"
+    [it] "Marker"
+    [it] "Close popup"
+    [it] "Zoom in"
+    [it] "Zoom out"
+    [it] "A JavaScript library for interactive maps"
+    [it] "Leaflet"
+    [it] "OpenStreetMap"
+    [it] "Elira Hoxha"
+
+  Story: Patterns/Mantine/ListingsPageFrame/Default
+    [it] "Home"
+
+  Story: Patterns/Mantine/SaveSearchButton/Pending
+    [sq] "Unauthorized"
+    [uk] "Unauthorized"
+    [it] "Unauthorized"
+
+    Report: .screenshots/locale-leak/2026-09-17T18-23/report.json
+EXIT_CODE=1
+
+Attribution check against this task's diff (node script over report.json, quoted verbatim):
+  Filter A - leaks whose storyId matches this task's two edited stories
+  (mantine-primitives-favoritebutton--default, mantine-primitives-listingfeatureicon--default): 9 matches,
+  all 3 are pre-existing captions this diff did not touch (verified against `git diff`: the "Icon shape,
+  `overlay`..." caption, the "Pill shape..." caption, and ListingFeatureIcon's top `Text` caption are all
+  outside every hunk in this task's diff).
+  Filter B - leaks whose token contains this task's new section text ("no className", "unsaved",
+  "saved, enabled", "saved, disabled", "248-254", "4 states: unsaved"): 0 matches after excluding the
+  pre-existing "Pill shape...unsaved and saved" caption (also unmodified by this diff).
+
+Conclusion: 0 of the 392 leaks are attributable to this task's diff. The 392 leaks span unrelated stories
+(Admin/AdminUsersTable, Patterns/Mantine/ListingDetailView's Leaflet map chrome - already tracked as
+pre-existing in docs/backlog.md task **798** filed by Task 791's review, Patterns/Mantine/ListingsPageFrame,
+Patterns/Mantine/SaveSearchButton, and others this task never opened). This gate's non-zero exit predates
+and is independent of this task's 3-file diff.

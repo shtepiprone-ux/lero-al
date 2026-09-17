@@ -9,21 +9,26 @@ import { MantineStoryShell } from '../_MantineStoryShell'
 
 /**
  * Task 821 — canonical story for the real production `FavoriteButton` (agent-contract 16d tier-3
- * node; `owner: "821"` in `scripts/rendered-scope-allowlist.json`, rendered by `ListingCard` and
- * `ListingDetailView`, neither of which owns it). Statically imports the real component
- * (clause 16c) — `ListingCardPattern.stories.tsx` also imports it directly, but only to fill a
- * composition slot on `MantineListingCardPattern`; that is not this component's own Story
- * (GR-3/agent-contract 16d: "a composition Story is not a component Story"). This file is.
+ * node, enrolled in `scripts/mantine-migration-scope.json`; its former tier-3
+ * `scripts/rendered-scope-allowlist.json` entry was removed by the 2026-09-16 owner decision once
+ * the component was enrolled and storied — the allowlist carries no current entry for it).
+ * Rendered by `ListingCard` and `ListingDetailView`, neither of which owns it. Statically imports
+ * the real component (clause 16c) — `ListingCardPattern.stories.tsx` also imports it directly, but
+ * only to fill a composition slot on `MantineListingCardPattern`; that is not this component's own
+ * Story (GR-3/agent-contract 16d: "a composition Story is not a component Story"). This file is.
  *
  * `FavoriteButton` calls `useAuth()` unconditionally on every render, so — same technique as
  * `ListingCard.stories.tsx`/`ListingCardPattern.stories.tsx` — the real `AuthContext.Provider` is
  * supplied directly with a signed-in fixture, bypassing `AuthProvider`'s live-Supabase-subscribing
  * `useEffect` mount (forbidden in stories) while still exercising the real button.
  *
- * `disabled`/`disabledLabel` and both `className` values below are the exact real production call
- * sites, not invented: `ListingCard.tsx:171-178` (list/inline, `styles.inlineFavorite`, no
- * `overlay`), `ListingCard.tsx:263-271` (grid, `overlay` + `styles.overlayFavorite`), and
- * `ListingDetailView.tsx:248-254` (no className, `disabledLabel` from `listing.action_disabled_*`).
+ * `disabled`/`disabledLabel` and every `className`/`overlay` value below are the exact real
+ * production call sites, not invented: `ListingCard.tsx:171-178` (list/inline,
+ * `styles.inlineFavorite`, no `overlay`, rendered in the first section below), `ListingCard.tsx:263-271`
+ * (grid, `overlay` + `styles.overlayFavorite`, rendered in the second section below), and
+ * `ListingDetailView.tsx:248-254` (no `className`, no `overlay`, default `shape="icon"`,
+ * `disabledLabel` from the `action_disabled_*` translations `favoriteDisabledLabel` resolves to),
+ * rendered in the fourth section, "Icon shape, no className".
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/FavoriteButton',
@@ -147,6 +152,31 @@ export const Default: Story = {
               <Group gap="xl" wrap="wrap">
                 <FavoriteButton listingId="story-7" isFavorited={false} shape="pill" />
                 <FavoriteButton listingId="story-8" isFavorited shape="pill" />
+              </Group>
+            </Stack>
+
+            <Stack gap="sm">
+              <Text size="xs" c="gray.5" fw={500}>
+                Icon shape, no className (`ListingDetailView.tsx:248-254` detail action row) —
+                default `shape`, no `overlay`, the 4 states: unsaved/saved × enabled/disabled.
+              </Text>
+              <Group gap="xl" wrap="wrap">
+                <Stack gap={4} align="center">
+                  <FavoriteButton listingId="story-9" isFavorited={false} />
+                  <Text size="xs" c="dimmed">unsaved, enabled</Text>
+                </Stack>
+                <Stack gap={4} align="center">
+                  <FavoriteButton listingId="story-10" isFavorited />
+                  <Text size="xs" c="dimmed">saved, enabled</Text>
+                </Stack>
+                <Stack gap={4} align="center">
+                  <FavoriteButton listingId="story-11" isFavorited={false} disabled disabledLabel={disabledLabel} />
+                  <Text size="xs" c="dimmed">unsaved, disabled</Text>
+                </Stack>
+                <Stack gap={4} align="center">
+                  <FavoriteButton listingId="story-12" isFavorited disabled disabledLabel={disabledLabel} />
+                  <Text size="xs" c="dimmed">saved, disabled</Text>
+                </Stack>
               </Group>
             </Stack>
           </Stack>

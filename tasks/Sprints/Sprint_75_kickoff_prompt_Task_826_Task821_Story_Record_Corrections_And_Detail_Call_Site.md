@@ -2,7 +2,31 @@
 
 Sprint 75 · P3 · QA profile **Q2**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Independent of every other open Sprint 75 task.
+**Status: ✅ `APPROVED WITH NOTES` — review 1, 2026-09-17. Archived in `docs/backlog-archive.md`.**
+
+Review 1 outcome (Opus, 2026-09-17): R1-R4 and AC1/AC2 are `VERIFIED` against source and the real diff; AC3's four
+named commands exit 0 with `git hash-object` values equal to the shipped files. The §13.3 owner visual matrix was
+**accepted by the owner on 2026-09-17** (all four tuples: 390/1440 × en/uk). Two notes, neither a code defect:
+
+1. **Kickoff defect, mine — §13.2 required a gate that was already red.** `check:locale-leak:mantine-only` exits 1,
+   and the pre-edit run at the same mode/scope (`.screenshots/locale-leak/2026-09-17T16-05`) is already **167**
+   leaks, so the block's "every command exits 0" expectation was unsatisfiable when written. No acceptance criterion
+   depends on that artifact (AC3 names only `check:stories`, `check:story-coverage`,
+   `check:design-tokens:strict`, `build-storybook`), and this diff provably cannot add a leak: the new caption
+   contains `×` (global allowlist `/[→←×÷]/`, `check-locale-leak.mjs:129`) and the four state captions start
+   lowercase (`/^\.|^[a-z]/`, `:131`). Not an executor deviation.
+2. **The retained locale-leak artifact is contaminated; its clean re-run belongs to Task 836, not here.**
+   `.screenshots/locale-leak/2026-09-17T18-23/report.json` (392 leaks) came from a run whose `storybook-static/` was
+   rewritten by `npm run build-storybook` mid-scan, so **225** of its 392 leaks are Storybook **manager chrome**
+   collected through the static server's `index.html` fallback (`check-locale-leak.mjs:270-284`; HTTP 200, so the
+   `catch { continue }` guard never fires) — the whole delta from 167 is `CopyIdButton` 0→210 and `CountButton`
+   3→18. Session-log §5.5 calls all 392 pre-existing debt; that characterisation is wrong for those 225, while its
+   conclusion (zero attributable to this diff) holds. The detector defect is Task **836**, which owns both the fix
+   and the re-run.
+
+The owner's visual review also surfaced a defect **outside this task's scope**, filed as Task **837**:
+`Patterns/Mantine/ListingDetailPattern`'s `DemoFavorite` stand-in (`ActionIcon variant="default" size="lg"`) shows a
+bordered 42px heart where production renders the borderless 32px `FavoriteButton`.
 
 ## 1. Mode and task type
 

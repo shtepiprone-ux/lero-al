@@ -7,11 +7,13 @@ import { MantineStoryShell } from '../_MantineStoryShell'
 
 /**
  * Task 821 — canonical story for the real production `ListingFeatureIcon` (agent-contract 16d
- * tier-3 node; `owner: "821"` in `scripts/rendered-scope-allowlist.json`, rendered by `ListingCard`
- * and `ListingDetailView`, neither of which owns it). Statically imports the real component
- * (clause 16c) — no demo stand-in. Every `PresentationIcon` name is rendered so a missing/renamed
- * `ICON_MAP` key (`ListingFeatureIcon.tsx`) is caught immediately, not only the 4 names the real
- * card/detail surfaces currently select.
+ * tier-3 node, enrolled in `scripts/mantine-migration-scope.json`; its former tier-3
+ * `scripts/rendered-scope-allowlist.json` entry was removed by the 2026-09-16 owner decision once
+ * the component was enrolled and storied — the allowlist carries no current entry for it).
+ * Rendered by `ListingCard` and `ListingDetailView`, neither of which owns it. Statically imports
+ * the real component (clause 16c) — no demo stand-in. Every `PresentationIcon` name is rendered so
+ * a missing/renamed `ICON_MAP` key (`ListingFeatureIcon.tsx`) is caught immediately, not only the 4
+ * names the real card/detail surfaces currently select.
  *
  * Both real production sizing paths are reproduced exactly, not invented: `ListingCard.tsx:184/282`
  * passes `className={styles.featureIcon}` (its own co-located `ListingCard.module.css`, reused here

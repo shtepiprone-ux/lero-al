@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic'
 import { Stack, Skeleton } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 
-// Task 782 — used inside next/dynamic's `loading` fallback, not a component body proper; see
-// page.tsx for the `!` rationale (createTheme()'s own return type is deep-partial, not this
+// Task 822 — used inside next/dynamic's `loading` fallback, not a component body proper; see
+// PopularLocationsView.tsx for the `!` rationale (createTheme()'s own return type is deep-partial, not this
 // project's runtime guarantee).
 const listingsFiltersSkeletonRowHeight = theme.other!.layout!.listingsFiltersSkeletonRowHeight
 

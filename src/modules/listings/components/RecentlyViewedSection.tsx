@@ -55,7 +55,9 @@ export async function RecentlyViewedSection({
       <RecentlyViewedGrid
         listings={listings}
         showEmptyState={showEmptyState}
-        clearSlot={showClear ? <ClearRecentlyViewedButton /> : undefined}
+        // Explicit key: the View drops this slot into Mantine `Group`, whose `Children.toArray` marks an
+        // unkeyed element that arrived from a Server Component as an unkeyed list child (dev warning).
+        clearSlot={showClear ? <ClearRecentlyViewedButton key="clear-recently-viewed" /> : undefined}
       />
     </div>
   )

@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/listings/components/__tests__/FavoriteButton.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  23:04:21
+   Duration  2.01s (transform 149ms, setup 116ms, import 777ms, tests 297ms, environment 697ms)
+
+EXIT_CODE=0

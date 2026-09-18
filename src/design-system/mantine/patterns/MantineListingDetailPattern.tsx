@@ -160,14 +160,19 @@ export function MantineListingDetailPattern({
                 all — see that component's own comment) — a single instance, no state-sync
                 concern. No longer gated on `contact.state`: favoriting a listing is independent
                 of the agent/owner-account state shown in the contact card. */}
-            {/* Task 784 D69-27 (owner visual review, 2026-09-04): the row below is `align="center"`,
-                not `flex-start`. The favorite ActionIcon (size="lg", 42px) is taller than a Badge
-                (~22px); top-aligning them puts the badge row's optical centre ~10px above the
-                icon's, which reads as the heart sitting low. Centring makes the two blocks share a
-                centre line at every width, including the 320px case where the badges wrap to two
-                rows and the icon centres against the whole block. */}
+            {/* Task 837 Revision 1 (owner decision 2026-09-18) supersedes Task 784 D69-27
+                (owner visual review, 2026-09-04, `align="center"`). Rule: the favorite/share
+                block's top edge stays flush with the top of the first row of badges at every
+                width, including when the badges wrap onto a second or third line (measured
+                run3: `badgeRows` 1 at 1440px, 2 at 390px, 3 at 320px — the icons stay pinned to
+                the first row in every case). Measured run3 (`firstBadgeHeight` 24px, a `sm`
+                Badge; the favorite/share `ActionIcon`s are 32px,
+                `theme.other.iconSize.prominent`): with `align="flex-start"` the icons' vertical
+                centre sits ~4px below the first badge row's centre. The owner reviewed and
+                accepted that offset over the alternative (centring the icon on the first row
+                with a token-computed offset). */}
             {(badges.length > 0 || favorite || share) && (
-              <Group justify="space-between" wrap="nowrap" align="center">
+              <Group justify="space-between" wrap="nowrap" align="flex-start">
                 <Group gap="xs" wrap="wrap">
                   {badges.map((b, i) => (
                     <Badge

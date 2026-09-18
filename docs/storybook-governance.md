@@ -2608,6 +2608,53 @@ npm run check:card-track-monotonicity:verify   # CI-safe, 5-arm gate self-test
 
 **Status as landed (Task 815).** Measured 2026-09-16 on `HEAD` `1ed5cd2a5`: 16 canonical Stories render the track (of 140 canonical, 351 total Stories — the kickoff's own §3.8 cost estimate said 139; the executor's re-measure against the same commit found 140, one off from that estimate, not from any tree change); all 16 clean at every sampled width — 0 drops. Two maintainer comments that previously instructed re-running `measureStorybookColumnMonotonicity` (`MantineListingCardTrack.module.css`, `_MantineStoryShell.tsx`) now name this command; `scripts/task809-favorites-parity-probe.mjs` itself is unmodified — it remains Task 809's retained evidence producer. See `docs/sessions/evidence/task815/` for the full measured census, the per-Story per-width transcript, and the planted-arm proof.
 
+### §15.11 — The `ReactNode` pattern-slot blind spot: neither §15.1 nor §15.6/§15.7 can see what fills a slot (Task 837, 2026-09-17)
+
+**Why.** Task 826's owner visual review found `Patterns/Mantine/ListingDetailPattern → Default` rendering a bordered
+34×34 `ActionIcon` (`DemoFavorite`, a hand-rolled local stand-in) in its `favorite` slot while every real
+`FavoriteButton` render on every other surface is a borderless 32×32 button — a defect neither gate below caught, on
+a pattern that reads fully green on both:
+
+- **`check:story-coverage` (§15.1)** resolves a canonical Mantine story's own `import` declarations to manifest
+  paths. `ListingDetailPattern.stories.tsx` statically imports `MantineListingDetailPattern` itself — that import
+  makes the *pattern* covered — but the gate never inspects what JSX value the story assigns to `favorite`. A prop
+  typed `ReactNode` is opaque to an import-resolution walk: `<DemoFavorite l={l} />` and
+  `<FavoriteButton listingId={id} isFavorited={x} />` are equally "just some JSX" to it. §15.1a's prose already names
+  this exact failure mode ("Pattern slots: … Do not count a static `<span>` or a legacy/demo button as coverage for a
+  migrated interactive control") — Task 826 is the measured proof that the prose alone did not stop it from shipping.
+- **`check-surface-census.mjs` / `check:surface-census:changed` (§15.6/§15.7)** walk *production* `.ts(x)` files
+  reached transitively by JSX-tag-root extraction from a named surface. A `.stories.tsx` file is never that surface
+  (§15.6's own "Deliberately does NOT flag" table already lists "a component rendered only from a `.stories.tsx`
+  file" as excluded, `n/a — stated in the printed blind-spot sentence`), so the census run against
+  `MantineListingDetailPattern.tsx` (8/8 enrolled+storied, clean) never looks at the story file that fills its slots
+  at all — the census's own root is the pattern, not the story that exercises it.
+
+**The mechanism, stated precisely.** Both gates key their coverage claim to *imports*, transitively (census) or
+directly (story-coverage). A `ReactNode` slot prop breaks that key: the story file that legitimately imports the real
+production component for one slot (`FavoriteButton`, enrolled, its own import present in the file) can, in the very
+same file, assign a completely different locally-defined function component to a sibling slot with the identical
+prop shape — the AST has no marker distinguishing "this JSX literal is asserted to represent the production
+component" from "this JSX literal is a disposable placeholder." Nothing about the file's own import list changes
+between the two cases, so an import-keyed gate cannot tell them apart even in principle, not merely as an
+implementation gap.
+
+**A detector that would catch it, and its false-positive boundary.** A static check could parse every canonical
+Mantine pattern's own `Props` interface (TS AST, same infra `check-story-coverage.mjs`/`check-pattern-enrolment.mjs`
+already use) for a `ReactNode`-typed prop whose JSDoc carries a machine-readable tag naming the one production
+component it is documented to receive (e.g. `@productionSlot FavoriteButton` — `MantineListingDetailPattern.tsx`'s
+own `favorite`/`share` doc comments already state this in prose, just not in a parseable form); then, for every
+canonical story assigning that prop, resolve the assigned JSX element's tag to its import and fail when it resolves
+to anything other than the tagged component (or a single-hop barrel re-export of it). **False-positive boundary:** a
+slot that is *not* a "this always represents one real component" contract — `gallerySlot`/`contactSlot`/
+`contentFooter` on this same pattern are genuine extension points with no single production node behind them, by
+design (Task 791) — must carry no `@productionSlot` tag and is never flagged; the detector's entire precision rests
+on every behavior-bearing slot actually carrying that annotation, which is itself a hand-maintained fact exactly like
+`scripts/rendered-scope-allowlist.json`'s `reason`/`owner` fields, not a self-verifying one. **Not built in this
+task** (R6) — recorded here as the mechanism a future task could implement, not as a standing gate. Until it exists,
+a canonical pattern Story's `ReactNode` slot content is closed only by the reviewer's own inspection (clause 16c) and,
+where visual, by the owner's rendered review (§MQ/`docs/qa-profiles.md`) — never by `check:story-coverage` or
+`check-surface-census.mjs`'s green exit alone.
+
 ---
 
 ## §MQ — Manual visual QA requirements (machine-detection limits, 2026-06-08)

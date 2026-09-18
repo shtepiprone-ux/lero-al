@@ -1,0 +1,12 @@
+ M docs/backlog.md
+ M docs/sessions/evidence/task826/15-check-locale-leak-rerun.txt
+ M docs/storybook-governance.md
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/theme.ts
+ M src/modules/listings/components/FavoriteButton.tsx
+ M src/modules/listings/components/SaveToCollectionButton.tsx
+ M src/modules/listings/components/__tests__/FavoriteButton.test.tsx
+ M src/stories/mantine/primitives/FavoriteButton.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+?? docs/sessions/evidence/task837/
+EXIT_CODE=0

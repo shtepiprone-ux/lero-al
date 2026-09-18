@@ -1,0 +1,8 @@
+--- shape=pill ---
+EXIT_CODE=1
+--- PILL_SIZE_MAP ---
+EXIT_CODE=1
+--- favoritePill ---
+EXIT_CODE=1
+--- DemoFavorite ---
+EXIT_CODE=1

@@ -27,10 +27,11 @@ interface Props {
 }
 
 // Task 654: default-variant (pill) size → Mantine Button size, governing padding-x/font-size only.
-// Mirrors FavoriteButton.tsx's PILL_SIZE_MAP exactly (Task 653) — theme.ts's project-wide Button
-// `styles.root` sets `minHeight: '2.75rem'` (44px) UNCONDITIONALLY on every Button instance, so the
-// migrated pill renders at 44px on all breakpoints, unifying the ListingContact action row with the
-// now-Mantine favorite pill (R1/R2). 'default'/'xl' are unexercised by any current consumer.
+// theme.ts's project-wide Button `styles.root` sets `minHeight: '2.75rem'` (44px) UNCONDITIONALLY
+// on every Button instance, so this pill renders at 44px on all breakpoints, matching the adjacent
+// action-row buttons (Task 653). 'default'/'xl' are unexercised by any current consumer. Task 837
+// R2 (2026-09-17) deleted the sibling `FavoriteButton.tsx` pill this comment used to cross-reference
+// (it had zero production consumers) — this file's own pill is untouched and stays live.
 const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
 
 export function SaveToCollectionButton({ listingId, variant = 'icon', className, size }: Props) {

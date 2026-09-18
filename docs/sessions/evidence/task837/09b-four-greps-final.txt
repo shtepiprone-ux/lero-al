@@ -1,0 +1,8 @@
+== shape="pill" ==
+EXIT=1
+== PILL_SIZE_MAP in FavoriteButton.tsx ==
+EXIT=1
+== favoritePill ==
+EXIT=1
+== DemoFavorite ==
+EXIT=1

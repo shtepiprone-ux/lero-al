@@ -216,14 +216,14 @@ describe('FavoriteButton', () => {
     expect(mockAddFavorite).not.toHaveBeenCalled()
   })
 
-  // ── Shape geometry regression (Task 603, updated Task 653 Mantine migration) ──
+  // ── Shape geometry regression (Task 603, updated Task 653 Mantine migration, pill deleted Task 837) ──
   // Task 603's `max-sm:w-full`/`max-sm:min-h-11`/`h-9` Tailwind-class assertions no longer
   // apply post-migration (Mantine renders no Tailwind utility classes at all — the icon-chrome
-  // absence check is trivially true now, kept as a regression guard). Replaced with assertions
+  // absence check is trivially true now, kept as a regression guard). Replaced with an assertion
   // on the real geometry Mantine renders (inline style / custom properties, verified via a
   // rendered-DOM inspection during Task 653): the icon is a fixed 32px round `ActionIcon` with
-  // no forced width; the pill is a Mantine `Button` whose `radius`/`border` are pinned to match
-  // the still-legacy `SaveToCollectionButton` sibling in `ListingContact.tsx` (18px / `var(--border)`).
+  // no forced width. Task 837 R2 deleted the `pill` shape (no production consumer) along with its
+  // own geometry regression test.
 
   it('icon shape (card overlay, default) does NOT carry the mobile full-width chrome', () => {
     renderButton({ isFavorited: false })
@@ -233,14 +233,5 @@ describe('FavoriteButton', () => {
     // No forced width — stays a fixed round 32px control at every viewport.
     expect(button.style.width).toBe('')
     expect(button.style.getPropertyValue('--ai-size')).toContain('2rem')
-  })
-
-  it('pill shape (ListingContact action row) radius/border match the still-legacy SaveToCollectionButton sibling', () => {
-    renderButton({ isFavorited: false, shape: 'pill', size: 'lg' })
-    const button = getButton()
-    // Matches the sibling's Tailwind `rounded-xl` (18px) and `border-border` (var(--border)),
-    // applied via Mantine props per the unlayered-CSS rule (Tasks 629/650/651), not Tailwind classes.
-    expect(button.style.getPropertyValue('--button-radius')).toBe('1.125rem')
-    expect(button.style.border).toContain('var(--border)')
   })
 })

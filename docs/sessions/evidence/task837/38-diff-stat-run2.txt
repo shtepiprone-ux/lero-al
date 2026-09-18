@@ -1,0 +1,9 @@
+ docs/storybook-governance.md                       |  47 +++
+ .../patterns/MantineListingDetailPattern.tsx       |  14 +-
+ src/design-system/mantine/theme.ts                 |   8 -
+ src/modules/listings/components/FavoriteButton.tsx |  46 +--
+ .../listings/components/SaveToCollectionButton.tsx |   9 +-
+ .../components/__tests__/FavoriteButton.test.tsx   |  17 +-
+ .../mantine/primitives/FavoriteButton.stories.tsx  |  28 +-
+ .../mantine/ListingDetailPattern.stories.tsx       | 379 ++++++++++++---------
+ 8 files changed, 305 insertions(+), 243 deletions(-)

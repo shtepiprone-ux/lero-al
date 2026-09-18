@@ -3,7 +3,7 @@
 import { useState, useTransition, useEffect, useRef, type CSSProperties } from 'react'
 import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
-import { ActionIcon, Button, useMantineTheme } from '@mantine/core'
+import { ActionIcon, useMantineTheme } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { addFavorite, removeFavorite } from '@/modules/listings/actions/favoriteActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
@@ -18,10 +18,6 @@ interface FavoriteButtonProps {
   onToggled?: (newState: boolean) => void
   disabled?: boolean
   disabledLabel?: string
-  /** Visual shape. 'icon' (default) = compact round button for card overlays; 'pill' = full-height pill for action rows. */
-  shape?: 'icon' | 'pill'
-  /** Canonical button size for pill shape. Has no effect on icon shape. */
-  size?: 'default' | 'lg' | 'xl'
   /**
    * Task 656 (owner-caught regression, `Mantine/Primitives/ListingCard` canonical Story):
    * grid-card floating top-right overlay position. Mantine `ActionIcon`'s own unlayered CSS
@@ -43,18 +39,7 @@ interface FavoriteButtonProps {
   overlay?: boolean
 }
 
-// Task 653: pill-shape size → Mantine Button size, governing padding-x/font-size only.
-// theme.ts's project-wide Button `styles.root` (line ~304-312) sets `minHeight: '2.75rem'` +
-// `height: 'auto'` UNCONDITIONALLY on every Button instance (a P0 touch-target rule, not
-// scoped to mobile — verified via rendered inline-style inspection: the resolved `height`
-// property is always `auto` with a 44px floor, regardless of the `size` prop or its
-// `--button-height-*` custom property). This means the migrated pill renders at 44px height
-// on ALL breakpoints, not the legacy sibling's fixed 36px (`h-9`) on desktop — see the R2
-// deviation note in the Task 653 session log; NOT overridden here (would violate the P0
-// touch-target rule project-wide). 'default'/'xl' are unexercised by any current consumer.
-const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
-
-export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon', size, overlay = false }: FavoriteButtonProps) {
+export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, overlay = false }: FavoriteButtonProps) {
   const tc = useTranslations('common')
   const theme = useMantineTheme()
   const { user, status } = useAuth()
@@ -157,27 +142,14 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     style: overlayStyle,
   }
 
-  if (shape === 'icon') {
-    return (
-      // Icon shape — round 32px overlay heart (card corners). Canonical `ActionIcon`, `variant="subtle"`
-      // (same borderless baseline as the HeaderActions.tsx favorites precedent); `radius="pill"` is the
-      // theme's own 9999px token (matches the legacy `rounded-full`); `size={32}` matches the legacy
-      // `w-8 h-8` (32px) exactly.
-      <ActionIcon {...commonProps} variant="subtle" size={theme.other.iconSize.prominent} radius="pill">
-        {icon}
-      </ActionIcon>
-    )
-  }
-
   return (
-    // Pill shape — ListingContact.tsx action row. Canonical `Button`, `variant="default"`. `radius`
-    // and `bd` are set to the EXACT pixel/token values of the still-legacy `SaveToCollectionButton`
-    // sibling's Tailwind `rounded-xl border border-border` (18px / `var(--border)` #EBEBEB) via Mantine
-    // props (not Tailwind classes — the unlayered-CSS rule), so the migrated pill's radius/border
-    // visually match its legacy neighbor exactly (Task 653 R2). Height does NOT match the sibling's
-    // 36px — see `PILL_SIZE_MAP` above and the R2 deviation note in the session log.
-    <Button {...commonProps} variant="default" size={PILL_SIZE_MAP[size ?? 'default']} radius={theme.other.radius.favoritePill} bd="1px solid var(--border)">
+    // Icon shape — round 32px overlay heart (card corners). Canonical `ActionIcon`, `variant="subtle"`
+    // (same borderless baseline as the HeaderActions.tsx favorites precedent); `radius="pill"` is the
+    // theme's own 9999px token (matches the legacy `rounded-full`); `size={32}` matches the legacy
+    // `w-8 h-8` (32px) exactly. Task 837 R2 — this was the component's only live-production shape;
+    // the `pill` branch (ListingContact.tsx's former action-row favorite) is deleted, no consumer.
+    <ActionIcon {...commonProps} variant="subtle" size={theme.other.iconSize.prominent} radius="pill">
       {icon}
-    </Button>
+    </ActionIcon>
   )
 }

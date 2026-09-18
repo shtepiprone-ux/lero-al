@@ -127,11 +127,6 @@ declare module '@mantine/core' {
     // Tailwind `text-sm` compiled line-height (`.text-sm{line-height:var(--tw-leading,1.25rem)}`,
     // `.next/static/css`, 2026-09-16 build). Same `lineHeight` group as the Task 822 roles above.
     lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph' | 'lightboxCounter', string>
-    // Task 822 (§3.3) — `FavoriteButton.tsx:179`'s `radius="1.125rem"` (Task 653 R2 sibling-match
-    // pill radius). A DIFFERENT namespace from the top-level `theme.radius` scale (xs..2xl/pill),
-    // which has no 1.125rem rung — this is a one-off consumer-specific role, the same pattern as
-    // `boxSize`/`iconSize` above.
-    radius: Record<'favoritePill', string>
     // Task 784 Revision 3 (D69-18) — `MantineTooltip`'s two §6k-documented chrome values that have
     // no existing named contract. Source: docs/mantine-responsive-design-system.md §25.2/§25.4
     // (Task 524's own canonical documentation, cited verbatim: "px=\"0.875rem\" (14px — no theme
@@ -555,9 +550,6 @@ export const theme = createTheme({
       authNoteParagraph: '1.21875rem', // 19.5px
       notificationGlyph: '1.5rem',    // 24px
       lightboxCounter: '1.25rem',     // 20px — Task 825: LightboxView counter (was text-sm)
-    },
-    radius: {
-      favoritePill: '1.125rem', // 18px — Task 653 R2 sibling-match pill radius
     },
     tooltip: {
       inlinePadding: '0.875rem',  // 14px — §25.2 §6k chrome (px-3.5)

@@ -2,9 +2,9 @@
 
 Sprint 75 · P2 · QA profile **Q3**
 
-**Status: `NEEDS REVISION` 2026-09-18 (Opus review 3) — the owner returned the §13.4 badges-row tuples: the
-favorite/share block must be top-aligned with the badges, not centred. Execute §16 Revision 1.** (Filed `READY FOR
-SONNET` 2026-09-17; review 2 `PARTIALLY VERIFIED` 2026-09-18.) Independent of every other open Sprint 75 task. Filed by the owner's
+**Status: ✅ `APPROVED` 2026-09-18 (Opus review 4, Revision 1 / run3) — archived in `docs/backlog-archive.md`.
+Owner accepted the §16.5 and §13.4 visual tuples 2026-09-18 (*"Візуально підтвержую - все ок."*).** (Filed `READY FOR
+SONNET` 2026-09-17; review 2 `PARTIALLY VERIFIED` 2026-09-18; review 3 `NEEDS REVISION` 2026-09-18 → §16.) Independent of every other open Sprint 75 task. Filed by the owner's
 visual review of Task 826 (2026-09-17).
 
 ## 1. Mode and task type

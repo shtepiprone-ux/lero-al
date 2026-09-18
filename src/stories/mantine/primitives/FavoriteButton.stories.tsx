@@ -26,9 +26,18 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * production call sites, not invented: `ListingCard.tsx:171-178` (list/inline,
  * `styles.inlineFavorite`, no `overlay`, rendered in the first section below), `ListingCard.tsx:263-271`
  * (grid, `overlay` + `styles.overlayFavorite`, rendered in the second section below), and
- * `ListingDetailView.tsx:248-254` (no `className`, no `overlay`, default `shape="icon"`,
+ * `ListingDetailView.tsx:248-254` (no `className`, no `overlay`,
  * `disabledLabel` from the `action_disabled_*` translations `favoriteDisabledLabel` resolves to),
- * rendered in the fourth section, "Icon shape, no className".
+ * rendered in the third section, "Icon shape, no className".
+ *
+ * Task 837 R2 (owner decision 2026-09-17) — the story section that used to follow the overlay
+ * section, demonstrating the component's second visual mode (a full-height action-row control),
+ * is deleted: `FavoriteButton` now has exactly one render branch, the round icon shape every
+ * section above already proves. That second mode's own size prop, its internal size-mapping
+ * constant and its one-off corner-radius theme token existed only to serve this now-removed story
+ * section — no production file ever rendered it (Task 211 put it in `ListingContact.tsx`'s action
+ * row in 2026-05; Task 784 D69-25 / Task 793 re-homed the favorite to the badges row and left it
+ * orphaned).
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/FavoriteButton',
@@ -146,19 +155,8 @@ export const Default: Story = {
 
             <Stack gap="sm">
               <Text size="xs" c="gray.5" fw={500}>
-                Pill shape (`shape=&quot;pill&quot;`) — the action-row variant the real component
-                also supports, unsaved and saved.
-              </Text>
-              <Group gap="xl" wrap="wrap">
-                <FavoriteButton listingId="story-7" isFavorited={false} shape="pill" />
-                <FavoriteButton listingId="story-8" isFavorited shape="pill" />
-              </Group>
-            </Stack>
-
-            <Stack gap="sm">
-              <Text size="xs" c="gray.5" fw={500}>
-                Icon shape, no className (`ListingDetailView.tsx:248-254` detail action row) —
-                default `shape`, no `overlay`, the 4 states: unsaved/saved × enabled/disabled.
+                No className, no `overlay` (`ListingDetailView.tsx:248-254` detail action row) —
+                the 4 states: unsaved/saved × enabled/disabled.
               </Text>
               <Group gap="xl" wrap="wrap">
                 <Stack gap={4} align="center">

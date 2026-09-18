@@ -69,6 +69,38 @@ active"*): the "active listings" (raw), "new listings (7d)", "users", "new users
 status bars. The Users page stays reachable from the sidebar (852). Pending reports are now ADM-02; open tickets are
 now ADM-06 (unassigned).
 
+### 3.2 Owner visual reference — table chrome (screenshot provided 2026-09-18, mid-844)
+
+The owner attached a screenshot of `techzaa.in/lahomes/admin/dashboard-agent.html` (the same reference already named
+in the sprint plan's opening section — this screenshot is that page's "Latest Transaction" table, not a new source)
+while looking at the current legacy `/admin` page and naming two blocks by their **current legacy labels** —
+"Останні оголошення" (Recent listings, row 5 above) and "Скарги на розгляді" (Pending reports / complaints, now the
+ADM-02 work list in row 3 above). Owner instruction, verbatim: *"я хочу, щоб вона виглядала наближено до референсу,
+але ти маєш використовувати Mantine токени та стилі"* (make it look close to the reference, using Mantine tokens and
+styles). Explicitly deferred to this task rather than done ad hoc on the legacy page — owner's own words: *"почекати
+Task 853, але треба туди внести посилання на референси, щоб вони не втратились чи загубились"* (wait for 853, but
+record the reference here so it isn't lost).
+
+**What the screenshot shows** (described here since the binary was pasted inline in chat, not saved to a path):
+a "Latest Transaction" table on a white card, header row "Latest Transaction" (left) + a "This Month" period-filter
+dropdown (right, pill-shaped trigger). Columns: checkbox · Purchase ID · Buyer Name (a circular avatar photo +
+name, two-part cell) · Invoice · Purchase Date · Total Amount · Payment Method · Payment Status · Action. Payment
+Status is a **pill badge** with a soft tinted background and matching text colour, no border, no icon — green
+"Completed", red "Cancel", amber/orange "Pending" (three distinct rows demonstrate all three). Action is three
+icon-only buttons (eye / pencil / trash) inside light-grey rounded squares, tightly grouped. Rows are separated by a
+hairline divider only (no zebra striping, no per-row border box), generous vertical padding, and the whole table sits
+inside one flat white card with a soft rounded corner and a barely-visible border — no drop shadow.
+
+**Binding consequence for this task, once picked up:** `AdminDashboardRecentListings`'s migrated Mantine rows (row 5
+above) should read the buyer/owner-name + status the same way — an `Avatar` (existing canonical primitive,
+`Mantine/Primitives/Avatar`) paired with the name, and the listing status as a pill `Badge` (theme default
+`radius:'pill'`, `variant:'light'`) coloured from `LISTING_STATUS_COLOR` (844) — never a raw hex or a new badge
+shape. The ADM-02 `MantineDashboardWorkList` row (row 3 above) already renders a `Badge` for its status per 844's
+own pattern; this reference confirms the pill/soft-tint look is the right visual target, not a new decision — no new
+token should be needed beyond what 843/844 already established. Re-verify this reading against the actual
+screenshot at execution time if it is still available in chat history or re-attached; do not invent detail this
+description omits (e.g. exact colour hex — reuse the theme's own green/red/yellow, never the screenshot's pixels).
+
 ## 4. Requirements
 
 | ID | Source | Observable requirement | P | Verification | Status |

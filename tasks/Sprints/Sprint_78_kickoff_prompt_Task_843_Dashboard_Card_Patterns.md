@@ -402,3 +402,26 @@ Update the session log: add a "Revision 1" section with its own Files Changed ro
 probe script and its JSON, the edited patterns and Story), R3 restated as amended, the GR-0 receipt, and
 transcripts `30+`. Mark `00`–`27` superseded where a new transcript replaces them. Set the 843 state to
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` in `docs/backlog.md` and the sprint Tasks table. No mutating git.
+
+## 17. Revision 2 — review 2 returned `NEEDS REVISION`, evidence only (2026-09-18)
+
+### 17.1 What review 2 verified
+
+F1, F2, F3 and F6 hold in the code. `allZeroState && rows.every((row) => row.count === 0)` is at
+`MantineDashboardStatRows.tsx:99`. `display="block"` replaces both `style` objects. All three error branches import
+and render `MantineEmptyLoadingErrorState`, and there is no `c="red"` in the three files. F4 holds too:
+`30-ac6-probe.json` records StatCard links at 198/202px and StatRows links at 44px, `scrollWidth` 320, and every
+`closest('a')` null. The reviewer re-ran the smoke tests natively: 7/7 pass. **Do not change any 843 source file.**
+
+### 17.2 What is still missing
+
+| ID | Sev | Req / AC | Defect | Required correction |
+|---|---|---|---|---|
+| **H1** | P2 | §16.4, AC4r, AC10 | The session log's §16.4 table gives exit codes but no transcript paths. The evidence root holds only `30`–`33`, which are the planted pairs, the probe, `build-storybook` and `build`. The runs of typecheck, lint, i18n, stories, coverage, enrolment, design-tokens, enrolled-tailwind, rendered-scope, the three censuses, vitest, file-integrity and mojibake, the `--untracked` grep with its comment/code classification, and the hash-object output are not retained. | Do not run §16.4 separately. Its single successor is the joint block in the **844 kickoff §16.3**, which covers all five patterns and is run once after 844 Revision 1 lands, because 843 and 844 share `messages/*.json`, `patterns/index.ts` and the manifest. Retain each command as its own transcript under `task843/40-…` onward, ending `EXIT_CODE=`. |
+| **H2** | P2 | AC9r | Tuples 1–7 have not been re-reviewed since F3 changed the error visuals. | Owner review. Record it verbatim, with the date, per tuple in `18-owner-review-matrix.md`. |
+| H3 | P3 | session log | The old section "Owner visual review — completed directly by the owner … **Owner verdict: accepted**" and the first-pass "Opus handoff" still stand unqualified below the Revision 1 section, and they contradict `18-…md`. | Mark both sections "superseded by Revision 1 / F5". |
+
+### 17.3 Closure
+
+843 closes together with 844 in one review, because their shared files cannot be staged separately. After H1–H3,
+set 843 to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No mutating git.

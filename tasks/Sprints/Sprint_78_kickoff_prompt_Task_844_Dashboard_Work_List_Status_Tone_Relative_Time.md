@@ -1,6 +1,6 @@
 # Task 844 — `MantineDashboardWorkList`, one listing-status colour source, and `RelativeTime` on Mantine with an absolute-time tooltip
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved · **Status: 🔁 NEEDS REVISION 2026-09-18 (review 1) — execute §16 Revision 1**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
@@ -281,3 +281,78 @@ Files Changed table.
 | Hardcode | R9/AC9; no new token needed. |
 | No legacy tests | The only new test covers the new module; the existing `AdminReportsManager` smoke test is only re-run. |
 | Commands in blocks | §13.2. |
+
+## 16. Revision 1 — review 1 returned `NEEDS REVISION` (2026-09-18)
+
+### 16.1 Re-entry
+
+`remediation`. Keep the existing files and the evidence in `docs/sessions/evidence/task844/`. New transcripts are
+numbered `50-` and up, written through Node or `-Encoding utf8` (no BOM), each ending with `EXIT_CODE=`. Emit a
+`GR-0 CANONICAL REUSE PREFLIGHT` receipt before the first edit.
+
+Already verified, do not change: `listingStatusTone.ts` and its test (4/4 pass; the reviewer re-ran them), the planted
+compile failure with matching hashes, `LOCALE_MAP` / `formatDistanceToNow` unchanged, the `<640` stacked row order,
+and the footer `Button variant="transparent"`. The rendered-scope allowlist and baseline show no diff.
+
+### 16.2 Findings to correct
+
+| ID | Sev | Req / AC | Where | Defect | Required correction |
+|---|---|---|---|---|---|
+| **G1** | P2 | R2, GR-0 (COMPOSE) | `MantineDashboardWorkList.tsx` `state === 'error'` branch | It still renders the cloned `Text size="sm" c="red"` + `Button`, the pattern that 843 F3 removed. **CONTRADICTION:** the session log says this branch was "Rewritten to compose `MantineEmptyLoadingErrorState`, matching 843 Revision 1 exactly". The file does not do that. | Render `<MantineEmptyLoadingErrorState state="error" description={errorText} action={retryLabel ? <Button variant="default" onClick={onRetry}>{retryLabel}</Button> : undefined} />`, as in the 843 patterns. Correct the session-log claim. |
+| **G2** | P2 | R1, R4, spec §17.1 | `RelativeTime.tsx` (`tabIndex={absoluteLabel ? 0 : undefined}`) inside a `MantineDashboardWorkList` row | 853/854 must pass `absoluteLabel` (spec §17.4). A `RelativeTime` with `absoluteLabel` in a row's `meta` becomes a `tabIndex=0` element **inside** the row `<a>`. That gives two tab stops per row and puts a focusable element inside a link, against §11 "one tab stop per row" and §17.1. The current Story hides this because its rows pass no `absoluteLabel`. | Add `focusable?: boolean` to `RelativeTime`, default `true`, so AC5's standalone path is unchanged. Set `tabIndex` only when `absoluteLabel && focusable`; the `aria-label` and hover Tooltip stay. In the WorkList JSDoc, state that `meta` renders inside the row link and a `RelativeTime` there must pass `focusable={false}`. In the WorkList Story, rows pass `absoluteLabel` and `focusable={false}`. Add `src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx` with these cases: each row `a` has no descendant matching `[tabindex]:not([tabindex="-1"]), a, button`; the error Retry `button` has `closest('a') === null`; `maxRows=5` with 7 rows renders 5 row links; and `state="error"` renders the `MantineEmptyLoadingErrorState` alert (`role="alert"`). Planted arm: default `focusable` in the Story rows makes the first case fail. Restore it with a hash witness. |
+| **G3** | P2 | R7, AC7 | session log R7, `r7-computed-style-equivalence.md` | AC7 requires two **measured** computed-style readings. The log says "no browser session available". Yet the same task ran two Playwright probes (`34`, `37`) against the live Storybook, and §10 step 1 named the legacy `Cabinet/ListingsTab` story as the fallback. Reading source code does not measure anything. | Write a Playwright script `50-r7-inherit-probe.mjs` → `50-r7-inherit-probe.json`. It opens `iframe.html?id=cabinet-listingstab--default&globals=locale:uk` and the `Mantine/Primitives/RelativeTime` story at 1280px. For every `time` element it records the computed `font-size`, `line-height`, `font-weight`, `font-family`, `color`, `letter-spacing`, `display`, `margin` and `padding` of the element **and of its parent**. It exits non-zero unless the first six equal the parent's values, `display` is `inline` and margin and padding are 0. The old `<span>` inherited all six, so parent equality is the observable "unchanged" property. `/admin/listings` stays owner tuple 6. |
+| **G4** | P2 | §13.2, §13.4, AC1, AC2, AC5 | `docs/sessions/evidence/task844/` | The evidence is missing. There are no §13.2 gate transcripts, only builds. The `34`/`37` probes left no output file, and the session log only paraphrases them. There is no AC1 DOM excerpt, no AC2 bounding box at 320, and no retained AC5 play or focus result. | Extend the G3 script, or write `51-worklist-probe.mjs` → `51-…json`, against `patterns-mantine-dashboardworklist--default` at 320×800 `uk`. It records: row-link count and heights against `touchTarget`, `scrollWidth <= 320`, the outerHTML of row 1 truncated to 2,000 characters (AC1 excerpt), Retry `closest('a')`, and the footer's right edge against its container. For AC5, focus the `time[tabindex]` in `mantine-primitives-relativetime--default` and record `document.activeElement === el`, its `aria-label`, and whether `[role="tooltip"]` becomes visible. Then run the §16.3 block. |
+| G5 | P3 | R1 | `MantineDashboardWorkList.tsx:14`; `DashboardWorkList.stories.tsx` docs text | `status.color` is typed `string` rather than `MantineColor`. The Story description still says "the footer reuses the existing canonical ViewAllLink", which is no longer true. | Change the type to `MantineColor` and correct the description. |
+
+Process note (no action): 844 was executed before 843 was approved, although §1 says it depends on 843 approved.
+843 and 844 now close in one joint review (843 kickoff §17.3).
+
+### 16.3 Final gate block (replaces §13.2; also closes 843 H1 when run once for both)
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npx.cmd vitest run src/modules/listings/lib/__tests__/listingStatusTone.test.ts src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineDashboardStatCard.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:pattern-enrolment
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census.mjs --surface src\components\shared\RelativeTime.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardWorkList.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardCard.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardStatCard.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardStatRows.tsx
+npm.cmd run build-storybook
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(|c=.red." -- src/design-system/mantine/patterns/MantineDashboard*.tsx src/components/shared/RelativeTime.tsx src/modules/listings/lib/listingStatusTone.ts
+git --no-optional-locks diff --stat
+git --no-optional-locks hash-object src/components/shared/RelativeTime.tsx src/design-system/mantine/patterns/MantineDashboardWorkList.tsx src/design-system/mantine/patterns/MantineDashboardCard.tsx src/design-system/mantine/patterns/MantineDashboardStatCard.tsx src/design-system/mantine/patterns/MantineDashboardStatRows.tsx src/modules/listings/lib/listingStatusTone.ts src/design-system/mantine/patterns/index.ts scripts/mantine-migration-scope.json
+```
+
+Every command gets its own transcript: 843's go to `docs/sessions/evidence/task843/40-…`, and the shared run is
+referenced from both session logs. Expected: every `npm`/`npx`/`node` command exits 0. `check:locale-leak` is not run
+(owner waiver 2026-09-18, `task843/13-check-locale-leak.txt`). The grep may print only comment lines. Quote each
+line and classify it; any `code` line fails. The `50`/`51` probes run afterwards against `npm.cmd run storybook`.
+
+### 16.4 Acceptance for this revision
+
+- **AC11 [G1]** — the WorkList smoke test's error case finds `role="alert"`; the §16.3 grep prints no `code` line.
+- **AC12 [G2]** — the WorkList smoke test passes; its planted arm failed and was restored with equal hashes.
+- **AC7r [G3]** — `50-r7-inherit-probe.json` exists, the script exit code is 0, and it covers both stories.
+- **AC1r / AC2r / AC5r [G4]** — `51-…json` exists with the fields listed in G4, and the script exit code is 0.
+- **AC10** — unchanged: the owner matrix §13.3 is recorded per tuple, verbatim, with the date.
+
+`GR-4 AC AUDIT — 5 revision criteria; each states an observable property; absolutes: none beyond the scoped grep.`
+
+### 16.5 Completion
+
+Session log: add a "Revision 1" section with a Files Changed table, the corrected G1 claim, and transcript paths.
+Set 844 to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` in `docs/backlog.md` and the sprint Tasks table. No mutating
+git. Continuing to 845 is not part of this revision.

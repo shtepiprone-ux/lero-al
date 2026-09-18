@@ -2,7 +2,9 @@
 
 Sprint 75 · P2 · QA profile **Q3**
 
-**Status: `READY FOR SONNET` 2026-09-17.** Independent of every other open Sprint 75 task. Filed by the owner's
+**Status: `NEEDS REVISION` 2026-09-18 (Opus review 3) — the owner returned the §13.4 badges-row tuples: the
+favorite/share block must be top-aligned with the badges, not centred. Execute §16 Revision 1.** (Filed `READY FOR
+SONNET` 2026-09-17; review 2 `PARTIALLY VERIFIED` 2026-09-18.) Independent of every other open Sprint 75 task. Filed by the owner's
 visual review of Task 826 (2026-09-17).
 
 ## 1. Mode and task type
@@ -126,9 +128,10 @@ spot is exactly what let this defect ship, and R6 records it.
 | **R2** | ② owner 2026-09-17 | The pill shape is gone: every row of §3.4 applied, `FavoriteButton` exposes no `shape` or `size` prop, and `theme.other.radius.favoritePill` no longer exists. `FavoriteButton.tsx` renders exactly one branch. | P1 | AC3, AC4 | Confirmed |
 | **R3** | 16c | Each of the four remaining `Demo*` nodes in that file (`DemoShare`, `DemoInquiryTrigger`, `DemoReportTrigger`, `DemoSaveToCollection`) is dispositioned in a table in the session log: `real` (renders the production component) or `proven-equal` (a computed-style capture showing identical `variant`-driven border, radius and size against the real component). Any measured mismatch is corrected to the real component's chrome or filed as a numbered follow-up with its measurement. No node is left undecided. | P2 | AC5 | Confirmed |
 | **R4** | owner 2026-09-17 | Nothing this task writes introduces a raw dimension, colour, radius or border literal. Every value comes from a Mantine prop or a `theme`/`theme.other` token. No `bd="…"` string and no Tailwind utility class is added. `check:design-tokens:strict` stays at 0. | P2 | AC4, AC7 | Confirmed |
-| **R5** | §3.2 | `MantineListingDetailPattern.tsx:164`'s badges-row comment states the **measured** height of the node the row now renders, and the alignment rule it justifies is re-measured after R1. If the measurement shows the rule is no longer needed or no longer correct, the comment says which, and any style change it implies is a separate filed task — not an unmeasured edit here. | P3 | AC6 | Confirmed |
+| **R5** | §3.2 · **superseded by R8 (§16)** | ~~The badges-row comment states the measured height and the `align="center"` rule is re-measured; any style change is a separate task.~~ Replaced by R8: the owner decided the style change on 2026-09-18 and it lands in this task. | — | AC10 | Superseded |
 | **R6** | Sprint 75 exit criterion 1 | `docs/storybook-governance.md` gains one concise subsection recording the slot blind spot of §3.5: a pattern Story's `ReactNode` slot is invisible to `check:story-coverage` and to `check-surface-census.mjs`, so neither can tell a real child from a hand-rolled stand-in. It either names the detector that would catch it **and** its false-positive boundary, or records in writing why none is worth building. No new gate is built in this task. | P3 | AC8 | Confirmed |
-| **R7** | preserve | No production rendering changes. `ListingDetailView.tsx`, `ListingCard.tsx`, `SaveToCollectionButton.tsx`'s own pill, `HeaderActions.tsx` and every `messages/*.json` are byte-unchanged except `SaveToCollectionButton.tsx:30`'s comment. | P1 | AC9 | Confirmed |
+| **R7** | preserve · amended §16 | No production rendering changes **except R8's one alignment value** in `MantineListingDetailPattern.tsx` (owner decision 2026-09-18). `ListingDetailView.tsx`, `ListingCard.tsx`, `SaveToCollectionButton.tsx`'s own pill, `HeaderActions.tsx` and every `messages/*.json` are byte-unchanged except `SaveToCollectionButton.tsx:30`'s comment. | P1 | AC9 | Confirmed |
+| **R8** | owner 2026-09-18 (§16) | The badges row's outer `Group` in `MantineListingDetailPattern.tsx` is `align="flex-start"`: the top edge of the favorite/share block equals the top edge of the first row of badges at every width. The D69-27 comment is rewritten to state this decision and the measured consequence. No other style value changes. | P1 | AC10, AC11 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -165,10 +168,14 @@ spot is exactly what let this defect ship, and R6 records it.
   `src/modules/listings/components/FavoriteButton.tsx` ·
   `src/modules/listings/components/__tests__/FavoriteButton.test.tsx` ·
   `src/design-system/mantine/theme.ts` (delete `radius.favoritePill` + its type) ·
-  `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` (comment only, R5) ·
+  `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` (comment + R8's one `align` value — §16.3) ·
   `src/modules/listings/components/SaveToCollectionButton.tsx` (line 30 comment only) ·
   `docs/storybook-governance.md` (one subsection, R6) · `docs/backlog.md` (837 state line).
 - **Written:** `docs/sessions/evidence/task837/*` · `docs/sessions/<date>-task837-*.md`.
+- **Review 2 ruling (Opus, 2026-09-18) — AC9 scope.** `scripts/task837-favorite-computed.mjs` is in scope as the
+  §13.3 evidence producer: §13.3 required a capture without naming its producer path (a kickoff omission, not an
+  executor deviation), the file has no `package.json`/CI entry, and it follows the committed `scripts/taskNNN-*.mjs`
+  probe precedent (e.g. `task770-copyid-computed.mjs`). It is staged with the approved implementation.
 
 ## 8. Out of scope
 
@@ -234,9 +241,7 @@ unconsumed pill proof and its test are gone; the blind spot that hid this is wri
 - **AC5 [R3]** — Given the session log, when its `Demo*` disposition table is read, then each of the four nodes has
   `real` or `proven-equal` with a retained computed-style capture path, and every mismatch names its correction or
   its filed follow-up number.
-- **AC6 [R1, R5]** — Given `MantineListingDetailPattern.tsx`, when its badges-row comment is read, then it states the
-  measured height of the real button captured in this task, and no style value in that file changed. Quote the
-  comment and `git diff` for the file.
+- **AC6 [R1, R5]** — **Superseded by AC10 (§16).**
 - **AC7 [R4]** — Given the gate block, when `npm run check:design-tokens:strict` runs, then it exits 0 with
   `0 violations`.
 - **AC8 [R6]** — Given `docs/storybook-governance.md`, when the new subsection is read, then it names both gates, the
@@ -320,6 +325,7 @@ render (assert no `#storybook-explorer-tree` in the document — Task 836's fail
 | `mantine-primitives-favoritebutton--default` | after the pill section is removed | 390, 1440 | en, uk | three sections remain, all borderless; nothing left behind where the pill was |
 
 `320` is `uk` only (Q2 mandatory cell carried into Q3); `390`/`1440` are both locales. Ten tuples total.
+**Revision 1:** the first row's tuples were returned by the owner on 2026-09-18. They are re-reviewed under §16.5.
 
 ## 14. Completion report contract
 
@@ -362,3 +368,92 @@ matrix handed to the owner. Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 | 2 slot replaced | §13.3 capture | heart border not transparent, or size ≠ 32px → revise |
 | 3 final | §13.2 | any non-zero except the four greps and the pre-existing locale-leak → not `IMPLEMENTED` |
 | 4 owner | §13.4 | any returned tuple → `NEEDS REVISION` |
+| 5 Revision 1 | §16.4 run3 | AC10/AC11 fail, any §13.2 command non-zero (except the pre-existing locale-leak), or a new leak on either target story → not `IMPLEMENTED` |
+
+## 16. Revision 1 — top-aligned favorite/share block (owner decision 2026-09-18, review 3)
+
+### 16.1 Owner decision, quoted with date
+
+- **2026-09-18, returning the §13.4 badges-row tuples:** *"FavoriteButton тепер без рамки, це супер. Але на
+  стоірнці ListingDetail кнопка "Додати в обране" вирівнюється вертикально по центру, а має бути завжди зверху,
+  тобто на рівні першого рядку badges"*.
+- **2026-09-18, choosing between two bounded options:** owner selected **"Верхні краї врівень"** —
+  `align="flex-start"`: the top of the heart equals the top of the first row of badges at every width. The owner
+  accepted the measured consequence: the 32px icon's centre sits about 5px below the centre of a ~22px badge row.
+  The rejected option was to centre the icon on the first row with a token-computed offset.
+- This **supersedes Task 784 D69-27** (owner visual review 2026-09-04, `align="center"`). The `FavoriteButton` border
+  result was accepted by the same owner message (*"FavoriteButton тепер без рамки, це супер"*).
+
+### 16.2 Verified context (Opus, 2026-09-18)
+
+`FACT` — `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:174`:
+`<Group justify="space-between" wrap="nowrap" align="center">` is the only alignment value on the row. Its inner
+badges `Group` (`gap="xs" wrap="wrap"`) and the icons `Group` (`gap="xs" wrap="nowrap"`) have no `align` of their own.
+The comment at `:163-172` documents D69-27 and Task 837 R5.
+
+`FACT` — the favorite and share icons are 32px (`theme.other.iconSize.prominent`, `theme.ts:501`). A `sm` Badge is
+the theme default (`theme.ts:872`). Re-measure the Badge height at run3; do not cite ~22px as final.
+
+`FACT` — `scripts/task784-d69-19-browser-evidence.mjs:532-550` still asserts the D69-27 centre line. It is retained
+evidence from Task 784 and is not wired to `package.json` or CI (`git grep` shows only comment references from
+`task781r2`/`task785`). **Do not edit or run it.** Its centre-line check is superseded by §16.1, and this section is
+the record of that.
+
+`FACT` — the pattern is rendered in production by `ListingDetailView.tsx`, so R8 changes `/listings/[slug]`. This is
+the only production rendering change the task makes.
+
+### 16.3 Required change (the whole write set for Revision 1)
+
+1. `MantineListingDetailPattern.tsx:174` — `align="center"` → `align="flex-start"`. Change no other attribute,
+   element, prop or value in that file.
+2. The same file's `:163-172` comment is rewritten in about 4-6 lines. It says that Task 837 Revision 1 (owner
+   decision 2026-09-18) supersedes D69-27. It gives the rule: the tops are flush with the first badge row at every
+   width, including when the badges wrap. It states the measured run3 icon and badge heights, and the centre offset
+   the owner accepted.
+3. `scripts/task837-favorite-computed.mjs` is extended so that, for every
+   `patterns-mantine-listingdetailpattern--default` cell, it records for each badges row: `firstBadgeTop`,
+   `firstBadgeHeight`, `favoriteTop`, `shareTop` (`getBoundingClientRect()`, CSS px), and a `badgeRows` count
+   derived from distinct Badge `top` values. It also adds the **320×800 `uk`** viewport cell for this story only.
+   The AC2 fields stay unchanged. Guard the capture so it **fails** a cell that finds no Badge or no favorite in a
+   badges row.
+4. Session log: a new `## Revision 1 — run3` section, plus Files Changed and evidence rows. `docs/backlog.md`: the
+   837 state line.
+
+No other file. `ListingDetailView.tsx`, both Story files, `FavoriteButton.tsx`, `theme.ts` and the test are not
+touched by Revision 1.
+
+### 16.4 Acceptance criteria and verification
+
+- **AC10 [R8]** — Given `git diff src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` relative to
+  `HEAD`, when read, then the only non-comment change is `align="center"` → `align="flex-start"` on the badges-row
+  outer `Group`. Quote the hunk.
+- **AC11 [R8]** — Given `runs/run3/favorite-computed.json`, when each badges row of
+  `patterns-mantine-listingdetailpattern--default` is read at 1440×900 (en, uk), 390×844 (en, uk) and 320×800 (uk),
+  then `|favoriteTop − firstBadgeTop| < 1` and `|shareTop − firstBadgeTop| < 1` in every row. At least one captured
+  cell has `badgeRows ≥ 2`, which proves the wrapped case; if none wraps, report it rather than inventing a fixture.
+  AC2's 32×32 / transparent / 9999px values are unchanged.
+- **Re-entry:** `remediation`. Keep run1 and run2 artifacts. Number the new transcripts from `40-` under
+  `docs/sessions/evidence/task837/`, with a `-run3` suffix. Write the capture to `runs/run3/`, never to `run1`/`run2`.
+- **Gate block:** re-run all of §13.2 as run3, in its stated order, after the edit. Add
+  `git --no-optional-locks diff -- src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` and include
+  `scripts/task837-favorite-computed.mjs` in the final `hash-object` line. Then run
+  `node.exe scripts\task837-favorite-computed.mjs run3` after `build-storybook` and before
+  `check:locale-leak:mantine-only`. Write every redirect through Node or with `-Encoding utf8` (no BOM — review 2's
+  run2 deviation). Record `node.exe -p "process.platform + ' ' + process.version"` as the first transcript.
+- **Locale leak:** no new leak on either target story relative to run2's `32-check-locale-leak-run2.txt`.
+
+### 16.5 Owner visual matrix after Revision 1 (replaces §13.4's badges-row rows)
+
+| Story | State | Widths | Locales | Owner checks |
+|---|---|---|---|---|
+| `patterns-mantine-listingdetailpattern--default` | badges row, after R8 | 320, 390, 1440 | en, uk (320: uk only) | the heart and share tops are flush with the first badge row; when the badges wrap, the icons stay beside the first row; no border; nothing overlaps |
+
+`mantine-primitives-favoritebutton--default`'s four tuples from §13.4 still need an explicit owner result. Revision 1
+does not change that Story.
+
+### 16.6 Revision quality gate
+
+`GR-1` — pattern census 8/8 at review 2; Revision 1 adds no import. Re-run it in the run3 block. · `GR-3a` — no
+Story write in Revision 1. · `GR-4 AC AUDIT — 2 new criteria; each states an observable property; absolutes: AC11's
+< 1px is a sub-pixel rounding bound on an equality that flex-start guarantees, and AC10's "only non-comment change"
+is scoped to one file with its diff as the witness.` · Hardcode rule (§3.1) — one Mantine `align` keyword, no value.

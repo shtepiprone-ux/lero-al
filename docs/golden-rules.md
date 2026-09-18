@@ -1,6 +1,6 @@
 # Golden Rules — non-negotiable, receipt-enforced
 
-> **Owner rule, 2026-09-10, written after Task 809.** These are not guidance. Each rule names the forbidden act, the
+> **Owner rule, 2026-09-18, strengthened after repeated Sonnet hardcode/duplication violations.** These are not guidance. Each rule names the forbidden act, the
 > command that proves compliance, and a **verbatim receipt line** that must appear in the response. **A response that
 > omits a required receipt is void** — the owner rejects it unread, and the agent restarts the step.
 >
@@ -12,6 +12,45 @@
 >
 > **A rule leaves this file only by owner decision quoted with its date. No agent may narrow, reinterpret, defer or
 > "scope out" any rule here, and no task, kickoff or review is authorization to do so.**
+
+## GR-0 — Search canonical sources first; reuse or extend them; never hardcode a parallel UI
+
+Binds: `agent-contract` **16b–16c**. Applies to every new visible production component, named visible component
+added to an existing file, Storybook page/title/export, wrapper, or visual style — and to every Mantine migration.
+This is the **first rule every executor must read** before opening a task, source file, diff, or Storybook file.
+
+**Forbidden:** creating a new component, Story, Story export, wrapper, utility chain, CSS rule, inline style, raw
+visual value, or scanner allowlist before a canonical-reuse search has completed. A different filename, folder,
+consumer, wrapper, Storybook title, viewport, locale, or copied markup is not a new requirement. Filename-only
+searches are invalid: the executor must search by the required behavior and visual role, open every plausible
+candidate, and inspect its production source and canonical Story.
+
+**Canonical-reuse preflight — before any related write:** search the component catalog, `src/design-system/mantine/`,
+`src/components/`, `src/modules/**/components/`, `src/stories/`, and colocated `*.stories.*` files with semantic
+purpose/behavior terms, not only the proposed name. For every plausible candidate, inspect its API, rendered states,
+canonical Story, and actual style/token path. Choose exactly one disposition:
+
+- `REUSE` — consume the canonical source unchanged.
+- `EXTEND` — add the missing behavior or state to its canonical owner and Story, then consume that owner.
+- `COMPOSE` — assemble existing canonical sources without cloning their markup or styles.
+- `CREATE` — allowed only after the search proves no inspected candidate can satisfy the requirement by reuse,
+  extension, or composition; create the smallest native Mantine shared source and its direct canonical Story first.
+- `STOP` — the boundary, candidate equivalence, or required visual contract is unclear; obtain an owner decision.
+
+**No hardcoded visual UI:** for new or migrated UI, every visual value must come from the canonical native Mantine
+component/theme-token path with the required TailAdmin provenance. New `className` utility chains, CSS/SCSS rules,
+`style` objects, raw hex/px/rem values, arbitrary utilities, bespoke wrappers, and governance allowlists are
+forbidden as substitutes for a canonical component, pattern, or token. Existing legacy styling may be preserved only
+where the task explicitly keeps a legacy surface; it never authorizes adding a new local visual rule. A missing
+canonical token or pattern is `STOP`, not permission to invent one.
+
+**Receipt — task design, execution and review alike:**
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: <component/Story/style>; semantic queries: <queries>; inspected candidates: <paths + Story IDs | NONE>; decision: <REUSE | EXTEND | COMPOSE | CREATE | STOP>; selected canonical owner: <path | NONE>; Mantine/TailAdmin token path: <path | NONE>; new hardcoded visual values: NONE; rationale: <why>.`
+
+No receipt, an uninspected plausible candidate, a `CREATE` decision without the search evidence, or any new
+hardcoded visual value makes the task invalid. The executor must emit `BLOCKED — GR-0 CANONICAL REUSE PREFLIGHT
+MISSING` and make no related write; the reviewer returns `NEEDS REVISION`.
 
 ## GR-1 — Every component a surface renders is in that surface's census
 
@@ -113,6 +152,7 @@ task-design block for documents the same response authored. Conflating the two i
 
 | Rule | Enforced by | State |
 |---|---|---|
+| GR-0 | Sonnet `execute-task` first-read stop gate + orchestrator/executor/reviewer inspection + required receipt | **active** — a missing/invalid receipt or a non-canonical new visual value blocks the task by rule. |
 | GR-1 | `scripts/check-rendered-scope.mjs` (`npm run check:rendered-scope`, **blocking**, Task 818), `scripts/check-surface-census-changed.mjs` (`npm run check:surface-census:changed`, **blocking**, Task 819 — maps the PR's own base..head diff to affected surfaces via `scripts/map-changed-surfaces.mjs` and censuses each with `scripts/check-surface-census.mjs --json`), `scripts/check-pattern-enrolment.mjs` (`npm run check:pattern-enrolment`, **blocking**, Task 820), **and** `scripts/check-media-enrolment.mjs` (`npm run check:media-enrolment`, **blocking**, Task 813) | **Enforced for both halves: the enrolled subgraph and pre-enrolment — and, for two directories, at the source.** Task 813 (2026-09-11) moved the project's canonical `<img>` render site, `AppImage.tsx` (and its co-located siblings), out of `src/components/ui/` — the literal path prefix both `check-rendered-scope.mjs` and `check-surface-census.mjs` classify as `tier2-legacy-primitive` — to `src/design-system/media/`, closing the tier-2 edge at its source for every consumer at once, and added `check:media-enrolment` (same shape as `check:pattern-enrolment`, directory-listing-driven, never a hard-coded name list) so that new directory does not ship ungoverned. Task 818 (2026-09-11) made `check:rendered-scope` blocking against a versioned, edge-keyed baseline (`scripts/rendered-scope-baseline.json`) — every component an *enrolled* surface renders is blocked from silently growing unmigrated. Task 819 (2026-09-11) closes the other half: `check-surface-census.mjs` (Task 817) censuses one named surface but took a `--surface` argument no CI job supplied, so a wholly unenrolled surface (the exact Task 809 shape) was invisible to every gate. `check:surface-census:changed` now runs in the same `governance` job, immediately after `check:rendered-scope:verify`: it fails closed (never a silent skip) when the merge base cannot be determined, either limit is exceeded, a changed file resolves to no surface, or a mapped surface's own census is unusable; every blocking node it finds is compared against its own versioned baseline (`scripts/surface-census-baseline.json`) the same way — baselined debt does not fail, a new block fails naming it, a stale entry fails, and a new `tier2-legacy-primitive` block can never be baselined away. Task 820 (2026-09-11, owner decision 5) closes GR-1's remaining gap for one directory by construction rather than by frontier-walking: every `.tsx` under `src/design-system/mantine/patterns/` must be a `scripts/mantine-migration-scope.json` entry, checked against the live directory listing (never a hard-coded name list), with the eleven Task 816 tier-3 allowlist entries retired as no longer needed — the manifest now enrols all 33 patterns directly. GR-1's `Command` block above (the by-hand, single-surface form) is unchanged and stays useful for ad-hoc inspection; it is not what CI runs. |
 | GR-2 | reviewer inspection + receipt | active |
 | GR-3 | `check:story-coverage` for enrolled components; `check-rendered-scope` blocking in CI for the enrolled-subgraph frontier (Task 818); `check-surface-census.mjs`/`check:surface-census:changed` blocking in CI for the pre-enrolment case (Task 819) — both check, per node, whether a canonical Mantine story imports it directly or through a single-hop `index.ts(x)` barrel re-export, never merely its parent, via the `story:<yes\|no>` column/field | **enforced for both halves** (Task 818, Task 819) — a rendered, unstoried component reachable from an enrolled root, or from any surface the current PR's diff actually touches, now blocks the PR. |

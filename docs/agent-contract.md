@@ -162,6 +162,17 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     style. If no suitable source exists, create and register one in the appropriate library or stop for the missing
     design decision; do not improvise a local style.
 
+    **Canonical-reuse preflight is mandatory before creation.** Before creating a visible component, Storybook
+    page/title/export, wrapper, or visual style, search semantic purpose/behavior terms across the component catalog,
+    canonical Mantine patterns/primitives, production components, and Storybook; inspect every plausible candidate's
+    source, API, canonical Story, rendered states, and token path. Reuse, extend, or compose a suitable candidate.
+    `CREATE` is permitted only when the search evidence proves none can satisfy the requirement; create the smallest
+    shared native Mantine source and direct canonical Story before a consumer. New/migrated UI may use only canonical
+    Mantine components/theme tokens with TailAdmin provenance — never a local utility chain, CSS rule, inline style,
+    raw visual value, arbitrary utility, bespoke wrapper, or scanner allowlist. The exact `GR-0 CANONICAL REUSE
+    PREFLIGHT` receipt is mandatory before any related write. Its absence is `BLOCKED — GR-0 CANONICAL REUSE
+    PREFLIGHT MISSING`.
+
 16c. **Canonical Mantine Stories are the visual source of truth and cannot be bypassed.** Before publishing a task
     that changes a visible Mantine-migrated artifact, the Opus orchestrator must inspect its corresponding canonical
     Mantine Story and put the required Story work in scope; before implementing it, the executor must re-verify that

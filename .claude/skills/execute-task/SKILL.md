@@ -42,6 +42,22 @@ implementation, complete the permitted product work and hand off the policy corr
 a Sonnet revision. When a policy edit is necessary for the task's own acceptance criteria, stop before changing the
 file and report the task-specification conflict to Opus.
 
+## STOP — first-read canonical reuse and Mantine-token gate
+
+Before opening a saved task, source file, diff, or Storybook file, read `docs/golden-rules.md` **GR-0 in full** and
+`docs/agent-contract.md` **16b–16c in full**. This is mandatory for every request, including one described as a
+small UI fix, Storybook-only change, style adjustment, or documentation-driven implementation.
+
+The first substantive executor response must include exactly:
+
+`CANONICAL REUSE PREFLIGHT LOADED — docs/golden-rules.md GR-0; docs/agent-contract.md 16b–16c.`
+
+Do not open the task or begin the normal start gate from a prior-session read, an injected excerpt, a summary, or an
+assumed workflow. If either file cannot be opened, return `BLOCKED`, naming its path. If the receipt is absent or a
+required file was not read, discard all preliminary implementation conclusions and restart this gate. Before any
+related write, complete the `GR-0 CANONICAL REUSE PREFLIGHT` receipt; a missing or invalid receipt is
+`BLOCKED — GR-0 CANONICAL REUSE PREFLIGHT MISSING`.
+
 ## Start gate
 
 Before editing code:

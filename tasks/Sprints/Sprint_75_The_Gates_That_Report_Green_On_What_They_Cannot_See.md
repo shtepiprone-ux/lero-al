@@ -105,6 +105,18 @@ established the detector-plus-boundary pattern this sprint is meant to produce.
    alongside the result, so a green line can never be read as a claim about the excluded set.** GR-2 already demands
    this of agents in prose; the exit criterion is that the *commands* say it themselves.
 
+## Closure audit — 2026-09-18 (Opus, on owner request) — `NOT READY TO CLOSE`
+
+| # | Result | Evidence |
+|---|---|---|
+| 1 | **Met.** Every Tasks-table row is `APPROVED` / `APPROVED WITH NOTES` (837 last, 2026-09-18). | Tasks table above. |
+| 2 | **Met** 2026-09-11 (Task 819). | Criterion 2's own note. |
+| 3 | **Met on sampled evidence.** Each landed gate has a `--verify-gate` self-test in `package.json` (rendered-scope, surface-census:changed, pattern-enrolment, media-enrolment, enrolled-tailwind, card-track-monotonicity, homepage-grid, click-shield, css-vars), or retained red-then-green test transcripts (822 `15_vitest-red`/`16_vitest-green`; 830 §3 red run + `green-vitest-post-fix.txt`; 797 ledger), or a planted arm (816, 817). Not every transcript was reopened. | Session logs + `docs/sessions/evidence/task*/`. |
+| 4 | **NOT MET.** `check:rendered-scope`, `check-surface-census.mjs`, `check:surface-census:changed` and `audit:design-system-patterns` all print *"Cannot see: dynamic import(), React.lazy()"*; no task owns that class and it is not recorded as deliberately undetectable. It is not theoretical: **8 production `next/dynamic` render edges** — `ListingsShell` → `ListingsFilters`, `SaveSearchButton`; `ListingDetailView` → `ListingContact`; `GalleryIsland` → `ListingGallery`; `HeroSearchClient` → `HeroSearch`; `MapWrapper` → `Map`; `ListingFormLoader` → `ListingFormShell`; `AdminUserAvatar` → `AvatarCropModal`. Measured 2026-09-18 (win32 v22.22.3): the `ListingsShell.tsx` census lists 22 nodes with neither `ListingsFilters` nor `SaveSearchButton`; the `ListingDetailView.tsx` census lists 36 nodes without `ListingContact`. That is the Task 809 defect class — a rendered component invisible to GR-1. All 8 specifiers are string literals, so each edge is statically resolvable. | `git grep next/dynamic -- src`; the two census runs. |
+| 5 | **Met.** | `docs/orchestrator-procedures.md` → "Corollary (Sprint 75, 2026-09-11)". |
+
+**STOP - OWNER DECISION REQUIRED (criterion 4).** (a) File a Sprint 75 task: the shared resolver follows `next/dynamic(() => import('<literal>'))` and `React.lazy(() => import('<literal>'))` as render edges in all four tools, with a two-armed plant; false-positive boundary = a non-literal specifier stays unseeable and is printed as such; newly visible nodes are baselined, not migrated, in that task. **Recommended.** (b) Record the class as deliberately undetectable, with the reason, here and in `docs/golden-rules.md`'s enforcement table. The sprint closes only after (a) is approved or (b) is recorded.
+
 ## Owner decisions — 2026-09-11, Task 812 §14.6 (quoted verbatim, `agent-contract` 16d)
 
 > **Decision 1 — select 1a, systematic tier-3 for the shared Mantine-pattern cluster.**

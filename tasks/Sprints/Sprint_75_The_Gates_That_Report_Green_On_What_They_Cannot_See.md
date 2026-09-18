@@ -1,5 +1,7 @@
 # Sprint 75 — The gates that report green on what they cannot see
 
+**Status: ✅ CLOSED 2026-09-18** by owner instruction, *"закривай спринт і заводь задачі на міграцію"*, after the closure audit below found exit criteria 1-5 met. Archived in `docs/backlog-archive.md`.
+
 > Opened **2026-09-11**, immediately after Task 809 closed, by the orchestrator. Task 809 cost six owner rejections
 > and six revisions; **not one of the six was caught by a gate, and the first of them shipped while
 > `check:story-coverage` printed `34/34` green.** This sprint exists to turn that class of blindness into failing
@@ -105,17 +107,23 @@ established the detector-plus-boundary pattern this sprint is meant to produce.
    alongside the result, so a green line can never be read as a claim about the excluded set.** GR-2 already demands
    this of agents in prose; the exit criterion is that the *commands* say it themselves.
 
-## Closure audit — 2026-09-18 (Opus, on owner request) — `NOT READY TO CLOSE`
+## Closure audit — 2026-09-18 (Opus, on owner request) — criteria 1-5 met; ✅ CLOSED by the owner 2026-09-18
 
 | # | Result | Evidence |
 |---|---|---|
 | 1 | **Met.** Every Tasks-table row is `APPROVED` / `APPROVED WITH NOTES` (837 last, 2026-09-18). | Tasks table above. |
 | 2 | **Met** 2026-09-11 (Task 819). | Criterion 2's own note. |
 | 3 | **Met on sampled evidence.** Each landed gate has a `--verify-gate` self-test in `package.json` (rendered-scope, surface-census:changed, pattern-enrolment, media-enrolment, enrolled-tailwind, card-track-monotonicity, homepage-grid, click-shield, css-vars), or retained red-then-green test transcripts (822 `15_vitest-red`/`16_vitest-green`; 830 §3 red run + `green-vitest-post-fix.txt`; 797 ledger), or a planted arm (816, 817). Not every transcript was reopened. | Session logs + `docs/sessions/evidence/task*/`. |
-| 4 | **NOT MET.** `check:rendered-scope`, `check-surface-census.mjs`, `check:surface-census:changed` and `audit:design-system-patterns` all print *"Cannot see: dynamic import(), React.lazy()"*; no task owns that class and it is not recorded as deliberately undetectable. It is not theoretical: **8 production `next/dynamic` render edges** — `ListingsShell` → `ListingsFilters`, `SaveSearchButton`; `ListingDetailView` → `ListingContact`; `GalleryIsland` → `ListingGallery`; `HeroSearchClient` → `HeroSearch`; `MapWrapper` → `Map`; `ListingFormLoader` → `ListingFormShell`; `AdminUserAvatar` → `AvatarCropModal`. Measured 2026-09-18 (win32 v22.22.3): the `ListingsShell.tsx` census lists 22 nodes with neither `ListingsFilters` nor `SaveSearchButton`; the `ListingDetailView.tsx` census lists 36 nodes without `ListingContact`. That is the Task 809 defect class — a rendered component invisible to GR-1. All 8 specifiers are string literals, so each edge is statically resolvable. | `git grep next/dynamic -- src`; the two census runs. |
+| 4 | **Met by record (owner decisions 2026-09-18 below)** — not by a detector. Audit finding that prompted it: `check:rendered-scope`, `check-surface-census.mjs`, `check:surface-census:changed` and `audit:design-system-patterns` all print *"Cannot see: dynamic import(), React.lazy()"*; no task owns that class and it is not recorded as deliberately undetectable. It is not theoretical: **8 production `next/dynamic` render edges** — `ListingsShell` → `ListingsFilters`, `SaveSearchButton`; `ListingDetailView` → `ListingContact`; `GalleryIsland` → `ListingGallery`; `HeroSearchClient` → `HeroSearch`; `MapWrapper` → `Map`; `ListingFormLoader` → `ListingFormShell`; `AdminUserAvatar` → `AvatarCropModal`. Measured 2026-09-18 (win32 v22.22.3): the `ListingsShell.tsx` census lists 22 nodes with neither `ListingsFilters` nor `SaveSearchButton`; the `ListingDetailView.tsx` census lists 36 nodes without `ListingContact`. That is the Task 809 defect class — a rendered component invisible to GR-1. All 8 specifiers are string literals, so each edge is statically resolvable. | `git grep next/dynamic -- src`; the two census runs. |
 | 5 | **Met.** | `docs/orchestrator-procedures.md` → "Corollary (Sprint 75, 2026-09-11)". |
 
-**STOP - OWNER DECISION REQUIRED (criterion 4).** (a) File a Sprint 75 task: the shared resolver follows `next/dynamic(() => import('<literal>'))` and `React.lazy(() => import('<literal>'))` as render edges in all four tools, with a two-armed plant; false-positive boundary = a non-literal specifier stays unseeable and is printed as such; newly visible nodes are baselined, not migrated, in that task. **Recommended.** (b) Record the class as deliberately undetectable, with the reason, here and in `docs/golden-rules.md`'s enforcement table. The sprint closes only after (a) is approved or (b) is recorded.
+**Owner decisions — 2026-09-18, criterion 4 (quoted verbatim, in order).**
+
+1. Chose option (a), a resolver task that follows `next/dynamic`/`React.lazy` edges and baselines the newly visible nodes.
+2. Asked about the measured conflict (both baseline writers refuse any new `tier2-legacy-primitive` key, and following the edges exposes `input` under `ListingDetailView`, `button` under `GalleryIsland`, 6 primitives under `ListingFormLoader`, `dialog` under `AdminUserAvatar`), the owner selected **"Мігрувати імпорти"**.
+3. Then: *"у проекті не треба створювати тести, які будуть перевіряти legacy компоненти та елементи. Ми мігруємо на Minetine увесь проект."*
+
+**Disposition.** Option (a) is **withdrawn**: a detector whose job is to see unmigrated legacy components is exactly the checking machinery decision 3 forbids. No task number was reserved and no kickoff was written. Criterion 4 is closed for this class **by record, not by detector**: the `dynamic import()`/`React.lazy()` blind spot the four GR-1 tools print stays deliberately undetected, and the legacy components behind it are closed by migrating them to Mantine. Correction, measured 2026-09-18 after the owner's instruction to file the migrations (census root rows, win32 v22.22.3): `ListingContact`, `ListingsFilters` and `SaveSearchButton` are **already migrated** (manifest yes, own Story, className 0, no `@/components/ui` import). The earlier sentence here that named `ListingContact` and `ListingsFilters` as unowned was wrong. The legacy behind the eight `next/dynamic` edges is: `ListingGallery` → **794**; `ListingContact`'s `ListingInquiryDialog`/`ListingReportDialog` → **795**; `ListingFormShell` → **796**; `Map` → **839** (Sprint 71); `ListingsFilters`'s `FilterChoiceGroup`/`YearCombobox` residue + four unenrolled leaves → **840** (Sprint 69); `HeroSearch` + `PropertyTypeCombobox` → **841** (Sprint 76); `AvatarCropModal` → **842** (Sprint 76).
 
 ## Owner decisions — 2026-09-11, Task 812 §14.6 (quoted verbatim, `agent-contract` 16d)
 

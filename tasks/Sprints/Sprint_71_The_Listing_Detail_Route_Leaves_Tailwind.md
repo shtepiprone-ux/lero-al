@@ -57,6 +57,7 @@ gaps surface — 791's evidence pass already found five (§3.7 of its kickoff) b
 | **794** | Gallery + lightbox: `GalleryStaticFrame` / `ListingGallery` inner composition, LCP mechanism preserved — **`LightboxView` moved to Sprint 75 Task 825 by owner decision 2026-09-16** · **owner decision 2026-09-17 (Sprint 75 Task 829): 794 must empty its 27 keys from `scripts/enrolled-tailwind-baseline.json`** | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **795** | The three legacy dialogs: `ListingInquiryDialog`, `ListingReportDialog`, `SaveToCollectionButton` | P2 | Q4 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **796** | `create` / `[slug]/edit`: `ListingFormShellView`, 5 steps, 10 field components, `ImageUpload`, cancel dialog | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
+| **839** | `Map` (the Leaflet wrapper `MapWrapper` loads through `next/dynamic` on the detail route) leaves Tailwind, gets its own canonical Mantine Story and a manifest entry — filed 2026-09-18 at Sprint 75 closure, owner instruction *"закривай спринт і заводь задачі на міграцію"* | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 
 ## Execution order
 

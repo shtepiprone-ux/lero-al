@@ -1,0 +1,8 @@
+src/app/api/upload-avatar/route.ts
+src/components/admin/AdminUserAvatar.module.css
+src/components/admin/AdminUserAvatar.stories.tsx
+src/components/admin/AdminUserAvatar.tsx
+src/components/shared/AvatarCropModal.tsx
+src/components/ui/avatar.tsx
+src/stories/mantine/primitives/Avatar.stories.tsx
+EXIT_CODE=0

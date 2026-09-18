@@ -1042,15 +1042,6 @@
     "src/components/listing/WhatsAppContactButton.tsx :: src/components/listing/WhatsAppContactButton.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/components/shared/AvatarCropModal.tsx :: src/components/shared/AvatarCropModal.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/components/shared/AvatarCropModal.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/components/shared/AvatarCropModal.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/components/shared/FilterToggleGroup.tsx :: src/components/shared/FilterToggleGroup.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },

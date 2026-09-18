@@ -4,9 +4,8 @@ import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import Cropper from 'react-easy-crop'
 import type { Area } from 'react-easy-crop'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
+import { Paper, Slider, Text, Stack, Flex, Button, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 
 // ── Canvas crop helper ────────────────────────────────────────────────────────
 
@@ -60,6 +59,7 @@ export function AvatarCropModal({
   onConfirm, onCancel,
 }: AvatarCropModalProps) {
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
@@ -92,61 +92,79 @@ export function AvatarCropModal({
   }
 
   return (
-    <Dialog open onOpenChange={open => { if (!open && !saving) onCancel() }}>
-      <DialogContent showCloseButton={false} className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex flex-col gap-4">
-          {/* Crop area — react-easy-crop fills the relative container */}
-          <div
-            className="relative h-72 w-full rounded-xl overflow-hidden bg-muted"
-            role="application"
-            aria-label={tc('aria_avatar_crop')}
+    <MantineModal
+      opened
+      onClose={() => { if (!saving) onCancel() }}
+      title={title}
+      footer={
+        <Flex
+          direction={{ base: 'column-reverse', sm: 'row' }}
+          gap="sm"
+          justify={{ base: 'stretch', sm: 'flex-end' }}
+        >
+          <Button
+            variant="outline"
+            color="gray"
+            w={{ base: '100%', sm: 'auto' }}
+            onClick={onCancel}
+            disabled={saving}
           >
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              minZoom={1}
-              maxZoom={3}
-              restrictPosition
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropComplete={onCropComplete}
-              showGrid={false}
-            />
-          </div>
-
-          {/* Zoom slider */}
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.01}
-            value={zoom}
-            onChange={e => setZoom(Number(e.target.value))}
-            aria-label={zoomLabel}
-            className="w-full cursor-pointer accent-primary"
-          />
-
-          {/* Hint text */}
-          <p className="text-xs text-muted-foreground text-center">{hint}</p>
-        </div>
-
-        <DialogFooter>
-          <Button variant="outline" onClick={onCancel} disabled={saving}>
             {cancelLabel}
           </Button>
           {/* Also disabled when crop area not yet initialized (image still loading) */}
-          <Button onClick={handleSave} disabled={saving || !croppedAreaPixels}>
-            {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+          <Button
+            color="brand"
+            w={{ base: '100%', sm: 'auto' }}
+            onClick={handleSave}
+            loading={saving}
+            disabled={!croppedAreaPixels}
+          >
             {saveLabel}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Flex>
+      }
+    >
+      <Stack gap="md">
+        {/* Crop area — react-easy-crop fills the relative container */}
+        <Paper
+          radius="xl"
+          bg="gray.1"
+          pos="relative"
+          h={theme.other.boxSize.avatarCropArea}
+          w="100%"
+          style={{ overflow: 'hidden' }}
+          role="application"
+          aria-label={tc('aria_avatar_crop')}
+        >
+          <Cropper
+            image={imageSrc}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            minZoom={1}
+            maxZoom={3}
+            restrictPosition
+            onCropChange={setCrop}
+            onZoomChange={setZoom}
+            onCropComplete={onCropComplete}
+            showGrid={false}
+          />
+        </Paper>
+
+        {/* Zoom slider */}
+        <Slider
+          min={1}
+          max={3}
+          step={0.01}
+          value={zoom}
+          onChange={setZoom}
+          label={null}
+          thumbLabel={zoomLabel}
+        />
+
+        {/* Hint text */}
+        <Text size="xs" c="dimmed" ta="center">{hint}</Text>
+      </Stack>
+    </MantineModal>
   )
 }

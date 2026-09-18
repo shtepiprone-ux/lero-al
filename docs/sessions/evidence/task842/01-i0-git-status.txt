@@ -1,0 +1,2 @@
+?? docs/sessions/evidence/task842/
+EXIT_CODE=0

@@ -205,6 +205,10 @@ const PER_STORY_TOKENS = {
   // same loanword, verified against messages/it.json's own dozens of unmodified "Link" usages
   // (e.g. auth.link_copied, admin.field_nav_links).
   'mantine-primitives-unstyledbutton': ['Link'],
+  // AvatarCropModal (Task 842 review, owner-authorised 2026-09-18): cabinet.avatar_zoom_label is
+  // "Zoom" in it — the standard Italian loanword, verified against messages/it.json:565; sq/uk
+  // translate it ("Zmadho"/"Масштаб"), so it stays story-scoped, never global.
+  'patterns-mantine-avatarcropmodal': ['Zoom'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

@@ -1,0 +1,22 @@
+Task 842 §13.4 width-delta evidence
+Legacy: AvatarCropModal.tsx (pre-change) :96 DialogContent className="sm:max-w-md" -> Tailwind max-w-md = 28rem = 448px
+
+Mantine: MantineModal default size='md' (AvatarCropModal.tsx does not override size).
+Source: node_modules/@mantine/core/styles/Modal.css lines 2-7:
+2:  --modal-size-xs: 320px;
+3:  --modal-size-sm: 380px;
+4:  --modal-size-md: 440px;
+5:  --modal-size-lg: 620px;
+6:  --modal-size-xl: 780px;
+7:  --modal-size: var(--modal-size-md);
+38:  flex: var(--modal-content-flex, 0 0 var(--modal-size));
+
+--modal-size-md: 440px; .mantine-Modal-content { flex: var(--modal-content-flex, 0 0 var(--modal-size)); max-width: 100%; }
+At a 1440px viewport (well above the max-width:100% clamp point), the rendered Modal content width = 440px.
+
+Delta: 448px (legacy) - 440px (Mantine size=md) = 8px narrower with the canonical Mantine Modal.
+
+LIMITATION: browser extension (Claude in Chrome) was not connected in this session, so this is a
+static determination from Mantine's own compiled CSS custom-property source, not a live DOM
+getBoundingClientRect() measurement in a running Storybook instance. No theme.ts override of
+--modal-size-md exists (grepped, zero hits), so the shipped value is unmodified from the library default.

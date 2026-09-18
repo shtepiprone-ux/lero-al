@@ -2,7 +2,7 @@
 
 Sprint 76 · P2 · QA profile **Q3**
 
-**Status: `READY FOR SONNET` 2026-09-18.** Independent of 841. Filed at Sprint 75's closure by owner instruction
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-18, review 1** (was `READY FOR SONNET` 2026-09-18). Review record: session log § "Orchestrator review". Independent of 841. Filed at Sprint 75's closure by owner instruction
 *"закривай спринт і заводь задачі на міграцію"* (2026-09-18). Binding owner rule of the same day: *"у проекті не треба
 створювати тести, які будуть перевіряти legacy компоненти та елементи. Ми мігруємо на Minetine увесь проект."*
 

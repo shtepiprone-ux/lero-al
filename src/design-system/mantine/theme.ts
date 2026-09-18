@@ -104,6 +104,7 @@ declare module '@mantine/core' {
                                // production dimension, but AC17 scopes "no raw literal" to story
                                // fixtures too.
       | 'compactTrigger'  // 280px — RangeDatePicker compact trigger width
+      | 'avatarCropArea'  // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72)
       | 'emptyState'      // 360px — MantineEmptyLoadingErrorState stack max-width
       | 'galleryNavDemoWidth'  // 480px — the same two Stories' demo backdrop width
       | 'prose'           // 576px — homepage hero subtitle max-width
@@ -532,6 +533,7 @@ export const theme = createTheme({
       dropdownPanel: '13.75rem', // 220px
       galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
       compactTrigger: '17.5rem', // 280px
+      avatarCropArea: '18rem', // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72, AvatarCropModal.tsx:104)
       emptyState: '22.5rem',     // 360px
       galleryNavDemoWidth: '30rem', // 480px — Task 824 R17 revision, D824-4/AC17 audit
       prose: '36rem',            // 576px

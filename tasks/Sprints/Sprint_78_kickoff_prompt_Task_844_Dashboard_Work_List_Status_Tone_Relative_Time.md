@@ -1,6 +1,6 @@
 # Task 844 — `MantineDashboardWorkList`, one listing-status colour source, and `RelativeTime` on Mantine with an absolute-time tooltip
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved · **Status: 🔁 NEEDS REVISION 2026-09-18 (review 1) — execute §16 Revision 1**
+Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved · **Status: 🔁 NEEDS REVISION 2026-09-18 (review 2) — execute §17 Revision 2**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
@@ -356,3 +356,43 @@ line and classify it; any `code` line fails. The `50`/`51` probes run afterwards
 Session log: add a "Revision 1" section with a Files Changed table, the corrected G1 claim, and transcript paths.
 Set 844 to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` in `docs/backlog.md` and the sprint Tasks table. No mutating
 git. Continuing to 845 is not part of this revision.
+
+## 17. Revision 2 — review 2 returned `NEEDS REVISION` (2026-09-18)
+
+### 17.1 What review 2 verified — do not redo
+
+- G1: the error branch composes `MantineEmptyLoadingErrorState`, and there is no `c="red"`.
+- G4: `51-worklist-probe.json` passes.
+- G5: `status.color` is `MantineColor`.
+- G3: `50-r7-inherit-probe.json` passes 12/12 against the legacy `Cabinet/ListingsTab` story.
+- The joint gate block `task843/40`–`57` is all exit 0. Its hashes equal the current files, and the builds ran after
+  the last source edit.
+- The WorkList planted arm failed and was restored.
+
+### 17.2 Findings to correct
+
+| ID | Sev | Req / AC | Where | Defect | Required correction |
+|---|---|---|---|---|---|
+| **K1** | P2 | R6, §11 positive flow, AC10 | `RelativeTime.stories.tsx` `FIXTURE_ANCHOR`; `DashboardWorkList.stories.tsx` `FIXTURE_ANCHOR` | Storybook freezes "now" at **`2026-07-30T00:00:00.000Z`** (`.storybook/preview-head.html:15`, Task 698). Both Stories anchor their fixtures at `2026-09-18T12:00Z`, which is in the future. So the rendered text is wrong. The `50` probe records "приблизно за 2 місяці" ("in about 2 months") for the 5-minute, 3-hour and 2-day fixtures, and "10 днів тому" for the 60-day one. The `51` probe shows the same future text in every WorkList row. R6's minutes / hours / days / months states and §11's "4 hours ago" are therefore **not rendered**. The Story comment "displayed text drifts as real time passes" is false: the preview clock is frozen. | Set both anchors to `new Date('2026-07-30T00:00:00.000Z')`, the frozen instant already used by `ListingsTab.stories.tsx:21` and `admin.fixtures.ts:49`. Cite `preview-head.html:15` in the comment, replacing the "drifts" text. Recompute every `absoluteLabel` fixture string as that instant minus its offset, formatted `DD.MM.YYYY HH:mm` in `Europe/Tirane`. Re-run `50`/`51` as `60-…`/`61-…`. Each rendered text must be in the past ("тому" in `uk`), and the four plain RelativeTime rows must read as minutes, hours, days and months respectively. |
+| **K2** | P2 | R4, §16.2 G2 | `RelativeTime.tsx` `showTooltip = Boolean(absoluteLabel) && focusable` | G2 required "set `tabIndex` only when `absoluteLabel && focusable`; the `aria-label` **and hover Tooltip stay**". Instead, `focusable={false}` also removes the Tooltip. In the dashboard rows, which are the only place 853/854 use it, a mouse user never sees the absolute time. This deviation is not declared anywhere. | Wrap in `MantineTooltip` whenever `absoluteLabel` is set, and gate only `tabIndex` on `focusable`. Update the JSDoc. Add a case to `MantineDashboardWorkList.smoke.test.tsx`: with `focusable={false}` the row still contains no element with `tabindex >= 0`. Extend `61-…`: hovering the row's `time` makes `[role="tooltip"]` visible. |
+| K3 | P3 | session log | `2026-09-18-task844-…md` | Several parts of the log are stale and contradict the final state: <br>• "Owner corrections applied proactively" item 3 and its `GR-0 … decision: REUSE; selected canonical owner: ViewAllLink.tsx` receipt describe a reuse that was later reverted. <br>• The first Files Changed table lists `rendered-scope-allowlist.json` / `-baseline.json` as changed, but `git status` shows neither. <br>• The R4 row still quotes `tabIndex={absoluteLabel ? 0 : undefined}`. <br>• The first "Validation evidence" table points at 843 transcripts `32`/`33` rather than `40`–`57`. <br>• `40-r7-live-computed-style-proof.mjs` has no output file. | Mark each of these "superseded by Revision 1/2" with a pointer to the current fact. Delete the orphan `40-…mjs`, or mark it superseded by `50`. |
+
+### 17.3 Gates
+
+After K1–K2, re-run the **§16.3 block** once, as new transcripts `task843/60-…` onward. It is still the joint 843+844
+block. Expected: every `npm`/`npx`/`node` command exits 0, and the grep prints only comment lines, each quoted and
+classified. Then run the `60`/`61` probes against `npm.cmd run storybook`.
+
+### 17.4 Acceptance
+
+- **AC6r [K1]** — `60-…json` records, for the four plain RelativeTime rows, past-tense text in the minute, hour, day
+  and month ranges. `61-…json` shows the WorkList rows' time as past tense.
+- **AC13 [K2]** — the WorkList smoke test passes, including the new case; `61-…json` records the tooltip visible on
+  hover of a `focusable={false}` time.
+- **AC10** — unchanged: owner matrix §13.3, per tuple, verbatim, with the date. Do this after K1, because the owner
+  must see correct relative text.
+
+`GR-4 AC AUDIT — 3 revision criteria; each states an observable property; absolutes: none.`
+
+Session log: add a "Revision 2" section with its Files Changed and transcript paths. Set 844 to
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No mutating git. Do not start 845.

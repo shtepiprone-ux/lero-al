@@ -2,7 +2,8 @@
 
 Sprint 76 · P2 · QA profile **Q4** (critical flow) with the Q3 visual matrix
 
-**Status: `READY FOR SONNET` 2026-09-18 — do not run concurrently with Task 840** (both extend
+**Status: `NEEDS REVISION` 2026-09-18 (review 1) — evidence-only Revision 1, see §16. No source file may change.**
+Original status line, kept for context: `READY FOR SONNET` 2026-09-18 — do not run concurrently with Task 840 (both extend
 `src/stories/mantine/primitives/FilterControls.stories.tsx`; either order, never in parallel). Filed at Sprint 75's
 closure by owner instruction *"закривай спринт і заводь задачі на міграцію"* (2026-09-18). Binding owner rule of the same
 day: *"у проекті не треба створювати тести, які будуть перевіряти legacy компоненти та елементи. Ми мігруємо на Minetine
@@ -346,3 +347,97 @@ log with a Files Changed table.
 | Hardcode rule | The icon uses an existing theme role; the wrapper loses its only Tailwind default; no new value. |
 | "No legacy tests" | No test added; existing critical-flow tests are re-run only. |
 | Conflict with 840 | The shared file is named in the Status line; I0 stops if 840 is in flight. |
+
+## 16. Revision 1 — review 1 `NEEDS REVISION` (2026-09-18)
+
+### 16.1 Re-entry mode
+
+`remediation`. Start at §16.4 step 1. Everything else from the first pass stays as it is:
+R1-R6, AC1-AC8, every transcript `00-`…`55-`, and the build (`54-build-square-fix.txt`, exit 0). Do **not** re-run
+any gate. Do **not** change any file under `src/` or `scripts/`. Do **not** edit `docs/backlog.md`. Opus owns the
+backlog for this revision, because the `Stop` hook blocked the executor's backlog edit in the first pass.
+
+### 16.2 Owner decisions recorded by the reviewer (2026-09-18, answers given to review 1, quoted as given)
+
+| # | Question | Owner answer (verbatim) | Effect |
+|---|---|---|---|
+| OD-1 | Keep the `MantineCountButton` fix (session log §7a) in Task 841? | "Confirm, keep in 841" | §16.3 R7 is in scope. |
+| OD-2 | Does the waiver of `check:locale-leak:mantine-only` (§13.2) stand? | "Waiver stands" | §13.2's locale-leak line and its three-story-ID grep are waived for 841. The owner's AC9 visual check replaces them. |
+| OD-3 | AC9 owner matrix result, including the collapsed/no-badge square filters icon at 640? | "All accepted" | AC9 is accepted for every §13.3 tuple and for the §16.3 R7 state. |
+
+### 16.3 Scope added by OD-1
+
+| ID | Requirement | Files | Status after review 1 |
+|---|---|---|---|
+| **R7** | In the collapsed state with no badge (`iconOnlyBelow` active, `count` 0), `MantineCountButton` renders its icon centred in a square `theme.other.touchTarget` × `theme.other.touchTarget` box. The collapsed state with a badge is unchanged. | `src/design-system/mantine/patterns/MantineCountButton.tsx`, `src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx`, `src/stories/mantine/primitives/CountButton.stories.tsx` | Code, tests (`43-`: 99/99), planted failures (`26-`, `42-`), build (`54-`) and owner visuals (OD-3): verified by the reviewer. **Missing: the GR-3a receipt for the Story edit (F1).** |
+
+- **AC10 [R7]** — Given the session log, when read, then it contains a literal GR-3a receipt for
+  `MantineCountButton` × collapsed + no badge, naming the canonical candidate
+  `Mantine/Primitives/CountButton`, its direct-import evidence `src/stories/mantine/primitives/CountButton.stories.tsx:7`,
+  decision `EXTEND`, and target `Mantine/Primitives/CountButton`.
+
+### 16.4 Findings and required corrections
+
+| # | Severity | Finding | Correction |
+|---|---|---|---|
+| **F1** | P2 (GR-3a: "the reviewer returns `NEEDS REVISION`") | The §7a Story write (a new state in `CountButton.stories.tsx`) has no GR-3a receipt. Session log §9 only mentions "GR-3a-equivalent reasoning". The outcome was correct: it extended the one canonical Story that imports the component. | Step 1. |
+| **F2** | P3 | Session log §7a presents "a Playwright probe … measured … `44×44px` exactly" plus a screenshot as "real-browser evidence". No probe script, transcript or screenshot is in `docs/sessions/evidence/task841/`. | Step 2. |
+| **F3** | P3 (orchestrator-procedures, Corollary 818) | The last `git hash-object` witness (`20-final-hashes.txt`) predates §7a. The final gate block `39-`…`54-` carries no hash. It also omits the three §7a files. | Step 3. |
+
+**Steps:**
+
+1. In the session log §7, add this line after the two existing GR-3a receipts. Re-verify its direct-import claim
+   first with the grep in step 4:
+   `GR-3a STORY PREFLIGHT — MantineCountButton × collapsed + no badge (count 0, iconOnlyAbove=640 iconOnlyBelow=860); canonical candidates: Mantine/Primitives/CountButton; direct-import evidence: src/stories/mantine/primitives/CountButton.stories.tsx:7; toolbar coverage: locale=Storybook locale toolbar, viewport=Storybook viewport toolbar; decision: EXTEND; target: Mantine/Primitives/CountButton; rationale: the only canonical Story that imports the component; every earlier collapsed demo there has a non-zero count, so the missing state was added to it and no new page was created.`
+   If the grep shows a second canonical candidate, stop with `BLOCKED` and quote the output.
+2. In session log §7a, relabel the Playwright paragraph as `UNRETAINED — not review evidence`. Keep what it says, and
+   add that R7's visual outcome is closed by owner decision OD-3 (kickoff §16.2). Do not re-run or recreate the probe.
+3. Write `docs/sessions/evidence/task841/56-final-hashes.txt` with the §16.4 command block below. Every hash must equal
+   the review-1 value in §16.5. If any hash differs, a source file changed after review: stop with `BLOCKED` and list
+   the mismatching paths.
+4. Session log: set the status line to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Revision 1)`. Update §2 AC9
+   to "accepted by owner, OD-3". Update §8's locale-leak deviation to cite OD-2. Update §9's three open items to
+   cite OD-1/OD-2/OD-3. Add a Files Changed row for `56-final-hashes.txt`. Remove §11's instruction for Opus to apply
+   the backlog, and point to §16.1.
+5. Run `check:file-integrity` and `check:mojibake` (block below) after the session-log edit, and save them as
+   `57-`/`58-`.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+git --no-optional-locks grep -n -E "import .*MantineCountButton" -- "src/**/*.stories.tsx"
+git --no-optional-locks hash-object src/components/shared/PropertyTypeCombobox.tsx src/design-system/mantine/patterns/MantineCountButton.tsx src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx src/stories/mantine/primitives/CountButton.stories.tsx src/stories/mantine/primitives/FilterControls.stories.tsx src/stories/mantine/primitives/HeroSearch.stories.tsx scripts/mantine-migration-scope.json scripts/rendered-scope-baseline.json scripts/surface-census-baseline.json
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks status --short
+```
+
+Expected: the grep prints exactly one line, `CountButton.stories.tsx:7`. The nine hashes equal §16.5 in the same
+order. Both checks exit 0. Status shows the same nine `M` paths as review 1, plus the session log and the evidence directory.
+
+### 16.5 Review-1 hash witness (reviewer, 2026-09-18, `git hash-object`)
+
+```
+3bf075dcf589528ba90644b6d4687b8513f61957  src/components/shared/PropertyTypeCombobox.tsx
+c14cd3e7e4dc1a5b06929fea5750f95c30426558  src/design-system/mantine/patterns/MantineCountButton.tsx
+500a97bb99e6fbf81d05fb339bc636870680bcfb  src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+37471a129688e44487dbee1b68fcc13498ad11b8  src/stories/mantine/primitives/CountButton.stories.tsx
+edd6d6edc7da015a3859efbc31349feba16d2bff  src/stories/mantine/primitives/FilterControls.stories.tsx
+06f10d249503ac4f31c57c0823cecdbbc56b0d32  src/stories/mantine/primitives/HeroSearch.stories.tsx
+b6cc13e8dc6191b2ac7700b400c999f3180438d3  scripts/mantine-migration-scope.json
+c86f7f9b9fd9e9d50b8716459c442d42830ca8e2  scripts/rendered-scope-baseline.json
+2e38cc51b203ad58206fed47825854c17134c332  scripts/surface-census-baseline.json
+```
+
+### 16.6 Review-1 census (reviewer, native `win32 v22.22.3`)
+
+`check-surface-census.mjs --surface src\components\shared\HeroSearch.tsx` → 17 nodes, exit 1. `HeroSearch`,
+`PropertyTypeCombobox` and `MantineCountButton` read `manifest:yes story:yes`. It blocks only on 840's four leaves.
+
+`GR-1 CENSUS COMPLETE — 17 nodes; tier1 2 migrated+enrolled+story this task (HeroSearch, PropertyTypeCombobox) + MantineCountButton already enrolled+storied; tier2 0 imports removed; tier3 4 listed and filed as 840.`
+
+### 16.7 Completion
+
+Report the three steps with their transcript paths and the hash comparison. Status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no mutating
+git, no `git push`, no `docs/backlog.md` edit.

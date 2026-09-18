@@ -1,0 +1,23 @@
+--- git ls-files src/** | grep -i propertytype ---
+src/components/admin/AdminPropertyTypesManager.stories.tsx
+src/components/admin/AdminPropertyTypesManager.tsx
+src/components/shared/PropertyTypeCombobox.tsx
+src/hooks/usePropertyTypes.ts
+src/modules/admin/actions/propertyTypes.ts
+src/modules/admin/lib/propertyTypes.ts
+src/modules/listings/domain/propertyTypeSchema.ts
+--- git grep -l PROPERTY_TYPES -- src ---
+src/app/[locale]/favorites/page.tsx
+src/components/admin/AdminPropertyTypesManager.stories.tsx
+src/components/shared/PropertyTypeCombobox.tsx
+src/hooks/usePropertyTypes.ts
+src/modules/admin/actions/propertyTypes.ts
+src/modules/admin/lib/propertyTypes.ts
+src/modules/listings/constants/index.ts
+src/modules/listings/domain/filterEngine.ts
+src/stories/fixtures/admin.fixtures.ts
+src/stories/mantine/primitives/FavoritesShell.stories.tsx
+--- git grep -l canonical Story importing PropertyTypeCombobox ---
+EXIT=1
+--- git grep -l canonical Story importing HeroSearch (not View) ---
+EXIT=1

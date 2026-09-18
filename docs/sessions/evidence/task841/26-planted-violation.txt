@@ -1,0 +1,47 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx (18 tests | 1 failed) 424ms
+     × Task 841 — collapsed + no badge (count=0) renders the icon centered, with no leftSection wrapper 17ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx > MantineCountButton — iconOnlyBelow collapse (Task 571) > Task 841 — collapsed + no badge (count=0) renders the icon centered, with no leftSection wrapper
+AssertionError: expected <span …(2)>…(1)</span> to be null
+
+- Expected:
+null
+
++ Received:
+<span
+  class="m_a74036a mantine-Button-section"
+  data-position="left"
+>
+  <span
+    data-testid="icon"
+  >
+    icon
+  </span>
+</span>
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx:231:60
+    229|     // carries the asymmetric `margin-inline-end` that caused the off-…
+    230|     // the fix.
+    231|     expect(button.querySelector('[data-position="left"]')).toBeNull()
+       |                                                            ^
+    232|     // The icon itself must still render — just as the button's own ce…
+    233|     expect(screen.getByTestId('icon')).toBeInTheDocument()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  12:38:37
+   Duration  2.84s (transform 165ms, setup 99ms, import 1.18s, tests 424ms, environment 967ms)
+
+EXIT_CODE=1

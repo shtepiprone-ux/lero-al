@@ -1,0 +1,26 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 1a3d95a6ee6ee9ffe484b3438349f22f1a21bcf0
+    Changed paths seen: 5
+    Excluded (4):
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      src/stories/mantine/primitives/FilterControls.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/HeroSearch.stories.tsx  [story-or-test-file]
+    Included surfaces (1):
+      src/components/shared/PropertyTypeCombobox.tsx
+    Re-censused parent surfaces (3):
+      src/components/shared/HeroSearch.tsx  <- src/components/shared/PropertyTypeCombobox.tsx
+      src/components/shared/HeroSearchView.tsx  <- src/components/shared/PropertyTypeCombobox.tsx
+      src/modules/listings/components/ListingFormShell.tsx  <- src/components/shared/PropertyTypeCombobox.tsx
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 487 (carried-forward entries for the 491-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0

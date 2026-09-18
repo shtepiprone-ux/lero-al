@@ -2,7 +2,10 @@
 
 Sprint 76 · P2 · QA profile **Q4** (critical flow) with the Q3 visual matrix
 
-**Status: `NEEDS REVISION` 2026-09-18 (review 1) — evidence-only Revision 1, see §16. No source file may change.**
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-18 (review 2, Revision 1) — archived. Notes: locale-leak waived (OD-2);
+the §7a Playwright probe is unretained, and R7's visual result is closed by OD-3; session log §4 still has one stale sentence
+("described in §11 for Opus to apply"), which §11 and §16.1 supersede.**
+Review 1: `NEEDS REVISION` 2026-09-18 — evidence-only Revision 1, see §16.
 Original status line, kept for context: `READY FOR SONNET` 2026-09-18 — do not run concurrently with Task 840 (both extend
 `src/stories/mantine/primitives/FilterControls.stories.tsx`; either order, never in parallel). Filed at Sprint 75's
 closure by owner instruction *"закривай спринт і заводь задачі на міграцію"* (2026-09-18). Binding owner rule of the same

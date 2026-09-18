@@ -1,0 +1,12 @@
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/surface-census-baseline.json
+ M src/components/shared/PropertyTypeCombobox.tsx
+ M src/design-system/mantine/patterns/MantineCountButton.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+ M src/stories/mantine/primitives/CountButton.stories.tsx
+ M src/stories/mantine/primitives/FilterControls.stories.tsx
+ M src/stories/mantine/primitives/HeroSearch.stories.tsx
+?? docs/sessions/2026-09-18-task841-hero-search-container-and-property-type-combobox.md
+?? docs/sessions/evidence/task841/
+EXIT_CODE=0

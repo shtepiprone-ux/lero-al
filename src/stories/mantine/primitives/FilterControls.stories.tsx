@@ -5,6 +5,7 @@ import { storyT } from '../../_storyI18n'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
+import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
 /**
@@ -14,6 +15,13 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * sub-components (Task 566) are presentational forwarders consumed by `FiltersPanel`/
  * `ListingsFilters` — this title is a display-grouping choice for gate enforcement, not a
  * taxonomy claim.
+ *
+ * Task 841: `PropertyTypeCombobox` (`@/components/shared/PropertyTypeCombobox`) has no canonical
+ * Story of its own (GR-3a preflight: zero canonical candidates) and is added here rather than a
+ * new page — it is a sibling filter-leaf control with no page of its own, exactly like the other
+ * three. Its two real production call sites are `HeroSearchView.tsx:108` (hero: defaults,
+ * `showAllOption` true) and `ListingFormShellView.tsx:175` (form: `showAllOption={false}` +
+ * placeholder).
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/FilterControls',
@@ -122,6 +130,25 @@ function RoomsRowDemo({ ariaLabel }: { ariaLabel: string }) {
   )
 }
 
+// Task 841 — hero call site (HeroSearchView.tsx:108): defaults, showAllOption=true, empty value.
+function PropertyTypeHeroDemo() {
+  const [value, setValue] = useState('')
+  return <PropertyTypeCombobox value={value} onChange={setValue} />
+}
+
+// Task 841 — form call site (ListingFormShellView.tsx:175): showAllOption=false + placeholder.
+function PropertyTypeFormDemo({ placeholder }: { placeholder: string }) {
+  const [value, setValue] = useState('')
+  return (
+    <PropertyTypeCombobox
+      value={value}
+      onChange={setValue}
+      showAllOption={false}
+      placeholder={placeholder}
+    />
+  )
+}
+
 export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
@@ -194,6 +221,17 @@ export const Default: Story = {
               getLabel={key => (key === 'all' ? storyT(locale, 'common.all') : storyT(locale, `listing.${key}`))}
               ariaLabel={storyT(locale, 'common.property_type')}
             />
+          </Stack>
+
+          {/* PropertyTypeCombobox (Task 841) — the real production component, built on
+              MantineCombobox `variant="button"`. Two real call sites: hero (defaults) and form
+              (showAllOption=false + placeholder). */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {storyT(locale, 'common.property_type')}
+            </Text>
+            <PropertyTypeHeroDemo />
+            <PropertyTypeFormDemo placeholder={storyT(locale, 'listing.property_type_placeholder')} />
           </Stack>
         </Stack>
       </MantineStoryShell>

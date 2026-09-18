@@ -1,0 +1,38 @@
+win32 v22.22.3
+src/stories/mantine/primitives/CountButton.stories.tsx:7:import { MantineCountButton } from '@/design-system/mantine/patterns/MantineCountButton'
+3bf075dcf589528ba90644b6d4687b8513f61957
+c14cd3e7e4dc1a5b06929fea5750f95c30426558
+500a97bb99e6fbf81d05fb339bc636870680bcfb
+37471a129688e44487dbee1b68fcc13498ad11b8
+edd6d6edc7da015a3859efbc31349feba16d2bff
+06f10d249503ac4f31c57c0823cecdbbc56b0d32
+b6cc13e8dc6191b2ac7700b400c999f3180438d3
+c86f7f9b9fd9e9d50b8716459c442d42830ca8e2
+2e38cc51b203ad58206fed47825854c17134c332
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 78 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 78 file(s) clean
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 5829 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 5829 files
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/surface-census-baseline.json
+ M src/components/shared/PropertyTypeCombobox.tsx
+ M src/design-system/mantine/patterns/MantineCountButton.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+ M src/stories/mantine/primitives/CountButton.stories.tsx
+ M src/stories/mantine/primitives/FilterControls.stories.tsx
+ M src/stories/mantine/primitives/HeroSearch.stories.tsx
+?? docs/sessions/2026-09-18-task841-hero-search-container-and-property-type-combobox.md
+?? docs/sessions/evidence/task841/
+EXIT_CODE=0

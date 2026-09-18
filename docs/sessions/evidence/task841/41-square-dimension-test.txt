@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  12:51:45
+   Duration  2.05s (transform 93ms, setup 85ms, import 789ms, tests 297ms, environment 669ms)
+
+EXIT_CODE=0

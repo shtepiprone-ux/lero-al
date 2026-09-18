@@ -1,0 +1,10 @@
+
+> lero-al@0.1.0 check:locale-leak:mantine-only
+> node scripts/check-locale-leak.mjs --mantine-only
+
+🔍  Locale leak detector — full mode (mantine-only)
+Mantine selected: 144; non-Mantine excluded: 197
+    Stories: 144 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-18T10-23/
+
+.......................................................................

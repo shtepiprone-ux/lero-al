@@ -34,6 +34,22 @@
  * Planted-violation (Task 571, documented, verified once and reverted): removing the
  * `iconOnlyBelow != null &&` guard (collapsing whenever the mocked query resolves `true`, even
  * with `iconOnlyBelow` unset) makes test 5 FAIL — the label that must always render is hidden.
+ *
+ * **Task 841 addition — collapsed + zero count (no badge) icon centering AND square shape.**
+ * Owner-reported visual regression on the real `HeroSearch` container Story
+ * (`Mantine/Primitives/HeroSearch` `Container` at 640px), found twice: first the icon rendered
+ * visibly left-of-center (root cause: Mantine's own `Button` applies `margin-inline-end` to
+ * `leftSection` toward the label unconditionally, `.section[data-position='left']`, with no
+ * `rightSection`/badge to balance it), then — after centering it — the button itself was a
+ * non-square rectangle (content-driven width never matched the fixed `minHeight: 2.75rem`).
+ * Fix, both closed together: the icon renders as the Button's own `children`/label instead of
+ * `leftSection` (asserted below by the ABSENCE of a `[data-position="left"]` section wrapper), and
+ * `w`/`h` are both pinned to `theme.other.touchTarget` (44px) with `px={0}` (asserted below by the
+ * button's own bounding box being exactly square).
+ *
+ * Planted-violation (documented, verified once and reverted): reverting to the pre-fix code (no
+ * `leftSection` swap, no fixed `w`/`h`) makes both new tests FAIL — the wrapper is present again
+ * and the box is a non-square rectangle.
  */
 
 import React from 'react'
@@ -200,6 +216,54 @@ describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
     )
     const button = screen.getByRole('button', { name: 'Advanced filters' })
     expect(button.querySelector('.mantine-Badge-root')).toBeNull()
+  })
+
+  it('Task 841 — collapsed + no badge (count=0) renders the icon centered, with no leftSection wrapper', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton count={0} iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    // The pre-fix shape wraps the icon in Mantine's own `[data-position="left"]` section, which
+    // carries the asymmetric `margin-inline-end` that caused the off-center render. Its absence is
+    // the fix.
+    expect(button.querySelector('[data-position="left"]')).toBeNull()
+    // The icon itself must still render — just as the button's own centered label content.
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
+
+  it('Task 841 — collapsed + no badge (count=0) is pinned to a square box (w === h === theme.other.touchTarget)', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton count={0} iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    expect(button.style.width).toBe('2.75rem')
+    expect(button.style.height).toBe('2.75rem')
+    expect(button.style.width).toBe(button.style.height)
+  })
+
+  it('Task 841 — collapsed WITH a badge (count>0) is unaffected: leftSection wrapper still present, symmetric with rightSection', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton count={3} iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    expect(button.querySelector('[data-position="left"]')).not.toBeNull()
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+    expect(button).toHaveTextContent('3')
   })
 
   it('touch target stays >=44px (2.75rem) in the collapsed state', () => {

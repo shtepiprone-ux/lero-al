@@ -1,7 +1,7 @@
 'use client'
 
 import type { ButtonProps } from '@mantine/core'
-import { Button, Badge } from '@mantine/core'
+import { Button, Badge, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
 export interface MantineCountButtonProps extends ButtonProps {
@@ -78,10 +78,36 @@ export interface MantineCountButtonProps extends ButtonProps {
  * `[data-with-left-section]`/`[data-with-right-section]` flex children (§18.9-verified: they are
  * never absolutely positioned, so they cannot overlap the — now hidden — label in the collapsed
  * state, and Mantine's own `.inner` flex gap keeps them apart from each other).
+ *
+ * **Task 841 fix — collapsed + zero count (no badge) previously rendered as an off-center icon in
+ * a non-square box.** Two compounding defects, both owner-caught on the real `HeroSearch`
+ * container Story (Task 841), the first render to ever combine "collapsed" with "no badge" (every
+ * prior `iconOnlyBelow` demo, in this file's own Story and in `FiltersPanel`'s Apply button, always
+ * had a non-zero count, so a badge/`rightSection` was always present):
+ * 1. Mantine's own `Button` unconditionally applies `margin-inline-end: var(--mantine-spacing-xs)`
+ *    to `leftSection` toward the label (`Button.module.css` `.section[data-position='left']`),
+ *    even when the label is empty. With no `rightSection` to balance that one-sided margin, the
+ *    icon sat visibly left of the button's own center.
+ * 2. With no fixed width, the button's content-driven width (icon + asymmetric padding, per
+ *    `.root[data-with-left-section]`'s reduced `padding-inline-start`) never matched its
+ *    `minHeight: 2.75rem`, so the icon-only button rendered as a non-square rectangle instead of
+ *    the square icon-button shape every other icon-only control in this design system uses.
+ *
+ * Fix, applied only in the badge-less collapsed state (the collapsed+badge case is untouched —
+ * `leftSection`/`rightSection` there already balance each other symmetrically and keep their
+ * existing content-driven width):
+ * - the icon renders as the Button's own centered `children`/label instead of `leftSection`, so no
+ *   asymmetric margin applies (closes defect 1);
+ * - `w`/`h` are both pinned to `theme.other.touchTarget` (the SAME canonical 44px token every
+ *   other square icon-only control in this design system already uses for its touch target —
+ *   `theme.ts:488`, no new token invented) and `px={0}` (the fixed width already provides all the
+ *   surrounding space a centered 16-20px icon needs) — guaranteeing a true square regardless of
+ *   the icon's own intrinsic size (closes defect 2).
  */
 export function MantineCountButton({
-  count, rightSection, children, variant, iconOnlyBelow, iconOnlyAbove, px, ...props
+  count, rightSection, children, variant, iconOnlyBelow, iconOnlyAbove, px, leftSection, ...props
 }: MantineCountButtonProps) {
+  const theme = useMantineTheme()
   const isFilledHost = variant === undefined || variant === 'filled'
   const countBadge = count && count > 0
     ? isFilledHost
@@ -110,15 +136,23 @@ export function MantineCountButton({
   // It remains false on the server and the first client render, so the pre-hydration output is
   // unchanged; with no `iconOnlyBelow`, `iconOnlyAbove` remains inert.
   const collapsed = iconOnlyBelow != null && belowThreshold
+  const resolvedRightSection = rightSection ?? countBadge
+  // See the Task 841 fix doc block above: only the badge-less collapsed state swaps leftSection
+  // for children and pins a square size — the collapsed+badge case keeps leftSection/rightSection
+  // and its existing content-driven width, already symmetric.
+  const collapsedIconOnly = collapsed && !resolvedRightSection
 
   return (
     <Button
       {...props}
       variant={variant}
-      rightSection={rightSection ?? countBadge}
-      px={collapsed ? 'xs' : px}
+      leftSection={collapsedIconOnly ? undefined : leftSection}
+      rightSection={resolvedRightSection}
+      px={collapsedIconOnly ? 0 : (collapsed ? 'xs' : px)}
+      w={collapsedIconOnly ? theme.other.touchTarget : undefined}
+      h={collapsedIconOnly ? theme.other.touchTarget : undefined}
     >
-      {collapsed ? null : children}
+      {collapsedIconOnly ? leftSection : (collapsed ? null : children)}
     </Button>
   )
 }

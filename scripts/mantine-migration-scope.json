@@ -72,5 +72,7 @@
   "src/modules/listings/components/ListingFeatureIcon.tsx",
   "src/modules/listings/components/FavoriteButton.tsx",
   "src/modules/listings/components/LightboxView.tsx",
-  "src/components/shared/AvatarCropModal.tsx"
+  "src/components/shared/AvatarCropModal.tsx",
+  "src/components/shared/HeroSearch.tsx",
+  "src/components/shared/PropertyTypeCombobox.tsx"
 ]

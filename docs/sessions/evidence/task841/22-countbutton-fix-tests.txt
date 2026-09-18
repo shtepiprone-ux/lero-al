@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx src/components/shared/__tests__/heroSearch.smoke.test.tsx src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx src/modules/listings/components/__tests__/listingsFilterBar.smoke.test.tsx src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  5 passed (5)
+      Tests  66 passed (66)
+   Start at  12:32:36
+   Duration  13.61s (transform 1.83s, setup 467ms, import 9.99s, tests 14.03s, environment 3.98s)
+
+EXIT_CODE=0

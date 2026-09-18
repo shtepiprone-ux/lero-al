@@ -1,0 +1,9 @@
+src/components/shared/HeroSearchView.module.css:79:  /* Site #4 — PropertyTypeCombobox (basis-full sm:basis-auto sm:w-48 shrink-0) */
+src/components/shared/HeroSearchView.tsx:10:import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
+src/components/shared/HeroSearchView.tsx:108:            <PropertyTypeCombobox
+src/components/shared/PropertyTypeCombobox.tsx:18:export function PropertyTypeCombobox({
+src/design-system/mantine/input-chrome.css:116:   LocationCombobox, PropertyTypeCombobox, YearCombobox — all confirmed broken pre-fix, see the
+src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx:13: *   2. Override (`triggerWidth={{ base: '100%', sm: '100%' }}`, what `PropertyTypeCombobox` now
+src/modules/listings/components/ListingFormShellView.tsx:15:import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
+src/modules/listings/components/ListingFormShellView.tsx:175:                  <PropertyTypeCombobox
+EXIT_CODE=0

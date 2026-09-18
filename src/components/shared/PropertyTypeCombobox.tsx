@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { Home } from 'lucide-react'
+import { useMantineTheme } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import { PROPERTY_TYPES } from '@/modules/listings/constants'
 import { MantineCombobox } from '@/design-system/mantine/patterns'
@@ -21,6 +22,7 @@ export function PropertyTypeCombobox({
 }: Props) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
+  const theme = useMantineTheme()
 
   const options = useMemo(() => {
     const typeOpts = PROPERTY_TYPES.map(pt => ({
@@ -33,14 +35,14 @@ export function PropertyTypeCombobox({
   }, [showAllOption, t, tl])
 
   return (
-    <div className={cn('property-type-combobox', className ?? 'sm:w-48 shrink-0')}>
+    <div className={cn('property-type-combobox', className)}>
       <MantineCombobox
         options={options}
         value={value}
         onChange={onChange}
         variant="button"
         placeholder={placeholder ?? t('all_types')}
-        icon={<Home className="h-4 w-4" />}
+        icon={<Home size={theme.other.iconSize.standard} />}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={t('no_results')}
         triggerAriaLabel={t('property_type')}

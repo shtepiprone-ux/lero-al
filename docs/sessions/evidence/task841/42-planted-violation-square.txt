@@ -1,0 +1,37 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx (19 tests | 1 failed) 303ms
+     × Task 841 — collapsed + no badge (count=0) is pinned to a square box (w === h === theme.other.touchTarget) 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx > MantineCountButton — iconOnlyBelow collapse (Task 571) > Task 841 — collapsed + no badge (count=0) is pinned to a square box (w === h === theme.other.touchTarget)
+AssertionError: expected '' to be '2.75rem' // Object.is equality
+
+- Expected
++ Received
+
+- 2.75rem
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx:249:32
+    247|     )
+    248|     const button = screen.getByRole('button', { name: 'Advanced filter…
+    249|     expect(button.style.width).toBe('2.75rem')
+       |                                ^
+    250|     expect(button.style.height).toBe('2.75rem')
+    251|     expect(button.style.width).toBe(button.style.height)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 passed (19)
+   Start at  12:51:58
+   Duration  2.02s (transform 90ms, setup 81ms, import 774ms, tests 303ms, environment 654ms)
+
+EXIT_CODE=1

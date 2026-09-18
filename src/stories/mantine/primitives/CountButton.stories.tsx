@@ -155,6 +155,31 @@ export const Default: Story = {
             </MantineCountButton>
           </Stack>
 
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              Task 841 fix — collapsed + zero count (no badge): the exact real production shape
+              (`HeroSearchView`&apos;s filters trigger, `iconOnlyAbove=640 iconOnlyBelow=860`, real
+              `HeroSearch` container&apos;s default `activeFiltersCount=0`). Every OTHER collapsed demo
+              above/below always carries a non-zero count, so a badge was always present to balance
+              the icon and give the button a stable content-driven width — this state, with nothing
+              on the right, previously rendered the icon left-of-center AND the button as a
+              non-square rectangle. Fixed by rendering the icon as the Button&apos;s own centered label
+              instead of `leftSection`, and pinning the box to a true square at
+              `theme.other.touchTarget` (44px, the same token every square icon-only control in this
+              design system already uses). Force this narrow viewport to see the collapsed state.
+            </Text>
+            <MantineCountButton
+              variant="default"
+              leftSection={<SlidersIcon />}
+              iconOnlyAbove={640}
+              iconOnlyBelow={860}
+              aria-label={t('count_button_label')}
+              onClick={() => {}}
+            >
+              {t('count_button_label')}
+            </MantineCountButton>
+          </Stack>
+
           <FilterTriggerBoundaryStates t={t} />
         </Stack>
       </MantineStoryShell>

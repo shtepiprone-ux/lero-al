@@ -1,6 +1,6 @@
 # Sprint 76 — the legacy islands no route sprint owns move to Mantine
 
-**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Active tasks:** 2 (both kickoffs filed 2026-09-18)
+**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN — zero open tasks; closure is an owner decision** · **Landed tasks:** 2 (841, 842) · **Active tasks:** 0
 
 > **Opened by owner instruction, 2026-09-18:** *"закривай спринт і заводь задачі на міграцію"*, given when Sprint 75 closed. Sprint 75's closure audit
 > found eight components loaded through `next/dynamic`, invisible to every GR-1 tool. The owner ruled that the
@@ -32,12 +32,17 @@ rendered by their production consumers without a visible or behavioural regressi
 
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
-| **841** | Homepage hero search: `HeroSearch` (container loaded by `HeroSearchClient` through `next/dynamic`) gets its own Story + manifest entry; `PropertyTypeCombobox`'s Tailwind fallback `'sm:w-48 shrink-0'` and its icon's `h-4 w-4` go | P2 | **Q4** (critical-flow row 56) | 🟠 **NEEDS REVISION** 2026-09-18 (review 1: evidence-only Revision 1, kickoff §16; owner decisions OD-1..3 recorded there) → [`Sprint_76_kickoff_prompt_Task_841_…`](Sprint_76_kickoff_prompt_Task_841_Hero_Search_Container_And_Property_Type_Combobox.md). Duplicate check done: no other property-type selector; proofs **extend** `Mantine/Primitives/FilterControls` and `Mantine/Primitives/HeroSearch`, no new page. |
+| **841** | Homepage hero search: `HeroSearch` (container loaded by `HeroSearchClient` through `next/dynamic`) gets its own Story + manifest entry; `PropertyTypeCombobox`'s Tailwind fallback `'sm:w-48 shrink-0'` and its icon's `h-4 w-4` go | P2 | **Q4** (critical-flow row 56) | ✅ **APPROVED WITH NOTES** 2026-09-18, review 2 (Revision 1; owner decisions OD-1..3 in kickoff §16.2; scope includes the owner-added `MantineCountButton` collapsed/no-badge fix, R7) → [`Sprint_76_kickoff_prompt_Task_841_…`](Sprint_76_kickoff_prompt_Task_841_Hero_Search_Container_And_Property_Type_Combobox.md) · session `docs/sessions/2026-09-18-task841-hero-search-container-and-property-type-combobox.md`. Duplicate check done: no other property-type selector; proofs **extend** `Mantine/Primitives/FilterControls` and `Mantine/Primitives/HeroSearch`, no new page. |
 | **842** | `AvatarCropModal` leaves shadcn `Dialog`/`Button` for the canonical Mantine modal pattern — consumed by `AdminUserAvatar` in `AdminUserProfile` (admin) and `ProfileTab` (cabinet) | P2 | Q3 | ✅ **APPROVED WITH NOTES** 2026-09-18, review 1 — [`Sprint_76_kickoff_prompt_Task_842_…`](Sprint_76_kickoff_prompt_Task_842_Avatar_Crop_Modal_Mantine.md) · session `docs/sessions/2026-09-18-task842-avatar-crop-modal-mantine.md`. Census root `manifest:yes story:yes className:0 ui-imports:0`; owner accepted all six §13.3 tuples. |
 
 ## Execution order
 
-841 and 842 share no file and may run in either order. **841 must not run concurrently with Sprint 69's 840** — both extend `src/stories/mantine/primitives/FilterControls.stories.tsx`.
+Both tasks have landed (842, then 841, 2026-09-18). 841 landed first on the shared `src/stories/mantine/primitives/FilterControls.stories.tsx`, so Sprint 69's 840 now extends that file after it.
+
+**Before closure, exit criterion 2 needs an owner reading:** the reviewer's native census (2026-09-18) gives
+`PropertyTypeCombobox` `className:1`. That one attribute is the `className={cn('property-type-combobox', className)}`
+pass-through, which the 841 kickoff took from `LocationCombobox` (also `className:1`). It carries no Tailwind. `HeroSearch` and
+`AvatarCropModal` read `className:0`.
 
 ## Preconditions
 

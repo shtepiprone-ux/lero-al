@@ -1,0 +1,8 @@
+ scripts/mantine-migration-scope.json               |  4 +-
+ scripts/rendered-scope-baseline.json               |  3 -
+ scripts/surface-census-baseline.json               | 12 ---
+ src/components/shared/PropertyTypeCombobox.tsx     |  6 +-
+ .../mantine/primitives/FilterControls.stories.tsx  | 38 +++++++++
+ .../mantine/primitives/HeroSearch.stories.tsx      | 99 +++++++++++++++-------
+ 6 files changed, 112 insertions(+), 50 deletions(-)
+EXIT_CODE=0

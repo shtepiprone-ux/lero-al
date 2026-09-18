@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import type { ReactNode } from 'react'
 import { Box } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { HeroSearch } from '@/components/shared/HeroSearch'
 import { HeroSearchView } from '@/components/shared/HeroSearchView'
 import { HeroSearchFallback } from '@/components/shared/HeroSearchFallback'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
@@ -28,6 +30,18 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * trigger, search); the FiltersPanel drawer itself is already proven by the Task 567
  * `FiltersPanelShell` story, so it is not re-opened here (its title doesn't match a
  * `MANTINE_OVERLAY_PRIMITIVES` open-trigger name, so the harness would not auto-click it anyway).
+ *
+ * Task 841 — adds `Container`, a third state rendering the real `HeroSearch` container
+ * (`@/components/shared/HeroSearch`) DIRECTLY and unmocked, per GR-3/16c: a composition Story that
+ * only renders `HeroSearchView` is not proof for the container itself. `HeroSearch` owns
+ * `useLocations()`/`useRouter()` (Task 568 container/presentational split, `docs/component-rules.md`
+ * → "Container / Presentational Primitive Split") — Storybook's `nextjs: { appDirectory: true }`
+ * global parameter (`.storybook/preview.tsx:227-229`) resolves `useRouter`, and `useLocations`
+ * resolves to its real (possibly-empty, `.catch`-guarded) result exactly like the precedented
+ * `FavoritesShell`/`AuthSheet` container stories — consistent with the Task 568 owner decision that
+ * rejected hook-mocking. No mock or alias of either hook is added here or anywhere in this file.
+ * The hero `Box` frame duplicated across `Default`/`Fallback` is factored into `HeroFrame` and
+ * reused by all three exports so the three states stay visually identical by construction.
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/HeroSearch',
@@ -35,6 +49,23 @@ const meta: Meta = {
 }
 export default meta
 type Story = StoryObj<typeof meta>
+
+// Task 670: production hero background is `bg="var(--hero-bg)"` (solid coral,
+// `src/app/[locale]/page.tsx:27`, since Task 659; retokenized off `--primary` onto its own
+// `--hero-bg` token 2026-08-18) — the gradient this section used to render here was stale
+// (pre-659). Task 712: renders the SAME Mantine `Box` composition production renders
+// (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>` wrapper, no raw Tailwind
+// utility (cl. 16c parity). Task 841: factored out of `Default`/`Fallback` so `Container` reuses
+// the identical frame byte-for-byte rather than a third copy.
+function HeroFrame({ children }: { children: ReactNode }) {
+  return (
+    <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+      <Box className="container-wide">
+        {children}
+      </Box>
+    </Box>
+  )
+}
 
 export const Default: Story = {
   render: (_args, context) => {
@@ -48,33 +79,25 @@ export const Default: Story = {
 
     return (
       <MantineStoryShell>
-        {/* Task 670: production hero background is `bg="var(--hero-bg)"` (solid coral,
-            `src/app/[locale]/page.tsx:27`, since Task 659; retokenized off `--primary` onto its
-            own `--hero-bg` token 2026-08-18) — the gradient this section used to render here was
-            stale (pre-659). Task 712: renders the SAME Mantine `Box` composition production
-            renders (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>` wrapper, no
-            raw Tailwind utility (cl. 16c parity). */}
-        <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
-          <Box className="container-wide">
-            <HeroSearchView
-              locations={locations}
-              listingType="sale"
-              onListingTypeChange={() => {}}
-              propertyType=""
-              onPropertyTypeChange={() => {}}
-              locationId={null}
-              onLocationChange={() => {}}
-              filters={{}}
-              onFiltersChange={() => {}}
-              activeFiltersCount={2}
-              filtersOpen={false}
-              onOpenFilters={() => {}}
-              onCloseFilters={() => {}}
-              onSearch={() => {}}
-              onLocationKeyDown={() => {}}
-            />
-          </Box>
-        </Box>
+        <HeroFrame>
+          <HeroSearchView
+            locations={locations}
+            listingType="sale"
+            onListingTypeChange={() => {}}
+            propertyType=""
+            onPropertyTypeChange={() => {}}
+            locationId={null}
+            onLocationChange={() => {}}
+            filters={{}}
+            onFiltersChange={() => {}}
+            activeFiltersCount={2}
+            filtersOpen={false}
+            onOpenFilters={() => {}}
+            onCloseFilters={() => {}}
+            onSearch={() => {}}
+            onLocationKeyDown={() => {}}
+          />
+        </HeroFrame>
       </MantineStoryShell>
     )
   },
@@ -91,11 +114,23 @@ export const Default: Story = {
 export const Fallback: Story = {
   render: () => (
     <MantineStoryShell>
-      <Box component="section" bg="var(--hero-bg)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
-        <Box className="container-wide">
-          <HeroSearchFallback />
-        </Box>
-      </Box>
+      <HeroFrame>
+        <HeroSearchFallback />
+      </HeroFrame>
+    </MantineStoryShell>
+  ),
+}
+
+/**
+ * Task 841 — the real `HeroSearch` container, unmocked. See the module JSDoc above for the
+ * GR-3/16c rationale and the Task 568 precedent this follows.
+ */
+export const Container: Story = {
+  render: () => (
+    <MantineStoryShell>
+      <HeroFrame>
+        <HeroSearch />
+      </HeroFrame>
     </MantineStoryShell>
   ),
 }

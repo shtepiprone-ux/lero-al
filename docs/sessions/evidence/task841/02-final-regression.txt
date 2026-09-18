@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/components/shared/__tests__/heroSearch.smoke.test.tsx src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  12:21:53
+   Duration  7.21s (transform 1.08s, setup 347ms, import 6.13s, tests 6.25s, environment 2.83s)
+
+EXIT_CODE=0

@@ -1,6 +1,6 @@
 # Sprint 76 — the legacy islands no route sprint owns move to Mantine
 
-**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN — zero open tasks; closure is an owner decision** · **Landed tasks:** 2 (841, 842) · **Active tasks:** 0
+**Opened:** 2026-09-18 · **Status:** ✅ **CLOSED 2026-09-18** by owner decision (criterion 2 read as met, "варіант А"). The closure audit is below and the sprint is archived in `docs/backlog-archive.md` · **Landed tasks:** 2 (841, 842) · **Active tasks:** 0
 
 > **Opened by owner instruction, 2026-09-18:** *"закривай спринт і заводь задачі на міграцію"*, given when Sprint 75 closed. Sprint 75's closure audit
 > found eight components loaded through `next/dynamic`, invisible to every GR-1 tool. The owner ruled that the
@@ -39,10 +39,23 @@ rendered by their production consumers without a visible or behavioural regressi
 
 Both tasks have landed (842, then 841, 2026-09-18). 841 landed first on the shared `src/stories/mantine/primitives/FilterControls.stories.tsx`, so Sprint 69's 840 now extends that file after it.
 
-**Before closure, exit criterion 2 needs an owner reading:** the reviewer's native census (2026-09-18) gives
-`PropertyTypeCombobox` `className:1`. That one attribute is the `className={cn('property-type-combobox', className)}`
-pass-through, which the 841 kickoff took from `LocationCombobox` (also `className:1`). It carries no Tailwind. `HeroSearch` and
-`AvatarCropModal` read `className:0`.
+## Closure audit — 2026-09-18 (Opus, on owner request) — ✅ CLOSED by the owner
+
+Measured natively (`win32 v22.22.3`, `node.exe scripts\check-surface-census.mjs --surface <component>`, root rows):
+
+| Component | Root row | Criterion 2 |
+|---|---|---|
+| `src/components/shared/HeroSearch.tsx` | `manifest:yes story:yes className:0 ui-imports:0` | met |
+| `src/components/shared/AvatarCropModal.tsx` | `manifest:yes story:yes className:0 ui-imports:0` | met |
+| `src/components/shared/PropertyTypeCombobox.tsx` | `manifest:yes story:yes className:1 ui-imports:0` | met by owner decision (below) |
+
+- **Criterion 1: met.** 842 and 841 are both `APPROVED WITH NOTES` (2026-09-18, archive rows).
+- **Criterion 2: met by owner decision.** `PropertyTypeCombobox`'s single `className` is the consumer pass-through
+  `<div className={cn('property-type-combobox', className)}>` (`PropertyTypeCombobox.tsx:38`). It uses the
+  `LocationCombobox` idiom and holds no Tailwind utility, which is what the sprint goal asks for. Owner decision,
+  2026-09-18, choosing between (A) accept as met and (B) file a task to remove the attribute: **"варіант А"**.
+- **Not a Sprint 76 criterion:** the `HeroSearch` surface census still exits 1. It blocks only on the four shared filter
+  leaves (`FilterChoiceGroup`, `FilterRangeInputs`, `FilterRoomsRow`, `YearCombobox`), which are owned by **840** (Sprint 69, open).
 
 ## Preconditions
 

@@ -1,0 +1,6 @@
+src/design-system/mantine/patterns/MantineDashboardCard.tsx:46: * px/rem/hex, no `className`, no `@/components/ui/*` import.
+src/design-system/mantine/patterns/MantineDashboardStatCard.tsx:48: * `mih={theme.other.boxSize.dashboardStatCardMinHeight}` (132px, spec §17.2/§17.3) — a minimum,
+src/design-system/mantine/patterns/MantineDashboardStatRows.tsx:48: * (44px), a label, a count, an optional tone `Badge` (colour is never the only carrier — the
+src/design-system/mantine/patterns/MantineDashboardWorkList.tsx:136:                title into roughly half the row width at 320px. Stacked instead, one item per
+
+EXIT_CODE=0

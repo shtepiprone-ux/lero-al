@@ -1,0 +1,22 @@
+
+> lero-al@0.1.0 check:enrolled-tailwind
+> node scripts/check-enrolled-tailwind.mjs
+
+check:enrolled-tailwind — compiler-backed Tailwind-utility detector for enrolled files (Task 829)
+    Scope: scripts\mantine-migration-scope.json — 79 entries
+    Oracle: tailwindcss 4.3.0 (@tailwindcss/node __unstable__loadDesignSystem(globals.css).candidatesToCss)
+    Oracle liveness sample: candidatesToCss(['hidden']) -> .hidden { display: none; }
+    Baseline: scripts\enrolled-tailwind-baseline.json (present) — 27 entries
+    Cannot see:
+      - class strings built in another module and imported (only a same-file module-level const resolves)
+      - runtime-computed strings (function return values)
+      - Tailwind applied through CSS (@apply in a .module.css file)
+      - non-enrolled files (owned by check:surface-census:changed)
+      - any attribute name other than className/classNames (e.g. a plain `class`)
+
+    Enrolled files with a Tailwind-compiling finding: 2 (of 79 manifest entries)
+      src/modules/listings/components/ListingDetailView.tsx: hidden(1)
+      src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx: flex(1) items-center(1) justify-center(1) bg-muted(1) h-[var(--listing-gallery-h-mobile)](2) sm:h-[var(--listing-gallery-h-tablet)](2) md:h-[var(--listing-gallery-h-desktop)](2) h-10(1) w-10(1) text-muted-foreground(1) relative(1) overflow-hidden(2) rounded-lg(1) absolute(2) inset-0(1) block(2) h-full(5) w-full(4) shrink-0(1) pointer-events-none(1) bottom-2(1) left-2(1) rounded-full(1) px-2(1) py-0.5(1) text-xs(1)
+
+PASS  check:enrolled-tailwind — every enrolled file's Tailwind-utility findings match the versioned baseline exactly.
+EXIT_CODE=0

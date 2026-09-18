@@ -1687,6 +1687,13 @@
       "email_transient": "Mesazhi juaj u ruajt, por ndodhi një gabim i përkohshëm me sistemin tonë të emailit. Do t'ju kontaktojmë sa më shpejt."
     }
   },
+  "dashboard": {
+    "common": {
+      "retry": "Provo përsëri",
+      "loading_label": "Duke u ngarkuar",
+      "updated_at_prefix": "Përditësuar në"
+    }
+  },
   "storybook": {
     "listing": {
       "modern_apartment": "Apartament Modern në Qendër të Tiranës",
@@ -2441,7 +2448,26 @@
       "listings_pagination_section_middle": "Faqja e mesme — të dyja anët aktive",
       "listings_pagination_section_last": "Faqja e fundit — Para e çaktivizuar",
       "listings_pagination_section_ellipsis": "Interval i madh — tre pika",
-      "listings_pagination_section_narrow": "Kontejner i ngushtë — shkallë tkurrjeje"
+      "listings_pagination_section_narrow": "Kontejner i ngushtë — shkallë tkurrjeje",
+      "dashboard_stat_label": "Në moderim",
+      "dashboard_stat_caption": "radha aktuale",
+      "dashboard_stat_zero_text": "Radha është bosh",
+      "dashboard_stat_error": "Ky tregues nuk u ngarkua",
+      "dashboard_rows_label_pending": "Në pritje",
+      "dashboard_rows_label_in_review": "Në shqyrtim",
+      "dashboard_rows_label_rejected": "Refuzuar",
+      "dashboard_rows_all_zero_text": "Asgjë nuk kërkon vëmendjen tuaj",
+      "dashboard_rows_error": "Këto rreshta nuk u ngarkuan",
+      "dashboard_card_title": "Aktiviteti i fundit",
+      "dashboard_card_scope_now": "Tani",
+      "dashboard_card_error": "Ky seksion nuk u ngarkua",
+      "dashboard_card_body": "Gjithçka funksionon normalisht.",
+      "dashboard_worklist_cta": "Shqyrto",
+      "dashboard_worklist_footer": "Gjithë radha",
+      "relative_time_section_plain": "tekst relativ i thjeshtë — minuta / orë / ditë / muaj më parë",
+      "relative_time_section_absolute": "me absoluteLabel — hover ose fokusi me tastierë shfaq datën-orën absolute",
+      "relative_time_section_inherit": "inherit — merr madhësinë dhe ngjyrën e Text-it përreth, pa madhësi/ngjyrë të vetën",
+      "relative_time_section_nested_link": "brenda një lidhjeje (showTooltip=false) — aria-label mban ende kohën absolute, por nuk shtohet një ndalesë tab e veçantë"
     }
   },
   "ui": {

@@ -1687,6 +1687,13 @@
       "email_transient": "Il tuo messaggio è stato ricevuto, ma si è verificato un problema temporaneo con il nostro sistema email. Ti ricontatteremo al più presto."
     }
   },
+  "dashboard": {
+    "common": {
+      "retry": "Riprova",
+      "loading_label": "Caricamento",
+      "updated_at_prefix": "Aggiornato alle"
+    }
+  },
   "storybook": {
     "listing": {
       "modern_apartment": "Appartamento Moderno nel Centro di Tirana",
@@ -2441,7 +2448,26 @@
       "listings_pagination_section_middle": "Pagina centrale — entrambi i lati attivi",
       "listings_pagination_section_last": "Ultima pagina — Successivo disabilitato",
       "listings_pagination_section_ellipsis": "Intervallo ampio — puntini di sospensione",
-      "listings_pagination_section_narrow": "Contenitore stretto — scala di riduzione"
+      "listings_pagination_section_narrow": "Contenitore stretto — scala di riduzione",
+      "dashboard_stat_label": "In moderazione",
+      "dashboard_stat_caption": "coda attuale",
+      "dashboard_stat_zero_text": "La coda è vuota",
+      "dashboard_stat_error": "Impossibile caricare questa metrica",
+      "dashboard_rows_label_pending": "In attesa",
+      "dashboard_rows_label_in_review": "In revisione",
+      "dashboard_rows_label_rejected": "Rifiutato",
+      "dashboard_rows_all_zero_text": "Niente richiede la tua attenzione",
+      "dashboard_rows_error": "Impossibile caricare queste righe",
+      "dashboard_card_title": "Attività recente",
+      "dashboard_card_scope_now": "Ora",
+      "dashboard_card_error": "Impossibile caricare questa sezione",
+      "dashboard_card_body": "Tutto funziona normalmente.",
+      "dashboard_worklist_cta": "Rivedi",
+      "dashboard_worklist_footer": "Tutta la coda",
+      "relative_time_section_plain": "testo relativo semplice — minuti / ore / giorni / mesi fa",
+      "relative_time_section_absolute": "con absoluteLabel — hover o focus da tastiera mostra la data-ora assoluta",
+      "relative_time_section_inherit": "inherit — eredita la dimensione e il colore del Text circostante, senza propria dimensione/colore",
+      "relative_time_section_nested_link": "annidato in un link (showTooltip=false) — l'aria-label mantiene ancora l'ora assoluta, ma senza un tab stop separato"
     }
   },
   "ui": {

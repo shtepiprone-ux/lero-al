@@ -74,5 +74,10 @@
   "src/modules/listings/components/LightboxView.tsx",
   "src/components/shared/AvatarCropModal.tsx",
   "src/components/shared/HeroSearch.tsx",
-  "src/components/shared/PropertyTypeCombobox.tsx"
+  "src/components/shared/PropertyTypeCombobox.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardCard.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardStatCard.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardStatRows.tsx",
+  "src/components/shared/RelativeTime.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardWorkList.tsx"
 ]

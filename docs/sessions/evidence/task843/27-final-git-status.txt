@@ -1,0 +1,35 @@
+ M .claude/skills/execute-task/SKILL.md
+ M docs/agent-contract.md
+ M docs/golden-rules.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+?? docs/sessions/evidence/task843/
+?? src/design-system/mantine/patterns/MantineDashboardCard.tsx
+?? src/design-system/mantine/patterns/MantineDashboardStatCard.tsx
+?? src/design-system/mantine/patterns/MantineDashboardStatRows.tsx
+?? src/stories/patterns/mantine/DashboardCard.stories.tsx
+?? src/stories/patterns/mantine/DashboardStatCard.stories.tsx
+?? src/stories/patterns/mantine/DashboardStatRows.stories.tsx
+ .claude/skills/execute-task/SKILL.md        | 16 +++++++++++
+ docs/agent-contract.md                      | 11 ++++++++
+ docs/golden-rules.md                        | 42 ++++++++++++++++++++++++++++-
+ messages/en.json                            | 22 ++++++++++++++-
+ messages/it.json                            | 22 ++++++++++++++-
+ messages/sq.json                            | 22 ++++++++++++++-
+ messages/uk.json                            | 22 ++++++++++++++-
+ scripts/mantine-migration-scope.json        |  5 +++-
+ src/design-system/mantine/patterns/index.ts |  9 +++++++
+ src/design-system/mantine/theme.ts          |  5 ++++
+ 10 files changed, 170 insertions(+), 6 deletions(-)
+---HASHES---
+0e4bd13dd7d4c510c66eff78d2a9fb0f74d21bd4
+a2a0fbd4045405ebdf73d5ef6999c35c08dae9b2
+e106434a4048d022917d95de29f6ab313b5342af
+342b6fafddff83d3cbc0baf831a3da4dcf790a42
+c297608ac1d7c882fff09d7a0ec1e6035d36aa64
+317e3959650ab87c470c72cb8588b47b66324c47

@@ -1,0 +1,13 @@
+PASS [Cabinet/ListingsTab (legacy production consumer)] "5 днів тому" display=block margin=0px padding=0px
+PASS [Cabinet/ListingsTab (legacy production consumer)] "10 днів тому" display=block margin=0px padding=0px
+PASS [Cabinet/ListingsTab (legacy production consumer)] "20 днів тому" display=block margin=0px padding=0px
+PASS [Cabinet/ListingsTab (legacy production consumer)] "близько 1 місяця тому" display=block margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "10 днів тому" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+PASS [Mantine/Primitives/RelativeTime] "приблизно за 2 місяці" display=inline margin=0px padding=0px
+EXIT_CODE=0

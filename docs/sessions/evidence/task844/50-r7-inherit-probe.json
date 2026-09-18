@@ -1,0 +1,314 @@
+[
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "text": "5 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "text": "10 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "text": "20 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "text": "близько 1 місяця тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "10 днів тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "18px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(102, 112, 133)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "18px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(102, 112, 133)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "600",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(29, 41, 57)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "600",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(29, 41, 57)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "text": "приблизно за 2 місяці",
+    "element": {
+      "fontSize": "16px",
+      "lineHeight": "24px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(236, 84, 71)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "16px",
+      "lineHeight": "24px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(236, 84, 71)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pass": true
+  }
+]

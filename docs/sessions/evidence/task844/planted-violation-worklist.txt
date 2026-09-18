@@ -1,0 +1,46 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx (4 tests | 1 failed) 270ms
+     × a row <a> has no descendant [tabindex]/a/button when meta RelativeTime uses focusable={false} 174ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx > MantineDashboardWorkList — no nested competing clickable (G2) > a row <a> has no descendant [tabindex]/a/button when meta RelativeTime uses focusable={false}
+AssertionError: expected <time …(5)></time> to be null
+
+- Expected:
+null
+
++ Received:
+<time
+  aria-label="about 8 hours ago (18.09.2026 08:00)"
+  class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+  data-inherit="true"
+  datetime="2026-09-18T08:00:00.000Z"
+  tabindex="0"
+>
+  about 8 hours ago
+</time>
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx:72:24
+     70|     for (const link of links) {
+     71|       const offender = link.querySelector('[tabindex]:not([tabindex="-…
+     72|       expect(offender).toBeNull()
+       |                        ^
+     73|     }
+     74|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  18:06:57
+   Duration  3.59s (transform 120ms, setup 83ms, import 2.39s, tests 270ms, environment 706ms)
+
+EXIT_CODE=1

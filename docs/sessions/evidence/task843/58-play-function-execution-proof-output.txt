@@ -1,0 +1,5 @@
+PASS DashboardStatCard (AC2 — single link target) (id=patterns-mantine-dashboardstatcard--default)
+PASS DashboardStatRows (AC3/AC6 — all-zero gate + touch target) (id=patterns-mantine-dashboardstatrows--default)
+PASS DashboardWorkList (AC1/AC2 — row links + touch target) (id=patterns-mantine-dashboardworklist--default)
+PASS RelativeTime (AC5 — keyboard focus + nested-link no-tabindex) (id=mantine-primitives-relativetime--default)
+EXIT_CODE=0

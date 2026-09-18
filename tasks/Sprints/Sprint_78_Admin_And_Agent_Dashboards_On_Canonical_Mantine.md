@@ -1,6 +1,6 @@
 # Sprint 78 — the admin and agent dashboards, rebuilt on canonical Mantine from the dashboard spec v3.3
 
-**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 14 (843–856) · **Reserved:** 4 (857 · 858 · 859 · 860)
+**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (843 · 844) · **Kickoffs filed:** 14 (843–856) · **Reserved:** 4 (857 · 858 · 859 · 860)
 
 > **Opened by owner instruction, 2026-09-18:** *"необхідно створити новий спринт для оновлення Admin Dashboard та
 > Agent Statistic Dashboard. У теці tech-materials/ є файли з технічним завданням. Необхідно створити план задач і
@@ -93,8 +93,8 @@ has to open the `.docx`. Spec block IDs (`ADM-01`…`ADM-11`, `AGT-01`…`AGT-12
 
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **843** | Canonical dashboard card patterns: `MantineDashboardCard`, `MantineDashboardStatCard`, `MantineDashboardStatRows` + their `theme.other` roles | P1 | Q3 | — | ⏸ `PARTIALLY VERIFIED` 2026-09-18 (review 3) — code + joint gate evidence verified; owner re-review H2 owed; closes with 844 → [`Sprint_78_kickoff_prompt_Task_843_…`](Sprint_78_kickoff_prompt_Task_843_Dashboard_Card_Patterns.md) · [session log](../../docs/sessions/2026-09-18-task843-dashboard-card-patterns.md) |
-| **844** | `MantineDashboardWorkList`, the shared listing-status tone source, and `RelativeTime` on Mantine with an absolute-time tooltip | P1 | Q3 | 843 | 🔁 `NEEDS REVISION` 2026-09-18 (review 2) — execute kickoff §17 (K1 frozen-clock fixtures, K2 tooltip, K3 log) → [`…_Task_844_…`](Sprint_78_kickoff_prompt_Task_844_Dashboard_Work_List_Status_Tone_Relative_Time.md) · [session log](../../docs/sessions/2026-09-18-task844-worklist-status-tone-relativetime.md) |
+| **843** | Canonical dashboard card patterns: `MantineDashboardCard`, `MantineDashboardStatCard`, `MantineDashboardStatRows` + their `theme.other` roles | P1 | Q3 | — | ✅ `APPROVED WITH NOTES` 2026-09-18 (review 4, joint with 844; owner visual accepted) — archived → [`Sprint_78_kickoff_prompt_Task_843_…`](Sprint_78_kickoff_prompt_Task_843_Dashboard_Card_Patterns.md) · [session log](../../docs/sessions/2026-09-18-task843-dashboard-card-patterns.md) |
+| **844** | `MantineDashboardWorkList`, the shared listing-status tone source, and `RelativeTime` on Mantine with an absolute-time tooltip | P1 | Q3 | 843 | ✅ `APPROVED WITH NOTES` 2026-09-18 (review 3, joint with 843; owner visual accepted incl. `/admin/listings`) — archived → [`…_Task_844_…`](Sprint_78_kickoff_prompt_Task_844_Dashboard_Work_List_Status_Tone_Relative_Time.md) · [session log](../../docs/sessions/2026-09-18-task844-worklist-status-tone-relativetime.md) |
 | **845** | `@mantine/charts` + `MantineDashboardLineChart` and `MantineDashboardDonut` with text alternatives | P1 | Q3 | 843, 844 | 📝 KICKOFF FILED → [`…_Task_845_…`](Sprint_78_kickoff_prompt_Task_845_Dashboard_Chart_Patterns.md) |
 | **846** | `MantineDashboardHeader`, `MantineDashboardPeriodControl`, `MantineDashboardGrid` + `src/lib/dashboard/period.ts` (Tirane completed periods) | P1 | Q3 | 843 | 📝 KICKOFF FILED → [`…_Task_846_…`](Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md) |
 | **847** | Admin dashboard server data layer (ADM-01/02/06/08/09/11, recent listings, location requests) with per-block error results | P1 | Q1 | 846 (`period.ts`) | 📝 KICKOFF FILED → [`…_Task_847_…`](Sprint_78_kickoff_prompt_Task_847_Admin_Dashboard_Data_Layer.md) |

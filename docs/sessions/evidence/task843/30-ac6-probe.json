@@ -1,0 +1,64 @@
+{
+  "viewport": {
+    "width": 320,
+    "height": 800
+  },
+  "results": [
+    {
+      "target": "DashboardStatCard",
+      "url": "http://localhost:6006/iframe.html?id=patterns-mantine-dashboardstatcard--default&globals=locale:uk",
+      "resolvedTouchTargetPx": 44,
+      "scrollWidth": 320,
+      "links": [
+        {
+          "height": 198.109375,
+          "width": 288,
+          "text": "На модерації12поточна черга",
+          "cls": "m_e615b15f mantine-Card-root m_1b7284a3 mantine-Paper-root __m__-_r_3_"
+        },
+        {
+          "height": 202.109375,
+          "width": 288,
+          "text": "На модерації0Черга порожня",
+          "cls": "m_e615b15f mantine-Card-root m_1b7284a3 mantine-Paper-root __m__-_r_b_"
+        }
+      ],
+      "buttons": [
+        {
+          "closestAIsNull": true
+        }
+      ]
+    },
+    {
+      "target": "DashboardStatRows",
+      "url": "http://localhost:6006/iframe.html?id=patterns-mantine-dashboardstatrows--default&globals=locale:uk",
+      "resolvedTouchTargetPx": 44,
+      "scrollWidth": 320,
+      "links": [
+        {
+          "height": 44,
+          "width": 288,
+          "text": "Очікує3",
+          "cls": "mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+        },
+        {
+          "height": 44,
+          "width": 288,
+          "text": "На розгляді0",
+          "cls": "mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+        },
+        {
+          "height": 44,
+          "width": 288,
+          "text": "Відхилено1",
+          "cls": "mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root"
+        }
+      ],
+      "buttons": [
+        {
+          "closestAIsNull": true
+        }
+      ]
+    }
+  ]
+}

@@ -1687,6 +1687,13 @@
       "email_transient": "Your message was received, but there was a temporary issue with our email system. We'll follow up as soon as possible."
     }
   },
+  "dashboard": {
+    "common": {
+      "retry": "Retry",
+      "loading_label": "Loading",
+      "updated_at_prefix": "Updated at"
+    }
+  },
   "storybook": {
     "listing": {
       "modern_apartment": "Modern Apartment in Tirana Center",
@@ -2441,7 +2448,26 @@
       "listings_pagination_section_middle": "Middle page — both edges enabled",
       "listings_pagination_section_last": "Last page — Next disabled",
       "listings_pagination_section_ellipsis": "Large range — ellipsis",
-      "listings_pagination_section_narrow": "Narrow container — shed ladder"
+      "listings_pagination_section_narrow": "Narrow container — shed ladder",
+      "dashboard_stat_label": "On moderation",
+      "dashboard_stat_caption": "current queue",
+      "dashboard_stat_zero_text": "Queue is empty",
+      "dashboard_stat_error": "Couldn't load this metric",
+      "dashboard_rows_label_pending": "Pending",
+      "dashboard_rows_label_in_review": "In review",
+      "dashboard_rows_label_rejected": "Rejected",
+      "dashboard_rows_all_zero_text": "Nothing needs your attention",
+      "dashboard_rows_error": "Couldn't load these rows",
+      "dashboard_card_title": "Recent activity",
+      "dashboard_card_scope_now": "Now",
+      "dashboard_card_error": "Couldn't load this section",
+      "dashboard_card_body": "Everything is running normally.",
+      "dashboard_worklist_cta": "Review",
+      "dashboard_worklist_footer": "Whole queue",
+      "relative_time_section_plain": "plain relative text — minutes / hours / days / months ago",
+      "relative_time_section_absolute": "with absoluteLabel — hover or keyboard-focus shows the absolute date-time",
+      "relative_time_section_inherit": "inherit — takes the surrounding Text's size and colour, no size/colour of its own",
+      "relative_time_section_nested_link": "nested inside a link (showTooltip=false) — the aria-label still carries the absolute time, but no separate tab stop is added"
     }
   },
   "ui": {

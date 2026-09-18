@@ -1,0 +1,12 @@
+DEVIATION — owner instruction, 2026-09-18 (mid-task): "можеш не запускати locale leak, бо як показала практика,
+цей тест всеодно не бачить, наскільки якісно зроблені елементи. Мені кожного разу необхідно власноруч все
+переглядати." (You don't need to run locale-leak; in practice it never catches whether the elements are actually
+well-made — I always have to review everything myself.)
+
+The npm.cmd run check:locale-leak:mantine-only process (task bx16xj1oy) was started after build-storybook and ran
+for >20 minutes without completing (it renders all 103 canonical Mantine stories x 4 locales in Playwright) before
+the owner interrupted and asked that it be stopped for this task and replaced by direct owner visual review of the
+§13.3 matrix. Process stopped via TaskStop before producing a report.
+
+STATUS: not run to completion. Not claimed as a passing or failing gate. Superseded by the owner's direct visual
+review of the story matrix below (docs/sessions/evidence/task843/18-owner-review-matrix.md).

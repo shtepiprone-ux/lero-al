@@ -1,0 +1,14 @@
+PASS [Cabinet/ListingsTab (legacy production consumer)] "5 днів тому" display=block pastTenseOk=true
+PASS [Cabinet/ListingsTab (legacy production consumer)] "10 днів тому" display=block pastTenseOk=true
+PASS [Cabinet/ListingsTab (legacy production consumer)] "20 днів тому" display=block pastTenseOk=true
+PASS [Cabinet/ListingsTab (legacy production consumer)] "близько 1 місяця тому" display=block pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "5 хвилин тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "близько 3 годин тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "2 днi тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "2 місяці тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "близько 3 годин тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "2 днi тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "2 днi тому" display=inline pastTenseOk=true
+PASS [Mantine/Primitives/RelativeTime] "близько 3 годин тому" display=inline pastTenseOk=true
+
+EXIT_CODE=0

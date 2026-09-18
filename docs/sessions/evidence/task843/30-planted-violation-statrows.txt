@@ -1,0 +1,70 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx (4 tests | 1 failed) 255ms
+     × (a) mixed counts + allZeroState passed → rows render, not the empty state 170ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx > MantineDashboardStatRows — allZeroState gate (Revision 1, F1) > (a) mixed counts + allZeroState passed → rows render, not the empty state
+TestingLibraryElementError: Unable to find an accessible element with the role "link"
+
+Here are the accessible roles:
+
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mdata-testid[39m=[32m"empty-icon"[39m
+      [36m>[39m
+        [0micon[0m
+      [36m</span>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+        [33mdata-size[39m=[32m"sm"[39m
+        [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"[39m
+      [36m>[39m
+        [0mNothing needs your attention[0m
+      [36m</p>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:109:15
+ ❯ src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx:58:19
+     56|     ]
+     57|     render(withProvider(<MantineDashboardStatRows rows={rows} allZeroS…
+     58|     expect(screen.getAllByRole('link')).toHaveLength(3)
+       |                   ^
+     59|     expect(screen.queryByText(ALL_ZERO_STATE.text)).not.toBeInTheDocum…
+     60|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  17:07:06
+   Duration  2.77s (transform 116ms, setup 101ms, import 1.24s, tests 255ms, environment 888ms)
+
+EXIT_CODE=1

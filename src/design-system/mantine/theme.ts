@@ -97,6 +97,10 @@ declare module '@mantine/core' {
                               // but a DIFFERENT rendered role (rule 3: same value, different
                               // owner) — a phone-field trigger width, not a card thumbnail.
       | 'truncateLabel'   // 120px — UserMenu truncated user-name max-width
+      | 'dashboardStatCardMinHeight' // 132px — Task 843: dashboard top card min height (spec v3.3
+                                      // §17.2 ADM-01 / §17.3 AGT-01, "Висота 132 px"). Applied as
+                                      // `mih`, never a fixed height, so a translated label may
+                                      // still grow the card.
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
       | 'galleryNavDemoHeight' // 270px — Task 824 R17 revision (D824-4, AC17 audit): the
                                // `GalleryNavActionIcon`/`GalleryDesktopNavigation` canonical Stories'
@@ -530,6 +534,7 @@ export const theme = createTheme({
                                     // Task 556 STOP-AND-ASK #1). Same value as `thumbnail`, distinct
                                     // rendered role (rule 3).
       truncateLabel: '7.5rem',   // 120px
+      dashboardStatCardMinHeight: '8.25rem', // 132px — Task 843: dashboard top card min height (spec v3.3 §17.2 ADM-01 / §17.3 AGT-01)
       dropdownPanel: '13.75rem', // 220px
       galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
       compactTrigger: '17.5rem', // 280px

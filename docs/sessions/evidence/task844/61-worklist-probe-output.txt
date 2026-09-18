@@ -1,0 +1,46 @@
+{
+  "workList": {
+    "scrollWidth": 320,
+    "touchTargetPx": 44,
+    "linkCount": 8,
+    "linkHeights": [
+      154.015625,
+      154.015625,
+      174.03125,
+      154.015625,
+      154.015625,
+      44,
+      154.015625,
+      154.015625
+    ],
+    "allLinksMeetTouchTarget": true,
+    "row1ExcerptTruncated": "<a href=\"/admin/listings?status=pending&amp;row=1\" class=\"mantine-focus-auto m_87cf2631 mantine-UnstyledButton-root\" style=\"padding-block: var(--mantine-spacing-sm); min-height: 2.75rem; display: block;\"><div class=\"m_6d731127 mantine-Stack-root mantine-hidden-from-sm\" style=\"--stack-gap: 0.5rem; --stack-align: flex-start; --stack-justify: flex-start;\"><div class=\"m_347db0ec mantine-Badge-root\" data-variant=\"light\" data-size=\"sm\" style=\"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: var(--mantine-color-yellow-light); --badge-color: var(--mantine-color-yellow-light-color); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;\"><span class=\"m_5add502a mantine-Badge-label\">На розгляді</span></div><p class=\"mantine-focus-auto m_b6d8b162 mantine-Text-root\" data-size=\"sm\" data-line-clamp=\"true\" style=\"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); --text-line-clamp: 2; color: var(--mantine-color-gray-8); font-weight: 600; width: 100%;\">Сучасна Квартира в Центрі Тирани</p><p class=\"mantine-focus-auto m_b6d8b162 mantine-Text-root\" data-size=\"xs\" style=\"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-gray-5); width: 100%;\">Еліра Ходжа</p><p class=\"mantine-focus-auto m_b6d8b162 mantine-Text-root\" data-size=\"xs\" style=\"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-gray-5); width: 100%;\"><span class=\"\" style=\"display: inline-block;\"><time class=\"mantine-focus-auto m_b6d8b162 mantine-Text-root\" data-inherit=\"true\" datetime=\"2026-07-29T20:00:00.000Z\" aria-label=\"близько 4 годин тому (29.07.2026 22:00)\">близько 4 годин тому</time></span></p",
+    "retryButtonCount": 1,
+    "retryClosestAIsNullForAll": true,
+    "footer": {
+      "linkRight": 304,
+      "containerRight": 304,
+      "rightAligned": true
+    },
+    "rowTimeTexts": [
+      "близько 4 годин тому",
+      "близько 4 годин тому",
+      "близько 4 годин тому",
+      "близько 4 годин тому",
+      "близько 4 годин тому",
+      "близько 4 годин тому",
+      "близько 4 годин тому"
+    ],
+    "rowTimesAllPastTense": true
+  },
+  "workListHoverTooltip": {
+    "hoverTooltipVisible": true
+  },
+  "relativeTime": {
+    "focused": true,
+    "ariaLabel": "близько 3 годин тому (29.07.2026 23:00)",
+    "tooltipVisible": true
+  }
+}
+
+EXIT_CODE=0

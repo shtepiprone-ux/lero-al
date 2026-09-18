@@ -1,6 +1,6 @@
 # Task 843 — canonical dashboard card patterns: `MantineDashboardCard`, `MantineDashboardStatCard`, `MantineDashboardStatRows`
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A, first task · **Status: ⏸ PARTIALLY VERIFIED 2026-09-18 (review 3) — code and §17 H1/H3 evidence verified; waiting on owner re-review H2 and the joint closure with 844 (§17.3)**
+Sprint 78 · P1 · QA profile **Q3** · Wave A, first task · **Status: ✅ APPROVED WITH NOTES 2026-09-18 (review 4, joint closure with 844) — archived**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) — read
 its "Owner decisions" table first; **D78-5** (TailAdmin type scale wins over the spec's §17.1 numbers) binds this task.

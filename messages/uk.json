@@ -1687,6 +1687,13 @@
       "email_transient": "Ваше повідомлення збережено, але виникла тимчасова проблема з нашою системою електронної пошти. Ми зв'яжемося з вами якнайшвидше."
     }
   },
+  "dashboard": {
+    "common": {
+      "retry": "Спробувати ще раз",
+      "loading_label": "Завантаження",
+      "updated_at_prefix": "Оновлено о"
+    }
+  },
   "storybook": {
     "listing": {
       "modern_apartment": "Сучасна Квартира в Центрі Тирани",
@@ -2441,7 +2448,26 @@
       "listings_pagination_section_middle": "Середня сторінка — обидва краї активні",
       "listings_pagination_section_last": "Остання сторінка — «Далі» вимкнено",
       "listings_pagination_section_ellipsis": "Великий діапазон — багатокрапка",
-      "listings_pagination_section_narrow": "Вузький контейнер — драбина стиснення"
+      "listings_pagination_section_narrow": "Вузький контейнер — драбина стиснення",
+      "dashboard_stat_label": "На модерації",
+      "dashboard_stat_caption": "поточна черга",
+      "dashboard_stat_zero_text": "Черга порожня",
+      "dashboard_stat_error": "Не вдалося завантажити цей показник",
+      "dashboard_rows_label_pending": "Очікує",
+      "dashboard_rows_label_in_review": "На розгляді",
+      "dashboard_rows_label_rejected": "Відхилено",
+      "dashboard_rows_all_zero_text": "Нічого не потребує вашої уваги",
+      "dashboard_rows_error": "Не вдалося завантажити ці рядки",
+      "dashboard_card_title": "Остання активність",
+      "dashboard_card_scope_now": "Зараз",
+      "dashboard_card_error": "Не вдалося завантажити цей розділ",
+      "dashboard_card_body": "Усе працює нормально.",
+      "dashboard_worklist_cta": "Розглянути",
+      "dashboard_worklist_footer": "Уся черга",
+      "relative_time_section_plain": "простий відносний текст — хвилини / години / дні / місяці тому",
+      "relative_time_section_absolute": "з absoluteLabel — наведення або фокус з клавіатури показує абсолютну дату-час",
+      "relative_time_section_inherit": "inherit — успадковує розмір і колір навколишнього Text, без власного розміру/кольору",
+      "relative_time_section_nested_link": "усередині посилання (showTooltip=false) — aria-label все ще містить абсолютний час, але без окремої точки табуляції"
     }
   },
   "ui": {

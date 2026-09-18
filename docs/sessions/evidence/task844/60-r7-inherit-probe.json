@@ -1,0 +1,350 @@
+[
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "index": 0,
+    "isPlainFixture": false,
+    "text": "5 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "index": 1,
+    "isPlainFixture": false,
+    "text": "10 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "index": 2,
+    "isPlainFixture": false,
+    "text": "20 днів тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Cabinet/ListingsTab (legacy production consumer)",
+    "storyId": "cabinet-listingstab--default",
+    "index": 3,
+    "isPlainFixture": false,
+    "text": "близько 1 місяця тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "block",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.556 0 0)",
+      "letterSpacing": "normal",
+      "display": "flex"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 0,
+    "isPlainFixture": true,
+    "text": "5 хвилин тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 1,
+    "isPlainFixture": true,
+    "text": "близько 3 годин тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 2,
+    "isPlainFixture": true,
+    "text": "2 днi тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 3,
+    "isPlainFixture": true,
+    "text": "2 місяці тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 4,
+    "isPlainFixture": false,
+    "text": "близько 3 годин тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "oklch(0.145 0 0)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 5,
+    "isPlainFixture": false,
+    "text": "2 днi тому",
+    "element": {
+      "fontSize": "12px",
+      "lineHeight": "18px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(102, 112, 133)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "12px",
+      "lineHeight": "18px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(102, 112, 133)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 6,
+    "isPlainFixture": false,
+    "text": "2 днi тому",
+    "element": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "600",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(29, 41, 57)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "14px",
+      "lineHeight": "20.02px",
+      "fontWeight": "600",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(29, 41, 57)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  },
+  {
+    "target": "Mantine/Primitives/RelativeTime",
+    "storyId": "mantine-primitives-relativetime--default",
+    "index": 7,
+    "isPlainFixture": false,
+    "text": "близько 3 годин тому",
+    "element": {
+      "fontSize": "16px",
+      "lineHeight": "24px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(236, 84, 71)",
+      "letterSpacing": "normal",
+      "display": "inline",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "parent": {
+      "fontSize": "16px",
+      "lineHeight": "24px",
+      "fontWeight": "400",
+      "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+      "color": "rgb(236, 84, 71)",
+      "letterSpacing": "normal",
+      "display": "block"
+    },
+    "pastTenseOk": true,
+    "pass": true
+  }
+]

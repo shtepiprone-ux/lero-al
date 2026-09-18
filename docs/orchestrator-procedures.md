@@ -30,6 +30,38 @@ Before planning, assigning, reviewing, or approving work:
 
 Do not rely on filenames, task titles, prior summaries, or a worker's completion report as proof.
 
+### STOP — reserved-number preflight: read `docs/backlog-reserved.md` first (owner rule, 2026-09-18)
+
+**The first step of any action that uses or changes a reserved number is to open `docs/backlog-reserved.md` in the
+current session.** This covers writing its kickoff, assigning or moving it to a sprint, re-scoping, folding, retiring,
+closing or archiving it, and citing its scope in another task. A `docs/backlog.md` registry row is an **index, not the
+record**: it points to `backlog-reserved.md` for the full text, so the backlog row alone never counts as evidence of
+the number's scope or state.
+
+Read, in this order:
+
+1. the number's own row, if it has one;
+2. **"Registry bookkeeping"** — is the number live, retired or folded? A retired or folded number is never reused or
+   re-scheduled;
+3. every **other** row that names the number (search the file for it) — sequencing constraints, ownership
+   ("… stay **798**'s") and folds are recorded on the *other* task's row.
+
+Then change that file **in the same edit** as every other state record (GR-5):
+
+- update the row's state or sprint cell when the number moves;
+- when its kickoff is written, move the row's measurements into the kickoff and delete the row;
+- when the number is archived, delete the row.
+
+A number with no row there is still checked against steps 2–3.
+
+**Receipt — task design, backlog/sprint edits and approved-review closure alike:**
+
+`RESERVED PREFLIGHT — <numbers>; own rows: <line refs | none>; bookkeeping: <live | retired | folded>; cross-refs: <row numbers | none>; reserved file updated: <yes: what | no change needed>.`
+
+*Why (2026-09-18):* six reserved numbers (786, 798, 799, 800, 801, 802) were moved into Sprint 77 from their
+`backlog.md` rows alone. `backlog-reserved.md` still said 798 had "no sprint yet", and 839's row there carried the
+798 ownership boundary that the sprint's execution order depends on. The owner caught it, not a check.
+
 ## Requirement ledger
 
 For non-trivial task design or review, normalize requirements into a ledger:

@@ -273,6 +273,9 @@ Before returning `APPROVED` or `APPROVED WITH NOTES`, Opus must complete this cl
    superseded, archived, or otherwise no longer active. Do this even when the file is already within its 80-line limit.
 3. Add one concise, newest-first ledger row per closed task to `docs/backlog-archive.md`, linking the session and
    kickoff where they exist. Never copy the review transcript into either backlog file.
+   **Reserved-number preflight (owner rule, 2026-09-18):** for every number this closure archives, re-scopes or
+   leaves partly open, open `docs/backlog-reserved.md` first. Delete the archived number's row, update a partly open
+   one, and emit the `RESERVED PREFLIGHT` receipt (`docs/orchestrator-procedures.md`). Stage the file if it changed.
 4. If a note or owner action remains open after approval, carry it as a separate active owner-action or numbered task;
    do not keep the approved task row active merely to hold that follow-up.
 5. Re-read both backlog files, verify the active backlog contains only live work and is at most 80 physical lines,

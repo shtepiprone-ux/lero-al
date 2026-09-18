@@ -17,6 +17,9 @@ This file selects the minimal rule bundle for each task type. It replaces "read 
 - `docs/rule-index.md`
 - `docs/qa-profiles.md`
 - `docs/backlog.md`
+- `docs/backlog-reserved.md` - **mandatory before any action on a reserved number** (kickoff, sprint assignment, fold,
+  close, archive). The backlog registry row is an index; this file is the record. Receipt: `RESERVED PREFLIGHT`
+  (`docs/orchestrator-procedures.md`).
 - `docs/critical-flow-registry.md` - scan for affected critical flows only.
 
 For Opus orchestration or review, also read:

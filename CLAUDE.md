@@ -50,6 +50,9 @@ For every task:
 2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
 3. Use `docs/qa-profiles.md` to choose validation depth.
 4. Read `docs/backlog.md` for current project state when planning, creating, or closing tasks.
+5. Before any action on a reserved number (kickoff, sprint assignment, fold, close, archive), read
+   `docs/backlog-reserved.md` **first**: the backlog row is only an index to it. Procedure and receipt:
+   `docs/orchestrator-procedures.md` → "STOP — reserved-number preflight".
 
 For Opus orchestration or review, also read:
 

@@ -73,6 +73,9 @@ write a kickoff or issue a decision first.
 
 1. Classify the request and state the task type.
 2. Read `CLAUDE.md`, `docs/agent-contract.md`, `docs/orchestrator-role.md`, `docs/orchestrator-procedures.md`, `docs/rule-index.md`, `docs/qa-profiles.md`, and `docs/backlog.md`.
+   **If the task is, or touches, a reserved number, open `docs/backlog-reserved.md` before anything else about it** and
+   emit the `RESERVED PREFLIGHT` receipt (`docs/orchestrator-procedures.md` → "STOP — reserved-number preflight").
+   The backlog registry row is an index, not the record.
 3. Select and read the minimal task-specific rule bundle from `docs/rule-index.md`.
 4. Inspect the affected source, existing behavior, nearby patterns, tests, stories, and current diff when relevant.
    For every UI artifact, search the canonical Mantine Storybook scope, `docs/component-catalog.md`,
@@ -264,6 +267,9 @@ Do not publish the first draft. Check all of the following and revise the task i
 
 Owner rule, 2026-08-01. **A task may not be created without a sprint.**
 
+0. **Reserved-number preflight (owner rule, 2026-09-18).** Before assigning or moving any reserved number to a sprint,
+   open `docs/backlog-reserved.md`: its own row, "Registry bookkeeping", and every other row naming it. Update its
+   state or sprint cell there in the same edit. Receipt: `RESERVED PREFLIGHT` (see `docs/orchestrator-procedures.md`).
 1. Read `docs/backlog.md` → "Current sprint" and open `tasks/Sprints/Sprint_NN_*.md` for that sprint.
 2. If the task fits an open sprint, save the kickoff as
    `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` and add its row to that sprint's Tasks table.

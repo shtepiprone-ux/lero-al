@@ -1,6 +1,11 @@
 # Sprint 68 — `/listings` leaves Tailwind, one surface at a time
 
-**Opened:** 2026-08-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 5 (775 · 776 APPROVED WITH NOTES 2026-08-31 · 777 COMPLETE 2026-09-01 · 778 APPROVED WITH NOTES 2026-09-02 · 779+780+780R APPROVED WITH NOTES 2026-09-02)
+**Opened:** 2026-08-30 · **Status:** ✅ **CLOSED** 2026-09-18 (owner: *"прибери"*) · **Landed tasks:** 5 (775 · 776 APPROVED WITH NOTES 2026-08-31 · 777 COMPLETE 2026-09-01 · 778 APPROVED WITH NOTES 2026-09-02 · 779+780+780R APPROVED WITH NOTES 2026-09-02)
+
+> **Closed by owner decision, 2026-09-18, verbatim:** *"прибери"*, in answer to the orchestrator's note that Sprint 68
+> was open with zero open tasks. All six Tasks-table rows (775-780) are archived. Open decision **D68-1** (Task 772
+> lands first or is folded in) is moot: 772 was archived 2026-09-03 under Sprint 66. **D68-2** (differential rendered
+> acceptance) stays binding where later sprints cite it, and it lives in this file.
 
 > **Opened by owner instruction, 2026-08-30** — the owner supplied a route-level migration plan for `/listings`
 > (working note, untracked: `Codex-tasks/listings-mantine-migration-plan.md`) and asked for a sprint plus its first

@@ -363,3 +363,111 @@ Return this, and write it in the session log as well:
 | No invented command | Every command exists in `package.json` (`test`, `typecheck`, `lint`, `build`, `check:mojibake`) or is `npx vitest`/`npx eslint` against a path read in this session. |
 | Q1 includes the final build | §13.2 |
 | Sprint assigned | Sprint 77, opened in the same edit |
+
+---
+
+## 16. Review 1 (2026-09-18): `NEEDS REVISION`, evidence-only Revision 1
+
+**The implementation is not reopened.** The reviewer re-read the test-file diff and re-ran natively (`win32`) the
+targeted file, the full suite, `typecheck`, `eslint`, `check:mojibake` and `npm run build`. Every command gave the
+expected result, and `build` exited 0. AC1–AC7 hold on the real diff:
+
+- targeted run: 63/63 passed;
+- the probe went red and was restored (FooterView hash `69994cd6…` before and after);
+- `CONTRACT_CONSUMERS` still has 22 entries, with no needle, `file` or `contract` value changed;
+- the raw-dimension scan still reads raw source;
+- the full suite's failing set equals the I0 set minus the `FooterView` test.
+
+**Do not edit `src/`, and do not re-run any capture.** The I0 arm cannot be re-captured now that the test is fixed,
+so the existing transcripts are the only baseline and must be preserved.
+
+### 16.1 Findings
+
+- **F1 — P2 [R8, AC8, clause 14].** Of the 23 files under `docs/sessions/evidence/task790/r1/`, **15 start with a
+  UTF-8 BOM (`EF BB BF`)**, which breaks AC8's "UTF-8 without BOM". `check:mojibake` does not detect BOMs, so its
+  green result does not cover this (GR-2). The files are:
+  - `00-platform.txt`, `01-git-status-i0.txt`, `02-hash-test-i0.txt`, `03-hash-footer-i0.txt`
+  - `04-targeted-i0.txt`, `05-full-suite-i0.txt`, `06-targeted-after-fix.txt`, `09-probe-red-run.txt`
+  - `13-targeted-final.txt`, `14-full-suite-final.txt`, `15-typecheck.txt`, `16-eslint.txt`, `17-mojibake.txt`
+  - `18-build.txt`, `22-mojibake-final-all-files.txt`
+- **F2 — P2 [R9, AC9, §14].** The session log says things the evidence contradicts:
+  - "Commands run" (`:35`) says every transcript is BOM-free and that *each* one records the platform, Node version,
+    working directory, exact command and exit code. F1 disproves the first part. For the second, transcripts such as
+    `05-full-suite-i0.txt` and `13-targeted-final.txt` start with the Vitest banner and have no
+    platform/cwd/command header. Platform, Node and cwd are recorded once, in `00-platform.txt`.
+  - "Files changed" says the evidence folder has "21 files"; it has **23**.
+
+### 16.2 Revision 1: exact actions
+
+1. **Remove the BOM from exactly the 15 paths in F1, and nothing else.**
+   - Use Node I/O only.
+   - Before any write, the script prints the 15-path manifest and checks that every path exists and starts with
+     `EF BB BF`. If the count is not 15, or a path is missing, or a path has no BOM, the script prints
+     `SCOPE GUARD FAILED` and writes nothing.
+   - For each path, record `git hash-object` before the write, then write `bytes.subarray(3)`, then record the hash
+     after.
+2. **Correct the session log in place:**
+   - Replace the `:35` sentence with a true one: transcripts are UTF-8 without BOM *after the Revision 1 BOM strip*.
+     Platform, Node version and cwd are recorded once, in `00-platform.txt`. Each transcript's exact command and exit
+     code are recorded in the "Commands run" table.
+   - Change "21 files" to "23 files".
+   - Add a short "Revision 1" section that names F1/F2, the 15-path manifest, the before/after hashes, and the
+     evidence file from step 3.
+
+   **§13's instruction that every transcript must carry its own header is waived for this task only**, by the
+   orchestrator who wrote that instruction. It is a reporting instruction, not an AC. Do not add headers to existing
+   transcripts after the fact.
+3. **Run the verification below** and save its output as `docs/sessions/evidence/task790/r1/23-rev1-bom-and-mojibake.txt`,
+   written through Node as UTF-8 without BOM.
+4. **State records:**
+   - Set `docs/backlog.md` row 790 and the Sprint 77 `790 · R1` row back to
+     `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Revision 1)`.
+   - `docs/backlog.md` stays at 80 lines or fewer.
+
+### 16.3 Revision 1 acceptance criteria
+
+- **AC-R1 [R8]**
+  - **Given** the evidence folder, the session log, and the test file
+  - **when** the verification block runs
+  - **then** it prints `BOM files: 0`.
+- **AC-R2 [R8]**
+  - **Given** the 15 manifest paths
+  - **when** you compare the pre-strip and post-strip bytes
+  - **then**, for every path, the post-strip content equals the pre-strip content with only the first 3 bytes removed
+  - **and** no other file's `git hash-object` changes.
+  - The Node script asserts this and exits non-zero on any mismatch.
+- **AC-R3 [R9]**
+  - **Given** the corrected session log
+  - **when** you compare it against the folder listing and the transcripts
+  - **then** its file count matches the actual count
+  - **and** no sentence claims a property that a transcript lacks.
+- **AC-R4 [R6]**
+  - **Given** the final `git status --porcelain`
+  - **when** you compare it against §7's write set
+  - **then** no path under `src/` appears except the test file
+  - **and** the test file's hash still equals `dc744262ef46d8263dfead87de9657a22791991e`.
+
+### 16.4 Verification
+
+Run from the project root:
+
+```powershell
+$ev = "docs/sessions/evidence/task790/r1"
+$test = "src/design-system/mantine/__tests__/theme.d69-18.test.tsx"
+node.exe -p "process.platform + ' ' + process.version"
+node.exe -e "const fs=require('fs'),p=require('path');const d='docs/sessions/evidence/task790/r1';const files=fs.readdirSync(d).map(f=>p.join(d,f)).concat(['docs/sessions/2026-09-18-task790r1-footerview-non-null-source-assertion.md','src/design-system/mantine/__tests__/theme.d69-18.test.tsx']);const bom=files.filter(f=>{const b=fs.readFileSync(f);return b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF});console.log('files scanned: '+files.length);console.log('BOM files: '+bom.length);bom.forEach(f=>console.log('  '+f));process.exit(bom.length?1:0)"
+npm.cmd run check:mojibake
+git hash-object $test
+git --no-optional-locks status --porcelain
+```
+
+Expected results:
+
+- The platform is `win32`.
+- The BOM check prints `BOM files: 0` and exits 0.
+- `check:mojibake` exits 0.
+- The test file's hash is `dc744262ef46d8263dfead87de9657a22791991e`.
+- `git status --porcelain` lists only §7's write set.
+
+No `build` or test re-run is required: Revision 1 changes no source or test file, and the test file's hash
+witness above proves it.

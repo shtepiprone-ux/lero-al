@@ -1,0 +1,6 @@
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0

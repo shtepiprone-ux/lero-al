@@ -15,11 +15,12 @@
  *   3. Asserts OWNER EXCLUSIVITY by comparing two theme-sourced values against each other
  *      (never against a hardcoded literal) — e.g. `theme.other.tooltip.multilineWidth` must not
  *      equal `theme.other.boxSize.compactTrigger`.
- *   4. Verifies every mapped §13 consumer MECHANICALLY: (a) its source text contains a reference
- *      to the expected named contract or its emitted CSS variable, and (b) the project's own
- *      `scanContent()` detector — the same function `--scope=mantine` itself runs — reports zero
- *      raw-dimension findings for that file. Both checks read real files at test time; neither
- *      duplicates a raw design value.
+ *   4. Verifies every mapped §13 consumer MECHANICALLY: (a) its source text, with type-only
+ *      non-null assertions (`!`) removed first, contains a reference to the expected named
+ *      contract or its emitted CSS variable, and (b) the project's own `scanContent()` detector —
+ *      the same function `--scope=mantine` itself runs — reports zero raw-dimension findings for
+ *      that file, on the raw, unnormalised source. Both checks read real files at test time;
+ *      neither duplicates a raw design value.
  *
  * Exact visual fidelity (does the rendered computed style match this contract at runtime) is
  * intentionally OUT of scope for this jsdom test — jsdom has no real layout engine. That check is
@@ -58,6 +59,16 @@ beforeAll(() => {
 
 function readSource(relPath: string): string {
   return readFileSync(resolve(ROOT, relPath), 'utf8')
+}
+
+/** Removes TypeScript's type-only non-null assertion (`!`) before a mechanical needle match, so
+ *  a consumer written as `theme.other!.layout!.footerGridGap` — the Task 784 outage hotfix
+ *  (34faa47a9), required because `other`/`layout` are optional on the theme's imported type —
+ *  still matches the needle `theme.other.layout.footerGridGap`. Only a `!` directly between an
+ *  identifier character, `)` or `]` and a following `.` is removed; `!==`, `!=`, logical-not `!x`
+ *  and `!(…)` are left untouched. */
+function normalise(source: string): string {
+  return source.replace(/(?<=[\w)\]])!(?=\.)/g, '')
 }
 
 /** No cast anywhere: `useMantineTheme()`'s own return type IS `MantineTheme`. Named without a
@@ -151,6 +162,40 @@ describe('D69-18 owner exclusivity — theme-sourced comparisons, never a hardco
     const t = resolveTheme()
     const values = [t.spacing.micro, t.spacing.tight, t.spacing.compact]
     expect(new Set(values).size).toBe(3)
+  })
+})
+
+describe('D69-18 non-null-assertion normaliser — syntax fixtures only, no theme value', () => {
+  it('removes a type-only `!` between an identifier and `.`', () => {
+    expect(normalise('theme.other!.layout!.footerGridGap')).toBe('theme.other.layout.footerGridGap')
+  })
+
+  it('removes a type-only `!` after a call expression', () => {
+    expect(normalise('fn()!.x')).toBe('fn().x')
+  })
+
+  it('removes a type-only `!` after an index expression', () => {
+    expect(normalise('arr[0]!.x')).toBe('arr[0].x')
+  })
+
+  it('leaves strict inequality `!==` unchanged', () => {
+    expect(normalise('a !== b')).toBe('a !== b')
+  })
+
+  it('leaves loose inequality `!=` unchanged', () => {
+    expect(normalise('a != b')).toBe('a != b')
+  })
+
+  it('leaves logical-not `!x` unchanged', () => {
+    expect(normalise('!x.y')).toBe('!x.y')
+  })
+
+  it('leaves logical-not before a parenthesized condition unchanged', () => {
+    expect(normalise('if (!theme.other) {}')).toBe('if (!theme.other) {}')
+  })
+
+  it('leaves logical-not before a parenthesized member access unchanged', () => {
+    expect(normalise('!(a).b')).toBe('!(a).b')
   })
 })
 
@@ -273,7 +318,7 @@ const CONTRACT_CONSUMERS: Array<{ contract: string; file: string; mustContain: s
 describe('D69-18 §13 consumers — each resolves its named contract (mechanical source check)', () => {
   for (const { contract, file, mustContain } of CONTRACT_CONSUMERS) {
     it(`${file} resolves ${contract}`, () => {
-      const source = readSource(file)
+      const source = normalise(readSource(file))
       for (const needle of mustContain) {
         expect(source).toContain(needle)
       }
@@ -305,6 +350,6 @@ describe('D69-18 compactTrigger exclusivity — MantineTooltip.tsx no longer use
     const source = readSource('src/design-system/mantine/patterns/MantineTooltip.tsx')
     const withoutLineComments = source.replace(/\/\/.*$/gm, '')
     const withoutBlockComments = withoutLineComments.replace(/\/\*[\s\S]*?\*\//g, '')
-    expect(withoutBlockComments).not.toContain('boxSize.compactTrigger')
+    expect(normalise(withoutBlockComments)).not.toContain('boxSize.compactTrigger')
   })
 })

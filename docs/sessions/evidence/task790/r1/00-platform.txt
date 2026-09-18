@@ -1,0 +1,7 @@
+win32 v22.22.3
+
+Path                           
+----                           
+C:\Claude_Code_Projects\lero-al
+
+

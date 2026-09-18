@@ -1,0 +1,80 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 1 failed) 16ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 6ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 2 failed) 1130ms
+     × archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived) 84ms
+     × archived listing renders the archived badge + dimmed card 50ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run *> docs/sessions/evidence/task790/r1/1 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module 
+wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine 
+pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned 
+badges/isArchived)
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
+    188|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    189|     const link = screen.getByRole('link')
+    190|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    191|   })
+    192|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List 
+view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
+    272|     expect(screen.getByText('Archived')).toBeInTheDocument()
+    273|     const link = screen.getByRole('link')
+    274|     expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocum…
+       |                                                         ^
+    275|   })
+    276| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed | 87 passed (89)
+      Tests  3 failed | 1647 passed (1650)
+   Start at  14:05:28
+   Duration  20.29s (transform 8.90s, setup 11.90s, import 112.90s, tests 65.43s, environment 115.17s)
+
+
+EXIT_CODE=1

@@ -1,0 +1,2 @@
+RESTORE OK: C:\Claude_Code_Projects\lero-al\src\components\layout\FooterView.tsx restored from C:\Users\Nox\AppData\Local\Temp\task790-FooterView.tsx.bak
+EXIT_CODE=0

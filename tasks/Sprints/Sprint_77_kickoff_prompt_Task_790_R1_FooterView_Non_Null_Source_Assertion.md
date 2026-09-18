@@ -471,3 +471,17 @@ Expected results:
 
 No `build` or test re-run is required: Revision 1 changes no source or test file, and the test file's hash
 witness above proves it.
+
+## 17. Review 2 (2026-09-18): `APPROVED`
+
+The Revision 1 work closes F1 and F2:
+
+- AC-R1: the reviewer's own scan of 29 files reports `BOM files: 0`.
+- AC-R2: for all 15 manifest paths, the reviewer re-derived both hashes — the current bytes with the BOM put back
+  reproduce the pre-strip hash, and the current bytes reproduce the post-strip hash. Hashing used git's path filters
+  (`text=auto eol=lf`).
+- AC-R3: the session log's file count (25) and its provenance sentence match the folder.
+- AC-R4: the test file hash is still `dc744262…` and `FooterView.tsx` is still `69994cd6…`.
+
+The review 1 findings on AC1–AC7, and the reviewer's `build` (exit 0) at the same test-file hash, still apply. The task
+is archived, and the rest of Task 790 stays reserved in Sprint 77.

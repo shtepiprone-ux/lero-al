@@ -1,0 +1,33 @@
+MANIFEST (15 paths):
+  docs/sessions/evidence/task790/r1/00-platform.txt
+  docs/sessions/evidence/task790/r1/01-git-status-i0.txt
+  docs/sessions/evidence/task790/r1/02-hash-test-i0.txt
+  docs/sessions/evidence/task790/r1/03-hash-footer-i0.txt
+  docs/sessions/evidence/task790/r1/04-targeted-i0.txt
+  docs/sessions/evidence/task790/r1/05-full-suite-i0.txt
+  docs/sessions/evidence/task790/r1/06-targeted-after-fix.txt
+  docs/sessions/evidence/task790/r1/09-probe-red-run.txt
+  docs/sessions/evidence/task790/r1/13-targeted-final.txt
+  docs/sessions/evidence/task790/r1/14-full-suite-final.txt
+  docs/sessions/evidence/task790/r1/15-typecheck.txt
+  docs/sessions/evidence/task790/r1/16-eslint.txt
+  docs/sessions/evidence/task790/r1/17-mojibake.txt
+  docs/sessions/evidence/task790/r1/18-build.txt
+  docs/sessions/evidence/task790/r1/22-mojibake-final-all-files.txt
+SCOPE GUARD OK: all 15 paths exist and start with EF BB BF
+docs/sessions/evidence/task790/r1/00-platform.txt: c56aa1aab6fd677dbc98e31d3926d06c720f3ae6 -> 1a5ea695144bf566fa8b17c4829378921a615bbc (removed 3 bytes)
+docs/sessions/evidence/task790/r1/01-git-status-i0.txt: 961efe72bdf8526185252645a6c03fd832bfae10 -> 3afb07f05591855c0f03ad25f5f76b0801cc0846 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/02-hash-test-i0.txt: 4923f7b669067c6f8a883da63150b4cce00bbdcd -> 078c7159873f350b2f73eb15e51446fb342d5113 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/03-hash-footer-i0.txt: 2806b8aa3bd12396d28d2b917236b63cce766052 -> 115ba5bec4046510354dc9c0faf09ad89c8bf091 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/04-targeted-i0.txt: f28fb4bbdfd71d8561a7ce66569180f3d9445eaf -> f95e47f0735f514ae7b3ba036239eb9905e05beb (removed 3 bytes)
+docs/sessions/evidence/task790/r1/05-full-suite-i0.txt: 38c6b44707c4ec19c4566a5ff35b15c8ed89b53c -> 0ce349fde6366f5a493671b9ccafd2f99c5a28fd (removed 3 bytes)
+docs/sessions/evidence/task790/r1/06-targeted-after-fix.txt: 9dca107c9b37f2135f493b8f0f1f86fc0fbf8d4b -> da11963f4b3e0239b9f24ce53418cf4666f6fb07 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/09-probe-red-run.txt: 917a0c006ec244829600dd9e395be7be4dab166c -> f2945045a8647476001ada9079094f3c01cc70bd (removed 3 bytes)
+docs/sessions/evidence/task790/r1/13-targeted-final.txt: ee692e836690774bf936a7cea08d93fa9481d5f9 -> f9ff2d53a194667d0db977015566456dfa0deca1 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/14-full-suite-final.txt: 3fa1eb7bf3156b091e7fb35f88ec1e5ae9e8bdee -> 82776d1afad21a374e77b9f3b264b0cfaac84501 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/15-typecheck.txt: 0cb2d3c549160e941adf9661a85686255ef98e76 -> cdd337bc5ed6ed5ba6af438eed9e539efb7f7080 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/16-eslint.txt: 739e71f8a37f915c57810f74c4b3e3f899471241 -> 3799c07fb06236e49d68dc576974267f756761dc (removed 3 bytes)
+docs/sessions/evidence/task790/r1/17-mojibake.txt: ddc248ce9e20635fdb653a743747a51a2db66517 -> 462d2471b8239e5b25d0343a1f71cf224f792e75 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/18-build.txt: b88572b3f21067e53407494743ad2089a006ce82 -> 22001798198c2a1abaa59e4e3777836798213582 (removed 3 bytes)
+docs/sessions/evidence/task790/r1/22-mojibake-final-all-files.txt: 008798ccc3dda48e3a3b12186b1e824b63740901 -> 9e115648c4a87f052da44e7193cc94ed1c4cea87 (removed 3 bytes)
+DONE: stripped BOM from 15 files

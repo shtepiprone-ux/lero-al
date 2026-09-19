@@ -1,7 +1,8 @@
 # Task 845 — `@mantine/charts` enters the project; `MantineDashboardLineChart` and `MantineDashboardDonut` with text alternatives
 
 Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved (card shell) and **844** approved (tone
-map) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+map) · **Status: 🔁 `NEEDS REVISION` 2026-09-19 (review 2) — execute §17 (Revision 2); §17 supersedes every
+conflicting line in §1–§16, and §16 still supersedes §1–§15. OD-1/OD-2 in §16.2 are still open owner decisions.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-2** (owner,
 2026-09-18): *"@mantine/charts (Рекомендовано)"*.
@@ -270,3 +271,389 @@ git. Update the 845 line of `docs/backlog.md`; session log with Files Changed ta
 | Hardcode | R5/AC5; two new `theme.other` roles, both spec- or palette-sourced. |
 | Behaviour proof without jsdom | Stated in §3; the Story in a real browser is the proof (AC2–AC4). |
 | Commands in blocks | §13.2. |
+
+## 16. Revision 1 — review 1 `NEEDS REVISION` (2026-09-19)
+
+### 16.0 Precedence and re-entry
+
+The implementation was driven far past this kickoff by in-session owner instructions (session log
+`docs/sessions/2026-09-19-task845-dashboard-chart-patterns.md`, Passes 1–16): ApexCharts replaced `@mantine/charts`,
+six patterns exist instead of two, and `MantineCombobox`, `MantineDashboardCard`, `theme.ts` colour scales and
+`src/lib/formatters.ts` changed. **This section is now the task.** Where §1–§15 conflict with it, §16 wins; the rows
+it does not touch (R7, R8, AC7, AC8, the negative-flow table in §11 except as amended in §16.2) still bind.
+
+Re-entry mode: **`remediation`**. Start at §16.3 W1. Keep every shipped pattern, Story, message key and the two
+owner-reported `MantineCombobox` fixes; do not rebuild any chart from scratch; do not reinstall `@mantine/charts` or
+`recharts`. Evidence root `docs/sessions/evidence/task845/` (create it; it does not exist at review time).
+
+### 16.1 Owner decisions recorded by this review (verbatim from the session log; the owner's commit of this file confirms them)
+
+| ID | Owner words (as quoted in the session log, 2026-09-19) | Consequence — supersedes |
+|---|---|---|
+| **D845-1** | *"для коректних поведінок чартів використовуй бібліотеку ApexCharts, де вже є всі кліки, всі тултіпи, всі ховер ефекти"* (Pass 9) | Chart engine = `apexcharts` + `react-apexcharts`, loaded through `next/dynamic(…, { ssr: false })`. Supersedes **D78-2**, R1, AC1 and §10.2–§10.3. `@mantine/charts`/`recharts` must be absent from `package.json`, the lockfile's root dependencies, and every `src/` / `.storybook/` import. |
+| **D845-2** | *"У Storybook мають бути всі види чартів з референсу... Задача не може бути закрита, допоки всі чарти не співпадають з референсами по всіх критеріях!"* (Pass 8) | Six patterns are in scope: `MantineDashboardLineChart`, `…BarChart`, `…Donut`, `…SemiDonut`, `…Radar`, `…RadialProgress`, each with its own Story and manifest entry. Supersedes R6's two-pattern scope and §7/§8. |
+| **D845-3** | Pass 10: owner-provided reference *pinterest.com/ideas/warm-pastel-color-palette/959971831841/* replacing the saturated palette (*"дуже агресивна"*) | `theme.other.chartSeries` = the five warm-pastel scales at shade 4 (`dustyRose`, `warmSage`, `mutedLilac`, `warmGold`, `warmLatte`). Supersedes R5's proposed shade-7 set. |
+
+### 16.2 `STOP - OWNER DECISION REQUIRED` — two open decisions
+
+Work items W1–W6 and W8 do not depend on these and proceed now. **W7 is blocked until the owner's answer is written
+here, verbatim and dated, by Opus.** If still unanswered at completion, report `PARTIALLY IMPLEMENTED`.
+
+**OD-1 — text alternative and drill-down (spec v3.3 §17.2 ADM-11, §17.4).** The shipped patterns have no tabular
+text alternative (the data-table toggle was removed in Pass 3), the hover tooltip opens only on mouse
+(`chart.events.dataPointMouseEnter`), and `MantineDashboardDonut` legend rows toggle visibility instead of linking to
+the listing filter. Kickoffs **853** (`donut segment opens its drill-down target`) and **855** (`the table toggle`,
+`the donut segments navigate`) depend on the removed behaviour.
+- **Option A (recommended):** keep the owner's visual legend toggles; add back one keyboard-operable
+  `Button` (`aria-expanded`) per Line/Bar/Radar pattern that reveals a Mantine `Table` of the visible series (the
+  original R3), and give `MantineDashboardDonut` an optional `href` per segment rendered as a link list/table under
+  the ring (the original R4 list, collapsed behind the same toggle). Verification: AC3/AC4 as originally written,
+  re-run against the ApexCharts DOM.
+- **Option B:** the owner waives ADM-11's link list and §17.4's text alternative for these patterns. Opus then
+  amends 853 and 855 (drill-down from the donut and the table toggle removed) in the same commit that records the
+  waiver. Verification: the 853/855 kickoffs no longer contain a requirement or AC that uses the table toggle or
+  donut-segment navigation.
+
+**OD-2 — motion (spec v3.3 §17.4, "respect `prefers-reduced-motion`").** Every pattern sets
+`animations: { enabled: true, speed: 400 }` unconditionally (owner, Pass 7: animation mandatory).
+- **Option A (recommended):** animation stays on by default and is disabled when `useReducedMotion()` from
+  `@mantine/hooks` returns `true`. Verification: Playwright with `reducedMotion: 'reduce'` shows the ApexCharts
+  `chart.animations.enabled` option `false` (quote the options object logged from the Story).
+- **Option B:** animation always on; the owner waives the §17.4 motion rule for dashboards. No code change.
+
+### 16.3 Work items (map to review-1 findings F1–F8)
+
+- **W1 — F2 hardcoded visual values (GR-0).** Remove every raw visual number/colour from the six pattern files and
+  move it to one new role `theme.other.dashboardChart` (with its `MantineThemeOther` augmentation), each key
+  commented with its provenance (TailAdmin/ApexCharts measurement already recorded in the session log, or the spec
+  row). It must cover at least: donut size (200), semi-donut size (220), radial size (180), radar size (100), bar
+  radius (4), donut segment border radius (8) and spacing (3), segment expand offset (10), tooltip offset (12),
+  primary/secondary line stroke width (2.5/1.5), radar and semi-donut stroke width (2/3), primary/secondary gradient
+  opacity (0.35/0.16), inactive-legend swatch opacity (0.35), hover marker size (5), animation speed (400), default
+  shade (6), the shade-collision step (2) and the radar nearest-marker distance (20). Then:
+  - delete both `design-tokens-allow` markers (`MantineDashboardRadar.tsx`, `MantineDashboardSemiDonut.tsx`);
+  - replace `colors: ['white']` (`MantineDashboardSemiDonut.tsx`) with a theme value (`theme.white`);
+  - replace every `style={{ display: 'flex', … }}` wrapper with Mantine `Center`/`Flex`/`Stack` props, and every
+    `style={{ opacity: … }}` / `style={{ pointerEvents: 'none' }}` / `style={{ flexShrink: 0 }}` with the component's
+    own prop or a `styles` entry reading the new role;
+  - replace `theme.other!.iconSize!.compact! / 2` with a named `dashboardChart.tooltipSwatchSize` token.
+- **W2 — F3 clones.** `resolveThemeColor` exists 6×, `LegendToggle` 5×, the tooltip `styles` object 5×. Create:
+  - `src/design-system/mantine/patterns/dashboardChartTheme.ts` (no JSX) exporting `resolveThemeColor(theme, ref)`
+    and `dashboardChartTooltipStyles(theme)`;
+  - `src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx` — the one legend (row/column layout prop,
+    the `Button variant="subtle"` toggle with `aria-pressed`), enrolled in `scripts/mantine-migration-scope.json`,
+    exported from the barrel, with its own Story `src/stories/patterns/mantine/DashboardChartLegend.stories.tsx`
+    (`Patterns/Mantine/DashboardChartLegend`: all visible; one hidden — wrapping is checked by resizing the window on
+    those states, never through a width-named export; see §17.3 X4).
+  All six patterns consume these; no local copy survives (AC11).
+- **W3 — F4 shared components changed outside the original scope.** `MantineCombobox.tsx` (outer `Box w`,
+  `rightSectionPointerEvents="none"`) and `MantineDashboardCard.tsx` (`scopeLabel` under the title) are kept and are
+  now in scope. Required:
+  - extend `src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx` with two assertions: the
+    component's outermost element carries the resolved width for the default, a fixed `triggerWidth`, and
+    `triggerWidth="100%"`; and the right section's `pointer-events` is `none` (clause 15 — the consumers include
+    P0 auth `AuthSheet.tsx`, `PhoneField.tsx` and `RangeDatePicker.tsx`, all in `docs/critical-flow-registry.md`).
+    A planted revert of either line must make the test fail — record both arms with `git hash-object` witnesses,
+    reading and writing the planted file through Node, never `Get-Content -Raw`;
+  - correct the now-false comment at `src/modules/listings/components/ListingsFilterBar.tsx:94-101` (it states the
+    combobox's outer wrapper "carries no width" and that "no combobox-file edit" was needed); do not change its code;
+  - update `src/stories/patterns/mantine/DashboardCard.stories.tsx` only if a state no longer demonstrates the
+    under-title `scopeLabel`;
+  - rendered evidence at 360 and 1440 px for the consumer Stories listed in §16.7 rows 9–10.
+- **W4 — F5 evidence.** Run §16.6 in one pass and retain its full transcript as
+  `docs/sessions/evidence/task845/final-gate.log`, including `git hash-object` of every changed file. Bundle note:
+  from that build, quote the `/admin` First Load JS line and prove no ApexCharts chunk is reachable from `/admin`
+  (search the build's app manifest for `apexcharts` under the `/admin` page entries → no hit; quote the command).
+- **W5 — F7 records.** In the session log: correct the R1 row (it says `@mantine/charts` "Holds" — false since
+  Pass 9); add `MantineDashboardCard.tsx`, `MantineCombobox.tsx`, `ListingsFilterBar.tsx` (W3 comment) and all five
+  new `formatters.ts` functions to Files Changed; drop `src/app/layout.tsx` / `.storybook/preview.tsx` (zero net
+  diff); add every file W1–W8 touches. Delete the untracked repository-root `.playwright-mcp/` directory (135 tool
+  artefacts) and the 27 untracked repository-root `*.png` screenshots (`barchart-*.png`, `donut-*.png`,
+  `linechart-*.png`, `radar-*.png`, `semidonut-*.png`); any screenshot worth keeping moves under the evidence root
+  first. `git --no-optional-locks status --short` must then show no untracked path outside the §16.4 write set.
+- **W6 — F8 formatters.** In `src/lib/formatters.ts` the five new functions receive `YYYY-MM-DD` strings (parsed as
+  UTC midnight); `formatWeekdayShort` uses `getUTCDay()` while the other four use local `getDate()`/`getMonth()`, so
+  weekday and day disagree for any viewer west of UTC. Use UTC getters in all five. Add cases to
+  `src/lib/__tests__/formatters.test.ts` for each function × 4 locales plus one run under `TZ=America/New_York`.
+- **W7 — OD-1/OD-2 outcome** (blocked until §16.2 is answered): implement the chosen option exactly as written there.
+- **W8 — census.** Re-run the per-file census for all seven pattern files and the changed-surface census; emit one
+  `GR-1 CENSUS COMPLETE` receipt per file and `GR-3 STORY PROVEN` for each of the seven patterns.
+
+### 16.4 Revised write set
+
+Created: `dashboardChartTheme.ts`, `MantineDashboardChartLegend.tsx`, `DashboardChartLegend.stories.tsx`, the
+evidence root. Edited: the six `MantineDashboard{LineChart,BarChart,Donut,SemiDonut,Radar,RadialProgress}.tsx`, their
+six Stories only where W1/W2/W7 require, `theme.ts`, `patterns/index.ts`, `scripts/mantine-migration-scope.json`,
+`MantineCombobox.smoke.test.tsx`, `ListingsFilterBar.tsx` (comment only), `DashboardCard.stories.tsx` (only if W3
+requires), `src/lib/formatters.ts`, `src/lib/__tests__/formatters.test.ts`, `messages/{sq,en,uk,it}.json` (only for
+new W2/W7 strings), the session log, the 845 row of `docs/backlog.md` (one concise line). Nothing else.
+
+### 16.5 Revised acceptance criteria (replace AC1–AC6; AC7–AC8 remain)
+
+- **AC9 [D845-1]** — `npm.cmd ls apexcharts react-apexcharts @mantine/charts recharts` lists the first two and not
+  the last two; `git grep -n -E "@mantine/charts|from 'recharts'" -- src .storybook` → no hit.
+- **AC10 [W1]** — the §16.6 hardcode `git grep` prints no line (a remaining hit needs a one-line reason in the
+  session log naming why it is not a visual value); `Select-String -Path src\design-system\mantine\theme.ts -Pattern
+  "dashboardChart:"` shows the role.
+- **AC11 [W2]** — `git grep -n -E "function (resolveThemeColor|LegendToggle)" -- src` prints exactly one
+  `resolveThemeColor` (in `dashboardChartTheme.ts`) and no `LegendToggle`; each of the six patterns imports
+  `MantineDashboardChartLegend` or has no legend (RadialProgress).
+- **AC12 [W3]** — the extended `MantineCombobox.smoke.test.tsx` passes, and each planted revert (outer `Box w`
+  removed; `rightSectionPointerEvents` removed) makes it fail — both transcripts retained.
+- **AC13 [W3]** — the four consumer smoke files (`MantineCombobox`, `PhoneField`, `filtersRangeDatePicker`,
+  `listingsMigratedControls`) pass.
+- **AC14 [W4]** — `docs/sessions/evidence/task845/final-gate.log` holds §16.6 with every exit code, the `/admin`
+  First Load JS line, and the no-ApexCharts-under-`/admin` proof.
+- **AC15 [W6]** — `formatters.test.ts` passes, including the `America/New_York` case, where
+  `formatWeekdayShort('2026-09-19', 'en')` and `formatShortDate('2026-09-19', 'en')` both describe Saturday
+  19 September.
+- **AC16 [W7]** — the §16.2 verification line of the chosen option for OD-1 and for OD-2.
+- **AC17 [W8]** — per-file census rows read `manifest:yes story:yes` for all seven patterns; the changed-surface
+  census exits 0.
+
+`GR-4 AC AUDIT — 9 new criteria (AC9–AC17); each states an observable property; absolutes: AC10/AC11 greps are
+scoped to named files and AC10 admits a documented exception line.`
+
+### 16.6 Final gate block (replaces §13.2)
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd ls apexcharts react-apexcharts @mantine/charts recharts
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:pattern-enrolment
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census-changed.mjs --base HEAD
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardLineChart.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardBarChart.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardDonut.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardSemiDonut.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardRadar.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardRadialProgress.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardChartLegend.tsx
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx src/components/shared/__tests__/PhoneField.smoke.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx src/lib/__tests__/formatters.test.ts
+npm.cmd run build-storybook
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep -n -E "design-tokens-allow|style=\{\{|'white'|= [0-9]+(\.[0-9]+)?$|: [0-9]+\.[0-9]+" -- src/design-system/mantine/patterns/MantineDashboard*.tsx src/design-system/mantine/patterns/dashboardChartTheme.ts
+git --no-optional-locks status --short
+git --no-optional-locks diff --stat
+git --no-optional-locks hash-object package.json package-lock.json src/design-system/mantine/theme.ts src/design-system/mantine/patterns/MantineCombobox.tsx src/design-system/mantine/patterns/MantineDashboardCard.tsx src/lib/formatters.ts src/design-system/mantine/patterns/dashboardChartTheme.ts src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx src/design-system/mantine/patterns/MantineDashboardLineChart.tsx src/design-system/mantine/patterns/MantineDashboardBarChart.tsx src/design-system/mantine/patterns/MantineDashboardDonut.tsx src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx src/design-system/mantine/patterns/MantineDashboardRadar.tsx src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx
+```
+
+Expected: every command exits 0 except `check:locale-leak:mantine-only` (known red, Task 836 — quote zero leak lines
+for the seven `patterns-mantine-dashboard*` story IDs) and the hardcode `git grep` (exit 1, no output). The
+`TZ=America/New_York` case of AC15 runs inside `formatters.test.ts` (set `process.env.TZ` in that describe block, or a
+second `vitest` invocation with `$env:TZ = "America/New_York"` — record which).
+
+### 16.7 Owner visual review (replaces §13.3) — `OWNER VISUAL QA REQUIRED`
+
+Use `iframe.html?id=<story-id>&globals=locale:<locale>` and resize the window.
+
+| # | Story | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 1 | `Patterns/Mantine/DashboardLineChart` | Default (week, month, year) | 1440 / 360 | en / uk | pastel colours, legend toggles, tooltip, axis labels, period filter full-width at 360 |
+| 2 | `Patterns/Mantine/DashboardBarChart` | Default | 1440 / 360 | sq / uk | rounding only on the stack top, tooltip, legend |
+| 3 | `Patterns/Mantine/DashboardDonut` | Default, Empty, Error | 1440 / 360 | en / uk | centre total, legend column aligned with the period control, tooltip not clipped, no two segments share a visible colour |
+| 4 | `Patterns/Mantine/DashboardSemiDonut` | Default | 1440 / 360 | it / uk | arc, gaps, legend reachable |
+| 5 | `Patterns/Mantine/DashboardRadar` | Default | 1440 / 320 | en / uk | labels not clipped, legend visible at 320, tooltip |
+| 6 | `Patterns/Mantine/DashboardRadialProgress` | Default, Empty, Error | 1440 / 360 | sq | ring proportion |
+| 7 | `Patterns/Mantine/DashboardChartLegend` | all states | 1440 / 320 | uk | one legend, wraps |
+| 8 | `Patterns/Mantine/DashboardCard` | every state | 1440 / 360 | en / uk | `scopeLabel` under the title (843 change) |
+| 9 | `Mantine/Primitives/Combobox`, `…/PhoneField`, `…/RangeDatePicker`, `…/FilterControls`, `…/LocationComboboxSubPanel` | Default | 1440 / 360 | en / uk | trigger widths unchanged except where full-width at 360 is intended; chevron click opens |
+| 10 | `Patterns/Mantine/ListingsFilterBar`, `Patterns/Mantine/ListingsSortBar` | Default | 1440 / 360 | uk | no layout shift vs `main` |
+| 11 | any OD-1 Option A table/link list | open | 1440 / 360 | uk | table scrolls inside its own container |
+
+### 16.8 Completion
+
+Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when W1–W8 and AC9–AC17 hold with retained evidence;
+`PARTIALLY IMPLEMENTED` if OD-1/OD-2 are still unanswered. Update the 845 backlog row as **one line**. No mutating git.
+
+## 17. Revision 2 — review 2 `NEEDS REVISION` (2026-09-19)
+
+### 17.0 Precedence and re-entry
+
+Review 2 inspected the Revision 1 diff, `docs/sessions/evidence/task845/final-gate.log` and the session log's
+"Revision 1" sections. W2 (legend/helpers), W6 (formatters, TZ case re-checked natively) and W8 (census re-run by the
+reviewer: all seven roots `manifest:yes story:yes className:0`) are accepted and must not be redone. Everything else
+in §16 still binds, and §17 overrides it where they conflict.
+
+Re-entry mode: **`remediation`**. Start at §17.3 X1. Do not rebuild any chart. Do not re-plant the `MantineCombobox`
+test arms (W3's planted-revert proof is accepted). The Revision 1 log `final-gate.log` stays as it is, as the
+superseded artifact. Put the new pass in `final-gate-rev2.log` (§17.5) and never overwrite the old one.
+
+### 17.1 Findings this revision closes (review 2)
+
+| ID | Sev | Finding | Evidence |
+|---|---|---|---|
+| F9 | P2 | W1 left raw visual values in the pattern files: the executor kept them because they were "not itemized", but W1 says *every* such value, and its list starts "at least". | `MantineDashboardDonut.tsx:43` `DONUT_HOLE_SIZE = '62%'`; `MantineDashboardSemiDonut.tsx:34` `'60%'`; `MantineDashboardRadialProgress.tsx:33` `HOLLOW_SIZE = '56%'`; `MantineDashboardBarChart.tsx:178` `columnWidth: '40%'`; `MantineDashboardLineChart.tsx:190` `stops: [0, 90, 100]`. The §16.6 grep cannot see a `'NN%'` string or an array, which is how these slipped through. |
+| F10 | P2 | GR-0 clones that review 1 missed (the miss was the orchestrator's). The loading/error/empty branch block is copied into 5 patterns. The tooltip body (a title plus one swatch row per series) is copied into 5 patterns. | 14 `Skeleton`/`MantineEmptyLoadingErrorState` render sites across Line/Bar/Donut/Radar/RadialProgress. `ColorSwatch … size={…tooltipSwatchSize}` rows in Line:238, Bar:225, Radar:238, Donut:261, SemiDonut:139. |
+| F11 | P1 | W3's last bullet was not done. There is no rendered evidence at 360/1440 for the `MantineCombobox` consumers (§16.7 rows 9–10). The outer-`Box` width change reaches every consumer, including P0 auth `AuthSheet`/`PhoneField`. | The session log's Revision 1 section and the evidence root hold no such capture. |
+| F12 | P1 | AC14 is not met, although the session log says it is. `final-gate.log` has **no** `npm run build` transcript, no `/admin` First Load JS line, no ApexCharts-reachability command, and no `check:file-integrity`, `check:mojibake`, hardcode grep, `git status`, `diff --stat` or `hash-object` output. The session log (Revision 1 → "§16.6 final gate") says all of these are "recorded in `final-gate.log`". | The log's section headers end at `check:locale-leak` plus a partial "FINAL re-verification" (typecheck, stories, design-tokens). |
+| F13 | P2 | 11 locale-leak lines on Task 845's own Stories. The executor called them "pre-existing", which is false: the keys are new in this task's uncommitted diff (`git show HEAD:messages/sq.json` has none of them). §16.6 required zero leak lines for the `patterns-mantine-dashboard*` IDs. | `RadialProgress` Default/Empty `[sq] "Total"`; `SemiDonut` ×3 states `[sq] "Mobile"`, `[it] "Mobile"`, `[it] "Social Media"`. |
+| F14 | P3 | AC9's grep is not empty. There is a stale `@mantine/charts`/D78-2 comment in `theme.ts`. | `src/design-system/mantine/theme.ts:723` (the `chartSeries` value comment), plus the `// Task 845 (D78-2, …)` augmentation comment above `chartSeries`. |
+| F15 | P3 | W5 was only partly done. The Files Changed table still lists `src/app/layout.tsx` / `.storybook/preview.tsx`, and `MantineDashboardCard.tsx` appears in no Files Changed table. | Session log, Files Changed rows for Pass 1 and Pass 9. `grep` for `MantineDashboardCard.tsx` finds only the prose at lines 410 and 583. |
+| F16 | P2 | The owner's Story rule (no width-named exports, breakpoints come from the toolbar) is broken. `DashboardChartLegend.stories.tsx` exports `WrapAt320`, which renders exactly what `AllVisible` renders. The cause was §16.3 W2's wording "wrap at 320", an orchestrator defect now corrected in place. | `src/stories/patterns/mantine/DashboardChartLegend.stories.tsx:77`. |
+
+### 17.2 Owner decisions
+
+No new decision. **OD-1 and OD-2 (§16.2) are still unanswered**, so W7 stays blocked exactly as §16.2 states. Do not
+implement either option until Opus has written the owner's answer into §16.2, verbatim and dated.
+
+### 17.3 Work items
+
+- **X1 — F9.** Add five keys to `theme.other.dashboardChart`, each with its `MantineThemeOther` type and a provenance
+  comment copied from the file comment it replaces: `donutHoleSize: '62%'`, `semiDonutHoleSize: '60%'`,
+  `radialHollowSize: '56%'`, `barColumnWidth: '40%'`, `lineGradientStops: [0, 90, 100]` (typed `number[]`). Delete the
+  three module constants and the two inline literals, and read the keys instead. The following literals stay inline
+  as structural, non-visual switches or definitions, and the session log gives each a one-line reason: `startAngle:
+  -90` / `endAngle: 90` (the definition of a semicircle), `opacityTo: 0`, `shadeIntensity: 1`, `strokeDashArray: 0`,
+  `rotate: 0`, and the colour-tuple bounds `0`/`9`. Do not keep any other raw number, percentage or colour string.
+- **X2 — F10.** Create two shared pattern files, each enrolled in `scripts/mantine-migration-scope.json`,
+  barrel-exported, and given its own Story (GR-3a: `CREATE`; the reviewer found no candidate, since no Story imports a
+  chart state frame or a chart tooltip body):
+  - `src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx`. Props: `state`, `emptyTitle?`,
+    `emptyDescription?`, `errorText?`, `retryLabel?`, `onRetry?`, `loadingAriaLabel?`, `children`. It renders the exact
+    loading (`Flex` + `Skeleton`), error (`Center` + `MantineEmptyLoadingErrorState` + Retry `Button`) and empty
+    (`Center` + `MantineEmptyLoadingErrorState`) blocks the five patterns render today, at
+    `boxSize.dashboardChartMinHeight`, and renders `children` when `state === 'ready'`. Move `DashboardChartState` into
+    this file and re-export it from `MantineDashboardLineChart.tsx` so existing imports keep compiling. Story
+    `src/stories/patterns/mantine/DashboardChartStateFrame.stories.tsx`, title
+    `Patterns/Mantine/DashboardChartStateFrame`, with the states `Ready`, `Loading`, `Empty` and `Error`.
+  - `src/design-system/mantine/patterns/MantineDashboardChartTooltipContent.tsx`. Props: `title?: string` and
+    `rows: { key, label, value: string, color }[]`. It renders the title `Text` and one `ColorSwatch` + label/value row
+    per entry, exactly as Line/Bar/Radar render them today; Donut/SemiDonut pass one row and no title. Story
+    `src/stories/patterns/mantine/DashboardChartTooltipContent.stories.tsx`, title
+    `Patterns/Mantine/DashboardChartTooltipContent`, with the states `MultiSeries` and `SingleRow`. It renders the
+    content statically, with no hover.
+
+  Every pattern that has a `state` prop must render through the frame, and all five tooltip sites must render through
+  the content component. No `Skeleton`, `MantineEmptyLoadingErrorState` or tooltip `ColorSwatch` row may remain in
+  the six chart files (AC19). The rendered output must stay the same, and the owner matrix checks this.
+- **X3 — F11.** Capture rendered consumer evidence with a Playwright script saved as
+  `docs/sessions/evidence/task845/combobox-consumers.mjs`, run against `storybook-static`.
+  - Stories: every Story ID under `Mantine/Primitives/Combobox`, `…/PhoneField`, `…/RangeDatePicker`,
+    `…/FilterControls`, `…/LocationComboboxSubPanel`, `Patterns/Mantine/ListingsFilterBar` and
+    `Patterns/Mantine/ListingsSortBar`, resolved from `storybook-static/index.json` (list them in the output).
+  - Matrix: widths 360 and 1440; locales `en` and `uk`.
+  - Each cell records: the `getBoundingClientRect().width` of every `.mantine-TextInput-root` and of its parent
+    element; whether `document.elementFromPoint` at the centre of each chevron (the right section) resolves to the
+    `<input>` or to a node inside the `.mantine-TextInput-wrapper` other than the `<svg>`; and a screenshot.
+  - Output: `combobox-consumers.json` plus PNGs under `docs/sessions/evidence/task845/combobox/`.
+  - **Before arm:** write `git show HEAD:src/design-system/mantine/patterns/MantineCombobox.tsx` over the file through
+    Node (`writeFileSync`, never `Get-Content -Raw`), with a `git hash-object` witness before the plant, after the
+    plant, and after the restore. Rebuild Storybook, capture, restore, rebuild, capture again.
+  - The JSON diffs both arms per cell. Every width delta at 360 is listed by Story ID for owner rows 9–10. Any delta
+    at 1440 is a finding: report it and do not explain it away.
+- **X4 — F16.** Delete the `WrapAt320` export. The owner checks wrapping on `AllVisible`/`OneHidden` by resizing the
+  window (§16.7 row 7).
+- **X5 — F13.** Replace these message values; en and uk stay unchanged:
+  - `sq` `storybook.mantine.dashboard_radial_label`: `"Total"` → `"Gjithsej"`;
+  - `sq` `dashboard_semi_donut_mobile`: `"Mobile"` → `"Celular"`;
+  - `it` `dashboard_semi_donut_mobile`: `"Mobile"` → `"Dispositivi mobili"`;
+  - `it` `dashboard_semi_donut_social`: `"Social Media"` → `"Reti sociali"`.
+
+  Use Node UTF-8 I/O and keep key parity. If a word still leaks, report it and do not add an allowlist entry.
+  `DashboardWorkList`'s `Elira Hoxha` (Task 843, committed) is out of scope.
+- **X6 — F14.** Rewrite the two `theme.ts` comments so they name D845-1/ApexCharts and resolution through
+  `resolveThemeColor`. No code change.
+- **X7 — F15.** In the session log, strike the two `layout.tsx`/`preview.tsx` rows (net zero diff) and add a
+  `MantineDashboardCard.tsx` row (header `Group` → `Stack gap="micro"`, `scopeLabel` doc comment, Pass 10). Add a
+  "Revision 2" section and a Files Changed table covering X1–X8. Mark `final-gate.log` as superseded by
+  `final-gate-rev2.log`.
+- **X8 — gate.** Run §17.5 once, after X1–X7.
+
+### 17.4 Revised write set (in addition to §16.4)
+
+Created: `MantineDashboardChartStateFrame.tsx`, `MantineDashboardChartTooltipContent.tsx`, their two Stories,
+`docs/sessions/evidence/task845/{combobox-consumers.mjs,combobox-consumers.json,combobox/*.png,final-gate-rev2.log}`.
+Edited: the six chart patterns, `theme.ts`, `patterns/index.ts`, `scripts/mantine-migration-scope.json`,
+`DashboardChartLegend.stories.tsx` (X4 only), `messages/sq.json` and `messages/it.json` (X5 only), the session log,
+and the 845 row of `docs/backlog.md`. `MantineCombobox.tsx` is edited only inside the X3 plant and must end on hash
+`1a64070300181bea245655a271f84fb654d4517a`.
+
+### 17.5 Final gate block (replaces §16.6)
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+Start-Transcript -Path docs\sessions\evidence\task845\final-gate-rev2.log
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd ls apexcharts react-apexcharts @mantine/charts recharts; "EXIT=$LASTEXITCODE"
+npm.cmd run typecheck; "EXIT=$LASTEXITCODE"
+npm.cmd run lint; "EXIT=$LASTEXITCODE"
+npm.cmd run check:i18n; "EXIT=$LASTEXITCODE"
+npm.cmd run check:stories; "EXIT=$LASTEXITCODE"
+npm.cmd run check:story-coverage; "EXIT=$LASTEXITCODE"
+npm.cmd run check:pattern-enrolment; "EXIT=$LASTEXITCODE"
+npm.cmd run check:design-tokens:strict; "EXIT=$LASTEXITCODE"
+npm.cmd run check:enrolled-tailwind; "EXIT=$LASTEXITCODE"
+npm.cmd run check:rendered-scope; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census-changed.mjs --base HEAD; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardLineChart.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardBarChart.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardDonut.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardSemiDonut.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardRadar.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardRadialProgress.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardChartLegend.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardChartStateFrame.tsx; "EXIT=$LASTEXITCODE"
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineDashboardChartTooltipContent.tsx; "EXIT=$LASTEXITCODE"
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx src/components/shared/__tests__/PhoneField.smoke.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx src/lib/__tests__/formatters.test.ts; "EXIT=$LASTEXITCODE"
+npm.cmd run build-storybook; "EXIT=$LASTEXITCODE"
+npm.cmd run check:locale-leak:mantine-only; "EXIT=$LASTEXITCODE"
+npm.cmd run build; "EXIT=$LASTEXITCODE"
+node.exe -e "const m=require('./.next/app-build-manifest.json').pages['/admin/page'];const fs=require('fs');let h=0;for(const f of m){if(/apexcharts|ApexCharts/.test(fs.readFileSync('.next/'+f,'utf8')))h++}console.log('/admin/page chunks',m.length,'apexcharts hits',h)"; "EXIT=$LASTEXITCODE"
+npm.cmd run check:file-integrity; "EXIT=$LASTEXITCODE"
+npm.cmd run check:mojibake; "EXIT=$LASTEXITCODE"
+git --no-optional-locks grep -n -E "design-tokens-allow|style=\{\{|'white'|= [0-9]+(\.[0-9]+)?$|: [0-9]+\.[0-9]+|'[0-9]+(\.[0-9]+)?%'|\[[0-9]+, [0-9]+" -- src/design-system/mantine/patterns/MantineDashboardLineChart.tsx src/design-system/mantine/patterns/MantineDashboardBarChart.tsx src/design-system/mantine/patterns/MantineDashboardDonut.tsx src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx src/design-system/mantine/patterns/MantineDashboardRadar.tsx src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx src/design-system/mantine/patterns/MantineDashboardChartTooltipContent.tsx src/design-system/mantine/patterns/dashboardChartTheme.ts; "EXIT=$LASTEXITCODE"
+git --no-optional-locks grep -n -E "<Skeleton|<MantineEmptyLoadingErrorState|tooltipSwatchSize" -- src/design-system/mantine/patterns/MantineDashboardLineChart.tsx src/design-system/mantine/patterns/MantineDashboardBarChart.tsx src/design-system/mantine/patterns/MantineDashboardDonut.tsx src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx src/design-system/mantine/patterns/MantineDashboardRadar.tsx src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx; "EXIT=$LASTEXITCODE"
+git --no-optional-locks grep -n -E "@mantine/charts|from 'recharts'" -- src .storybook; "EXIT=$LASTEXITCODE"
+git --no-optional-locks status --short
+git --no-optional-locks diff --stat
+git --no-optional-locks hash-object package.json package-lock.json messages/sq.json messages/it.json src/design-system/mantine/theme.ts src/design-system/mantine/patterns/MantineCombobox.tsx src/design-system/mantine/patterns/MantineDashboardCard.tsx src/lib/formatters.ts src/design-system/mantine/patterns/dashboardChartTheme.ts src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx src/design-system/mantine/patterns/MantineDashboardChartTooltipContent.tsx src/design-system/mantine/patterns/MantineDashboardLineChart.tsx src/design-system/mantine/patterns/MantineDashboardBarChart.tsx src/design-system/mantine/patterns/MantineDashboardDonut.tsx src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx src/design-system/mantine/patterns/MantineDashboardRadar.tsx src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx
+Stop-Transcript
+```
+
+Expected:
+- Every `EXIT=` line reads 0, with these exceptions: `check:locale-leak:mantine-only` (known red, Task 836) and the
+  last three `git grep` lines, which each exit 1 with no output.
+- For locale-leak, quote the report lines for every `Patterns/Mantine/Dashboard*` Story ID from Task 845 (Line, Bar,
+  Donut, SemiDonut, Radar, RadialProgress, ChartLegend, ChartStateFrame, ChartTooltipContent). The expected count is
+  zero.
+- The `/admin` line reads `apexcharts hits 0`. Quote the build's `/admin` First Load JS row from the same transcript.
+
+### 17.6 Acceptance criteria (added; AC9, AC11–AC13, AC15, AC17 stay accepted; AC10, AC14, AC16 still bind)
+
+- **AC18 [X1]** — The first §17.5 `git grep` prints nothing. `Select-String -Path src\design-system\mantine\theme.ts
+  -Pattern "donutHoleSize|semiDonutHoleSize|radialHollowSize|barColumnWidth|lineGradientStops"` shows the definitions
+  and their types.
+- **AC19 [X2]** — The second §17.5 `git grep` prints nothing. Both new files have census rows reading
+  `manifest:yes story:yes className:0`. `GR-3 STORY PROVEN` is recorded for both.
+- **AC20 [X3]** — `combobox-consumers.json` covers every resolved Story ID × {360, 1440} × {en, uk} in both arms. The
+  `hash-object` witnesses show the plant restored to `1a64070300181bea245655a271f84fb654d4517a`. The 1440 width
+  deltas are listed; each is either zero or reported as a finding.
+- **AC21 [X4]** — `Select-String -Path src\stories\patterns\mantine\DashboardChartLegend.stories.tsx -Pattern
+  "WrapAt320"` finds no match.
+- **AC22 [X5]** — The locale-leak report lists zero lines under any Task 845 `Patterns/Mantine/Dashboard*` Story ID.
+- **AC23 [X6, X7, X8]** — The third §17.5 `git grep` prints nothing. The session log's Files Changed tables match
+  `git status --short` path for path. `final-gate-rev2.log` holds every `EXIT=` line, the `/admin` First Load JS row
+  and the ApexCharts line.
+
+`GR-4 AC AUDIT — 6 new criteria (AC18–AC23); each states an observable property; absolutes: the three git-grep
+criteria are scoped to named files, with the structural literals of X1 excluded by construction; AC22 is scoped to
+this task's own Story IDs.`
+
+### 17.7 Completion
+
+Report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when X1–X8 and W7 are complete and AC9–AC23 hold with retained
+evidence. Report `PARTIALLY IMPLEMENTED` when X1–X8 are complete and OD-1/OD-2 are still open. The owner matrix
+(§16.7) additionally gains rows for `Patterns/Mantine/DashboardChartStateFrame` and `…/DashboardChartTooltipContent`
+(every state, 1440/360, en/uk). Update the 845 backlog row as **one line**. No mutating git.

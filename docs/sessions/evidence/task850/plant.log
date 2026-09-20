@@ -1,0 +1,32 @@
+pre-plant hash: fac96fca513fc161bc91800a2c42e30cf780bab7
+ src/modules/listings/actions/contactEvents.ts | 96 +++++++++++++++++++++------
+ 1 file changed, 77 insertions(+), 19 deletions(-)
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+src/components/listing/WhatsAppContactButton.tsx(51,35): error TS2345: Argument of type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(88,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(106,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(120,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(131,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(141,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(151,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(161,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(170,51): error TS2345: Argument of type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: "11111111-1111-4111-8111-111111111111"; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: "sq"; }' but required in type 'TrackArgs'.
+src/modules/listings/actions/__tests__/contactEvents.test.ts(180,7): error TS2578: Unused '@ts-expect-error' directive.
+src/modules/listings/components/ListingContact.tsx(125,39): error TS2345: Argument of type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' but required in type 'TrackArgs'.
+src/modules/listings/components/ListingMobileCTA.tsx(60,37): error TS2345: Argument of type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' is not assignable to parameter of type 'TrackArgs'.
+  Property 'listingOwnerId' is missing in type '{ listingId: string; channel: "whatsapp"; source: "listing_detail_contact_card"; locale: string; }' but required in type 'TrackArgs'.
+PLANT_TYPECHECK_EXIT_CODE=2
+post-revert hash: fac96fca513fc161bc91800a2c42e30cf780bab7

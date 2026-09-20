@@ -50,7 +50,6 @@ export function WhatsAppContactButton({
     // Fire-and-forget: do not block navigation.
     void trackListingContactEvent({
       listingId,
-      listingOwnerId,
       channel: 'whatsapp',
       source: 'listing_detail_contact_card',
       locale,

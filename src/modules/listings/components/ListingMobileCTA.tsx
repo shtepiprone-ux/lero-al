@@ -57,7 +57,7 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
       }
       const digits = result.whatsapp.replace(/\D/g, '')
       if (!digits) { toast.error(t('contact_load_failed')); return }
-      void trackListingContactEvent({ listingId, listingOwnerId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+      void trackListingContactEvent({ listingId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
       const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
       window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
     } finally {

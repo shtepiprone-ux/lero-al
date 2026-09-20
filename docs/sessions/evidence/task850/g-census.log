@@ -1,0 +1,27 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: bb1477a3918849227d102104494b37fe511f8a18
+    Changed paths seen: 7
+    Excluded (2):
+      docs/sessions/evidence/task861/storybook-dev.log  [outside-src]
+      scripts/schema-drift-check.sql  [outside-src]
+    Included surfaces (5):
+      src/components/listing/WhatsAppContactButton.tsx
+      src/modules/listings/actions/contactEvents.ts
+      src/modules/listings/components/ListingContact.tsx
+      src/modules/listings/components/ListingMobileCTA.tsx
+      src/types/database.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 5
+    Blocks baselined (recorded debt, does not fail): 9
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 475
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

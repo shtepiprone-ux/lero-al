@@ -297,6 +297,7 @@ export interface ListingContactEvent {
   listing_id: string
   listing_owner_id: string
   actor_user_id: string | null
+  actor_ip_hash: string | null
   channel: 'whatsapp'
   source: string
   locale: string | null

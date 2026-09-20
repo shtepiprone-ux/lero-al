@@ -122,7 +122,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
       const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
       if (!digits) { toast.error(t('contact_load_failed')); return }
       if (type === 'whatsapp') {
-        void trackListingContactEvent({ listingId: contactListingId, listingOwnerId: owner.id, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+        void trackListingContactEvent({ listingId: contactListingId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
         const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
         window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
       } else {

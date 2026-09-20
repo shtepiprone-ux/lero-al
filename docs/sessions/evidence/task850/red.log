@@ -1,0 +1,295 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/listings/actions/__tests__/contactEvents.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stderr | src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > guest: inserts actor_user_id null, a 24-hex actor_ip_hash and the server-resolved owner
+[contactEvents] unexpected error Error: [vitest] No "cookies" export is defined on the "next/headers" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:62:17)
+    at Object.get (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:324:16)
+    at createClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/server.ts:5:29)
+    at Module.trackListingContactEvent (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/contactEvents.ts:40:28)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactEvents.test.ts:88:20 {
+  codeFrame: 'vi.mock(import("next/headers"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+
+stderr | src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > authenticated non-owner: inserts the session user id and no ip hash
+[contactEvents] unexpected error Error: [vitest] No "cookies" export is defined on the "next/headers" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:62:17)
+    at Object.get (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:324:16)
+    at createClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/server.ts:5:29)
+    at Module.trackListingContactEvent (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/contactEvents.ts:40:28)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactEvents.test.ts:106:20 {
+  codeFrame: 'vi.mock(import("next/headers"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+
+stderr | src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > owner: writes the row with is_owner_click true, then reports self_click
+[contactEvents] unexpected error Error: [vitest] No "cookies" export is defined on the "next/headers" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:62:17)
+    at Object.get (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:324:16)
+    at createClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/server.ts:5:29)
+    at Module.trackListingContactEvent (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/contactEvents.ts:40:28)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactEvents.test.ts:120:20 {
+  codeFrame: 'vi.mock(import("next/headers"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+
+stderr | src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > unknown or non-public listing: not_found and zero inserts
+[contactEvents] unexpected error Error: [vitest] No "cookies" export is defined on the "next/headers" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:62:17)
+    at Object.get (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:324:16)
+    at createClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/server.ts:5:29)
+    at Module.trackListingContactEvent (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/contactEvents.ts:40:28)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactEvents.test.ts:131:20 {
+  codeFrame: 'vi.mock(import("next/headers"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+
+stderr | src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > recent duplicate for the same listing and actor: deduplicated and zero inserts
+[contactEvents] unexpected error Error: [vitest] No "cookies" export is defined on the "next/headers" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:62:17)
+    at Object.get (file:///C:/Claude_Code_Projects/lero-al/node_modules/vitest/dist/chunks/startVitestModuleRunner.bRl2_oI_.js:324:16)
+    at createClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/server.ts:5:29)
+    at Module.trackListingContactEvent (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/contactEvents.ts:40:28)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactEvents.test.ts:141:20 {
+  codeFrame: 'vi.mock(import("next/headers"), async (importOriginal) => {\n' +
+    '  const actual = await importOriginal()\n' +
+    '  return {\n' +
+    '    ...actual,\n' +
+    '    // your mocked methods\n' +
+    '  }\n' +
+    '})'
+}
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts (9 tests | 8 failed) 17ms
+     × guest: inserts actor_user_id null, a 24-hex actor_ip_hash and the server-resolved owner 8ms
+     × authenticated non-owner: inserts the session user id and no ip hash 1ms
+     × owner: writes the row with is_owner_click true, then reports self_click 1ms
+     × unknown or non-public listing: not_found and zero inserts 1ms
+     × recent duplicate for the same listing and actor: deduplicated and zero inserts 1ms
+     × insert error: insert_failed, logged with the error code, never a success 2ms
+     × guest without any ip header: row written with an empty hash and no de-dup lookup 1ms
+     × a caller-supplied owner id cannot reach the insert 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > guest: inserts actor_user_id null, a 24-hex actor_ip_hash and the server-resolved owner
+AssertionError: expected { ok: false, reason: 'insert_failed' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "ok": false,
++   "reason": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:90:20
+     88|     const result = await trackListingContactEvent({ ...baseArgs })
+     89|
+     90|     expect(result).toEqual({ ok: true })
+       |                    ^
+     91|     expect(mockInsert).toHaveBeenCalledTimes(1)
+     92|     const row = mockInsert.mock.calls[0][0]
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > authenticated non-owner: inserts the session user id and no ip hash
+AssertionError: expected { ok: false, reason: 'insert_failed' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "ok": false,
++   "reason": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:108:20
+    106|     const result = await trackListingContactEvent({ ...baseArgs })
+    107|
+    108|     expect(result).toEqual({ ok: true })
+       |                    ^
+    109|     const row = mockInsert.mock.calls[0][0]
+    110|     expect(row.actor_user_id).toBe(OTHER_USER_ID)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > owner: writes the row with is_owner_click true, then reports self_click
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:122:24
+    120|     const result = await trackListingContactEvent({ ...baseArgs })
+    121|
+    122|     expect(mockInsert).toHaveBeenCalledTimes(1)
+       |                        ^
+    123|     expect(mockInsert.mock.calls[0][0].is_owner_click).toBe(true)
+    124|     expect(mockInsert.mock.calls[0][0].actor_user_id).toBe(OWNER_ID)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > unknown or non-public listing: not_found and zero inserts
+AssertionError: expected { ok: false, reason: 'insert_failed' } to deeply equal { ok: false, reason: 'not_found' }
+
+- Expected
++ Received
+
+  {
+    "ok": false,
+-   "reason": "not_found",
++   "reason": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:133:20
+    131|     const result = await trackListingContactEvent({ ...baseArgs })
+    132|
+    133|     expect(result).toEqual({ ok: false, reason: 'not_found' })
+       |                    ^
+    134|     expect(mockInsert).not.toHaveBeenCalled()
+    135|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > recent duplicate for the same listing and actor: deduplicated and zero inserts
+AssertionError: expected { ok: false, reason: 'insert_failed' } to deeply equal { ok: false, reason: 'deduplicated' }
+
+- Expected
++ Received
+
+  {
+    "ok": false,
+-   "reason": "deduplicated",
++   "reason": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:143:20
+    141|     const result = await trackListingContactEvent({ ...baseArgs })
+    142|
+    143|     expect(result).toEqual({ ok: false, reason: 'deduplicated' })
+       |                    ^
+    144|     expect(mockInsert).not.toHaveBeenCalled()
+    145|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > insert error: insert_failed, logged with the error code, never a success
+AssertionError: expected "error" to be called with arguments: [ …(2) ]
+
+Received:
+
+  1st error call:
+
+  [
+-   "[contactEvents] insert failed",
+-   {
+-     "code": "23503",
+-     "listingId": "11111111-1111-4111-8111-111111111111",
++   "[contactEvents] unexpected error",
++   Error {
++     "message": "[vitest] No \"cookies\" export is defined on the \"next/headers\" mock. Did you forget to return it from \"vi.mock\"?
++ If you need to partially mock a module, you can use \"importOriginal\" helper inside:
++ ",
++     "codeFrame": "vi.mock(import(\"next/headers\"), async (importOriginal) => {
++   const actual = await importOriginal()
++   return {
++     ...actual,
++     // your mocked methods
++   }
++ })",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:154:17
+    152|
+    153|     expect(result).toEqual({ ok: false, reason: 'insert_failed' })
+    154|     expect(spy).toHaveBeenCalledWith('[contactEvents] insert failed', …
+       |                 ^
+    155|     spy.mockRestore()
+    156|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > guest without any ip header: row written with an empty hash and no de-dup lookup
+AssertionError: expected { ok: false, reason: 'insert_failed' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "ok": false,
++   "reason": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:172:20
+    170|     const result = await trackListingContactEvent({ ...baseArgs })
+    171|
+    172|     expect(result).toEqual({ ok: true })
+       |                    ^
+    173|     expect(mockInsert.mock.calls[0][0].actor_ip_hash).toBe('')
+    174|     expect(mockDedupLimit).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/contactEvents.test.ts > trackListingContactEvent > a caller-supplied owner id cannot reach the insert
+TypeError: Cannot read properties of undefined (reading '0')
+ ❯ src/modules/listings/actions/__tests__/contactEvents.test.ts:184:35
+    182|     })
+    183|
+    184|     expect(mockInsert.mock.calls[0][0].listing_owner_id).toBe(OWNER_ID)
+       |                                   ^
+    185|   })
+    186| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 1 passed (9)
+   Start at  19:41:23
+   Duration  1.83s (transform 78ms, setup 93ms, import 849ms, tests 17ms, environment 735ms)
+
+EXIT_CODE=1

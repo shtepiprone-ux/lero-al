@@ -39,7 +39,7 @@
 | listings | `removeFromCollection` | `listings/actions/collectionActions.ts:162` | `collection_items` | B (self) | `getUser()` + blocked check | user-scoped | ⬜ | — |
 | listings | `submitListingInquiry` | `listings/actions/submitListingInquiry.ts` | `listing_inquiries` | A (anon) | validation + IP rate-limit | service-role | 🟢 Slice 3 (442) | `npm run test:listings` |
 | listings | `applyListingTransitionByStatus` | `listings/actions/applyListingTransition.ts` | `listings` | B/C (owner/admin) | getUser + ownership/privilege check | service-role (via `_db` injection) | 🟢 Slice 3 (442) | `npm run test:listings` |
-| listings | `trackListingContactEvent` | `listings/actions/contactEvents.ts:21` | `listing_contact_events` | B (self, optional) | `getUser()` (optional, logs anon too) | user-scoped | ⬜ | — |
+| listings | `trackListingContactEvent` | `listings/actions/contactEvents.ts:29` | `listing_contact_events` | B (self, optional) | `getUser()` (optional) + server-resolved listing | service-role | ⬜ | — |
 | listings | `recordListingView` | `listings/actions/recentlyViewedActions.ts:21` | `recently_viewed` (via RPC) / cookie | B (self, optional) | `getUser()` (optional, cookie for guest) | user-scoped | ⬜ | — |
 | listings | `clearRecentlyViewed` | `listings/actions/recentlyViewedActions.ts:64` | `recently_viewed` / cookie | B (self, optional) | `getUser()` (optional) | user-scoped | ⬜ | — |
 | admin | `updateListingStatus` | `admin/actions/index.ts:39` | `listings` (via transition) | C (admin/mod) | `resolveAdminActor()` | service-role (via transition) | ⬜ | — |

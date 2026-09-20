@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/listings/actions/__tests__/contactEvents.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  19:42:41
+   Duration  981ms (transform 53ms, setup 90ms, import 45ms, tests 9ms, environment 707ms)
+
+EXIT_CODE=0

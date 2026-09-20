@@ -33,7 +33,7 @@
 --   ContactInquiryReply  → contact_inquiry_replies  (5 cols)
 --   PublicUserProfile    → public_user_profiles     (9 cols)
 --   SiteFooter           → site_footer              (12 cols)
---   ListingContactEvent  → listing_contact_events   (9 cols)
+--   ListingContactEvent  → listing_contact_events   (10 cols)
 --   ListingInquiry       → listing_inquiries        (9 cols)
 --   HistoryClearEvent    → history_clear_events     (10 cols)
 --   ListingActivityDaily → listing_activity_daily   (7 cols)
@@ -340,6 +340,7 @@ WITH expected(table_name, column_name) AS (
     ('listing_contact_events', 'listing_id'),
     ('listing_contact_events', 'listing_owner_id'),
     ('listing_contact_events', 'actor_user_id'),
+    ('listing_contact_events', 'actor_ip_hash'),
     ('listing_contact_events', 'channel'),
     ('listing_contact_events', 'source'),
     ('listing_contact_events', 'locale'),
@@ -691,6 +692,7 @@ WITH expected(table_name, column_name) AS (
     ('listing_contact_events', 'listing_id'),
     ('listing_contact_events', 'listing_owner_id'),
     ('listing_contact_events', 'actor_user_id'),
+    ('listing_contact_events', 'actor_ip_hash'),
     ('listing_contact_events', 'channel'),
     ('listing_contact_events', 'source'),
     ('listing_contact_events', 'locale'),

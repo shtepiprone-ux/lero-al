@@ -1,5 +1,6 @@
 import type { Viewport } from 'next'
 import { Open_Sans } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ColorSchemeScript } from '@mantine/core'
 import { headers, cookies } from 'next/headers'
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <MantineRootProvider>
           {children}
         </MantineRootProvider>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>

@@ -1,6 +1,6 @@
 # Task 846 — `MantineDashboardHeader`, `MantineDashboardPeriodControl`, `MantineDashboardGrid`, and `src/lib/dashboard/period.ts` (Tirane completed periods)
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: 🔴 NEEDS REVISION (review 1, 2026-09-20) — read §16 first; it is blocked on an owner decision**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
@@ -83,7 +83,7 @@ New patterns render Mantine core, `RangeDatePicker` (enrolled, storied) and noth
 | **R3** | spec §4 | `compareToPrevious(current, previous)` → `{ kind: 'no_base' }` when `previous === 0`; otherwise `{ kind: 'delta', delta, percent }` with `percent` rounded to an integer. Never returns `Infinity`/`NaN`. | P1 | AC1 | Confirmed |
 | **R4** | §3, 844 R5 | `formatters.ts` gains `formatDateTimeInZone(iso, locale, timeZone)`, which produces the **same per-locale layout** as `formatDateTime` but for the wall clock of `timeZone` (parts from `Intl.DateTimeFormat('en-US', { timeZone, hourCycle: 'h23', … }).formatToParts`, composed by the existing layout code). `period.ts` exposes `tiraneAbsoluteLabel(iso, locale)` built on it. Server-only use is documented in JSDoc. | P1 | AC1 | Confirmed |
 | **R5** | spec §16.1, §17.2–§17.3, D78-5 | `MantineDashboardHeader` props: `title`, `subtitle?`, `updatedAtLabel?` (a preformatted string), `stale?: { label: string }`, `periodControl?: ReactNode`. Title = `Title order={1} size="h4"`; subtitle = `Text size="sm" c="gray.5"`. `updatedAtLabel` = `Text size="xs" c="gray.5"`. `stale` = yellow `Badge` with an icon and the label. Layout: `Group justify="space-between"` from `sm`, `Stack` below `sm`, the control full width below `sm`. | P1 | AC2, AC6 | Confirmed |
-| **R6** | spec §16.3, §17.3 | `MantineDashboardPeriodControl` props: `value: PeriodSelection`, `onChange`, `now` (the server's `now`, ISO), labels (`label7d`, `label30d`, `labelCustom`, `rangePlaceholder`, error messages keyed by R2's codes, `scopeLabel`). It renders the canonical `SegmentedControl` (full width below `sm`). Selecting Custom renders `RangeDatePicker` with `maxDate` = Tirane yesterday. Selecting a range calls `validateCustomRange`; on error it shows the localized message (`Text c="red.7" size="xs"` with `role="alert"`) and does **not** call `onChange`. It is keyboard-operable end to end. | P1 | AC3, AC6 | Confirmed |
+| **R6** | spec §16.3, §17.3 | `MantineDashboardPeriodControl` props: `value: PeriodSelection`, `onChange`, `now` (the server's `now`, ISO), labels (`label7d`, `label30d`, `labelCustom`, `rangePlaceholder`, error messages keyed by R2's codes, `scopeLabel`). It renders the canonical `SegmentedControl` (full width below `sm`). Selecting Custom renders `RangeDatePicker` with `maxDate` = Tirane yesterday. Selecting a range calls `validateCustomRange`; on error it shows the localized message (`Text c="red.7" size="xs"` with `role="alert"`) and does **not** call `onChange`. It is keyboard-operable end to end. | P1 | AC3, AC6 | **AMENDED — review 1, §16.1: the "end to end" clause is unsatisfiable inside this task's scope and is blocked on an owner decision. Everything else in R6 is `VERIFIED`.** |
 | **R7** | spec §17.1 | `MantineDashboardGrid` = `Container`-like root with `maw={theme.other.boxSize.dashboardContentMaxWidth}` (new role `'90rem'`, 1440px, spec §17.1), `px={{ base: 'md', md: 'xl' }}`, rows separated by `{ base: 'md', md: 'xl' }`. `TopRow`: `SimpleGrid` with `cols={{ base: 1, md: 2, lg: Math.min(n, 4) }}` where `n` = rendered children count, so 3 cards fill the row and a missing 4th leaves no gap. `Split`: Mantine `Grid` with main `span={{ base: 12, lg: 8 }}` and side `span={{ base: 12, lg: 4 }}`. `Full`: one full-width row. Gaps `{ base: 'md', md: 'xl' }` (TailAdmin `gap-4 md:gap-6`, spec 24). | P1 | AC4, AC6 | Confirmed |
 | **R8** | 16c, GR-3, GR-3a | Own Stories `Patterns/Mantine/DashboardHeader` (fresh, stale, with and without period control), `Patterns/Mantine/DashboardPeriodControl` (7d selected, custom open, custom error > 90 days), `Patterns/Mantine/DashboardGrid` (TopRow with 4 and with 3 real `MantineDashboardStatCard`s from 843, Split with two `MantineDashboardCard`s, Full). All three pattern files enrolled. | P1 | AC5 | Confirmed |
 | **R9** | hardcode, i18n | No raw px/rem/hex/rgb, no `className=`, no Tailwind in the pattern files; `period.ts` contains no UI. New strings for the stories and the control's default messages exist in 4 locales (`dashboard.period.*`). `check:i18n` 0. | P1 | AC5, AC7 | Confirmed |
@@ -177,6 +177,9 @@ nothing a user sees changes yet.
 - **AC3 [R6]** — Given `DashboardPeriodControl` in the browser, when a 120-day custom range is chosen by keyboard, then
   an element with `role="alert"` shows the localized "longer than 90 days" message, and the story's `onChange` action
   log records no call. Quote the DOM and the actions panel.
+  **Review 1, 2026-09-20 — `PARTIALLY VERIFIED`.** The alert, its three localized texts and the absent `onChange` are
+  proven. The words "by keyboard" are not met for one step: the picker cannot be opened without a pointer. Cause and
+  the decision that unblocks this criterion are in §16.1. Do not re-run AC3 until §16.1 is decided.
 - **AC4 [R7]** — Given `DashboardGrid → Default` at 1440px, when the 3-card `TopRow` is measured, then its three
   cards' combined width plus gaps equals the row width (no empty column). At 800px there are 2 columns; at 700px, 1.
   Quote the computed `grid-template-columns` at each width.
@@ -271,3 +274,57 @@ or `BLOCKED`. No self-approval, no mutating git. Update the 846 line of `docs/ba
 | GR-1 / 16d | §3.2 receipt. |
 | Hardcode | R7/R9; one new role, spec-sourced. |
 | Commands in blocks | §13.2. |
+
+## 16. Review 1 — `NEEDS REVISION` 2026-09-20 (Opus)
+
+The implementation is otherwise complete and evidenced: R1–R5, R7, R8, R9 and AC1, AC2, AC4, AC5, AC7 are `VERIFIED`
+against the real diff and the retained transcripts, and the owner accepted the §13.3 visual matrix on 2026-09-20
+(AC6 `VERIFIED`). One requirement clause is false as shipped, and it is a task-design defect of this kickoff, not an
+executor deviation. **Nothing below asks for a re-implementation.**
+
+### 16.1 `STOP - OWNER DECISION REQUIRED` — R6's "keyboard-operable end to end"
+
+**Finding (P1, R6 / AC3).** `MantineDashboardPeriodControl`'s Custom range picker cannot be opened without a pointer.
+Measured at source, not inferred:
+
+- `src/design-system/mantine/patterns/RangeDatePicker.tsx:836-838` — the trigger is `<TextInput readOnly …>`. An
+  `input[readonly]` fires no `click` event from `Enter` or `Space`.
+- `src/design-system/mantine/patterns/MantinePopover.tsx:115-122` (desktop) and `:137` (the `<640` bottom-sheet
+  wrapper) — both open paths are `onClick` only. Counter-check: neither file contains any `onKeyDown`/`onKeyUp`
+  handler, and `Popover.Target` in controlled mode attaches nothing of its own (documented at `:80-88`).
+
+So a keyboard-only user can reach 7 days / 30 days / Custom (the `SegmentedControl` is a radio group) but cannot open
+the calendar. The executor disclosed this accurately; its own play function opens the trigger with a pointer.
+
+**This defect is inherited, not introduced.** Both files are `RangeDatePicker`'s, reused unchanged and placed out of
+scope by §8; the same trigger already ships in the live listings date-range filter, a `docs/critical-flow-registry.md`
+row. Task 846's diff does not touch either file. Filed as **Task 861** (see `docs/backlog-reserved.md`).
+
+**Why this is a kickoff defect.** R6 asserted an observable property that this task's own scope forbids it from
+delivering — the class `docs/orchestrator-procedures.md` → "Detector-aware requirements and migrations" calls a
+task-design defect: *"When feasibility evidence contradicts a drafted acceptance criterion, correct the criterion
+before assigning the task."* A requirement may only be changed by an explicit owner decision recorded before the
+verdict, so the orchestrator cannot narrow R6 and approve in the same turn.
+
+**Decision required — choose exactly one:**
+
+| Option | What changes | What it verifies | Cost |
+|---|---|---|---|
+| **A — narrow R6 here, fix in 861** (recommended) | Owner records a dated decision below. R6's final sentence becomes: *"The segmented control is keyboard-operable; the custom picker inherits `RangeDatePicker`'s pointer-only trigger, tracked as 861."* AC3 keeps its proven assertions and drops "by keyboard" for the open step. | No code change. The existing evidence closes the amended AC3 as written. 846 is then re-reviewed for approval on the record already in hand. | One review turn. No executor session. |
+| **B — fix the trigger first, inside 861, and hold 846** | 861 is promoted ahead of 846's approval: `MantinePopover` gains a keyboard open path (`Enter`/`Space` on the trigger) and `RangeDatePicker` regression evidence is re-run. 846 is re-reviewed unchanged afterwards. | R6 as originally written, end to end. | A full Q4 executor session on a critical-flow component, and it blocks Wave B (847/848 need `period.ts`). |
+| **C — widen 846's scope to include the trigger fix** | §8 is amended to bring `MantinePopover.tsx` in scope; 846 re-enters with a Q4 profile and critical-flow regression proof. | Same as B, in one task. | Rejected by the reviewer: it puts a live critical flow into a pattern-authoring task after its evidence was already captured. Recorded for completeness. |
+
+`OWNER DECISION 2026-__-__:` *(record verbatim here, with the date, before the next review turn)*
+
+### 16.2 Notes carried into the next review (no action required)
+
+- **Deviations accepted.** The four named `Grid` exports instead of `Grid.TopRow` statics (Server-Component
+  reachability), `Flex` instead of `Group`/`Stack` (responsive props are typed on `Flex`), and `TopRow`'s
+  `md: min(n, 2)` clamp are all better than the kickoff's text and are evidenced. They do not need reverting.
+- **Consumer contract for 853/854.** Clicking a preset while `value.kind === 'custom'` calls `onChange` but leaves the
+  segment on Custom until the consumer updates `value`. The pattern is controlled by design; 853/854 must write the
+  URL back. State it in their kickoffs.
+- **Unrelated worktree paths.** `package.json` / `package-lock.json` carry `@vercel/analytics`, added by the owner at
+  09:24 on 2026-09-20 while 846's gates ran. They are `EXCLUDED AS UNRELATED` from 846's handoff. Separately: commit
+  `78c322757` imports that package from `src/app/layout.tsx` while its manifest entry is still uncommitted — the
+  owner should commit both together, or CI will fail on a missing dependency. Not 846's defect.

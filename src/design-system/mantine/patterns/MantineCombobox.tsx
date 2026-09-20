@@ -261,18 +261,44 @@ export function MantineCombobox({
     </Combobox.Option>
   )
 
+  // The trigger's own `w` only resolves against ITS immediate containing block — this outer
+  // `Box` (the component's actual footprint inside a flex row like a card header `Group`). A
+  // plain `Box` with no width is a flex item that shrink-to-fits its content by default (a flex
+  // row's main-axis sizing, unlike `align-items:stretch`'s cross-axis-only stretch), so the
+  // trigger's `width:100%` was resolving against an unconstrained auto-width ancestor and had no
+  // row width left to actually fill (Task 845 Pass 11 — dashboard chart period filters stayed
+  // ~212px wide on a 360px viewport despite the correct-looking `w={{ base: '100%', sm: 'auto' }}`
+  // already on the `TextInput`). Mirroring the same resolved width here — whatever the trigger
+  // itself resolves to, fixed or responsive — makes the whole component's footprint match its own
+  // documented width contract in every case: the default stretches full-width on mobile like the
+  // trigger always intended, a fixed `triggerWidth` (e.g. `PhoneField`'s compact country trigger)
+  // keeps that same fixed footprint, and an explicit `triggerWidth="100%"` consumer that already
+  // wraps this component in its own flex-grow `Box` (`ListingsSortBar`) is unaffected either way.
+  const resolvedWidth = triggerWidth ?? ({ base: '100%', sm: 'auto' } as const)
+
   const triggerCommonProps = {
     placeholder,
     disabled,
     error,
     leftSection: icon,
     rightSection: <Combobox.Chevron />,
-    w: triggerWidth ?? ({ base: '100%', sm: 'auto' } as const),
+    // Confirmed live (Task 845 Pass 11): Mantine's own documented default for this prop is
+    // `"none"` (the chevron section should never capture a click, letting it fall through to the
+    // real `<input>` underneath), but this project's installed build never actually sets the
+    // resulting `--input-right-section-pointer-events` CSS var unless a value is passed
+    // explicitly — leaving the section's `pointer-events` at its CSS initial value, `auto`. That
+    // made the chevron's own ~34×42px hit box swallow every click inside it (confirmed via
+    // `elementFromPoint` at the chevron's exact center hitting the bare `<svg>`, not the input)
+    // while a click anywhere else on the same trigger reached the input's `onClick` normally —
+    // exactly the reported "click the chevron itself → nothing; click beside it → opens" bug.
+    // Passing the value explicitly is the fix in every Mantine version, default-inferred or not.
+    rightSectionPointerEvents: 'none' as const,
+    w: resolvedWidth,
     radius: 'lg' as const,
   }
 
   return (
-    <Box>
+    <Box w={resolvedWidth}>
       <Combobox store={combobox} onOptionSubmit={handleSelect} withinPortal={withinPortal}>
         <Combobox.Target targetType={variant === 'input' ? 'input' : 'button'}>
           {variant === 'input' ? (

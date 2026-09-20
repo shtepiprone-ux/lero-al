@@ -1,0 +1,354 @@
+{
+  "arm": "after",
+  "viewportHeight": 900,
+  "results": [
+    {
+      "story": "patterns-mantine-dashboardbarchart--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 212,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardlinechart--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 152,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboarddonut--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 98,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardsemidonut--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 62,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradar--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 61,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 71.1,
+      "worstOutsideCardPx": 87.1,
+      "worstAt": {
+        "x": 219,
+        "y": 302,
+        "left": 218,
+        "right": 391,
+        "width": 173
+      }
+    },
+    {
+      "story": "patterns-mantine-dashboardradialprogress--default",
+      "width": 320,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 0,
+      "tooltipKind": null,
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardbarchart--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 212,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardlinechart--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 152,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboarddonut--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 98,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardsemidonut--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 62,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradar--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 60,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 37.4,
+      "worstOutsideCardPx": 53.4,
+      "worstAt": {
+        "x": 217,
+        "y": 302,
+        "left": 217,
+        "right": 357,
+        "width": 140
+      }
+    },
+    {
+      "story": "patterns-mantine-dashboardradialprogress--default",
+      "width": 320,
+      "locale": "en",
+      "apex": true,
+      "hoverPointsWithTooltip": 0,
+      "tooltipKind": null,
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardbarchart--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 212,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardlinechart--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 152,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboarddonut--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 98,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardsemidonut--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 62,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradar--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 61,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 1.1,
+      "worstOutsideCardPx": 17.1,
+      "worstAt": {
+        "x": 219,
+        "y": 302,
+        "left": 218,
+        "right": 391,
+        "width": 173
+      }
+    },
+    {
+      "story": "patterns-mantine-dashboardradialprogress--default",
+      "width": 390,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 0,
+      "tooltipKind": null,
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardbarchart--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 212,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardlinechart--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 152,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboarddonut--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 98,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardsemidonut--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 62,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradar--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 61,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradialprogress--default",
+      "width": 768,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 0,
+      "tooltipKind": null,
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardbarchart--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 212,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardlinechart--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 152,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboarddonut--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 98,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardsemidonut--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 62,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradar--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 61,
+      "tooltipKind": "apexcharts-native",
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    },
+    {
+      "story": "patterns-mantine-dashboardradialprogress--default",
+      "width": 1440,
+      "locale": "uk",
+      "apex": true,
+      "hoverPointsWithTooltip": 0,
+      "tooltipKind": null,
+      "worstOverflowPx": 0,
+      "worstOutsideCardPx": 0,
+      "worstAt": null
+    }
+  ]
+}

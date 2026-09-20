@@ -1,0 +1,18 @@
+== X3 witness 1: working-tree MantineCombobox.tsx before any plant
+1a64070300181bea245655a271f84fb654d4517a
+== X3 witness 1b: backup taken; working-tree hash 1a64070300181bea245655a271f84fb654d4517a
+== X3 witness 2: after plant (must equal HEAD blob dc50e1f1396788e55d76d578ca59d042575cd50a)
+dc50e1f1396788e55d76d578ca59d042575cd50a
+== X3 witness 3: after restore (must equal 1a64070300181bea245655a271f84fb654d4517a)
+dc50e1f1396788e55d76d578ca59d042575cd50a
+== git status --porcelain for the planted path (empty = unchanged vs index means nothing; shows M when working tree differs from HEAD, as expected for this task)
+
+== X3 INCIDENT (recorded by the executor, unedited above): witness 3 printed dc50e1f… (the HEAD blob), i.e. the scripted restore did NOT run.
+   Cause: x3_before_arm.sh passed POSIX-style /c/Users/... paths to Node's fs.copyFileSync, which Node on Windows resolves as C:\c\Users\..., so the backup copy
+   (taken before the plant) and the restore copy both failed silently (no set -e). The BEFORE-arm build and capture were unaffected: witness 2 proves the plant took effect.
+   Consequence: MantineCombobox.tsx was left on the HEAD blob until the executor reconstructed it from the exact 'git diff' printed earlier in the session,
+   applied with the Edit tool (git apply is owner-only). Reconstruction is proven by the hash below, not asserted.
+== X3 witness 4: after manual reconstruction (must equal 1a64070300181bea245655a271f84fb654d4517a)
+1a64070300181bea245655a271f84fb654d4517a
+== git status --porcelain for the planted path (M = differs from HEAD, expected: this task's two owner-reported fixes)
+ M src/design-system/mantine/patterns/MantineCombobox.tsx

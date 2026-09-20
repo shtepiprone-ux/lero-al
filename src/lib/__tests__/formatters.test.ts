@@ -6,10 +6,10 @@
  * and the listing-card date-with-year formatter.
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { formatPrice, formatListingDate } from '../formatters'
+import { formatPrice, formatListingDate, formatShortDate, formatMonthAbbrev, formatFullDate, formatMonthFull, formatWeekdayShort } from '../formatters'
 
 // ── formatPrice — single-currency-marker contract ─────────────────────────────
 
@@ -170,5 +170,75 @@ describe('per_sqm label allows direct use without .split("/")', () => {
     expect(listing['per_sqm'].startsWith('/')).toBe(true)
     expect(listing['per_sqm']).toContain('м²')
     expect(listing['per_sqm']).not.toContain('m2')
+  })
+})
+
+// ── Task 845 Revision 1 (W6) — chart date formatters use UTC getters consistently ─
+
+describe('formatShortDate / formatMonthAbbrev / formatFullDate / formatMonthFull / formatWeekdayShort — UTC parsing, all 4 locales', () => {
+  // A `YYYY-MM-DD` string parses as UTC midnight. Before this fix, `formatWeekdayShort` read
+  // `getUTCDay()` while the other four read local `getDate()`/`getMonth()` — for any viewer west
+  // of UTC (e.g. `America/New_York`), `new Date('2026-09-19')` is still 2026-09-18 in local time,
+  // so the weekday and the day/month disagreed. `2026-09-19` (UTC) is a Saturday in September.
+  const DATE = '2026-09-19'
+  const locales = ['en', 'sq', 'uk', 'it'] as const
+
+  for (const locale of locales) {
+    it(`${locale}: all five formatters return non-empty, non-placeholder text for ${DATE}`, () => {
+      for (const fn of [formatShortDate, formatMonthAbbrev, formatFullDate, formatMonthFull, formatWeekdayShort]) {
+        const result = fn(DATE, locale)
+        expect(result).toBeTruthy()
+        expect(result).not.toBe('—')
+      }
+    })
+
+    it(`${locale}: returns "—" for null/undefined/invalid input`, () => {
+      for (const fn of [formatShortDate, formatMonthAbbrev, formatFullDate, formatMonthFull, formatWeekdayShort]) {
+        expect(fn(null, locale)).toBe('—')
+        expect(fn(undefined, locale)).toBe('—')
+        expect(fn('not-a-date', locale)).toBe('—')
+      }
+    })
+  }
+
+  it('en: every formatter names September (the UTC month), never August/October', () => {
+    expect(formatShortDate(DATE, 'en')).toBe('Sep 19')
+    expect(formatMonthAbbrev(DATE, 'en')).toBe('Sep')
+    expect(formatFullDate(DATE, 'en')).toBe('19 September')
+    expect(formatMonthFull(DATE, 'en')).toBe('September')
+    expect(formatWeekdayShort(DATE, 'en')).toBe('Sat')
+  })
+
+  it('uk: every formatter names вересень (the UTC month) in Cyrillic', () => {
+    expect(formatShortDate(DATE, 'uk')).toBe('19 вер.')
+    expect(formatMonthAbbrev(DATE, 'uk')).toBe('вер.')
+    expect(formatFullDate(DATE, 'uk')).toBe('19 вересня')
+    expect(formatMonthFull(DATE, 'uk')).toBe('Вересень')
+    expect(formatWeekdayShort(DATE, 'uk')).toBe('Сб')
+  })
+
+  describe('TZ=America/New_York — UTC parsing keeps every formatter on the same calendar day regardless of the runtime local timezone', () => {
+    const originalTZ = process.env.TZ
+
+    beforeAll(() => {
+      process.env.TZ = 'America/New_York'
+    })
+
+    afterAll(() => {
+      if (originalTZ === undefined) delete process.env.TZ
+      else process.env.TZ = originalTZ
+    })
+
+    it('formatWeekdayShort and formatShortDate both describe Saturday 19 September for 2026-09-19 in en', () => {
+      // Pre-fix: `formatShortDate` read local `getDate()`/`getMonth()`, which resolve
+      // `2026-09-19T00:00:00Z` back to 2026-09-18 under `America/New_York` (UTC-4) — a Friday, the
+      // 18th, not the 19th — while `formatWeekdayShort`'s `getUTCDay()` still said Saturday. Both
+      // now read UTC parts, so both agree regardless of the runtime's local timezone.
+      expect(formatWeekdayShort(DATE, 'en')).toBe('Sat')
+      expect(formatShortDate(DATE, 'en')).toBe('Sep 19')
+      expect(formatMonthAbbrev(DATE, 'en')).toBe('Sep')
+      expect(formatFullDate(DATE, 'en')).toBe('19 September')
+      expect(formatMonthFull(DATE, 'en')).toBe('September')
+    })
   })
 })

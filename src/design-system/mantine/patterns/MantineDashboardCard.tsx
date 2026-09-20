@@ -10,7 +10,7 @@ export type DashboardCardState = 'ready' | 'loading' | 'error' | 'stale'
 export interface MantineDashboardCardProps {
   /** Section title. Kept visible in every state (spec §17.4 — error/stale never replace it). */
   title: string
-  /** Scope label next to the title, e.g. "Now" or a formatted period ("Last 30 days"). */
+  /** Scope label under the title (own line), e.g. "Now" or a formatted period ("Jun 2026"). */
   scopeLabel?: ReactNode
   /** Optional slot rendered on the header's trailing edge (e.g. a period control, a link). */
   headerAction?: ReactNode
@@ -65,7 +65,7 @@ export function MantineDashboardCard({
 
   const header = (
     <Group justify="space-between" align="flex-start" wrap="wrap" gap="sm">
-      <Group gap="xs" align="baseline" wrap="wrap">
+      <Stack gap="micro">
         <Title order={2} size="h5">
           {title}
         </Title>
@@ -74,7 +74,7 @@ export function MantineDashboardCard({
             {scopeLabel}
           </Text>
         )}
-      </Group>
+      </Stack>
       {headerAction}
     </Group>
   )

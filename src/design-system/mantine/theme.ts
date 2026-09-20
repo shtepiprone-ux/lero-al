@@ -101,6 +101,13 @@ declare module '@mantine/core' {
                                       // §17.2 ADM-01 / §17.3 AGT-01, "Висота 132 px"). Applied as
                                       // `mih`, never a fixed height, so a translated label may
                                       // still grow the card.
+      | 'dashboardPeriodColumn' // 212px — Task 845 Pass 15 (owner-reported): the dashboard chart
+                                // family's period `MantineCombobox` (`headerAction`) and, at ≥640px,
+                                // each chart pattern's legend column share this exact width so both
+                                // start at the identical trailing-edge X regardless of card width or
+                                // locale — measured live as `MantineCombobox`'s own already-stable
+                                // rendered trigger width at the `sm` breakpoint (`en`/`uk`/`it`/`sq`,
+                                // all identically 212px), not an invented number.
       | 'dropdownPanel'   // 220px — Combobox/RangeDatePicker dropdown max-height
       | 'galleryNavDemoHeight' // 270px — Task 824 R17 revision (D824-4, AC17 audit): the
                                // `GalleryNavActionIcon`/`GalleryDesktopNavigation` canonical Stories'
@@ -110,6 +117,10 @@ declare module '@mantine/core' {
       | 'compactTrigger'  // 280px — RangeDatePicker compact trigger width
       | 'avatarCropArea'  // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72)
       | 'emptyState'      // 360px — MantineEmptyLoadingErrorState stack max-width
+      | 'dashboardChartMinHeight' // 384px — Task 845: `MantineDashboardLineChart`/
+                                  // `MantineDashboardDonut` chart-area min height (spec v3.3
+                                  // §17.2 ADM-10 "minimum height 384px"). Applied as `mih`, never
+                                  // a fixed height.
       | 'galleryNavDemoWidth'  // 480px — the same two Stories' demo backdrop width
       | 'prose'           // 576px — homepage hero subtitle max-width
       | 'ctaSection'       // 672px — homepage CTA box max-width
@@ -217,6 +228,50 @@ declare module '@mantine/core' {
         width: string
         height: string
       }
+    }
+    // Task 845 (D845-1, spec v3.3 §17.2 ADM-10/§17.3 AGT-03/04/05) — the dashboard charts'
+    // per-event-type series colours, each a `'<colour>.<shade>'` Mantine theme colour reference
+    // (never a hex/rgb literal), resolved to a real CSS colour by `resolveThemeColor`
+    // (`patterns/dashboardChartTheme.ts`) for the ApexCharts options. `chatThreads`/`chatInboundMessages` have no chart consumer yet
+    // (D78-1 keeps chat out of this sprint) — the keys exist now so a later chat series never
+    // needs an ad-hoc colour choice.
+    chartSeries: Record<'recordedViews' | 'whatsappClicks' | 'formInquiries' | 'chatThreads' | 'chatInboundMessages', string>
+    // Task 845 Revision 1 (W1, owner-reported hardcode audit 2026-09-19) — every ApexCharts/
+    // chart-library configuration constant previously local to the six `MantineDashboard*` pattern
+    // files, moved to one named role so no pattern file carries a raw visual number. Each value is
+    // exactly the pre-Revision-1 literal it replaces (see the six pattern files' own doc comments /
+    // the Task 845 session log for each value's original TailAdmin/ApexCharts-measurement or
+    // explicit-owner-instruction provenance) — this migration does not re-derive any of them.
+    dashboardChart: {
+      donutSize: number // 200px — MantineDashboardDonut ring diameter (ApexCharts canvas)
+      semiDonutSize: number // 220px — MantineDashboardSemiDonut ring diameter
+      radialSize: number // 180px — MantineDashboardRadialProgress ring diameter
+      radarSize: number // 100px — MantineDashboardRadar's `plotOptions.radar.size` (the largest radius, used when the chart box is wide enough)
+      radarLabelReserve: number // 90px — horizontal room the radar keeps free on each side for its category labels: the widest label measured live across en/uk/sq/it is 77px (uk `Повідомлення`) plus the label's gap to the polygon (Task 845 Revision 2)
+      barRadius: number // 4px — MantineDashboardBarChart stacked-bar top corner radius
+      donutBorderRadius: number // 8px — donut/semi-donut segment corner radius
+      donutSpacing: number // 3px — gap between adjacent donut segments
+      expandOffset: number // 10px — ApexCharts' own default pie `expandOffset`; extra canvas room
+                            // reserved on every side so a clicked/expanded slice never clips
+      lineStrokeWidthPrimary: number // 2.5 — line chart primary-series stroke width
+      lineStrokeWidthSecondary: number // 1.5 — line chart secondary-series stroke width
+      radarStrokeWidth: number // 2 — radar polygon outline weight
+      semiDonutStrokeWidth: number // 3 — semi-donut segment separator weight
+      radarFillOpacity: number // 0.25 — radar polygon fill opacity
+      gradientOpacityPrimary: number // 0.35 — line chart primary-series fill gradient start opacity
+      gradientOpacitySecondary: number // 0.16 — line chart secondary-series fill gradient start opacity
+      legendInactiveOpacity: number // 0.35 — a toggled-off legend swatch's opacity
+      hoverMarkerSize: number // 5 — line chart's hovered-point marker radius
+      animationSpeed: number // 400 — every chart's ApexCharts `animations.speed` (ms)
+      defaultShade: number // 6 — the theme shade read when a `'<colour>.<shade>'` ref omits one
+      shadeCollisionStep: number // 2 — donut colour-collision resolver's shade increment
+      // Task 845 Revision 2 (X1, review 2 finding F9) — the five ratio/array literals Revision 1
+      // left as local constants or inline values in the pattern files.
+      donutHoleSize: string // '62%' — MantineDashboardDonut `plotOptions.pie.donut.size`; ApexCharts' own "Rounded Spaced" donut demo value (apexcharts.com/javascript-chart-demos/pie-charts/rounded-spaced/), owner-requested Pass 13
+      semiDonutHoleSize: string // '60%' — MantineDashboardSemiDonut `plotOptions.pie.donut.size`; same measured ratio as the full donut (thickness ≈ 0.45 × outer radius: hole radius / outer radius = (110 − 44) / 110 ≈ 0.6)
+      radialHollowSize: string // '56%' — MantineDashboardRadialProgress `plotOptions.radialBar.hollow.size`; TailAdmin's measured ring thickness (demo.tailadmin.com/radial-chart)
+      barColumnWidth: string // '40%' — MantineDashboardBarChart `plotOptions.bar.columnWidth`; TailAdmin Bar Chart 1/2 column-to-slot ratio (demo.tailadmin.com/bar-chart)
+      lineGradientStops: number[] // [0, 90, 100] — MantineDashboardLineChart area-fill `gradient.stops` (percent offsets), TailAdmin Line Chart 1
     }
   }
 }
@@ -371,11 +426,81 @@ const sale: MantineColorsTuple = [
   '#8d0624', // 9 — approximation
 ]
 
+// Task 845 Pass 10 (owner-provided reference, 2026-09-19): the owner rejected the chart series'
+// original saturated palette ("дуже агресивна") and named a specific external reference —
+// pinterest.com/ideas/warm-pastel-color-palette/959971831841/ — for a warm, muted replacement.
+// Each authoritative stop below is a pixel sampled directly from that reference page's own pinned
+// swatch images (Python PIL `getpixel`, not eyeballed/guessed), placed at index 4 — the same slot
+// `chartSeries` below actually reads for every pre-existing tuple in this file (`blueLight.4`,
+// `orange.4`). The other 9 slots are an approximated light→dark ramp around that one cited stop,
+// same derivation spirit as the `purple`/`sale` tuples above (a single authoritative hex expanded
+// into a plausible 10-shade ramp) — not independently cited.
+const dustyRose: MantineColorsTuple = [
+  '#fcf0ef', // 0 — approximation
+  '#f7dbdb', // 1 — approximation
+  '#f2c6c6', // 2 — approximation
+  '#edafae', // 3 — approximation
+  '#e89897', // 4 — "Bloom", warm-pastel-color-palette pin, sampled pixel (232,152,151)
+  '#c27f7e', // 5 — approximation
+  '#9e6866', // 6 — approximation
+  '#7e5452', // 7 — approximation
+  '#5e3f3d', // 8 — approximation
+  '#3e2a28', // 9 — approximation
+]
+const warmSage: MantineColorsTuple = [
+  '#f1f3ef', // 0 — approximation
+  '#dfe3d9', // 1 — approximation
+  '#cdd2c4', // 2 — approximation
+  '#b8c0ab', // 3 — approximation
+  '#a4ae93', // 4 — "Sage Green", warm-pastel-color-palette pin, sampled pixel (164,174,147)
+  '#8a917b', // 5 — approximation
+  '#727664', // 6 — approximation
+  '#5c5e50', // 7 — approximation
+  '#46473b', // 8 — approximation
+  '#312f27', // 9 — approximation
+]
+const mutedLilac: MantineColorsTuple = [
+  '#f9f7f9', // 0 — approximation
+  '#f1edf2', // 1 — approximation
+  '#eae3eb', // 2 — approximation
+  '#e1d7e2', // 3 — approximation
+  '#d8ccda', // 4 — "Muted Lilac", warm-pastel-color-palette pin, sampled pixel (216,204,218)
+  '#b5aab5', // 5 — approximation
+  '#938a92', // 6 — approximation
+  '#766e73', // 7 — approximation
+  '#595154', // 8 — approximation
+  '#3b3535', // 9 — approximation
+]
+const warmGold: MantineColorsTuple = [
+  '#fff7ed', // 0 — approximation
+  '#feecd6', // 1 — approximation
+  '#fde1bf', // 2 — approximation
+  '#fdd5a4', // 3 — approximation
+  '#fcc98a', // 4 — "Golden", warm-pastel-color-palette pin, sampled pixel (252,201,138)
+  '#d2a873', // 5 — approximation
+  '#ab885e', // 6 — approximation
+  '#886c4b', // 7 — approximation
+  '#655038', // 8 — approximation
+  '#423425', // 9 — approximation
+]
+const warmLatte: MantineColorsTuple = [
+  '#f8f1ec', // 0 — approximation
+  '#efddd3', // 1 — approximation
+  '#e6caba', // 2 — approximation
+  '#dcb49e', // 3 — approximation
+  '#d29f82', // 4 — "Warm Brown / Latte", warm-pastel-color-palette pin, sampled pixel (210,159,130)
+  '#b0856d', // 5 — approximation
+  '#906d59', // 6 — approximation
+  '#735747', // 7 — approximation
+  '#564135', // 8 — approximation
+  '#3a2c24', // 9 — approximation
+]
+
 export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange },
+  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange, dustyRose, warmSage, mutedLilac, warmGold, warmLatte },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, xs2=480, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.
@@ -535,11 +660,13 @@ export const theme = createTheme({
                                     // rendered role (rule 3).
       truncateLabel: '7.5rem',   // 120px
       dashboardStatCardMinHeight: '8.25rem', // 132px — Task 843: dashboard top card min height (spec v3.3 §17.2 ADM-01 / §17.3 AGT-01)
+      dashboardPeriodColumn: '13.25rem', // 212px — Task 845 Pass 15, see the `MantineThemeOther` augmentation above for the full measurement
       dropdownPanel: '13.75rem', // 220px
       galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
       compactTrigger: '17.5rem', // 280px
       avatarCropArea: '18rem', // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72, AvatarCropModal.tsx:104)
       emptyState: '22.5rem',     // 360px
+      dashboardChartMinHeight: '24rem', // 384px — Task 845: line chart / donut chart area min height (spec v3.3 §17.2 ADM-10)
       galleryNavDemoWidth: '30rem', // 480px — Task 824 R17 revision, D824-4/AC17 audit
       prose: '36rem',            // 576px
       ctaSection: '42rem',       // 672px
@@ -596,6 +723,61 @@ export const theme = createTheme({
         width: '2.5rem',  // 40px
         height: '0.25rem', // 4px
       },
+    },
+    // Task 845 (D845-1, spec v3.3 §17.2 ADM-10/§17.3 AGT-03/04/05) — see the `MantineThemeOther`
+    // augmentation above for full provenance. Each value is a `theme.colors` reference
+    // (`'<colour>.<shade>'`), never a hex/rgb literal; resolved through `resolveThemeColor`
+    // (`patterns/dashboardChartTheme.ts`) for both the ApexCharts options and the legend swatch, via
+    // `theme.colors[name][shade]`. Distinct colours per series so no
+    // two of the three shipped metrics (views/WhatsApp/inquiries) collide.
+    // Revised 2026-09-18, second owner correction — the shade-7/`brand`-red set from the first
+    // correction read as saturated "brand" colour, not the soft, muted palette TailAdmin's own
+    // Line/Bar/Pie references actually use. Moved to paler shades of the same hues (3-5, not
+    // 6-7), matched where possible to a value TailAdmin's own reference already measures exactly:
+    // `orange.4` (`#fd853a`) is TailAdmin's own measured donut-segment orange
+    // (`rgba(253,133,58)`, demo.tailadmin.com/pie-chart) verified live 2026-09-18, and
+    // `purple.3` (`#bdb1f9`) is a near-exact match for its measured lavender segment
+    // (`rgba(189,180,254)`). No hex/rgb literal here — every value is still a `theme.colors`
+    // reference; only the shade index moved.
+    // Task 845 Pass 10 (owner-provided reference): warm-pastel palette, replacing the previous
+    // saturated brand-colour set the owner rejected on sight — see the `dustyRose`/`warmSage`/
+    // `mutedLilac`/`warmGold`/`warmLatte` tuples above for each colour's cited source pixel.
+    chartSeries: {
+      recordedViews: 'dustyRose.4',
+      whatsappClicks: 'warmSage.4',
+      formInquiries: 'mutedLilac.4',
+      chatThreads: 'warmGold.4',
+      chatInboundMessages: 'warmLatte.4',
+    },
+    // Task 845 Revision 1 (W1) — see the `MantineThemeOther` augmentation above for full
+    // per-key provenance. Every value is the exact pre-Revision-1 literal it replaces.
+    dashboardChart: {
+      donutSize: 200,
+      semiDonutSize: 220,
+      radialSize: 180,
+      radarSize: 100,
+      radarLabelReserve: 90,
+      barRadius: 4,
+      donutBorderRadius: 8,
+      donutSpacing: 3,
+      expandOffset: 10,
+      lineStrokeWidthPrimary: 2.5,
+      lineStrokeWidthSecondary: 1.5,
+      radarStrokeWidth: 2,
+      semiDonutStrokeWidth: 3,
+      radarFillOpacity: 0.25,
+      gradientOpacityPrimary: 0.35,
+      gradientOpacitySecondary: 0.16,
+      legendInactiveOpacity: 0.35,
+      hoverMarkerSize: 5,
+      animationSpeed: 400,
+      defaultShade: 6,
+      shadeCollisionStep: 2,
+      donutHoleSize: '62%',
+      semiDonutHoleSize: '60%',
+      radialHollowSize: '56%',
+      barColumnWidth: '40%',
+      lineGradientStops: [0, 90, 100],
     },
   },
 

@@ -1,8 +1,8 @@
 # Task 845 — `@mantine/charts` enters the project; `MantineDashboardLineChart` and `MantineDashboardDonut` with text alternatives
 
 Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved (card shell) and **844** approved (tone
-map) · **Status: 🔁 `NEEDS REVISION` 2026-09-19 (review 2) — execute §17 (Revision 2); §17 supersedes every
-conflicting line in §1–§16, and §16 still supersedes §1–§15. OD-1/OD-2 in §16.2 are still open owner decisions.**
+map) · **Status: ✅ `APPROVED WITH NOTES` 2026-09-20 (review 3). Closed and archived — see §18 for the closing
+decisions (OD-1 = B, OD-2 = B, D845-4 native tooltip, D1 exception). No further execution is owed on this task.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-2** (owner,
 2026-09-18): *"@mantine/charts (Рекомендовано)"*.
@@ -294,10 +294,26 @@ owner-reported `MantineCombobox` fixes; do not rebuild any chart from scratch; d
 | **D845-2** | *"У Storybook мають бути всі види чартів з референсу... Задача не може бути закрита, допоки всі чарти не співпадають з референсами по всіх критеріях!"* (Pass 8) | Six patterns are in scope: `MantineDashboardLineChart`, `…BarChart`, `…Donut`, `…SemiDonut`, `…Radar`, `…RadialProgress`, each with its own Story and manifest entry. Supersedes R6's two-pattern scope and §7/§8. |
 | **D845-3** | Pass 10: owner-provided reference *pinterest.com/ideas/warm-pastel-color-palette/959971831841/* replacing the saturated palette (*"дуже агресивна"*) | `theme.other.chartSeries` = the five warm-pastel scales at shade 4 (`dustyRose`, `warmSage`, `mutedLilac`, `warmGold`, `warmLatte`). Supersedes R5's proposed shade-7 set. |
 
-### 16.2 `STOP - OWNER DECISION REQUIRED` — two open decisions
+### 16.2 ~~`STOP - OWNER DECISION REQUIRED`~~ — ANSWERED 2026-09-20; W7 is closed
 
-Work items W1–W6 and W8 do not depend on these and proceed now. **W7 is blocked until the owner's answer is written
-here, verbatim and dated, by Opus.** If still unanswered at completion, report `PARTIALLY IMPLEMENTED`.
+> **OWNER DECISION, 2026-09-20 (recorded by Opus in review 3, in-session):**
+>
+> - **OD-1 = Option B.** The owner waives ADM-11's link list and §17.4's text alternative for these patterns. **No
+>   code change.** Opus amends **853** and **855** in the same commit (drill-down from the donut and the table toggle
+>   removed) — done 2026-09-20; verification below.
+> - **OD-2 = Option B.** Animation is always on; the owner waives the §17.4 `prefers-reduced-motion` rule for the
+>   dashboard charts. **No code change.**
+>
+> **W7 is therefore complete by waiver, and AC16 is met.** Verification actually run (2026-09-20):
+> `grep -n -i "table toggle|donut segment|segments navigate|segment a link|segment hrefs|each segment"` over
+> `Sprint_78_kickoff_prompt_Task_853_Admin_Operations_Dashboard.md` and
+> `Sprint_78_kickoff_prompt_Task_855_Activity_Analytics_Integration.md` returns no requirement or AC that depends on
+> the removed behaviour.
+
+The original text of the two decisions is kept below as the record of what was decided against.
+
+Work items W1–W6 and W8 did not depend on these. **W7 was blocked until the owner's answer was written here,
+verbatim and dated, by Opus** — answered above on 2026-09-20.
 
 **OD-1 — text alternative and drill-down (spec v3.3 §17.2 ADM-11, §17.4).** The shipped patterns have no tabular
 text alternative (the data-table toggle was removed in Pass 3), the hover tooltip opens only on mouse
@@ -657,3 +673,42 @@ Report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` only when X1–X8 and W7 are
 evidence. Report `PARTIALLY IMPLEMENTED` when X1–X8 are complete and OD-1/OD-2 are still open. The owner matrix
 (§16.7) additionally gains rows for `Patterns/Mantine/DashboardChartStateFrame` and `…/DashboardChartTooltipContent`
 (every state, 1440/360, en/uk). Update the 845 backlog row as **one line**. No mutating git.
+
+## 18. Review 3 — `APPROVED WITH NOTES` (2026-09-20). Closing decisions
+
+§18 supersedes every conflicting line in §1–§17. The task is closed; nothing below is an instruction to execute.
+
+### 18.1 Owner decisions recorded at closure
+
+| ID | Owner words / choice (2026-09-19 – 2026-09-20, in-session) | Consequence — supersedes |
+|---|---|---|
+| **D845-4** | *"нативний tooltip apexcharts має правильну поведінку"* — the owner rejected the `Tooltip.Floating` wrapper of Pass 15/16 and required ApexCharts' own tooltip. | Chart tooltips are the library's native tooltip; the patterns feed it text and the theme font only. **Supersedes the second half of §17.3 X2**: `MantineDashboardChartTooltipContent.tsx` and its Story were deleted and must never be re-created; **AC19's tooltip clause is void** (its `tooltipSwatchSize` grep now passes trivially). The **state-frame half of X2 stands and is verified.** The clipping the owner saw is fixed by `useApexTooltipMirror.ts` (a hook, not a visual component: it only slides ApexCharts' own element back inside the viewport and the clipping card) plus a responsive radar box. §16.7 loses its `DashboardChartTooltipContent` rows. |
+| **OD-1** | **Option B** (see §16.2) | No code change. 853 and 855 amended 2026-09-20 in the same commit. |
+| **OD-2** | **Option B** (see §16.2) | No code change. Animation stays unconditionally on. |
+| **Visual** | *"Візуально все ок в сторісах"* (2026-09-20), after *"я візуально підтверджую, що tooltip тепер не обрізається під час hover ефекту"* (2026-09-19) | The §16.7 owner visual matrix is **accepted**. AC8 closed. |
+
+### 18.2 D1 — the `'NN%'` grep exception (AC18 narrowed)
+
+AC18's grep matches two lines that are **not** visual values:
+`MantineDashboardChartLegend.tsx:74` `w={{ base: '100%', sm: columnWidth }}` and
+`MantineDashboardRadar.tsx:178` `w={{ base: '100%', sm: theme.other.boxSize.dashboardChartMinHeight }}`.
+Both are Mantine's own responsive "fill the row below `sm`" idiom, which GR-0 permits; the regex cannot distinguish
+`'100%'` (a layout instruction) from `'62%'` (a measured visual ratio). **Decision (Opus, 2026-09-20): accepted as a
+standing exception, not a defect.** Any future task reusing this grep excludes the exact literal `'100%'`; every other
+percentage in these files remains forbidden and must be a `theme.other.dashboardChart` key.
+
+### 18.3 Notes carried out of this task (no action owed)
+
+- `/admin` First Load JS is **433 kB** vs 432 kB in Revision 1. `apexcharts hits 0` across all 20 `/admin/page`
+  chunks (`final-gate-rev2.log`), so no chart code reaches the route; the ~1 kB is unattributed and most plausibly
+  the enlarged `theme.other` object. Not a defect; re-measure in **853**, which is the first real chart consumer.
+- `MantineDashboardRadar.tsx:178` uses `boxSize.dashboardChartMinHeight` as a **width** cap. It is the right number
+  (a square plot box) but a height-named token; if 853/855 need a second value, give it its own key.
+- `MantineDashboardRadialProgress` maps `state="empty"` to the frame's `ready` (documented at its `:66`): a radial
+  bar's empty shape is `value={0}`, which renders a correct empty ring. Intentional, and it preserves the
+  pre-X2 rendered output that X2 required be unchanged.
+- The X3 plant-and-restore incident (POSIX paths passed to Node `fs` on Windows) is recorded in
+  `combobox-plant-witness.log`. The plant itself took effect (witness 2 = the HEAD blob), the before-arm capture is
+  therefore valid, and the reconstruction is proven by witness 4 = `1a64070300181bea245655a271f84fb654d4517a`, which
+  the reviewer re-measured against the live working tree at review time. This is the `Get-Content -Raw` family of
+  failure in a new form: **the witness is what caught it, which is exactly why it is mandatory.**

@@ -158,9 +158,12 @@ export function formatDateTime(dateStr: string | null | undefined, locale: strin
 /** `common.calendar_*` data (Task 562) reused here — do not duplicate; keyed by locale. */
 const CALENDAR_MESSAGES: Record<string, {
   common: {
+    calendar_months: string[]
     calendar_months_short: string[]
+    calendar_months_formatting: string[]
     calendar_month_year_suffix: string
     calendar_summary_order: string
+    calendar_weekdays_short: string[]
   }
 }> = { en: enMessages, uk: ukMessages, sq: sqMessages, it: itMessages } as never
 
@@ -188,6 +191,135 @@ export function formatListingDate(dateStr: string | null | undefined, locale: st
     return calendar_summary_order === 'month_day'
       ? `${month} ${day}, ${year}`
       : `${day} ${month} ${year}${calendar_month_year_suffix}`
+  } catch {
+    return '—'
+  }
+}
+
+/**
+ * Compact localized date WITHOUT the year — day + short month only, e.g. en:"Jun 15" ·
+ * uk:"15 черв." · it:"15 giu" · sq:"15 qer". Same safe, static `calendar_months_short` data as
+ * `formatListingDate` (never a live `Intl.DateTimeFormat` call — some browsers' bundled ICU has no
+ * `sq` locale data at all). For dense chart axis ticks where a full year repeated on every point
+ * (Task 845 Pass 10 — a 7-point week view previously fit only 3 of 7 `formatListingDate` labels on
+ * a narrow screen before wrapping/overlap-hiding kicked in). Returns '—' on null, undefined, or
+ * invalid input.
+ */
+export function formatShortDate(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const { calendar_months_short, calendar_summary_order } = (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    // UTC getters (Task 845 Revision 1, W6 — owner-reported): a bare `YYYY-MM-DD` string parses as
+    // UTC midnight. `getDate()`/`getMonth()` read that instant back in the RUNTIME's own local
+    // timezone, which disagrees with `formatWeekdayShort`'s `getUTCDay()` (already UTC) for any
+    // viewer west of UTC — e.g. `formatWeekdayShort('2026-09-19', 'en')` said "Sat" while this
+    // function said "18" for the same input under `TZ=America/New_York`. All five of this file's
+    // `YYYY-MM-DD`-input chart formatters now read UTC parts consistently.
+    const day = d.getUTCDate()
+    const month = calendar_months_short[d.getUTCMonth()]
+    return calendar_summary_order === 'month_day' ? `${month} ${day}` : `${day} ${month}`
+  } catch {
+    return '—'
+  }
+}
+
+/**
+ * The bare localized short month name — e.g. en:"Jun" · uk:"черв." · it:"giu" · sq:"qer". Same
+ * safe, static `calendar_months_short` data as `formatListingDate`/`formatShortDate` (never a live
+ * `Intl.DateTimeFormat` call). For a chart whose header already states the active month/year via
+ * `MantineDashboardCard`'s own `scopeLabel` slot, so a per-point axis tick never needs to repeat it
+ * — e.g. a 12-point year view's own ticks (Task 845 Pass 10, owner correction: state the period
+ * ONCE next to the title, then let the chart's own axis show only the bare value the reference
+ * needs, never the month name on every single tick). Returns '—' on null, undefined, or invalid
+ * input.
+ */
+export function formatMonthAbbrev(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const { calendar_months_short } = (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    // UTC getter (Task 845 Revision 1, W6) — see `formatShortDate`'s own comment.
+    return calendar_months_short[d.getUTCMonth()]
+  } catch {
+    return '—'
+  }
+}
+
+/**
+ * Day + full month name, no year — e.g. en:"19 September" · uk:"19 вересня" · it:"19 settembre" ·
+ * sq:"19 shtator". Uses `common.calendar_months_formatting` (already in every locale file, the
+ * standard CLDR "format" form used when a month name is preceded by a day number — for Ukrainian
+ * specifically this is the grammatically-required GENITIVE case, "вересня" not the standalone
+ * nominative "вересень" `calendar_months`/`calendar_months_short` carry; en/sq/it have no such
+ * case distinction, so their `calendar_months_formatting` values are identical to their
+ * `calendar_months`). Never a live `Intl.DateTimeFormat` call. For a chart tooltip that needs a
+ * genuinely full, unambiguous date on hover (Task 845 Pass 10, owner-requested) while the chart's
+ * own dense axis ticks stay bare (`formatMonthAbbrev`) — two different labels for two different
+ * contexts sharing one point, not one function trying to serve both. Returns '—' on null,
+ * undefined, or invalid input.
+ */
+export function formatFullDate(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const { calendar_months_formatting } = (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    // UTC getters (Task 845 Revision 1, W6) — see `formatShortDate`'s own comment.
+    return `${d.getUTCDate()} ${calendar_months_formatting[d.getUTCMonth()]}`
+  } catch {
+    return '—'
+  }
+}
+
+/**
+ * The bare full, standalone month name — e.g. en:"September" · uk:"Вересень" · it:"Settembre" ·
+ * sq:"Shtator". Uses `common.calendar_months` — the NOMINATIVE/standalone CLDR form (unlike
+ * `formatFullDate`'s `calendar_months_formatting`, which is the genitive/"preceded by a day
+ * number" form for Ukrainian) — capitalised, since the raw message data is lowercase (a
+ * calendar-internal key convention, not display-ready text). For a chart tooltip whose point IS a
+ * whole month (a year-view's 12 points, Task 845 Pass 10, owner-requested) where a day number
+ * would be meaningless. Never a live `Intl.DateTimeFormat` call. Returns '—' on null, undefined,
+ * or invalid input.
+ */
+export function formatMonthFull(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const { calendar_months } = (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    // UTC getter (Task 845 Revision 1, W6) — see `formatShortDate`'s own comment.
+    const month = calendar_months[d.getUTCMonth()]
+    return month.charAt(0).toUpperCase() + month.slice(1)
+  } catch {
+    return '—'
+  }
+}
+
+/**
+ * The bare localized short weekday name — e.g. en:"Tue" · uk:"Вт" · it:"mar" · sq:"mar".
+ * Uses `common.calendar_weekdays_short` (already in every locale file for the `RangeDatePicker`
+ * calendar header, Monday-first order matching this data's own existing consumer) — capitalised
+ * here regardless of the raw message casing, since uk/sq/it store lowercase abbreviations but a
+ * chart axis/tooltip label reads as a proper noun (same capitalisation rule `formatMonthFull`
+ * already applies for the same reason). Never a live `Intl.DateTimeFormat` call (same ICU-
+ * completeness rationale as every other formatter in this file — some browsers' bundled ICU has
+ * no `sq` locale data at all). `getUTCDay()` (0=Sun..6=Sat) is remapped to the data's Monday-first
+ * order. For a chart's week-period axis tick/tooltip (Task 845 Pass 12, owner-requested: "Пн, Вт,
+ * Ср..." — a real weekday name, never a generic "Day N" counter). Returns '—' on null, undefined,
+ * or invalid input.
+ */
+export function formatWeekdayShort(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const { calendar_weekdays_short } = (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    const mondayFirstIndex = (d.getUTCDay() + 6) % 7
+    const weekday = calendar_weekdays_short[mondayFirstIndex]
+    return weekday.charAt(0).toUpperCase() + weekday.slice(1)
   } catch {
     return '—'
   }

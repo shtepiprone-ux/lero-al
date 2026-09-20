@@ -92,12 +92,14 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
           <Divider orientation="vertical" color="gray.3" />
 
           {/*
-            Property type — wrapped in a plain block `Box`: `MantineCombobox`'s own outer wrapper
-            carries no width, so as a bare flex item its `triggerWidth: '100%'` resolves against
-            an undetermined containing block and collapses to content size (Task 780). A `Box`
-            with an explicit responsive `w` becomes a definite-width flex item; the combobox's own
-            unwidthed block child then fills it via ordinary block auto-width — no combobox-file
-            edit needed.
+            Property type — wrapped in a plain block `Box` with an explicit responsive `w` (Task
+            780): a bare flex item shrink-to-fits by default, so without this wrapper the row's own
+            flex layout leaves no definite width for a `triggerWidth: '100%'` child to resolve
+            against. `MantineCombobox`'s own outer wrapper now mirrors its trigger's resolved width
+            too (Task 845 Pass 11 — a later, independent fix for the dashboard chart period
+            filters), which does not remove the need for this `Box`: it gives the combobox a
+            definite footprint once ITS containing block already has one, not a substitute for
+            this row supplying that containing block in the first place.
           */}
           <Box w={FULL_BELOW_SM}>
             <MantineCombobox

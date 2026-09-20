@@ -277,3 +277,90 @@ describe('MantineCombobox — dropdownMinWidth (Task 556)', () => {
     expect(dropdown.style.minWidth).toBe('')
   })
 })
+
+/**
+ * Task 845 Revision 1 (W3) — two owner-reported fixes now in this task's scope (clause 15: both
+ * consumers, `AuthSheet.tsx`/`PhoneField.tsx`/`RangeDatePicker.tsx`, are P0 auth / critical-flow
+ * surfaces per `docs/critical-flow-registry.md`).
+ *
+ * Both DOM facts below were confirmed against a real render of this component (a throwaway dump,
+ * not asserted here) before writing the assertions, per the project's evidence rules:
+ *   - The outer `Box` is `.mantine-TextInput-root`'s own parent element.
+ *   - A responsive `triggerWidth` (default `{ base: '100%', sm: 'auto' }`) resolves through a
+ *     generated `<style data-mantine-styles="inline">` class rule on BOTH the outer Box and the
+ *     trigger; a fixed/percentage `triggerWidth` resolves through a plain inline `style="width:…"`
+ *     attribute on both instead — Mantine's own style-props system picks the mechanism, not this
+ *     component.
+ *   - `pointer-events: none` on the chevron section is real only in the browser's own compiled
+ *     `@mantine/core/styles.css` (not loaded in this jsdom test run — `getComputedStyle` on the
+ *     section returns the CSS-initial `auto` here regardless). The OBSERVABLE fact in jsdom is that
+ *     `rightSectionPointerEvents: 'none'` reaches Mantine's own `vars` mechanism, which sets the
+ *     `--input-right-section-pointer-events` custom property inline on `.mantine-TextInput-wrapper`
+ *     — that inline property is what these assertions check.
+ */
+function outerBoxOf(container: HTMLElement): HTMLElement {
+  return container.querySelector('.mantine-TextInput-root')!.parentElement as HTMLElement
+}
+
+describe('MantineCombobox — outer Box mirrors the trigger\'s resolved width (Task 845 Revision 1, W3)', () => {
+  it('default (no triggerWidth): outer Box carries the identical responsive 100%/auto rule as the trigger', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox options={[]} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    const outer = outerBoxOf(container)
+    const outerClass = outer.className
+    expect(outerClass).toBeTruthy()
+    // First inline-style tag in DOM order belongs to the outer Box (it wraps the trigger); the
+    // second belongs to the trigger's own TextInput wrapper — verified against a real render dump.
+    const styleTags = Array.from(container.querySelectorAll('style[data-mantine-styles="inline"]'))
+    expect(styleTags.length).toBeGreaterThanOrEqual(2)
+    const outerRule = styleTags[0].textContent ?? ''
+    const triggerRule = styleTags[1].textContent ?? ''
+    expect(outerRule).toContain(`.${outerClass}{width:100%;}`)
+    expect(outerRule).toContain(`@media(min-width: 40em){.${outerClass}{width:auto;}}`)
+    // Both rules resolve to the identical width contract (base 100% / sm auto) — the outer Box
+    // mirrors the trigger, it does not invent a different width. Each generated class id is
+    // replaced with a constant placeholder (globally, jsdom ids are not always pure digits — e.g.
+    // `_r_9c_` — so this normalizes every occurrence rather than assuming a fixed character set).
+    const normalize = (s: string) => s.replace(/__m__-_r_[0-9a-z]+_/g, 'CLASS')
+    expect(normalize(outerRule)).toBe(normalize(triggerRule))
+  })
+
+  it('fixed triggerWidth={112}: outer Box carries the identical fixed width as the trigger', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox options={[]} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" triggerWidth={112} />,
+      ),
+    )
+    const outer = outerBoxOf(container)
+    const triggerRoot = container.querySelector('.mantine-TextInput-root') as HTMLElement
+    expect(outer.style.width).toBeTruthy()
+    expect(outer.style.width).toBe(triggerRoot.style.width)
+  })
+
+  it('triggerWidth="100%": outer Box carries the identical 100% width as the trigger', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox options={[]} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" triggerWidth="100%" />,
+      ),
+    )
+    const outer = outerBoxOf(container)
+    const triggerRoot = container.querySelector('.mantine-TextInput-root') as HTMLElement
+    expect(outer.style.width).toBe('100%')
+    expect(triggerRoot.style.width).toBe('100%')
+  })
+})
+
+describe('MantineCombobox — chevron right-section pointer-events (Task 845 Revision 1, W3)', () => {
+  it('the trigger wrapper carries --input-right-section-pointer-events: none', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox options={[]} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    const wrapper = container.querySelector('.mantine-TextInput-wrapper') as HTMLElement
+    expect(wrapper.style.getPropertyValue('--input-right-section-pointer-events')).toBe('none')
+  })
+})

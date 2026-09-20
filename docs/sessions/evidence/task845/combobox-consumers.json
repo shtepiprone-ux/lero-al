@@ -1,0 +1,6499 @@
+{
+  "stories": [
+    {
+      "id": "mantine-primitives-combobox--default",
+      "title": "Mantine/Primitives/Combobox",
+      "name": "Default"
+    },
+    {
+      "id": "mantine-primitives-filtercontrols--default",
+      "title": "Mantine/Primitives/FilterControls",
+      "name": "Default"
+    },
+    {
+      "id": "mantine-primitives-locationcomboboxsubpanel--default",
+      "title": "Mantine/Primitives/LocationComboboxSubPanel",
+      "name": "Default"
+    },
+    {
+      "id": "mantine-primitives-phonefield--default",
+      "title": "Mantine/Primitives/PhoneField",
+      "name": "Default"
+    },
+    {
+      "id": "mantine-primitives-rangedatepicker--default",
+      "title": "Mantine/Primitives/RangeDatePicker",
+      "name": "Default"
+    },
+    {
+      "id": "patterns-mantine-listingsfilterbar--default",
+      "title": "Patterns/Mantine/ListingsFilterBar",
+      "name": "Default"
+    },
+    {
+      "id": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "title": "Patterns/Mantine/ListingsFilterBar",
+      "name": "Many Active Filters"
+    },
+    {
+      "id": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "title": "Patterns/Mantine/ListingsFilterBar",
+      "name": "One Active Filter"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--default",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "Default"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--list-view-selected",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "List View Selected"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--many-active-filters",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "Many Active Filters"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--one-active-filter",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "One Active Filter"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--sort-selected",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "Sort Selected"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--two-active-filters",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "Two Active Filters"
+    },
+    {
+      "id": "patterns-mantine-listingssortbar--zero-results",
+      "title": "Patterns/Mantine/ListingsSortBar",
+      "name": "Zero Results"
+    }
+  ],
+  "summary": {
+    "cellsBefore": 60,
+    "cellsAfter": 60,
+    "cellsCompared": 60,
+    "missing": [],
+    "deltaCount": 124,
+    "deltasAt360ByStory": {
+      "mantine-primitives-combobox--default": 20,
+      "mantine-primitives-filtercontrols--default": 4,
+      "mantine-primitives-locationcomboboxsubpanel--default": 4,
+      "mantine-primitives-phonefield--default": 4,
+      "mantine-primitives-rangedatepicker--default": 4,
+      "patterns-mantine-listingsfilterbar--default": 4,
+      "patterns-mantine-listingsfilterbar--many-active-filters": 4,
+      "patterns-mantine-listingsfilterbar--one-active-filter": 4,
+      "patterns-mantine-listingssortbar--default": 2,
+      "patterns-mantine-listingssortbar--list-view-selected": 2,
+      "patterns-mantine-listingssortbar--many-active-filters": 2,
+      "patterns-mantine-listingssortbar--one-active-filter": 2,
+      "patterns-mantine-listingssortbar--sort-selected": 2,
+      "patterns-mantine-listingssortbar--two-active-filters": 2,
+      "patterns-mantine-listingssortbar--zero-results": 2
+    },
+    "deltasAt1440": [
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 3,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 4,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 5,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 6,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 7,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 8,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|en",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 9,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 3,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 4,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 5,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 6,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 7,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 8,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-combobox--default|1440|uk",
+        "storyId": "mantine-primitives-combobox--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 9,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-filtercontrols--default|1440|en",
+        "storyId": "mantine-primitives-filtercontrols--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-filtercontrols--default|1440|en",
+        "storyId": "mantine-primitives-filtercontrols--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 3,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-filtercontrols--default|1440|uk",
+        "storyId": "mantine-primitives-filtercontrols--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-filtercontrols--default|1440|uk",
+        "storyId": "mantine-primitives-filtercontrols--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 3,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+        "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+        "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+        "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+        "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-phonefield--default|1440|en",
+        "storyId": "mantine-primitives-phonefield--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-phonefield--default|1440|en",
+        "storyId": "mantine-primitives-phonefield--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-phonefield--default|1440|uk",
+        "storyId": "mantine-primitives-phonefield--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-phonefield--default|1440|uk",
+        "storyId": "mantine-primitives-phonefield--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 2,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-rangedatepicker--default|1440|en",
+        "storyId": "mantine-primitives-rangedatepicker--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 6,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-rangedatepicker--default|1440|en",
+        "storyId": "mantine-primitives-rangedatepicker--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 7,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+        "storyId": "mantine-primitives-rangedatepicker--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 6,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+        "storyId": "mantine-primitives-rangedatepicker--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 7,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+        "width": 1440,
+        "locale": "en",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+        "width": 1440,
+        "locale": "uk",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+        "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+        "width": 1440,
+        "locale": "en",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+        "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+        "width": 1440,
+        "locale": "uk",
+        "control": 1,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--default|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--default",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--default|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--default",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--list-view-selected|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--list-view-selected|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--many-active-filters|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--many-active-filters|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--one-active-filter|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--one-active-filter|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--sort-selected|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--sort-selected",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--sort-selected|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--sort-selected",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--two-active-filters|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--two-active-filters|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--zero-results|1440|en",
+        "storyId": "patterns-mantine-listingssortbar--zero-results",
+        "width": 1440,
+        "locale": "en",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      },
+      {
+        "key": "patterns-mantine-listingssortbar--zero-results|1440|uk",
+        "storyId": "patterns-mantine-listingssortbar--zero-results",
+        "width": 1440,
+        "locale": "uk",
+        "control": 0,
+        "field": "chevronHit",
+        "before": "svg",
+        "after": "input"
+      }
+    ]
+  },
+  "deltas": [
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|360|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|360|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|360|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|360|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|360|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|360|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|360|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|360|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|360|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|360|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|360|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|360|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|360|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|360|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "en",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|360|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|360|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|360|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|360|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|360|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|360|en",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|360|en",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|360|en",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|360|en",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|360|en",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|360|en",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|360|en",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|360|uk",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    }
+  ],
+  "before": {
+    "mantine-primitives-combobox--default|360|en": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 248
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 566.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 8,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 714.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 9,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862.4
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-combobox--default__360__en.png"
+    },
+    "mantine-primitives-combobox--default|360|uk": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 248
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 566.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 8,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 714.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 9,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862.4
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-combobox--default__360__uk.png"
+    },
+    "mantine-primitives-filtercontrols--default|360|en": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 810
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-filtercontrols--default__360__en.png"
+    },
+    "mantine-primitives-filtercontrols--default|360|uk": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 810
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-filtercontrols--default__360__uk.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|360|en": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 302,
+          "parentWidth": 328,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 302,
+          "parentWidth": 302,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 313,
+            "y": 301
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-locationcomboboxsubpanel--default__360__en.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|360|uk": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 302,
+          "parentWidth": 328,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 302,
+          "parentWidth": 302,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 313,
+            "y": 301
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-locationcomboboxsubpanel--default__360__uk.png"
+    },
+    "mantine-primitives-phonefield--default|360|en": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 110,
+            "y": 115
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 110,
+            "y": 260
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-phonefield--default__360__en.png"
+    },
+    "mantine-primitives-phonefield--default|360|uk": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 110,
+            "y": 115
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 110,
+            "y": 260
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-phonefield--default__360__uk.png"
+    },
+    "mantine-primitives-rangedatepicker--default|360|en": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 7,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 176
+          },
+          "chevronHit": "outside:div.mantine-Drawer-overlay.m_9814e45f"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 764
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 5,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 183,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 291,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-rangedatepicker--default__360__en.png"
+    },
+    "mantine-primitives-rangedatepicker--default|360|uk": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 7,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 176
+          },
+          "chevronHit": "outside:div.mantine-Drawer-overlay.m_9814e45f"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 764
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 5,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 183,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 291,
+            "y": 360
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-rangedatepicker--default__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--default__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--default__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--many-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--many-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--one-active-filter__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--one-active-filter__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--default|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 219.36,
+          "parentWidth": 219.36,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 82
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--default__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--default|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--default__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--list-view-selected__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--list-view-selected__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--many-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--many-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--one-active-filter__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--one-active-filter__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--sort-selected__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--sort-selected__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--two-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--two-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 219.36,
+          "parentWidth": 219.36,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 82
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--zero-results__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--zero-results__360__uk.png"
+    },
+    "mantine-primitives-combobox--default|1440|en": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 97
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 191
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 285
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 379
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 4,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 453.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 547.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 641.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 8,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 735.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 9,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829.4
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-combobox--default__1440__en.png"
+    },
+    "mantine-primitives-combobox--default|1440|uk": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 97
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 191
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 285
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 379
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 4,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 450.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 453.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 6,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 547.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 641.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 8,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 735.4
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 9,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829.4
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-combobox--default__1440__uk.png"
+    },
+    "mantine-primitives-filtercontrols--default|1440|en": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 777
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-filtercontrols--default__1440__en.png"
+    },
+    "mantine-primitives-filtercontrols--default|1440|uk": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 777
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-filtercontrols--default__1440__uk.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|1440|en": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 420,
+          "parentWidth": 420,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 451,
+            "y": 97
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 394,
+          "parentWidth": 420,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 394,
+          "parentWidth": 394,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 438,
+            "y": 280
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-locationcomboboxsubpanel--default__1440__en.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|1440|uk": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 420,
+          "parentWidth": 420,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 451,
+            "y": 97
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 394,
+          "parentWidth": 420,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 394,
+          "parentWidth": 394,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 438,
+            "y": 280
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-locationcomboboxsubpanel--default__1440__uk.png"
+    },
+    "mantine-primitives-phonefield--default|1440|en": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 143,
+            "y": 130
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 143,
+            "y": 257
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-phonefield--default__1440__en.png"
+    },
+    "mantine-primitives-phonefield--default|1440|uk": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 143,
+            "y": 130
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 143,
+            "y": 257
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-phonefield--default__1440__uk.png"
+    },
+    "mantine-primitives-rangedatepicker--default|1440|en": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 8,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 191
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 2,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 527
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 280,
+          "parentWidth": 578,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 6,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 277.8,
+            "y": 223
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 385.8,
+            "y": 223
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-rangedatepicker--default__1440__en.png"
+    },
+    "mantine-primitives-rangedatepicker--default|1440|uk": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 8,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 191
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 2,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 527
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 280,
+          "parentWidth": 578,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 6,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 276.6,
+            "y": 223
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 7,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 384.6,
+            "y": 223
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/mantine-primitives-rangedatepicker--default__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--default__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--default__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--many-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--many-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--one-active-filter__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingsfilterbar--one-active-filter__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--default|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--default__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--default|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--default__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--list-view-selected__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--list-view-selected__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--many-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--many-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--one-active-filter__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--one-active-filter__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--sort-selected__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--sort-selected__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--two-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--two-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--zero-results__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "svg"
+        }
+      ],
+      "screenshot": "combobox/before/patterns-mantine-listingssortbar--zero-results__1440__uk.png"
+    }
+  },
+  "after": {
+    "mantine-primitives-combobox--default|360|en": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_h_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 248
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 360
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_15_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_1g_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 5,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_1q_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_24_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 566.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 8,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2o_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 714.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 9,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_33_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862.4
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-combobox--default__360__en.png"
+    },
+    "mantine-primitives-combobox--default|360|uk": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_h_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 248
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 360
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_15_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_1g_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 5,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_1q_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_24_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 566.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 8,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2o_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 714.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 9,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_33_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862.4
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-combobox--default__360__uk.png"
+    },
+    "mantine-primitives-filtercontrols--default|360|en": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2a_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 810
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2i_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-filtercontrols--default__360__en.png"
+    },
+    "mantine-primitives-filtercontrols--default|360|uk": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 160,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2a_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 810
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_2i_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 862
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-filtercontrols--default__360__uk.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|360|en": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 302,
+          "parentWidth": 328,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 302,
+          "parentWidth": 302,
+          "parent": "div.__m__-_r_u_",
+          "chevronPoint": {
+            "x": 313,
+            "y": 301
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-locationcomboboxsubpanel--default__360__en.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|360|uk": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 118
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 302,
+          "parentWidth": 328,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 302,
+          "parentWidth": 302,
+          "parent": "div.__m__-_r_u_",
+          "chevronPoint": {
+            "x": 313,
+            "y": 301
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-locationcomboboxsubpanel--default__360__uk.png"
+    },
+    "mantine-primitives-phonefield--default|360|en": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_a_",
+          "chevronPoint": {
+            "x": 110,
+            "y": 115
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 110,
+            "y": 260
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-phonefield--default__360__en.png"
+    },
+    "mantine-primitives-phonefield--default|360|uk": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_a_",
+          "chevronPoint": {
+            "x": 110,
+            "y": 115
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 110,
+            "y": 260
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 208,
+          "parentWidth": 328,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-phonefield--default__360__uk.png"
+    },
+    "mantine-primitives-rangedatepicker--default|360|en": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 7,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 176
+          },
+          "chevronHit": "outside:div.mantine-Drawer-overlay.m_9814e45f"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 764
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 5,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 183,
+            "y": 360
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 291,
+            "y": 360
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-rangedatepicker--default__360__en.png"
+    },
+    "mantine-primitives-rangedatepicker--default|360|uk": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 7,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 176
+          },
+          "chevronHit": "outside:div.mantine-Drawer-overlay.m_9814e45f"
+        },
+        {
+          "index": 2,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 764
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 5,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 183,
+            "y": 360
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 291,
+            "y": 360
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-rangedatepicker--default__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--default__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--default__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--many-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--many-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|360|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--one-active-filter__360__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|360|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 198
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 326,
+            "y": 250
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--one-active-filter__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--default|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 219.36,
+          "parentWidth": 219.36,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 82
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--default__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--default|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--default__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--list-view-selected__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--list-view-selected__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--many-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--many-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--one-active-filter__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--one-active-filter__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--sort-selected__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--sort-selected__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--two-active-filters__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--two-active-filters__360__uk.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|360|en": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 219.36,
+          "parentWidth": 219.36,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 82
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--zero-results__360__en.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|360|uk": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 360,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 328,
+          "parentWidth": 328,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 326,
+            "y": 134
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--zero-results__360__uk.png"
+    },
+    "mantine-primitives-combobox--default|1440|en": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 97
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_h_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 191
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 285
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_15_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 379
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 4,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_1g_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 5,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_1q_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 453.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_24_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 547.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2e_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 641.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 8,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2o_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 735.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 9,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_33_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829.4
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-combobox--default__1440__en.png"
+    },
+    "mantine-primitives-combobox--default|1440|uk": {
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 10,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 97
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_h_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 191
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 285
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_15_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 379
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 4,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_1g_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 450.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 5,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_1q_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 453.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 6,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_24_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 547.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2e_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 641.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 8,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2o_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 735.4
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 9,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_33_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829.4
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-combobox--default__1440__uk.png"
+    },
+    "mantine-primitives-filtercontrols--default|1440|en": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2a_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 777
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2i_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-filtercontrols--default__1440__en.png"
+    },
+    "mantine-primitives-filtercontrols--default|1440|uk": {
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 667,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2a_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 777
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1342,
+          "parentWidth": 1342,
+          "parent": "div.__m__-_r_2i_",
+          "chevronPoint": {
+            "x": 1373,
+            "y": 829
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-filtercontrols--default__1440__uk.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|1440|en": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 420,
+          "parentWidth": 420,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 451,
+            "y": 97
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 394,
+          "parentWidth": 420,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 394,
+          "parentWidth": 394,
+          "parent": "div.__m__-_r_1d_",
+          "chevronPoint": {
+            "x": 438,
+            "y": 280
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-locationcomboboxsubpanel--default__1440__en.png"
+    },
+    "mantine-primitives-locationcomboboxsubpanel--default|1440|uk": {
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 3,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 420,
+          "parentWidth": 420,
+          "parent": "div.__m__-_r_7_",
+          "chevronPoint": {
+            "x": 451,
+            "y": 97
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 394,
+          "parentWidth": 420,
+          "parent": "div.m_6d731127.mantine-Stack-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 394,
+          "parentWidth": 394,
+          "parent": "div.__m__-_r_1d_",
+          "chevronPoint": {
+            "x": 438,
+            "y": 280
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-locationcomboboxsubpanel--default__1440__uk.png"
+    },
+    "mantine-primitives-phonefield--default|1440|en": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_a_",
+          "chevronPoint": {
+            "x": 143,
+            "y": 130
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 143,
+            "y": 257
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-phonefield--default__1440__en.png"
+    },
+    "mantine-primitives-phonefield--default|1440|uk": {
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 4,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_a_",
+          "chevronPoint": {
+            "x": 143,
+            "y": 130
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 2,
+          "rootWidth": 112,
+          "parentWidth": 112,
+          "parent": "div.__m__-_r_r_",
+          "chevronPoint": {
+            "x": 143,
+            "y": 257
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 3,
+          "rootWidth": 1222,
+          "parentWidth": 1342,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-phonefield--default__1440__uk.png"
+    },
+    "mantine-primitives-rangedatepicker--default|1440|en": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 8,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 191
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 2,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 527
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 280,
+          "parentWidth": 578,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 6,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 277.8,
+            "y": 223
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 385.8,
+            "y": 223
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-rangedatepicker--default__1440__en.png"
+    },
+    "mantine-primitives-rangedatepicker--default|1440|uk": {
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 8,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 1,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 191
+          },
+          "chevronHit": "outside:div.m_6d731127.mantine-Stack-root"
+        },
+        {
+          "index": 2,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 3,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 4,
+          "rootWidth": 480,
+          "parentWidth": 480,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 511,
+            "y": 527
+          },
+          "chevronHit": "svg"
+        },
+        {
+          "index": 5,
+          "rootWidth": 280,
+          "parentWidth": 578,
+          "parent": "div.m_4081bf90.mantine-Group-root",
+          "chevronPoint": null,
+          "chevronHit": "no-right-section"
+        },
+        {
+          "index": 6,
+          "rootWidth": 150,
+          "parentWidth": 150,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 276.6,
+            "y": 223
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 7,
+          "rootWidth": 100,
+          "parentWidth": 100,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 384.6,
+            "y": 223
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/mantine-primitives-rangedatepicker--default__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--default__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--default|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--default__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--many-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--many-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|1440|en": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 498.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 736.4,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--one-active-filter__1440__en.png"
+    },
+    "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk": {
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 2,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div.__m__-_r_e_",
+          "chevronPoint": {
+            "x": 503.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        },
+        {
+          "index": 1,
+          "rootWidth": 230,
+          "parentWidth": 230,
+          "parent": "div.__m__-_r_n_",
+          "chevronPoint": {
+            "x": 741.7,
+            "y": 34
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingsfilterbar--one-active-filter__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--default|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--default__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--default|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--default__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--list-view-selected__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--list-view-selected|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--list-view-selected__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--many-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--many-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--many-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--one-active-filter__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--one-active-filter|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--one-active-filter__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--sort-selected__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--sort-selected|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--sort-selected__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--two-active-filters__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--two-active-filters|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--two-active-filters__1440__uk.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|1440|en": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "en",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--zero-results__1440__en.png"
+    },
+    "patterns-mantine-listingssortbar--zero-results|1440|uk": {
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "uk",
+      "controlCount": 1,
+      "controls": [
+        {
+          "index": 0,
+          "rootWidth": 212,
+          "parentWidth": 212,
+          "parent": "div",
+          "chevronPoint": {
+            "x": 1294,
+            "y": 50
+          },
+          "chevronHit": "input"
+        }
+      ],
+      "screenshot": "combobox/after/patterns-mantine-listingssortbar--zero-results__1440__uk.png"
+    }
+  }
+}

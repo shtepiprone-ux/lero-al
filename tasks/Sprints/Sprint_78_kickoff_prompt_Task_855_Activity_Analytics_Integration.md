@@ -26,7 +26,7 @@ move two blocks to single-source aggregate data. Bundles: **UI / Current Mantine
      - main: a single-event chart (`mode="single"`) with a selector — Views / WhatsApp clicks / Form inquiries. Chat
        options are **absent**, not disabled (D78-1).
      - side: the **portfolio visibility** `MantineDashboardDonut` — visible / needs action / not visible, disjoint,
-       summing to all listings, each segment a link.
+       summing to all listings. **No per-segment link (owner decision OD-1 = B, 2026-09-20 — Task 845 §16.2/§18.1).**
    - **AGT-10** gains the columns recorded views, WhatsApp clicks and last activity. Every numeric column is sortable
      across all pages; columns are never summed. On mobile each value is a labelled row.
    - **AGT-05** and AGT-10's form column switch to the aggregate, so card, chart and table read one source. 848's
@@ -37,7 +37,9 @@ move two blocks to single-source aggregate data. Bundles: **UI / Current Mantine
 - 849: `src/modules/analytics/activity/read.ts` → `getPlatformActivitySeries(period)`,
   `getOwnerActivitySeries(ownerId, period)`, `getOwnerActivityByListing(ownerId, period)`, `getActivityFreshness(now)`;
   `theme.other.chartSeries` keys (845).
-- 845: `MantineDashboardLineChart` (`multi` / `single`, table toggle, empty, loading, error) and `MantineDashboardDonut`.
+- 845: `MantineDashboardLineChart` (`multi` / `single`, empty, loading, error — **there is no table toggle: owner
+  decision OD-1 = B, 2026-09-20, Task 845 §16.2/§18.1 waives §17.4's tabular text alternative**) and
+  `MantineDashboardDonut` (no per-segment href, same decision). Tooltips are ApexCharts' own native tooltip (D845-4).
 - 846: `MantineDashboardPeriodControl`, `resolvePeriod`, `previousPeriod`, `compareToPrevious`, `listDates`.
 - 848: `getAgentStatisticsData` incl. `statusCounts` (all 7 statuses), AGT-01 hidden count, and the documented
   admin-client inquiry-count function (removed here, R6).
@@ -59,7 +61,7 @@ move two blocks to single-source aggregate data. Bundles: **UI / Current Mantine
 - AGT-10: columns views, WhatsApp, form, last activity; sortable, never summed; mobile = labelled rows.
 - Whole period empty → the chart's empty state; a single empty day → an axis point at 0.
 - Stale aggregate → last valid values + a prominent "updated at …" badge; never presented as current, never 0.
-- Portfolio donut (§16.3): visible / needs action / not visible, each segment → a list of own listings.
+- Portfolio donut (§16.3): visible / needs action / not visible. **Segments do not navigate** (OD-1 = B, 2026-09-20).
 
 ## 4. Requirements
 
@@ -68,7 +70,7 @@ move two blocks to single-source aggregate data. Bundles: **UI / Current Mantine
 | **R1** | ADM-10 | Admin page reads `?period=` (846 parser; default 30d) and fetches `getPlatformActivitySeries` + `getActivityFreshness` in the page's existing parallel fetch; `AdminDashboardView` renders the ADM-10 card per §2.1 with `series` from `theme.other.chartSeries` (`recordedViews`, `whatsappClicks`, `formInquiries`), dates labelled via a Tirane date helper, totals as `MantineDashboardStatRows` (three rows, no sum, each row links to nothing — analytic totals carry no decorative CTA, spec §17.4). | P0 | AC1, AC2 | Confirmed |
 | **R2** | spec §17.2 layout | Row 3 becomes `TopRow` of ADM-01 / ADM-02 / ADM-06 work lists + location requests (conditional); nothing else in 853's composition changes. | P1 | AC1 | Confirmed |
 | **R3** | AGT-03 | Agent page fetches `getOwnerActivitySeries` (current + previous period) and `getActivityFreshness`; AGT-03 StatCard per §3.1, `href` = AGT-10 sorted by views (`?sort=views_desc`). | P0 | AC3 | Confirmed |
-| **R4** | spec §16.3 | Agent row 2: `Split` main = single-mode chart with a `SegmentedControl` selector (Views · WhatsApp clicks · Form inquiries; default Views), the selection in `?event=`; side = portfolio donut with segments `visible` (848 visible), `needs_action` (pending + active_hidden), `not_visible` (inactive + sold + rented + archived + expired). Sum = all listings (asserted in a unit test of the mapping function). Segment hrefs = the cabinet listings filters recorded by 848/854. | P0 | AC3, AC4 | Confirmed |
+| **R4** | spec §16.3 | Agent row 2: `Split` main = single-mode chart with a `SegmentedControl` selector (Views · WhatsApp clicks · Form inquiries; default Views), the selection in `?event=`; side = portfolio donut with segments `visible` (848 visible), `needs_action` (pending + active_hidden), `not_visible` (inactive + sold + rented + archived + expired). Sum = all listings (asserted in a unit test of the mapping function). **No segment hrefs — owner decision OD-1 = B, 2026-09-20 (Task 845 §16.2/§18.1); the cabinet-filter drill-down recorded by 848/854 is not wired from this donut.** | P0 | AC3, AC4 | Confirmed |
 | **R5** | AGT-10 | Table columns added: recorded views, WhatsApp clicks, last activity date (`RelativeTime` + absolute label). When the sort key is an activity column, rows are sorted over **all** of the owner's listings (848's owner listing list + `getOwnerActivityByListing`, merged by `listing_id`, missing = 0 after a successful read) and then paginated (10/page). Mobile card meta rows: Views / WhatsApp / Form / Last activity, each labelled. | P0 | AC5 | Confirmed |
 | **R6** | single source | AGT-05's value/comparison and AGT-10's form column come from the aggregate. 848's admin-client inquiry-count function and its test cases are **deleted**, and `git grep` confirms no remaining caller (clause 9 deletion audit). | P1 | AC6 | Confirmed |
 | **R7** | spec §3 | Tooltip / description texts per §3.1 for every series and card; the WhatsApp tooltip adds that guest clicks are recorded from {850 deploy date}, which the executor reads from the approved 850 record (the archive row date) and passes as a translated sentence with the date formatted per locale. | P1 | AC7 | Confirmed |
@@ -119,8 +121,9 @@ there is reported, not patched here) · 857–859.
    before and after. If either grows by more than the chart package's own chunk, report the import path. The chart
    views must not be imported by any other route.
 5. **Live proof** (staff + agent sessions, after O78-3): the admin chart shows 30 points with tooltips; a series
-   toggle; the table toggle; the agent selector switches series and the URL; the donut segments navigate; AGT-10 sorted
-   by views is consistent across pages 1 → 2 (the last value on page 1 ≥ the first value on page 2).
+   toggle; the agent selector switches series and the URL; AGT-10 sorted
+   by views is consistent across pages 1 → 2 (the last value on page 1 ≥ the first value on page 2). (The table
+   toggle and donut-segment navigation were removed by owner decision OD-1 = B, 2026-09-20.)
 
 ## 11. Positive and negative flows
 
@@ -214,7 +217,7 @@ Until Task 799 lands, use `iframe.html?id=<story-id>&globals=locale:<locale>` an
 
 | # | Story / route | State | Width | Locale | Owner checks |
 |---|---|---|---|---|---|
-| 1 | `/admin` (live) | 30d | 1440 | en | ADM-10: 3 series in distinct theme colours, toggles, tooltip, table; totals rows; donut beside |
+| 1 | `/admin` (live) | 30d | 1440 | en | ADM-10: 3 series in distinct theme colours, toggles, native ApexCharts tooltip; totals rows; donut beside (no table, no segment links — OD-1 = B) |
 | 2 | `/admin` (live) | 7d | 1024 | sq | period switch updates only ADM-10 |
 | 3 | `/admin` (live) | 30d | 390 | uk | chart full width, legend wraps |
 | 4 | `/en/cabinet/statistics` (live) | Views | 1440 | en | 3 top cards (AGT-01/02/03); chart + portfolio donut; table with activity columns |

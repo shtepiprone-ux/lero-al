@@ -1,0 +1,32 @@
+320/uk patterns-mantine-dashboardbarchart--default: shown=212 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/uk patterns-mantine-dashboardlinechart--default: shown=152 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/uk patterns-mantine-dashboarddonut--default: shown=98 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/uk patterns-mantine-dashboardsemidonut--default: shown=62 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/uk patterns-mantine-dashboardradar--default: shown=61 kind=apexcharts-native worstOverflow=71px outsideCard=87px
+320/uk patterns-mantine-dashboardradialprogress--default: shown=0 kind=null worstOverflow=0px outsideCard=0px
+320/en patterns-mantine-dashboardbarchart--default: shown=212 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/en patterns-mantine-dashboardlinechart--default: shown=152 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/en patterns-mantine-dashboarddonut--default: shown=98 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/en patterns-mantine-dashboardsemidonut--default: shown=62 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+320/en patterns-mantine-dashboardradar--default: shown=60 kind=apexcharts-native worstOverflow=37px outsideCard=53px
+320/en patterns-mantine-dashboardradialprogress--default: shown=0 kind=null worstOverflow=0px outsideCard=0px
+390/uk patterns-mantine-dashboardbarchart--default: shown=212 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+390/uk patterns-mantine-dashboardlinechart--default: shown=152 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+390/uk patterns-mantine-dashboarddonut--default: shown=98 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+390/uk patterns-mantine-dashboardsemidonut--default: shown=62 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+390/uk patterns-mantine-dashboardradar--default: shown=61 kind=apexcharts-native worstOverflow=1px outsideCard=17px
+390/uk patterns-mantine-dashboardradialprogress--default: shown=0 kind=null worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboardbarchart--default: shown=212 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboardlinechart--default: shown=152 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboarddonut--default: shown=98 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboardsemidonut--default: shown=62 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboardradar--default: shown=61 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+768/uk patterns-mantine-dashboardradialprogress--default: shown=0 kind=null worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboardbarchart--default: shown=212 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboardlinechart--default: shown=152 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboarddonut--default: shown=98 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboardsemidonut--default: shown=62 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboardradar--default: shown=61 kind=apexcharts-native worstOverflow=0px outsideCard=0px
+1440/uk patterns-mantine-dashboardradialprogress--default: shown=0 kind=null worstOverflow=0px outsideCard=0px
+ARM after: 30 cells; cells with overflow: 3; cells with tooltip outside the card: 3; cells where no tooltip appeared: 5
+EXIT=0

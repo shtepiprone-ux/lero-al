@@ -1,0 +1,646 @@
+{
+  "cellsBefore": 60,
+  "cellsAfter": 60,
+  "cellsCompared": 60,
+  "missing": [],
+  "deltaCount": 124,
+  "deltasAt360ByStory": {
+    "mantine-primitives-combobox--default": 20,
+    "mantine-primitives-filtercontrols--default": 4,
+    "mantine-primitives-locationcomboboxsubpanel--default": 4,
+    "mantine-primitives-phonefield--default": 4,
+    "mantine-primitives-rangedatepicker--default": 4,
+    "patterns-mantine-listingsfilterbar--default": 4,
+    "patterns-mantine-listingsfilterbar--many-active-filters": 4,
+    "patterns-mantine-listingsfilterbar--one-active-filter": 4,
+    "patterns-mantine-listingssortbar--default": 2,
+    "patterns-mantine-listingssortbar--list-view-selected": 2,
+    "patterns-mantine-listingssortbar--many-active-filters": 2,
+    "patterns-mantine-listingssortbar--one-active-filter": 2,
+    "patterns-mantine-listingssortbar--sort-selected": 2,
+    "patterns-mantine-listingssortbar--two-active-filters": 2,
+    "patterns-mantine-listingssortbar--zero-results": 2
+  },
+  "deltasAt1440": [
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|en",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 4,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 5,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 8,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-combobox--default|1440|uk",
+      "storyId": "mantine-primitives-combobox--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 9,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|en",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-filtercontrols--default|1440|uk",
+      "storyId": "mantine-primitives-filtercontrols--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 3,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|en",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-locationcomboboxsubpanel--default|1440|uk",
+      "storyId": "mantine-primitives-locationcomboboxsubpanel--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|en",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-phonefield--default|1440|uk",
+      "storyId": "mantine-primitives-phonefield--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 2,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|en",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 6,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "mantine-primitives-rangedatepicker--default|1440|uk",
+      "storyId": "mantine-primitives-rangedatepicker--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 7,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingsfilterbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingsfilterbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 1,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--default|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--default",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--list-view-selected|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--list-view-selected",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--many-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--many-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--one-active-filter|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--one-active-filter",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--sort-selected|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--sort-selected",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--two-active-filters|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--two-active-filters",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|1440|en",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "en",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    },
+    {
+      "key": "patterns-mantine-listingssortbar--zero-results|1440|uk",
+      "storyId": "patterns-mantine-listingssortbar--zero-results",
+      "width": 1440,
+      "locale": "uk",
+      "control": 0,
+      "field": "chevronHit",
+      "before": "svg",
+      "after": "input"
+    }
+  ]
+}

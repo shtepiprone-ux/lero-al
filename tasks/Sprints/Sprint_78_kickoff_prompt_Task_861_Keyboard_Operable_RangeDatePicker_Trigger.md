@@ -1,6 +1,6 @@
 # Task 861 — `RangeDatePicker`'s trigger becomes a semantic button, so the canonical date-range picker opens from the keyboard
 
-Sprint 78 · **P1** · QA profile **Q4** · cross-sprint prerequisite · **gates Task 846's approval and Sprint 78 Wave B** · **Status: 🔴 NEEDS REVISION (review 1, 2026-09-20), kickoff corrected 2026-09-20 per owner — EXECUTABLE, re-enter at §16**
+Sprint 78 · **P1** · QA profile **Q4** · cross-sprint prerequisite · **gates Task 846's approval and Sprint 78 Wave B** · **Status: 🔴 NEEDS REVISION (review 2, 2026-09-20) — implementation verified; F6 is fixed in this kickoff, F7 is owed. AC9's visual half accepted by the owner 2026-09-20 (§17.5), both §17.1 deltas ratified; its keyboard half still owner-owed. Re-enter at §17.2.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed by Task 846's review 1; promoted by owner decision 2026-09-20 (Option B, `Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md` §16.1).
 
@@ -118,7 +118,7 @@ DOM at AC5 rather than trusting this paragraph.
 | **R3** | WAI-ARIA dialog pattern | On open, focus moves into the surface. `Escape` closes it and returns focus to the trigger. Closing by `Apply`/`Confirm`/`Cancel` also returns focus to the trigger. Focus never lands on `document.body`. | P0 | AC2 | Confirmed |
 | **R4** | owner 2026-09-20 | The trigger carries `aria-haspopup="dialog"` and an `aria-expanded` that is `true` exactly while the surface is open and `false` otherwise, on both paths. **REVISED — review 1, §16.2.** `MantinePopover` applies the two attributes **only when the trigger is a native button**; a wrapper trigger (the bell's `Indicator`) must receive neither, because they are invalid on a role-less element. The bell's own `ActionIcon` gets them via the render-function trigger (R4b) — **in this task**. | P1 | AC3, AC3b | Revised |
 | **R4a** | 16d, GR-1, §3.3, owner 2026-09-20 | `NotificationBellView.tsx`, `NotificationCenter.tsx` and `NotificationItem.tsx` are **all three** added to `scripts/mantine-migration-scope.json`. The bell is already storied and `className:0`; the other two are covered by R4c. | P1 | AC3a | Confirmed |
-| **R4c** | 16d, GR-1, GR-3a, owner decisions 2026-09-20 (§16.1, §16.8) | **The bell's popover contents are migrated in this task.** `NotificationCenter.tsx` loses its `className={styles.list}` **and its `NotificationCenter.module.css` (6 lines) is deleted** — a CSS module is not a canonical style source (GR-0); `NotificationItem.tsx` loses its one `cn(...)` `className` at `:180`. Both move to canonical Mantine components and theme tokens. **Story disposition is NOT symmetric — see §16.8:** `NotificationItem` **already has a direct-import Story** that must be *migrated*, never duplicated; `NotificationCenter` has none and gets a new one. No visual change is intended: the panel's rendered chrome must match its pre-861 capture. | P1 | AC3c, AC9 | Confirmed |
+| **R4c** | 16d, GR-1, GR-3a, owner decisions 2026-09-20 (§16.1, §16.8) | **The bell's popover contents are migrated in this task.** `NotificationCenter.tsx` loses its `className={styles.list}` **and its `NotificationCenter.module.css` (6 lines) is deleted** — a CSS module is not a canonical style source (GR-0); `NotificationItem.tsx` loses its one `cn(...)` `className` at `:180`. Both move to canonical Mantine components and theme tokens. **Story disposition is NOT symmetric — see §16.8:** `NotificationItem` **already has a direct-import Story** that must be *migrated*, never duplicated; `NotificationCenter` has none and gets a new one. **REVISED — review 2, §17.1. The original "the panel's rendered chrome must match its pre-861 capture" was a GR-4 absolute that a correct GR-0 implementation must violate**, and no pre-861 capture exists. Replaced by: every rendered-chrome difference is either zero or one of the two deltas ratified in §17.1; no third delta, and no new hardcoded visual value. | P1 | AC3c, AC9 | Revised |
 | **R4b** | review 1, §16.2 | **The ARIA clone never lands on a role-less element.** `MantinePopover` applies `aria-haspopup`/`aria-expanded` only to a native-button trigger; a wrapper trigger (the bell's `Indicator`) receives neither on its root. The bell's own `ActionIcon` gets them through the render-function trigger API instead, so the attributes sit on the real button. Both halves are asserted, the wrapper case with a non-button trigger. | P1 | AC3b | Confirmed |
 | **R5** | §3.4, clause 15 | Every behaviour in critical-flow row 55 is preserved byte-for-behaviour: day-tap alone never fires `onChange`; `Apply`/`Confirm` commits `{from, to: to ?? from}`; end-before-start is swapped; `maxDate`/`minDate`/`disablePastDates` disable the right cells; `Cancel`/backdrop discards; the clear-X commits `{undefined, undefined}` **without opening the surface**; an invalid `value.from` is guarded. | P0 | AC4, AC6 | Confirmed |
 | **R6** | §3.5, 16/16a | Rendered chrome is unchanged: the trigger keeps its `leftSection` calendar icon, conditional clear-X, `radius="lg"`, full width under `fullWidthTrigger`, placeholder text, and the §6d/§6e resting/focus/disabled styling it inherits from `.mantine-Input-input`. Text alignment stays left. No new `className`, CSS rule, inline style, raw px/hex or theme token. | P1 | AC5, AC7 | Confirmed |
@@ -266,8 +266,11 @@ commits one `onChange({from, to})` and closes, and focus is back on the trigger 
   `src/design-system/mantine/patterns/MantineDashboard*` or `src/lib/dashboard/`.
 - **AC9 [R2, R3, R6]** — Given the §13.3 owner matrix, when reviewed, then each tuple is accepted or returned with a
   concrete defect.
+- **AC10 [R4c, clause 9]** — **Added by review 2, §17.2.** Given a whole-repository search for the retired story id
+  and title this task deleted, when run, then no live consumer still resolves them. Run the §17.2 command block and
+  quote its output before and after the fix; state for each hit whether it was re-pointed or retired, and why.
 
-`GR-4 AC AUDIT — 9 criteria; each states an observable property; absolutes: AC7's empty hardcode grep on the two changed pattern files, and AC8's empty porcelain under two Task 846 paths — both are the task's own preservation boundaries, measured, not aspirational.`
+`GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: AC7's "no new match versus HEAD" and AC8's empty porcelain under two Task 846 paths — both are measured preservation boundaries, not aspirations. AC10 asserts zero LIVE consumers of a deleted id, which is a measurable property of the current tree, not a byte-comparison. R4c's former "must match its pre-861 capture" was an absolute of exactly the forbidden kind and was removed in review 2 (§17.1) — the second GR-4 defect found in this kickoff, after AC7's at §16.4.`
 
 `GR-3a STORY PREFLIGHT — RangeDatePicker × closed/expanded trigger states; canonical candidates: Mantine/Primitives/RangeDatePicker (src/stories/mantine/primitives/RangeDatePicker.stories.tsx); direct-import evidence: that file imports RangeDatePicker by name; toolbar coverage: locale=toolbar, viewport=toolbar (Task 799 caveat); decision: EXTEND; target: Mantine/Primitives/RangeDatePicker; rationale: the canonical Story already imports the production component — a new page would be the parallel-Story violation GR-3a exists to stop.`
 
@@ -327,9 +330,14 @@ Until Task 799 lands, use `iframe.html?id=<story-id>&globals=locale:<locale>` an
 | 2 | same | open, keyboard-driven | 1280 | sq | `Enter` opens; focus visibly inside; `Escape` closes and the focus ring is back on the trigger |
 | 3 | same | closed + open | 390 / 320 | uk | bottom sheet on both; no overflow; focus returns |
 | 4 | `Patterns/Mantine/DashboardPeriodControl` → `CustomRangeTooLong` | keyboard-only, end to end | 1280 | it | opens without the mouse; the >90-day error still appears; Task 846 unchanged |
-| 5 | `Mantine/Primitives/NotificationBellView` | **open** panel | 1280 | en | panel chrome, header/title, unread vs read rows, the "mark all read" control, internal scroll — all unchanged from the pre-861 capture; nothing clipped |
+| 5 | `Mantine/Primitives/NotificationBellView` | **open** panel | 1280 | en | panel chrome, header/title, unread vs read rows, the "mark all read" control, internal scroll — nothing clipped, nothing relocated. **Revised (§17.1): judge this against the two named deltas, not against "unchanged" — the separator/header-underline shade is now `#e4e7ec` (was `#EBEBEB`) and the row background transition is 200 ms (was 150 ms). Accept or return each delta by name.** |
 | 6 | same | **open** panel | 390 / 320 | uk | same list, and at both widths: no horizontal overflow, no clipped row text, the panel scrolls internally rather than pushing the page, "mark all read" reachable |
 | 7 | the migrated `NotificationItem` Story (canonical title) and the new `NotificationCenter` Story | all retained scenarios | 1280 / 390 | sq | every scenario the old `Notifications/NotificationItem` page showed still renders, unread/read states still visually distinct |
+
+**Tuples 1–4 are unchanged and were already owed from review 1.** Tuples 5–7 could not be answered as originally
+written: they asked whether the panel is *unchanged*, for a panel the implementation had already measured as changed
+in two named ways. §17.1 replaces that question with the two deltas above. Screenshots for convenience (not verdicts):
+`docs/sessions/evidence/task861/final-r1/shot-bell-open-*.png`, `shot-item-*.png`, `shot-center-*.png`.
 
 ### 13.4 Evidence the executor hands over
 
@@ -499,3 +507,143 @@ R9 is narrowed to exactly that. Any further edit to a Task 846 file is out of sc
 **The ratification is conditional:** the owner returned 861 to Opus for the three kickoff corrections now applied —
 the stale "moves to Task 862" text in R4 (removed; it contradicted §16.1), the §13.3 bell rows (added as tuples 5–7),
 and the `NotificationItem` duplicate-Story hazard (§16.8). Those are complete; 861 is executable again.
+
+## 17. Review 2 — `NEEDS REVISION` 2026-09-20 (Opus)
+
+**The implementation is verified.** Every claim below was re-measured against the diff and the artifacts, not the
+report. Independently re-run by this review, native `win32 v22.22.3`: the bell census exits **0** with all 5 nodes
+`tier1 manifest:yes story:yes className:0`; `check:rendered-scope` exits 0 with **0 new / 0 stale** edges;
+`check:story-coverage` 95/95 exit 0; `check:surface-census:changed --base HEAD` 0 new / 0 stale, exit 0. F1 (16d),
+F2 (wrapper ARIA), F3 (placeholder span) and F5 (320 overflow, bell focus trap) from review 1 are **closed**. The
+`npm run build` transcript (`final-r1/17-build.txt`, `EXIT_CODE=0`, 12:11) is **current for the reviewed diff** —
+every source file's mtime is at or before 12:07:46; the only later write is `scripts/surface-census-baseline.json`
+(12:12), a governance JSON no bundle imports.
+
+Two defects remain. **One of them is this kickoff's, not the executor's.**
+
+### 17.1 F6 · P2 · **this kickoff's defect** — R4c demanded a visual preservation that GR-0 makes impossible
+
+R4c said *"No visual change is intended: the panel's rendered chrome must match its pre-861 capture."* That cannot
+hold, and the executor disclosed both reasons (D10) rather than papering over them:
+
+| Delta | Before | After | Why it is forced |
+|---|---|---|---|
+| row separators + header underline | `var(--border)` = `#EBEBEB` (`globals.css:470`) | `Divider` `gray.2` = `#e4e7ec` (`theme.ts:285`; `Divider.defaultProps.color`, `theme.ts:1247-1255`) | the old value came from a **CSS module**, which GR-0 forbids as a style source; the canonical `Divider` carries gray-200 by project decision (Task 545 §6o) |
+| row background transition | `150ms cubic-bezier(.4,0,.2,1)` | `var(--motion-duration-base)` = **200ms**, `var(--motion-ease-standard)` = the same curve (`globals.css:335,338`) | the deleted module's own comment records it: **no `--duration-*` token equals 150 ms** (fast 100 / base 200 / slow 300) |
+
+Both are one canonical step away from the legacy value, and **there is no pre-861 capture to compare against** — the
+old panel cannot be rendered without reverting the migration. So R4c's clause was unsatisfiable *and* unmeasurable:
+a **GR-4 absolute**, the second in this kickoff after AC7's at §16.4, and this one is mine.
+
+**Resolution — already applied above, no executor work:** R4c is rewritten to permit exactly these two deltas and no
+third; §13.3 tuples 5–7 now name them so the owner ratifies or rejects them by name instead of being asked whether a
+known-changed panel is unchanged. **The executor changes nothing for F6.**
+**Verification:** AC9, tuples 5–7.
+
+### 17.2 F7 · P3 · clause 9 — a deleted Story left one live consumer behind
+
+`docs/agent-contract.md` **9**: a deletion requires a whole-repository audit of its live downstream references, and a
+known broken one *"is part of the same task, never an out-of-scope cleanup."* The session's own
+"Downstream references found and closed" section audited three and **missed a fourth**:
+
+- `scripts/task319-qa-notification-templates.mjs:38` — `const STORY_ID = 'notifications-notificationitem--all-cases'`
+  resolves to the Story file this task deleted. The script's header comment (`:5-6`) also describes the retired
+  `w-80` wrapper. It is not wired into `package.json` or CI, which is why every gate stayed green — **GR-2: a green
+  gate is not evidence about a script no gate runs.**
+
+**Resolution — one of two, executor's call, stated with its reason:** either re-point `STORY_ID` to
+`mantine-primitives-notificationitem--default` and correct the stale header comment, **or** delete the script as
+superseded by the canonical Story (Task 319 is long closed and the capture is referenced by no live gate, runbook or
+open task — prove that with the grep below before choosing deletion).
+**Verification:** AC10.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+git --no-optional-locks grep -n -E "notifications-notificationitem|Notifications/NotificationItem|task319-qa-notification-templates"
+node.exe scripts\check-surface-census.mjs --surface src\modules\notifications\components\NotificationBellView.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:file-integrity
+```
+
+Expected: the first command returns only prose/comment references inside `src/stories/**` and this kickoff — **no
+executable `STORY_ID` or path binding to the deleted Story**; the remaining four exit 0. Return all five outputs.
+`npm run build` does **not** need re-running for F7 if only `scripts/task319-*.mjs` changes — it is outside the
+bundle; say so explicitly in the report rather than re-running it silently.
+
+### 17.3 Rulings on the executor's open questions — no work owed for any of these
+
+1. **D9 · the two `color-mix()` constants in `NotificationItem.tsx` — KEEP as they are.** They are the deleted
+   module's own values, relocated **unchanged** (5 % resting / 10 % hover of `--primary`) onto Mantine's `bg` prop
+   with `useHover`. Inventing a new theme token for a 5 %/10 % primary tint would need TailAdmin provenance this
+   repo does not have (clause **16a**), and `globals.css` defines no such tint — the only comparable token,
+   `--accent` (`:574`), is a 15 % brand tint for a different role. Moving a preserved value out of a forbidden CSS
+   module into the nearest canonical mechanism is a **net GR-0 improvement**, not a new hardcode. Do not convert
+   them to a token in this task.
+2. **D11 · deleting `NotificationItem.module.css` too — CORRECT, keep.** R4c names only the `Center` module, but the
+   `Item` module held the same class of rules and was the source of the `className` R4c removes. Deleting one and
+   leaving the other would have left a CSS module as a live style source. The kickoff was narrower than GR-0; the
+   executor applied GR-0.
+3. **D13 · the native-button heuristic — ACCEPTED.** `type === 'button'` or `props.component === 'button'` or
+   `Button`/`ActionIcon`/`UnstyledButton`, with `props.component` taking precedence. Verified against both
+   production consumers: `RangeDatePicker` matches on `component`, the bell takes the render-function branch and its
+   `Indicator` root correctly receives neither attribute. A future unknown wrapper degrades to *no ARIA*, which is
+   the safe direction. Leave it.
+4. **D5/D6 · desktop `trapFocus`/`returnFocus` on every consumer, and the render-function trigger — BOTH INTENDED.**
+   The dropdown is portaled, so without the trap a keyboard user cannot reach it; the bell's inherited trap is now
+   asserted (`NotificationBellView.smoke`, and Chromium `focusInsidePanel:true` / `afterEscape.focusOnBell:true`).
+   D6 gained its production caller in this revision, which is exactly what §16.7 asked for.
+5. **`scripts/surface-census-baseline.json` — SCOPE CONFIRMED.** Inspected: exactly the three now-paid-off
+   `NotificationBellView`/`Center`/`Item` rows removed, nothing else, produced by the gate's own
+   `--update-baseline`. A stale entry **fails** that gate by design (Task 819), so leaving them was not an option.
+   No tier-2 row was touched.
+6. **`check:stories-rendered` — NOT REQUIRED, and must not be run.** It is `screenshots:assert`, **retired by owner
+   decision 2026-09-03**; its output is not valid review evidence. The two new Stories need no entry in its registry
+   and this limitation is void, not outstanding.
+7. **`tailwind-entropy.allowlist.json:18` · the stale `NotificationItem` entry — LEAVE IT, out of scope.** It was
+   already stale before this task (the class went in Task 762). Correctly reported, correctly not touched.
+8. **AC8 · the 120-day flow not re-driven — ACCEPTED as evidenced.** For `RangeDatePicker` the revision is a no-op:
+   `buttonTrigger` is `true`, so the ARIA clone is unchanged and `withRoles={buttonTrigger}` equals Mantine's own
+   default — the same DOM as the run that produced `playwright-keyboard-846-CustomRangeTooLong.txt`. The re-drive in
+   `25-keyboard-after-popover-change.txt` confirms open/`Escape`/focus-return at 1280 **and** 390 for both the
+   picker and 846's `CustomRangeTooLong`. `INFERENCE` backed by a real-browser counter-check; no re-run owed.
+9. **AC4's one re-expressed assertion (review 1 item 3) — ACCEPTED.** `value`/`placeholder` do not exist on a
+   `<button>`; `textContent === 'Select dates'` plus `not.toMatch(/\d{2}\.\d{2}\.\d{4}/)` asserts the same
+   observable property. A selector/idiom change, not a weakened expectation.
+
+### 17.4 Re-entry
+
+`remediation`. **Start at §17.2 and change nothing else.** The only file this revision may touch is
+`scripts/task319-qa-notification-templates.mjs` (re-point or retire), plus `docs/backlog.md` and the session log.
+Every other path in the worktree — including all of Task 846's — is **frozen**; re-confirm that with
+`git --no-optional-locks status --porcelain` against `final-r1/27-status-porcelain.txt` and report any difference.
+Do **not** re-run the full §13.2 block: the §17.2 block is the whole verification for this revision. Do not revisit
+F6 (§17.1 is already applied to this kickoff) or any ruling in §17.3.
+
+AC9 is **partly closed — see §17.5.** Its visual half was accepted by the owner on 2026-09-20, which also ratifies
+both §17.1 deltas; its keyboard half (tuples 2, 3-keyboard, 4) is still owner-owed. Neither half is executor work
+and neither blocks this revision.
+
+### 17.5 AC9 — owner visual verdict, 2026-09-20 (partial: chrome accepted, keyboard half still owed)
+
+> OWNER 2026-09-20: «візуально сторіси виглядаю чудово»
+
+**What this ratifies — the rendered-chrome half of the matrix, tuples 1 · 5 · 6 · 7, and the visual half of 3.**
+That includes, by direct consequence, the two §17.1 deltas, because tuples 5–6 render exactly them and nothing else
+in the panel changed: the separator / header-underline shade `#e4e7ec` (was `#EBEBEB`) and the row-background
+transition 200 ms (was 150 ms). **Both are ACCEPTED.** R4c's revised clause is therefore satisfied: two deltas
+permitted, two observed, no third. No token work follows — see §17.3 item 1.
+
+**What it does NOT ratify, because it is not a visual property.** Tuples **2**, **3** (its keyboard half) and **4**
+assert *behaviour* — that the surface opens from the keyboard with no pointer, that the focus ring comes back to the
+trigger on `Escape`, and that 846's 120-day `CustomRangeTooLong` flow completes keyboard-only. That behaviour is the
+entire subject of this task, so it cannot be closed by a verdict on appearance.
+
+It is, separately, **machine-proven in a real browser** — `final-r1/25-keyboard-after-popover-change.txt` (picker and
+846's control, `Enter` opens / `Escape` returns focus, 1280 and 390), `playwright-keyboard-RangeDatePicker.txt`,
+`playwright-keyboard-846-CustomRangeTooLong.txt` (the full 120-day flow, `onChange` not called, positive control
+live), and 61/61 critical-flow tests. So the risk here is low and the owner's remaining check is a confirmation, not
+a discovery. It stays open because Q4 + `docs/critical-flow-registry.md` row 55 make the owner's hands-on keyboard
+pass part of AC9, and because a reviewer may not convert "looks right" into "works from the keyboard".
+
+`AC9 STATUS — visual: ACCEPTED (tuples 1, 5, 6, 7, and 3-visual), owner 2026-09-20 verbatim above. Keyboard: OPEN (tuples 2, 3-keyboard, 4) — owner hands-on confirmation owed; machine evidence already green.`

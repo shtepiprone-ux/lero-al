@@ -46,7 +46,9 @@ approved review, emit a precise owner-run `git add <explicit paths>` and `git co
 after an `APPROVED` or `APPROVED WITH NOTES` review may Opus additionally emit `git push <verified-remote>
 <verified-branch>` for the owner; never emit a push handoff at task design or after a non-approved verdict. Do not
 emit broad staging commands. If approval evidence is missing, reject, partially verify, or block rather than infer
-success. The sole `.git` maintenance exception is stale `index.lock` cleanup under the matching workflow: check for
+success. A commit handoff must never include a `Co-Authored-By:` trailer: provide only the intended subject and any
+task-required body. The sole `.git` maintenance exception is stale `index.lock` cleanup under the matching workflow:
+check for
 active Git processes first, then delete only the exact stale lock and re-check status before any handoff.
 
 Before an `APPROVED` or `APPROVED WITH NOTES` verdict, close the backlog in the same turn: synchronize all GR-5 state

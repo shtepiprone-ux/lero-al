@@ -320,6 +320,8 @@ git commit -m "docs(TaskN): <short description>"
 
 Never execute the commands. A task-design handoff must never contain `git push`; only an `APPROVED` /
 `APPROVED WITH NOTES` implementation review may emit a verified-remote push handoff under the review protocol. Never
+append a `Co-Authored-By:` trailer to the commit message, including any Claude/Anthropic identity; the command carries
+only the intended subject and any task-required body. Never
 use `git add -A`, `git add -u`, wildcards, or a command that stages an uninspected file. Inspect read-only `git status
 --short` and reconcile all changed or untracked paths with the task/document artifacts created in this session. Include
 every reconciled artifact exactly once. List unrelated parallel changes as `EXCLUDED AS UNRELATED` without staging

@@ -149,6 +149,10 @@ A **non-approved review** contains no git command **for the implementation** —
 task-design block for documents the same response authored. Conflating the two is how the block went missing on
 2026-09-10.
 
+**Commit-identity ban:** an owner-run `git commit` handoff must contain only the intended commit subject and any
+task-required body. It must never append a `Co-Authored-By:` trailer. This explicitly forbids the Claude/Anthropic
+identity trailer; do not substitute a different Claude model or address to evade it.
+
 **Role boundary:** GR-6 and `.claude/hooks/orchestrator-response-gate.ps1` are Opus-only. Sonnet's executor
 handoff ends with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED` and contains
 no `git add`, `git commit`, or `git push` command. Missing or ambiguous hook role metadata fails open; it never
@@ -167,7 +171,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks an Opus response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
-| GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, and blocks `git push` outside an approved review | **enforced** |
+| GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |
 
 **A receipt is a self-report, and on 2026-09-10 the orchestrator skipped one under pressure in the same session that
 wrote this file.** That is why GR-5 and GR-6 are now an **Opus-only `Stop` hook**: it reads the real `git status` and

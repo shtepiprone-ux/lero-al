@@ -132,7 +132,9 @@ git push <verified-remote> <verified-branch>
 
 Never execute the commands. Before emitting the push line, inspect the current branch and remote/upstream with
 read-only Git and replace both placeholders with their verified values; a bare `git push` is not permitted. Never
-use `git add -A`, `git add -u`, or wildcards.
+append a `Co-Authored-By:` trailer to the commit message, including any Claude/Anthropic identity; the command carries
+only the intended subject and any task-required body. Never use `git add -A`, `git add -u`, or
+wildcards.
 
 `NEEDS REVISION` is a task-revision action, not a report-only decision. Before returning it, amend the existing
 kickoff as specified in **Needs-revision closure** below, then emit an owner-run commit handoff for that amended

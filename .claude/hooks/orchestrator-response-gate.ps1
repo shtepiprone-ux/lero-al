@@ -75,6 +75,12 @@ try {
         $problems += "GR-6 VIOLATED. 'git push' appears in a response that is not an APPROVED / APPROVED WITH NOTES review."
     }
 
+    # GR-6 - Co-Authored-By trailers are forbidden in every owner-run commit handoff. Reject
+    # all variants so an alternate Claude model/address cannot bypass the policy.
+    if ($last -match '(?im)^\s*Co-Authored-By\s*:') {
+        $problems += "GR-6 VIOLATED. Owner-run commit handoffs must not include a Co-Authored-By trailer. Emit only the intended commit subject and any task-required body."
+    }
+
     # GR-5 - closing a task in the backlog requires the archive row in the same response.
     $backlogTouched = @($design | Where-Object { $_ -eq 'docs/backlog.md' }).Count -gt 0
     $archiveTouched = @($design | Where-Object { $_ -eq 'docs/backlog-archive.md' }).Count -gt 0

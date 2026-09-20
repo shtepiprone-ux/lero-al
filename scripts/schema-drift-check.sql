@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-06-15T19:57:35.167Z by: npm run check:schema-drift
+-- Generated 2026-09-20T14:41:46.185Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -36,6 +36,8 @@
 --   ListingContactEvent  → listing_contact_events   (9 cols)
 --   ListingInquiry       → listing_inquiries        (9 cols)
 --   HistoryClearEvent    → history_clear_events     (10 cols)
+--   ListingActivityDaily → listing_activity_daily   (7 cols)
+--   ListingActivityRefresh → listing_activity_refresh (8 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -361,7 +363,22 @@ WITH expected(table_name, column_name) AS (
     ('history_clear_events', 'cleared_row_ids'),
     ('history_clear_events', 'cleared_row_count'),
     ('history_clear_events', 'metadata'),
-    ('history_clear_events', 'created_at')
+    ('history_clear_events', 'created_at'),
+    ('listing_activity_daily', 'listing_id'),
+    ('listing_activity_daily', 'metric_date'),
+    ('listing_activity_daily', 'recorded_views'),
+    ('listing_activity_daily', 'whatsapp_clicks'),
+    ('listing_activity_daily', 'listing_inquiry_submissions'),
+    ('listing_activity_daily', 'updated_at'),
+    ('listing_activity_daily', 'job_version'),
+    ('listing_activity_refresh', 'id'),
+    ('listing_activity_refresh', 'ran_at'),
+    ('listing_activity_refresh', 'from_date'),
+    ('listing_activity_refresh', 'to_date'),
+    ('listing_activity_refresh', 'status'),
+    ('listing_activity_refresh', 'rows_written'),
+    ('listing_activity_refresh', 'job_version'),
+    ('listing_activity_refresh', 'error')
 )
 SELECT
   e.table_name,
@@ -697,7 +714,22 @@ WITH expected(table_name, column_name) AS (
     ('history_clear_events', 'cleared_row_ids'),
     ('history_clear_events', 'cleared_row_count'),
     ('history_clear_events', 'metadata'),
-    ('history_clear_events', 'created_at')
+    ('history_clear_events', 'created_at'),
+    ('listing_activity_daily', 'listing_id'),
+    ('listing_activity_daily', 'metric_date'),
+    ('listing_activity_daily', 'recorded_views'),
+    ('listing_activity_daily', 'whatsapp_clicks'),
+    ('listing_activity_daily', 'listing_inquiry_submissions'),
+    ('listing_activity_daily', 'updated_at'),
+    ('listing_activity_daily', 'job_version'),
+    ('listing_activity_refresh', 'id'),
+    ('listing_activity_refresh', 'ran_at'),
+    ('listing_activity_refresh', 'from_date'),
+    ('listing_activity_refresh', 'to_date'),
+    ('listing_activity_refresh', 'status'),
+    ('listing_activity_refresh', 'rows_written'),
+    ('listing_activity_refresh', 'job_version'),
+    ('listing_activity_refresh', 'error')
 )
 SELECT
   ic.table_name,
@@ -708,6 +740,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer', 'listing_contact_events', 'listing_inquiries', 'history_clear_events')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer', 'listing_contact_events', 'listing_inquiries', 'history_clear_events', 'listing_activity_daily', 'listing_activity_refresh')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

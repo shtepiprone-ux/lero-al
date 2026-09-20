@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/app/api/cron/listing-activity/__tests__ src/modules/analytics/activity/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  16:41:53
+   Duration  1.27s (transform 213ms, setup 176ms, import 272ms, tests 34ms, environment 1.51s)
+
+EXIT_CODE=0

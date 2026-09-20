@@ -1,0 +1,48 @@
+
+> lero-al@0.1.0 check:schema-drift
+> node scripts/check-schema-drift.mjs
+
+✔ Generated: scripts/schema-drift-check.sql
+  Tables covered : 35
+  Columns tracked: 330
+
+  Interface            → Table                      Cols
+  ─────────────────────────────────────────────────────
+  User                 → users                    29
+  UserChangeLog        → user_change_log          7
+  UserStatusHistory    → user_status_history      7
+  EmailChangeToken     → email_change_tokens      7
+  EmailTemplate        → email_templates          10
+  Location             → locations                12
+  Listing              → listings                 42
+  ListingImage         → listing_images           5
+  Favorite             → favorites                4
+  FavoritePriceAlert   → favorite_price_alerts    4
+  SavedSearch          → saved_searches           12
+  ListingReport        → listing_reports          7
+  ReportAction         → report_actions           8
+  SupportTicket        → support_tickets          12
+  Notification         → notifications            10
+  DBCurrency           → currencies               12
+  DBExchangeProvider   → exchange_providers       11
+  DBPropertyType       → property_types           10
+  Page                 → pages                    7
+  SiteSetting          → site_settings            3
+  Company              → companies                4
+  Collection           → collections              5
+  CollectionItem       → collection_items         3
+  RecentlyViewed       → recently_viewed          4
+  RolePermission       → role_permissions         5
+  RolePermissionEvent  → role_permission_events   8
+  ContactInquiry       → contact_inquiries        13
+  ContactInquiryReply  → contact_inquiry_replies  5
+  PublicUserProfile    → public_user_profiles     9
+  SiteFooter           → site_footer              12
+  ListingContactEvent  → listing_contact_events   9
+  ListingInquiry       → listing_inquiries        9
+  HistoryClearEvent    → history_clear_events     10
+  ListingActivityDaily → listing_activity_daily   7
+  ListingActivityRefresh → listing_activity_refresh 8
+
+Next: run scripts/schema-drift-check.sql in the Supabase SQL Editor.
+EXIT_CODE=0

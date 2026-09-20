@@ -84,6 +84,8 @@ const INTERFACE_TABLE_MAP = {
   ListingContactEvent:    'listing_contact_events',
   ListingInquiry:         'listing_inquiries',
   HistoryClearEvent:      'history_clear_events',
+  ListingActivityDaily:   'listing_activity_daily',
+  ListingActivityRefresh: 'listing_activity_refresh',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

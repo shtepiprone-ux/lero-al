@@ -341,3 +341,41 @@ thing between this task and approval**, and it is the two-edit re-entry above.
 `remediation`. Preserve every artifact under `docs/sessions/evidence/task849/`; do not re-run the AC4 plant or
 regenerate `scripts/schema-drift-check.sql` unless `src/types/database.ts` changes again. The only source edits the
 re-entry may make are the two named in §16.2's first bullet.
+
+## 17. Review 2 — `APPROVED WITH NOTES`, 2026-09-20 — task closed and archived
+
+**Status: ✅ APPROVED WITH NOTES — ARCHIVED 2026-09-20.** Evidence root for the re-entry:
+`docs/sessions/evidence/task849/reentry/`. AC1–AC7 are all `VERIFIED`; no executor work remains.
+
+**AC5 — `VERIFIED`.** `vercel.json` carries `{"path":"/api/cron/listing-activity","schedule":"30 0 * * *"}`
+(hash `3d30084c710d92d50f0fb26f6d5425d31d3366e8`), matching O78-1's answer as recorded verbatim at
+`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md:138`. `ACTIVITY_REFRESH_CADENCE = 'daily'` puts
+`STALE_AFTER_MS` at 26 h (`types.ts`, hash `5072d41c3f563140467bb944ade2534f53826e80`).
+
+**Counter-check, because review 1 found this exact test vacuous.** `read.test.ts:240-246` guards its assertion with
+`if (!entry) return`. The reviewer re-evaluated the guard independently against the shipped `vercel.json` — the entry
+is found and the guard does **not** fire — so `expect(entry.schedule).toBe('30 0 * * *')` genuinely executes. The
+criterion is closed by the file's content, with the test as a drift lock, not the other way round.
+
+**Freshness of the transcripts.** All seven `git hash-object` witnesses in `08-hashes.txt` equal the current working
+tree, and `04-build.txt` lists `ƒ /api/cron/listing-activity`, so the gate block describes the shipped diff.
+
+### 17.1 The §16.2 deviation — accepted
+
+Setting the constant to `'daily'` narrowed it and `=== 'hourly' ? 2 : 26` failed `tsc` with TS2367. The final form
+declares `type ActivityRefreshCadence = 'hourly' | 'daily'` and derives `STALE_AFTER_MS` from
+`Record<ActivityRefreshCadence, number> = { hourly: 2, daily: 26 }`. Values unchanged, behaviour identical, and the
+file is one §16.2 already permits. **Accepted.** `NOTE`: the `Record` is slightly more than the constraint required —
+annotating the const with the union alone clears TS2367 — but it is not a defect and must not be re-worked.
+
+`NOTE`: the executor ran `git diff --stat -- vercel.json` where §13.2 prints the unscoped form, so `07-diffstat.txt`
+understates the changed set. The reviewer reconciled the handoff against the real `git status --short` instead.
+
+### 17.2 What survives approval — owner only
+
+Not an acceptance criterion and not executor work; carried as an active owner action in `docs/backlog.md`:
+
+1. After the next deploy, confirm the **deployment itself succeeded**. Five crons on Hobby is the one property
+   `vercel.json` cannot prove locally, and a rejected cron config fails the whole deployment.
+2. Then confirm the first scheduled invocation's `200` in Vercel → Cron Jobs → `/api/cron/listing-activity` →
+   View Logs. Expected window 01:30–03:30 Tirane (00:30 UTC + Hobby's 1-hour flexible window).

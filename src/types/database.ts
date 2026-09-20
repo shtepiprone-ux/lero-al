@@ -304,6 +304,28 @@ export interface ListingContactEvent {
   created_at: string
 }
 
+// Task 849 — service-role-only aggregate; never read from the client.
+export interface ListingActivityDaily {
+  listing_id: string
+  metric_date: string // Europe/Tirane local date, 'YYYY-MM-DD'
+  recorded_views: number
+  whatsapp_clicks: number
+  listing_inquiry_submissions: number
+  updated_at: string
+  job_version: string
+}
+
+export interface ListingActivityRefresh {
+  id: number
+  ran_at: string
+  from_date: string
+  to_date: string
+  status: 'success' | 'failure'
+  rows_written: number | null
+  job_version: string
+  error: string | null
+}
+
 export interface ListingImage {
   id: string
   listing_id: string

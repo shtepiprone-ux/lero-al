@@ -1,0 +1,5 @@
+ docs/sessions/evidence/task861/storybook-dev.log | 24 ++++++++++++++
+ scripts/check-schema-drift.mjs                   |  2 ++
+ scripts/schema-drift-check.sql                   | 40 +++++++++++++++++++++---
+ src/types/database.ts                            | 22 +++++++++++++
+ 4 files changed, 84 insertions(+), 4 deletions(-)

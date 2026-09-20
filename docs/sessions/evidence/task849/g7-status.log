@@ -1,0 +1,11 @@
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/check-schema-drift.mjs
+ M scripts/schema-drift-check.sql
+ M src/types/database.ts
+?? docs/sessions/evidence/task849/
+?? scripts/task-849-backfill.sql
+?? scripts/task-849-listing-activity-daily.sql
+?? scripts/task-849-verify.sql
+?? src/app/api/cron/listing-activity/
+?? src/modules/analytics/
+EXIT_CODE=0

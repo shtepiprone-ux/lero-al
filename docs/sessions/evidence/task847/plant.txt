@@ -1,0 +1,8 @@
+SCOPE MANIFEST: src/modules/admin/dashboard/queries.ts (1 path, exists: yes)
+pre-plant hash: d263d56baabdeaee6ecd2c04efa7cbd7bbe81339
+arm=count plant-applied-exit=0
+arm count planted hash: d9a7b043428aa008f73511c62eccc4beb9ea10cc
+arm count restored hash: d263d56baabdeaee6ecd2c04efa7cbd7bbe81339
+arm=rows plant-applied-exit=0
+arm rows planted hash: 8331b29995bda680bf5bcc3984b5d6fa8e825824
+arm rows restored hash: d263d56baabdeaee6ecd2c04efa7cbd7bbe81339

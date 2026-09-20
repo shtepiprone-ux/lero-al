@@ -1,0 +1,9 @@
+
+> lero-al@0.1.0 check:listing-visibility
+> node scripts/check-listing-visibility.mjs
+
+✅ Listing public-visibility invariant gate PASSED — 0 violations.
+   Anchor VISIBILITY_POLICY_ANCHOR present in src/modules/listings/lib/visibility.ts.
+   Allowlist: 7 entries, 0 stale.
+   Scanned 701 files.
+EXIT_CODE=0

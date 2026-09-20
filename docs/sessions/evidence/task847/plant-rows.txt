@@ -1,0 +1,45 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/dashboard/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/dashboard/__tests__/queries.test.ts (23 tests | 1 failed) 30ms
+     × (b) a failing adm01 query fails only that block 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/dashboard/__tests__/queries.test.ts > getAdminDashboardData > (b) a failing adm01 query fails only that block
+AssertionError: expected { ok: true, …(1) } to deeply equal { ok: false, error: 'query_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "query_failed",
+-   "ok": false,
++   "data": {
++     "count": 12,
++     "rows": [],
++   },
++   "ok": true,
+  }
+
+ ❯ src/modules/admin/dashboard/__tests__/queries.test.ts:235:22
+    233|     const d = await getAdminDashboardData()
+    234|
+    235|     expect(d[block]).toEqual({ ok: false, error: 'query_failed' })
+       |                      ^
+    236|     for (const other of BLOCKS.filter((b) => b !== block)) expect(d[ot…
+    237|     expect(errorSpy).toHaveBeenCalledWith(`[AdminDashboard] ${block} f…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 30 passed (31)
+   Start at  14:41:55
+   Duration  1.53s (transform 177ms, setup 223ms, import 167ms, tests 35ms, environment 1.97s)
+
+EXIT_CODE=1

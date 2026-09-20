@@ -1,7 +1,12 @@
 # Task 847 — the admin dashboard's server data layer: one typed result per block, errors never read as 0
 
 Sprint 78 · P1 · QA profile **Q1** · Wave B · depends on **846** approved (`src/lib/dashboard/period.ts`) ·
-**Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+**Status: ✅ APPROVED WITH NOTES 2026-09-20 (review 1) — ARCHIVED** (ledger row in `docs/backlog-archive.md`; session log
+`docs/sessions/2026-09-20-task847-admin-dashboard-data-layer.md`). Review notes are P3 only and none re-opens this task:
+the §13.2 `git grep` commands are vacuous while the files are untracked (re-run with `--untracked` until the owner commits);
+`check:listing-visibility` cannot see a predicate chained through the `listingCount()` factory → filed as **863**; ADM-06's
+href encodes the comma (`status=open%2Cin_progress`, decodes identically) — **confirmed, no change**; the ADM-11 consistency
+check may race the clock, which §3.1 asks for; `createAdminClient()` still throws on missing env, as today's page does.
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). D78-1 keeps
 ADM-03/04/05 (reviews, chat) and ADM-07 (verification) **out**; ADM-10 is 855's.

@@ -1,0 +1,10 @@
+## git grep --untracked (the new files are untracked, so plain git grep is vacuous)
+## AC3
+exit=1
+## AC6
+exit=1
+## AC4
+src/modules/admin/dashboard/queries.ts:241:    countOf(() => listingCount().eq('status', 'active')),
+exit=0
+## sanity: same command finds a known term (proves --untracked searches the file)
+src/modules/admin/dashboard/queries.ts:2

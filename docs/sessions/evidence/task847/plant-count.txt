@@ -1,0 +1,81 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/dashboard/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/dashboard/__tests__/queries.test.ts (23 tests | 1 failed) 38ms
+     × (b) a failing pending-listings count is shared by ADM-01 and the ADM-11 segment, and only those fail 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/dashboard/__tests__/queries.test.ts > getAdminDashboardData > (b) a failing pending-listings count is shared by ADM-01 and the ADM-11 segment, and only those fail
+AssertionError: expected { ok: true, data: { count: +0, …(1) } } to deeply equal { ok: false, error: 'query_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "query_failed",
+-   "ok": false,
++   "data": {
++     "count": 0,
++     "rows": [
++       {
++         "authorName": "Ana Hoxha",
++         "createdAt": "2026-09-01T10:00:00Z",
++         "id": "l-1",
++         "slug": "apartment",
++         "title": "Apartment",
++       },
++       {
++         "authorName": "Ana Hoxha",
++         "createdAt": "2026-09-02T10:00:00Z",
++         "id": "l-2",
++         "slug": "apartment",
++         "title": "Apartment",
++       },
++       {
++         "authorName": "Ana Hoxha",
++         "createdAt": "2026-09-03T10:00:00Z",
++         "id": "l-3",
++         "slug": "apartment",
++         "title": "Apartment",
++       },
++       {
++         "authorName": "Ana Hoxha",
++         "createdAt": "2026-09-04T10:00:00Z",
++         "id": "l-4",
++         "slug": "apartment",
++         "title": "Apartment",
++       },
++       {
++         "authorName": "Ana Hoxha",
++         "createdAt": "2026-09-05T10:00:00Z",
++         "id": "l-5",
++         "slug": "apartment",
++         "title": "Apartment",
++       },
++     ],
++   },
++   "ok": true,
+  }
+
+ ❯ src/modules/admin/dashboard/__tests__/queries.test.ts:255:21
+    253|     const d = await getAdminDashboardData()
+    254|
+    255|     expect(d.adm01).toEqual({ ok: false, error: 'query_failed' })
+       |                     ^
+    256|     expect(d.adm11).toEqual({ ok: false, error: 'query_failed' })
+    257|     for (const other of ['adm02', 'adm06', 'adm08', 'adm09', 'recentLi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 30 passed (31)
+   Start at  14:41:52
+   Duration  1.42s (transform 205ms, setup 212ms, import 192ms, tests 45ms, environment 1.97s)
+
+EXIT_CODE=1

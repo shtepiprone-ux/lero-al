@@ -19,6 +19,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyCronRequest } from '@/lib/cron/verifyCronRequest'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendTemplatedEmail } from '@/modules/notifications/lib/sendTemplatedEmail'
 import { createNotification } from '@/modules/notifications/lib/mutations'
@@ -46,14 +47,9 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 
-export async function POST(request: NextRequest) {
-  // Verify Vercel cron secret
-  const cronSecret = process.env.CRON_SECRET
-  if (cronSecret) {
-    if (request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
-    }
-  }
+async function handle(request: NextRequest) {
+  const auth = verifyCronRequest(request)
+  if (!auth.ok) return auth.response
 
   const db = createAdminClient()
   const now = new Date().toISOString()
@@ -152,3 +148,6 @@ export async function POST(request: NextRequest) {
   console.info('[cron/saved-searches] complete', summary)
   return NextResponse.json(summary)
 }
+
+export const GET = handle
+export const POST = handle

@@ -1,0 +1,274 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/cron/__tests__/verifyCronRequest.test.ts (0 test)
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts (6 tests | 4 failed) 16ms
+     × wrong secret → 401, no Supabase call 6ms
+     × no Authorization header → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+stdout | src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > POST → 401 and no listing is touched
+[cron/listings-expiry] complete {
+  expired: 1,
+  errors: 0,
+  null_expiry_active: 0,
+  null_expiry_note: 'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)',
+  at: '2026-09-20T13:35:17.073Z'
+}
+
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts (9 tests | 4 failed) 25ms
+     × unauthorized caller → 401 3ms
+     × authorized, lapsed active listings → same result as POST 1ms
+     × GET → 401 and no listing is touched 1ms
+     × POST → 401 and no listing is touched 4ms
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts (6 tests | 4 failed) 13ms
+     × wrong secret → 401, no Supabase call 5ms
+     × no Authorization header → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts (6 tests | 4 failed) 14ms
+     × wrong secret → 401, no Supabase call 5ms
+     × no Authorization header → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/cron/__tests__/verifyCronRequest.test.ts [ src/lib/cron/__tests__/verifyCronRequest.test.ts ]
+Error: Failed to resolve import "../verifyCronRequest" from "src/lib/cron/__tests__/verifyCronRequest.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Claude_Code_Projects/lero-al/src/lib/cron/__tests__/verifyCronRequest.test.ts:11:34
+  1  |  import { describe, it, expect, vi, afterEach } from "vitest";
+  2  |  import { NextRequest } from "next/server";
+  3  |  import { verifyCronRequest } from "../verifyCronRequest";
+     |                                     ^
+  4  |  afterEach(() => {
+  5  |    vi.unstubAllEnvs();
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42553:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42550:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40529:23
+ ❯ node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40648:37
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40575:7
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42348:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:35740:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity GET auth > wrong secret → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:46:23
+     44| ] as const)('inactivity %s auth', (method, handler) => {
+     45|   it('wrong secret → 401, no Supabase call', async () => {
+     46|     const res = await handler(makeRequest(method, 'Bearer wrong-secret…
+       |                       ^
+     47|     expect(res.status).toBe(401)
+     48|     expect(await res.json()).toEqual({ error: 'unauthorized' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity GET auth > no Authorization header → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:53:23
+     51|
+     52|   it('no Authorization header → 401, no Supabase call', async () => {
+     53|     const res = await handler(makeRequest(method))
+       |                       ^
+     54|     expect(res.status).toBe(401)
+     55|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity GET auth > CRON_SECRET unset → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:60:23
+     58|   it('CRON_SECRET unset → 401, no Supabase call', async () => {
+     59|     delete process.env.CRON_SECRET
+     60|     const res = await handler(makeRequest(method, 'Bearer undefined'))
+       |                       ^
+     61|     expect(res.status).toBe(401)
+     62|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/inactivity/__tests__/route.auth.test.ts:16:4
+ ❯ POST src/app/api/cron/inactivity/route.ts:67:14
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts GET auth > wrong secret → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:46:23
+     44| ] as const)('price-alerts %s auth', (method, handler) => {
+     45|   it('wrong secret → 401, no Supabase call', async () => {
+     46|     const res = await handler(makeRequest(method, 'Bearer wrong-secret…
+       |                       ^
+     47|     expect(res.status).toBe(401)
+     48|     expect(await res.json()).toEqual({ error: 'unauthorized' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts GET auth > no Authorization header → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:53:23
+     51|
+     52|   it('no Authorization header → 401, no Supabase call', async () => {
+     53|     const res = await handler(makeRequest(method))
+       |                       ^
+     54|     expect(res.status).toBe(401)
+     55|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts GET auth > CRON_SECRET unset → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:60:23
+     58|   it('CRON_SECRET unset → 401, no Supabase call', async () => {
+     59|     delete process.env.CRON_SECRET
+     60|     const res = await handler(makeRequest(method, 'Bearer undefined'))
+       |                       ^
+     61|     expect(res.status).toBe(401)
+     62|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:16:4
+ ❯ POST src/app/api/cron/price-alerts/route.ts:48:14
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches GET auth > wrong secret → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:46:23
+     44| ] as const)('saved-searches %s auth', (method, handler) => {
+     45|   it('wrong secret → 401, no Supabase call', async () => {
+     46|     const res = await handler(makeRequest(method, 'Bearer wrong-secret…
+       |                       ^
+     47|     expect(res.status).toBe(401)
+     48|     expect(await res.json()).toEqual({ error: 'unauthorized' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches GET auth > no Authorization header → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:53:23
+     51|
+     52|   it('no Authorization header → 401, no Supabase call', async () => {
+     53|     const res = await handler(makeRequest(method))
+       |                       ^
+     54|     expect(res.status).toBe(401)
+     55|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches GET auth > CRON_SECRET unset → 401, no Supabase call
+TypeError: handler is not a function
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:60:23
+     58|   it('CRON_SECRET unset → 401, no Supabase call', async () => {
+     59|     delete process.env.CRON_SECRET
+     60|     const res = await handler(makeRequest(method, 'Bearer undefined'))
+       |                       ^
+     61|     expect(res.status).toBe(401)
+     62|     expect(createAdminClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:16:4
+ ❯ POST src/app/api/cron/saved-searches/route.ts:58:14
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > GET /api/cron/listings-expiry (Vercel invocation) > unauthorized caller → 401
+TypeError: GET is not a function
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:140:23
+    138| describe('GET /api/cron/listings-expiry (Vercel invocation)', () => {
+    139|   it('unauthorized caller → 401', async () => {
+    140|     const res = await GET(makeRequest('Bearer wrong-secret', 'GET'))
+       |                       ^
+    141|     expect(res.status).toBe(401)
+    142|     const body = await res.json()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > GET /api/cron/listings-expiry (Vercel invocation) > authorized, lapsed active listings → same result as POST
+TypeError: GET is not a function
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:150:23
+    148|     selectNullCountResult = 1
+    149|
+    150|     const res = await GET(makeRequest('Bearer test-secret', 'GET'))
+       |                       ^
+    151|     expect(res.status).toBe(200)
+    152|     const body = await res.json()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > GET → 401 and no listing is touched
+TypeError: handler is not a function
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:171:23
+    169|     selectLapsedResult = [{ id: 'l1' }]
+    170|
+    171|     const res = await handler(makeRequest(undefined, method))
+       |                       ^
+    172|     expect(res.status).toBe(401)
+    173|     expect(updateCalls).toHaveLength(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > POST → 401 and no listing is touched
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:172:24
+    170|
+    171|     const res = await handler(makeRequest(undefined, method))
+    172|     expect(res.status).toBe(401)
+       |                        ^
+    173|     expect(updateCalls).toHaveLength(0)
+    174|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  16 failed | 11 passed (27)
+   Start at  15:35:15
+   Duration  1.87s (transform 536ms, setup 408ms, import 1.22s, tests 69ms, environment 4.14s)
+
+EXIT_CODE=1

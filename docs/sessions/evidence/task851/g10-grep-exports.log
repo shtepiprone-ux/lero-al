@@ -1,0 +1,9 @@
+src/app/api/cron/inactivity/route.ts:176:export const GET = handle
+src/app/api/cron/inactivity/route.ts:177:export const POST = handle
+src/app/api/cron/listings-expiry/route.ts:76:export const GET = handle
+src/app/api/cron/listings-expiry/route.ts:77:export const POST = handle
+src/app/api/cron/price-alerts/route.ts:199:export const GET = handle
+src/app/api/cron/price-alerts/route.ts:200:export const POST = handle
+src/app/api/cron/saved-searches/route.ts:152:export const GET = handle
+src/app/api/cron/saved-searches/route.ts:153:export const POST = handle
+EXIT_CODE=0

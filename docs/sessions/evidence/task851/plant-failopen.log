@@ -1,0 +1,157 @@
+PRE-PLANT HASH 1640a31cfae7d12c22038633d876eae011bd15de
+PLANTED HASH 4ad70352d483e211d41b0ce13bba138e7145bed5
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/cron/__tests__/verifyCronRequest.test.ts (6 tests | 2 failed) 18ms
+     × CRON_SECRET unset → 401 even when a header is sent (fail closed) 5ms
+     × CRON_SECRET empty → 401, including for a literal "Bearer " header 1ms
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts (6 tests | 2 failed) 21ms
+     × CRON_SECRET unset → 401, no Supabase call 5ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+stdout | src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > GET → 401 and no listing is touched
+[cron/listings-expiry] complete {
+  expired: 1,
+  errors: 0,
+  null_expiry_active: 0,
+  null_expiry_note: 'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)',
+  at: '2026-09-20T13:35:51.665Z'
+}
+
+stdout | src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > POST → 401 and no listing is touched
+[cron/listings-expiry] complete {
+  expired: 1,
+  errors: 0,
+  null_expiry_active: 0,
+  null_expiry_note: 'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)',
+  at: '2026-09-20T13:35:51.671Z'
+}
+
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts (9 tests | 2 failed) 27ms
+     × GET → 401 and no listing is touched 6ms
+     × POST → 401 and no listing is touched 2ms
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts (6 tests | 2 failed) 14ms
+     × CRON_SECRET unset → 401, no Supabase call 3ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts (6 tests | 2 failed) 14ms
+     × CRON_SECRET unset → 401, no Supabase call 3ms
+     × CRON_SECRET unset → 401, no Supabase call 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/cron/__tests__/verifyCronRequest.test.ts > verifyCronRequest > CRON_SECRET unset → 401 even when a header is sent (fail closed)
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ expectUnauthorized src/lib/cron/__tests__/verifyCronRequest.test.ts:24:21
+     22|
+     23| async function expectUnauthorized(result: ReturnType<typeof verifyCron…
+     24|   expect(result.ok).toBe(false)
+       |                     ^
+     25|   if (result.ok) return
+     26|   expect(result.response.status).toBe(401)
+ ❯ src/lib/cron/__tests__/verifyCronRequest.test.ts:55:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  src/lib/cron/__tests__/verifyCronRequest.test.ts > verifyCronRequest > CRON_SECRET empty → 401, including for a literal "Bearer " header
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ expectUnauthorized src/lib/cron/__tests__/verifyCronRequest.test.ts:24:21
+     22|
+     23| async function expectUnauthorized(result: ReturnType<typeof verifyCron…
+     24|   expect(result.ok).toBe(false)
+       |                     ^
+     25|   if (result.ok) return
+     26|   expect(result.response.status).toBe(401)
+ ❯ src/lib/cron/__tests__/verifyCronRequest.test.ts:61:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity GET auth > CRON_SECRET unset → 401, no Supabase call
+ FAIL  src/app/api/cron/inactivity/__tests__/route.auth.test.ts > inactivity POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/inactivity/__tests__/route.auth.test.ts:16:4
+ ❯ handle src/app/api/cron/inactivity/route.ts:61:14
+ ❯ src/app/api/cron/inactivity/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts GET auth > CRON_SECRET unset → 401, no Supabase call
+ FAIL  src/app/api/cron/price-alerts/__tests__/route.auth.test.ts > price-alerts POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:16:4
+ ❯ handle src/app/api/cron/price-alerts/route.ts:45:14
+ ❯ src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches GET auth > CRON_SECRET unset → 401, no Supabase call
+ FAIL  src/app/api/cron/saved-searches/__tests__/route.auth.test.ts > saved-searches POST auth > CRON_SECRET unset → 401, no Supabase call
+Error: createAdminClient must not be called for an unauthorized request
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:13:9
+     11|
+     12| const createAdminClient = vi.fn(() => {
+     13|   throw new Error('createAdminClient must not be called for an unautho…
+       |         ^
+     14| })
+     15|
+ ❯ createAdminClient src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:16:4
+ ❯ handle src/app/api/cron/saved-searches/route.ts:54:14
+ ❯ src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:60:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > GET → 401 and no listing is touched
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > CRON_SECRET unset → every call refused (fail closed) > POST → 401 and no listing is touched
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:172:24
+    170|
+    171|     const res = await handler(makeRequest(undefined, method))
+    172|     expect(res.status).toBe(401)
+       |                        ^
+    173|     expect(updateCalls).toHaveLength(0)
+    174|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  10 failed | 23 passed (33)
+   Start at  15:35:50
+   Duration  1.59s (transform 433ms, setup 484ms, import 904ms, tests 93ms, environment 4.35s)
+
+EXIT_CODE=1
+RESTORED HASH 1640a31cfae7d12c22038633d876eae011bd15de

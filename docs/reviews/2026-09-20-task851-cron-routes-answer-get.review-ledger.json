@@ -1,0 +1,491 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-851 — the four cron routes export GET as well as POST and fail closed when CRON_SECRET is unset (R1-R6), with the owner-run first-run impact grid and the enable-order decision",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "eee5c0d129e2d133c51ebf0cc04cf35946a9d318",
+    "reviewedRevision": "uncommitted worktree on top of eee5c0d129e2d133c51ebf0cc04cf35946a9d318 (main). Blobs: src/lib/cron/verifyCronRequest.ts 1640a31c, src/app/api/cron/inactivity/route.ts 1ef17627, src/app/api/cron/listings-expiry/route.ts 6bb22732, src/app/api/cron/price-alerts/route.ts 024af812, src/app/api/cron/saved-searches/route.ts 4bab7353, scripts/task-851-first-run-impact.sql 58a0279c.",
+    "reviewedPaths": [
+      "src/lib/cron/verifyCronRequest.ts",
+      "src/lib/cron/__tests__/verifyCronRequest.test.ts",
+      "src/app/api/cron/inactivity/route.ts",
+      "src/app/api/cron/listings-expiry/route.ts",
+      "src/app/api/cron/price-alerts/route.ts",
+      "src/app/api/cron/saved-searches/route.ts",
+      "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
+      "src/app/api/cron/inactivity/__tests__/route.auth.test.ts",
+      "src/app/api/cron/price-alerts/__tests__/route.auth.test.ts",
+      "src/app/api/cron/saved-searches/__tests__/route.auth.test.ts",
+      "scripts/task-851-first-run-impact.sql",
+      "docs/env.md",
+      "docs/critical-flow-registry.md",
+      "docs/sessions/2026-09-20-task851-cron-routes-answer-get.md",
+      "docs/sessions/evidence/task851"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-20-task851-cron-routes-answer-get.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F2"],
+      "finalSubject": {
+        "path": "src/lib/cron/verifyCronRequest.ts",
+        "symbol": "verifyCronRequest",
+        "diffHunks": ["src/lib/cron/verifyCronRequest.ts:13-19 (new file, blob 1640a31c)"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "unset secret",
+          "empty secret",
+          "wrong bearer",
+          "missing Authorization header",
+          "bare secret without the Bearer scheme",
+          "exact Bearer ${CRON_SECRET}"
+        ],
+        "phases": ["post-fix"],
+        "notApplicable": {
+          "stories": "Server-only auth helper; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "Server-only auth helper; no user-facing string — the 401 body is the machine token {error:'unauthorized'}.",
+          "viewports": "Server-only auth helper; nothing rendered.",
+          "states": "Server-only auth helper; the six input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task851/g3-helper-test.log",
+          "command": "npm.cmd run test -- src/lib/cron/__tests__/verifyCronRequest.test.ts",
+          "observable": "6 tests passed, EXIT_CODE=0; the six cases are the six subjects. Reviewer native rerun (win32, Node v22.22.3) of src/app/api/cron + src/lib/cron: 5 files, 33 tests passed, exit 0.",
+          "freshness": "final worktree 2026-09-20; reviewer git hash-object of verifyCronRequest.ts equals the executor's g12 record 1640a31c",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "unset secret",
+              "empty secret",
+              "wrong bearer",
+              "missing Authorization header",
+              "bare secret without the Bearer scheme",
+              "exact Bearer ${CRON_SECRET}"
+            ],
+            "phases": ["post-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The unset/empty-secret cases would also pass against the old fail-open logic, so the fail-closed guarantee is untested.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task851/plant-failopen.log",
+          "result": "REFUTED. Planting `if (cronSecret) {...}` fail-open (hash 4ad70352) failed exactly the two unset/empty helper cases plus 8 route cases, 10 failed / 23 passed, EXIT_CODE=1; RESTORED HASH 1640a31c equals the pre-plant and the current reviewer hash."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server helper; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/api/cron/listings-expiry/route.ts",
+        "symbol": "handle, export const GET, export const POST (same shape in inactivity, price-alerts, saved-searches)",
+        "diffHunks": [
+          "src/app/api/cron/inactivity/route.ts:53-58, :175-177",
+          "src/app/api/cron/listings-expiry/route.ts:18-24, :75-77",
+          "src/app/api/cron/price-alerts/route.ts:41-46, :198-200",
+          "src/app/api/cron/saved-searches/route.ts:50-55, :151-153"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "inactivity route",
+          "listings-expiry route",
+          "price-alerts route",
+          "saved-searches route"
+        ],
+        "phases": ["pre-fix", "post-fix"],
+        "notApplicable": {
+          "stories": "API route modules; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "API route modules; no user-facing string changed.",
+          "viewports": "API route modules; nothing rendered.",
+          "states": "Covered by AC3's auth branches; this row is the export/handler shape."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task851/g10-grep-exports.log",
+          "command": "git --no-optional-locks grep -n -E \"^export (const|async function) (GET|POST)\" -- src/app/api/cron",
+          "observable": "Exactly 8 lines: GET and POST exported by all four routes (inactivity:176-177, listings-expiry:76-77, price-alerts:199-200, saved-searches:152-153), EXIT_CODE=0. git grep reads the working tree for tracked files, and all four routes are tracked-and-modified, so the hit set is the shipped content.",
+          "freshness": "final worktree 2026-09-20; the four route hashes in g12 equal the reviewer hash-object rerun",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "inactivity route",
+              "listings-expiry route",
+              "price-alerts route",
+              "saved-searches route"
+            ],
+            "phases": ["pre-fix", "post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task851/g7-build.log",
+          "command": "npm.cmd run build",
+          "observable": "EXIT_CODE=0; lines 180-183 mark all four cron routes as 'f' (Dynamic — server-rendered on demand), not 'o' (Static). Next 15.5.18 therefore evaluates the new GET per request rather than prerendering a cached response.",
+          "freshness": "final worktree 2026-09-20; build ran after the final route edit, hashes in g12 equal the reviewer rerun",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "inactivity route",
+              "listings-expiry route",
+              "price-alerts route",
+              "saved-searches route"
+            ],
+            "phases": ["post-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The refactor changed handler-body lines beyond R2's scope, or broke the fingerprints check:listing-visibility allowlists in listings-expiry.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task851/g6-listing-visibility.log",
+          "result": "REFUTED. Reviewer read the full four-route diff: every hunk is the import line, the POST-to-handle signature, the removed inline check, and the two trailing exports; no body line is touched. node scripts/check-listing-visibility.mjs PASSED, 0 violations, allowlist 7 entries 0 stale, 713 files scanned, EXIT_CODE=0 — the three .eq('status','active') / .lt('expires_at', now) / .is('expires_at', null) fingerprints survive verbatim."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript route modules; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R3 R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
+        "symbol": "GET /api/cron/listings-expiry (Vercel invocation), CRON_SECRET unset -> every call refused; route.auth.test.ts x3",
+        "diffHunks": [
+          "src/app/api/cron/listings-expiry/__tests__/route.test.ts:137-179",
+          "src/app/api/cron/inactivity/__tests__/route.auth.test.ts:41-63 (new)",
+          "src/app/api/cron/price-alerts/__tests__/route.auth.test.ts:41-63 (new)",
+          "src/app/api/cron/saved-searches/__tests__/route.auth.test.ts:41-63 (new)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "listings-expiry GET authorized -> same result as POST",
+          "listings-expiry GET wrong secret -> 401",
+          "listings-expiry unset secret -> 401 for GET and POST, no listing touched",
+          "inactivity GET+POST wrong/missing/unset -> 401 before createAdminClient",
+          "price-alerts GET+POST wrong/missing/unset -> 401 before createAdminClient",
+          "saved-searches GET+POST wrong/missing/unset -> 401 before createAdminClient"
+        ],
+        "phases": ["pre-fix", "post-fix"],
+        "notApplicable": {
+          "stories": "Vitest server tests; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "Vitest server tests; the asserted body is the machine token {error:'unauthorized'}.",
+          "viewports": "Vitest server tests; nothing rendered.",
+          "states": "The auth branches are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task851/g4-cron-all.log",
+          "command": "npx.cmd vitest run src/app/api/cron",
+          "observable": "4 files, 27 tests passed, EXIT_CODE=0. Reviewer native rerun of src/app/api/cron + src/lib/cron: 5 files, 33 passed, exit 0 (win32, Node v22.22.3).",
+          "freshness": "final worktree 2026-09-20; reviewer rerun 16:21 on the same blobs recorded in g12",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "listings-expiry GET authorized -> same result as POST",
+              "listings-expiry GET wrong secret -> 401",
+              "listings-expiry unset secret -> 401 for GET and POST, no listing touched",
+              "inactivity GET+POST wrong/missing/unset -> 401 before createAdminClient",
+              "price-alerts GET+POST wrong/missing/unset -> 401 before createAdminClient",
+              "saved-searches GET+POST wrong/missing/unset -> 401 before createAdminClient"
+            ],
+            "phases": ["post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task851/g5-critical-flow.log",
+          "command": "npx.cmd vitest run src/app/api/cron/listings-expiry/__tests__/route.test.ts",
+          "observable": "9 tests passed, EXIT_CODE=0, against the 5-test baseline in baseline-critical-flow.log — the registered critical flow keeps its five original cases and gains four GET/unset cases.",
+          "freshness": "final worktree 2026-09-20; baseline captured at I0 before the implementation",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "listings-expiry GET authorized -> same result as POST",
+              "listings-expiry GET wrong secret -> 401",
+              "listings-expiry unset secret -> 401 for GET and POST, no listing touched"
+            ],
+            "phases": ["pre-fix", "post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task851/red-before-impl.log",
+          "command": "npx.cmd vitest run src/app/api/cron src/lib/cron (tests written first, before R1/R2 existed)",
+          "observable": "Failed Tests 16. Each of the three route.auth suites reports '6 tests | 4 failed' (price-alerts :5, saved-searches :24, inactivity :29): the three GET cases fail because the route exported no GET, and the POST unset-secret case fails because the old inline check was fail-open and reached createAdminClient. That is the pre-fix arm for these three subjects.",
+          "freshness": "captured at I0/step 2 before the helper and the route edits existed",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "inactivity GET+POST wrong/missing/unset -> 401 before createAdminClient",
+              "price-alerts GET+POST wrong/missing/unset -> 401 before createAdminClient",
+              "saved-searches GET+POST wrong/missing/unset -> 401 before createAdminClient"
+            ],
+            "phases": ["pre-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new tests mirror the implementation and cannot fail, so they are not a gate on the fail-closed behavior.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task851/plant-failopen.log",
+          "result": "REFUTED. The fail-open plant drove exactly the unset-secret cases red in all five files — listings-expiry GET and POST returned 200 where 401 is asserted (route.test.ts:172), and the three route.auth suites failed their unset case for both methods; 10 failed / 23 passed, EXIT_CODE=1, restored hash equal. red-before-impl.log additionally records 16 failures before the helper existed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Vitest suites; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": ["F1"],
+      "finalSubject": {
+        "path": "scripts/task-851-first-run-impact.sql",
+        "symbol": "impact grid, 10 rows (blob 58a0279c)",
+        "diffHunks": ["scripts/task-851-first-run-impact.sql:23-133 (new file)"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every count cites its route file:line and mirrors that predicate",
+          "owner-run output attached to the review",
+          "owner enable-order decision"
+        ],
+        "phases": ["post-fix"],
+        "notApplicable": {
+          "stories": "Read-only SQL report; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "Read-only SQL report; no user-facing string.",
+          "viewports": "Read-only SQL report; nothing rendered.",
+          "states": "The report is a single snapshot; the three subjects enumerate its required halves."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/task-851-first-run-impact.sql",
+          "command": "Reviewer line-by-line trace of all ten cited sites against the route sources",
+          "observable": "Every citation resolves and every predicate matches: listings-expiry:35-38/41-44 equal the .eq('status','active').lt('expires_at', now) and .is('expires_at', null) queries; inactivity:71-77, :93-97, :133-141 — the PostgREST .or(last_seen_at.lt.X, and(last_seen_at.is.null, created_at.lt.X)) pairs are faithful COALESCE(last_seen_at, created_at) translations and the two chained .or() calls AND together into the 91-365 day band; saved-searches:59-62 + shouldCheck:35-43 reproduce the instant / 6.5-day / 23-hour arms and the last_checked_at IS NULL short-circuit, with :76's new Date(0) epoch cutoff behind row 7; price-alerts:50-64 is the favorites x non-archived-listings join, :103-113 the lastPrice === undefined baseline branch, :115-174 the changed-price notify branch. SELECT-only: no INSERT, UPDATE, DELETE or DDL in the file.",
+          "freshness": "final worktree 2026-09-20; reviewer git hash-object 58a0279c equals the executor's g12 record",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["every count cites its route file:line and mirrors that predicate"],
+            "phases": ["post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task851/owner-o78-2-and-first-run-impact.md",
+          "command": "OWNER-NATIVE — owner ran the SQL in the Supabase SQL editor and returned the grid, plus Vercel Cron Jobs / CRON_SECRET / View Logs state (O78-2)",
+          "observable": "Grid returned: 0 expirations, 0 NULL-expiry, 0 soft-deletes, 0 listings to archive, 0 warning emails, 0 due and 0 never-checked saved searches, 7 favorite pairs, 7 silent baseline inserts, 0 changed-price notifications. First-run blast radius = 7 rows in favorite_price_alerts and zero emails. Owner decision recorded verbatim: all four may be enabled together after re-approval; crons stay Disabled until then. CRON_SECRET is set for Production, so manual POST triggers keep working after deploy.",
+          "freshness": "owner-run 2026-09-20 against live Production data, after the reviewed diff was final",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["owner-run output attached to the review", "owner enable-order decision"],
+            "phases": ["post-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 7 price-alert pairs will send 7 emails on the first run, so the near-zero blast radius is wrong.",
+          "kind": "EXECUTED",
+          "path": "src/app/api/cron/price-alerts/route.ts",
+          "result": "REFUTED. Reviewer read the full pair loop: an unseen pair (lastPrice === undefined, :102) pushes a baselineUpserts row, increments baseline and `continue`s at :111 before any getUserById, sendTemplatedEmail or createNotification call; only the lastPrice-defined, price-differs branch (:114+) notifies. The owner's grid row 8 = row 9 = 7 confirms no favorite_price_alerts row exists yet, so only that silent branch can fire. Row 10 = 0 independently."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Read-only reporting SQL executed by the owner in the Supabase editor; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R6",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/env.md",
+        "symbol": "CRON_SECRET row; docs/critical-flow-registry.md row 69 route cell",
+        "diffHunks": ["docs/env.md:17", "docs/critical-flow-registry.md:69"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "env.md lists all five CRON_SECRET routes and the unset = 401 rule",
+          "critical-flow registry row 69 route cell reads GET|POST"
+        ],
+        "phases": ["pre-fix", "post-fix"],
+        "notApplicable": {
+          "stories": "Documentation rows; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "Project documentation is English-only by convention; not a user-facing runtime string.",
+          "viewports": "Documentation rows; nothing rendered.",
+          "states": "Documentation rows have no state branches."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/env.md",
+          "command": "git --no-optional-locks diff -- docs/env.md docs/critical-flow-registry.md",
+          "observable": "env.md:17 now names /api/cron/inactivity, /api/cron/listings-expiry, /api/cron/price-alerts, /api/cron/saved-searches and /api/cron/listing-activity (Task 849), cites src/lib/cron/verifyCronRequest.ts, and states 'Unset or empty = every cron call is refused (401)'. critical-flow-registry.md:69's route cell reads 'GET\\|POST /api/cron/listings-expiry'.",
+          "freshness": "final worktree 2026-09-20; reviewer reread both current files in this review turn",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "env.md lists all five CRON_SECRET routes and the unset = 401 rule",
+              "critical-flow registry row 69 route cell reads GET|POST"
+            ],
+            "phases": ["pre-fix", "post-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The registry row's regression command no longer matches the route cell it documents, or a fifth CRON_SECRET consumer was missed.",
+          "kind": "EXECUTED",
+          "path": "docs/critical-flow-registry.md",
+          "result": "REFUTED. Row 69's command column still runs the listings-expiry suite that now covers both methods (9/9), and the reviewer's grep for /api/cron consumers across src/ returns only the four routes, the helper, its test and two email doc-comments — 849's listing-activity route does not exist yet and is documented as forthcoming."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Markdown documentation; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / final gate block",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-20-task851-cron-routes-answer-get.md",
+        "symbol": "Files Changed table and the SS13.2 gate transcripts",
+        "diffHunks": ["docs/sessions/evidence/task851/g1-g12"]
+      },
+      "requiredScope": {
+        "subjects": [
+          "typecheck, lint, helper test, cron suites, listing-visibility, build, file-integrity, mojibake, export grep, hashes",
+          "Files Changed table equals the real diff"
+        ],
+        "phases": ["post-fix"],
+        "notApplicable": {
+          "stories": "Gate transcripts; no UI artifact, story, locale, viewport or visual state.",
+          "locales": "Gate transcripts; no user-facing string.",
+          "viewports": "Gate transcripts; nothing rendered.",
+          "states": "Gate transcripts have no state branches."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task851/g12-hashes.log",
+          "command": "git --no-optional-locks hash-object of the 13 changed/created files",
+          "observable": "All five source hashes equal the reviewer's native rerun (1640a31c, 1ef17627, 6bb22732, 024af812, 4bab7353) and the SQL 58a0279c — the retained gate transcripts describe the shipped content, not a superseded version.",
+          "freshness": "final worktree 2026-09-20; reviewer hash-object rerun in this review turn returned identical values",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["typecheck, lint, helper test, cron suites, listing-visibility, build, file-integrity, mojibake, export grep, hashes"],
+            "phases": ["post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task851/g8-file-integrity.log",
+          "command": "npm.cmd run check:file-integrity; npm.cmd run check:mojibake; npm.cmd run typecheck; npm.cmd run lint; npm.cmd run build",
+          "observable": "file-integrity 37 files clean EXIT_CODE=0; mojibake 0 artifacts in 6271 files EXIT_CODE=0 (g9); typecheck EXIT_CODE=0 (g1); lint 0 errors / 79 pre-existing warnings EXIT_CODE=0 (g2); build EXIT_CODE=0 (g7).",
+          "freshness": "final worktree 2026-09-20, all captured after the final source edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["typecheck, lint, helper test, cron suites, listing-visibility, build, file-integrity, mojibake, export grep, hashes"],
+            "phases": ["post-fix"]
+          }
+        },
+        {
+          "path": "docs/sessions/2026-09-20-task851-cron-routes-answer-get.md",
+          "command": "Reviewer reconciliation of the session log's Files Changed table against git --no-optional-locks status --short",
+          "observable": "All 15 task paths match one-for-one; the only other worktree entry is docs/sessions/evidence/task861/storybook-dev.log, EXCLUDED AS UNRELATED. The five policy files the executor flagged as changed mid-session are clean at review time — the owner committed them (HEAD is now eee5c0d1).",
+          "freshness": "reviewer ran status in this review turn against the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": ["Files Changed table equals the real diff"],
+            "phases": ["post-fix"]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The build transcript predates the final edits, so a broken route shipped behind a stale green.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task851/g12-hashes.log",
+          "result": "REFUTED. The build (g7, 15:40) precedes the hash capture (g12, 15:41) in the same gate pass, and every hash in g12 still equals the reviewer's hash-object rerun after the review's own docs-only edits; no source file changed after the build."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Command transcripts; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC4 / R5",
+      "requirementIds": ["AC4 / R5"],
+      "evidence": "scripts/task-851-first-run-impact.sql:16-20 says the per_run_cap column 'says how many the first run would actually process', but every route caps the rows it FETCHES, not the rows it acts on: saved-searches/route.ts:62 limits the notify_email=true fetch to 500 before the frequency gate, price-alerts/route.ts:51 caps favorites at 5000 before the non-archived join, and row 4's 'none' is in fact bounded by inactivity/route.ts:77's 200-user limit. Every deviation over-states the blast radius, so the report stays safe to decide from, and the owner's returned grid is all zeros except 7 baseline inserts. Non-blocking wording fix: state 'upper bound - the route caps the rows it fetches'."
+    },
+    {
+      "id": "F2",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC1 / R1",
+      "requirementIds": ["AC1 / R1"],
+      "evidence": "src/app/api/cron/inactivity/route.ts lost console.error('[cron/inactivity] Unauthorized') with the inline check R2 replaced, and verifyCronRequest.ts:15 logs nothing, so a rejected cron call is now silent on all four routes. Correctly self-reported by the executor as a deviation. Optional: one console.error in the helper covers all five consumers at once."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC4 / R5",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer re-ran the cron + helper suites natively (5 files, 33 tests, exit 0), re-ran git hash-object on the six shipped files, read the complete four-route diff, the helper, all five test files and the SQL, traced all ten SQL citations to their route sites, read the full price-alerts pair loop, and reconciled git status against the session log's Files Changed table. AC4 / R5 is the lowest-evidence row: its implementation half is fully inspected, and its owner half rests on the owner's returned Supabase grid and Vercel state, retained verbatim at docs/sessions/evidence/task851/owner-o78-2-and-first-run-impact.md rather than re-measured by the reviewer, who has no database or dashboard access. O78-2 itself returned empty cron logs, so the kickoff's 405 INFERENCE stays UNKNOWN and is moot: the crons are Disabled in Vercel, an independent reason the jobs have not run, which this task does not address."
+  }
+}

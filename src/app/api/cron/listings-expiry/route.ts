@@ -15,16 +15,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyCronRequest } from '@/lib/cron/verifyCronRequest'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { resolveTransition } from '@/modules/listings/domain/listingTransitionEngine'
 
-export async function POST(request: NextRequest) {
-  const cronSecret = process.env.CRON_SECRET
-  if (cronSecret) {
-    if (request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
-    }
-  }
+async function handle(request: NextRequest) {
+  const auth = verifyCronRequest(request)
+  if (!auth.ok) return auth.response
 
   const db = createAdminClient()
   const now = new Date().toISOString()
@@ -75,3 +72,6 @@ export async function POST(request: NextRequest) {
   console.info('[cron/listings-expiry] complete', summary)
   return NextResponse.json(summary)
 }
+
+export const GET = handle
+export const POST = handle

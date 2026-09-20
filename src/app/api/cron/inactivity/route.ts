@@ -19,6 +19,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import * as React from 'react'
+import { verifyCronRequest } from '@/lib/cron/verifyCronRequest'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
 import { InactivityWarningEmail, getInactivityWarningEmailStrings } from '@/modules/notifications/lib/emails/InactivityWarningEmail'
@@ -49,16 +50,9 @@ function signInUrl(locale: string): string {
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 
-export async function POST(request: NextRequest) {
-  // Verify Vercel cron secret
-  const cronSecret = process.env.CRON_SECRET
-  if (cronSecret) {
-    const auth = request.headers.get('authorization')
-    if (auth !== `Bearer ${cronSecret}`) {
-      console.error('[cron/inactivity] Unauthorized')
-      return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
-    }
-  }
+async function handle(request: NextRequest) {
+  const auth = verifyCronRequest(request)
+  if (!auth.ok) return auth.response
 
   const now = Date.now()
   const threeMonthsAgo  = new Date(now - THREE_MONTHS_MS).toISOString()
@@ -178,3 +172,6 @@ export async function POST(request: NextRequest) {
   console.info('[cron/inactivity] complete', summary)
   return NextResponse.json(summary)
 }
+
+export const GET = handle
+export const POST = handle

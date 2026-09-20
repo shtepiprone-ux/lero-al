@@ -7,6 +7,8 @@
  *   3. NULL-expiry active rows reported but NOT mutated.
  *   4. Unauthorized caller → 401.
  *   5. Engine uses resolveTransition('active', 'EXPIRE') → expired (not raw string).
+ *   6. (Task 851) GET — what Vercel sends — mirrors POST: authorized → same result, wrong secret → 401.
+ *   7. (Task 851) CRON_SECRET unset → 401 for GET and POST, no DB call (fail closed).
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
@@ -52,7 +54,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   },
 }))
 
-const { POST } = await import('../route')
+const { GET, POST } = await import('../route')
 
 beforeEach(() => {
   updateCalls = []
@@ -65,11 +67,11 @@ afterEach(() => {
   vi.unstubAllEnvs()
 })
 
-function makeRequest(authHeader?: string): NextRequest {
+function makeRequest(authHeader?: string, method: 'GET' | 'POST' = 'POST'): NextRequest {
   const headers: Record<string, string> = {}
   if (authHeader) headers.authorization = authHeader
   return new NextRequest('http://localhost/api/cron/listings-expiry', {
-    method: 'POST',
+    method,
     headers,
   })
 }
@@ -130,5 +132,48 @@ describe('POST /api/cron/listings-expiry', () => {
 
     await POST(makeRequest('Bearer test-secret'))
     expect(updateCalls[0].payload.status).toBe('expired')
+  })
+})
+
+describe('GET /api/cron/listings-expiry (Vercel invocation)', () => {
+  it('unauthorized caller → 401', async () => {
+    const res = await GET(makeRequest('Bearer wrong-secret', 'GET'))
+    expect(res.status).toBe(401)
+    const body = await res.json()
+    expect(body.error).toBe('unauthorized')
+  })
+
+  it('authorized, lapsed active listings → same result as POST', async () => {
+    selectLapsedResult = [{ id: 'l1' }, { id: 'l2' }]
+    selectNullCountResult = 1
+
+    const res = await GET(makeRequest('Bearer test-secret', 'GET'))
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    expect(body.expired).toBe(2)
+    expect(body.errors).toBe(0)
+    expect(body.null_expiry_active).toBe(1)
+    expect(updateCalls).toHaveLength(2)
+    for (const call of updateCalls) {
+      expect(call.payload.status).toBe('expired')
+    }
+  })
+})
+
+describe('CRON_SECRET unset → every call refused (fail closed)', () => {
+  it.each([
+    ['GET', GET],
+    ['POST', POST],
+  ] as const)('%s → 401 and no listing is touched', async (method, handler) => {
+    delete process.env.CRON_SECRET
+    selectLapsedResult = [{ id: 'l1' }]
+
+    const res = await handler(makeRequest(undefined, method))
+    expect(res.status).toBe(401)
+    expect(updateCalls).toHaveLength(0)
+
+    const withHeader = await handler(makeRequest('Bearer undefined', method))
+    expect(withHeader.status).toBe(401)
+    expect(updateCalls).toHaveLength(0)
   })
 })

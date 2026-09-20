@@ -1,7 +1,12 @@
 # Task 851 — the four cron routes answer Vercel's `GET`, and refuse every call when `CRON_SECRET` is missing
 
 Sprint 78 · P1 · QA profile **Q4** (critical flow "Listing expiry reconciliation") · Wave B, **before 849** · owner
-action **O78-2** first · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET (I0 needs O78-2's answer)**
+action **O78-2** first · **Status: ✅ APPROVED WITH NOTES 2026-09-20, ARCHIVED — all of R1–R6 and AC1–AC6 verified.
+AC4 closed on the owner's run of `scripts/task-851-first-run-impact.sql`: 7 silent `favorite_price_alerts` baseline
+rows and zero emails, soft-deletes or mutations. O78-2 returned empty View Logs — the crons are **Disabled** in
+Vercel, so §3's 405 INFERENCE stays UNKNOWN and is moot; enabling all four (owner-authorized on that grid) is a
+separate active owner action, not part of this task. Ledger
+`docs/reviews/2026-09-20-task851-cron-routes-answer-get.review-ledger.json`; archive row in `docs/backlog-archive.md`.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed because 849's
 design read the Vercel cron docs (D78-4) and found the existing routes cannot be invoked the way Vercel invokes them.

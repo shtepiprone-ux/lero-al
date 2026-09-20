@@ -1,0 +1,33 @@
+ .claude/agents/orchestrator.md                     |  4 +-
+ .claude/hooks/orchestrator-response-gate.ps1       |  6 +++
+ .claude/skills/create-task/SKILL.md                |  2 +
+ .claude/skills/review-task/SKILL.md                |  4 +-
+ docs/critical-flow-registry.md                     |  2 +-
+ docs/env.md                                        |  2 +-
+ docs/golden-rules.md                               |  6 ++-
+ docs/sessions/evidence/task861/storybook-dev.log   | 18 ++++++++
+ src/app/api/cron/inactivity/route.ts               | 17 +++-----
+ .../cron/listings-expiry/__tests__/route.test.ts   | 51 ++++++++++++++++++++--
+ src/app/api/cron/listings-expiry/route.ts          | 14 +++---
+ src/app/api/cron/price-alerts/route.ts             | 14 +++---
+ src/app/api/cron/saved-searches/route.ts           | 15 +++----
+ 13 files changed, 115 insertions(+), 40 deletions(-)
+ M .claude/agents/orchestrator.md
+ M .claude/hooks/orchestrator-response-gate.ps1
+ M .claude/skills/create-task/SKILL.md
+ M .claude/skills/review-task/SKILL.md
+ M docs/critical-flow-registry.md
+ M docs/env.md
+ M docs/golden-rules.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M src/app/api/cron/inactivity/route.ts
+ M src/app/api/cron/listings-expiry/__tests__/route.test.ts
+ M src/app/api/cron/listings-expiry/route.ts
+ M src/app/api/cron/price-alerts/route.ts
+ M src/app/api/cron/saved-searches/route.ts
+?? docs/sessions/evidence/task851/
+?? scripts/task-851-first-run-impact.sql
+?? src/app/api/cron/inactivity/__tests__/
+?? src/app/api/cron/price-alerts/__tests__/
+?? src/app/api/cron/saved-searches/__tests__/
+?? src/lib/cron/

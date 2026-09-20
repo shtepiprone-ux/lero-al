@@ -1,0 +1,38 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/data.test.ts [ src/modules/cabinet/statistics/__tests__/data.test.ts ]
+Error: Failed to resolve import "../data" from "src/modules/cabinet/statistics/__tests__/data.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Claude_Code_Projects/lero-al/src/modules/cabinet/statistics/__tests__/data.test.ts:72:48
+  39 |    };
+  40 |  }
+  41 |  const { getAgentStatisticsData } = await import("../data");
+     |                                                  ^
+  42 |  const OWNER = "agent-owner-1";
+  43 |  const FUTURE = "2099-01-01T00:00:00Z";
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42553:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42550:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40529:23
+ ❯ node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40648:37
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:40575:7
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:42348:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:35740:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  19 passed (19)
+   Start at  15:02:35
+   Duration  1.20s (transform 275ms, setup 278ms, import 254ms, tests 12ms, environment 2.46s)
+
+EXIT=1

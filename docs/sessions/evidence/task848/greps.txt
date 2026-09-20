@@ -1,0 +1,11 @@
+## AC3a createAdminClient
+src/modules/cabinet/statistics/__tests__/data.test.ts:54:vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => makeClient('service') }))
+src/modules/cabinet/statistics/data.ts:144:    const { createAdminClient } = await (serviceRoleModule ??= import('@/lib/supabase/admin'))
+src/modules/cabinet/statistics/data.ts:145:    const db = createAdminClient()
+EXIT=0
+## AC3b identity
+EXIT=1
+## AC4
+EXIT=1
+## AC5
+EXIT=1

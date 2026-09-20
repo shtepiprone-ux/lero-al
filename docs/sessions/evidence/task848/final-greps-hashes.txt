@@ -1,0 +1,14 @@
+src/modules/cabinet/statistics/__tests__/data.test.ts:54:vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => makeClient('service') }))
+src/modules/cabinet/statistics/data.ts:144:    const { createAdminClient } = await (serviceRoleModule ??= import('@/lib/supabase/admin'))
+src/modules/cabinet/statistics/data.ts:145:    const db = createAdminClient()
+EXIT=0
+EXIT=1
+EXIT=1
+EXIT=1
+ M docs/sessions/evidence/task861/storybook-dev.log
+?? docs/sessions/evidence/task848/
+?? src/modules/cabinet/statistics/
+2fd89b83a77973b45358f3d61cb7b1b02d9ea23a
+afd8c6302ee99d5961361f718b199d1fc6d644c4
+885d8a9f9e730bac8473146a9c15a1aaae977405
+1f3b4b4057ac81d9a4664f0758b88d7f750ba8d7

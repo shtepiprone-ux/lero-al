@@ -1,7 +1,12 @@
 # Task 848 — the agent statistics data layer: a `role='agent'` gate and owner-isolated queries for AGT-01, AGT-02, AGT-05, AGT-10
 
 Sprint 78 · P1 · QA profile **Q4** (ownership / data isolation) · Wave B · depends on **846** approved (`period.ts`)
-and **847** approved (`src/lib/dashboard/blockResult.ts`) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+and **847** approved (`src/lib/dashboard/blockResult.ts`) · **Status: ✅ APPROVED WITH NOTES 2026-09-20 — ARCHIVED** (review 1; archive row in `docs/backlog-archive.md`, session `docs/sessions/2026-09-20-task848-agent-statistics-data-layer.md`)
+
+> **Review note, 2026-09-20 — §13.2's four `git grep` commands are vacuous as written.** `git grep` reads the index,
+> and every file this task creates is untracked, so all four print nothing whatever the files contain. The executor
+> ran them with `--untracked` (reproduced byte-identical at review) and the AC3–AC5 properties are verified; the
+> defect is in this text, not the implementation. The canonical form for the rest of Sprint 78 is **864**.
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-3** (owner,
 2026-09-18): *"role=agent. Нова стоірнка, кнопка "Statistics" на цю сторінку знаходиться у меню користувача, біля

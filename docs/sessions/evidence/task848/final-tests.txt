@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  3 passed (3)
+      Tests  49 passed (49)
+   Start at  15:06:00
+   Duration  1.23s (transform 353ms, setup 286ms, import 382ms, tests 46ms, environment 2.38s)
+
+EXIT=0

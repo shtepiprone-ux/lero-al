@@ -1,0 +1,38 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts (30 tests | 1 failed) 38ms
+     × every query — listings and inquiries — is constrained by the owner id 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/data.test.ts > owner isolation (R2, R3) > every query — listings and inquiries — is constrained by the owner id
+AssertionError: listing_inquiries id has eq(listing_owner_id, owner): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts:240:105
+    238|     for (const c of state.calls) {
+    239|       const ownerColumn = c.table === 'listing_inquiries' ? 'listing_o…
+    240|       expect(has(c, 'eq', ownerColumn, OWNER), `${c.table} ${c.columns…
+       |                                                                                                         ^
+    241|     }
+    242|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 48 passed (49)
+   Start at  15:05:44
+   Duration  1.32s (transform 354ms, setup 263ms, import 383ms, tests 54ms, environment 2.39s)
+
+EXIT=1

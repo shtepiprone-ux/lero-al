@@ -1,0 +1,10 @@
+88f69f2b2faadc48476832a6477a96f270ee9aca  src/design-system/mantine/patterns/RangeDatePicker.tsx
+097d6fe16d72552a40e2b4c7f448569bb9e8093c  src/design-system/mantine/patterns/MantinePopover.tsx
+9cd2e6bae0ef034cbbede76caac1c0bcb882885f  src/modules/notifications/components/NotificationBellView.tsx
+d7c103e8c3a3db2889bfe3892d9e31afaf188ec6  scripts/mantine-migration-scope.json
+a24423cb6f666b9cfce5f29749724c74e38c3f20  src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+4730a1c73e2fcfcccb78c95f5e02c4dd5f13870d  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+37481c740bf3e2871d063e9b5d35b5aa1cc56653  src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx
+98471ec0e95eac5b432cba34411ecc25122e3a89  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+95d84c002b230d09a0f35496d4eb18fcda2505bb  src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+577605b6655f109e55a7bfb86921e7bf9480a81b  docs/backlog.md

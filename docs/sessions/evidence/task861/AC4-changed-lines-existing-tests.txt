@@ -1,0 +1,15 @@
+-    expect(screen.getByDisplayValue(`${from} — ${to}`)).toBeTruthy()
++    expect(screen.getByRole('button', { name: `${from} — ${to}` })).toBeTruthy()
+-    // placeholder — `getByDisplayValue` reads the live DOM property, unlike a CSS `[value=]`
+-    // attribute selector which wouldn't reliably reflect a React-controlled input.
+-    const rangeInput = within(baseElement as HTMLElement).getByDisplayValue('10.01.2026')
++    // placeholder — the trigger is a semantic <button> (Task 861), so it is found by role + text.
++    const rangeInput = within(baseElement as HTMLElement).getByRole('button', { name: '10.01.2026' })
+-    expect(within(baseElement).getByDisplayValue(`${from} — ${to}`)).toBeTruthy()
++    expect(within(baseElement).getByRole('button', { name: `${from} — ${to}` })).toBeTruthy()
+-    const rangeInput = within(baseElement).getByDisplayValue('10.01.2026')
++    const rangeInput = within(baseElement).getByRole('button', { name: '10.01.2026' })
+-    fireEvent.click(within(document.body).getByDisplayValue('10.01.2026'))
++    fireEvent.click(within(document.body).getByRole('button', { name: '10.01.2026' }))
+-  fireEvent.click(baseElement.querySelector('input')!)
++  fireEvent.click(baseElement.querySelector('.mantine-Input-input')!)

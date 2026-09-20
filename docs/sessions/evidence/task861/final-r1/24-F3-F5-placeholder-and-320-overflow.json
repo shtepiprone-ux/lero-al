@@ -1,0 +1,538 @@
+[
+  {
+    "locale": "en",
+    "width": 1280,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 320,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Select dates",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 1280,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 320,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Zgjidhni datat",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 1280,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 320,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Оберіть дати",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 1280,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          480,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 320,
+    "hScroll": false,
+    "triggers": [
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": true,
+        "spanClass": "m_88bacfd0 mantine-InputPlaceholder-placeholder",
+        "text": "Seleziona le date",
+        "spanColor": "rgb(152, 162, 179)",
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      },
+      {
+        "hasPlaceholderSpan": false,
+        "spanClass": null,
+        "text": "28.01.2026 — 05.02.2026",
+        "spanColor": null,
+        "buttonColor": "rgb(29, 41, 57)",
+        "box": [
+          288,
+          44
+        ],
+        "overflowsX": false
+      }
+    ]
+  }
+]

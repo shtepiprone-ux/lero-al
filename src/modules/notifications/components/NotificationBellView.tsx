@@ -17,6 +17,8 @@ export interface NotificationBellViewProps {
  * Presentational primitive (Task 591) — the bell trigger (icon-only `ActionIcon`, clause-11
  * exemption) with an unread-count `Indicator`, wrapped in the canonical `MantinePopover`
  * (anchored dropdown ≥640 / full-width bottom sheet <640). Content is `NotificationCenter`.
+ * Task 861: the `Indicator` is a role-less wrapper, so the trigger is a render function and the inner
+ * `ActionIcon` (the real button) carries `aria-haspopup`/`aria-expanded` itself — never the wrapper root.
  * The inner `Box` reproduces the legacy `PopoverContent`'s `max-h-120` (480px) flex-column cap —
  * `NotificationCenter`'s own `flex-1 min-h-0` list assumes a bounded flex ancestor, which neither
  * `Popover.Dropdown` nor `SheetContent` supplies by default.
@@ -27,7 +29,7 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
 
   return (
     <MantinePopover
-      trigger={
+      trigger={({ opened }) => (
         <Indicator
           inline
           label={unreadCount > 99 ? '99+' : unreadCount}
@@ -36,11 +38,18 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
           offset={theme.other.layout.notificationPopoverOffset}
           disabled={unreadCount === 0}
         >
-          <ActionIcon variant="default" aria-label={t('title')} mih={theme.other.touchTarget} miw={theme.other.touchTarget}>
+          <ActionIcon
+            variant="default"
+            aria-label={t('title')}
+            aria-haspopup="dialog"
+            aria-expanded={opened}
+            mih={theme.other.touchTarget}
+            miw={theme.other.touchTarget}
+          >
             <Bell size={theme.other.iconSize.roomy} />
           </ActionIcon>
         </Indicator>
-      }
+      )}
       iconOnlyTrigger
       position="bottom-end"
       width={theme.other.layout.notificationPanelWidth}

@@ -1692,9 +1692,23 @@
       "retry": "Спробувати ще раз",
       "loading_label": "Завантаження",
       "updated_at_prefix": "Оновлено о"
+    },
+    "period": {
+      "label_7d": "7 днів",
+      "label_30d": "30 днів",
+      "label_custom": "Свій період",
+      "range_placeholder": "Оберіть дати",
+      "scope_label": "Період",
+      "error_end_after_yesterday": "Кінцева дата має бути не пізніше вчорашньої.",
+      "error_start_after_end": "Початкова дата має бути раніше за кінцеву.",
+      "error_longer_than_90_days": "Період може становити не більше 90 днів.",
+      "error_invalid_date": "Введіть коректні дати."
     }
   },
   "storybook": {
+    "notifications": {
+      "legacy_status_title": "Статус оголошення змінено"
+    },
     "listing": {
       "modern_apartment": "Сучасна Квартира в Центрі Тирани",
       "apartment_long": "Апартаменти в центрі Тирани з чудовим видом на гори та зручним розташуванням поряд з усіма зручностями міста",
@@ -2510,6 +2524,13 @@
       "dashboard_radial_aria_label": "Графік рівня відповідей",
       "dashboard_radial_label": "Всього",
       "dashboard_period_filter_label": "Період",
+      "dashboard_header_title": "Аналітика",
+      "dashboard_header_subtitle": "Перегляди та запити щодо ваших оголошень",
+      "dashboard_header_stale_label": "Дані можуть бути застарілими",
+      "dashboard_grid_stat_listings": "Активні оголошення",
+      "dashboard_grid_stat_views": "Перегляди",
+      "dashboard_grid_stat_inquiries": "Запити",
+      "dashboard_grid_stat_favorites": "Обране",
       "dashboard_period_week": "Тиждень",
       "dashboard_period_month": "Місяць",
       "dashboard_period_year": "Рік",

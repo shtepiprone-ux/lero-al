@@ -1,0 +1,38 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (31 tests | 1 failed) 13979ms
+     × unparseable value.from is guarded to empty — placeholder shown, no crash 12ms
+npm.cmd : 
+At line:1 char:302
++ ... tch {} } }; npm.cmd run test -- src/design-system/mantine/patterns/__ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — trigger (Task 
+558) > unparseable value.from is guarded to empty — placeholder shown, no crash
+TypeError: Cannot read properties of null (reading 'value')
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:344:18
+    342|     )
+    343|     const input = container.querySelector('input') as HTMLInputElement
+    344|     expect(input.value).toBe('')
+       |                  ^
+    345|     expect(input.placeholder).toBe('Select dates')
+    346|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 30 passed (31)
+   Start at  10:44:24
+   Duration  16.24s (transform 146ms, setup 79ms, import 1.38s, tests 13.98s, environment 678ms)
+
+EXIT_CODE=1

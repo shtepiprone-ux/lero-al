@@ -29,7 +29,7 @@
 
 import React from 'react'
 import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
-import { render, fireEvent, cleanup } from '@testing-library/react'
+import { render, fireEvent, cleanup, waitFor } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { MantinePopover } from '../MantinePopover'
@@ -164,5 +164,96 @@ describe('MantinePopover — mobile (Task 558)', () => {
     expect(confirmBtn).toBeTruthy()
     fireEvent.click(confirmBtn)
     expect(baseElement.querySelector('[data-testid="confirm-btn"]')).toBeNull()
+  })
+})
+
+/**
+ * Task 861 — trigger ARIA + focus return, on BOTH paths, for a native-button trigger and for a wrapped
+ * (render-function) trigger. `MantinePopover` owns NO key handler: Enter/Space work because the
+ * trigger is a native button, so a single click event toggles exactly once (no double toggle).
+ * Planted-violation (Task 861 R7): dropping the ARIA clone / `returnFocus` makes these FAIL.
+ */
+describe.each([
+  { path: 'desktop', mobile: false },
+  { path: 'mobile', mobile: true },
+])('MantinePopover — trigger ARIA + focus return, $path (Task 861)', ({ mobile }) => {
+  beforeAll(() => stubMatchMedia(mobile))
+
+  it('element trigger: aria-haspopup="dialog" always; aria-expanded false → true → false; one click toggles once', async () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantinePopover trigger={<button type="button">open</button>}>
+          {(close) => (
+            <button type="button" data-testid="close-btn" onClick={close}>
+              close
+            </button>
+          )}
+        </MantinePopover>,
+      ),
+    )
+    const btn = baseElement.querySelector('button')!
+    expect(btn.getAttribute('aria-haspopup')).toBe('dialog')
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    btn.focus()
+    fireEvent.click(btn)
+    expect(btn.getAttribute('aria-expanded')).toBe('true')
+    expect(baseElement.querySelector('[data-testid="close-btn"]')).toBeTruthy()
+    fireEvent.click(baseElement.querySelector('[data-testid="close-btn"]')!)
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    await waitFor(() => expect(document.activeElement).toBe(btn))
+  })
+
+  it('render-function trigger receives { opened } so the inner button carries the ARIA', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantinePopover
+          trigger={({ opened }) => (
+            <span>
+              <button type="button" aria-haspopup="dialog" aria-expanded={opened}>
+                open
+              </button>
+            </span>
+          )}
+        >
+          <div data-testid="pop-body">content</div>
+        </MantinePopover>,
+      ),
+    )
+    const btn = baseElement.querySelector('button')!
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    fireEvent.click(btn)
+    expect(btn.getAttribute('aria-expanded')).toBe('true')
+    expect(baseElement.querySelector('[data-testid="pop-body"]')).toBeTruthy()
+  })
+
+  it('wrapper trigger (non-button element): the wrapper root carries NO aria-haspopup / aria-expanded, closed or open (Task 861 R4b)', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantinePopover trigger={<div data-testid="wrapper"><button type="button">inner</button></div>}>
+          <div data-testid="pop-body">content</div>
+        </MantinePopover>,
+      ),
+    )
+    const wrapper = baseElement.querySelector('[data-testid="wrapper"]')!
+    expect(wrapper.hasAttribute('aria-haspopup')).toBe(false)
+    expect(wrapper.hasAttribute('aria-expanded')).toBe(false)
+    fireEvent.click(baseElement.querySelector('button')!)
+    expect(baseElement.querySelector('[data-testid="pop-body"]')).toBeTruthy()
+    expect(wrapper.hasAttribute('aria-haspopup')).toBe(false)
+    expect(wrapper.hasAttribute('aria-expanded')).toBe(false)
+  })
+
+  it('disabled: a disabled native trigger never opens and aria-expanded stays false', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantinePopover trigger={<button type="button" disabled>open</button>} disabled>
+          <div data-testid="pop-body">content</div>
+        </MantinePopover>,
+      ),
+    )
+    const btn = baseElement.querySelector('button')!
+    fireEvent.click(btn)
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    expect(baseElement.querySelector('[data-testid="pop-body"]')).toBeNull()
   })
 })

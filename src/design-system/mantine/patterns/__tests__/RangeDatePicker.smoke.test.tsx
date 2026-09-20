@@ -40,7 +40,7 @@
 
 import React from 'react'
 import { describe, it, expect, vi, beforeAll, beforeEach, afterEach } from 'vitest'
-import { render, fireEvent, cleanup, within } from '@testing-library/react'
+import { render, fireEvent, cleanup, within, waitFor, act } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
 import { format, subMonths } from 'date-fns'
@@ -99,6 +99,26 @@ function stubMatchMedia(matches: boolean) {
 
 afterEach(() => cleanup())
 
+/** The trigger, located by Mantine's input slot class — valid for an `<input>` and a `<button>`. */
+function getTrigger(root: ParentNode): HTMLElement {
+  return root.querySelector('.mantine-Input-input') as HTMLElement
+}
+
+/**
+ * Task 861 — models the browser's keyboard ACTIVATION BEHAVIOUR without dispatching a pointer event
+ * (this repo has no user-event). HTML: a `<button>` fires `click` on `Enter` keydown and on `Space`
+ * keyup (after an un-prevented keydown); an `<input readonly>` has no activation behaviour, so
+ * nothing happens — which is exactly the pre-fix defect. The real-browser proof is the Playwright
+ * transcript in docs/sessions/evidence/task861/.
+ */
+function pressKey(el: HTMLElement, key: 'Enter' | ' ') {
+  const isButton = el instanceof HTMLButtonElement && !el.disabled
+  const downNotPrevented = fireEvent.keyDown(el, { key })
+  if (isButton && downNotPrevented && key === 'Enter') fireEvent.click(el)
+  const upNotPrevented = fireEvent.keyUp(el, { key })
+  if (isButton && downNotPrevented && upNotPrevented && key === ' ') fireEvent.click(el)
+}
+
 describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () => {
   beforeEach(() => stubMatchMedia(false))
 
@@ -107,7 +127,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
 
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
@@ -125,7 +145,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
 
     // Click the LATER day first, then the EARLIER day — pickDay must swap so from <= to.
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_20}"]`)!)
@@ -140,7 +160,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
 
     const applyBtn = within(baseElement as HTMLElement).getByRole('button', { name: 'Apply' })
@@ -162,7 +182,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
         />,
       ),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
 
     const day15 = baseElement.querySelector(`[data-date="${DAY_15}"]`) as HTMLButtonElement
     expect(day15).toBeDisabled()
@@ -188,7 +208,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
         />,
       ),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
 
     const day15 = baseElement.querySelector(`[data-date="${DAY_15}"]`) as HTMLButtonElement
     expect(day15).toBeDisabled()
@@ -204,7 +224,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: DAY_10, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     // value.from seeds staged.from; one click on a LATER day stages `to` directly.
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
 
@@ -222,7 +242,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
         <RangeDatePicker value={{ from: PAST_MONTH_DAY, to: undefined }} onChange={onChange} disablePastDates />,
       ),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     const cell = baseElement.querySelector(`[data-date="${PAST_MONTH_DAY}"]`) as HTMLButtonElement
     expect(cell).toBeDisabled()
   })
@@ -232,7 +252,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: PAST_MONTH_DAY, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     const cell = baseElement.querySelector(`[data-date="${PAST_MONTH_DAY}"]`) as HTMLButtonElement
     expect(cell).not.toBeDisabled()
   })
@@ -246,7 +266,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
 
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
@@ -265,7 +285,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
 
     const confirmBtn = within(baseElement as HTMLElement).getByRole('button', { name: 'Confirm' })
@@ -283,7 +303,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
         <RangeDatePicker value={{ from: PAST_MONTH_DAY, to: undefined }} onChange={onChange} disablePastDates />,
       ),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     expect(baseElement.querySelector(`[data-date="${PAST_MONTH_DAY}"]`)).toBeNull()
   })
 
@@ -292,7 +312,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
     const { baseElement, container } = render(
       withProviders(<RangeDatePicker value={{ from: PAST_MONTH_DAY, to: undefined }} onChange={onChange} />),
     )
-    fireEvent.click(container.querySelector('input')!)
+    fireEvent.click(getTrigger(container))
     const cell = baseElement.querySelector(`[data-date="${PAST_MONTH_DAY}"]`) as HTMLButtonElement
     expect(cell).toBeTruthy()
     expect(cell).not.toBeDisabled()
@@ -320,8 +340,123 @@ describe('RangeDatePicker — trigger (Task 558)', { timeout: 15_000 }, () => {
     const { container } = render(
       withProviders(<RangeDatePicker value={{ from: 'not-a-date', to: undefined }} onChange={onChange} />),
     )
-    const input = container.querySelector('input') as HTMLInputElement
-    expect(input.value).toBe('')
-    expect(input.placeholder).toBe('Select dates')
+    // Task 861 (selector only): the trigger is a <button> now — no .value/.placeholder; the same
+    // expectation (no date shown, the placeholder shown) is read from its text.
+    const trigger = getTrigger(container)
+    expect(trigger.textContent).toBe('Select dates')
+    expect(trigger.textContent).not.toMatch(/\d{2}\.\d{2}\.\d{4}/)
+  })
+})
+
+describe.each([
+  { path: 'desktop ≥640', mobile: false, commit: 'Apply' },
+  { path: 'mobile <640 bottom sheet', mobile: true, commit: 'Confirm' },
+])('RangeDatePicker — keyboard-only custom-range flow, $path (Task 861)', ({ mobile, commit }) => {
+  beforeEach(() => stubMatchMedia(mobile))
+
+  const empty = { from: undefined, to: undefined }
+  const surface = (root: HTMLElement) => root.querySelector('[data-date]')
+  const insideSurface = (root: HTMLElement) =>
+    !!surface(root)?.closest('[role="dialog"]')?.contains(document.activeElement)
+  const rendered = (onChange = vi.fn<(next: DateRange) => void>(), value: DateRange = empty) => {
+    const r = render(withProviders(<RangeDatePicker value={value} onChange={onChange} />))
+    return { ...r, onChange, trigger: getTrigger(r.container) }
+  }
+
+  it('trigger is a semantic <button type="button"> keeping the Mantine input chrome (AC1)', () => {
+    const { trigger } = rendered()
+    expect(trigger.tagName).toBe('BUTTON')
+    expect(trigger.getAttribute('type')).toBe('button')
+    expect(trigger.classList.contains('mantine-Input-input')).toBe(true)
+  })
+
+  it('Enter on the focused trigger opens the surface with no pointer event (AC1)', () => {
+    const { baseElement, trigger } = rendered()
+    trigger.focus()
+    expect(surface(baseElement)).toBeNull()
+    pressKey(trigger, 'Enter')
+    expect(surface(baseElement)).toBeTruthy()
+  })
+
+  it('Space on the focused trigger opens the surface on keyup, with no pointer event (AC1)', () => {
+    const { baseElement, trigger } = rendered()
+    trigger.focus()
+    expect(surface(baseElement)).toBeNull()
+    pressKey(trigger, ' ')
+    expect(surface(baseElement)).toBeTruthy()
+  })
+
+  it('aria-haspopup="dialog" in both states; aria-expanded "false" then "true" (AC3)', () => {
+    const { trigger } = rendered()
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog')
+    expect(trigger.getAttribute('aria-expanded')).toBe('false')
+    pressKey(trigger, 'Enter')
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog')
+    expect(trigger.getAttribute('aria-expanded')).toBe('true')
+  })
+
+  it('opening moves focus inside the surface; Escape closes and returns focus to the trigger (AC2)', async () => {
+    const { baseElement, trigger } = rendered()
+    trigger.focus()
+    pressKey(trigger, 'Enter')
+    await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+    fireEvent.keyDown(document.activeElement!, { key: 'Escape' })
+    await waitFor(() => expect(surface(baseElement)).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(trigger))
+    expect(trigger.getAttribute('aria-expanded')).toBe('false')
+  })
+
+  it('Escape with a staged but uncommitted range discards it, fires nothing, focus returns (negative)', async () => {
+    const { baseElement, trigger, onChange } = rendered()
+    trigger.focus()
+    pressKey(trigger, 'Enter')
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+    await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+    fireEvent.keyDown(document.activeElement!, { key: 'Escape' })
+    await waitFor(() => expect(surface(baseElement)).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(trigger))
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  it(`${commit} commits one onChange, closes, and returns focus to the trigger (AC2)`, async () => {
+    const { baseElement, trigger, onChange } = rendered()
+    trigger.focus()
+    pressKey(trigger, 'Enter')
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: commit }))
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith({ from: DAY_10, to: DAY_15 })
+    await waitFor(() => expect(surface(baseElement)).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(trigger))
+  })
+
+  if (!mobile) {
+    it('Cancel discards, fires nothing, and returns focus to the trigger (AC2)', async () => {
+      const { baseElement, trigger, onChange } = rendered()
+      trigger.focus()
+      pressKey(trigger, 'Enter')
+      fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+      fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Cancel' }))
+      expect(onChange).not.toHaveBeenCalled()
+      await waitFor(() => expect(surface(baseElement)).toBeNull())
+      await waitFor(() => expect(document.activeElement).toBe(trigger))
+    })
+  }
+
+  it('clear-X is a sibling of the trigger (no button-in-button) and commits {undefined,undefined} without opening (AC5)', () => {
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const { baseElement, container } = render(
+      withProviders(<RangeDatePicker value={{ from: DAY_10, to: DAY_15 }} onChange={onChange} />),
+    )
+    const trigger = getTrigger(container)
+    const clear = container.querySelector('button[aria-label="Clear"]') as HTMLButtonElement
+    expect(trigger.contains(clear)).toBe(false)
+    expect(container.querySelector('button button')).toBeNull()
+    act(() => {
+      fireEvent.click(clear)
+    })
+    expect(onChange).toHaveBeenCalledWith({ from: undefined, to: undefined })
+    expect(surface(baseElement)).toBeNull()
   })
 })

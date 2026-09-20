@@ -6,11 +6,15 @@ import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale as DfLocale } from 'date-fns'
 import { Anchor, Box, Group, Text, useMantineTheme } from '@mantine/core'
-import { cn } from '@/lib/utils'
+import { useHover } from '@mantine/hooks'
 import { formatCount } from '@/lib/formatters'
-import styles from './NotificationItem.module.css'
 
 const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
+
+// Task 861 R4c — the unread tint / hover tint that lived in `NotificationItem.module.css`, relocated
+// UNCHANGED (5% resting, 10% hover of `--primary`) onto Mantine's `bg` prop; the CSS module is deleted.
+const UNREAD_BG = 'color-mix(in oklab, var(--primary) 5%, transparent)'
+const UNREAD_HOVER_BG = 'color-mix(in oklab, var(--primary) 10%, transparent)'
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
 import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import type { Notification, NotificationType } from '@/types/database'
@@ -130,6 +134,7 @@ export function NotificationItem({ notification, onRead }: Props) {
   const theme = useMantineTheme()
   const dfLocale = DF_LOCALE_MAP[locale] ?? enUS
   const [isPending, startTransition] = useTransition()
+  const { hovered, ref } = useHover<HTMLDivElement>()
 
   function handleClick() {
     if (notification.is_read) return
@@ -170,19 +175,23 @@ export function NotificationItem({ notification, onRead }: Props) {
         : notification.body
   }
 
+  // Interactive = unread and not mid-mutation (was `.interactive`): pointer cursor + the hover tint.
+  const interactive = !notification.is_read && !isPending
+
   const content = (
     <Group
+      ref={ref}
       wrap="nowrap"
       align="flex-start"
       gap="sm"
       px="md"
       py="sm"
-      className={cn(
-        styles.root,
-        !notification.is_read && styles.unread,
-        !notification.is_read && !isPending && styles.interactive,
-        isPending && styles.pending,
-      )}
+      bg={notification.is_read ? undefined : interactive && hovered ? UNREAD_HOVER_BG : UNREAD_BG}
+      opacity={isPending ? 0.6 : undefined}
+      style={{
+        cursor: interactive ? 'pointer' : undefined,
+        transition: 'background-color var(--motion-duration-base) var(--motion-ease-standard)',
+      }}
       onClick={handleClick}
       role={!notification.is_read ? 'button' : undefined}
       tabIndex={!notification.is_read ? 0 : undefined}

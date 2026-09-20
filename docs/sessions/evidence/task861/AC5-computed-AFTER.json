@@ -1,0 +1,57 @@
+{
+  "withValue": {
+    "tag": "BUTTON",
+    "type": "button",
+    "outerHTML": "<button class=\"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input\" data-variant=\"default\" type=\"button\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-invalid=\"false\" id=\"mantine-3126tloi3-target\" style=\"min-height: 2.75rem; color: var(--mantine-color-gray-8);\">28.01.2026 — 05.02.2026</button",
+    "borderRadius": "8px",
+    "height": "44px",
+    "paddingInline": "34px / 34px",
+    "textAlign": "left",
+    "fontSize": "14px",
+    "color": "rgb(29, 41, 57)",
+    "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+    "lineHeight": "34px",
+    "borderColor": "rgb(208, 213, 221)",
+    "bg": "rgb(255, 255, 255)",
+    "cursor": "pointer",
+    "boxWidth": 480,
+    "boxHeight": 44,
+    "overflow": "visible",
+    "textOverflow": "clip",
+    "whiteSpace": "normal",
+    "wrapperChildren": [
+      "DIV.m_82577fc2",
+      "BUTTON.m_8fb7ebe7",
+      "DIV.m_82577fc2"
+    ],
+    "nestedButtonInButton": false
+  },
+  "empty": {
+    "tag": "BUTTON",
+    "type": "button",
+    "outerHTML": "<button class=\"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input\" data-variant=\"default\" type=\"button\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-invalid=\"false\" id=\"mantine-aaw2554b6-target\" style=\"min-height: 2.75rem; color: var(--mantine-color-gray-8);\"><span class=\"m_88bacfd0 mantine",
+    "borderRadius": "8px",
+    "height": "44px",
+    "paddingInline": "34px / 16px",
+    "textAlign": "left",
+    "fontSize": "14px",
+    "color": "rgb(29, 41, 57)",
+    "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+    "lineHeight": "34px",
+    "borderColor": "rgb(208, 213, 221)",
+    "bg": "rgb(255, 255, 255)",
+    "cursor": "pointer",
+    "boxWidth": 480,
+    "boxHeight": 44,
+    "overflow": "visible",
+    "textOverflow": "clip",
+    "whiteSpace": "normal",
+    "wrapperChildren": [
+      "DIV.m_82577fc2",
+      "BUTTON.m_8fb7ebe7"
+    ],
+    "nestedButtonInButton": false
+  },
+  "placeholderColorEmpty": "rgb(29, 41, 57)",
+  "emptyText": ""
+}

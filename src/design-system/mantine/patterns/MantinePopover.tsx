@@ -1,13 +1,35 @@
 'use client'
 
 import { cloneElement, isValidElement, useState, type MouseEvent, type ReactElement, type ReactNode } from 'react'
-import { Popover, Box } from '@mantine/core'
+import { ActionIcon, Box, Button, Popover, UnstyledButton } from '@mantine/core'
 import type { PopoverProps } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
 
+/**
+ * Task 861 (review 1 F2) — `aria-haspopup`/`aria-expanded` are valid only on an element with a role. Only a
+ * trigger that IS a native button gets them cloned on; a wrapper (an `Indicator`, a `div`, …) must not carry
+ * them on its role-less root — it uses the render-function trigger to put them on its real inner button.
+ */
+const BUTTON_TRIGGER_TYPES: ReadonlySet<unknown> = new Set([Button, ActionIcon, UnstyledButton])
+
+function isButtonTrigger(node: ReactNode): boolean {
+  if (!isValidElement(node)) return false
+  const { type, props } = node as ReactElement<{ component?: unknown }>
+  if (props.component !== undefined) return props.component === 'button'
+  return type === 'button' || BUTTON_TRIGGER_TYPES.has(type)
+}
+
 export interface MantinePopoverProps {
-  /** Trigger element — activates the popover on click (must forward refs for Popover.Target on desktop) */
-  trigger: ReactNode
+  /**
+   * Trigger element — activates the popover on click (must forward refs for Popover.Target on desktop).
+   * Task 861: it MUST be natively keyboard-operable (a real `<button>`/`ActionIcon`) — this component
+   * deliberately owns no key handler, because a native button already turns Enter/Space into a click and
+   * a second handler here would toggle twice. A native-button element trigger gets `aria-haspopup`/
+   * `aria-expanded` from this component; a WRAPPER trigger (e.g. an `Indicator`) gets neither on its
+   * role-less root. Such a trigger is passed as a render function `({ opened }) => ReactNode` (additive):
+   * it receives the open state so the inner button carries the two attributes itself.
+   */
+  trigger: ReactNode | ((state: { opened: boolean }) => ReactNode)
   /**
    * Arbitrary content rendered in the anchored popover (≥640) or bottom sheet (<640). A plain
    * `ReactNode` renders unchanged (existing behavior). A render function `(close: () => void) =>
@@ -61,6 +83,15 @@ export interface MantinePopoverProps {
  * `padding:0` by design for row-based consumers (Select/DropdownMenu/NavigationMenu),
  * so a blob-content consumer like this one supplies its own inset.
  *
+ * Keyboard + ARIA (Task 861): this component owns NO key handler that opens/toggles. Enter/Space work
+ * because the trigger is a native button (a click event is synthesised by the browser), so consumers
+ * that already pass a native button never toggle twice. The trigger carries `aria-haspopup="dialog"` +
+ * a live `aria-expanded` on BOTH paths (`Popover.Target` only supplied them on desktop) — but only when the
+ * trigger IS a native button; a wrapper trigger never gets them on its root (review 1 F2, `withRoles` off).
+ * Desktop
+ * `Popover` runs `trapFocus` + `returnFocus` — the dropdown is portaled, so without the trap a keyboard
+ * user could not Tab into it — and the `<640` sheet's `Drawer` already returns focus.
+ *
  * Mobile click mechanism: at <640 the trigger is wrapped in an inline-block span
  * that captures the click event (bubbled from the trigger button) and calls openDrawer().
  * This avoids Mantine Popover's controlled-mode onChange behaviour (in Mantine v8,
@@ -110,16 +141,29 @@ export function MantinePopover({
   const renderChildren = (close: () => void) =>
     typeof children === 'function' ? children(close) : children
 
+  // Task 861 — one open state for the trigger's ARIA on both paths (desktop popover / mobile sheet).
+  const expanded = isMobile ? drawerOpened : desktopOpened
+  const triggerNode: ReactNode = typeof trigger === 'function' ? trigger({ opened: expanded }) : trigger
+  // Native-button element trigger only (F2/R4b). A wrapper or render-function trigger owns its inner
+  // button's ARIA; `Popover.Target`'s own `withRoles` is switched off for it below so it cannot land on the wrapper.
+  const buttonTrigger = typeof trigger !== 'function' && isButtonTrigger(trigger)
+  const ariaTrigger = buttonTrigger
+    ? cloneElement(trigger as ReactElement<Record<string, unknown>>, {
+        'aria-haspopup': 'dialog',
+        'aria-expanded': expanded,
+      })
+    : triggerNode
+
   // Controlled Popover.Target attaches no click handler of its own (see doc comment above) — the
   // trigger must carry its own toggle onClick, attached BEFORE Popover.Target clones it.
-  const clickableTrigger = isValidElement(trigger)
-    ? cloneElement(trigger as ReactElement<{ onClick?: (e: MouseEvent) => void }>, {
+  const clickableTrigger = isValidElement(ariaTrigger)
+    ? cloneElement(ariaTrigger as ReactElement<{ onClick?: (e: MouseEvent) => void }>, {
         onClick: (e: MouseEvent) => {
           if (!disabled) setDesktopOpened((o) => !o)
-          ;(trigger as ReactElement<{ onClick?: (e: MouseEvent) => void }>).props.onClick?.(e)
+          ;(ariaTrigger as ReactElement<{ onClick?: (e: MouseEvent) => void }>).props.onClick?.(e)
         },
       })
-    : trigger
+    : ariaTrigger
 
   return (
     <>
@@ -136,7 +180,7 @@ export function MantinePopover({
           }
           onClick={() => { if (!disabled) openDrawer() }}
         >
-          {trigger}
+          {ariaTrigger}
         </Box>
       ) : (
         /* Desktop: alignSelf:flex-start (default) prevents a Stack align="stretch" parent from
@@ -152,6 +196,9 @@ export function MantinePopover({
             withArrow={withArrow}
             offset={offset}
             disabled={disabled}
+            withRoles={buttonTrigger}
+            trapFocus
+            returnFocus
           >
             <Popover.Target>{clickableTrigger}</Popover.Target>
             <Popover.Dropdown>{renderChildren(closeDesktop)}</Popover.Dropdown>

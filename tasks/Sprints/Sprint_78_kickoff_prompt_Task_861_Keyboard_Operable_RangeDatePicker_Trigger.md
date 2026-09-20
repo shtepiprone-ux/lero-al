@@ -1,6 +1,6 @@
 # Task 861 — `RangeDatePicker`'s trigger becomes a semantic button, so the canonical date-range picker opens from the keyboard
 
-Sprint 78 · **P1** · QA profile **Q4** · cross-sprint prerequisite · **gates Task 846's approval and Sprint 78 Wave B** · **Status: 🔴 NEEDS REVISION (review 2, 2026-09-20) — implementation verified; F6 is fixed in this kickoff, F7 is owed. AC9's visual half accepted by the owner 2026-09-20 (§17.5), both §17.1 deltas ratified; its keyboard half still owner-owed. Re-enter at §17.2.**
+Sprint 78 · **P1** · QA profile **Q4** · cross-sprint prerequisite · **gates Task 846's approval and Sprint 78 Wave B** · **Status: ✅ APPROVED WITH NOTES (review 3, 2026-09-20) — CLOSED AND ARCHIVED.** All of R1–R9 and AC1–AC10 verified; AC9 CLOSED with all 7 owner tuples accepted 2026-09-20 (§17.5) and both §17.1 deltas ratified; F7 closed by retiring the orphaned `task319` QA script (§18). Ledger row → `docs/backlog-archive.md` (2026-09-20). **This unblocks Task 846 and Sprint 78 Wave B.** No executor work remains.
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed by Task 846's review 1; promoted by owner decision 2026-09-20 (Option B, `Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md` §16.1).
 
@@ -620,9 +620,8 @@ Every other path in the worktree — including all of Task 846's — is **frozen
 Do **not** re-run the full §13.2 block: the §17.2 block is the whole verification for this revision. Do not revisit
 F6 (§17.1 is already applied to this kickoff) or any ruling in §17.3.
 
-AC9 is **partly closed — see §17.5.** Its visual half was accepted by the owner on 2026-09-20, which also ratifies
-both §17.1 deltas; its keyboard half (tuples 2, 3-keyboard, 4) is still owner-owed. Neither half is executor work
-and neither blocks this revision.
+AC9 is **CLOSED — see §17.5.** All seven tuples were accepted by the owner on 2026-09-20, visual and keyboard alike,
+which also ratifies both §17.1 deltas. **F7 / AC10 is the only criterion still open in this task.**
 
 ### 17.5 AC9 — owner visual verdict, 2026-09-20 (partial: chrome accepted, keyboard half still owed)
 
@@ -646,4 +645,63 @@ live), and 61/61 critical-flow tests. So the risk here is low and the owner's re
 a discovery. It stays open because Q4 + `docs/critical-flow-registry.md` row 55 make the owner's hands-on keyboard
 pass part of AC9, and because a reviewer may not convert "looks right" into "works from the keyboard".
 
-`AC9 STATUS — visual: ACCEPTED (tuples 1, 5, 6, 7, and 3-visual), owner 2026-09-20 verbatim above. Keyboard: OPEN (tuples 2, 3-keyboard, 4) — owner hands-on confirmation owed; machine evidence already green.`
+**Keyboard half — ACCEPTED by the owner the same day, 2026-09-20**, against the three numbered steps quoted back to
+him (tuple 2: `Enter` opens / focus inside / `Escape` returns the ring, 1280 sq; tuple 3-keyboard: the same on the
+`<640` bottom sheet at 390 and 320, uk; tuple 4: 846's `CustomRangeTooLong` driven >90 days with no pointer, the
+error still shown, 1280 it):
+
+> OWNER 2026-09-20: ACCEPTED
+
+`AC9 STATUS — CLOSED. All 7 tuples ACCEPTED by the owner 2026-09-20: visual (1, 5, 6, 7, 3-visual) and keyboard (2, 3-keyboard, 4). Both §17.1 deltas ratified. No visual or behavioural tuple remains open.`
+
+## 18. Review 3 — `APPROVED WITH NOTES` 2026-09-20 (Opus) — CLOSED
+
+**F7 is closed and every criterion is met.** Revision 2 retired `scripts/task319-qa-notification-templates.mjs`
+rather than re-pointing it. **The deletion is the right call and is accepted:** the script's selector targeted the
+old `.divide-y` / 8-child row structure the migration removed, so a re-point would have been a rewrite, not a fix;
+and it is a one-off screenshot QA of exactly the class the owner retired on 2026-09-03. §17.2 offered retirement as
+an option and required grep proof before taking it; the proof was produced.
+
+Re-verified by this review, not read from the report: `git grep` over `scripts/`, `src/`, `.github/` and
+`package.json` returns **no hit** for `notifications-notificationitem--all-cases` (exit 1), and AC10's five commands
+are all `EXIT_CODE=0` in `final-r2/05`…`09` — bell census 5/5, `check:stories` 169 files / 0 violations,
+`check:story-coverage` 95/95, `check:file-integrity` 197 files clean. The porcelain delta against
+`final-r1/27-status-porcelain.txt` is exactly the one deletion plus the two doc files; nothing else moved.
+
+**`npm run build` was correctly not re-run.** The only source change since the `final-r1` build transcript is the
+removal of a standalone CLI script under `scripts/`, which nothing under `src/` imports — verified, not assumed. The
+build transcript therefore remains current for the reviewed diff.
+
+### 18.1 The one open reference — ruled, and deliberately left alone
+
+`docs/sessions/evidence/task758/task758-item3-qa-transition-property.mjs:57` still names
+`storyId: 'notifications-notificationitem--all-cases'`. Revision 2 found it, stayed inside §17.4's edit scope, and
+handed it up. **Correct, and the ruling is: leave it, permanently.**
+
+It is a **frozen evidence artifact of a closed task**, not a live consumer. Task 758 is archived; no npm script, gate,
+CI job or open task invokes this file. Editing it would be worse than the staleness: it would rewrite a record of
+what was measured on the day it was measured, pointing a historical transcript at a Story that did not exist then.
+Clause 9's "known active broken reference" binds **live** consumers; an archived measurement is not one. The same
+reasoning covers the Storybook `index.json` snapshots under `docs/reviews/artifacts/**`, which carry the same id.
+
+**This is the general rule for `docs/sessions/evidence/**` and `docs/reviews/artifacts/**`: evidence is immutable.
+A migration never edits a past task's evidence to keep it runnable.**
+
+### 18.2 Notes carried out of this task — none blocks anything
+
+1. **`scripts/governance/tailwind-entropy.allowlist.json:18`** — the `text-[10px]` exemption for
+   `NotificationItem.tsx` was already stale before 861 (the class went in Task 762). Out of scope here, correctly
+   untouched, and now genuinely unreferenced. Worth sweeping with the next allowlist audit; not worth a task of its
+   own.
+2. **The two `color-mix()` tints** stay as relocated constants in `NotificationItem.tsx` (§17.3 item 1). If a
+   TailAdmin-backed primary-tint token is ever established, they are the first consumer.
+3. **`MantinePopover`'s native-button heuristic** (§17.3 item 3) degrades to *no ARIA* for an unknown wrapper, which
+   is the safe direction. If a third consumer ever passes something exotic, that is the place to look.
+
+### 18.3 Closure
+
+`GR-1 CENSUS COMPLETE — 5 nodes; tier1 5 migrated+enrolled+story; tier2 0 imports removed; tier3 0 listed and filed as none.`
+`GR-2 SCOPE STATED — check:story-coverage and check:pattern-enrolment inspect only enrolled components and src/design-system/mantine/patterns/; neither can see scripts/ or docs/sessions/evidence/; AC10 is closed by the repo-wide grep over scripts/, src/, .github/ and package.json, not by a gate's exit code.`
+`GR-3 STORY PROVEN — NotificationItem ← src/stories/mantine/primitives/NotificationItem.stories.tsx; NotificationCenter ← src/stories/mantine/primitives/NotificationCenter.stories.tsx; NotificationBellView ← src/stories/mantine/primitives/NotificationBellView.stories.tsx; RangeDatePicker ← src/stories/mantine/primitives/RangeDatePicker.stories.tsx.`
+`AC9 STATUS — CLOSED. All 7 tuples ACCEPTED by the owner 2026-09-20.`
+`AC10 STATUS — CLOSED. No live binding to the retired Story id in scripts/, src/, .github/ or package.json; frozen evidence exempt by §18.1.`

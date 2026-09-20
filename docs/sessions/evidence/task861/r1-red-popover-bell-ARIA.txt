@@ -1,0 +1,83 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx (14 tests | 2 failed) 555ms
+     × wrapper trigger (non-button element): the wrapper root carries NO aria-haspopup / aria-expanded, closed or open (Task 861 R4b) 24ms
+     × wrapper trigger (non-button element): the wrapper root carries NO aria-haspopup / aria-expanded, closed or open (Task 861 R4b) 12ms
+ ❯ src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx (3 tests | 3 failed) 618ms
+     × the ActionIcon <button> carries aria-haspopup="dialog" and a live aria-expanded; the Indicator wrapper carries neither 169ms
+     × the ActionIcon <button> carries aria-haspopup="dialog" and a live aria-expanded; the Indicator wrapper carries neither 87ms
+     × opening moves focus into the panel; Escape closes it and returns focus to the bell button 357ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx > MantinePopover — trigger ARIA + focus return, 'desktop' (Task 861) > wrapper trigger (non-button element): the wrapper root carries NO aria-haspopup / aria-expanded, closed or open (Task 861 R4b)
+ FAIL  src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx > MantinePopover — trigger ARIA + focus return, 'mobile' (Task 861) > wrapper trigger (non-button element): the wrapper root carries NO aria-haspopup / aria-expanded, closed or open (Task 861 R4b)
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx:238:51
+    236|     )
+    237|     const wrapper = baseElement.querySelector('[data-testid="wrapper"]…
+    238|     expect(wrapper.hasAttribute('aria-haspopup')).toBe(false)
+       |                                                   ^
+    239|     expect(wrapper.hasAttribute('aria-expanded')).toBe(false)
+    240|     fireEvent.click(baseElement.querySelector('button')!)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx > NotificationBellView — trigger ARIA, 'desktop' (Task 861 AC3b) > the ActionIcon <button> carries aria-haspopup="dialog" and a live aria-expanded; the Indicator wrapper carries neither
+ FAIL  src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx > NotificationBellView — trigger ARIA, 'mobile' (Task 861 AC3b) > the ActionIcon <button> carries aria-haspopup="dialog" and a live aria-expanded; the Indicator wrapper carries neither
+AssertionError: expected null to be 'dialog' // Object.is equality
+
+- Expected:
+"dialog"
+
++ Received:
+null
+
+ ❯ src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx:82:50
+     80|     expect(wrapper.tagName).not.toBe('BUTTON')
+     81|     // closed
+     82|     expect(button.getAttribute('aria-haspopup')).toBe('dialog')
+       |                                                  ^
+     83|     expect(button.getAttribute('aria-expanded')).toBe('false')
+     84|     expect(wrapper.hasAttribute('aria-haspopup')).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx > NotificationBellView — desktop focus trap + return (Task 861 F5) > opening moves focus into the panel; Escape closes it and returns focus to the bell button
+AssertionError: expected null to be 'false' // Object.is equality
+
+- Expected:
+"false"
+
++ Received:
+null
+
+ ❯ src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx:108:50
+    106|     await waitFor(() => expect(panel()).toBeNull())
+    107|     await waitFor(() => expect(document.activeElement).toBe(button))
+    108|     expect(button.getAttribute('aria-expanded')).toBe('false')
+       |                                                  ^
+    109|   })
+    110| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 12 passed (17)
+   Start at  11:58:57
+   Duration  8.34s (transform 1.42s, setup 250ms, import 7.23s, tests 1.17s, environment 2.07s)
+
+EXIT_CODE=1

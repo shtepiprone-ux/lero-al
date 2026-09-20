@@ -1,0 +1,5 @@
+src/design-system/mantine/patterns/MantinePopover.tsx:55: * Anchored Mantine Popover at ≥640px; full-width bottom sheet at <640px.
+src/design-system/mantine/patterns/MantinePopover.tsx:60: * Desktop (≥640px): Mantine Popover in uncontrolled mode, anchored to trigger.
+src/design-system/mantine/patterns/MantinePopover.tsx:63: * Mobile (<640px): clicking the trigger opens a P0-compliant ResponsiveBottomSheet —
+src/design-system/mantine/patterns/MantinePopover.tsx:67: * gets a 16px gutter instead of bleeding to the sheet's edges — the sheet body is
+EXIT_CODE=0

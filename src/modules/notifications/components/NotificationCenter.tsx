@@ -1,13 +1,12 @@
 'use client'
 
-import { useTransition } from 'react'
+import { Fragment, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { CheckCheck } from 'lucide-react'
-import { Button, Flex, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Box, Button, Divider, Flex, Stack, Text, useMantineTheme } from '@mantine/core'
 import { markAllNotificationsRead } from '@/modules/notifications/lib/mutations'
 import { NotificationItem } from './NotificationItem'
 import type { Notification } from '@/types/database'
-import styles from './NotificationCenter.module.css'
 
 interface Props {
   notifications: Notification[]
@@ -52,7 +51,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
         gap="xs"
         px="md"
         py="sm"
-        style={{ borderBottom: '1px solid var(--border)', flexShrink: 0 }}
+        style={{ flexShrink: 0 }}
       >
         {/* lh=1.625 (leading-relaxed) matches this <p>'s pre-migration base-rule line-height —
             globals.css's `p { @apply leading-relaxed }` wins over text-sm's own paired 20px
@@ -73,19 +72,24 @@ export function NotificationCenter({ notifications, onRead }: Props) {
           </Button>
         )}
       </Flex>
+      <Divider />
 
-      {/* List */}
-      <div className={styles.list} style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
+      {/* List — Task 861 R4c: the CSS module's `divide-y` reproduction is now a canonical `Divider`
+          between adjacent rows (same primitive `MantineDashboardWorkList` uses), and the module is deleted. */}
+      <Box style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
         {notifications.length === 0 ? (
           <Text size="sm" c="var(--muted-foreground)" ta="center" lh={1.625} px="md" py="2xl">
             {t('empty')}
           </Text>
         ) : (
-          notifications.map(n => (
-            <NotificationItem key={n.id} notification={n} onRead={onRead} />
+          notifications.map((n, i) => (
+            <Fragment key={n.id}>
+              {i > 0 && <Divider />}
+              <NotificationItem notification={n} onRead={onRead} />
+            </Fragment>
           ))
         )}
-      </div>
+      </Box>
     </Stack>
   )
 }

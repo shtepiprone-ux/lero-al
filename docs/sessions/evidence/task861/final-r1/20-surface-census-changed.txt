@@ -1,0 +1,52 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 035c26712af2c7b5e3d0ff5d7805ff2346ce7fe4
+    Changed paths seen: 21
+    Excluded (13):
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx  [story-or-test-file]
+      src/modules/notifications/components/NotificationCenter.module.css  [deleted]
+      src/modules/notifications/components/NotificationItem.module.css  [deleted]
+      src/modules/notifications/components/NotificationItem.stories.tsx  [deleted]
+      src/stories/mantine/primitives/RangeDatePicker.stories.tsx  [story-or-test-file]
+    Included surfaces (8):
+      src/design-system/mantine/patterns/MantinePopover.tsx
+      src/design-system/mantine/patterns/RangeDatePicker.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/theme.ts
+      src/lib/formatters.ts
+      src/modules/notifications/components/NotificationBellView.tsx
+      src/modules/notifications/components/NotificationCenter.tsx
+      src/modules/notifications/components/NotificationItem.tsx
+    Re-censused parent surfaces (1):
+      src/app/[locale]/layout.tsx  <- src/modules/notifications/components/NotificationBellView.tsx, src/modules/notifications/components/NotificationCenter.tsx, src/modules/notifications/components/NotificationItem.tsx
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 9
+    Blocks baselined (recorded debt, does not fail): 12
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 472
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 3
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+FAIL  3 stale baseline entr(ies) — no matching block exists:
+    src/app/[locale]/layout.tsx :: src/modules/notifications/components/NotificationBellView.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/layout.tsx :: src/modules/notifications/components/NotificationCenter.tsx :: tier1-unenrolled-or-unstoried
+    src/app/[locale]/layout.tsx :: src/modules/notifications/components/NotificationItem.tsx :: tier1-unenrolled-or-unstoried
+  Fix: run `npm run check:surface-census:changed:update-baseline` to drop paid-off debt from the baseline.
+
+Docs: docs/storybook-governance.md §15.7, docs/agent-contract.md 16d, docs/golden-rules.md GR-1/GR-3.
+EXIT_CODE=1

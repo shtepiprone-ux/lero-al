@@ -1,0 +1,21 @@
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package-lock.json
+ M package.json
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/lib/formatters.ts
+?? docs/sessions/2026-09-20-task846-dashboard-header-period-grid.md
+?? docs/sessions/evidence/task846/
+?? src/design-system/mantine/patterns/MantineDashboardGrid.tsx
+?? src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+?? src/design-system/mantine/patterns/MantineDashboardPeriodControl.tsx
+?? src/lib/__tests__/formatDateTimeInZone.test.ts
+?? src/lib/dashboard/
+?? src/stories/fixtures/dashboardPeriod.fixture.ts
+?? src/stories/patterns/mantine/DashboardGrid.stories.tsx
+?? src/stories/patterns/mantine/DashboardHeader.stories.tsx
+?? src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx

@@ -1,0 +1,4 @@
+hash BEFORE plant  (fixed): 370b1042f1e4df13c8a0cd3807fb39baa3ba58fd
+hash DURING plant (reverted trigger): d6dbe0019bfe92020f963b3ff3d4103151b83c84
+hash AFTER restore (fixed): 370b1042f1e4df13c8a0cd3807fb39baa3ba58fd
+restored byte-identical: True

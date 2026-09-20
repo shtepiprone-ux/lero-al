@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/notifications
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  12 passed (12)
+   Start at  12:08:18
+   Duration  4.63s (transform 831ms, setup 465ms, import 8.03s, tests 743ms, environment 3.20s)
+
+EXIT_CODE=0

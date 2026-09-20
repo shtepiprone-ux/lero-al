@@ -144,7 +144,7 @@ describe('FiltersPanel — RangeDatePicker wiring (Task 559)', () => {
     )
     const from = format(new Date(today.getFullYear(), today.getMonth(), 10), 'dd.MM.yyyy')
     const to = format(new Date(today.getFullYear(), today.getMonth(), 15), 'dd.MM.yyyy')
-    expect(screen.getByDisplayValue(`${from} — ${to}`)).toBeTruthy()
+    expect(screen.getByRole('button', { name: `${from} — ${to}` })).toBeTruthy()
   })
 
   it('picking a range then Apply filters commits BOTH date_from + date_to atomically', () => {
@@ -165,9 +165,8 @@ describe('FiltersPanel — RangeDatePicker wiring (Task 559)', () => {
     // FiltersPanel renders inside a Radix `Sheet`, which portals its content to
     // `document.body` — outside RTL's `container`, hence `baseElement` throughout this describe.
     // `value.from` is pre-seeded (ANCHOR_FROM), so the trigger shows a VALUE ("10.01.2026"), not a
-    // placeholder — `getByDisplayValue` reads the live DOM property, unlike a CSS `[value=]`
-    // attribute selector which wouldn't reliably reflect a React-controlled input.
-    const rangeInput = within(baseElement as HTMLElement).getByDisplayValue('10.01.2026')
+    // placeholder — the trigger is a semantic <button> (Task 861), so it is found by role + text.
+    const rangeInput = within(baseElement as HTMLElement).getByRole('button', { name: '10.01.2026' })
     fireEvent.click(rangeInput)
     // `date_from` was pre-seeded (anchors the panel on January 2026) — one click on a LATER day
     // within the same month stages `to` directly (see ANCHOR_FROM/PICK_TO doc comment above).
@@ -213,7 +212,7 @@ describe('ListingsFilters — RangeDatePicker wiring (Task 559)', () => {
     openPeriodSection(baseElement)
     const from = format(new Date(today.getFullYear(), today.getMonth(), 10), 'dd.MM.yyyy')
     const to = format(new Date(today.getFullYear(), today.getMonth(), 15), 'dd.MM.yyyy')
-    expect(within(baseElement).getByDisplayValue(`${from} — ${to}`)).toBeTruthy()
+    expect(within(baseElement).getByRole('button', { name: `${from} — ${to}` })).toBeTruthy()
   })
 
   it('picking a range pushes BOTH date_from + date_to in ONE router.push call', () => {
@@ -222,7 +221,7 @@ describe('ListingsFilters — RangeDatePicker wiring (Task 559)', () => {
     openPeriodSection(baseElement)
     // `date_from` is pre-seeded via the URL (anchors the panel on January 2026) — one click on a
     // LATER day within the same month stages `to` directly (see ANCHOR_FROM/PICK_TO doc comment).
-    const rangeInput = within(baseElement).getByDisplayValue('10.01.2026')
+    const rangeInput = within(baseElement).getByRole('button', { name: '10.01.2026' })
     fireEvent.click(rangeInput)
     fireEvent.click(baseElement.querySelector(`[data-date="${PICK_TO}"]`)!)
     fireEvent.click(within(baseElement).getByRole('button', { name: 'Apply' }))
@@ -311,7 +310,7 @@ describe('FiltersPanel — in-calendar month selector stays inside the calendar 
 
     // Open the calendar. ANCHOR_FROM anchors the left pane on January 2026; day cells carry
     // `data-date`, which is the portal-agnostic "the calendar panel is mounted" probe.
-    fireEvent.click(within(document.body).getByDisplayValue('10.01.2026'))
+    fireEvent.click(within(document.body).getByRole('button', { name: '10.01.2026' }))
     await waitFor(() => {
       if (document.querySelectorAll('[data-date]').length === 0) throw new Error('calendar not open')
     })

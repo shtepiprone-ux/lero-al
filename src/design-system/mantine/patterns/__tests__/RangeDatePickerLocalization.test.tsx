@@ -70,7 +70,7 @@ function renderOpen(locale: string) {
       </MantineProvider>
     </NextIntlClientProvider>,
   )
-  fireEvent.click(baseElement.querySelector('input')!)
+  fireEvent.click(baseElement.querySelector('.mantine-Input-input')!)
   return within(baseElement as HTMLElement)
 }
 

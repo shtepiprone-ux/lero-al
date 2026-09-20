@@ -1,0 +1,460 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (31 tests | 16 failed) 9244ms
+     × unparseable value.from is guarded to empty — placeholder shown, no crash 15ms
+     × trigger is a semantic <button type="button"> keeping the Mantine input chrome (AC1) 11ms
+     × Enter on the focused trigger opens the surface with no pointer event (AC1) 13ms
+     × Space on the focused trigger opens the surface on keyup, with no pointer event (AC1) 10ms
+     × aria-haspopup="dialog" in both states; aria-expanded "false" then "true" (AC3) 12ms
+     × opening moves focus inside the surface; Escape closes and returns focus to the trigger (AC2) 1021ms
+     × Escape with a staged but uncommitted range discards it, fires nothing, focus returns (negative) 12ms
+     × Apply commits one onChange, closes, and returns focus to the trigger (AC2) 9ms
+     × Cancel discards, fires nothing, and returns focus to the trigger (AC2) 10ms
+     × trigger is a semantic <button type="button"> keeping the Mantine input chrome (AC1) 12ms
+     × Enter on the focused trigger opens the surface with no pointer event (AC1) 14ms
+     × Space on the focused trigger opens the surface on keyup, with no pointer event (AC1) 12ms
+     × aria-haspopup="dialog" in both states; aria-expanded "false" then "true" (AC3) 13ms
+     × opening moves focus inside the surface; Escape closes and returns focus to the trigger (AC2) 1020ms
+     × Escape with a staged but uncommitted range discards it, fires nothing, focus returns (negative) 12ms
+     × Confirm commits one onChange, closes, and returns focus to the trigger (AC2) 12ms
+npm.cmd : 
+At C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\c4fb7b89-de8c-4589-a9f1-a7a2c02a7805\scratchp
+ad\plant.ps1:46 char:1
++ npm.cmd run test -- src/design-system/mantine/patterns/__tests__/Rang ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — trigger (Task 
+558) > unparseable value.from is guarded to empty — placeholder shown, no crash
+AssertionError: expected '' to be 'Select dates' // Object.is equality
+
+- Expected
++ Received
+
+- Select dates
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:346:33
+    344|     // expectation (no date shown, the placeholder shown) is read from…
+    345|     const trigger = getTrigger(container)
+    346|     expect(trigger.textContent).toBe('Select dates')
+       |                                 ^
+    347|     expect(trigger.textContent).not.toMatch(/\d{2}\.\d{2}\.\d{4}/)
+    348|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > trigger is a semantic <button type="button"> keeping the Mantine input 
+chrome (AC1)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > trigger is a semantic <button type="button"> keeping the 
+Mantine input chrome (AC1)
+AssertionError: expected 'INPUT' to be 'BUTTON' // Object.is equality
+
+Expected: "BUTTON"
+Received: "INPUT"
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:368:29
+    366|   it('trigger is a semantic <button type="button"> keeping the Mantine…
+    367|     const { trigger } = rendered()
+    368|     expect(trigger.tagName).toBe('BUTTON')
+       |                             ^
+    369|     expect(trigger.getAttribute('type')).toBe('button')
+    370|     expect(trigger.classList.contains('mantine-Input-input')).toBe(tru…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > Enter on the focused trigger opens the surface with no pointer event 
+(AC1)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > Enter on the focused trigger opens the surface with no 
+pointer event (AC1)
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:378:34
+    376|     expect(surface(baseElement)).toBeNull()
+    377|     pressKey(trigger, 'Enter')
+    378|     expect(surface(baseElement)).toBeTruthy()
+       |                                  ^
+    379|   })
+    380|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > Space on the focused trigger opens the surface on keyup, with no 
+pointer event (AC1)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > Space on the focused trigger opens the surface on keyup, 
+with no pointer event (AC1)
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:386:34
+    384|     expect(surface(baseElement)).toBeNull()
+    385|     pressKey(trigger, ' ')
+    386|     expect(surface(baseElement)).toBeTruthy()
+       |                                  ^
+    387|   })
+    388|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > aria-haspopup="dialog" in both states; aria-expanded "false" then 
+"true" (AC3)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > aria-haspopup="dialog" in both states; aria-expanded 
+"false" then "true" (AC3)
+AssertionError: expected 'false' to be 'true' // Object.is equality
+
+Expected: "true"
+Received: "false"
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:395:51
+    393|     pressKey(trigger, 'Enter')
+    394|     expect(trigger.getAttribute('aria-haspopup')).toBe('dialog')
+    395|     expect(trigger.getAttribute('aria-expanded')).toBe('true')
+       |                                                   ^
+    396|   })
+    397|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > opening moves focus inside the surface; Escape closes and returns focus 
+to the trigger (AC2)
+AssertionError: expected false to be true // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m""[39m
+        [33mstyle[39m=[32m"align-self: stretch;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mstyle[39m=[32m"cursor: pointer; width: 100%;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-variant[39m=[32m"default"[39m
+            [33mdata-with-left-section[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
+--input-radius: var(--mantine-radius-lg);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
+              [33mdata-position[39m=[32m"left"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mstyle[39m=[32m"color: var(--mantine-color-gray-5);"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 2v4"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mrx[39m=[32m"2"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 10h18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 18h.01"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<input[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-invalid[39m=[32m"false"[39m
+              [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+              [33mdata-variant[39m=[32m"default"[39m
+              [33mid[39m=[32m"mantine-enwceppbh-target"[39m
+              [33mplaceholder[39m=[32m"Select dates"[39m
+              [33mreadonly[39m=[32m""[39m
+              [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m...
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:402:60
+    400|     trigger.focus()
+    401|     pressKey(trigger, 'Enter')
+    402|     await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+       |                                                            ^
+    403|     fireEvent.keyDown(document.activeElement!, { key: 'Escape' })
+    404|     await waitFor(() => expect(surface(baseElement)).toBeNull())
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > Escape with a staged but uncommitted range discards it, fires nothing, 
+focus returns (negative)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > Escape with a staged but uncommitted range discards it, 
+fires nothing, focus returns (negative)
+Error: Unable to fire a "click" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:413:15
+    411|     trigger.focus()
+    412|     pressKey(trigger, 'Enter')
+    413|     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]…
+       |               ^
+    414|     await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+    415|     fireEvent.keyDown(document.activeElement!, { key: 'Escape' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > Apply commits one onChange, closes, and returns focus to the trigger 
+(AC2)
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > Confirm commits one onChange, closes, and returns focus to 
+the trigger (AC2)
+Error: Unable to fire a "click" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:425:15
+    423|     trigger.focus()
+    424|     pressKey(trigger, 'Enter')
+    425|     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]…
+       |               ^
+    426|     fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]…
+    427|     fireEvent.click(within(baseElement as HTMLElement).getByRole('butt…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'desktop ≥640' (Task 861) > Cancel discards, fires nothing, and returns focus to the trigger (AC2)
+Error: Unable to fire a "click" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as click] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:439:17
+    437|       trigger.focus()
+    438|       pressKey(trigger, 'Enter')
+    439|       fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}…
+       |                 ^
+    440|       fireEvent.click(within(baseElement as HTMLElement).getByRole('bu…
+    441|       expect(onChange).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only 
+custom-range flow, 'mobile <640 bottom sheet' (Task 861) > opening moves focus inside the surface; Escape closes and 
+returns focus to the trigger (AC2)
+AssertionError: expected false to be true // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m""[39m
+        [33mstyle[39m=[32m"display: flex; flex-direction: column;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mstyle[39m=[32m"cursor: pointer; width: 100%;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-variant[39m=[32m"default"[39m
+            [33mdata-with-left-section[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
+--input-radius: var(--mantine-radius-lg);"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
+              [33mdata-position[39m=[32m"left"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mstyle[39m=[32m"color: var(--mantine-color-gray-5);"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 2v4"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"18"[39m
+
+ Test Files  1 failed (1)
+      Tests  16 failed | 15 passed (31)
+   Start at  10:47:29
+   Duration  11.72s (transform 155ms, setup 87ms, import 1.51s, tests 9.24s, environment 721ms)
+
+                  [33mrx[39m=[32m"2"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 10h18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 18h.01"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<input[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-invalid[39m=[32m"false"[39m
+              [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+              [33mdata-variant[39m=[32m"default"[39m
+              [33mid[39m=[32m"mantine-mc8mk4x5g"[39m
+              [33mplaceholder[39m=[32m"Select dates"[39m
+              [33mreadonly[39m=[32m""[39m
+              [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_f11b401e mantine-Drawer-root"[39m
+          [33mdata-size[39m=[32m"auto"[39m
+          [33mstyle[39m=[32m"--drawer-size: var(--drawer-size-auto); --drawer-flex: 0 0 calc(100% - 
+var(--drawer-offset, 0rem) * 2); --drawer-height: var(--drawer-size); --drawer-align: flex-end; --mb-z-index: 
+200;"[39m
+        [36m/>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m...
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:402:60
+    400|     trigger.focus()
+    401|     pressKey(trigger, 'Enter')
+    402|     await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+       |                                                            ^
+    403|     fireEvent.keyDown(document.activeElement!, { key: 'Escape' })
+    404|     await waitFor(() => expect(surface(baseElement)).toBeNull())
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+EXIT_CODE=1

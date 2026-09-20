@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Group,
+  Input,
   ScrollArea,
   Stack,
   Text,
@@ -833,12 +834,18 @@ export function RangeDatePicker({
   }
 
   const trigger = (
+    // Task 861: a semantic <button type="button"> — Enter/Space activate it natively, so the popover opens
+    // from the keyboard with no key handler of its own. It stays a <TextInput> (runtime-polymorphic: it
+    // renders InputBase with a caller-overridable `component`) so the theme's TextInput defaults and
+    // input-chrome.css (keyed on .mantine-TextInput-input) keep applying — chrome unchanged, no new value.
+    // `component` is not in TextInput's public types, hence the one narrow cast. The clear-X below is a
+    // SIBLING inside .mantine-Input-wrapper, never nested in the button.
     <TextInput
-      readOnly
+      {...({ component: 'button' } as object)}
+      type="button"
+      pointer
       w="100%"
       radius="lg"
-      value={displayText}
-      placeholder={placeholder ?? t('select_range')}
       className={className}
       leftSection={<CalendarDays size={theme.other.iconSize.standard} style={{ color: 'var(--mantine-color-gray-5)' }} />}
       rightSection={
@@ -856,7 +863,9 @@ export function RangeDatePicker({
         ) : undefined
       }
       style={{ cursor: 'pointer' }}
-    />
+    >
+      {displayText || <Input.Placeholder c="gray.4">{placeholder ?? t('select_range')}</Input.Placeholder>}
+    </TextInput>
   )
 
   return (

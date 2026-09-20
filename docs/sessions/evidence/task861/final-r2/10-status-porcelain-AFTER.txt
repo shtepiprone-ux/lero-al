@@ -1,0 +1,40 @@
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/mantine-migration-scope.json
+ M scripts/surface-census-baseline.json
+ D scripts/task319-qa-notification-templates.mjs
+ M src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/MantinePopover.tsx
+ M src/design-system/mantine/patterns/RangeDatePicker.tsx
+ M src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/lib/formatters.ts
+ M src/modules/notifications/components/NotificationBellView.tsx
+ D src/modules/notifications/components/NotificationCenter.module.css
+ M src/modules/notifications/components/NotificationCenter.tsx
+ D src/modules/notifications/components/NotificationItem.module.css
+ D src/modules/notifications/components/NotificationItem.stories.tsx
+ M src/modules/notifications/components/NotificationItem.tsx
+ M src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+?? docs/sessions/2026-09-20-task846-dashboard-header-period-grid.md
+?? docs/sessions/2026-09-20-task861-keyboard-rangedatepicker-trigger.md
+?? docs/sessions/evidence/task846/
+?? docs/sessions/evidence/task861/
+?? src/design-system/mantine/patterns/MantineDashboardGrid.tsx
+?? src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+?? src/design-system/mantine/patterns/MantineDashboardPeriodControl.tsx
+?? src/lib/__tests__/formatDateTimeInZone.test.ts
+?? src/lib/dashboard/
+?? src/modules/notifications/components/__tests__/NotificationBellView.smoke.test.tsx
+?? src/stories/fixtures/dashboardPeriod.fixture.ts
+?? src/stories/fixtures/notifications.fixture.ts
+?? src/stories/mantine/primitives/NotificationCenter.stories.tsx
+?? src/stories/mantine/primitives/NotificationItem.stories.tsx
+?? src/stories/patterns/mantine/DashboardGrid.stories.tsx
+?? src/stories/patterns/mantine/DashboardHeader.stories.tsx
+?? src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx

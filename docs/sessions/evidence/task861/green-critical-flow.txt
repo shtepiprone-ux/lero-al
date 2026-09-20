@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/modules/notifications
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  8 passed (8)
+      Tests  70 passed (70)
+   Start at  10:45:59
+   Duration  23.71s (transform 1.69s, setup 874ms, import 21.25s, tests 28.70s, environment 8.10s)
+
+EXIT_CODE=0

@@ -1692,9 +1692,23 @@
       "retry": "Riprova",
       "loading_label": "Caricamento",
       "updated_at_prefix": "Aggiornato alle"
+    },
+    "period": {
+      "label_7d": "7 giorni",
+      "label_30d": "30 giorni",
+      "label_custom": "Personalizzato",
+      "range_placeholder": "Seleziona le date",
+      "scope_label": "Periodo",
+      "error_end_after_yesterday": "La data di fine deve essere al più ieri.",
+      "error_start_after_end": "La data di inizio deve precedere quella di fine.",
+      "error_longer_than_90_days": "Il periodo può durare al massimo 90 giorni.",
+      "error_invalid_date": "Inserisci date valide."
     }
   },
   "storybook": {
+    "notifications": {
+      "legacy_status_title": "Stato dell'annuncio modificato"
+    },
     "listing": {
       "modern_apartment": "Appartamento Moderno nel Centro di Tirana",
       "apartment_long": "Appartamento Moderno nel Centro di Tirana con Belle Vedute — Titolo Lungo per Test dello Stress Locale",
@@ -2510,6 +2524,13 @@
       "dashboard_radial_aria_label": "Grafico del tasso di risposta",
       "dashboard_radial_label": "Totale",
       "dashboard_period_filter_label": "Periodo",
+      "dashboard_header_title": "Analisi",
+      "dashboard_header_subtitle": "Visualizzazioni e richieste per i tuoi annunci",
+      "dashboard_header_stale_label": "I dati potrebbero non essere aggiornati",
+      "dashboard_grid_stat_listings": "Annunci attivi",
+      "dashboard_grid_stat_views": "Visualizzazioni",
+      "dashboard_grid_stat_inquiries": "Richieste",
+      "dashboard_grid_stat_favorites": "Preferiti",
       "dashboard_period_week": "Settimana",
       "dashboard_period_month": "Mese",
       "dashboard_period_year": "Anno",

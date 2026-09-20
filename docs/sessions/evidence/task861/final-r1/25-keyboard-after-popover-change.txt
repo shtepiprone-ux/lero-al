@@ -1,0 +1,26 @@
+=== RangeDatePicker @1280
+PASS  trigger is <button type=button>
+PASS  aria-haspopup=dialog closed
+PASS  aria-expanded=false closed
+PASS  Enter opens: aria-expanded=true
+PASS  calendar surface in DOM
+PASS  Escape closes: aria-expanded=false
+PASS  focus returned to trigger
+PASS  Space opens
+=== RangeDatePicker @390
+PASS  trigger is <button type=button>
+PASS  aria-haspopup=dialog closed
+PASS  aria-expanded=false closed
+PASS  Enter opens: aria-expanded=true
+PASS  calendar surface in DOM
+PASS  Escape closes: aria-expanded=false
+PASS  focus returned to trigger
+PASS  Space opens
+=== 846 DashboardPeriodControl CustomRangeTooLong @1280
+PASS  period trigger present as button[aria-haspopup=dialog]
+PASS  Enter opens the surface (no pointer)
+PASS  Escape returns focus to the trigger
+=== 846 DashboardPeriodControl CustomRangeTooLong @390
+PASS  period trigger present as button[aria-haspopup=dialog]
+PASS  Enter opens the surface (no pointer)
+PASS  Escape returns focus to the trigger

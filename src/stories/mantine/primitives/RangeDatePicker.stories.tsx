@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>
  * Forces the calendar panel OPEN (Task 554 open-overlay pattern, same mechanism as
  * `LocationComboboxSubPanel.stories.tsx`). `RangeDatePicker` has no prop to force the panel open
  * (by design — "do NOT add a force-open prop to the product component", carried over from Task
- * 553's kickoff). This wrapper finds the real trigger `<input readOnly>` and clicks it.
+ * 553's kickoff). This wrapper finds the real trigger (a semantic `<button type="button">` since Task 861) and clicks it.
  *
  * **Why a `setTimeout(0)`-deferred `useEffect`, not a synchronous `useLayoutEffect` (Task 561
  * fix — the Task 558 version used `useLayoutEffect` and silently never opened the MOBILE sheet):**
@@ -55,7 +55,7 @@ function RangeDatePickerOpen({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      containerRef.current?.querySelector('input')?.click()
+      containerRef.current?.querySelector<HTMLElement>('.mantine-Input-input')?.click()
     }, 0)
     return () => clearTimeout(timer)
   }, [])
@@ -89,7 +89,7 @@ export const Default: Story = {
         <Stack gap="xl">
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              empty — trigger shows placeholder, no clear affordance
+              empty — collapsed trigger (aria-expanded=false, aria-haspopup=dialog) shows the placeholder, no clear affordance; Tab to it, Enter/Space opens
             </Text>
             <RangeDatePickerRow placeholder={t('range_placeholder')} />
           </Stack>
@@ -120,7 +120,7 @@ export const Default: Story = {
 
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              forced open (real RangeDatePicker, Task 561 mobile rework) — ≥640: two-month
+              forced open — expanded trigger (aria-expanded=true); Escape closes and focus returns to it (real RangeDatePicker, Task 561 mobile rework) — ≥640: two-month
               consecutive pair + shared header (arrows + month/year dropdowns + gray right-month
               label) + range summary + Clear/Cancel/Apply; &lt;640: FIXED header with month + year
               dropdowns (no duplicate month label), vertically-scrolling month list where each

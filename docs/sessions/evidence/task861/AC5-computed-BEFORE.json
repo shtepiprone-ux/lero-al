@@ -1,0 +1,57 @@
+{
+  "withValue": {
+    "tag": "INPUT",
+    "type": null,
+    "outerHTML": "<input class=\"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input\" data-variant=\"default\" readonly=\"\" placeholder=\"Select dates\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-invalid=\"false\" id=\"mantine-c7wa6dwdx-target\" value=\"28.01.2026 — 05.02.2026\" style=\"min-height: 2.75rem; color: var(-",
+    "borderRadius": "8px",
+    "height": "44px",
+    "paddingInline": "34px / 34px",
+    "textAlign": "left",
+    "fontSize": "14px",
+    "color": "rgb(29, 41, 57)",
+    "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+    "lineHeight": "34px",
+    "borderColor": "rgb(208, 213, 221)",
+    "bg": "rgb(255, 255, 255)",
+    "cursor": "text",
+    "boxWidth": 480,
+    "boxHeight": 44,
+    "overflow": "clip",
+    "textOverflow": "clip",
+    "whiteSpace": "normal",
+    "wrapperChildren": [
+      "DIV.m_82577fc2",
+      "INPUT.m_8fb7ebe7",
+      "DIV.m_82577fc2"
+    ],
+    "nestedButtonInButton": false
+  },
+  "empty": {
+    "tag": "INPUT",
+    "type": null,
+    "outerHTML": "<input class=\"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input\" data-variant=\"default\" readonly=\"\" placeholder=\"Select dates\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-invalid=\"false\" id=\"mantine-22vbkcdnu-target\" value=\"\" style=\"min-height: 2.75rem; color: var(--mantine-color-gray-8);",
+    "borderRadius": "8px",
+    "height": "44px",
+    "paddingInline": "34px / 16px",
+    "textAlign": "left",
+    "fontSize": "14px",
+    "color": "rgb(29, 41, 57)",
+    "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+    "lineHeight": "34px",
+    "borderColor": "rgb(208, 213, 221)",
+    "bg": "rgb(255, 255, 255)",
+    "cursor": "text",
+    "boxWidth": 480,
+    "boxHeight": 44,
+    "overflow": "clip",
+    "textOverflow": "clip",
+    "whiteSpace": "normal",
+    "wrapperChildren": [
+      "DIV.m_82577fc2",
+      "INPUT.m_8fb7ebe7"
+    ],
+    "nestedButtonInButton": false
+  },
+  "placeholderColorEmpty": "rgb(152, 162, 179)",
+  "emptyText": ""
+}

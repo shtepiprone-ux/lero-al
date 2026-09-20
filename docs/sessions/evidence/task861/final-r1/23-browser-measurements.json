@@ -1,0 +1,278 @@
+{
+  "rangedatepicker": [
+    {
+      "locale": "en",
+      "width": 1280,
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "sq",
+      "width": 1280,
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "sq",
+      "width": 320,
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "uk",
+      "width": 1280,
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "uk",
+      "width": 320,
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "it",
+      "width": 1280,
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "empties": []
+    },
+    {
+      "locale": "it",
+      "width": 320,
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "empties": []
+    }
+  ],
+  "bell": [
+    {
+      "width": 1280,
+      "locale": "en",
+      "before": {
+        "expanded": "false",
+        "parentAria": null
+      },
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "panelRect": [
+        62,
+        136,
+        294,
+        442
+      ],
+      "unreadRows": 2,
+      "unreadBg": "oklab(0.649014 0.167144 0.0901175 / 0.05)",
+      "unreadCursor": "pointer",
+      "unreadTransition": "background-color 0.2s",
+      "dividers": 3,
+      "scrollerScrollable": false,
+      "markAllButtons": [
+        "Mark all as read"
+      ],
+      "bellExpandedOpen": "true",
+      "bellParentHasAria": false,
+      "focusInsidePanel": true,
+      "rowTextClipped": false,
+      "hoverBg": "oklab(0.649014 0.167144 0.0901175 / 0.1)",
+      "afterEscape": {
+        "focusOnBell": true,
+        "expanded": "false",
+        "panelGone": true
+      }
+    },
+    {
+      "width": 390,
+      "locale": "uk",
+      "before": {
+        "expanded": "false",
+        "parentAria": null
+      },
+      "docScrollW": 390,
+      "docClientW": 390,
+      "hScroll": false,
+      "panelRect": [
+        16,
+        450,
+        358,
+        434
+      ],
+      "unreadRows": 2,
+      "unreadBg": "oklab(0.649014 0.167144 0.0901175 / 0.05)",
+      "unreadCursor": "pointer",
+      "unreadTransition": "background-color 0.2s",
+      "dividers": 3,
+      "scrollerScrollable": false,
+      "markAllButtons": [
+        "Позначити всі як прочитані"
+      ],
+      "bellExpandedOpen": "true",
+      "bellParentHasAria": false,
+      "focusInsidePanel": true,
+      "rowTextClipped": false,
+      "hoverBg": "oklab(0.649014 0.167144 0.0901175 / 0.1)",
+      "afterEscape": {
+        "focusOnBell": true,
+        "expanded": "false",
+        "panelGone": true
+      }
+    },
+    {
+      "width": 320,
+      "locale": "uk",
+      "before": {
+        "expanded": "false",
+        "parentAria": null
+      },
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "panelRect": [
+        16,
+        431,
+        288,
+        454
+      ],
+      "unreadRows": 2,
+      "unreadBg": "oklab(0.649014 0.167144 0.0901175 / 0.05)",
+      "unreadCursor": "pointer",
+      "unreadTransition": "background-color 0.2s",
+      "dividers": 3,
+      "scrollerScrollable": false,
+      "markAllButtons": [
+        "Позначити всі як прочитані"
+      ],
+      "bellExpandedOpen": "true",
+      "bellParentHasAria": false,
+      "focusInsidePanel": true,
+      "rowTextClipped": false,
+      "hoverBg": "oklab(0.649014 0.167144 0.0901175 / 0.1)",
+      "afterEscape": {
+        "focusOnBell": true,
+        "expanded": "false",
+        "panelGone": true
+      }
+    },
+    {
+      "width": 320,
+      "locale": "sq",
+      "before": {
+        "expanded": "false",
+        "parentAria": null
+      },
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "panelRect": [
+        16,
+        431,
+        288,
+        454
+      ],
+      "unreadRows": 2,
+      "unreadBg": "oklab(0.649014 0.167144 0.0901175 / 0.05)",
+      "unreadCursor": "pointer",
+      "unreadTransition": "background-color 0.2s",
+      "dividers": 3,
+      "scrollerScrollable": false,
+      "markAllButtons": [
+        "Shëno të gjitha si të lexuara"
+      ],
+      "bellExpandedOpen": "true",
+      "bellParentHasAria": false,
+      "focusInsidePanel": true,
+      "rowTextClipped": false,
+      "hoverBg": "oklab(0.649014 0.167144 0.0901175 / 0.1)",
+      "afterEscape": {
+        "focusOnBell": true,
+        "expanded": "false",
+        "panelGone": true
+      }
+    }
+  ],
+  "item": [
+    {
+      "width": 1280,
+      "locale": "sq",
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "rowsRendered": 14,
+      "errorDisplay": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "locale": "sq",
+      "docScrollW": 390,
+      "docClientW": 390,
+      "hScroll": false,
+      "rowsRendered": 14,
+      "errorDisplay": false,
+      "pageErrors": []
+    },
+    {
+      "width": 320,
+      "locale": "uk",
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "rowsRendered": 14,
+      "errorDisplay": false,
+      "pageErrors": []
+    }
+  ],
+  "center": [
+    {
+      "width": 1280,
+      "locale": "sq",
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "hScroll": false,
+      "rowsRendered": 15,
+      "errorDisplay": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "locale": "sq",
+      "docScrollW": 390,
+      "docClientW": 390,
+      "hScroll": false,
+      "rowsRendered": 15,
+      "errorDisplay": false,
+      "pageErrors": []
+    },
+    {
+      "width": 320,
+      "locale": "uk",
+      "docScrollW": 320,
+      "docClientW": 320,
+      "hScroll": false,
+      "rowsRendered": 15,
+      "errorDisplay": false,
+      "pageErrors": []
+    }
+  ]
+}

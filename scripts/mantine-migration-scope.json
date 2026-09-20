@@ -87,5 +87,11 @@
   "src/design-system/mantine/patterns/MantineDashboardRadar.tsx",
   "src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx",
   "src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx",
-  "src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx"
+  "src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardHeader.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardPeriodControl.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardGrid.tsx",
+  "src/modules/notifications/components/NotificationBellView.tsx",
+  "src/modules/notifications/components/NotificationCenter.tsx",
+  "src/modules/notifications/components/NotificationItem.tsx"
 ]

@@ -1692,9 +1692,23 @@
       "retry": "Provo përsëri",
       "loading_label": "Duke u ngarkuar",
       "updated_at_prefix": "Përditësuar në"
+    },
+    "period": {
+      "label_7d": "7 ditë",
+      "label_30d": "30 ditë",
+      "label_custom": "E personalizuar",
+      "range_placeholder": "Zgjidhni datat",
+      "scope_label": "Periudha",
+      "error_end_after_yesterday": "Data e mbarimit duhet të jetë më së voni dje.",
+      "error_start_after_end": "Data e fillimit duhet të jetë para datës së mbarimit.",
+      "error_longer_than_90_days": "Periudha mund të jetë maksimumi 90 ditë.",
+      "error_invalid_date": "Vendosni data të vlefshme."
     }
   },
   "storybook": {
+    "notifications": {
+      "legacy_status_title": "Statusi i listimit u ndryshua"
+    },
     "listing": {
       "modern_apartment": "Apartament Modern në Qendër të Tiranës",
       "apartment_long": "Apartament Modern në Qendër të Tiranës me Pamje të Bukura — Titull i Gjatë për Stres Lokali",
@@ -2510,6 +2524,13 @@
       "dashboard_radial_aria_label": "Grafiku i shkallës së përgjigjes",
       "dashboard_radial_label": "Gjithsej",
       "dashboard_period_filter_label": "Periudha",
+      "dashboard_header_title": "Analitika",
+      "dashboard_header_subtitle": "Shikimet dhe kërkesat për shpalljet tuaja",
+      "dashboard_header_stale_label": "Të dhënat mund të jenë të vjetruara",
+      "dashboard_grid_stat_listings": "Shpallje aktive",
+      "dashboard_grid_stat_views": "Shikime",
+      "dashboard_grid_stat_inquiries": "Kërkesa",
+      "dashboard_grid_stat_favorites": "Të preferuarat",
       "dashboard_period_week": "Javë",
       "dashboard_period_month": "Muaj",
       "dashboard_period_year": "Vit",

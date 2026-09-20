@@ -1,0 +1,18 @@
+HEAD:src/design-system/mantine/patterns/MantinePopover.tsx:48: * Anchored Mantine Popover at ≥640px; full-width bottom sheet at <640px.
+HEAD:src/design-system/mantine/patterns/MantinePopover.tsx:53: * Desktop (≥640px): Mantine Popover in uncontrolled mode, anchored to trigger.
+HEAD:src/design-system/mantine/patterns/MantinePopover.tsx:56: * Mobile (<640px): clicking the trigger opens a P0-compliant ResponsiveBottomSheet —
+HEAD:src/design-system/mantine/patterns/MantinePopover.tsx:60: * gets a 16px gutter instead of bleeding to the sheet's edges — the sheet body is
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:38:      {/* Header — Task 593: <640px the mark-all button drops to its own row below the title,
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:39:          full-width with flush-left content (owner decision 2026-07-14); >=640px reverts to the
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:41:          retargeted this from the custom 390px breakpoint token to the canonical 640px `sm`, but
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:45:          instead of the now-deleted custom token. Task 754: `sm:` = 640px in this project's
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:46:          Tailwind config (`--bp-sm: 640px`, globals.css:281) — Mantine's own `sm` breakpoint is
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:47:          40em = 640px (mantine-responsive-design-system.md §6.1), an exact 1:1 mapping. */}
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:55:        style={{ borderBottom: '1px solid var(--border)', flexShrink: 0 }}
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:58:            globals.css's `p { @apply leading-relaxed }` wins over text-sm's own paired 20px
+HEAD:src/modules/notifications/components/NotificationCenter.tsx:78:      <div className={styles.list} style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
+HEAD:src/modules/notifications/components/NotificationItem.tsx:180:      className={cn(
+HEAD:src/modules/notifications/components/NotificationItem.tsx:192:          default (24px, text-base's own paired line-height; no globals.css base rule targets
+HEAD:src/modules/notifications/components/NotificationItem.tsx:205:            so text-sm's own paired 20px line-height never applied; reproduced exactly. */}
+HEAD:src/modules/notifications/components/NotificationItem.tsx:215:            `p { @apply leading-relaxed }` base rule won over text-xs's own paired 16px line-height
+HEAD:src/modules/notifications/components/NotificationItem.tsx:227:        {/* text-2xs = 10px (globals.css --text-2xs, no Mantine token — D28 raw-literal exemption).

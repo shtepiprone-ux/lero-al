@@ -1692,9 +1692,23 @@
       "retry": "Retry",
       "loading_label": "Loading",
       "updated_at_prefix": "Updated at"
+    },
+    "period": {
+      "label_7d": "7 days",
+      "label_30d": "30 days",
+      "label_custom": "Custom",
+      "range_placeholder": "Select dates",
+      "scope_label": "Period",
+      "error_end_after_yesterday": "The end date must be no later than yesterday.",
+      "error_start_after_end": "The start date must be before the end date.",
+      "error_longer_than_90_days": "The period can be at most 90 days.",
+      "error_invalid_date": "Enter valid dates."
     }
   },
   "storybook": {
+    "notifications": {
+      "legacy_status_title": "Listing status changed"
+    },
     "listing": {
       "modern_apartment": "Modern Apartment in Tirana Center",
       "apartment_long": "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
@@ -2510,6 +2524,13 @@
       "dashboard_radial_aria_label": "Response rate chart",
       "dashboard_radial_label": "Total",
       "dashboard_period_filter_label": "Period",
+      "dashboard_header_title": "Analytics",
+      "dashboard_header_subtitle": "Views and inquiries for your listings",
+      "dashboard_header_stale_label": "Data may be outdated",
+      "dashboard_grid_stat_listings": "Active listings",
+      "dashboard_grid_stat_views": "Views",
+      "dashboard_grid_stat_inquiries": "Inquiries",
+      "dashboard_grid_stat_favorites": "Favorites",
       "dashboard_period_week": "Week",
       "dashboard_period_month": "Month",
       "dashboard_period_year": "Year",

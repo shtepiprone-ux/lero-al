@@ -1,0 +1,54 @@
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/modules/notifications/components/NotificationBellView.tsx
+    Nodes visited: 5
+    Local import edges resolved (from tier-1 nodes): 17
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 12
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 1
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as RENDERED, non-type-only import bindings in that node's own file resolving
+    under src/components/ui/* (a co-located .module.css or hook sibling is never a rendered JSX tag).
+    story:yes means a canonical Mantine story imports the node directly OR through a single-hop index.ts(x)
+    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).
+    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): 0
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Task 831 R11: a .ts root is not a component; a .ts module that renders through createElement or
+    re-exports a component under a non-barrel name is not walked.
+    Canonical Mantine story files consulted: 116 (of 161 total *.stories.ts(x)).
+
+NODES (5):
+    src/modules/notifications/components/NotificationBellView.tsx  tier:tier1  manifest:no  story:yes  className:0  ui-imports:0  parent:(root surface)
+    src/design-system/mantine/patterns/MantinePopover.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/notifications/components/NotificationBellView.tsx
+    src/modules/notifications/components/NotificationCenter.tsx  tier:tier1  manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/notifications/components/NotificationBellView.tsx
+    src/design-system/mantine/patterns/responsiveBottomSheet.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/design-system/mantine/patterns/MantinePopover.tsx
+    src/modules/notifications/components/NotificationItem.tsx  tier:tier1  manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/notifications/components/NotificationCenter.tsx
+
+Barrel hops unwrapped (1):
+    src/modules/notifications/components/NotificationBellView.tsx imports '@/design-system/mantine/patterns' -> src/design-system/mantine/patterns/index.ts -> src/design-system/mantine/patterns/MantinePopover.tsx
+
+node.exe : FAIL  src/modules/notifications/components/NotificationBellView.tsx  [tier1-unenrolled-or-unstoried]
+At C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\c4fb7b89-de8c-4589-a9f1-a7a2c02a7805\scratchp
+ad\gates.ps1:28 char:41
++ ... BellView' { node.exe scripts\check-surface-census.mjs --surface src\m ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  src/modul...d-or-unstoried]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/modules/notifications/components/NotificationCenter.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/modules/notifications/components/NotificationItem.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+
+GR-1 CENSUS BLOCKED — src/modules/notifications/components/NotificationBellView.tsx, 
+src/modules/notifications/components/NotificationCenter.tsx, src/modules/notifications/components/NotificationItem.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.
+EXIT_CODE=1

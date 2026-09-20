@@ -1,0 +1,17 @@
+PASS  Tab reaches the segmented control  — INPUT ""
+PASS  Custom revealed the picker trigger (a <button>)
+PASS  Tab reaches the picker trigger  — BUTTON "Select dates"
+PASS  Storybook actions channel attached (counts consumer onChange calls from here on)
+PASS  Enter opens the calendar (no pointer)
+PASS  Tab reaches the Previous-month button  — BUTTON[Previous] ""
+PASS  focus stayed on Previous after 4 presses  — BUTTON[Previous] ""
+PASS  Tab reaches a day cell (start)  — BUTTON[1 March 2026][2026-03-01] "1"
+PASS  Shift+Tab reaches the Next-month button  — BUTTON[Next] ""
+PASS  Tab reaches a day cell (end, later month)  — BUTTON[1 July 2026][2026-07-01] "1"
+keyboard-picked 2026-03-01 -> 2026-07-01 (122 days apart)
+PASS  picked range is longer than 90 days  — 122
+PASS  Tab reaches Apply  — BUTTON "Apply"
+PASS  role="alert" shows the >90-day message  — The period can be at most 90 days.
+PASS  surface closed and focus back on the trigger  — BUTTON "01.03.2026 — 01.07.2026"
+PASS  consumer onChange NOT called for the too-long range (0 action events during the whole keyboard flow)  — []
+PASS  positive control: a valid keyboard range DOES reach the consumer (counter is live)  — ["onChange"]

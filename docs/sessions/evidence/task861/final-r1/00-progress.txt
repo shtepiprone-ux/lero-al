@@ -1,0 +1,16 @@
+06-i18n-hydration EXIT_CODE=0
+07-check-stories EXIT_CODE=0
+08-story-coverage EXIT_CODE=0
+09-pattern-enrolment EXIT_CODE=0
+10-design-tokens-strict EXIT_CODE=0
+11-enrolled-tailwind EXIT_CODE=0
+12-rendered-scope EXIT_CODE=0
+13-census-RangeDatePicker EXIT_CODE=0
+14-census-MantinePopover EXIT_CODE=0
+15-census-NotificationBellView EXIT_CODE=0
+15b-census-NotificationCenter EXIT_CODE=0
+16-build-storybook EXIT_CODE=0
+17-build EXIT_CODE=0
+18-file-integrity EXIT_CODE=0
+19-mojibake EXIT_CODE=0
+DONE

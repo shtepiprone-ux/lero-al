@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:i18n-hydration
+> vitest run src/lib/__tests__/date-format-ssr-parity.smoke.test.ts src/i18n/__tests__/i18n-render-parity.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  33 passed (33)
+   Start at  10:59:27
+   Duration  1.46s (transform 145ms, setup 187ms, import 216ms, tests 517ms, environment 1.38s)
+
+EXIT_CODE=0

@@ -1,0 +1,40 @@
+
+=== width 1280 locale en ===
+PASS  Tab reaches the trigger  — BUTTON "Select dates"
+PASS  trigger is <button type="button">  — BUTTON type=button
+PASS  closed: aria-expanded=false, no calendar
+PASS  Enter opens the calendar
+PASS  aria-expanded=true while open
+PASS  focus moved inside the surface  — INPUT ""
+PASS  Escape closes the calendar
+PASS  focus returned to the trigger  — BUTTON "Select dates"
+PASS  aria-expanded=false after close
+PASS  Space opens the calendar
+PASS  Space did not scroll the page
+PASS  Tab reaches a day cell  — BUTTON[1 July 2026][data-date=2026-07-01] "1"
+picked 2026-07-01 → 2026-07-04
+PASS  Tab reaches the commit button  — Apply
+PASS  Apply committed and closed the surface
+PASS  focus back on the trigger after commit  — BUTTON "01.07.2026 — 04.07.2026"
+PASS  trigger shows the committed range  — 01.07.2026 — 04.07.2026
+PASS  Escape with staged range: closed, focus on trigger, value unchanged  — 01.07.2026 — 04.07.2026
+
+=== width 390 locale uk ===
+PASS  Tab reaches the trigger  — BUTTON "Оберіть дати"
+PASS  trigger is <button type="button">  — BUTTON type=button
+PASS  closed: aria-expanded=false, no calendar
+PASS  Enter opens the calendar
+PASS  aria-expanded=true while open
+PASS  focus moved inside the surface  — INPUT[Місяць] ""
+PASS  Escape closes the calendar
+PASS  focus returned to the trigger  — BUTTON "Оберіть дати"
+PASS  aria-expanded=false after close
+PASS  Space opens the calendar
+PASS  Space did not scroll the page
+PASS  Tab reaches a day cell  — BUTTON[1 July 2025][data-date=2025-07-01] "1"
+picked 2025-07-01 → 2025-07-04
+PASS  Tab reaches the commit button  — Підтвердити
+PASS  Підтвердити committed and closed the surface
+PASS  focus back on the trigger after commit  — BUTTON "01.07.2025 — 04.07.2025"
+PASS  trigger shows the committed range  — 01.07.2025 — 04.07.2025
+PASS  Escape with staged range: closed, focus on trigger, value unchanged  — 01.07.2025 — 04.07.2025

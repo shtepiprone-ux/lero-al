@@ -1,6 +1,6 @@
 # Task 846 — `MantineDashboardHeader`, `MantineDashboardPeriodControl`, `MantineDashboardGrid`, and `src/lib/dashboard/period.ts` (Tirane completed periods)
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: 🔴 NEEDS REVISION (review 1, 2026-09-20) — read §16 first; it is blocked on an owner decision**
+Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: ⏸️ HELD — implementation complete and evidenced; no executor work is owed on 846. Owner decision 2026-09-20 (Option B, §16.1) holds final approval behind **Task 861**; re-review unchanged once 861 lands.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
@@ -83,7 +83,7 @@ New patterns render Mantine core, `RangeDatePicker` (enrolled, storied) and noth
 | **R3** | spec §4 | `compareToPrevious(current, previous)` → `{ kind: 'no_base' }` when `previous === 0`; otherwise `{ kind: 'delta', delta, percent }` with `percent` rounded to an integer. Never returns `Infinity`/`NaN`. | P1 | AC1 | Confirmed |
 | **R4** | §3, 844 R5 | `formatters.ts` gains `formatDateTimeInZone(iso, locale, timeZone)`, which produces the **same per-locale layout** as `formatDateTime` but for the wall clock of `timeZone` (parts from `Intl.DateTimeFormat('en-US', { timeZone, hourCycle: 'h23', … }).formatToParts`, composed by the existing layout code). `period.ts` exposes `tiraneAbsoluteLabel(iso, locale)` built on it. Server-only use is documented in JSDoc. | P1 | AC1 | Confirmed |
 | **R5** | spec §16.1, §17.2–§17.3, D78-5 | `MantineDashboardHeader` props: `title`, `subtitle?`, `updatedAtLabel?` (a preformatted string), `stale?: { label: string }`, `periodControl?: ReactNode`. Title = `Title order={1} size="h4"`; subtitle = `Text size="sm" c="gray.5"`. `updatedAtLabel` = `Text size="xs" c="gray.5"`. `stale` = yellow `Badge` with an icon and the label. Layout: `Group justify="space-between"` from `sm`, `Stack` below `sm`, the control full width below `sm`. | P1 | AC2, AC6 | Confirmed |
-| **R6** | spec §16.3, §17.3 | `MantineDashboardPeriodControl` props: `value: PeriodSelection`, `onChange`, `now` (the server's `now`, ISO), labels (`label7d`, `label30d`, `labelCustom`, `rangePlaceholder`, error messages keyed by R2's codes, `scopeLabel`). It renders the canonical `SegmentedControl` (full width below `sm`). Selecting Custom renders `RangeDatePicker` with `maxDate` = Tirane yesterday. Selecting a range calls `validateCustomRange`; on error it shows the localized message (`Text c="red.7" size="xs"` with `role="alert"`) and does **not** call `onChange`. It is keyboard-operable end to end. | P1 | AC3, AC6 | **AMENDED — review 1, §16.1: the "end to end" clause is unsatisfiable inside this task's scope and is blocked on an owner decision. Everything else in R6 is `VERIFIED`.** |
+| **R6** | spec §16.3, §17.3 | `MantineDashboardPeriodControl` props: `value: PeriodSelection`, `onChange`, `now` (the server's `now`, ISO), labels (`label7d`, `label30d`, `labelCustom`, `rangePlaceholder`, error messages keyed by R2's codes, `scopeLabel`). It renders the canonical `SegmentedControl` (full width below `sm`). Selecting Custom renders `RangeDatePicker` with `maxDate` = Tirane yesterday. Selecting a range calls `validateCustomRange`; on error it shows the localized message (`Text c="red.7" size="xs"` with `role="alert"`) and does **not** call `onChange`. It is keyboard-operable end to end. | P1 | AC3, AC6 | **UNCHANGED — owner decision 2026-09-20 (Option B, §16.1) kept this wording and fixes the trigger in Task 861 instead. Everything else in R6 is `VERIFIED`; the "end to end" clause is verified at the re-review, after 861.** |
 | **R7** | spec §17.1 | `MantineDashboardGrid` = `Container`-like root with `maw={theme.other.boxSize.dashboardContentMaxWidth}` (new role `'90rem'`, 1440px, spec §17.1), `px={{ base: 'md', md: 'xl' }}`, rows separated by `{ base: 'md', md: 'xl' }`. `TopRow`: `SimpleGrid` with `cols={{ base: 1, md: 2, lg: Math.min(n, 4) }}` where `n` = rendered children count, so 3 cards fill the row and a missing 4th leaves no gap. `Split`: Mantine `Grid` with main `span={{ base: 12, lg: 8 }}` and side `span={{ base: 12, lg: 4 }}`. `Full`: one full-width row. Gaps `{ base: 'md', md: 'xl' }` (TailAdmin `gap-4 md:gap-6`, spec 24). | P1 | AC4, AC6 | Confirmed |
 | **R8** | 16c, GR-3, GR-3a | Own Stories `Patterns/Mantine/DashboardHeader` (fresh, stale, with and without period control), `Patterns/Mantine/DashboardPeriodControl` (7d selected, custom open, custom error > 90 days), `Patterns/Mantine/DashboardGrid` (TopRow with 4 and with 3 real `MantineDashboardStatCard`s from 843, Split with two `MantineDashboardCard`s, Full). All three pattern files enrolled. | P1 | AC5 | Confirmed |
 | **R9** | hardcode, i18n | No raw px/rem/hex/rgb, no `className=`, no Tailwind in the pattern files; `period.ts` contains no UI. New strings for the stories and the control's default messages exist in 4 locales (`dashboard.period.*`). `check:i18n` 0. | P1 | AC5, AC7 | Confirmed |
@@ -178,8 +178,10 @@ nothing a user sees changes yet.
   an element with `role="alert"` shows the localized "longer than 90 days" message, and the story's `onChange` action
   log records no call. Quote the DOM and the actions panel.
   **Review 1, 2026-09-20 — `PARTIALLY VERIFIED`.** The alert, its three localized texts and the absent `onChange` are
-  proven. The words "by keyboard" are not met for one step: the picker cannot be opened without a pointer. Cause and
-  the decision that unblocks this criterion are in §16.1. Do not re-run AC3 until §16.1 is decided.
+  proven. The words "by keyboard" are not met for one step: the picker cannot be opened without a pointer. Cause in
+  §16.1. **Owner decision 2026-09-20 (Option B): AC3 keeps this wording.** Re-run it keyboard-only and end to end —
+  open, select, read the error, close, focus returns — after Task 861 fixes the trigger. Not before; nothing in 846
+  can make it pass today.
 - **AC4 [R7]** — Given `DashboardGrid → Default` at 1440px, when the 3-card `TopRow` is measured, then its three
   cards' combined width plus gaps equals the row width (no empty column). At 800px there are 2 columns; at 700px, 1.
   Quote the computed `grid-template-columns` at each width.
@@ -282,7 +284,7 @@ against the real diff and the retained transcripts, and the owner accepted the �
 (AC6 `VERIFIED`). One requirement clause is false as shipped, and it is a task-design defect of this kickoff, not an
 executor deviation. **Nothing below asks for a re-implementation.**
 
-### 16.1 `STOP - OWNER DECISION REQUIRED` — R6's "keyboard-operable end to end"
+### 16.1 R6's "keyboard-operable end to end" — **DECIDED 2026-09-20: Option B. 846 is held behind Task 861.**
 
 **Finding (P1, R6 / AC3).** `MantineDashboardPeriodControl`'s Custom range picker cannot be opened without a pointer.
 Measured at source, not inferred:
@@ -306,15 +308,43 @@ task-design defect: *"When feasibility evidence contradicts a drafted acceptance
 before assigning the task."* A requirement may only be changed by an explicit owner decision recorded before the
 verdict, so the orchestrator cannot narrow R6 and approve in the same turn.
 
-**Decision required — choose exactly one:**
+**Options as put to the owner. ❌ A and ❌ C were rejected; ✅ B was selected — see the recorded decision below.**
 
 | Option | What changes | What it verifies | Cost |
 |---|---|---|---|
-| **A — narrow R6 here, fix in 861** (recommended) | Owner records a dated decision below. R6's final sentence becomes: *"The segmented control is keyboard-operable; the custom picker inherits `RangeDatePicker`'s pointer-only trigger, tracked as 861."* AC3 keeps its proven assertions and drops "by keyboard" for the open step. | No code change. The existing evidence closes the amended AC3 as written. 846 is then re-reviewed for approval on the record already in hand. | One review turn. No executor session. |
-| **B — fix the trigger first, inside 861, and hold 846** | 861 is promoted ahead of 846's approval: `MantinePopover` gains a keyboard open path (`Enter`/`Space` on the trigger) and `RangeDatePicker` regression evidence is re-run. 846 is re-reviewed unchanged afterwards. | R6 as originally written, end to end. | A full Q4 executor session on a critical-flow component, and it blocks Wave B (847/848 need `period.ts`). |
-| **C — widen 846's scope to include the trigger fix** | §8 is amended to bring `MantinePopover.tsx` in scope; 846 re-enters with a Q4 profile and critical-flow regression proof. | Same as B, in one task. | Rejected by the reviewer: it puts a live critical flow into a pattern-authoring task after its evidence was already captured. Recorded for completeness. |
+| ❌ **A — narrow R6 here, fix in 861** (reviewer's recommendation, **rejected by the owner 2026-09-20**) | Owner records a dated decision below. R6's final sentence becomes: *"The segmented control is keyboard-operable; the custom picker inherits `RangeDatePicker`'s pointer-only trigger, tracked as 861."* AC3 keeps its proven assertions and drops "by keyboard" for the open step. | No code change. The existing evidence closes the amended AC3 as written. 846 is then re-reviewed for approval on the record already in hand. | One review turn. No executor session. |
+| ✅ **B — fix the trigger first, inside 861, and hold 846** — **SELECTED 2026-09-20** | 861 is promoted ahead of 846's approval: `MantinePopover` gains a keyboard open path (`Enter`/`Space` on the trigger) and `RangeDatePicker` regression evidence is re-run. 846 is re-reviewed unchanged afterwards. | R6 as originally written, end to end. | A full Q4 executor session on a critical-flow component, and it blocks Wave B (847/848 need `period.ts`). |
+| ❌ **C — widen 846's scope to include the trigger fix** — **rejected by the owner 2026-09-20** | §8 is amended to bring `MantinePopover.tsx` in scope; 846 re-enters with a Q4 profile and critical-flow regression proof. | Same as B, in one task. | Rejected by the reviewer: it puts a live critical flow into a pattern-authoring task after its evidence was already captured. Recorded for completeness. |
 
-`OWNER DECISION 2026-__-__:` *(record verbatim here, with the date, before the next review turn)*
+**`OWNER DECISION 2026-09-20` — recorded verbatim:**
+
+> OWNER DECISION 2026-09-20: Option B selected. Task 861 is promoted as a prerequisite for final approval of Task
+> 846. The RangeDatePicker/MantinePopover trigger must support a complete keyboard-only custom-range flow, including
+> opening the picker, selecting a range, receiving validation feedback, closing the surface, and returning focus
+> predictably. Task 846 remains unchanged and is re-reviewed after Task 861's Q4 regression evidence is accepted.
+
+Rationale given with the decision: Option A would narrow the criterion on paper and let a brand-new canonical control
+inherit a P1 accessibility defect, contrary to **WCAG 2.2 SC 2.1.1** — every pointer-operable function needs a
+keyboard equivalent. Option C was rejected for mixing a critical-flow accessibility fix into a finished pattern task
+and enlarging the regression surface.
+
+**Binding consequences.**
+
+1. **846's code, evidence and scope do not change.** R6 keeps its original wording; nothing in §1–§15 is amended,
+   and no executor session is owed on 846. Its verdict stays `NEEDS REVISION` **solely** as the hold on 861.
+2. **846 is re-reviewed unchanged** once 861's Q4 regression evidence is accepted. The next review re-runs AC3
+   keyboard-only, end to end, against the fixed trigger; every other criterion is already closed on the record in
+   §16 and is not re-litigated.
+3. **Wave B is blocked with it.** 847 and 848 import `period.ts` from 846, so the sprint's Wave A → Wave B gate now
+   runs through 861. That is the accepted cost of the decision.
+
+**Binding technical requirement for 861 (owner, 2026-09-20).** Do **not** fix this by adding an `onKeyDown` to the
+shared `MantinePopover` — that risks a double toggle on triggers that are already native buttons, which most
+consumers are. Make `RangeDatePicker`'s trigger a semantic `<button type="button">` with correct `aria-expanded` and
+`aria-haspopup` (or an equivalent natively keyboard-operable Mantine component). `Enter` and `Space` then open the
+calendar natively; on open, focus moves into the surface; `Escape` closes it and returns focus to the trigger, per
+the WAI-ARIA dialog pattern. The full keyboard-only flow — open, select a range, receive validation feedback, close,
+return focus — is 861's acceptance criterion, not a note.
 
 ### 16.2 Notes carried into the next review (no action required)
 

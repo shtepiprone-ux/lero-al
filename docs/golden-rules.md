@@ -138,13 +138,21 @@ active owner action or numbered task; it never keeps an approved task active. Th
 **Receipts:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.` For an approved verdict also emit
 `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.`
 
-## GR-6 — Every response that writes a task/doc artifact ends with the owner-run git block
+**Role boundary:** this rule's approval/archive obligations belong to Opus. Sonnet records only the task's concise
+current state and its implementation evidence; it must not approve, archive, or emit Git commands.
+
+## GR-6 — Every Opus task-design/review response that writes a task/doc artifact ends with the owner-run git block
 
 Binds `CLAUDE.md` → Git policy. **Task design** ends with `git add` + `git commit`, explicit paths, **never** `git
 push`. **An approved review** ends with `git add` + `git commit` + `git push <verified-remote> <verified-branch>`.
 A **non-approved review** contains no git command **for the implementation** — and that does **not** suppress the
 task-design block for documents the same response authored. Conflating the two is how the block went missing on
 2026-09-10.
+
+**Role boundary:** GR-6 and `.claude/hooks/orchestrator-response-gate.ps1` are Opus-only. Sonnet's executor
+handoff ends with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED` and contains
+no `git add`, `git commit`, or `git push` command. Missing or ambiguous hook role metadata fails open; it never
+turns a Sonnet backlog/session-log write into a Git-handoff demand.
 
 **Receipt:** `GR-6 HANDOFF EMITTED — <task-design | approved-review | none: no artifact written>.`
 
@@ -158,13 +166,14 @@ task-design block for documents the same response authored. Conflating the two i
 | GR-3 | `check:story-coverage` for enrolled components; `check-rendered-scope` blocking in CI for the enrolled-subgraph frontier (Task 818); `check-surface-census.mjs`/`check:surface-census:changed` blocking in CI for the pre-enrolment case (Task 819) — both check, per node, whether a canonical Mantine story imports it directly or through a single-hop `index.ts(x)` barrel re-export, never merely its parent, via the `story:<yes\|no>` column/field | **enforced for both halves** (Task 818, Task 819) — a rendered, unstoried component reachable from an enrolled root, or from any surface the current PR's diff actually touches, now blocks the PR. |
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-4 | reviewer inspection + receipt | active |
-| GR-5 | **`Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks the response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
-| GR-6 | **`Stop` hook** — blocks the response when a `tasks/**` or governance doc is written and uncommitted with no `git add` block, and blocks `git push` outside an approved review | **enforced** |
+| GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks an Opus response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
+| GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, and blocks `git push` outside an approved review | **enforced** |
 
 **A receipt is a self-report, and on 2026-09-10 the orchestrator skipped one under pressure in the same session that
-wrote this file.** That is why GR-5 and GR-6 are now a **`Stop` hook**: it reads the real `git status` and the actual
-last response, and exits 2 — the response is blocked and must be fixed before it can finish. It is fail-open on any
-error and honours `stop_hook_active`, so it can never wedge a session.
+wrote this file.** That is why GR-5 and GR-6 are now an **Opus-only `Stop` hook**: it reads the real `git status` and
+the actual Opus response, and exits 2 — the response is blocked and must be fixed before it can finish. It is
+fail-open on any error or absent role signal and honours `stop_hook_active`, so it can never wedge a Sonnet executor
+with a prohibited Git command.
 
 **GR-1 and GR-3 are enforced for both the enrolled subgraph and pre-enrolment.** Task 812 built
 `check:rendered-scope`; owner decision 3 (2026-09-11) ran it advisory first; Task 818 (2026-09-11) made it blocking

@@ -233,3 +233,111 @@ No self-approval, no mutating git. Update the 849 line of `docs/backlog.md`; ses
 | No client access? | R1 grants + AC7. |
 | No lifetime counter used as a series? | §3.1 + R1 sources. |
 | Commands in blocks | §13.2; owner SQL steps listed in §13.3. |
+
+## 16. Review 1 — `PARTIALLY VERIFIED`, 2026-09-20
+
+Session log: `docs/sessions/2026-09-20-task849-listing-activity-daily.md`. Evidence root
+`docs/sessions/evidence/task849/`. **Do not restart this task from scratch.** R1–R4 and R6–R9 were inspected against
+the real files and are correct as written; the repo gate block (§13.2) exits 0 on every command and the AC4 plant is
+two-armed with equal before/after hashes. What remains is listed below and nothing else.
+
+### 16.1 Accepted deviations (no rework)
+
+1. **`scripts/check-schema-drift.mjs` edited although §7 lists only the generated `scripts/schema-drift-check.sql`.**
+   Accepted: that file is emitted by the generator from `INTERFACE_TABLE_MAP`, so R9 is unreachable without the two
+   map entries. §7's file list is the defect, not the edit. §7 is amended: `scripts/check-schema-drift.mjs` is an
+   **Edited** path.
+2. **The route returns `500 { ok:false }` when the recompute succeeded but its `success` refresh row could not be
+   stored.** R4 is silent on this branch. Accepted and now binding: freshness is read from
+   `listing_activity_refresh`, so swallowing the insert failure would leave the dashboards reading a fresh aggregate
+   as stale with no signal anywhere. R4 is amended to require this branch, and it is covered by
+   `route.test.ts` → *"a refresh row that cannot be stored after a good recompute is a 500, not a silent success"*.
+3. **`getPlatformActivitySeries` / `getOwnerActivitySeries` return `data_inconsistent` when the RPC does not return
+   exactly `period.days` rows.** An addition beyond R7, kept: it is what makes §3.1's "`0` only after a successful
+   aggregate read" observable, and it matches the SQL, whose `generate_series(p_from::timestamp, p_to::timestamp,
+   interval '1 day')` always emits `to − from + 1` rows.
+4. **`ACTIVITY_REFRESH_CADENCE` in `src/modules/analytics/activity/types.ts`** is R7's "same constant as R5", with a
+   test that cross-checks it against `vercel.json` once an entry exists. Kept.
+5. **`docs/env.md` not edited.** §7 required one line; `docs/env.md:17` already names
+   `/api/cron/listing-activity (Task 849)`, written by 851. Verified in review; §7's row is satisfied.
+
+### 16.2 What is still open
+
+- **R5 / AC5 — UNBLOCKED 2026-09-20. O78-1 is answered: "Hobby"** (owner, verbatim; Vercel Settings → Cron Jobs
+  screenshot shows the **Hobby** badge and *"Cron jobs on Hobby have a flexible time window of 1-hour"*). The
+  executor's refusal to guess was correct behaviour. **The re-entry makes exactly two edits, in one commit:**
+  1. `vercel.json` — add `{ "path": "/api/cron/listing-activity", "schedule": "30 0 * * *" }` to `crons`. This is
+     D78-4's only permitted fallback; `0 * * * *` would fail **every** deployment on Hobby.
+  2. `src/modules/analytics/activity/types.ts` — `ACTIVITY_REFRESH_CADENCE = 'daily'`, which moves `STALE_AFTER_MS`
+     to 26 h with no other change.
+
+  Nothing else may be touched. `read.test.ts`'s cadence test stops being a no-op at that point and asserts
+  `30 0 * * *` against the constant, so the two cannot drift. Then re-run §13.2 in full and re-report.
+
+  *Schedule sanity, recorded so the next session need not re-derive it:* 00:30 UTC plus Hobby's 1-hour window puts
+  every run at 01:30–03:30 Tirane in CET and CEST alike — always **after** local midnight, so each completed Tirane
+  day is still finalised while it is the run's `yesterday`. 26 h covers one daily run plus that window plus grace.
+- **AC6 — VERIFIED 2026-09-20 by owner-native evidence, complete.** `scripts/task-849-backfill.sql`'s own trailing
+  query returned all six rows (its `limit 6` is the whole set): ids 1–6, every one `status: success`,
+  `job_version: '849.1-backfill'`, ranges contiguous and 30 days each — `2026-03-25 → 2026-04-23`,
+  `04-24 → 05-23`, `05-24 → 06-22`, `06-23 → 07-22`, `07-23 → 08-21`, `08-22 → 09-20`. That is exactly the 180
+  Tirane days ending today, in six chunks, one refresh row per chunk: R6 and AC6 as written. `rows_written`
+  0 / 0 / 2 / 6 / 4 / 27 (39 total) — monotonically rising toward the present, which is what a real listing
+  population produces. All six share one `ran_at`, confirming the documented single-transaction DO block.
+  This also proves R1–R2 applied cleanly to the live database: both tables, `recompute_listing_activity` and the
+  service-role grants exist and executed, and the function's range/span guards did not reject a 30-day chunk.
+- **AC7(c) — VERIFIED 2026-09-20, owner-native.** The consolidated grid returned, against the live database:
+  `anon_select_daily`, `authenticated_select_daily`, `anon_select_refresh`, `authenticated_select_refresh`,
+  `authenticated_exec_recompute`, `anon_exec_platform_series`, `authenticated_exec_owner_series` all **false**;
+  `service_role_select_daily`, `rls_daily`, `rls_refresh` all **true**. R1's grant discipline and the no-policy RLS
+  lockdown hold in the real schema, for the tables **and** the functions. These facts are independent of how much
+  data the tables hold, so this criterion is closed outright.
+- **Read-function execution — VERIFIED 2026-09-20, owner-native (review-1 part (e), added because nothing had ever
+  executed R3).** `listing_activity_platform_series` and `listing_activity_owner_series` each returned **exactly 7**
+  rows for a 7-day range, so the SQL's `generate_series` row count equals `period.days` and `read.ts:59`'s
+  `data.length !== period.days` guard will not fail every block closed — the failure mode that would have silently
+  broken 855/856. `listing_activity_owner_by_listing` returned **4** rows for one real owner over 180 days, which
+  also exercises the `listings.user_id` join and the `having … > 0` filter against real backfilled data.
+- **AC2 — VERIFIED 2026-09-20, owner-native, two-armed.** The first attempt sampled yesterday, which has zero rows,
+  and compared `0 = 0`; that was recorded as a **vacuous pass, not evidence**, and re-run against the busiest real
+  day, **2026-09-10** (6 listing rows, 12 recorded views). *Passing arm:* two consecutive recomputes agreed on all
+  four aggregates (`row_count` 6 = 6, `recorded_views` 12 = 12, clicks 0 = 0, inquiries 0 = 0). *Failing arm:* the
+  day was deliberately corrupted — `+1000` views and `+1000` clicks on each of the 6 rows plus one phantom row
+  (777/777/777) for a listing with **no** events that day — and the total moved to **6789**, which is exactly
+  `12 + 6×1000 + 777`, so the plant demonstrably fired. A third recompute restored `row_count` 6, `recorded_views`
+  12, clicks 0, inquiries 0. That erasure of the phantom row is the load-bearing part: it proves the function's
+  `delete … where metric_date between p_from and p_to` clears **every** row for the range, not merely the rows its
+  own key set would rebuild. R2's "recompute day, never increment" holds against the live database.
+- **AC3 — VERIFIED on all three metrics, each on its own busiest day.** The first pass closed only
+  `recorded_views`; the other two were `0 = 0` on that day and were **not** recorded as closed. Re-targeted per
+  metric, the aggregate matched the raw tables exactly:
+  - `recorded_views` — **2026-09-10**, 12 = 12, **`per_listing_mismatches` = 0** across all 6 listings. Meaningful
+    in both directions: the recompute filters on half-open `timestamptz` bounds (`viewed_at >= v_start and
+    < v_end`) while the check filters on the direct `(viewed_at at time zone 'Europe/Tirane')::date` cast — two
+    different expressions agreeing on 12 events is real evidence that §3's UTC-bounds arithmetic is correct.
+  - `whatsapp_clicks` — **2026-09-11**, 2 = 2.
+  - `listing_inquiry_submissions` — **2026-07-30**, 1 = 1.
+
+  Table populations at the time of measurement: `listing_views` 53, `listing_contact_events` 4,
+  `listing_inquiries` 1. Small, but no longer vacuous: every metric is now compared against a non-zero row set.
+- **The `is_owner_click = false` exclusion — VERIFIED 2026-09-20, owner-native, three arms plus a positive
+  control.** It was the last unexercised predicate in R2: every real sample contained **zero** owner clicks, so
+  `agg = raw` would have held whether or not the filter existed, and no repo test can reach it because the vitest
+  suites mock the database away. Closed with a net-zero probe on 2026-09-11 (baseline 2): an existing event cloned
+  as `is_owner_click = true` left the count at **2** — the exclusion holds; **the same row** flipped to `false`
+  raised it to **3** — the positive control, which is what makes the first arm meaningful, since it proves the
+  silence came from the flag and not from the row being uncountable for an unrelated reason; deleting it returned
+  the count to **2** and `listing_contact_events` to its original **4** rows. The probe ran as one transaction and
+  left no residue. D78-1's rule that an agent's own WhatsApp taps must not inflate their statistics is enforced by
+  the SQL, and now measured.
+
+**With that, every acceptance criterion except AC5 is verified.** R1–R4 and R6–R9 are complete and evidenced;
+AC1/AC2/AC3/AC4/AC6/AC7 are closed, the last four on owner-native output from the live database. **AC5 is the only
+thing between this task and approval**, and it is the two-edit re-entry above.
+- **The first scheduled invocation's `200` log line**, after O78-1 is answered and the entry deployed.
+
+### 16.3 Re-entry mode
+
+`remediation`. Preserve every artifact under `docs/sessions/evidence/task849/`; do not re-run the AC4 plant or
+regenerate `scripts/schema-drift-check.sql` unless `src/types/database.ts` changes again. The only source edits the
+re-entry may make are the two named in §16.2's first bullet.

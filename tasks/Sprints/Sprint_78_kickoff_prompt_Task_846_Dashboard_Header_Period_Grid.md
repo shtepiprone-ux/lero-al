@@ -1,6 +1,6 @@
 # Task 846 — `MantineDashboardHeader`, `MantineDashboardPeriodControl`, `MantineDashboardGrid`, and `src/lib/dashboard/period.ts` (Tirane completed periods)
 
-Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: ⏸️ HELD — implementation complete and evidenced; no executor work is owed on 846. Owner decision 2026-09-20 (Option B, §16.1) holds final approval behind **Task 861**; re-review unchanged once 861 lands.**
+Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: ✅ `APPROVED WITH NOTES` 2026-09-20 (review 2) — CLOSED AND ARCHIVED.** Re-reviewed unchanged after **Task 861** landed, per §16.1's Option B: only AC3 was re-verified (now keyboard-only end to end in real Chromium) and all six production hashes matched the review-1 witnesses byte-for-byte. See §17. Ledger row → `docs/backlog-archive.md`. **Wave A is complete; Wave B (847/848) is open.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
@@ -358,3 +358,70 @@ return focus — is 861's acceptance criterion, not a note.
   09:24 on 2026-09-20 while 846's gates ran. They are `EXCLUDED AS UNRELATED` from 846's handoff. Separately: commit
   `78c322757` imports that package from `src/app/layout.tsx` while its manifest entry is still uncommitted — the
   owner should commit both together, or CI will fail on a missing dependency. Not 846's defect.
+
+## 17. Review 2 — `APPROVED WITH NOTES` 2026-09-20 (Opus) — CLOSED
+
+**Re-reviewed unchanged, exactly as §16.1's binding consequence 2 requires: only AC3 was re-opened; every other
+criterion stays closed on the record in §16 and was not re-litigated.** No executor session was ever run on 846, and
+none was owed.
+
+### 17.1 The implementation is byte-identical to what review 1 inspected
+
+Measured this session with `git hash-object`, against the witnesses in the session log's "Final `git hash-object`"
+line — not inferred from a clean `git status`:
+
+| File | Review 1 witness | Now | |
+|---|---|---|---|
+| `src/lib/dashboard/period.ts` | `c28caa806` | `c28caa806` | ✅ |
+| `src/lib/formatters.ts` | `294d8ea89` | `294d8ea89` | ✅ |
+| `src/design-system/mantine/theme.ts` | `d25751a3f` | `d25751a3f` | ✅ |
+| `…/patterns/MantineDashboardHeader.tsx` | `edb186b09` | `edb186b09` | ✅ |
+| `…/patterns/MantineDashboardPeriodControl.tsx` | `f45039332` | `f45039332` | ✅ |
+| `…/patterns/MantineDashboardGrid.tsx` | `0cfbff099` | `0cfbff099` | ✅ |
+
+The **only** post-review-1 edit to any 846 file is the two ratified D1 Story selector lines —
+`src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx:71,99`, `input[readonly]` →
+`button[aria-haspopup="dialog"]`, file hash `afeb0f89`. Both lines were read in place this session: two selectors,
+no assertion touched. The owner's ratification is quoted verbatim at Task 861 §16.9, and R9 there is narrowed to
+exactly those two lines.
+
+### 17.2 AC3 — now met, keyboard-only and end to end
+
+`docs/sessions/evidence/task861/playwright-keyboard-846-CustomRangeTooLong.txt`, real Chromium, no pointer event in
+the flow: Tab reaches the segmented control → Custom reveals the trigger, **now a `<button>`** → Tab reaches it →
+**`Enter` opens the calendar** → month navigation and two day cells by keyboard (2026-03-01 → 2026-07-01, 122 days)
+→ Tab to `Apply` → `role="alert"` reads *"The period can be at most 90 days."* → **surface closes and focus returns
+to the trigger** → `onChange` **not called**, 0 action events for the whole flow.
+
+The zero is not a dead instrument: the same run's **positive control** drives a valid keyboard range and records
+`["onChange"]`. That counter-check is what makes AC3's negative assertion evidence rather than an absence.
+
+`25-keyboard-after-popover-change.txt` re-confirms the trigger opens on `Enter` and returns focus on `Escape` at
+1280 **and** 390 after 861's revision-1 popover change, so the transcript above still describes the shipped code
+(861 §17.3 item 8 records the source-level reason: for a native-button trigger the revision is a no-op).
+
+**AC3 `VERIFIED`.** R6's original wording — "It is keyboard-operable end to end" — now holds as written. It was
+never narrowed; the owner rejected that route on 2026-09-20 precisely so it would not be.
+
+### 17.3 Build freshness
+
+846's own `final-build.txt` predates 861's changes, but Task 861's `final-r1/17-build.txt` (`EXIT_CODE=0`) compiled
+the **combined** worktree — 846's patterns and `period.ts` were present and untracked at that build — so the
+non-Q0 build gate is current for the code being committed. Verified by mtime: every source file predates the
+12:09–12:11 build window.
+
+### 17.4 Notes carried forward from §16.2 — unchanged, no action
+
+1. **Accepted deviations stand:** the four named `Grid` exports instead of `Grid.TopRow` statics (Server-Component
+   reachability), `Flex` instead of `Group`/`Stack` (responsive props are typed on `Flex`), and `TopRow`'s
+   `md: min(n, 2)` clamp. All are better than this kickoff's text and are evidenced. Nothing to revert.
+2. **Consumer contract for 853/854 — put this in their kickoffs.** Clicking a preset while `value.kind === 'custom'`
+   calls `onChange` but leaves the segment on Custom until the consumer updates `value`. The pattern is controlled
+   by design; the consumer must write the period back to the URL.
+3. `package.json` / `package-lock.json` were `EXCLUDED AS UNRELATED` at review 1; the owner has since committed them
+   (`035c26712`). No longer outstanding.
+
+### 17.5 Closure
+
+`AC1–AC7 CLOSED. AC3 VERIFIED this review; AC6 (owner visual matrix) accepted 2026-09-20 and re-confirmed by Task 861's tuple 4; the rest carried from §16 unchanged.`
+`GR-5 STATE SYNCED — 846 = APPROVED WITH NOTES / archived in: this kickoff; Sprint_78 plan Tasks table + Wave A note + landed count; docs/backlog.md; docs/backlog-archive.md.`

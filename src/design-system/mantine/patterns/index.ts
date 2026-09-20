@@ -158,4 +158,23 @@ export type { MantineDashboardChartLegendProps, DashboardChartLegendItem } from 
 export { MantineDashboardChartStateFrame } from './MantineDashboardChartStateFrame'
 export type { MantineDashboardChartStateFrameProps } from './MantineDashboardChartStateFrame'
 
+export { MantineDashboardHeader } from './MantineDashboardHeader'
+export type { MantineDashboardHeaderProps } from './MantineDashboardHeader'
+
+export { MantineDashboardPeriodControl } from './MantineDashboardPeriodControl'
+export type { MantineDashboardPeriodControlProps, DashboardPeriodControlLabels, DashboardPeriodError } from './MantineDashboardPeriodControl'
+
+export {
+  MantineDashboardGrid,
+  MantineDashboardGridTopRow,
+  MantineDashboardGridSplit,
+  MantineDashboardGridFull,
+} from './MantineDashboardGrid'
+export type {
+  MantineDashboardGridProps,
+  MantineDashboardGridTopRowProps,
+  MantineDashboardGridSplitProps,
+  MantineDashboardGridFullProps,
+} from './MantineDashboardGrid'
+
 

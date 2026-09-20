@@ -1,0 +1,23 @@
+
+> lero-al@0.1.0 test
+> vitest run src/lib/dashboard/__tests__/period.test.ts src/lib/__tests__/formatDateTimeInZone.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/dashboard/__tests__/period.test.ts (0 test)
+ ❯ src/lib/__tests__/formatDateTimeInZone.test.ts (7 tests | 7 failed) 6ms
+     × UTC zone reproduces formatDateTime exactly for every locale 3ms
+     × shifts to the wall clock of Europe/Tirane (summer +2, winter +1) 0ms
+     × uses the 12h layout with the locale day-period for en and sq 0ms
+     × renders midnight as 00:00 in 24h locales and 12:00 AM in 12h locales (never 24:00) 0ms
+     × falls back to the en layout for an unknown locale, like formatDateTime 0ms
+     × returns the em dash for null, undefined, empty and invalid input 0ms
+     × returns the em dash for an invalid time zone instead of throwing 0ms
+
+ Test Files  2 failed (2)
+      Tests  7 failed (7)
+   Start at  08:45:11
+   Duration  14.79s (transform 91ms, setup 3.05s, import 121ms, tests 6ms, environment 25.19s)
+
+EXIT_CODE=1

@@ -1,0 +1,335 @@
+{
+  "ac2_default_stale": {
+    "badgeCount": 1,
+    "badgeText": "Data may be outdated",
+    "badgeHasSvg": true,
+    "h1Text": "Analytics",
+    "h1FontSize": "24px",
+    "h1LineHeight": "31.92px",
+    "overflowX": false
+  },
+  "ac2_fresh": {
+    "badgeCount": 0
+  },
+  "header_uk_390": {
+    "innerWidth": 390,
+    "scrollWidth": 390,
+    "overflowX": false,
+    "segLeft": 16,
+    "segRight": 374,
+    "segWidth": 358,
+    "titleLeft": 16,
+    "rootWidth": 390,
+    "stacked": true
+  },
+  "header_uk_320": {
+    "innerWidth": 320,
+    "scrollWidth": 320,
+    "overflowX": false,
+    "segLeft": 16,
+    "segRight": 304,
+    "segWidth": 288,
+    "titleLeft": 16,
+    "rootWidth": 320,
+    "stacked": true
+  },
+  "grid_1920_en": {
+    "innerWidth": 1920,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "330px 330px 330px 330px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 4,
+        "rowWidth": 1392,
+        "cardsPlusGaps": 1392
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "448px 448px 448px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 3,
+        "rowWidth": 1392,
+        "cardsPlusGaps": 1392
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "24px",
+      "width": 1440
+    },
+    "splitColumnWidths": [
+      330,
+      330,
+      330,
+      330
+    ],
+    "overflowX": false
+  },
+  "grid_1440_en": {
+    "innerWidth": 1440,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "330px 330px 330px 330px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 4,
+        "rowWidth": 1392,
+        "cardsPlusGaps": 1392
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "448px 448px 448px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 3,
+        "rowWidth": 1392,
+        "cardsPlusGaps": 1392
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "24px",
+      "width": 1440
+    },
+    "splitColumnWidths": [
+      330,
+      330,
+      330,
+      330
+    ],
+    "overflowX": false
+  },
+  "grid_1280_en": {
+    "innerWidth": 1280,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "290px 290px 290px 290px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 4,
+        "rowWidth": 1232,
+        "cardsPlusGaps": 1232
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "394.656px 394.672px 394.656px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 3,
+        "rowWidth": 1232,
+        "cardsPlusGaps": 1231.98
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "24px",
+      "width": 1280
+    },
+    "splitColumnWidths": [
+      290,
+      290,
+      290,
+      290
+    ],
+    "overflowX": false
+  },
+  "grid_1024_sq": {
+    "innerWidth": 1024,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "226px 226px 226px 226px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 4,
+        "rowWidth": 976,
+        "cardsPlusGaps": 976
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "309.328px 309.328px 309.344px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 3,
+        "rowWidth": 976,
+        "cardsPlusGaps": 976
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "24px",
+      "width": 1024
+    },
+    "splitColumnWidths": [
+      226,
+      226,
+      226,
+      226
+    ],
+    "overflowX": false
+  },
+  "grid_800_sq": {
+    "innerWidth": 800,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "364px 364px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 2,
+        "rowWidth": 752,
+        "cardsPlusGaps": 752
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "364px 364px",
+        "columnGap": "24px",
+        "cardsInFirstRow": 2,
+        "rowWidth": 752,
+        "cardsPlusGaps": 752
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "24px",
+      "width": 800
+    },
+    "splitColumnWidths": [
+      364,
+      364,
+      364,
+      364
+    ],
+    "overflowX": false
+  },
+  "grid_700_sq": {
+    "innerWidth": 700,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "668px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 668,
+        "cardsPlusGaps": 668
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "668px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 668,
+        "cardsPlusGaps": 668
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "16px",
+      "width": 700
+    },
+    "splitColumnWidths": [
+      668,
+      668,
+      668,
+      668
+    ],
+    "overflowX": false
+  },
+  "grid_480_uk": {
+    "innerWidth": 480,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "448px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 448,
+        "cardsPlusGaps": 448
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "448px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 448,
+        "cardsPlusGaps": 448
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "16px",
+      "width": 480
+    },
+    "splitColumnWidths": [
+      448,
+      448,
+      448,
+      448
+    ],
+    "overflowX": false
+  },
+  "grid_320_uk": {
+    "innerWidth": 320,
+    "rows": [
+      {
+        "cards": 4,
+        "gridTemplateColumns": "288px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 288,
+        "cardsPlusGaps": 288
+      },
+      {
+        "cards": 3,
+        "gridTemplateColumns": "288px",
+        "columnGap": "16px",
+        "cardsInFirstRow": 1,
+        "rowWidth": 288,
+        "cardsPlusGaps": 288
+      }
+    ],
+    "container": {
+      "maxWidth": "1440px",
+      "paddingLeft": "16px",
+      "width": 320
+    },
+    "splitColumnWidths": [
+      288,
+      288,
+      288,
+      288
+    ],
+    "overflowX": false
+  },
+  "ac3_too_long": {
+    "alertCount": 1,
+    "alertText": [
+      "The period can be at most 90 days."
+    ],
+    "alertOuterHTML": [
+      "<p class=\"mantine-focus-auto m_b6d8b162 mantine-Text-root\" data-size=\"xs\" role=\"alert\" style=\"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-red-7);\">The period can be at most 90 days.</p>"
+    ],
+    "triggerValue": "05.01.2026 — 05.05.2026",
+    "storybookErrorVisible": false
+  },
+  "ac3_pageErrors": [],
+  "ac3_too_long_it": {
+    "alertText": [
+      "Il periodo può durare al massimo 90 giorni."
+    ],
+    "storybookErrorVisible": false
+  },
+  "ac3_too_long_uk": {
+    "alertText": [
+      "Період може становити не більше 90 днів."
+    ],
+    "storybookErrorVisible": false
+  },
+  "custom_open_it": {
+    "sep17Disabled": false,
+    "sep18Disabled": true,
+    "storybookErrorVisible": false
+  },
+  "period_default_uk_320": {
+    "segLeft": 16,
+    "segRight": 304,
+    "innerWidth": 320,
+    "overflowX": false
+  }
+}

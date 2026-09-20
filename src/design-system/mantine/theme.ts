@@ -124,7 +124,9 @@ declare module '@mantine/core' {
       | 'galleryNavDemoWidth'  // 480px — the same two Stories' demo backdrop width
       | 'prose'           // 576px — homepage hero subtitle max-width
       | 'ctaSection'       // 672px — homepage CTA box max-width
-      | 'content',        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
+      | 'content'        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
+      | 'dashboardContentMaxWidth', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1,
+                                    // "max content width 1440"). `MantineDashboardGrid` root `maw`.
       string
     >
     // Task 784 Revision 3 (D69-18) — a single shared micro-tracking role for uppercase filter/
@@ -671,6 +673,7 @@ export const theme = createTheme({
       prose: '36rem',            // 576px
       ctaSection: '42rem',       // 672px
       content: '48rem',          // 768px
+      dashboardContentMaxWidth: '90rem', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1)
     },
     // Task 784 Revision 3 (D69-18) — see the `MantineThemeOther` augmentation above for full
     // per-role provenance. Every value below is an exact, one-time migration of a cited pre-D69-16

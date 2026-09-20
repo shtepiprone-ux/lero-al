@@ -155,6 +155,49 @@ export function formatDateTime(dateStr: string | null | undefined, locale: strin
   }
 }
 
+/**
+ * Zone-aware variant of `formatDateTime` (Task 846 R4): the SAME per-locale layout
+ * (`DATE_FORMAT` → `composeDateParts`/`composeTimeParts`), but for the wall clock of `timeZone`
+ * (an IANA id, e.g. `Europe/Tirane`) instead of UTC. Only the numeric wall-clock parts come from
+ * `Intl.DateTimeFormat('en-US', …).formatToParts` — the fixed `en-US` locale is used purely as a
+ * zone-conversion engine (its ICU data is present in every runtime), never for layout, so `sq`
+ * still renders through the manual composition described at `DATE_FORMAT`.
+ *
+ * SERVER-ONLY USE: call this on the server and pass the resulting string down (Task 844 R5,
+ * `RelativeTime absoluteLabel`). Zone conversion depends on the runtime's tz database, so a
+ * client-side call is not guaranteed to match the server byte for byte.
+ *
+ * Returns '—' on null, undefined, invalid input, or an invalid time zone (never throws).
+ */
+export function formatDateTimeInZone(
+  dateStr: string | null | undefined,
+  locale: string,
+  timeZone: string,
+): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hourCycle: 'h23',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }).formatToParts(d)
+    const part = (type: Intl.DateTimeFormatPartTypes): number =>
+      Number(parts.find((p) => p.type === type)?.value)
+    const datePart = composeDateParts(part('day'), part('month'), part('year'), locale)
+    // `% 24`: some engines report midnight as "24" even under `h23`.
+    const timePart = composeTimeParts(part('hour') % 24, part('minute'), locale)
+    return `${datePart}, ${timePart}`
+  } catch {
+    return '—'
+  }
+}
+
 /** `common.calendar_*` data (Task 562) reused here — do not duplicate; keyed by locale. */
 const CALENDAR_MESSAGES: Record<string, {
   common: {

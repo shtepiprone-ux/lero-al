@@ -1,0 +1,30 @@
+== TZ=UTC
+
+> lero-al@0.1.0 test
+> vitest run src/lib/dashboard/__tests__/period.test.ts src/lib/__tests__/formatDateTimeInZone.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  43 passed (43)
+   Start at  06:46:26
+   Duration  985ms (transform 151ms, setup 167ms, import 172ms, tests 29ms, environment 1.34s)
+
+EXIT_CODE=0
+== TZ=America/Los_Angeles
+
+> lero-al@0.1.0 test
+> vitest run src/lib/dashboard/__tests__/period.test.ts src/lib/__tests__/formatDateTimeInZone.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  43 passed (43)
+   Start at  23:46:28
+   Duration  975ms (transform 165ms, setup 166ms, import 187ms, tests 29ms, environment 1.31s)
+
+EXIT_CODE=0

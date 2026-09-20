@@ -1,0 +1,57 @@
+
+> lero-al@0.1.0 test
+> vitest run src/lib/dashboard/__tests__/period.test.ts src/lib/__tests__/formatDateTimeInZone.test.ts --reporter=verbose
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > UTC zone reproduces formatDateTime exactly for every locale 14ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > shifts to the wall clock of Europe/Tirane (summer +2, winter +1) 1ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > uses the 12h layout with the locale day-period for en and sq 0ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > renders midnight as 00:00 in 24h locales and 12:00 AM in 12h locales (never 24:00) 0ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > falls back to the en layout for an unknown locale, like formatDateTime 0ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > returns the em dash for null, undefined, empty and invalid input 0ms
+ ✓ src/lib/__tests__/formatDateTimeInZone.test.ts > formatDateTimeInZone > returns the em dash for an invalid time zone instead of throwing 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > TIRANE_TZ > is the IANA id Intl accepts (Europe/Tirana is rejected by Intl) 2ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: normal day (2026-09-18 10:00 Tirane) > cuts the local day in Tirane time 1ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: normal day (2026-09-18 10:00 Tirane) > accepts an ISO string instant 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: normal day (2026-09-18 10:00 Tirane) > summer day is UTC+2, winter day is UTC+1, both 24h 1ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: normal day (2026-09-18 10:00 Tirane) > day bounds are half-open: consecutive days share the boundary 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST start day (2026-03-29, 23h local day) > yesterday is 2026-03-28 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST start day (2026-03-29, 23h local day) > the local day is 23 hours long with DST-correct UTC bounds 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST start day (2026-03-29, 23h local day) > the 7d period ending yesterday is 03-22..03-28 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST end day (2026-10-25, 25h local day) > yesterday is 2026-10-24 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST end day (2026-10-25, 25h local day) > the local day is 25 hours long with DST-correct UTC bounds 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: DST end day (2026-10-25, 25h local day) > a period spanning the change has exact UTC bounds 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > case: instant already the next local day in Tirane (2026-09-18T22:30Z) > today in Tirane is the 19th, so yesterday is 2026-09-18 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > resolvePeriod / previousPeriod / listDates > 7d and 30d end yesterday and contain exactly 7/30 dates 1ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > resolvePeriod / previousPeriod / listDates > positive flow: 30d at 2026-09-18 10:00 Tirane, previous is 2026-07-20..2026-08-18 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > resolvePeriod / previousPeriod / listDates > previous period is adjacent and equal in length 1ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > resolvePeriod / previousPeriod / listDates > custom selection resolves to its own range 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > resolvePeriod / previousPeriod / listDates > crosses a year boundary 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > accepts a range ending yesterday 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > accepts exactly 90 days and rejects 91 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > rejects a range ending today (incomplete day) and in the future 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > uses the Tirane day, not the UTC day 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > rejects start after end 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > rejects invalid dates 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > validateCustomRange > accepts a single-day range 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > parses the presets 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > parses a valid custom range 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > falls back to 30d for missing, garbage or partial input and never throws 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > falls back to 30d for a custom range ending today, over 90 days, or reversed 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > accepts a Next.js style record, including array values 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > parsePeriodParams / serializePeriod > serializePeriod is the inverse of parsePeriodParams 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > compareToPrevious > returns no_base when the previous value is 0 (never Infinity, NaN or +100%) 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > compareToPrevious > returns delta and an integer percent otherwise 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > compareToPrevious > never returns a non-finite number 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > tiraneAbsoluteLabel > renders the Tirane wall clock in the per-locale layout 1ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > tiraneAbsoluteLabel > crosses the local midnight 0ms
+ ✓ src/lib/dashboard/__tests__/period.test.ts > tiraneAbsoluteLabel > returns the em dash for invalid input 0ms
+
+ Test Files  2 passed (2)
+      Tests  43 passed (43)
+   Start at  08:46:18
+   Duration  987ms (transform 151ms, setup 168ms, import 176ms, tests 29ms, environment 1.33s)
+
+EXIT_CODE=0

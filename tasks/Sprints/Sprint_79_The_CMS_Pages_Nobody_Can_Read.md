@@ -1,0 +1,101 @@
+# Sprint 79 — the CMS pages the site publishes, and nobody outside the admin can read
+
+**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (867) · **Reserved:** 1 (868)
+
+> **These counts drift.** Re-derive them from the Tasks table below, never from this line.
+
+> **Opened by owner report, 2026-09-21** (production observation, quoted): *"Я перевірив продакшн:
+> https://lero.al/en/privacy-policy реально повертає 404"* … *"Footer: це підтверджений дефект. Він має жорсткий
+> список лише статичних маршрутів і не визнає опубліковані CMS-slug-и. Через /about, /privacy-policy,
+> /terms-of-service кнопка Save зупиняється ще до запиту на сервер. Тому разом із ними не зберігаються й соціальні
+> посилання."*
+>
+> The owner's acceptance sentence, verbatim, is this sprint's exit criterion: *"Адмін створив і опублікував
+> privacy-policy з текстом → https://lero.al/en/privacy-policy відкривається в інкогніто → Footer з /privacy-policy
+> зберігається → соціальні посилання з Footer відображаються на сайті."*
+
+## The defect, and why it is one sprint and not four
+
+Two tasks, two days apart, left the CMS half-connected, and nothing since has read the seam:
+
+- **2026-05-28 — Task 275** (grant-discipline audit, owner-applied the same day) set `public.pages` to
+  `service_role: ALL · anon: none · authenticated: none`, with the rationale *"No public route reads pages directly
+  from DB (admin-managed CMS content)."* — `tasks/Sprints/Sprint_16_task_275_grant_audit.md:52`.
+- **2026-05-30 — Task 326A** shipped exactly such a route: `src/app/[locale]/[slug]/page.tsx` reads `pages` through
+  the **anon/session** client (`createClient()` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`). Its planning session had already
+  written the instruction — *"Verify existing `pages` RLS posture"*
+  (`docs/sessions/2026-05-30-task-326-admin-pages-footer-flow-planning.md:196`) — and it was never carried out.
+- The route discards the Supabase error object (`const { data: page } = …`, `[slug]/page.tsx:39`), so a missing-GRANT
+  `42501` is indistinguishable from "no such page": both fall into `notFound()`. The 404 is silent by construction.
+
+The Footer half is the same seam from the other side. `src/lib/footer-route-allowlist.ts:1-3` carries the comment
+*"pages table slugs are excluded: the table exists but no public [locale]/[slug] renderer exists yet"* — written
+before 326A, never revisited after it. Its five-entry static list is consulted twice (`AdminFooterManager.tsx:265`
+before the request is sent, `footer.ts:108` on the server), and because `upsertFooterContent` validates **one
+locale's whole payload**, a single rejected legal link also blocks that locale's social links — which is why
+`Footer.tsx:54-57`'s hardcoded `https://facebook.com` / `https://instagram.com` fallback is what the live site
+renders. The same file's `infoLinks` fallback (`:47-52`) ships `/about`, `/privacy-policy` and `/terms-of-service`:
+**the app's own defaults are links its own admin validator refuses to save.**
+
+One sprint, because fixing either half alone leaves the owner's acceptance sentence false.
+
+## Why a new sprint — goal fit checked against every open sprint
+
+| Sprint | Its goal | Fits? |
+|---|---|---|
+| **46** | ListingCard de-Tailwind + overlay exit | No — one card family. |
+| **55 · 56 · 57** | ARIA semantics / raw enum leaks / deleting unused code | No — detector and removal families. |
+| **61 · 62** | Projection layer no gate reads / Tailwind runtime tokens | No — gate families. |
+| **69** | `/listings` finishes the Mantine migration | No — a migration goal on another route. |
+| **70** | The site chrome leaves Tailwind, and the mobile bar goes away | **Closest on the Footer half, and still no.** 70's goal sentence is a **de-Tailwind migration** of header/footer chrome; 867 changes no markup at all and touches no Footer component. |
+| **71 · 72 · 74** | Listing-detail de-Tailwind / similar listings / one card width | No — listing surfaces. |
+| **73** | A sold listing is reachable by link but never listed | **Closest in kind, and still no.** 73 is public reachability too, but its subject is listing **status** visibility and it is explicitly scope-locked to `PUBLIC_VISIBLE_STATUSES` and the listings RLS layer (D73-1…D73-3). `pages` is a different table, a different actor gap (a missing GRANT, not a predicate) and a different route. |
+| **77** | The full test suite is red, and no gate runs it | No — test-suite health; the owner widened it for six named reserved numbers only. |
+| **78** | Admin and agent dashboards rebuilt on canonical Mantine | No — a dashboard rebuild from spec v3.3. **868 is routed there, not here**, because it is an admin-surface migration. |
+
+## Goal
+
+1. An anonymous visitor can read a **published** CMS page at `/{locale}/{slug}` in all four locales, and **cannot**
+   read a draft one. The guarantee lives in a DB policy, not in application code alone.
+2. The Footer admin can save an internal link to any published CMS page, and saving legal links stops silently
+   discarding that locale's social links.
+3. `is_published = true` can no longer be written for a page with an empty Albanian body.
+
+## Tasks
+
+> **This table is the single state source for the sprint.** Read state here, not from a kickoff header.
+
+| # | Title | Priority | QA | Depends on | State |
+|---|---|---|---|---|---|
+| **867** | The `pages` public read path (GRANT + `pages_select_public` policy, owner-applied SQL), Footer link validation against published slugs, and the empty-body publish guard | **P1** | **Q4** | — | 📝 `KICKOFF FILED` 2026-09-21 → [`…Task_867…`](Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md) |
+| **868** | `/admin/pages` tells the admin *why* a publish was refused — the specific `sq_body_required` message, which requires the GR-1 census and Mantine migration of `/admin/pages` (6 nodes; `AdminPagesManager` 367 ln / 58 `className` / 6 shadcn primitives) | P3 | Q3 | 867 | 🔒 **RESERVED, routed to Sprint 78** (admin Mantine) — full text → `docs/backlog-reserved.md` |
+
+## Owner actions this sprint needs
+
+| ID | Action |
+|---|---|
+| **O79-1** | Apply `scripts/task-867-pages-public-select.sql` in the Supabase SQL editor and return its output. |
+| **O79-2** | Run `scripts/task-867-verify.sql` and return its grids (grant, policy, positive arm, negative arm). |
+| **O79-3** | Create and then delete a throwaway **draft** page with slug `rls-probe-867` in `/admin/pages`, so the negative arm has a subject — required only if `scripts/task-867-verify.sql` reports zero draft rows. |
+| **O79-4** | After the approved review is deployed: open `https://lero.al/en/privacy-policy` in a private window, save a Footer legal link to `/privacy-policy`, and confirm the saved social links render. |
+
+## Explicitly not in this sprint
+
+- **Migrating `src/app/[locale]/[slug]/page.tsx` to Mantine.** Measured 2026-09-21:
+  `node scripts/check-surface-census.mjs --surface "src\app\[locale]\[slug]\page.tsx"` → 1 node, `tier1`,
+  `manifest:no story:no className:3`, already baselined in `scripts/surface-census-baseline.json`. 867 does not
+  change that file, so GR-1 is not triggered and the migration debt stays where it is recorded.
+- **Referential protection when a linked page is later unpublished or deleted** (Task 326B's original plan: block
+  delete/unpublish/slug-change while the Footer references the slug). 867 validates at save time only. Unnumbered
+  follow-up candidate; it becomes a task when the owner schedules it.
+- **Filling the empty bodies of the existing legal pages.** That is content, not code — the 2026-05-30 archive row
+  for 326A already records *"sq.body empty=pre-existing; pages need body fill"*.
+
+## Exit criteria
+
+1. `scripts/task-867-verify.sql`, run by the owner after O79-1, shows `anon` holding `select` on `public.pages`, a
+   published row readable as `anon`, and a draft row **not** readable as `anon`.
+2. `https://lero.al/en/privacy-policy` returns 200 in a private window (O79-4).
+3. A Footer legal link to a published CMS slug saves, and that locale's social links persist and render.
+4. `createPage` / `updatePage` refuse `is_published: true` with an empty `content.sq.body`, proven by unit tests.
+5. `npm run build` exits 0 and the full §13.2 gate block of Task 867 is green.

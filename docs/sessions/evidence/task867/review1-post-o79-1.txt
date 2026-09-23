@@ -39,3 +39,11 @@ O79-3: owner created draft "Test", slug rls-probe-867.
 (d1) anon_draft_readable = 0 · (d2) service_role_draft_count = 1   -> negative arm not vacuous, PASS
 Reviewer probe with the draft present (EXIT=0): Q1 anon unfiltered 3 rows, no error · Q2 anon published 3 · Q3 service_role 4
     -> the draft is hidden from anon via the real Data API as well. Positive arm (c): anon reads 3 published rows.
+
+--- 2026-09-23, after the owner applied kickoff §16.7's two statements ("Success. No rows returned") ---
+(a) anon SELECT · authenticated SELECT (nothing else)                                   -> AC3(a) PASS
+(b) "Admins can manage pages" ALL {public} (admin/moderator via auth.uid())
+    "pages_select_public"     SELECT {anon,authenticated} (is_published = true)        -> AC3(b) PASS, duplicate gone
+Reviewer re-check (win32, EXIT=0): probe Q1 anon 3 rows / Q2 3 / Q3 service 3 (probe draft deleted by the owner);
+prod privacy-policy en/sq/uk/it = 200 · /en/no-such-page-867 = 404 · /en/rls-probe-867 = 404.
+AC3 VERIFIED on the live database. Implementation (F1/F2/F3 + script lines) still owed per kickoff §16.

@@ -509,3 +509,7 @@ backlog row to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`. Scope 
 - **The owner already applied both statements to the live database on review 1's instruction.** The executor only
   brings the script in line with that database state: add exactly those two lines, verbatim, and nothing else. The
   owner's re-run of grids (a) and (b) closes AC3.
+- **Done 2026-09-23.** After the revoke, grid (a) returned only `anon SELECT` and `authenticated SELECT`. Grid (b)
+  returned only `Admins can manage pages` and `pages_select_public`. **AC3 is VERIFIED on all four grids**, and
+  production `privacy-policy` returns 200 in all four locales (evidence: `review1-post-o79-1.txt`). **The executor
+  must not run anything against the database.** R2's remaining work is the two script lines only.

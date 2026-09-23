@@ -45,12 +45,23 @@ Bundles: **DB / Server Action / RLS** + **Regression / Critical Flow Coverage** 
 | F7 | The admin sees the same pages because `/admin/pages` reads them with the **service role**, which bypasses both GRANT and RLS. | `src/app/admin/pages/page.tsx:12-16` (`createAdminClient()`); `src/modules/admin/actions/index.ts:233,255,261,270` |
 | F8 | `privacy-policy`, `about` and `terms-of-service` are **not** reserved slugs, so the route's reserved-slug guard is not the cause. | `src/lib/reserved-slugs.ts:6-13` |
 | F9 | `/[locale]/[slug]` **is** in the production build output and is server-rendered on demand: `├ ƒ /[locale]/[slug]   377 B   185 kB`. The route is not missing from the deployment. | `docs/sessions/evidence/task791/build-rev2.log:27` |
+| **F21** | **The inference below is now MEASURED, by the owner, on the live project, 2026-09-21.** An anonymous PostgREST read of `pages` returns **HTTP 401 Unauthorized**; the identical request through the service role returns rows. This is the missing-GRANT signature of F6 observed directly, and it is what `[slug]/page.tsx:39` discards. | Owner-run block, 2026-09-21: `ANON -> The remote server returned an error: (401) Unauthorized.` / `SVC  -> 1 rows` |
+| **F22** | **The live `pages` table holds exactly one row.** Whatever that row is, `/about` and `/terms-of-service` cannot both exist, and `privacy-policy` may not exist at all. Its slug, `is_published` and per-locale content lengths are **UNKNOWN** and are I0's first measurement (§10.1). | Same block: `SVC  -> 1 rows` |
 
-**INFERENCE (high confidence, must be re-measured at I0, not assumed):** F1+F2+F3+F5+F6 imply every anonymous request
-for a published CMS page returns 404 today. The orchestrator could **not** read the live database in its session
-(production reads are blocked in that environment), so the live grant state is an inference from the applied audit,
-not a measurement. **I0 measures it. If the measurement contradicts F1/F2 — i.e. `anon` already holds `select` —
-stop, report `TASK SPECIFICATION CONTRADICTION`, and attach the probe output; do not apply R2 blind.**
+**MEASURED, not inferred (2026-09-21).** F1+F2+F3+F5+F6 predicted that every anonymous request for a published CMS
+page returns 404, and F21 confirms the predicted mechanism on the live project: `anon` is refused at the Data API,
+the route swallows the refusal, `notFound()` runs. **Branch A of the I0 probe is therefore already selected: R2
+applies.** I0 re-runs the probe as **freshness validation** of F21/F22, not as a fresh investigation — the owner may
+have applied something between this kickoff and execution. The stop condition is unchanged and still binding: if the
+probe now shows `anon` **already** holding `select`, stop and report `TASK SPECIFICATION CONTRADICTION` instead of
+applying R2.
+
+**MISSING EVIDENCE — the production HTTP arm did not run.** The owner's third command printed `PROD ->` with no
+status: the exception carried no `Response` object, which on Windows PowerShell 5.1 is the TLS-negotiation or
+connection-failure shape, not a 404. Per `docs/orchestrator-procedures.md` → "Windows-native execution gate" this is
+an **environment screen, not a repository finding**: it neither confirms nor weakens the owner's original report that
+the page 404s. The corrected command is in §13.3; the executor must not cite the blank result as evidence in either
+direction.
 
 ### 3.2 The empty-content branch is a real defect but is **not** the 404 cause
 
@@ -117,7 +128,7 @@ at the end (AC8), not assert it.
 
 | ID | Source | Observable requirement | P | Verification | Status |
 |---|---|---|---|---|---|
-| **R1** | §3.1 INFERENCE | `scripts/task-867-pages-read-probe.mjs` (new): reads `.env.local` **through Node's `fs`** (never PowerShell `Get-Content -Raw`), then performs three read-only queries — `anon` select over `pages`, `anon` select over `pages` filtered to `is_published = true`, and the same select through the service role — printing for each: the PostgREST error code and message (or `null`), and the row count. It prints **no key material** and performs no write. | P0 | AC1 | Confirmed |
+| **R1** | §3.1 F21/F22 | `scripts/task-867-pages-read-probe.mjs` (new): reads `.env.local` **through Node's `fs`** (never PowerShell `Get-Content -Raw`), then performs three read-only queries — `anon` select over `pages`, `anon` select over `pages` filtered to `is_published = true`, and the same select through the service role — printing for each the PostgREST error **code** and message (or `null`) and the row count, and then the §10.1 content census (one line per row: slug, `is_published`, and the four locales' title/body **lengths**). It prints **no key material and no body text**, and performs no write. Re-running it after O79-1 is the before/after pair for AC3. | P0 | AC1 | Confirmed |
 | **R2** | `docs/rls-rules.md` template | `scripts/task-867-pages-public-select.sql` (new, owner-applied): idempotent. `grant select on public.pages to anon, authenticated;` and `create policy "pages_select_public" on public.pages for select to anon, authenticated using (is_published = true);` guarded by `drop policy if exists`. It grants **no** `insert/update/delete` to either role and changes no service-role grant. A header comment states the deploy order and cites Task 275 and Task 326A. | P0 | AC2, AC3 | Confirmed |
 | **R3** | owner item 5 | `src/lib/footer-route-allowlist.ts`: `isValidFooterUrl` keeps its signature `(url: string) => boolean` and its current verdicts for the empty string, external URLs, locale-prefixed paths and the five static paths; it additionally returns `true` for a **single-segment** path whose slug passes the canonical `validateSlug` (`src/lib/slug-validator.ts`). A multi-segment path that is not one of the static entries still returns `false`. The stale comment at `:1-3` is replaced by one that states the new client/server split. | P0 | AC4 | Confirmed |
 | **R4** | owner item 5 | `src/modules/admin/actions/footer.ts` → `upsertFooterContent`: for every **enabled** link whose URL starts with `/` and is not one of `STATIC_INTERNAL_PATHS`, the action resolves the slug against `pages` where `is_published = true` through `createAdminClient()`. Unknown or unpublished slug → the existing `{ error: 'invalid_internal_link' }`. A published slug saves, **together with that locale's social links**. The existing `isValidFooterUrl` shape check runs first; a shape-invalid path is still rejected without a DB call. | P0 | AC5 | Confirmed |
@@ -197,23 +208,30 @@ Files the executor may create or change:
 
 ## 10. Implementation requirements
 
-1. **Order.** I0 probe (R1) → R3/R4/R5/R7 code and tests → §13.2 gate → report. R2's SQL is **written** by the
-   executor but applied by the owner (O79-1); the task does not wait for it to be applied before reporting.
-2. **The probe reads `.env.local` with Node `fs`.** `docs/orchestrator-procedures.md` → the 818/816 corollary: a
+1. **I0 content census — the first measurement, before any code.** The probe of R1 also prints, through the service
+   role, one line per `pages` row: `slug`, `is_published`, and the **character length** of `content.<locale>.title`
+   and `content.<locale>.body` for each of the four locales. Never the body text itself. This exists because the live
+   table held **one** row on 2026-09-21 (F22), so the executor must know which slugs actually exist before it writes
+   a test fixture or reads the acceptance criteria as satisfiable. Record the census verbatim in the session
+   evidence. It changes no requirement — R2…R7 are independent of how many rows exist — but a completion report that
+   does not carry it is incomplete.
+2. **Order.** I0 census + probe (R1) → R3/R4/R5/R7 code and tests → §13.2 gate → report. R2's SQL is **written** by
+   the executor but applied by the owner (O79-1); the task does not wait for it to be applied before reporting.
+3. **The probe reads `.env.local` with Node `fs`.** `docs/orchestrator-procedures.md` → the 818/816 corollary: a
    BOM-less UTF-8 file round-tripped through PowerShell `Get-Content -Raw` is silently mojibaked. The probe prints no
    key, no bearer token and no URL fragment beyond the project host.
-3. **Canonical reuse (GR-0).** R3's new arm calls `validateSlug` from `src/lib/slug-validator.ts`; it does not
+4. **Canonical reuse (GR-0).** R3's new arm calls `validateSlug` from `src/lib/slug-validator.ts`; it does not
    re-implement the slug regex, the reserved-slug list or a locale-prefix list. R4 reuses the existing
    `'invalid_internal_link'` error code and its existing localized messages; no new error string reaches the UI.
-4. **No new visual value, no new component, no new Story, no new locale key.** If the work appears to need one, stop.
-5. **R4's DB call is batched.** Collect the distinct candidate slugs of one payload, resolve them with a single
+5. **No new visual value, no new component, no new Story, no new locale key.** If the work appears to need one, stop.
+6. **R4's DB call is batched.** Collect the distinct candidate slugs of one payload, resolve them with a single
    `.in('slug', slugs).eq('is_published', true)` query, and compare sets. Do not issue one query per link.
-6. **R5's guard must not change the success path.** A published page with a non-empty `sq` body, and every draft save,
+7. **R5's guard must not change the success path.** A published page with a non-empty `sq` body, and every draft save,
    behave exactly as today.
-7. **Failure behaviour of R4's lookup.** If the `pages` query itself errors, return the existing transient error
+8. **Failure behaviour of R4's lookup.** If the `pages` query itself errors, return the existing transient error
    (`{ error: 'transient' }`) and log it. Do **not** fall through to a successful save and do not treat a DB error as
    "slug not found".
-8. **Encoding and integrity.** Every new file is UTF-8 without BOM; `check:file-integrity` and `check:mojibake` are
+9. **Encoding and integrity.** Every new file is UTF-8 without BOM; `check:file-integrity` and `check:mojibake` are
    part of the gate block.
 
 ## 11. Positive and negative flows
@@ -233,7 +251,7 @@ social links instead of the Facebook/Instagram fallback.
 | Footer link that is **disabled** but has a bad URL | **Yes** | existing `l.enabled` filter | Ignored; save succeeds | AC5 |
 | Footer link with a locale prefix (`/en/about`) | **Yes** | R3 (preserved) | Rejected | AC4 |
 | Footer link to a reserved slug (`/listings`, `/auth`) | **Yes** | R3 via `validateSlug` | `/listings` stays valid (static entry); `/auth` is rejected | AC4 |
-| `pages` lookup errors during a Footer save | **Yes** | R4 §10.7 | `transient`, logged, no save | AC5 |
+| `pages` lookup errors during a Footer save | **Yes** | R4 §10.8 | `transient`, logged, no save | AC5 |
 | Publish with an empty `sq` body, `content` supplied | **Yes** | R5 | `sq_body_required`, no write | AC6 |
 | Publish with an empty `sq` body, `content` **not** supplied | **Yes** | R5 | Stored content is read first; same refusal | AC6 |
 | Save as **draft** with an empty `sq` body | **Yes** | R5 | Allowed, unchanged | AC6 |
@@ -243,9 +261,11 @@ social links instead of the Facebook/Instagram fallback.
 ## 12. Acceptance criteria
 
 - **AC1 [R1]** — Given `node.exe scripts\task-867-pages-read-probe.mjs` run from the project root, when its output is
-  read, then it reports, for each of the three queries, an error code (or `null`) and a row count, and the transcript
-  is saved under `docs/sessions/evidence/task867/`. The report states which of the two branches the measurement
-  selected: `anon` denied (proceed with R2) or `anon` already permitted (`TASK SPECIFICATION CONTRADICTION`).
+  read, then it reports, for each of the three queries, an error code (or `null`) and a row count, **and** the §10.1
+  content census for every row; the transcript is saved under `docs/sessions/evidence/task867/`. The report states
+  which of the two branches the measurement selected: `anon` denied (proceed with R2, the branch F21 already
+  selected) or `anon` already permitted (`TASK SPECIFICATION CONTRADICTION`), and it states whether the census still
+  shows the single row of F22 or something else.
 - **AC2 [R2]** — Given `scripts/task-867-pages-public-select.sql`, when read, then it contains the `select`-only grant
   for `anon` and `authenticated`, a `drop policy if exists` followed by `create policy "pages_select_public" … for
   select to anon, authenticated using (is_published = true)`, no `insert`/`update`/`delete` grant to either role, and
@@ -272,9 +292,11 @@ social links instead of the Facebook/Instagram fallback.
 - **AC8 [scope]** — Given `git --no-optional-locks diff --stat`, when read, then the changed paths are the ones listed
   in §7 and none of the §8 paths appears; and `node.exe scripts\check-surface-census-changed.mjs --base HEAD` exits 0
   with no new blocking node.
-- **AC9 [owner]** — Given O79-4 after deployment, when the owner opens `https://lero.al/en/privacy-policy` in a
-  private window and repeats it for `/sq/`, `/uk/` and `/it/`, then each published page responds 200, and a slug that
-  is not published responds 404. Owner-native (§13.3).
+- **AC9 [owner]** — Given **O79-0 completed** and O79-4 run after deployment, when the owner opens
+  `https://lero.al/en/privacy-policy` in a private window and repeats it for `/sq/`, `/uk/` and `/it/`, then each
+  published page responds 200, and a slug that is not published responds 404. Owner-native (§13.3). **This criterion
+  is not satisfiable while the page it names does not exist** (F22): an unmet AC9 whose cause is a missing row is an
+  owner content precondition, not an implementation defect, and the review must classify it that way.
 - **AC10** — Given the §13.2 gate block, when run, then every `npm`/`node` command in it exits 0.
 
 `GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: none. AC8's "none of the §8 paths appears" is the scope boundary itself, read from the diff, not a byte-level claim.`
@@ -327,22 +349,31 @@ Record the `/[locale]/[slug]` line of the build's route table verbatim (AC7).
 ### 13.3 Owner-native steps, in order
 
 ```powershell
+$slug = "privacy-policy"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $probe = "docs\sessions\evidence\task867\owner-probe.txt"
 node.exe scripts\task-867-pages-read-probe.mjs > $probe
 "EXIT_CODE=$LASTEXITCODE" | Add-Content $probe
-try { (Invoke-WebRequest -Uri "https://lero.al/en/privacy-policy" -UseBasicParsing).StatusCode } catch { $_.Exception.Response.StatusCode.value__ }
+try { "PROD -> " + (Invoke-WebRequest -Uri "https://lero.al/en/$slug" -UseBasicParsing).StatusCode } catch { "PROD -> status=" + $_.Exception.Response.StatusCode.value__ + " | msg=" + $_.Exception.Message }
 ```
 
 Expected: the probe file records the anon result (an error code such as `42501`, or a row count) beside the
-service-role row count; the web request prints `404` before O79-1 and `200` after the fix is deployed.
+service-role row count and the content census; `PROD` prints `status=404` before O79-1 and `200` after the fix is
+deployed. **The `Tls12` line and the `msg=` tail exist because the owner's 2026-09-21 run printed an empty status**
+(§3.1, MISSING EVIDENCE): a blank `status=` with a populated `msg=` is a connection/TLS failure, not a 404, and must
+be reported as such rather than recorded as a result.
 
 Then, in order, and not as commands:
 
-1. **O79-1** — paste `scripts/task-867-pages-public-select.sql` into the Supabase SQL editor, run it, return the output.
-2. **O79-2** — run `scripts/task-867-verify.sql`, return all four grids.
-3. **O79-3** — only if grid (d)'s service-role draft count is `0`: create a page with slug `rls-probe-867`, leave it
+1. **O79-0 — the content precondition.** The live table held **one** row on 2026-09-21 (F22). Before O79-4 can mean
+   anything, the pages the acceptance sentence names must exist **and carry Albanian text**: create or fill
+   `privacy-policy` (and `about` / `terms-of-service` if they are wanted) in `/admin/pages` and publish them. This is
+   content, not code, and after R5 lands an empty Albanian body will be refused at save time.
+2. **O79-1** — paste `scripts/task-867-pages-public-select.sql` into the Supabase SQL editor, run it, return the output.
+3. **O79-2** — run `scripts/task-867-verify.sql`, return all four grids.
+4. **O79-3** — only if grid (d)'s service-role draft count is `0`: create a page with slug `rls-probe-867`, leave it
    **Draft**, re-run `scripts/task-867-verify.sql`, return the grids, then delete the page.
-4. **O79-4** — after the approved review is deployed: open `https://lero.al/en/privacy-policy`, `/sq/…`, `/uk/…` and
+5. **O79-4** — after the approved review is deployed: open `https://lero.al/en/privacy-policy`, `/sq/…`, `/uk/…` and
    `/it/…` in a private window; then in `/admin/footer` save an info link `/privacy-policy` together with a social
    link, and confirm on the public site that the saved social links replaced the Facebook/Instagram fallback.
 

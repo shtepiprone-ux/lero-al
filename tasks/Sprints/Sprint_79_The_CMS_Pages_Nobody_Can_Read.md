@@ -39,6 +39,15 @@ renders. The same file's `infoLinks` fallback (`:47-52`) ships `/about`, `/priva
 
 One sprint, because fixing either half alone leaves the owner's acceptance sentence false.
 
+**Measured on the live project by the owner, 2026-09-21 — the diagnosis above is confirmed, not inferred.** An
+anonymous PostgREST read of `pages` returns **HTTP 401 Unauthorized** while the identical service-role read returns
+rows: the missing-GRANT signature, observed directly, and exactly what `[slug]/page.tsx:39` throws away. The same run
+returned a second fact nobody had asked for: **the table holds exactly one row**, so the pages the acceptance
+sentence names largely do not exist yet. That is content, not code — it becomes **O79-0**, and it is why an unmet
+AC9 is not automatically an implementation defect. The third arm of that run, the production HTTP status, did not
+execute (a PowerShell 5.1 TLS/connection failure printed a blank status); it is recorded as **MISSING EVIDENCE**,
+and the corrected command ships in the kickoff's §13.3.
+
 ## Why a new sprint — goal fit checked against every open sprint
 
 | Sprint | Its goal | Fits? |
@@ -74,6 +83,7 @@ One sprint, because fixing either half alone leaves the owner's acceptance sente
 
 | ID | Action |
 |---|---|
+| **O79-0** | **Content precondition, measured 2026-09-21: the live `pages` table holds exactly one row.** Create or fill and publish the pages the acceptance sentence names — `privacy-policy` first — with Albanian text in `/admin/pages`. Without this, O79-4 has nothing to open and the Footer's existence check will correctly refuse the link. |
 | **O79-1** | Apply `scripts/task-867-pages-public-select.sql` in the Supabase SQL editor and return its output. |
 | **O79-2** | Run `scripts/task-867-verify.sql` and return its grids (grant, policy, positive arm, negative arm). |
 | **O79-3** | Create and then delete a throwaway **draft** page with slug `rls-probe-867` in `/admin/pages`, so the negative arm has a subject — required only if `scripts/task-867-verify.sql` reports zero draft rows. |
@@ -95,7 +105,8 @@ One sprint, because fixing either half alone leaves the owner's acceptance sente
 
 1. `scripts/task-867-verify.sql`, run by the owner after O79-1, shows `anon` holding `select` on `public.pages`, a
    published row readable as `anon`, and a draft row **not** readable as `anon`.
-2. `https://lero.al/en/privacy-policy` returns 200 in a private window (O79-4).
+2. `https://lero.al/en/privacy-policy` returns 200 in a private window (O79-4) — **after O79-0**, since the page it
+   names did not exist on 2026-09-21. A 404 whose cause is a missing row closes nothing and blames nothing.
 3. A Footer legal link to a published CMS slug saves, and that locale's social links persist and render.
 4. `createPage` / `updatePage` refuse `is_published: true` with an empty `content.sq.body`, proven by unit tests.
 5. `npm run build` exits 0 and the full §13.2 gate block of Task 867 is green.

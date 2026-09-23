@@ -1,7 +1,7 @@
 # Task 867 — the public CMS read path (`pages` has no `anon` grant), and the Footer that cannot link to a page it publishes
 
 Sprint 79 · P1 · QA profile **Q4** (RLS/read-path security + server-action validation) · no dependencies ·
-owner actions **O79-1 … O79-4** · **Status: 📝 KICKOFF FILED 2026-09-21 — READY FOR SONNET**
+owner actions **O79-1 … O79-4** · **Status: 🔁 NEEDS REVISION 2026-09-23 (review 1) — re-enter at §16, READY FOR SONNET**
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -342,8 +342,9 @@ git --no-optional-locks hash-object src/lib/footer-route-allowlist.ts src/module
 ```
 
 Expected: `win32` on the first line; every `npm`/`node` command exits 0; the probe prints three result lines and no
-key material; the `revalidatePath` grep prints only the pre-existing `'/admin/pages'`, `'/admin/settings'`,
-`'/'`-layout and `'/admin'`-layout calls, with no path containing a locale segment; `diff --stat` lists only §7 paths.
+key material; the `revalidatePath` grep lists the two files' **pre-existing** calls (both files carry many unrelated
+ones — the earlier wording here, "only the pages/settings/layout calls", was wrong and is withdrawn by review 1); AC7 is
+closed by the added-line check in §16.4, not by that listing; `diff --stat` lists only §7 paths.
 Record the `/[locale]/[slug]` line of the build's route table verbatim (AC7).
 
 ### 13.3 Owner-native steps, in order
@@ -400,3 +401,88 @@ no review, no mutating git. Update the 867 row of `docs/backlog.md` with concise
 | RLS-change test requirement satisfied? | Write-path inventory §3.1 F7 + `docs/rls-write-path-manifest.md:55-57`; positive/negative permission arms AC3/AC5/AC6; actor matrix §11; runtime proof through the real action code in R7. |
 | Could a green CI gate be mistaken for policy proof? | No — the `GR-2 SCOPE STATED` receipt in §12 says what the gates cannot see. |
 | Every owner command in a block? | Yes — §13.2 and §13.3; the non-command steps are numbered beneath them. |
+
+## 16. Revision 1 — review 1, 2026-09-23 (`NEEDS REVISION`)
+
+**Re-entry mode: `remediation`.** Start at §16.4. Keep every evidence file in `docs/sessions/evidence/task867/`
+(`00`–`15`): they are the pre-revision baseline, **do not overwrite them**. Write revision evidence as
+`r1-NN-*.txt` in the same folder. The probe (R1/AC1), R2/R8 SQL, R3 helper, R5 guard, and the
+`footer-route-allowlist` test are **accepted and must not change**. `r1-*` evidence supersedes `02`–`15` only for the
+AC10 gate block.
+
+### 16.1 F1 — P2 — R4's service-role lookup runs before the admin check (R4, R7, AC5)
+
+- **Observed:** `src/modules/admin/actions/footer.ts` → `upsertFooterContent` now calls `createAdminClient()` and runs
+  `db.from('pages').select('slug').in(…).eq('is_published', true)` **before** `assertAdminUser()`. Before this diff,
+  that function did only pure validation before the admin check, and created the service-role client after it.
+- **Impact:** a `'use server'` export can be called by anyone. An unauthenticated or non-admin caller can now make the
+  server run a service-role query and read the result from the response: `forbidden` = every slug is published,
+  `invalid_internal_link` = at least one is not, `transient` = the lookup failed. The data exposed is low-sensitivity
+  (published slugs are public once R2 is applied), but it breaks the project's order of admin check first, then the
+  service role (every `index.ts` page action; the Task 851 precedent asserts 401 **before** `createAdminClient`).
+- **Required:** move `const actorId = await assertAdminUser(); if (!actorId) return { error: 'forbidden' }` so it runs
+  **after** the pure checks (locale, `validateLinks`, `isValidFooterUrl`) and **before** `createAdminClient()` and the
+  `pages` lookup. Keep the lookup's behaviour otherwise unchanged (batched, `transient` on error, reject the whole
+  locale payload).
+
+### 16.2 F2 — P2 — R4's test cannot see its published-only filter (R4, R7, AC5)
+
+- **Observed:** in `pages-and-footer-validation.smoke.test.ts`, `makePagesBuilder()` defines `eq() { return builder }`
+  and `in() { return builder }`, so both drop their arguments, and `mockCmsBatchSelect` returns fixture rows
+  regardless. The "unpublished slug" case only sets `data: []`. If `.eq('is_published', true)` or the `.in('slug', …)`
+  set were removed from `footer.ts`, all 17 tests would still pass. The only planted-violation proof (`05b`) covers
+  R5, not R4.
+- **Required:** record the builder's `in` and `eq` calls on the `select('slug')` chain, then add these assertions:
+  1. The positive case asserts `in` was called **once** with `('slug', <the distinct candidate slugs>)` **and**
+     `eq` with `('is_published', true)`. A payload with two enabled links to `/privacy-policy`, one to `/about`, and
+     one to the static `/contact` must produce exactly one lookup, with the set `['privacy-policy', 'about']` in any
+     order. This proves §10.6's batching and that static paths are excluded.
+  2. **New F1 arm:** with `mockGetUser` resolving `null`, and separately with the role `'user'`, a payload that
+     contains a CMS slug returns `{ error: 'forbidden' }`, `mockCmsBatchSelect` is **not** called, and
+     `mockFooterUpsert` is **not** called.
+  3. **New R4 shape arm:** an enabled link `/some/deep/path` returns `invalid_internal_link` with
+     `mockCmsBatchSelect` **not** called. R4 says "a shape-invalid path is still rejected without a DB call", and no
+     test currently asserts it.
+
+### 16.3 F3 — P3 — the session log misstates what the route does for en/uk/it (record accuracy)
+
+`docs/sessions/2026-09-21-task867-cms-read-path-footer-slug-validation.md` → "I0 content census" says that en/uk/it
+reads "would 404 on their own empty-content branch". That contradicts `src/app/[locale]/[slug]/page.tsx:51-56`: when
+the locale's title and body are both empty, `rendered = content.sq`, and `notFound()` fires only if the **sq** title
+and body are both empty too. All three live rows have a non-empty `sq.title`, so after O79-1 every locale returns
+**200 with the Albanian title and an empty body**, not 404. Correct that paragraph. The content-fill point for the
+owner still stands, but the reason is "renders a title with no body", not "404".
+
+### 16.4 Planted-violation proof and gate block (AC5, AC10)
+
+Every plant: take a `git hash-object` before the plant, plant, run, restore through Node `fs` (never
+`Get-Content -Raw`), then take a `git hash-object` after. The after hash must equal the before hash. Record all of it
+in `r1-05b-plants.txt`.
+
+- **Plant A (F2):** delete `.eq('is_published', true)` from the R4 lookup. At least one R4 test must fail.
+- **Plant B (F1):** move `assertAdminUser()` back below the lookup. The §16.2 item 2 test must fail.
+
+Then run the §13.2 gate block again, with each output redirected to `r1-NN-*.txt`. Replace the `revalidatePath`
+listing with this added-line check. Expect **no output**:
+
+```powershell
+git --no-optional-locks diff -U0 -- src | Select-String -Pattern '^\+.*revalidatePath'
+```
+
+### 16.5 Decided — no change owed
+
+- **R5 when `is_published` is omitted.** The executor gated R5 on `data.is_published === true` only. That matches
+  Objective 3 ("`is_published: true` can no longer be written…"). `AdminPagesManager.tsx:120-121` always sends
+  `is_published`, so an update without it is reachable only by calling the action directly as an admin with
+  `legal.manage`. Accepted as is. Do not widen R5.
+- **Operational consequence, for the owner, not the executor:** all three live rows are published with an empty
+  `sq.body` (I0 census, `01-probe.txt`). Once this ships, saving any of them from `/admin/pages` while it stays
+  **Published** is refused (generic `admin.legal.save_error` toast until 868) until its Albanian body is filled.
+  O79-0 covers this.
+
+### 16.6 Completion report for revision 1
+
+Report: the new `footer.ts` hash and test-file hash; the three new/changed test arms by name; Plant A and Plant B,
+each with its failing test name and its before/after hash pair; the `r1-*` gate block exit codes; the corrected
+session-log paragraph. Add a `## Revision 1` section to the same session log. Do not create a new log. Set the 867
+backlog row to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`. Scope stays §7. No other file may change.

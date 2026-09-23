@@ -1,6 +1,6 @@
 # Sprint 79 — the CMS pages the site publishes, and nobody outside the admin can read
 
-**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (867) · **Reserved:** 1 (868)
+**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (867, 869) · **Reserved:** 1 (868)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -69,6 +69,9 @@ and the corrected command ships in the kickoff's §13.3.
 2. The Footer admin can save an internal link to any published CMS page, and saving legal links stops silently
    discarding that locale's social links.
 3. `is_published = true` can no longer be written for a page with an empty Albanian body.
+4. **The next failure on this read path is visible.** The route stops discarding the Supabase error object, so an
+   infrastructure refusal and "no such page" stop being the same event — and the page it renders stops depending on
+   three Tailwind `prose` classes that emit no CSS, because the plugin behind them was never installed.
 
 ## Tasks
 
@@ -77,6 +80,7 @@ and the corrected command ships in the kickoff's §13.3.
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
 | **867** | The `pages` public read path (GRANT + `pages_select_public` policy, owner-applied SQL), Footer link validation against published slugs, and the empty-body publish guard | **P1** | **Q4** | — | 📝 `KICKOFF FILED` 2026-09-21 → [`…Task_867…`](Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md) |
+| **869** | The CMS route stops swallowing its read error (both queries — the page query **and** `generateMetadata`'s, which 867's F5 did not name), its view moves into `CmsPageView` with a canonical Mantine Story and manifest entry, and the three dead `prose` classes go — `@tailwindcss/typography` is not installed and `globals.css` loads no `@plugin`, so they have emitted zero CSS since 326A | **P1** | **Q3** | 867 (sequencing, not function) | 📝 `KICKOFF FILED` 2026-09-23 → [`…Task_869…`](Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md) |
 | **868** | `/admin/pages` tells the admin *why* a publish was refused — the specific `sq_body_required` message, which requires the GR-1 census and Mantine migration of `/admin/pages` (6 nodes; `AdminPagesManager` 367 ln / 58 `className` / 6 shadcn primitives) | P3 | Q3 | 867 | 🔒 **RESERVED, routed to Sprint 78** (admin Mantine) — full text → `docs/backlog-reserved.md` |
 
 ## Owner actions this sprint needs
@@ -88,13 +92,17 @@ and the corrected command ships in the kickoff's §13.3.
 | **O79-2** | Run `scripts/task-867-verify.sql` and return its grids (grant, policy, positive arm, negative arm). |
 | **O79-3** | Create and then delete a throwaway **draft** page with slug `rls-probe-867` in `/admin/pages`, so the negative arm has a subject — required only if `scripts/task-867-verify.sql` reports zero draft rows. |
 | **O79-4** | After the approved review is deployed: open `https://lero.al/en/privacy-policy` in a private window, save a Footer legal link to `/privacy-policy`, and confirm the saved social links render. |
+| **O79-5** | Task 869's `OWNER VISUAL QA REQUIRED` matrix: open `Patterns/Mantine/CmsPageView` in Storybook and record accepted / returned for each state × locale × viewport tuple listed in that kickoff's §13.3. No automated screenshot verdict substitutes for it. |
 
 ## Explicitly not in this sprint
 
-- **Migrating `src/app/[locale]/[slug]/page.tsx` to Mantine.** Measured 2026-09-21:
-  `node scripts/check-surface-census.mjs --surface "src\app\[locale]\[slug]\page.tsx"` → 1 node, `tier1`,
-  `manifest:no story:no className:3`, already baselined in `scripts/surface-census-baseline.json`. 867 does not
-  change that file, so GR-1 is not triggered and the migration debt stays where it is recorded.
+- ~~**Migrating `src/app/[locale]/[slug]/page.tsx` to Mantine.**~~ **SUPERSEDED 2026-09-23 by owner instruction**
+  (*"Так треба одразу завести під цю прогалину задачу!"*), which filed **869** for the swallowed read error in that
+  same file. The exclusion was written on 2026-09-21 under a premise that was true then and is false now: *"867 does
+  not change that file, so GR-1 is not triggered."* 867 still does not change it — **869 does**, so GR-1 applies and
+  the migration travels with the error fix. The 2026-09-21 measurement stands and is carried into 869 §3.3
+  (1 node, `tier1`, `manifest:no story:no className:3`, baselined in `scripts/surface-census-baseline.json`),
+  re-run on 2026-09-23 with the identical result.
 - **Referential protection when a linked page is later unpublished or deleted** (Task 326B's original plan: block
   delete/unpublish/slug-change while the Footer references the slug). 867 validates at save time only. Unnumbered
   follow-up candidate; it becomes a task when the owner schedules it.
@@ -110,3 +118,6 @@ and the corrected command ships in the kickoff's §13.3.
 3. A Footer legal link to a published CMS slug saves, and that locale's social links persist and render.
 4. `createPage` / `updatePage` refuse `is_published: true` with an empty `content.sq.body`, proven by unit tests.
 5. `npm run build` exits 0 and the full §13.2 gate block of Task 867 is green.
+6. A `42501` on the CMS read path is distinguishable from "no such page": Task 869's two-armed test proves the error
+   arm logs once and the genuine-miss arm logs zero times, and the surface census for
+   `src/app/[locale]/[slug]/page.tsx` prints two nodes with `CmsPageView` at `manifest:yes story:yes`.

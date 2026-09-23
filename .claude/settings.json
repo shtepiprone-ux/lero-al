@@ -1,0 +1,189 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(git restore *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git rm *)",
+      "Bash(git apply *)",
+      "Bash(git clean *)",
+      "Bash(git config *)",
+      "PowerShell(git add *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push *)",
+      "PowerShell(git reset *)",
+      "PowerShell(git restore *)",
+      "PowerShell(git checkout *)",
+      "PowerShell(git stash *)",
+      "PowerShell(git merge *)",
+      "PowerShell(git rebase *)",
+      "PowerShell(git rm *)",
+      "PowerShell(git apply *)",
+      "PowerShell(git clean *)",
+      "PowerShell(git config *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-mutating-git.ps1"
+            ],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
+              "-Part",
+              "1"
+            ],
+            "timeout": 5,
+            "statusMessage": "Loading Sonnet executor workflow"
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
+              "-Part",
+              "2"
+            ],
+            "timeout": 5,
+            "statusMessage": "Loading Sonnet executor workflow"
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
+              "-Part",
+              "3"
+            ],
+            "timeout": 5,
+            "statusMessage": "Loading Sonnet executor workflow"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
+              "-Part",
+              "1"
+            ],
+            "timeout": 5,
+            "statusMessage": "Routing Opus task/review workflow"
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
+              "-Part",
+              "2"
+            ],
+            "timeout": 5,
+            "statusMessage": "Routing Opus task/review workflow"
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
+              "-Part",
+              "3"
+            ],
+            "timeout": 5,
+            "statusMessage": "Routing Opus task/review workflow"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-response-gate.ps1"
+            ],
+            "timeout": 10,
+            "statusMessage": "Golden Rules gate (GR-5 / GR-6)"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "browser-use@claude-plugins-official": true
+  }
+}

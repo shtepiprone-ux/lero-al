@@ -108,13 +108,19 @@ Do not read all docs by default.
 
 ## Git policy
 
-Agents may use read-only git for inspection:
+Agents may use only these read-only Git subcommands for inspection:
 
 - `git status`
 - `git diff`
 - `git show`
 - `git log`
 - `git grep`
+- `git hash-object` (without `-w` / `--write`)
+- `git rev-list`, `git rev-parse`, `git ls-files`, `git ls-tree`, `git cat-file`, and `git merge-base`
+- `git check-attr`, `git check-ignore`, `git describe`, `git blame`, `git shortlog`, `git for-each-ref`, and `git name-rev`
+- `git remote` only to list remotes (`-v`) or read a URL (`get-url`), and `git branch --show-current`
+
+Any other Git subcommand is owner-only unless this policy is explicitly amended first.
 
 Mutating git is owner-only and native PowerShell only, including:
 
@@ -131,6 +137,18 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git apply`
 - `git clean`
 - `git config`
+
+## Agent Git enforcement
+
+Within Claude Code, no agent may execute a Git mutation, regardless of role, model, shell, executable spelling,
+path, alias, or wrapper. This includes `git`, `git.exe`, an absolute path to Git, and invocations routed through
+PowerShell, `cmd`, Bash, or another process launcher. A command that cannot be established as one of the read-only
+inspection commands above is forbidden to agents. The owner performs permitted Git mutations manually, outside
+Claude Code, in native PowerShell.
+
+The repository's `PreToolUse` Git gate enforces this boundary before Bash or PowerShell commands run. It is a
+defence-in-depth control; agents must still follow this policy and must not hide Git behind aliases, scripts, or
+other executables.
 
 After verified task design that changed task/docs artifacts, Opus must emit an explicit-path owner-run **commit**
 handoff for exactly those artifacts, including the `create-task` skill's stale `.git/index.lock` cleanup preflight.

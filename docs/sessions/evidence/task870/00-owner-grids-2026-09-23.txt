@@ -1,0 +1,118 @@
+Task 870 — design-time evidence. Owner-run in the Supabase SQL Editor (project shtepi-al, branch main/PRODUCTION),
+2026-09-23, pasted into the orchestrator session verbatim. Recorded by the orchestrator; values not edited.
+
+Trigger: Supabase e-mail "On October 30, Supabase will stop automatically granting Data API access to new tables in
+the public schema for existing projects." Data API settings page (owner screenshot): 2 of 2 schemas exposed,
+31 of 51 tables exposed, 6 of 17 functions exposed, "Automatically expose new tables" = ON.
+
+=====================================================================================================================
+GRID 1 — per-relation privileges (relkind r,p,v,m in public)
+query: c.relrowsecurity, has_table_privilege(anon|authenticated|service_role, oid, select|insert)
+columns: table_name | rls_on | anon_sel | auth_sel | auth_ins | svc_sel
+=====================================================================================================================
+agent_reviews            | t | t | t | t | t
+amenities                | t | t | t | t | t
+amenity_translations     | t | t | t | t | t
+collection_items         | t | t | t | t | t
+collections              | t | t | t | t | t
+companies                | t | t | t | f | t
+contact_inquiries        | t | f | f | f | t
+contact_inquiry_replies  | t | f | f | f | t
+conversations            | t | t | t | t | t
+currencies               | t | t | t | f | t
+currency_rates           | t | t | t | t | t
+email_change_tokens      | t | t | t | t | t
+email_templates          | t | f | f | f | t
+exchange_providers       | t | f | f | f | t
+favorite_price_alerts    | t | t | t | t | t
+favorites                | t | t | t | t | t
+history_clear_events     | t | t | t | t | t
+languages                | t | t | t | t | t
+listing_activity_daily   | t | f | f | f | t
+listing_activity_refresh | t | f | f | f | t
+listing_amenities        | t | t | t | t | t
+listing_contact_events   | t | f | t | f | t
+listing_images           | t | t | t | t | t
+listing_inquiries        | t | t | t | t | t
+listing_reports          | t | f | t | t | t
+listing_translations     | t | t | t | t | t
+listing_views            | t | t | t | t | t
+listings                 | t | t | t | t | t
+location_translations    | t | t | t | t | t
+locations                | t | t | t | f | t
+messages                 | t | t | t | t | t
+notification_settings    | t | t | t | t | t
+notifications            | t | t | t | t | t
+page_translations        | t | t | t | t | t
+pages                    | t | t | t | f | t
+property_types           | t | t | t | f | t
+public_user_profiles     | f | t | t | t | t      <- a VIEW (relkind v); rls_on=f is inherent to views
+recently_viewed          | t | t | t | t | t
+report_actions           | t | f | f | f | t
+role_permission_events   | t | f | f | f | t
+role_permissions         | t | f | f | f | t
+saved_searches           | t | f | t | t | t
+site_footer              | t | t | t | t | t
+site_settings            | t | f | f | f | t
+support_messages         | t | t | t | t | t
+support_ticket_events    | t | f | f | f | t
+support_tickets          | t | f | f | f | t
+user_change_log          | t | t | t | t | t
+user_status_history      | t | t | t | t | t
+users                    | t | t | t | t | t
+verification_requests    | t | t | t | t | t
+
+=====================================================================================================================
+GRID 2 — pg_default_acl for schema public
+columns: owner | obj_type | defaclacl
+=====================================================================================================================
+supabase_admin | S | {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+supabase_admin | r | {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+supabase_admin | f | {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+postgres       | r | {postgres=arwdDxtm/postgres,anon=Dxtm/postgres,authenticated=Dxtm/postgres,service_role=Dxtm/postgres}
+postgres       | S | {postgres=rwU/postgres,anon=w/postgres,authenticated=w/postgres,service_role=w/postgres}
+postgres       | f | {postgres=X/postgres}
+
+=====================================================================================================================
+GRID 3 — policies on three service-only tables (pg_policies)
+columns: tablename | policyname | roles | cmd
+=====================================================================================================================
+user_change_log     | Admin/moderator read change log     | {public} | SELECT
+user_status_history | Admin/moderator read status history | {public} | SELECT
+(email_change_tokens: no rows — zero policies)
+
+=====================================================================================================================
+GRID 4 — public_user_profiles, BEFORE the hotfix
+columns: anon_upd | auth_upd | anon_ins | view_updatable | opts | owner
+=====================================================================================================================
+true | true | true | YES | ["security_invoker=false"] | postgres bypassrls=true
+
+=====================================================================================================================
+HOTFIX — owner-applied 2026-09-23 in the SQL Editor ("Success. No rows returned")
+=====================================================================================================================
+begin;
+revoke all on public.public_user_profiles from anon, authenticated;
+grant select on public.public_user_profiles to authenticated;
+grant select on public.public_user_profiles to service_role;
+commit;
+notify pgrst, 'reload schema';
+
+(The first paste attempt failed with 42601 because explanatory prose was pasted with the SQL; the whole batch was
+rejected at parse time and nothing ran. The second, SQL-only paste succeeded.)
+
+=====================================================================================================================
+GRID 5 — public_user_profiles, AFTER the hotfix
+columns: anon_sel | anon_upd | anon_del | auth_sel | auth_upd | auth_ins | auth_del
+=====================================================================================================================
+false | false | false | true | false | false | false
+
+=====================================================================================================================
+OWNER STATEMENTS, 2026-09-23 (verbatim, Ukrainian)
+=====================================================================================================================
+"дірою ніхто не користувався, сайт ще не показується у пошукових системах, а також я нікому його не давав. Гість, як
+і раніше, бачить кнопку входу, а залогінений користувач бачить картку контактів з кнопками та інформацією, тому тут
+все ок."
+"Задачу створи, щоб уникнути дірок."
+
+Note on the "nobody used it" statement: it is the owner's account of exposure (site not indexed, URL not shared). It
+is not a log-derived measurement; no API-log query was run.

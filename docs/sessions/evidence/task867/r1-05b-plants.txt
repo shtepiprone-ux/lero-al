@@ -1,0 +1,43 @@
+Task 867 — Revision 1, §16.4 planted-violation proof (AC5, AC10)
+
+File under plant: src/modules/admin/actions/footer.ts
+Pre-plant hash (git hash-object): 8422b1612f3002ffe34c343f7101951f6a960512
+
+── Plant A (F2 proof) ──────────────────────────────────────────────────────
+Plant: deleted `.eq('is_published', true)` from the R4 lookup chain
+(`.select('slug').in('slug', Array.from(candidateSlugs))`).
+Hash during plant: see r1-02-plantA-hash-during.txt (differs from pre-plant hash — expected).
+Result: `npm run test -- pages-and-footer-validation.smoke.test.ts` -> 1 failed, 20 passed.
+Failing test: "upsertFooterContent — CMS slug existence (R4) > review-1 F2 — one batched
+lookup with the distinct candidate slug set, excluding a duplicate and a static path"
+Failure: AssertionError: expected "vi.fn()" to be called with arguments: [ 'is_published', true ]
+  at pages-and-footer-validation.smoke.test.ts:269:28
+Full transcript: r1-03-plantA-result.txt (EXIT_CODE=1)
+Restored via Edit tool (re-added the deleted line). Post-restore hash: 8422b1612f3002ffe34c343f7101951f6a960512
+Hash equality (pre-plant == post-restore): CONFIRMED — identical.
+
+── Plant B (F1 proof) ──────────────────────────────────────────────────────
+Plant: moved `const actorId = await assertAdminUser(); if (!actorId) return { error: 'forbidden' }`
+back to AFTER the R4 pages-lookup block (its pre-revision-1 position).
+Hash during plant: see r1-04-plantB-hash-during.txt (differs from pre-plant hash — expected).
+Result: `npm run test -- pages-and-footer-validation.smoke.test.ts` -> 2 failed, 19 passed.
+Failing tests:
+  1. "upsertFooterContent — CMS slug existence (R4) > review-1 F1 — an unauthenticated caller
+     gets forbidden before any pages lookup or upsert"
+     Failure: AssertionError: expected { error: 'invalid_internal_link' } to deeply equal { error: 'forbidden' }
+     at pages-and-footer-validation.smoke.test.ts:281:20
+  2. "upsertFooterContent — CMS slug existence (R4) > review-1 F1 — a non-admin caller gets
+     forbidden before any pages lookup or upsert"
+     Failure: AssertionError: expected { error: 'invalid_internal_link' } to deeply equal { error: 'forbidden' }
+     at pages-and-footer-validation.smoke.test.ts:295:20
+Full transcript: r1-05-plantB-result.txt (EXIT_CODE=1)
+Restored via Edit tool (moved the actorId check back above the lookup, matching §16.1). Post-restore
+hash: 8422b1612f3002ffe34c343f7101951f6a960512
+Hash equality (pre-plant == post-restore): CONFIRMED — identical.
+
+── Final state ──────────────────────────────────────────────────────────────
+footer.ts hash after both plants and restorations: 8422b1612f3002ffe34c343f7101951f6a960512
+(equals the pre-plant hash recorded at the top of this file — byte-identical, restoration verified,
+not merely asserted)
+`git status --porcelain -- src/modules/admin/actions/footer.ts` after restore: see r1-06-git-status-after-plants.txt
+Full suite re-run green: see r1-07-test-restored.txt

@@ -1,0 +1,47 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts (17 tests | 1 failed) 78ms
+     × publish with an empty sq body → sq_body_required, no insert 39ms
+npm.cmd : 
+At line:2 char:1
++ npm.cmd run test -- src/modules/admin/actions/__tests__/pages-and-foo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > createPage — sq_body_required 
+(R5) > publish with an empty sq body → sq_body_required, no insert
+AssertionError: expected {} to deeply equal { error: 'sq_body_required' }
+
+- Expected
++ Received
+
+- {
+-   "error": "sq_body_required",
+- }
++ {}
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:256:20
+    254|     })
+    255|
+    256|     expect(result).toEqual({ error: 'sq_body_required' })
+       |                    ^
+    257|     expect(mockPageInsert).not.toHaveBeenCalled()
+    258|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  19:20:34
+   Duration  1.06s (transform 101ms, setup 88ms, import 40ms, tests 78ms, environment 721ms)
+
+EXIT_CODE=1

@@ -1,6 +1,6 @@
 # Sprint 79 — the CMS pages the site publishes, and nobody outside the admin can read
 
-**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (867, 869) · **Reserved:** 1 (868)
+**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (867) · **Kickoffs filed:** 2 (867, 869) · **Reserved:** 1 (868)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -79,7 +79,7 @@ and the corrected command ships in the kickoff's §13.3.
 
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **867** | The `pages` public read path (GRANT + `pages_select_public` policy, owner-applied SQL), Footer link validation against published slugs, and the empty-body publish guard | **P1** | **Q4** | — | 🔁 `NEEDS REVISION` 2026-09-23 (review 1: admin check must precede the service-role lookup; R4 test must see its filter) → [`…Task_867…`](Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md) |
+| **867** | The `pages` public read path (GRANT + `pages_select_public` policy, owner-applied SQL), Footer link validation against published slugs, and the empty-body publish guard | **P1** | **Q4** | — | ✅ `APPROVED WITH NOTES` 2026-09-23 (review 2; archived — P3: the executor attempted and suggested a mutating `git checkout`; ledger `docs/reviews/2026-09-23-task867-cms-read-path-footer-slug-validation.review-ledger.json`) → [`…Task_867…`](Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md) |
 | **869** | The CMS route stops swallowing its read error (both queries — the page query **and** `generateMetadata`'s, which 867's F5 did not name), its view moves into `CmsPageView` with a canonical Mantine Story and manifest entry, and the three dead `prose` classes go — `@tailwindcss/typography` is not installed and `globals.css` loads no `@plugin`, so they have emitted zero CSS since 326A | **P1** | **Q3** | 867 (sequencing, not function) | 📝 `KICKOFF FILED` 2026-09-23 → [`…Task_869…`](Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md) |
 | **868** | `/admin/pages` tells the admin *why* a publish was refused — the specific `sq_body_required` message, which requires the GR-1 census and Mantine migration of `/admin/pages` (6 nodes; `AdminPagesManager` 367 ln / 58 `className` / 6 shadcn primitives) | P3 | Q3 | 867 | 🔒 **RESERVED, routed to Sprint 78** (admin Mantine) — full text → `docs/backlog-reserved.md` |
 

@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/lib/__tests__/footer-route-allowlist.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  19:19:53
+   Duration  14.99s (transform 51ms, setup 1.69s, import 37ms, tests 3ms, environment 12.75s)
+
+EXIT_CODE=0

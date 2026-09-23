@@ -229,6 +229,11 @@ export async function createPage(data: {
   await assertPermission('legal.manage')
   const slugResult = validateSlug(data.slug)
   if (!slugResult.ok) return { error: slugResult.reason }
+  // R5: a page cannot publish with an empty Albanian body. `data.content` is required on
+  // create, so the effective content is always the supplied one — no stored-row read needed.
+  if (data.is_published === true && !data.content.sq.body.trim()) {
+    return { error: 'sq_body_required' }
+  }
   const db = createAdminClient()
   const { data: existing } = await db.from('pages').select('id').eq('slug', data.slug).maybeSingle()
   if (existing) return { error: 'slug_already_used' }
@@ -256,6 +261,20 @@ export async function updatePage(
     if (existing) return { error: 'slug_already_used' }
   }
   const db = createAdminClient()
+  // R5: a page cannot publish with an empty Albanian body. "Effective" content is the
+  // supplied `data.content` when present; when `is_published: true` arrives without
+  // `content`, read the row's stored content first — never assume it is non-empty.
+  if (data.is_published === true) {
+    let sqBody = data.content?.sq?.body
+    if (sqBody === undefined) {
+      const { data: existingRow } = await db.from('pages').select('content').eq('id', id).maybeSingle()
+      const existingContent = existingRow?.content as PageContent | undefined
+      sqBody = existingContent?.sq?.body
+    }
+    if (!sqBody || !sqBody.trim()) {
+      return { error: 'sq_body_required' }
+    }
+  }
   const patch: Record<string, unknown> = { ...data, updated_at: new Date().toISOString() }
   if (data.content?.sq?.title) patch.title = data.content.sq.title
   const { error } = await db.from('pages').update(patch).eq('id', id)

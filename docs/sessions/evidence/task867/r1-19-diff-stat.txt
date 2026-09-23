@@ -1,0 +1,6 @@
+ docs/sessions/evidence/task861/storybook-dev.log | 37 +++++++++++++++++++
+ src/lib/footer-route-allowlist.ts                | 20 ++++++++---
+ src/modules/admin/actions/footer.ts              | 46 +++++++++++++++++++++++-
+ src/modules/admin/actions/index.ts               | 19 ++++++++++
+ 4 files changed, 117 insertions(+), 5 deletions(-)
+EXIT_CODE=0

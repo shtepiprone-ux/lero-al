@@ -1,0 +1,812 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-867 — the public CMS read path (pages SELECT grant + pages_select_public, owner-applied), Footer link validation against published slugs with admin-before-lookup order, and the empty-sq-body publish guard (R1-R8, revision 1)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "1c5b4be0f55f636b9c3bacf08cec2fe2fd9b4302",
+    "reviewedRevision": "uncommitted worktree on top of 1c5b4be0f55f636b9c3bacf08cec2fe2fd9b4302 (main). Blobs: footer-route-allowlist.ts 5f74a733, footer.ts 8422b161, index.ts 1b2a152d, task-867-pages-read-probe.mjs ec686cc7, task-867-pages-public-select.sql 50f7d103, task-867-verify.sql 7243de0e, footer-route-allowlist.test.ts c46604be, pages-and-footer-validation.smoke.test.ts 74816a17.",
+    "reviewedPaths": [
+      "src/lib/footer-route-allowlist.ts",
+      "src/modules/admin/actions/footer.ts",
+      "src/modules/admin/actions/index.ts",
+      "src/lib/__tests__/footer-route-allowlist.test.ts",
+      "src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+      "scripts/task-867-pages-read-probe.mjs",
+      "scripts/task-867-pages-public-select.sql",
+      "scripts/task-867-verify.sql",
+      "docs/sessions/2026-09-21-task867-cms-read-path-footer-slug-validation.md",
+      "docs/sessions/evidence/task867"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 10,
+      "verified": 10,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-23-task867-cms-read-path-footer-slug-validation.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-867-pages-read-probe.mjs",
+        "symbol": "three read-only queries + content census",
+        "diffHunks": [
+          "scripts/task-867-pages-read-probe.mjs (new file, blob ec686cc7)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "anon unfiltered",
+          "anon is_published=true",
+          "service_role unfiltered",
+          "content census"
+        ],
+        "phases": [
+          "pre-fix",
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Read-only Node probe; no UI artifact, story or visual state.",
+          "locales": "Read-only Node probe; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Read-only Node probe; nothing rendered by this change.",
+          "states": "Read-only Node probe; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/01-probe.txt",
+          "command": "node.exe scripts\\task-867-pages-read-probe.mjs",
+          "observable": "Pre-fix arm: anon queries return 42501, service role returns rows; census prints lengths only, no key material.",
+          "freshness": "I0, before O79-1; probe blob unchanged since (ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "anon unfiltered",
+              "anon is_published=true",
+              "service_role unfiltered",
+              "content census"
+            ],
+            "phases": [
+              "pre-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task867/review1-post-o79-1.txt",
+          "command": "node.exe scripts\\task-867-pages-read-probe.mjs (reviewer, win32, after O79-1)",
+          "observable": "Post-fix arm: Q1 anon 3 rows, Q2 anon published 3, Q3 service 3/4 with the probe draft present; census lengths only.",
+          "freshness": "2026-09-23 after O79-1 and after the 16.7 statements; probe blob ec686cc7",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "anon unfiltered",
+              "anon is_published=true",
+              "service_role unfiltered",
+              "content census"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The probe could print key material or body text.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/r1-09-probe.txt",
+          "result": "REFUTED. The r1 run prints error codes, row counts and per-locale title/body lengths only; no key, token or body text appears."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-867-pages-public-select.sql",
+        "symbol": "grant select; revoke references, trigger, truncate; drop/create pages_select_public; drop legacy policy",
+        "diffHunks": [
+          "scripts/task-867-pages-public-select.sql (new file, blob 50f7d103)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "select-only grant",
+          "16.7 revoke line",
+          "16.7 legacy-policy drop",
+          "pages_select_public policy",
+          "header"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Owner-applied SQL / DB grant and policy; no UI artifact, story or visual state.",
+          "locales": "Owner-applied SQL / DB grant and policy; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Owner-applied SQL / DB grant and policy; nothing rendered by this change.",
+          "states": "Owner-applied SQL / DB grant and policy; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/task-867-pages-public-select.sql",
+          "command": "reviewer read of the full file",
+          "observable": "grant select to anon, authenticated only; revoke references, trigger, truncate; drop policy if exists for both policy names; create policy pages_select_public for select to anon, authenticated using (is_published = true); header cites Task 275, 326A and the deploy order. No insert/update/delete grant.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "select-only grant",
+              "16.7 revoke line",
+              "16.7 legacy-policy drop",
+              "pages_select_public policy",
+              "header"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The script grants a write privilege to anon or authenticated.",
+          "kind": "EXECUTED",
+          "path": "scripts/task-867-pages-public-select.sql",
+          "result": "REFUTED. The only grant statement is `grant select on public.pages to anon, authenticated;`; every other statement is a revoke or a policy drop/create."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R2 R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-867-verify.sql",
+        "symbol": "grids a, b, c, d",
+        "diffHunks": [
+          "scripts/task-867-verify.sql (new file, blob 7243de0e)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grid a grants",
+          "grid b policies",
+          "grid c anon published > 0",
+          "grid d anon drafts = 0 beside service drafts > 0"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Owner-applied SQL / DB grant and policy; no UI artifact, story or visual state.",
+          "locales": "Owner-applied SQL / DB grant and policy; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Owner-applied SQL / DB grant and policy; nothing rendered by this change.",
+          "states": "Owner-applied SQL / DB grant and policy; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/review1-post-o79-1.txt",
+          "command": "owner-run scripts/task-867-verify.sql grids, one at a time, after O79-1 and after the 16.7 statements",
+          "observable": "(a) anon SELECT, authenticated SELECT, nothing else; (b) Admins can manage pages + pages_select_public only; (c) anon 3 published; (d1) anon drafts 0 beside (d2) service drafts 1.",
+          "freshness": "live database 2026-09-23, after the final SQL state the script now mirrors",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grid a grants",
+              "grid b policies",
+              "grid c anon published > 0",
+              "grid d anon drafts = 0 beside service drafts > 0"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The negative arm (d) is vacuous because there is no draft row.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/review1-post-o79-1.txt",
+          "result": "REFUTED. O79-3 created draft rls-probe-867; service-role draft count 1 beside anon 0, and the Data API agreed (anon 3 vs service 4)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R3 R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/lib/footer-route-allowlist.ts",
+        "symbol": "isValidFooterUrl",
+        "diffHunks": [
+          "src/lib/footer-route-allowlist.ts:1-7, :32-34, :46-51"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "five static paths",
+          "empty and external URLs",
+          "locale-prefixed paths",
+          "published-shape CMS slugs",
+          "reserved /auth",
+          "deep path",
+          "case and underscore variants"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Server action / pure helper; no UI artifact, story or visual state.",
+          "locales": "Server action / pure helper; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Server action / pure helper; nothing rendered by this change.",
+          "states": "Server action / pure helper; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-12-test-footer-allowlist.txt",
+          "command": "npm.cmd run test -- src/lib/__tests__/footer-route-allowlist.test.ts",
+          "observable": "All cases pass, EXIT_CODE=0. Reviewer native rerun (win32, Node v22.22.3) of this file plus the smoke suite: 2 files, 27 tests passed, exit 0.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "five static paths",
+              "empty and external URLs",
+              "locale-prefixed paths",
+              "published-shape CMS slugs",
+              "reserved /auth",
+              "deep path",
+              "case and underscore variants"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A multi-segment non-static path would be accepted by the new single-segment arm.",
+          "kind": "EXECUTED",
+          "path": "src/lib/footer-route-allowlist.ts",
+          "result": "REFUTED. The new arm requires the segment to contain no slash and validateSlug(segment).ok; /some/deep/path is asserted invalid in the test and returns invalid_internal_link without a DB call in the smoke suite."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R4 R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "src/modules/admin/actions/footer.ts",
+        "symbol": "upsertFooterContent, collectCandidateCmsSlugs",
+        "diffHunks": [
+          "src/modules/admin/actions/footer.ts:35-51, :130-159"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "published slug saves with social_links",
+          "unpublished slug rejected",
+          "nonexistent slug rejected",
+          "disabled bad link ignored",
+          "lookup error -> transient",
+          "service-role upsert",
+          "batched distinct slug set with is_published filter",
+          "unauthenticated -> forbidden before lookup",
+          "non-admin -> forbidden before lookup",
+          "shape-invalid path rejected without DB call"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Server action / pure helper; no UI artifact, story or visual state.",
+          "locales": "Server action / pure helper; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Server action / pure helper; nothing rendered by this change.",
+          "states": "Server action / pure helper; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-13-test-pages-footer-smoke.txt",
+          "command": "npm.cmd run test -- src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+          "observable": "21 tests passed, EXIT_CODE=0; the review-1 arms assert .in called once with {about, privacy-policy}, .eq(is_published, true), and forbidden with no lookup/upsert for a null user and for role user. Reviewer native rerun: pass.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "published slug saves with social_links",
+              "unpublished slug rejected",
+              "nonexistent slug rejected",
+              "disabled bad link ignored",
+              "lookup error -> transient",
+              "service-role upsert",
+              "batched distinct slug set with is_published filter",
+              "unauthenticated -> forbidden before lookup",
+              "non-admin -> forbidden before lookup",
+              "shape-invalid path rejected without DB call"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new assertions cannot fail when the filter or the auth order regresses.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/r1-05b-plants.txt",
+          "result": "REFUTED. Plant A (drop .eq(is_published)) failed the F2 test (1 failed/20 passed, EXIT 1); Plant B (auth check below the lookup) failed both F1 tests (2 failed/19 passed, EXIT 1). During-plant hashes d97f0ea4 and ba0cb926 recorded; restored hash 8422b161 equals the pre-plant hash and the reviewer hash-object."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / R5 R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/admin/actions/index.ts",
+        "symbol": "createPage, updatePage",
+        "diffHunks": [
+          "src/modules/admin/actions/index.ts:232-236, :264-277"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "create publish empty sq body",
+          "update publish content supplied empty",
+          "update publish content omitted, stored empty",
+          "update publish content omitted, stored non-empty",
+          "draft saves",
+          "non-empty publish",
+          "service-role writer for create/update/delete"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Server action / pure helper; no UI artifact, story or visual state.",
+          "locales": "Server action / pure helper; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Server action / pure helper; nothing rendered by this change.",
+          "states": "Server action / pure helper; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-13-test-pages-footer-smoke.txt",
+          "command": "npm.cmd run test -- src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+          "observable": "createPage/updatePage/deletePage describe blocks pass; the guard returns sq_body_required with no insert/update; drafts and non-empty publishes write through createAdminClient with createClient not called.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "create publish empty sq body",
+              "update publish content supplied empty",
+              "update publish content omitted, stored empty",
+              "update publish content omitted, stored non-empty",
+              "draft saves",
+              "non-empty publish",
+              "service-role writer for create/update/delete"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The R5 tests pass even without the guard.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/05b-planted-violation.txt",
+          "result": "REFUTED. The original R5 plant removed the guard and the sq_body_required tests failed, then passed after restore; index.ts is unchanged in revision 1 (blob 1b2a152d)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC7 / R6",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/[slug]/page.tsx",
+        "symbol": "route marker (unchanged file)",
+        "diffHunks": [
+          "no diff - refutation recorded from the build route table"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "route marker",
+          "no added revalidatePath"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Build output inspection; no UI artifact, story or visual state.",
+          "locales": "Build output inspection; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Build output inspection; nothing rendered by this change.",
+          "states": "Build output inspection; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-18-build.txt",
+          "command": "npm.cmd run build",
+          "observable": "EXIT_CODE=0; line 299 marks /[locale]/[slug] as Dynamic. The build ran at 20:02:50, after the last source edit (footer.ts 19:59:21).",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "route marker",
+              "no added revalidatePath"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task867/r1-20-revalidatePath-added-line-check.txt",
+          "command": "git --no-optional-locks diff -U0 -- src | Select-String -Pattern '^\\+.*revalidatePath'",
+          "observable": "No matching added line.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "route marker",
+              "no added revalidatePath"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A revalidatePath call was added in a file outside the grep.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/r1-20b-revalidatePath-powershell.txt",
+          "result": "REFUTED. The added-line check scans the whole src diff, not two files; NO MATCHES."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC8 / scope",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F1",
+        "F3"
+      ],
+      "finalSubject": {
+        "path": "src/modules/admin/actions/footer.ts",
+        "symbol": "diff scope",
+        "diffHunks": [
+          "git diff --stat: allowlist, footer.ts, index.ts + untracked section-7 files"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "changed paths within section 7",
+          "no section-8 path",
+          "surface census changed"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Scope reconciliation; no UI artifact, story or visual state.",
+          "locales": "Scope reconciliation; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Scope reconciliation; nothing rendered by this change.",
+          "states": "Scope reconciliation; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-19-diff-stat.txt",
+          "command": "git --no-optional-locks diff --stat",
+          "observable": "Tracked changes: footer-route-allowlist.ts, footer.ts, index.ts, plus the unrelated task861 storybook-dev.log. No section-8 path.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "changed paths within section 7",
+              "no section-8 path",
+              "surface census changed"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task867/r1-16-surface-census-changed.txt",
+          "command": "node.exe scripts\\check-surface-census-changed.mjs --base HEAD",
+          "observable": "EXIT_CODE=0, no new blocking node.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "changed paths within section 7",
+              "no section-8 path",
+              "surface census changed"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An out-of-scope path in git status belongs to this task.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/r1-06-git-status-after-plants.txt",
+          "result": "REFUTED. Reviewer git status: docs/sessions/evidence/task861/storybook-dev.log (pre-existing, Task 861) and scripts/schema-drift-check.sql (timestamp line from an owner-session npm run check:schema-drift on 2026-09-23) are unrelated; docs/sessions/evidence/task870/* belong to the parallel Task 870 execution. None is staged."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC9 / owner",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/app/[locale]/[slug]/page.tsx",
+        "symbol": "public CMS route (unchanged), reached through the new grant",
+        "diffHunks": [
+          "no diff - behaviour changed by the R2 grant"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "published privacy-policy 200",
+          "unknown slug 404",
+          "draft slug 404"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Route-level HTTP status; no Storybook artifact changes.",
+          "viewports": "HTTP status check; nothing layout-dependent is asserted.",
+          "states": "The three HTTP outcomes are enumerated under subjects."
+        },
+        "locales": [
+          "en",
+          "sq",
+          "uk",
+          "it"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/review1-post-o79-1.txt",
+          "command": "curl.exe / Invoke-WebRequest (TLS 1.2) against https://lero.al, reviewer, win32",
+          "observable": "privacy-policy 200 in en, sq, uk, it; /en/no-such-page-867 404; /en/rls-probe-867 (draft) 404.",
+          "freshness": "production 2026-09-23 after O79-1 and the 16.7 statements; the route file is unchanged by this task",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "published privacy-policy 200",
+              "unknown slug 404",
+              "draft slug 404"
+            ],
+            "phases": [
+              "post-fix"
+            ],
+            "locales": [
+              "en",
+              "sq",
+              "uk",
+              "it"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The 200 is the not-found shell streamed with status 200.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/review1-post-o79-1.txt",
+          "result": "REFUTED. The /en body carries no NEXT_HTTP_ERROR_FALLBACK marker and contains the CMS main element; the unknown and draft slugs return 404."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC10 / gates",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/admin/actions/footer.ts",
+        "symbol": "final gate block",
+        "diffHunks": [
+          "all section-7 files at r1-21 hashes"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "platform",
+          "probe",
+          "typecheck",
+          "lint",
+          "allowlist test",
+          "smoke test",
+          "test:admin",
+          "test:rls-guards",
+          "surface census",
+          "i18n",
+          "build",
+          "file integrity",
+          "mojibake"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Gate block; no UI artifact, story or visual state.",
+          "locales": "Gate block; no user-facing string added or changed (no messages/*.json edit).",
+          "viewports": "Gate block; nothing rendered by this change.",
+          "states": "Gate block; the input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task867/r1-18-build.txt",
+          "command": "section 13.2 gate block, r1-08 to r1-23",
+          "observable": "r1-08 win32 v22.22.3; every npm/node command EXIT_CODE=0 (r1-09 to r1-18, r1-22, r1-23). Reviewer native reruns: smoke+allowlist 27 passed, test:admin 18 passed, test:rls-guards 15 passed, all exit 0.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object of every shipped file equals docs/sessions/evidence/task867/r1-21-hash-object.txt (footer.ts 8422b161, index.ts 1b2a152d, allowlist 5f74a733, smoke test 74816a17, allowlist test c46604be, select.sql 50f7d103, verify.sql 7243de0e, probe ec686cc7)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "platform",
+              "probe",
+              "typecheck",
+              "lint",
+              "allowlist test",
+              "smoke test",
+              "test:admin",
+              "test:rls-guards",
+              "surface census",
+              "i18n",
+              "build",
+              "file integrity",
+              "mojibake"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The build transcript predates the final source edit.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task867/r1-21-hash-object.txt",
+          "result": "REFUTED. r1-18-build.txt mtime 20:02:50 is after footer.ts 19:59:21, the smoke test 19:58:00 and the SQL 19:56:55; the reviewer hash-object of all eight files equals r1-21."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants/policies and TypeScript server code; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P3",
+      "status": "OPEN",
+      "requirements": "AC8 / scope",
+      "requirementIds": [
+        "AC8 / scope"
+      ],
+      "evidence": "docs/sessions/2026-09-21-task867-cms-read-path-footer-slug-validation.md, section \"Files changed (revision 1)\": the executor attempted `git checkout -- scripts/schema-drift-check.sql` (denied by the harness) and told the owner to run the same command. agent-contract clause 10: Sonnet neither runs, emits nor suggests mutating git. The same log, section \"Remaining owner-native work\", then states \"no mutating git command was run or suggested this revision either\", which the earlier section contradicts. No state changed (the command was denied) and the attempt itself was reported; the closing sentence was not accurate. Recorded here instead of editing the executor log."
+    },
+    {
+      "id": "F2",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC5 / R4 R7",
+      "requirementIds": [
+        "AC5 / R4 R7"
+      ],
+      "evidence": "Kickoff 16.4 required restoring each plant through Node fs; r1-05b-plants.txt says both restores used the Edit tool. The rule exists to prevent PowerShell Get-Content -Raw mojibake; the recorded restored hash 8422b161 equals the pre-plant hash and the reviewer hash-object, so no damage occurred."
+    },
+    {
+      "id": "F3",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC8 / scope",
+      "requirementIds": [
+        "AC8 / scope"
+      ],
+      "evidence": "The session log's original \"Files Changed\" table still lists pre-revision hashes (footer.ts ba0cb926, select.sql f9ceec5a); the \"Files changed (revision 1)\" table carries the final values (8422b161, 50f7d103), which the reviewer confirmed. The first table is superseded history, not the final record."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC9 / owner",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell, node.exe -p process.platform = win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer read the full footer.ts, allowlist and index.ts diffs, the complete smoke-test builder and all footer arms, the R2 SQL, the plant record and the failing transcript, and the session log revision section; re-ran the smoke + allowlist suites (27 passed), test:admin (18) and test:rls-guards (15), all exit 0; re-ran git hash-object on the eight shipped files (equal to r1-21); compared build and source mtimes. AC9 is the lowest-evidence row: it rests on the production HTTP checks captured in review1-post-o79-1.txt earlier on 2026-09-23 rather than re-measured now; the route file is unchanged by this task and the grant state it depends on was verified by AC3. The Footer save in O79-4 needs this code deployed and remains an owner action in Sprint 79."
+  }
+}

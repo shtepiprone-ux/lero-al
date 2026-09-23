@@ -1,0 +1,26 @@
+HOST: bmxkzcxaojgmpgzawwtn.supabase.co
+
+Q1 anon select pages (no filter):
+  error_code: null
+  error_message: null
+  row_count: 3
+
+Q2 anon select pages where is_published = true:
+  error_code: null
+  error_message: null
+  row_count: 3
+
+Q3 service_role select pages (no filter):
+  error_code: null
+  error_message: null
+  row_count: 3
+
+BRANCH: anon already permitted — TASK SPECIFICATION CONTRADICTION. Stop before applying R2.
+
+CONTENT CENSUS (service-role, character lengths only, no body text):
+  slug=privacy-policy is_published=true | sq: title_len=22 body_len=14 | en: title_len=0 body_len=12 | uk: title_len=0 body_len=0 | it: title_len=0 body_len=18
+  slug=about is_published=true | sq: title_len=10 body_len=14 | en: title_len=0 body_len=12 | uk: title_len=0 body_len=20 | it: title_len=0 body_len=18
+  slug=terms-of-service is_published=true | sq: title_len=19 body_len=14 | en: title_len=16 body_len=34 | uk: title_len=0 body_len=20 | it: title_len=0 body_len=18
+
+CENSUS_ROW_COUNT=3 (F22 recorded exactly 1 on 2026-09-21 — this run states whether that still holds)
+EXIT_CODE=0

@@ -5,7 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { revalidatePath } from 'next/cache'
 import type { SiteFooter, FooterLink } from '@/types/database'
-import { isValidFooterUrl } from '@/lib/footer-route-allowlist'
+import { isValidFooterUrl, normalizeInternalPath, STATIC_INTERNAL_PATHS } from '@/lib/footer-route-allowlist'
 
 const VALID_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 
@@ -30,6 +30,24 @@ function isValidLinkUrl(url: string): boolean {
 
 function validateLinks(links: FooterLink[]): boolean {
   return links.every(l => isValidLinkUrl(l.url))
+}
+
+// A single-segment internal path that is not one of the static entries is a candidate
+// CMS page slug (its shape already passed isValidFooterUrl's validateSlug check). Its
+// EXISTENCE — is it a real, published `pages` row — is decided here, on the server,
+// never by the client-reachable shape check alone.
+function collectCandidateCmsSlugs(links: FooterLink[]): Set<string> {
+  const slugs = new Set<string>()
+  for (const link of links) {
+    if (!link.enabled) continue
+    const trimmed = link.url.trim()
+    if (!trimmed || !trimmed.startsWith('/')) continue
+    const normalized = normalizeInternalPath(trimmed)
+    if ((STATIC_INTERNAL_PATHS as readonly string[]).includes(normalized)) continue
+    const slug = normalized.slice(1)
+    if (slug) slugs.add(slug)
+  }
+  return slugs
 }
 
 // ── Public: read footer for a locale (used by public footer SSR) ──────────────
@@ -109,10 +127,36 @@ export async function upsertFooterContent(
     return { error: 'invalid_internal_link' }
   }
 
+  // R7/review-1 F1: the admin check runs after the pure checks above but BEFORE any
+  // service-role client or DB call — a 'use server' export is callable by anyone, so an
+  // unauthenticated/non-admin caller must never trigger a service-role `pages` read.
   const actorId = await assertAdminUser()
   if (!actorId) return { error: 'forbidden' }
 
   const db = createAdminClient()
+
+  // R4: resolve every enabled CMS-slug candidate against `pages` in one batched query —
+  // not one query per link. Unknown or unpublished → invalid_internal_link, same as the
+  // shape rejection above, so the whole locale payload (nav + info + social) is not saved.
+  const candidateSlugs = collectCandidateCmsSlugs(allLinks)
+  if (candidateSlugs.size > 0) {
+    const { data: publishedPages, error: pagesError } = await db
+      .from('pages')
+      .select('slug')
+      .in('slug', Array.from(candidateSlugs))
+      .eq('is_published', true)
+    if (pagesError) {
+      console.error('[footer] pages lookup failed', { error: pagesError })
+      return { error: 'transient' }
+    }
+    const publishedSlugs = new Set((publishedPages ?? []).map(p => p.slug))
+    for (const slug of candidateSlugs) {
+      if (!publishedSlugs.has(slug)) {
+        return { error: 'invalid_internal_link' }
+      }
+    }
+  }
+
   const { error } = await db.from('site_footer').upsert({
     locale,
     brand_title:          payload.brand_title.trim(),

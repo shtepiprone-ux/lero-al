@@ -1,7 +1,7 @@
 # Task 867 — the public CMS read path (`pages` has no `anon` grant), and the Footer that cannot link to a page it publishes
 
 Sprint 79 · P1 · QA profile **Q4** (RLS/read-path security + server-action validation) · no dependencies ·
-owner actions **O79-1 … O79-4** · **Status: 🔁 NEEDS REVISION 2026-09-23 (review 1) — re-enter at §16, READY FOR SONNET**
+owner actions **O79-1 … O79-4** · **Status: ✅ APPROVED WITH NOTES 2026-09-23 (review 2, of revision 1) — archived; ledger `docs/reviews/2026-09-23-task867-cms-read-path-footer-slug-validation.review-ledger.json`**
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 

@@ -1,0 +1,42 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts (21 tests | 1 failed) 77ms
+     × review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path 4ms
+npm.cmd : 
+At line:3 char:1
++ npm.cmd run test -- src/modules/admin/actions/__tests__/pages-and-foo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug 
+existence (R4) > review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a 
+static path
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'is_published', true ]
+
+Number of calls: 0
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:269:28
+    267|     expect(col).toBe('slug')
+    268|     expect([...slugs].sort()).toEqual(['about', 'privacy-policy'])
+    269|     expect(mockCmsBatchEq).toHaveBeenCalledWith('is_published', true)
+       |                            ^
+    270|   })
+    271|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 passed (21)
+   Start at  19:58:46
+   Duration  1.21s (transform 104ms, setup 89ms, import 45ms, tests 77ms, environment 761ms)
+
+EXIT_CODE=1

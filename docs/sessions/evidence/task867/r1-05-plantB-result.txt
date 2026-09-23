@@ -1,0 +1,70 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts (21 tests | 2 failed) 76ms
+     × review-1 F1 — an unauthenticated caller gets forbidden before any pages lookup or upsert 5ms
+     × review-1 F1 — a non-admin caller gets forbidden before any pages lookup or upsert 1ms
+npm.cmd : 
+At line:3 char:1
++ npm.cmd run test -- src/modules/admin/actions/__tests__/pages-and-foo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug 
+existence (R4) > review-1 F1 — an unauthenticated caller gets forbidden before any pages lookup or upsert
+AssertionError: expected { error: 'invalid_internal_link' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "invalid_internal_link",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:281:20
+    279|     })
+    280|
+    281|     expect(result).toEqual({ error: 'forbidden' })
+       |                    ^
+    282|     expect(mockCmsBatchSelect).not.toHaveBeenCalled()
+    283|     expect(mockFooterUpsert).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug 
+existence (R4) > review-1 F1 — a non-admin caller gets forbidden before any pages lookup or upsert
+AssertionError: expected { error: 'invalid_internal_link' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "invalid_internal_link",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:295:20
+    293|     })
+    294|
+    295|     expect(result).toEqual({ error: 'forbidden' })
+       |                    ^
+    296|     expect(mockCmsBatchSelect).not.toHaveBeenCalled()
+    297|     expect(mockFooterUpsert).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 19 passed (21)
+   Start at  19:59:10
+   Duration  1.12s (transform 102ms, setup 95ms, import 44ms, tests 76ms, environment 764ms)
+
+EXIT_CODE=1

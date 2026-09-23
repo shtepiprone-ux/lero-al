@@ -1,0 +1,6 @@
+EXIT_CODE=1
+
+NOTE: grep exit code 1 means "no lines matched" (grep's own exit-code convention: 0=match,
+1=no-match, 2=error). Per section 16.4, "Expect no output" — zero matches is the PASSING result
+for this specific check. No git-diff-added line touching revalidatePath exists in src/, in this
+diff, confirming AC7's "no added revalidatePath call".

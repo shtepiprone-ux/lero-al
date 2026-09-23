@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  19:20:49
+   Duration  1.05s (transform 97ms, setup 88ms, import 37ms, tests 71ms, environment 736ms)
+
+EXIT_CODE=0

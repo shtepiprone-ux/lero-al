@@ -1,0 +1,75 @@
+=== agent_reviews ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== amenities ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== amenity_translations ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== conversations ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== currency_rates ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== history_clear_events ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== languages ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== listing_amenities ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== listing_translations ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== location_translations ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== messages ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== notification_settings ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== page_translations ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== support_messages ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1
+=== verification_requests ===
+-- .from() hits --
+exit=1
+-- embed hits --
+exit=1

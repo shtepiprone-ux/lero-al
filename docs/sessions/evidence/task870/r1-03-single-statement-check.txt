@@ -1,0 +1,2 @@
+scripts/task-870-privilege-audit.sql semicolons=1 endsWithSemicolon=true writeKeywords=none
+scripts/task-870-guard-selftest.sql semicolons=24 endsWithSemicolon=true writeKeywords=none

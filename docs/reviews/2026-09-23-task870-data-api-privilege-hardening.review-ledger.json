@@ -1,0 +1,781 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-870 — Data API privilege hardening: the public_user_profiles hotfix recorded, anon/authenticated revoked on 3 service-only + 15 no-consumer tables behind a fail-closed guard, postgres default privileges stripped, one-grid repeatable audit and two-armed anon probe, rls-rules.md bans view DML grants (R1-R10, revision 1)",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "3a4b4017b18154ddc39be08e3cf9e611f77cbe90",
+    "reviewedRevision": "uncommitted worktree on top of 3a4b4017b18154ddc39be08e3cf9e611f77cbe90 (main). Blobs: task-870-privilege-audit.sql e61bbb47, task-870-harden-privileges.sql b1145e11, task-870-guard-selftest.sql dfa2b995, task-870-rollback.sql 6cb0029c, task-870-anon-probe.mjs d723409d, docs/rls-rules.md 2a6898a5.",
+    "reviewedPaths": [
+      "scripts/task-870-privilege-audit.sql",
+      "scripts/task-870-harden-privileges.sql",
+      "scripts/task-870-guard-selftest.sql",
+      "scripts/task-870-rollback.sql",
+      "scripts/task-870-anon-probe.mjs",
+      "docs/rls-rules.md",
+      "docs/sessions/2026-09-23-task870-data-api-privilege-hardening.md",
+      "docs/sessions/evidence/task870"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 9,
+      "verified": 9,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-23-task870-data-api-privilege-hardening.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-privilege-audit.sql",
+        "symbol": "single statement, checks A1-A8",
+        "diffHunks": [
+          "scripts/task-870-privilege-audit.sql (new file, blob e61bbb47)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "single statement",
+          "no write keyword",
+          "every check prints a (count) row",
+          "A8 limited to public"
+        ],
+        "phases": [
+          "pre-apply",
+          "post-apply"
+        ],
+        "notApplicable": {
+          "stories": "Read-only catalog query; no UI artifact, story or visual state.",
+          "locales": "Read-only catalog query; no user-facing string added or changed.",
+          "viewports": "Read-only catalog query; nothing rendered by this change.",
+          "states": "Read-only catalog query; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/r1-03-single-statement-check.txt",
+          "command": "node.exe single-statement check (kickoff 16.5)",
+          "observable": "audit: semicolons=1 endsWithSemicolon=true writeKeywords=none",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section); a static property of the file, identical before and after the owner applied the harden script",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "single statement",
+              "no write keyword"
+            ],
+            "phases": [
+              "pre-apply",
+              "post-apply"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/r1-05-a8-filter-check.txt",
+          "command": "node.exe A8 filter check (kickoff 16.5)",
+          "observable": "a8_public_filter=true",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section); a static property of the file, identical before and after the apply",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "A8 limited to public"
+            ],
+            "phases": [
+              "pre-apply",
+              "post-apply"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "command": "owner-run scripts/task-870-privilege-audit.sql in the SQL Editor, BEFORE and AFTER",
+          "observable": "One grid each time; every check A1-A8 printed a (count) row in both runs, including the zero-valued ones (A1, A3 before; A1, A3, A4, A7 after).",
+          "freshness": "live production database 2026-09-23, after the owner applied the revision-1 harden script (the same blob b1145e11) and the step-4b revoke",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every check prints a (count) row"
+            ],
+            "phases": [
+              "pre-apply",
+              "post-apply"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A zero COUNT could hide a check that never ran.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. Both owner grids contain an A1 and A3 (count) row reading 0 next to non-zero A2/A5/A6 rows, so a zero is printed, not omitted."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2 R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-harden-privileges.sql",
+        "symbol": "steps 1-2 revoke/grant statements",
+        "diffHunks": [
+          "scripts/task-870-harden-privileges.sql:87-110 (blob b1145e11)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "public_user_profiles revoke + two selects",
+          "18 literal revokes",
+          "no statement on role_permissions, listing_views or pages"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Owner-applied SQL; no UI artifact, story or visual state.",
+          "locales": "Owner-applied SQL; no user-facing string added or changed.",
+          "viewports": "Owner-applied SQL; nothing rendered by this change.",
+          "states": "Owner-applied SQL; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/05-harden-targets.txt",
+          "command": "node.exe target-list extraction (kickoff 13.2)",
+          "observable": "revoke/grant targets are exactly public_user_profiles (1 revoke, 2 grants) and the 18 R tables (1 revoke each); reviewer read of the final blob confirms steps 1-2 are unchanged in revision 1.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "public_user_profiles revoke + two selects",
+              "18 literal revokes",
+              "no statement on role_permissions, listing_views or pages"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A statement touches a table outside R.",
+          "kind": "EXECUTED",
+          "path": "scripts/task-870-harden-privileges.sql",
+          "result": "REFUTED. Reviewer read of the full file: no dynamic SQL outside the read-only guard, and none of role_permissions, listing_views or pages is named."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R3 R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-guard-selftest.sql",
+        "symbol": "guard do-block (g1-g4)",
+        "diffHunks": [
+          "scripts/task-870-guard-selftest.sql (blob dfa2b995)",
+          "scripts/task-870-harden-privileges.sql:27-85"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "planted users fires g4 naming public_user_profiles",
+          "real R set passes and applies",
+          "blocks byte-identical except the array"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Owner-run PL/pgSQL guard; no UI artifact, story or visual state.",
+          "locales": "Owner-run PL/pgSQL guard; no user-facing string added or changed.",
+          "viewports": "Owner-run PL/pgSQL guard; nothing rendered by this change.",
+          "states": "Owner-run PL/pgSQL guard; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "command": "owner-run scripts/task-870-guard-selftest.sql, then scripts/task-870-harden-privileges.sql",
+          "observable": "Selftest: ERROR P0001 \"Task 870 guard: 1 violation(s) found — g4: view(s) public_user_profiles depend on users\". Harden: \"Success. No rows returned\" (guard passed for R).",
+          "freshness": "live production database 2026-09-23, after the owner applied the revision-1 harden script (the same blob b1145e11) and the step-4b revoke",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "planted users fires g4 naming public_user_profiles",
+              "real R set passes and applies",
+              "blocks byte-identical except the array"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/r1-04-guard-check.txt",
+          "command": "node.exe guard-block diff and flag check (kickoff 16.5)",
+          "observable": "lines 59 59 differing [3] (the array literal); g4_names_views, g4_msg and g2_prokind true in both files.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "blocks byte-identical except the array"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The guard can never fail, so the harden success proves nothing.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. The identical block raised on the planted users array against the same live catalog minutes before the harden run passed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-anon-probe.mjs",
+        "symbol": "probe with denied_relation",
+        "diffHunks": [
+          "scripts/task-870-anon-probe.mjs (blob d723409d)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "17 R tables anon 200 before",
+          "support_messages anon 42501 denied_relation=support_tickets before",
+          "all 18 R anon 42501 with own denied_relation after",
+          "service_role 200/206 both phases",
+          "public_user_profiles GET and PATCH 42501 both phases"
+        ],
+        "phases": [
+          "pre-apply",
+          "post-apply"
+        ],
+        "notApplicable": {
+          "stories": "Live Data API probe; no UI artifact, story or visual state.",
+          "locales": "Live Data API probe; no user-facing string added or changed.",
+          "viewports": "Live Data API probe; nothing rendered by this change.",
+          "states": "Live Data API probe; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/r1-02-probe-before.txt",
+          "command": "node.exe scripts\\task-870-anon-probe.mjs --phase before (executor, win32)",
+          "observable": "17 R tables anon 200; support_messages anon 401 42501 denied_relation=support_tickets; service role 200/206; public_user_profiles GET and PATCH 401 42501 denied_relation=public_user_profiles.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "17 R tables anon 200 before",
+              "support_messages anon 42501 denied_relation=support_tickets before",
+              "all 18 R anon 42501 with own denied_relation after",
+              "service_role 200/206 both phases",
+              "public_user_profiles GET and PATCH 42501 both phases"
+            ],
+            "phases": [
+              "pre-apply"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "command": "node.exe scripts\\task-870-anon-probe.mjs --phase after (owner, win32)",
+          "observable": "All 18 R tables anon 401 42501 with denied_relation equal to the probed table (support_messages now names itself); service role 200/206 on all 18; public_user_profiles GET and PATCH 401 42501.",
+          "freshness": "live production database 2026-09-23, after the owner applied the revision-1 harden script (the same blob b1145e11) and the step-4b revoke",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "17 R tables anon 200 before",
+              "support_messages anon 42501 denied_relation=support_tickets before",
+              "all 18 R anon 42501 with own denied_relation after",
+              "service_role 200/206 both phases",
+              "public_user_profiles GET and PATCH 42501 both phases"
+            ],
+            "phases": [
+              "post-apply"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The AFTER 42501 on support_messages is the pre-existing policy refusal, not the revoke.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. BEFORE named support_tickets (policy subquery, reviewer-reproduced by a direct anon GET); AFTER names support_messages, which only a missing grant on that table produces because the grant check precedes RLS."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R1 R2 R4 R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-harden-privileges.sql",
+        "symbol": "live effect of steps 1-3",
+        "diffHunks": [
+          "scripts/task-870-harden-privileges.sql:87-114"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "A1 0",
+          "A3 0",
+          "A4 0",
+          "A7 0",
+          "A8 public_user_profiles authenticated SELECT only"
+        ],
+        "phases": [
+          "post-apply"
+        ],
+        "notApplicable": {
+          "stories": "Live catalog state; no UI artifact, story or visual state.",
+          "locales": "Live catalog state; no user-facing string added or changed.",
+          "viewports": "Live catalog state; nothing rendered by this change.",
+          "states": "Live catalog state; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "command": "owner-run AFTER audit",
+          "observable": "A1 0, A3 0, A4 0 (from 144), A7 0 (from 10), A8 1 row: public_user_profiles | authenticated | SELECT granted_by=postgres.",
+          "freshness": "live production database 2026-09-23, after the owner applied the revision-1 harden script (the same blob b1145e11) and the step-4b revoke",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "A1 0",
+              "A3 0",
+              "A4 0",
+              "A7 0",
+              "A8 public_user_profiles authenticated SELECT only"
+            ],
+            "phases": [
+              "post-apply"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A revoke by postgres left a grant made by another grantor (Assumption 5.4).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. BEFORE A4/A8 printed granted_by=postgres on every row, and AFTER A4 is 0 with A8 holding only the intended SELECT."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / R4 R10",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-23-task870-data-api-privilege-hardening.md",
+        "symbol": "S1 per-site trace + regression suites",
+        "diffHunks": [
+          "session log I0 step 4 table"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every S1 .from() site uses createAdminClient",
+          "test:auth passes",
+          "test:admin passes",
+          "admin history read and clear still work live"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Server write-path inventory; no UI artifact, story or visual state.",
+          "locales": "Server write-path inventory; no user-facing string added or changed.",
+          "viewports": "Server write-path inventory; nothing rendered by this change.",
+          "states": "Server write-path inventory; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-23-task870-data-api-privilege-hardening.md",
+          "command": "reviewer read of the I0 step 4 table + spot-check of the cited construction lines",
+          "observable": "14 S1 sites, each citing a createAdminClient() line; reviewer opened index.ts:366/534/562, cabinet index.ts:322/402/527, admin users page :21, inactivity route :61 — all `const db = createAdminClient()`.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every S1 .from() site uses createAdminClient"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/06-test-auth.txt",
+          "command": "npm.cmd run test:auth",
+          "observable": "28 passed, EXIT_CODE=0 (the email-change actions write email_change_tokens through the mocked admin client).",
+          "freshness": "revision 0; no src file changed in either revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "test:auth passes"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/07-test-admin.txt",
+          "command": "npm.cmd run test:admin",
+          "observable": "18 passed, EXIT_CODE=0 (updateUserProfileFull and clearHistory).",
+          "freshness": "revision 0; no src file changed in either revision",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "test:admin passes"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "command": "owner O80-3 manual checks after the apply",
+          "observable": "Admin /admin/users/<id> history sections load; admin clear-history of one record still works.",
+          "freshness": "live production database 2026-09-23, after the owner applied the revision-1 harden script (the same blob b1145e11) and the step-4b revoke",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "admin history read and clear still work live"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Revoking authenticated on user_status_history/user_change_log breaks the admin history view.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. Both reads use createAdminClient (admin users page :21) and the owner saw the sections load after the apply."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC7 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [
+        "F2"
+      ],
+      "finalSubject": {
+        "path": "scripts/task-870-rollback.sql",
+        "symbol": "break-glass grants",
+        "diffHunks": [
+          "scripts/task-870-rollback.sql (blob 6cb0029c, unchanged in revision 1)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "grants only on the 18 R tables",
+          "restores the F17 default entries",
+          "never names public_user_profiles in a statement"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Owner-applied break-glass SQL; no UI artifact, story or visual state.",
+          "locales": "Owner-applied break-glass SQL; no user-facing string added or changed.",
+          "viewports": "Owner-applied break-glass SQL; nothing rendered by this change.",
+          "states": "Owner-applied break-glass SQL; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "scripts/task-870-rollback.sql",
+          "command": "reviewer read of the full file",
+          "observable": "18 `grant all on public.<t> to anon, authenticated;`, the two default-privilege re-grants, reload; public_user_profiles appears only in the capitalised header warning.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "grants only on the 18 R tables",
+              "restores the F17 default entries",
+              "never names public_user_profiles in a statement"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The rollback restores less than the prior state.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt",
+          "result": "REFUTED. BEFORE A8 shows every R table held all eight privileges (arwdDxtm) for both roles, which `grant all` restores; the default-privilege re-grant restores TRUNCATE/REFERENCES/TRIGGER but not MAINTAIN — see note F2."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC8 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/rls-rules.md",
+        "symbol": "four sections of kickoff 10.5",
+        "diffHunks": [
+          "docs/rls-rules.md: SECURITY DEFINER exception condition 4; Existing known finding; Public Schema GRANT Discipline; Existing-table audit"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "view DML ban in the rule text",
+          "known finding updated",
+          "post-migration audit rule",
+          "one-grid rule"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Rules document; no UI artifact, story or visual state.",
+          "locales": "Rules document; no user-facing string added or changed.",
+          "viewports": "Rules document; nothing rendered by this change.",
+          "states": "Rules document; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/rls-rules.md",
+          "command": "git --no-optional-locks diff docs/rls-rules.md (reviewer)",
+          "observable": "Condition 4 now starts with revoke all and bans INSERT/UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER on any view for anon/authenticated; F17 fact, audit rule (A1/A3/A4/A7 must read 0) and the one-grid rule added; no other section touched.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "view DML ban in the rule text",
+              "known finding updated",
+              "post-migration audit rule",
+              "one-grid rule"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The executor wrote that the SQL was applied before it was.",
+          "kind": "EXECUTED",
+          "path": "docs/rls-rules.md",
+          "result": "REFUTED. The executor text names the scripts only; the applied state is recorded by the reviewer at approval."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC9 / scope",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/task-870-harden-privileges.sql",
+        "symbol": "final write set",
+        "diffHunks": [
+          "section 7 paths only"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no src change",
+          "build exit 0",
+          "integrity and mojibake exit 0",
+          "no path outside section 7"
+        ],
+        "phases": [
+          "post-fix"
+        ],
+        "notApplicable": {
+          "stories": "Scope and gate block; no UI artifact, story or visual state.",
+          "locales": "Scope and gate block; no user-facing string added or changed.",
+          "viewports": "Scope and gate block; nothing rendered by this change.",
+          "states": "Scope and gate block; the cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task870/r1-09-build.txt",
+          "command": "npm.cmd run build",
+          "observable": "EXIT_CODE=0 after the last revision-1 edit.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "build exit 0"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/r1-07-check-file-integrity.txt",
+          "command": "npm.cmd run check:file-integrity",
+          "observable": "EXIT_CODE=0; r1-08 check:mojibake EXIT_CODE=0; r1-06 eslint on the probe EXIT_CODE=0.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "integrity and mojibake exit 0"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task870/r1-11-status-after.txt",
+          "command": "git --no-optional-locks status --porcelain",
+          "observable": "Only section-7 paths (five scripts, rls-rules.md, session log, evidence, backlog row) plus the unrelated pre-existing task861 storybook-dev.log and schema-drift-check.sql timestamp; no src path.",
+          "freshness": "final worktree 2026-09-23; reviewer git hash-object equals r1-10-hash-object.txt (audit e61bbb47, harden b1145e11, selftest dfa2b995, rollback 6cb0029c, probe d723409d, rls-rules.md 2a6898a5 as the executor left it; at approval the reviewer appended the kickoff 10.5.4 applied-state paragraph to its Existing-table audit section)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no src change",
+              "no path outside section 7"
+            ],
+            "phases": [
+              "post-fix"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A src file changed.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task870/r1-11-status-after.txt",
+          "result": "REFUTED. Reviewer git status shows no src/ path modified or untracked."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "SQL grants, a read-only catalog query and a Node probe; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC4 / R7",
+      "requirementIds": [
+        "AC4 / R7"
+      ],
+      "evidence": "Orchestration defect, corrected in revision 1: the original R7 printed pg_code only, so the policy-subquery refusal on support_messages (denied_relation=support_tickets) looked like a premise drift. Recorded for the kickoff-design lesson; no residual effect."
+    },
+    {
+      "id": "F2",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC7 / R8",
+      "requirementIds": [
+        "AC7 / R8"
+      ],
+      "evidence": "scripts/task-870-rollback.sql re-grants TRUNCATE/REFERENCES/TRIGGER as default privileges but not MAINTAIN, which the BEFORE A7 grid showed (kickoff F17 listed Dxtm and R8 named three privileges). Break-glass only and never applied; MAINTAIN is not reachable through the Data API."
+    },
+    {
+      "id": "F3",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC5 / R1 R2 R4 R5",
+      "requirementIds": [
+        "AC5 / R1 R2 R4 R5"
+      ],
+      "evidence": "Out-of-R live hole found in the BEFORE A6 grid and closed the same session by an owner hotfix: clear_user_history(text, uuid, uuid, uuid) is SECURITY DEFINER with no caller check and was EXECUTE-able by anon and authenticated (Task 246 meant service-role only). Revoked in O80-2 step 4b; AFTER A6 no longer lists it; the only caller (clearHistory.ts:26-28, createAdminClient) still works per O80-3. The remaining A6 rows match rls-rules.md RPC EXECUTE Discipline (record_listing_view and record_recently_viewed intentionally anon-callable; get_listing_owner_contact authenticated-only)."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC6 / R4 R10",
+    "reviewer": "Opus",
+    "reviewerEnvironment": "Native Windows PowerShell/Git Bash on win32, Node v22.22.3, cwd C:\\Claude_Code_Projects\\lero-al. Reviewer read all five scripts in full after revision 1, the rls-rules.md diff, the session log S1 table and eight of its cited construction lines, and the r1 gate outputs; re-ran git hash-object (equal to r1-10); reproduced the support_messages refusal with one direct anon GET (message: permission denied for table support_tickets). Live AC1/AC3/AC4-after/AC5 rest on the owner-run SQL Editor grids and AFTER probe recorded verbatim in 20-owner-o80-2-o80-3.txt, not re-measured by the reviewer, who has no database access. AC6 is the lowest-evidence row: its regression suites are mocked and ran in revision 0, and its live half is the owner manual check."
+  }
+}

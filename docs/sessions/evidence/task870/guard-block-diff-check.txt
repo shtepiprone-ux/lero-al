@@ -1,0 +1,3 @@
+harden lines: 58 selftest lines: 58
+diff count: 1
+{"line":3,"harden":"  v_names text[] := array['email_change_tokens','user_status_history','user_change_log','agent_reviews','amenities','amenity_translations','conversations','currency_rates','history_clear_events','languages','listing_amenities','listing_translations','location_translations','messages','notification_settings','page_translations','support_messages','verification_requests'];","selftest":"  v_names text[] := array['users'];"}

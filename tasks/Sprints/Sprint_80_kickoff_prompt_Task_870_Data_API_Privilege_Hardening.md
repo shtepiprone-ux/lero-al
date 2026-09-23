@@ -1,7 +1,7 @@
 # Task 870 — Data API privilege hardening: no view is writable, no service-only or consumer-less table is reachable, no default hands out access
 
 Sprint 80 · **P1** · QA profile **Q4** (RLS/permission security; data-integrity risk) · no dependencies ·
-owner actions **O80-1 … O80-3** · **Status: 🔁 NEEDS REVISION 2026-09-23 (review 1) — re-enter at §16, READY FOR SONNET**
+owner actions **O80-1 … O80-3** · **Status: ✅ APPROVED WITH NOTES 2026-09-23 (review 3) — archived; owner evidence `docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt`, ledger `docs/reviews/2026-09-23-task870-data-api-privilege-hardening.review-ledger.json`**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Design-time evidence (owner grids, verbatim): `docs/sessions/evidence/task870/00-owner-grids-2026-09-23.txt`.
@@ -696,3 +696,23 @@ revision-0 PREMISE DRIFT is resolved by §16.4. Set the 870 backlog row to
 - **Must not change:** anything else.
 
 No git command other than the read-only ones in §16.5.
+
+## 17. O80-2 in progress — owner results and an A6 finding (review 2, 2026-09-23)
+
+- **BEFORE grid (O80-2 step 2), owner-run:** A1 0 · A2 1 (`public_user_profiles`, owner postgres,
+  bypassrls true, authenticated-only SELECT) · A3 0 · A4 144 (= 18 R tables × 2 roles × 4 privileges; S0 contributes
+  0) · A5 1 (`listing_views` "Anyone can insert a view", owned by 865) · A6 7 · A7 10 (anon/authenticated ×
+  TRUNCATE/REFERENCES/TRIGGER/MAINTAIN on tables + UPDATE on sequences) · A8 289 (all `granted_by=postgres`, so the
+  revoke grantor risk of Assumption 5.4 does not materialise).
+- **Selftest (O80-2 step 3), owner-run:** `ERROR: P0001: Task 870 guard: 1 violation(s) found — g4: view(s)
+  public_user_profiles depend on users`. **AC3 VERIFIED.**
+- **A6 finding — P1, live, outside 870's R.** `clear_user_history(text, uuid, uuid, uuid)` is `SECURITY DEFINER`, and
+  `anon` and `authenticated` can EXECUTE it (A6). Its body (`docs/sessions/2026-06-15-task246-admin-clear-history.md:113-172`)
+  has no caller check: it deletes any user's `user_change_log` / `user_status_history` rows by `p_entity_id` and
+  writes the caller-supplied `p_actor_user_id` into the audit row. Task 246 intended service-role only
+  (`REVOKE ALL … FROM PUBLIC; GRANT EXECUTE … TO service_role`); the explicit `anon`/`authenticated` grants survived.
+  The only caller is `src/modules/admin/actions/clearHistory.ts:26-28` (`createAdminClient()`), after
+  `hasPermission('audit.clear_history')`. **Owner hotfix, O80-2 step 4b:** `revoke execute on function
+  public.clear_user_history(text, uuid, uuid, uuid) from anon, authenticated; notify pgrst, 'reload schema';`. The
+  AFTER grid's A6 must no longer list it. Approval records it and files the remaining A6 rows (`record_listing_view`,
+  `record_recently_viewed`, `get_listing_owner_contact`) against `rls-rules.md` → Acknowledged Advisor Exceptions.

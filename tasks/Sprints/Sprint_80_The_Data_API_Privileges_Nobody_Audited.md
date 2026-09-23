@@ -1,6 +1,6 @@
 # Sprint 80 — the Data API privileges nobody audited against what the code actually uses
 
-**Opened:** 2026-09-23 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (870) · **Reserved:** 1 (871)
+**Opened:** 2026-09-23 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (870) · **Kickoffs filed:** 1 (870) · **Reserved:** 1 (871)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -65,7 +65,7 @@ default privileges and functions, and makes it repeatable.
 
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **870** | Data API privilege hardening: record the 2026-09-23 `public_user_profiles` hotfix, revoke `anon`/`authenticated` from the three service-only tables and the fifteen tables with no consumer (guarded, fail-closed SQL), remove the `anon`/`authenticated` default privileges on future `postgres` tables and sequences, ship a one-grid repeatable audit and a two-armed anon probe, and update `docs/rls-rules.md` so a view can never again be granted DML | **P1** | **Q4** | — | 🔁 `NEEDS REVISION` 2026-09-23 (review 1: the selftest cannot name the dependent view; A8 has no schema filter; the probe must print `denied_relation` — the `support_messages` drift is a policy subquery, not a drift) → [`…Task_870…`](Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md) |
+| **870** | Data API privilege hardening: record the 2026-09-23 `public_user_profiles` hotfix, revoke `anon`/`authenticated` from the three service-only tables and the fifteen tables with no consumer (guarded, fail-closed SQL), remove the `anon`/`authenticated` default privileges on future `postgres` tables and sequences, ship a one-grid repeatable audit and a two-armed anon probe, and update `docs/rls-rules.md` so a view can never again be granted DML | **P1** | **Q4** | — | ✅ `APPROVED WITH NOTES` 2026-09-23 (review 3; archived — owner-applied, AFTER audit A1/A3/A4/A7 = 0, anon probe 42501 on all 18 naming themselves; `clear_user_history` anon EXECUTE found in A6 and revoked the same run; ledger `docs/reviews/2026-09-23-task870-data-api-privilege-hardening.review-ledger.json`) → [`…Task_870…`](Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md) |
 | **871** | Moderator permission checks can never succeed: `roleHasPermission` (`src/lib/auth/permissions.ts:10-16`) reads `role_permissions` through the user-scoped client, and `authenticated` has had no `SELECT` on it since Task 275 | **P2** | Q4 | — | 🔒 **RESERVED** — full text → `docs/backlog-reserved.md`; fix route is an owner decision |
 
 ## Owner actions this sprint needs

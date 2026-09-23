@@ -1,0 +1,91 @@
+Task 870 — owner-native evidence, O80-1 → O80-3, 2026-09-23. Owner-run in the Supabase SQL Editor (project
+shtepi-al, main/PRODUCTION) and native Windows PowerShell; pasted into the orchestrator session verbatim and
+recorded here by the reviewer. Values not edited; the BEFORE grid's per-row detail is summarised by count because
+the full 289-row A8 snapshot is the rollback reference and every row read `granted_by=postgres`.
+
+O80-1  Data API → Settings → "Automatically expose new tables" switched OFF, Save. Owner: "Готово."
+
+O80-2 step 2 — BEFORE audit (scripts/task-870-privilege-audit.sql, one grid)
+  A1 (count) 0
+  A2 (count) 1   public_user_profiles | owner=postgres bypassrls=true anon_select=false authenticated_select=true
+  A3 (count) 0
+  A4 (count) 144 = 18 R tables x {anon, authenticated} x {SELECT, INSERT, UPDATE, DELETE}; every row granted_by=postgres;
+                 no S0 table appears
+  A5 (count) 1   listing_views | Anyone can insert a view | cmd=INSERT | qual= | with_check=true
+  A6 (count) 7   clear_user_history (anon, authenticated) · get_listing_owner_contact (authenticated)
+                 · record_listing_view (anon, authenticated) · record_recently_viewed (anon, authenticated)
+  A7 (count) 10  TABLE x {anon, authenticated} x {TRUNCATE, REFERENCES, TRIGGER, MAINTAIN} + SEQUENCE x {anon, authenticated} x UPDATE
+  A8 (count) 289 R tables: anon and authenticated each hold SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES,
+                 TRIGGER, MAINTAIN (18 x 2 x 8 = 288) + public_user_profiles | authenticated | SELECT; all granted_by=postgres
+
+O80-2 step 3 — selftest (scripts/task-870-guard-selftest.sql)
+  Failed to run sql query: ERROR:  P0001: Task 870 guard: 1 violation(s) found — g4: view(s) public_user_profiles depend on users
+  CONTEXT:  PL/pgSQL function inline_code_block line 57 at RAISE
+
+O80-2 step 4 — harden (scripts/task-870-harden-privileges.sql)
+  Success. No rows returned
+
+O80-2 step 4b — reviewer-issued hotfix for the A6 finding (kickoff §17), SQL only:
+  revoke execute on function public.clear_user_history(text, uuid, uuid, uuid) from anon, authenticated;
+  notify pgrst, 'reload schema';
+  Success. No rows returned
+
+O80-2 step 5 — AFTER audit
+  A1 (count) 0
+  A2 (count) 1   public_user_profiles | owner=postgres bypassrls=true anon_select=false authenticated_select=true
+  A3 (count) 0
+  A4 (count) 0
+  A5 (count) 1   listing_views | Anyone can insert a view | cmd=INSERT | qual= | with_check=true
+  A6 (count) 5   get_listing_owner_contact (authenticated) · record_listing_view (anon, authenticated)
+                 · record_recently_viewed (anon, authenticated)      <- clear_user_history gone
+  A7 (count) 0
+  A8 (count) 1   public_user_profiles | authenticated | SELECT granted_by=postgres
+
+O80-2 step 6 — AFTER probe (node.exe scripts\task-870-anon-probe.mjs --phase after)
+phase=after relation=email_change_tokens role=anon method=GET http_status=401 pg_code=42501 denied_relation=email_change_tokens
+phase=after relation=email_change_tokens role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=user_status_history role=anon method=GET http_status=401 pg_code=42501 denied_relation=user_status_history
+phase=after relation=user_status_history role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=user_change_log role=anon method=GET http_status=401 pg_code=42501 denied_relation=user_change_log
+phase=after relation=user_change_log role=service_role method=GET http_status=206 pg_code=null denied_relation=null
+phase=after relation=agent_reviews role=anon method=GET http_status=401 pg_code=42501 denied_relation=agent_reviews
+phase=after relation=agent_reviews role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=amenities role=anon method=GET http_status=401 pg_code=42501 denied_relation=amenities
+phase=after relation=amenities role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=amenity_translations role=anon method=GET http_status=401 pg_code=42501 denied_relation=amenity_translations
+phase=after relation=amenity_translations role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=conversations role=anon method=GET http_status=401 pg_code=42501 denied_relation=conversations
+phase=after relation=conversations role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=currency_rates role=anon method=GET http_status=401 pg_code=42501 denied_relation=currency_rates
+phase=after relation=currency_rates role=service_role method=GET http_status=206 pg_code=null denied_relation=null
+phase=after relation=history_clear_events role=anon method=GET http_status=401 pg_code=42501 denied_relation=history_clear_events
+phase=after relation=history_clear_events role=service_role method=GET http_status=206 pg_code=null denied_relation=null
+phase=after relation=languages role=anon method=GET http_status=401 pg_code=42501 denied_relation=languages
+phase=after relation=languages role=service_role method=GET http_status=206 pg_code=null denied_relation=null
+phase=after relation=listing_amenities role=anon method=GET http_status=401 pg_code=42501 denied_relation=listing_amenities
+phase=after relation=listing_amenities role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=listing_translations role=anon method=GET http_status=401 pg_code=42501 denied_relation=listing_translations
+phase=after relation=listing_translations role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=location_translations role=anon method=GET http_status=401 pg_code=42501 denied_relation=location_translations
+phase=after relation=location_translations role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=messages role=anon method=GET http_status=401 pg_code=42501 denied_relation=messages
+phase=after relation=messages role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=notification_settings role=anon method=GET http_status=401 pg_code=42501 denied_relation=notification_settings
+phase=after relation=notification_settings role=service_role method=GET http_status=206 pg_code=null denied_relation=null
+phase=after relation=page_translations role=anon method=GET http_status=401 pg_code=42501 denied_relation=page_translations
+phase=after relation=page_translations role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=support_messages role=anon method=GET http_status=401 pg_code=42501 denied_relation=support_messages
+phase=after relation=support_messages role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=verification_requests role=anon method=GET http_status=401 pg_code=42501 denied_relation=verification_requests
+phase=after relation=verification_requests role=service_role method=GET http_status=200 pg_code=null denied_relation=null
+phase=after relation=public_user_profiles role=anon method=GET http_status=401 pg_code=42501 denied_relation=public_user_profiles
+phase=after relation=public_user_profiles role=anon method=PATCH http_status=401 pg_code=42501 denied_relation=public_user_profiles
+
+O80-3 — owner manual checks (verbatim, Ukrainian)
+  Signed-in listing owner card: "Так, все ок."
+  Signed-out same listing: "Гість бачить лише інформацію що треба залогінитись." (PASS)
+    + new, unrelated observation: "коли я розлогінююсь, то мене перкидає на головну сторінку, а не мало б, якщо я
+      знаходжусь на публічній сторінці, наприклад на такій як сторінка оголошення. Це треба виправити."
+      -> filed as 872 (src/components/layout/Header.tsx:47 `signOut(() => router.push(`/${locale}`))`).
+  /admin/users/<id> history sections: "Так, я бачу історію."
+  Admin clear history of one record (clear_user_history via service role after the 4b revoke): "Так, історія очищається."

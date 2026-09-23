@@ -128,8 +128,13 @@ written into the migration as an SQL comment immediately above `CREATE VIEW`:
    raw `auth.uid()` linkage to private data, password hashes, tokens, IP addresses, etc.
 3. The view body contains an explicit `WHERE` filter that limits rows to those the public
    is allowed to see (e.g., `where is_public = true and deleted_at is null`).
-4. GRANTs on the view are minimal — typically `grant select on <view> to anon, authenticated;`
-   and never to roles that don't need it.
+4. GRANTs on the view always begin with `revoke all on public.<view> from anon, authenticated;`,
+   then grant `select` only to the roles that have a named consumer — never to a role that
+   doesn't need it. **No view is ever granted `INSERT`, `UPDATE`, `DELETE`, `TRUNCATE`,
+   `REFERENCES` or `TRIGGER` to `anon` or `authenticated` (Task 870).** An auto-updatable
+   non-invoker view executes a write as its owner, bypassing the base table's RLS entirely —
+   this is exactly how `public.public_user_profiles` was writable by anon (see "Existing known
+   finding" below and Task 870's session log).
 
 If any of (1)–(4) fails, the view MUST be `security_invoker = on` instead.
 
@@ -146,6 +151,11 @@ If Security Advisor reports `0010_security_definer_view`:
 - `public.public_user_profiles` — flagged `0010_security_definer_view` (2026-05-28).
   Audit task required: read the view DDL, decide intentional-facade vs accidental, and
   apply the matching fix. Must close before 2026-10-30 (Supabase enforcement deadline).
+- Its grants were `anon`/`authenticated` DML (the view is auto-updatable, so an `UPDATE`/
+  `INSERT` grant let anon and authenticated write through it) until the owner's 2026-09-23
+  hotfix revoked them, leaving only `SELECT` for `authenticated`. That hotfix is now recorded
+  in a versioned, idempotent script by Task 870's R2 (`scripts/task-870-harden-privileges.sql`
+  step 1), not only in the owner's SQL Editor history.
 
 ---
 
@@ -154,6 +164,11 @@ If Security Advisor reports `0010_security_definer_view`:
 **Effective dates** (Supabase rollout):
 - 2026-05-30 — default for all new projects.
 - 2026-10-30 — enforced on all existing projects, including this one.
+- **Measured 2026-09-23 (Task 870, F17, `docs/sessions/evidence/task870/00-owner-grids-2026-09-23.txt`
+  GRID 2):** on this project, `postgres`'s default privileges in `public` already grant no
+  `SELECT`/`INSERT`/`UPDATE`/`DELETE` to `anon`/`authenticated` for a table `postgres` creates —
+  only `TRUNCATE`/`REFERENCES`/`TRIGGER`/`MAINTAIN` (`Dxtm`) for tables and `UPDATE` (`w`) for
+  sequences. Task 870's `scripts/task-870-harden-privileges.sql` step 3 revokes that residue too.
 
 After enforcement, a new table in `public` is invisible to `supabase-js`, PostgREST, and
 GraphQL until it has explicit GRANTs. PostgREST returns error code `42501` with the missing
@@ -206,6 +221,24 @@ table that the app reads via `supabase-js` has the matching GRANTs. This audit i
 independent of the migration template above, which governs all new tables from now on.
 
 Audit run on 2026-05-28 as Task 275. See `tasks/Sprints/Sprint_16_task_275_grant_audit.md` for the per-table table and `scripts/grant-discipline-audit.sql` for the emitted SQL. Owner-applied on 2026-05-28.
+
+Task 870 (Sprint 80, 2026-09-23) extended this audit to views, default privileges and
+`SECURITY DEFINER` functions: `scripts/task-870-privilege-audit.sql` (read-only, one grid,
+eight checks), `scripts/task-870-harden-privileges.sql` (revokes), `scripts/task-870-guard-selftest.sql`
+and `scripts/task-870-rollback.sql`. **Owner-applied 2026-09-23** (reviewer-recorded): the AFTER audit read A1 0 ·
+A3 0 · A4 0 (from 144) · A7 0 (from 10), and the anon probe got `42501` on all 18 tables, each naming itself
+(`docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt`). The same BEFORE grid's A6 exposed
+`clear_user_history(text, uuid, uuid, uuid)`, a caller-unchecked `SECURITY DEFINER` function that deletes any user's
+history, to `anon`/`authenticated`. The owner revoked that EXECUTE the same day; `service_role` (its only caller,
+`clearHistory.ts`) keeps it. The remaining A6 rows match "RPC EXECUTE Discipline" below.
+
+**After any SQL that creates or alters a `public` object, run `scripts/task-870-privilege-audit.sql`.**
+Checks A1 (`view_write_grant`), A3 (`rls_disabled_reachable`), A4 (`service_only_reachable`) and A7
+(`default_acl_anon_auth`) must each read `0` in the `(count)` row.
+
+**Every owner-run read-only script in this project returns exactly one result grid** — the
+Supabase SQL Editor shows only the last statement's result, and a batch that mixes SQL with
+explanatory prose is rejected at parse time and applies nothing (Task 870 F22/F23).
 
 ---
 

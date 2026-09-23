@@ -1,0 +1,3 @@
+lines 59 59 differing [3]
+scripts/task-870-harden-privileges.sql g4_names_views=true g4_msg=true g2_prokind=true
+scripts/task-870-guard-selftest.sql g4_names_views=true g4_msg=true g2_prokind=true

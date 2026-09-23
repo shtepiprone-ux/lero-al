@@ -1,0 +1,26 @@
+ M docs/rls-rules.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+?? docs/sessions/2026-09-23-task870-data-api-privilege-hardening.md
+?? docs/sessions/evidence/task870/01-status-before.txt
+?? docs/sessions/evidence/task870/01b-hash-before-modified.txt
+?? docs/sessions/evidence/task870/02-platform.txt
+?? docs/sessions/evidence/task870/03-probe-before.txt
+?? docs/sessions/evidence/task870/04-single-statement-check.txt
+?? docs/sessions/evidence/task870/05-harden-targets.txt
+?? docs/sessions/evidence/task870/06-test-auth.txt
+?? docs/sessions/evidence/task870/07-test-admin.txt
+?? docs/sessions/evidence/task870/08-eslint-probe.txt
+?? docs/sessions/evidence/task870/09-check-file-integrity.txt
+?? docs/sessions/evidence/task870/10-check-mojibake.txt
+?? docs/sessions/evidence/task870/11-build.txt
+?? docs/sessions/evidence/task870/12-hash-object.txt
+?? docs/sessions/evidence/task870/13-status-after.txt
+?? docs/sessions/evidence/task870/guard-block-diff-check.txt
+?? docs/sessions/evidence/task870/i0-3-s2-census.txt
+?? docs/sessions/evidence/task870/i0-4-s1-from-sites.txt
+?? scripts/task-870-anon-probe.mjs
+?? scripts/task-870-guard-selftest.sql
+?? scripts/task-870-harden-privileges.sql
+?? scripts/task-870-privilege-audit.sql
+?? scripts/task-870-rollback.sql

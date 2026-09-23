@@ -1,0 +1,14 @@
+src/app/admin/users/[id]/page.tsx:44:      .from('user_change_log')
+src/app/admin/users/[id]/page.tsx:56:      .from('user_status_history')
+src/app/api/cron/inactivity/route.ts:104:      await db.from('user_status_history').insert({
+src/app/api/presence/route.ts:42:      await db.from('user_status_history').insert({
+src/modules/admin/actions/index.ts:396:          await db.from('user_change_log').insert({
+src/modules/admin/actions/index.ts:417:      await db.from('user_status_history').insert({
+src/modules/admin/actions/index.ts:541:    await db.from('user_status_history').insert({
+src/modules/admin/actions/index.ts:569:    await db.from('user_status_history').insert({
+src/modules/cabinet/actions/index.ts:327:    .from('email_change_tokens')
+src/modules/cabinet/actions/index.ts:358:  const { error: tokenError } = await db.from('email_change_tokens').insert({
+src/modules/cabinet/actions/index.ts:406:    .from('email_change_tokens')
+src/modules/cabinet/actions/index.ts:424:    .from('email_change_tokens')
+src/modules/cabinet/actions/index.ts:530:    .from('email_change_tokens')
+src/modules/cabinet/actions/index.ts:541:    .from('email_change_tokens')

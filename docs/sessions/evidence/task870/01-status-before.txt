@@ -1,0 +1,55 @@
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+ M src/lib/footer-route-allowlist.ts
+ M src/modules/admin/actions/footer.ts
+ M src/modules/admin/actions/index.ts
+?? docs/sessions/2026-09-21-task867-cms-read-path-footer-slug-validation.md
+?? docs/sessions/evidence/task867/00-platform.txt
+?? docs/sessions/evidence/task867/01-probe.txt
+?? docs/sessions/evidence/task867/02-typecheck.txt
+?? docs/sessions/evidence/task867/03-lint.txt
+?? docs/sessions/evidence/task867/04-test-footer-allowlist.txt
+?? docs/sessions/evidence/task867/05-test-pages-footer-smoke.txt
+?? docs/sessions/evidence/task867/05b-planted-violation.txt
+?? docs/sessions/evidence/task867/05c-restored.txt
+?? docs/sessions/evidence/task867/06-test-admin.txt
+?? docs/sessions/evidence/task867/07-test-rls-guards.txt
+?? docs/sessions/evidence/task867/08-check-surface-census-changed.txt
+?? docs/sessions/evidence/task867/09-check-i18n.txt
+?? docs/sessions/evidence/task867/10-build.txt
+?? docs/sessions/evidence/task867/11-check-file-integrity.txt
+?? docs/sessions/evidence/task867/12-check-mojibake.txt
+?? docs/sessions/evidence/task867/13-diff-stat.txt
+?? docs/sessions/evidence/task867/14-revalidatePath-grep.txt
+?? docs/sessions/evidence/task867/15-hash-object.txt
+?? docs/sessions/evidence/task867/r1-01-test-pages-footer-smoke.txt
+?? docs/sessions/evidence/task867/r1-02-plantA-hash-during.txt
+?? docs/sessions/evidence/task867/r1-03-plantA-result.txt
+?? docs/sessions/evidence/task867/r1-04-plantB-hash-during.txt
+?? docs/sessions/evidence/task867/r1-05-plantB-result.txt
+?? docs/sessions/evidence/task867/r1-05b-plants.txt
+?? docs/sessions/evidence/task867/r1-06-git-status-after-plants.txt
+?? docs/sessions/evidence/task867/r1-07-test-restored.txt
+?? docs/sessions/evidence/task867/r1-08-platform.txt
+?? docs/sessions/evidence/task867/r1-09-probe.txt
+?? docs/sessions/evidence/task867/r1-10-typecheck.txt
+?? docs/sessions/evidence/task867/r1-11-lint.txt
+?? docs/sessions/evidence/task867/r1-12-test-footer-allowlist.txt
+?? docs/sessions/evidence/task867/r1-13-test-pages-footer-smoke.txt
+?? docs/sessions/evidence/task867/r1-14-test-admin.txt
+?? docs/sessions/evidence/task867/r1-15-test-rls-guards.txt
+?? docs/sessions/evidence/task867/r1-16-surface-census-changed.txt
+?? docs/sessions/evidence/task867/r1-17-check-i18n.txt
+?? docs/sessions/evidence/task867/r1-18-build.txt
+?? docs/sessions/evidence/task867/r1-19-diff-stat.txt
+?? docs/sessions/evidence/task867/r1-20-revalidatePath-added-line-check.txt
+?? docs/sessions/evidence/task867/r1-20b-revalidatePath-powershell.txt
+?? docs/sessions/evidence/task867/r1-21-hash-object.txt
+?? docs/sessions/evidence/task867/r1-22-check-file-integrity.txt
+?? docs/sessions/evidence/task867/r1-23-check-mojibake.txt
+?? docs/sessions/evidence/task870/01-status-before.txt
+?? scripts/task-867-pages-public-select.sql
+?? scripts/task-867-pages-read-probe.mjs
+?? scripts/task-867-verify.sql
+?? src/lib/__tests__/footer-route-allowlist.test.ts
+?? src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts

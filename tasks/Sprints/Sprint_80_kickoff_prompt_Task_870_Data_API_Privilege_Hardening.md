@@ -1,7 +1,7 @@
 # Task 870 — Data API privilege hardening: no view is writable, no service-only or consumer-less table is reachable, no default hands out access
 
 Sprint 80 · **P1** · QA profile **Q4** (RLS/permission security; data-integrity risk) · no dependencies ·
-owner actions **O80-1 … O80-3** · **Status: 📝 KICKOFF FILED 2026-09-23 — READY FOR SONNET**
+owner actions **O80-1 … O80-3** · **Status: 🔁 NEEDS REVISION 2026-09-23 (review 1) — re-enter at §16, READY FOR SONNET**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Design-time evidence (owner grids, verbatim): `docs/sessions/evidence/task870/00-owner-grids-2026-09-23.txt`.
@@ -162,7 +162,9 @@ GR-0, GR-1, GR-3 and GR-3a are **NOT APPLICABLE**: there is no visible artifact 
 1. **ASSUMED, re-measured at I0:** the live grants still match grids 1 and 5. The executor's BEFORE probe is that
    measurement. An S1 or S2 table returning anything other than `200` for anon `GET` before the harden SQL, or
    `public_user_profiles` returning anything other than `42501` for anon, means the premise has drifted. **STOP and
-   report `PREMISE DRIFT` with the probe output.** Do not adjust the sets.
+   report `PREMISE DRIFT` with the probe output.** Do not adjust the sets. **Amended by §16.4:** a `42501` whose
+   `denied_relation` is a different table than the one probed (for example `support_messages` →
+   `support_tickets`) comes from an RLS policy subquery. It is not a drift, and §16.4 defines the expected value.
 2. **ASSUMED:** `.env.local`'s project URL is the production project (Task 867 §5.2 made the same assumption and its
    probe confirmed it). If the probe cannot reach the project from the executor's environment, record
    `MISSING EVIDENCE` and continue. The owner's AFTER run (O80-2) then supplies both arms.
@@ -365,7 +367,8 @@ sections all still render.
   and service-role `200`, and `public_user_profiles` returns anon `401`/`403` with `pg_code 42501` for both `GET` and
   `PATCH`. When run `--phase after` by the owner after the harden script, then every R relation returns anon
   `401`/`403` with `pg_code 42501` and service-role `200`. **The pair is the two-armed proof.** A BEFORE run that
-  already shows `42501` on R is `PREMISE DRIFT` (Assumption 5.1), not a pass.
+  already shows `42501` on R is `PREMISE DRIFT` (Assumption 5.1), not a pass. **Superseded in part by §16.4**, which
+  adds `denied_relation`, the `support_messages` policy-subquery arm, and accepts `206` for the service role.
 - **AC5 [R1, R2, R4, R5]** Given the owner's AFTER audit grid, the `(count)` rows of A1, A3, A4 and A7 read `0`, and
   A8 shows `public_user_profiles` with a single `SELECT` entry for `authenticated` and no entry for `anon`.
 - **AC6 [R4, R10]** Given the R10 inventory, every S1 `.from()` site cites the `createAdminClient()` call it uses.
@@ -569,3 +572,127 @@ Changed" table matching the real diff.
 | A zero COUNT is not a missing check | every check prints a `(count)` row even at 0 | AC1 / AC5 | a check with no `(count)` row → AC1 fails |
 | The revoke could be silently ineffective | a grantor ≠ `postgres` | A4/A8 print the grantor | A4 AFTER non-zero → finding, not a pass |
 | Unexpected write path | a user-scoped S1 site | checkpoint 2 | STOP |
+
+---
+
+## 16. Revision 1 — review 1, 2026-09-23 (`NEEDS REVISION`)
+
+**Re-entry mode: `remediation`.** Start at §16.5. Keep every file in `docs/sessions/evidence/task870/` (`00`–`13`,
+`i0-*`, `guard-block-diff-check.txt`) **as is**. They are the revision-0 record, so do not overwrite them. Write
+revision evidence as `r1-NN-*.txt` in the same folder. I0 (§10.1) is **not** re-run, and R and the three sets do not
+change. The S1 per-site trace (session log, I0 step 4) and the S2 census are **accepted**, and the reviewer
+spot-checked eight of the construction lines. `docs/rls-rules.md` and `scripts/task-870-rollback.sql` are
+**accepted and must not change**.
+
+### 16.1 F1 — P2 — the selftest cannot name `public_user_profiles` (R3, R6, AC3)
+
+- **Observed:** in `scripts/task-870-harden-privileges.sql` (and the byte-identical block in
+  `scripts/task-870-guard-selftest.sql`), g4 counts dependent views, and its violation text is
+  `format('g4: a view depends on %s', v_name)`. That message names only the **table**. For the planted
+  `array['users']`, the exception reads `… g4: a view depends on users`, and `public_user_profiles` never appears.
+  AC3 and R6 require the selftest error to name `public_user_profiles`, and the selftest's own header promises it.
+  As shipped, O80-2 step 3 fails AC3 even though the guard works.
+- **Required:** in both files, replace the g4 count with the names of the dependent views:
+  `select string_agg(distinct vc.relname, ',' order by vc.relname) into v_dep_names …` (same joins and filters as
+  now), and raise when it is not null, with
+  `format('g4: view(s) %s depend on %s', v_dep_names, v_name)`. Declare `v_dep_names text;` and remove
+  `v_dep_count`. The two blocks stay byte-identical except for the array literal (§10.4.4).
+
+### 16.2 F2 — P3 — g2 calls `pg_get_functiondef` on every `pg_proc` row (R3)
+
+- **Observed:** g2 runs `pg_get_functiondef(p.oid)` for every function in `public`. `pg_get_functiondef` raises an
+  error for an aggregate (`"<name>" is an aggregate function`). If `public` contains one, the guard aborts with an
+  error unrelated to any violation, and the harden script cannot apply. Whether `public` holds an aggregate is
+  **UNKNOWN**.
+- **Required:** add `and p.prokind in ('f', 'p')` to g2's `where`, in both files.
+
+### 16.3 F3 — P2 — A8 has no schema filter (R1, AC5)
+
+- **Observed:** `a8_detail` joins `pg_class` to `r_tables` on `relname` alone. A1, A3, A4 and A2 all filter
+  `n.nspname = 'public'`; A8 does not. Any same-named relation in another schema enters A8. Supabase ships schemas
+  other than `public` (for example `realtime`), and `messages` is one of R's names. The AFTER grid could therefore
+  show `anon`/`authenticated` entries that belong to a different table, which would falsely fail AC5, or hide which
+  table they belong to.
+- **Required:** join `pg_namespace` in `a8_detail` and filter `n.nspname = 'public'`, the same way `a4_detail`
+  does.
+
+### 16.4 F4 — P2 — orchestration defect: the probe cannot tell a grant refusal from a policy-subquery refusal (R7, AC4)
+
+- **Measured by the reviewer, 2026-09-23** (one anon `GET /rest/v1/support_messages?select=*&limit=0`, win32):
+  `status 401 code 42501 message permission denied for table support_tickets`. The refusal comes from a
+  `support_messages` RLS policy that reads `support_tickets`, where `anon` has no `SELECT` (grid 1). It does not
+  come from a grant change on `support_messages`. **The "PREMISE DRIFT" of revision 0 is resolved: no drift.**
+  `anon` still holds `SELECT` on `support_messages`, and R stays unchanged. The executor handled it correctly: it
+  stopped, did not adjust the sets, and reported.
+- **Why this is a task defect:** R7 told the probe to print `pg_code` and nothing else, so a policy-subquery `42501`
+  and a grant `42501` look identical. For `support_messages`, AC4's BEFORE (`200`) cannot happen, and its AFTER
+  (`42501`) would prove nothing.
+- **Required:** the probe also prints `denied_relation=<name>` for every non-2xx response. Take it from the PostgREST
+  `message` with `/permission denied for (?:table|view|relation) ([A-Za-z0-9_."]+)/`, or print `null` when the
+  message does not match. The message text itself stays unprinted. A relation name is not a secret, and nothing else
+  from the body is printed.
+- **AC4 as amended** (supersedes the corresponding clauses of §12 AC4):
+  - **BEFORE** (executor):
+    - each of the 17 R tables other than `support_messages` returns anon `200`;
+    - `support_messages` returns anon `401`/`403` `42501` with `denied_relation=support_tickets`;
+    - the service role returns `200` **or `206`** (the `Range: 0-0` header produces `206` on non-empty tables);
+    - `public_user_profiles` returns anon `401`/`403` `42501` with `denied_relation=public_user_profiles` for both
+      `GET` and `PATCH`.
+  - **AFTER** (owner): every R table **including `support_messages`** returns anon `401`/`403` `42501` with
+    `denied_relation` equal to **that table's own name**. The grant check runs before RLS, so after the revoke the
+    refusal names the probed table, and that is what distinguishes the fix from the policy. The service role returns
+    `200`/`206`.
+  - Any other combination is a finding, never a pass.
+- **Assumption 5.1 amended accordingly:** the `support_messages` BEFORE arm above is expected, not a drift.
+
+### 16.5 Gate block for revision 1 (executor, Windows PowerShell, project root)
+
+Restore nothing and plant nothing. The SQL cannot run in the executor's environment. The guard's failing arm is
+still proven by the owner's selftest run (O80-2 step 3), and the ACs below are static checks on the corrected files.
+
+```powershell
+$ev = "docs\sessions\evidence\task870"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r1-01-platform.txt"
+node.exe scripts\task-870-anon-probe.mjs --phase before | Tee-Object "$ev\r1-02-probe-before.txt"
+node.exe -e "const fs=require('fs');for(const f of ['scripts/task-870-privilege-audit.sql','scripts/task-870-guard-selftest.sql']){const s=fs.readFileSync(f,'utf8').replace(/--.*$/gm,'').replace(/'(?:[^']|'')*'/g,'');const n=(s.match(/;/g)||[]).length;const bad=s.match(/\b(insert|update|delete|grant|revoke|alter|create|drop|truncate)\b/gi);console.log(f,'semicolons='+n,'endsWithSemicolon='+/;\s*$/.test(s),'writeKeywords='+(bad?bad.join(','):'none'))}" | Tee-Object "$ev\r1-03-single-statement-check.txt"
+node.exe -e "const fs=require('fs');const D=String.fromCharCode(36,36);const g=f=>{const L=fs.readFileSync(f,'utf8').split(/\r?\n/);const i=L.indexOf('do '+D);const j=L.indexOf('end '+D+';',i);return L.slice(i,j+1)};const a=g('scripts/task-870-harden-privileges.sql'),b=g('scripts/task-870-guard-selftest.sql');const d=a.map((l,i)=>l===b[i]?null:i+1).filter(Boolean);console.log('lines',a.length,b.length,'differing',JSON.stringify(d));for(const f of ['scripts/task-870-harden-privileges.sql','scripts/task-870-guard-selftest.sql']){const s=fs.readFileSync(f,'utf8');console.log(f,'g4_names_views='+/string_agg\(distinct vc\.relname/.test(s),'g4_msg='+/g4: view\(s\) %s depend on %s/.test(s),'g2_prokind='+/prokind in \('f', 'p'\)/.test(s))}" | Tee-Object "$ev\r1-04-guard-check.txt"
+node.exe -e "const s=require('fs').readFileSync('scripts/task-870-privilege-audit.sql','utf8');const a8=s.slice(s.indexOf('a8_detail as ('),s.indexOf('combined as ('));console.log('a8_public_filter='+/nspname = 'public'/.test(a8))" | Tee-Object "$ev\r1-05-a8-filter-check.txt"
+npx.cmd eslint scripts\task-870-anon-probe.mjs *>&1 | Tee-Object "$ev\r1-06-eslint-probe.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r1-07-check-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r1-08-check-mojibake.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r1-09-build.txt"
+git --no-optional-locks hash-object scripts\task-870-privilege-audit.sql scripts\task-870-harden-privileges.sql scripts\task-870-guard-selftest.sql scripts\task-870-rollback.sql scripts\task-870-anon-probe.mjs docs\rls-rules.md | Tee-Object "$ev\r1-10-hash-object.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r1-11-status-after.txt"
+```
+
+Expected results:
+- `r1-02`: the AC4 BEFORE arm as amended in §16.4, including `denied_relation=support_tickets` on `support_messages`.
+- `r1-03`: the audit line reads `semicolons=1 endsWithSemicolon=true writeKeywords=none`.
+- `r1-04`: `differing` is a single line (the array literal), and all three flags read `true` for both files.
+- `r1-05`: `a8_public_filter=true`.
+- `r1-06` to `r1-09`: exit 0.
+- `r1-10`: the rollback and `rls-rules.md` hashes equal the revision-0 values in `12-hash-object.txt`, because
+  neither may change.
+
+Record each exit code in the session log.
+
+### 16.6 Completion report for revision 1
+
+Report:
+- the three changed scripts' new hashes, with the corrected g2/g4 lines and the A8 filter quoted;
+- the probe's new `denied_relation` output line format;
+- `r1-02` verbatim;
+- the `r1-04` and `r1-05` results;
+- the exit codes of `r1-06` to `r1-09`.
+
+Add a `## Revision 1` section to the existing session log (do not create a new log), and record there that the
+revision-0 PREMISE DRIFT is resolved by §16.4. Set the 870 backlog row to
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`.
+
+**Scope:**
+- **May change:** `scripts/task-870-harden-privileges.sql`, `scripts/task-870-guard-selftest.sql`,
+  `scripts/task-870-privilege-audit.sql`, `scripts/task-870-anon-probe.mjs`, the session log, `r1-*` evidence, and
+  the backlog row.
+- **Must not change:** anything else.
+
+No git command other than the read-only ones in §16.5.

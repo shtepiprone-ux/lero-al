@@ -26,3 +26,16 @@ Production (curl.exe / Invoke-WebRequest, TLS 1.2):
 
 0 <h1> on /en: en has body 12 / title 0, so route page.tsx:51-53 renders the en locale (body only) and does not
 fall back to sq.title per field. This is content, not a defect of 867.
+
+--- O79-2 grids returned by the owner one at a time, and O79-3, 2026-09-23 ---
+(a) anon: REFERENCES, SELECT, TRIGGER, TRUNCATE · authenticated: REFERENCES, SELECT, TRIGGER, TRUNCATE
+    -> AC3(a) "SELECT and no other privilege" FAILS. The cause predates this task: scripts/grant-discipline-audit.sql:45-46
+       (Task 275) revoked only select/insert/update/delete, so Supabase's default REFERENCES/TRIGGER/TRUNCATE survived.
+       The 867 SQL grants SELECT only.
+(b) "Admins can manage pages"              ALL    {public}               EXISTS(users.id = auth.uid() AND role IN (admin, moderator))
+    "Published pages viewable by everyone" SELECT {public}               (is_published = true)   <- pre-existing (326A session :14/:54)
+    "pages_select_public"                  SELECT {anon,authenticated}  (is_published = true)   <- 867, duplicates the one above
+O79-3: owner created draft "Test", slug rls-probe-867.
+(d1) anon_draft_readable = 0 · (d2) service_role_draft_count = 1   -> negative arm not vacuous, PASS
+Reviewer probe with the draft present (EXIT=0): Q1 anon unfiltered 3 rows, no error · Q2 anon published 3 · Q3 service_role 4
+    -> the draft is hidden from anon via the real Data API as well. Positive arm (c): anon reads 3 published rows.

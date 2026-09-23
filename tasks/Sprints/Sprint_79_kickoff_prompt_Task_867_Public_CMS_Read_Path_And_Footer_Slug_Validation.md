@@ -406,8 +406,8 @@ no review, no mutating git. Update the 867 row of `docs/backlog.md` with concise
 
 **Re-entry mode: `remediation`.** Start at §16.4. Keep every evidence file in `docs/sessions/evidence/task867/`
 (`00`–`15`): they are the pre-revision baseline, **do not overwrite them**. Write revision evidence as
-`r1-NN-*.txt` in the same folder. The probe (R1/AC1), R2/R8 SQL, R3 helper, R5 guard, and the
-`footer-route-allowlist` test are **accepted and must not change**. `r1-*` evidence supersedes `02`–`15` only for the
+`r1-NN-*.txt` in the same folder. The probe (R1/AC1), the R8 SQL, the R3 helper, the R5 guard, and the
+`footer-route-allowlist` test are **accepted and must not change**. The R2 SQL changes only by the two lines in §16.7. `r1-*` evidence supersedes `02`–`15` only for the
 AC10 gate block.
 
 ### 16.1 F1 — P2 — R4's service-role lookup runs before the admin check (R4, R7, AC5)
@@ -482,7 +482,30 @@ git --no-optional-locks diff -U0 -- src | Select-String -Pattern '^\+.*revalidat
 
 ### 16.6 Completion report for revision 1
 
-Report: the new `footer.ts` hash and test-file hash; the three new/changed test arms by name; Plant A and Plant B,
+Report: the new `footer.ts` hash, the test-file hash, and the new `scripts/task-867-pages-public-select.sql` hash with the two §16.7 lines quoted; the three new/changed test arms by name; Plant A and Plant B,
 each with its failing test name and its before/after hash pair; the `r1-*` gate block exit codes; the corrected
 session-log paragraph. Add a `## Revision 1` section to the same session log. Do not create a new log. Set the 867
 backlog row to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`. Scope stays §7. No other file may change.
+
+### 16.7 Added 2026-09-23 after O79-1/O79-2/O79-3 came back (evidence: `docs/sessions/evidence/task867/review1-post-o79-1.txt`)
+
+- **AC3 (c) and (d) are VERIFIED on the live database.** Anon reads 3 published rows. Anon reads 0 drafts, against a
+  service-role draft count of 1 (the O79-3 probe page). The Data API agrees: anon unfiltered returned 3, service role 4.
+- **F4 — P2 — AC3 (a) failed: `anon` and `authenticated` also hold `REFERENCES`, `TRIGGER` and `TRUNCATE` on
+  `public.pages`.** This task did not cause it. Task 275's applied script (`scripts/grant-discipline-audit.sql:45-46`)
+  revoked only `select, insert, update, delete`, so Supabase's default grants survived. The exposure is latent, not
+  live, because PostgREST exposes no TRUNCATE/TRIGGER endpoint. But `TRUNCATE` bypasses RLS, and AC3(a) requires
+  SELECT only. **Required:** add this line to `scripts/task-867-pages-public-select.sql`, directly after the `grant`,
+  with a comment citing `grant-discipline-audit.sql:45-46`:
+  `revoke references, trigger, truncate on public.pages from anon, authenticated;`
+- **F5 — P3 — orchestration defect: `pages_select_public` duplicates an existing policy.** `"Published pages viewable by
+  everyone"` (SELECT, `{public}`, `is_published = true`) was already there; 326A's session records it at `:14` and
+  `:54`. §2 and §3.1 said the table needed "the grant **and** the row-level policy". Only the grant was missing. Two
+  identical permissive SELECT policies are harmless, but they are dead weight (and one the Supabase advisor flags).
+  **Decided:** keep the repo-owned, role-scoped `pages_select_public` and drop the legacy one. Add this line to the
+  same script, directly before `create policy`:
+  `drop policy if exists "Published pages viewable by everyone" on public.pages;`
+  AC2 therefore also quotes these two lines. The script stays idempotent.
+- **The owner already applied both statements to the live database on review 1's instruction.** The executor only
+  brings the script in line with that database state: add exactly those two lines, verbatim, and nothing else. The
+  owner's re-run of grids (a) and (b) closes AC3.

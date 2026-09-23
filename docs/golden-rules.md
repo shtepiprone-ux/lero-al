@@ -73,6 +73,21 @@ node.exe scripts\check-surface-census.mjs --surface $surface
 
 Every tier-3 node is **filed as a numbered task in the same response**. A node passed over silently voids the receipt.
 
+**Container exemption. Owner decision 2026-09-23 (Task 872, Sprint 81 D81-2), verbatim option chosen:**
+*"View-stories достатньо (Recommended)"*. It resolves the conflict between this rule and `docs/component-rules.md` →
+"Container / Presentational Primitive Split" (owner P0, 2026-07-10, which forbids a Story that mocks hooks). The
+exemption holds only when **all** of the following are true:
+
+1. The tier-1 node is a pure container, meaning 0 `className`, 0 `@/components/ui/*` imports, and no JSX of its own
+   beyond rendering its View and passing slots.
+2. Its UI lives entirely in a View that is enrolled in `scripts/mantine-migration-scope.json`.
+3. That View has its own canonical Story.
+
+Such a container is **proven by that View's Story** and gets no Story of its own. It still appears in the census.
+The census cannot yet recognise the split, so the container stays as baselined debt, and the receipt counts it
+separately: `tier1 <a> migrated+enrolled+story + <e> container-exempt (<names>)`. A node that fails any of the three
+conditions is not exempt.
+
 ## GR-2 — A green gate is never evidence that a gate's blind spot is clean
 
 **Forbidden:** citing `check:story-coverage` (or any gate) as proof for a component that gate does not inspect.

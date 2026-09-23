@@ -1,0 +1,28 @@
+Task 867 — reviewer evidence after owner-applied O79-1 (2026-09-23)
+Platform: win32 v22.22.3 (native PowerShell), project root.
+
+Owner: scripts/task-867-pages-public-select.sql -> "Success. No rows returned"
+Owner: scripts/task-867-verify.sql run as one batch -> editor showed only the last grid:
+  service_role_draft_count = 0   (PART d2; parts a, b, c, d1 not returned)
+
+node.exe scripts\task-867-pages-read-probe.mjs  (EXIT=0)
+  Q1 anon select pages (no filter):             error_code null, row_count 3
+  Q2 anon select pages is_published = true:     error_code null, row_count 3
+  Q3 service_role select pages (no filter):     error_code null, row_count 3
+  Printed branch line "anon already permitted - TASK SPECIFICATION CONTRADICTION" is the probe's
+  PRE-apply branch logic firing on the POST-apply state; it is the expected after-arm (before = 42501,
+  01-probe.txt), not a contradiction.
+  Census (lengths only):
+    privacy-policy   pub=true | sq 22/14 | en 0/12 | uk 0/0  | it 0/18
+    about            pub=true | sq 10/14 | en 0/12 | uk 0/20 | it 0/18
+    terms-of-service pub=true | sq 19/14 | en 16/34 | uk 0/20 | it 0/18
+
+Production (curl.exe / Invoke-WebRequest, TLS 1.2):
+  https://lero.al/en/privacy-policy -> 200 (no NEXT_HTTP_ERROR_FALLBACK marker; CMS <main max-w-3xl> present; 0 <h1>)
+  https://lero.al/sq/privacy-policy -> 200
+  https://lero.al/uk/privacy-policy -> 200
+  https://lero.al/it/privacy-policy -> 200
+  https://lero.al/en/no-such-page-867 -> 404 (curl.exe; Invoke-WebRequest aborted the connection = environment screen)
+
+0 <h1> on /en: en has body 12 / title 0, so route page.tsx:51-53 renders the en locale (body only) and does not
+fall back to sq.title per field. This is content, not a defect of 867.

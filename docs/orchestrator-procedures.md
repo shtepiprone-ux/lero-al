@@ -409,6 +409,14 @@ stale closed/superseded entry, and add one concise newest-first archive-ledger r
 owner action survives approval, record it separately as active work; it is never a reason to retain the approved task
 in `docs/backlog.md`.
 
+**Physical kickoff archive — mandatory.** For every task whose final review verdict is `APPROVED` or `APPROVED WITH
+NOTES`, move its saved kickoff file unchanged from its current `tasks/` location to
+`tasks/Archive/<same filename>` before the final response. This is a physical archive in addition to the GR-5 ledger
+closure; neither a closed backlog row nor a ledger entry substitutes for the move. Do not move a kickoff for a
+non-approved verdict. Never overwrite an existing archive file: stop and resolve a name collision first. Write or
+update the `docs/backlog-archive.md` kickoff link to the new `tasks/Archive/` path, then verify that the destination
+exists and the source path no longer does before composing the owner handoff.
+
 Re-read `docs/backlog.md` and `docs/backlog-archive.md`, verify that the active file has only live work and no more
 than 80 physical lines, then inspect the diff. The approval handoff must stage both changed backlog files with the
 task's other reconciled artifacts. Do not repeat closure evidence in chat: one required receipt is enough.

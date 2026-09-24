@@ -16,8 +16,8 @@
       ".storybook/stubs/next-headers.ts",
       "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
       "docs/sessions/2026-08-21-task757R-authsheet-runtime-tokens.md",
-      "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
-      "tasks/Sprints/Sprint_60_kickoff_prompt_Task_757R_authsheet_runtime_tokens.md",
+      "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
+      "tasks/Archive/Sprint_60_kickoff_prompt_Task_757R_authsheet_runtime_tokens.md",
       "docs/backlog.md"
     ],
     "supersedes": [
@@ -363,7 +363,7 @@
       },
       "evidence": [
         {
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "command": "getComputedStyle on the live register_success screen (owner-run 2026-08-21)",
           "observable": "fontSize 18px, lineHeight 22.5px, letterSpacing -0.45px, fontWeight 600. Exactly the pre-757 baseline: the h1..h6 base rule writes --tw-leading:var(--leading-tight)=1.25 onto the element, so .text-lg's line-height:var(--tw-leading,1.75rem) resolved to 1.25 -> 18px x 1.25 = 22.5px. Reproduced by Mantine's own lh style prop, unitless.",
           "freshness": "owner-run on the final build",
@@ -406,7 +406,7 @@
         {
           "claim": "Wrapping the heading in a Mantine Text could drop the h1..h6 base rule.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Refuted by measurement, not inference: letter-spacing reads -0.45px, which is the base rule's -0.025em at 18px, and font-weight reads 600. The element still renders as a real <h3> under that rule."
         },
         {
@@ -482,32 +482,32 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. The declaration moved from a utility class to a Mantine style prop."
           },
           {
             "field": "layer",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. A Mantine style prop is emitted inline and is therefore unlayered."
           },
           {
             "field": "specificity",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. Inline styles outrank author selectors."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. Source order stops deciding once the declaration is inline."
           },
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. line-height:var(--tw-leading,1.75rem) resolved to 1.25 on this element; the after states 1.25 directly. The computed value is identical and measured: 22.5px."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. The custom-property indirection is removed; the resolved value it produced is stated literally instead."
           }
         ],
@@ -704,12 +704,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. Identical computed values - theme.ts fontSizes match the Tailwind sizes exactly - re-expressed through Mantine's own font-size variables."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. The --tw-leading read is replaced by a Mantine font-size variable; provably inert here, and separately authorised by D757-7."
           }
         ],
@@ -906,12 +906,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. Identical computed values - theme.ts fontSizes match the Tailwind sizes exactly - re-expressed through Mantine's own font-size variables."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. The --tw-leading read is replaced by a Mantine font-size variable; provably inert here, and separately authorised by D757-7."
           }
         ],
@@ -1165,12 +1165,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. transition-property drops --tw-gradient-from/via/to (no element in this tree carries a gradient); both timing declarations state the values the guards resolved to."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-9 (2026-08-21) authorises this envelope delta solely as the unavoidable consequence of moving a Tailwind utility onto Mantine props, conditional on the render matching the pre-757 baseline exactly - confirmed by the owner-run live measurement recorded in D757-9. All four Tailwind runtime-token reads are removed. This is the point of Task 757R: those tokens become undefined once Tailwind is removed, which would silently fall transition-duration back to 0s."
           }
         ],
@@ -1242,7 +1242,7 @@
       },
       "evidence": [
         {
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "command": "owner-native verification of both success states at every breakpoint, plus the getComputedStyle measurement recorded in D757-9",
           "observable": "No layout shift, overflow or clipping at any breakpoint in all four locales; the success-title metrics measured at 18px / 22.5px / -0.45px / 600.",
           "freshness": "owner-run on the final build",
@@ -1285,7 +1285,7 @@
         {
           "claim": "The owner's pass is equivalent to a captured before/after baseline.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "It is not, and this row does not record it as one. No pre-migration capture of either state exists or can be produced - the project's Turnstile site key is a real production key a headless browser cannot solve - so requiredScope.phases is declared as after only. The one property whose pre-migration value was established analytically is the h3 line-height, and it is now measured live and matches."
         },
         {
@@ -1389,7 +1389,7 @@
         {
           "claim": "This branch is a prefers-reduced-motion media query.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Refuted - and this was an orchestrator task-design defect the executor caught. No @media (prefers-reduced-motion: reduce) rule exists anywhere in the repository. The live override is globals.css:734-736, keyed on an attribute set at runtime by src/lib/performance/store.ts:148,165."
         },
         {
@@ -1704,7 +1704,7 @@
       },
       "evidence": [
         {
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "command": "owner-run manual end to end against a local production build with real Supabase and real Turnstile",
           "observable": "Login authenticated; forgot-password success shown, email received, recovery link worked, password changed, re-login succeeded; register success shown, confirmation email received, email confirmed, user authenticated. Re-confirmed on the final 757R build during the D757-9 measurement.",
           "freshness": "owner-run on the final build",
@@ -1740,7 +1740,7 @@
         {
           "claim": "The success states are technically unreachable, so this cannot be satisfied.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Refuted. The owner reached all three. The blocker is specific to headless automation."
         }
       ],

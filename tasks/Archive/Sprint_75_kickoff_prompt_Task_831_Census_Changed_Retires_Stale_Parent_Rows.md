@@ -81,7 +81,7 @@ is `"<surface> :: <node> :: <reasonCode>"` (`:128-133`).
 `docs/golden-rules.md` (GR-1 enforcement row) · `docs/agent-contract.md` clauses 9, 14 · `docs/qa-profiles.md` (Q4) ·
 `scripts/check-surface-census-changed.mjs` in full · `scripts/map-changed-surfaces.mjs` in full ·
 `scripts/check-surface-census.mjs` (`--json` output shape only) ·
-`tasks/Sprints/Sprint_75_kickoff_prompt_Task_825_LightboxView_Migration_And_Enrolment.md` §16.3 · this kickoff.
+`tasks/Archive/Sprint_75_kickoff_prompt_Task_825_LightboxView_Migration_And_Enrolment.md` §16.3 · this kickoff.
 
 ## 7. Scope
 

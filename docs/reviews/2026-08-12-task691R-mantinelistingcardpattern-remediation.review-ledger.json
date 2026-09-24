@@ -12,7 +12,7 @@
       "src/modules/listings/components/ListingCard.tsx",
       "src/components/ui/appImageConfig.ts",
       "src/components/ui/AppImage.tsx",
-      "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
+      "tasks/Archive/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
       "docs/sessions/2026-08-12-task691R-remediation.md",
       "docs/backlog.md",
       "docs/critical-flow-registry.md",
@@ -1239,7 +1239,7 @@
         {
           "claim": "check:homepage-grid was not re-run, so a gate is missing.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
+          "path": "tasks/Archive/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
           "result": "CORRECT BEHAVIOUR, NOT A GAP. Kickoff §3.6 and the previous review's F-L both state that check:homepage-grid already retained all three runs with the correct D37 classification and must be left alone. Re-running it would have overwritten a correctly classified UNATTRIBUTED artifact."
         }
       ],

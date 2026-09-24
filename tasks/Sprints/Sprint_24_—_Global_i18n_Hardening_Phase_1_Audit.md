@@ -21,7 +21,7 @@ Plus seed `docs/i18n-rules.md` (NEW; Task 316 creates, Tasks 317 + 318 extend).
 
 ### Task 316 — Project-wide dynamic-key + missing-key i18n audit
 
-- Kickoff: [`Sprint_24_kickoff_prompt_Task_316.md`](Sprint_24_kickoff_prompt_Task_316.md)
+- Kickoff: [`Sprint_24_kickoff_prompt_Task_316.md`](../Archive/Sprint_24_kickoff_prompt_Task_316.md)
 - Type: audit/spec (docs only)
 - Output: `docs/governance-reports/2026-05-31-i18n-dynamic-key-audit.md` (NEW) + `docs/i18n-rules.md` (NEW); session log; backlog entry.
 - Scope: every `t(\`...${var}\`)` in `src/`; per-locale missing-key matrix; remediation buckets for Task 320.
@@ -30,7 +30,7 @@ Plus seed `docs/i18n-rules.md` (NEW; Task 316 creates, Tasks 317 + 318 extend).
 
 ### Task 317 — Missing-key scanner script + `check:i18n-dynamic` wiring
 
-- Kickoff: [`Sprint_24_kickoff_prompt_Task_317.md`](Sprint_24_kickoff_prompt_Task_317.md)
+- Kickoff: [`Sprint_24_kickoff_prompt_Task_317.md`](../Archive/Sprint_24_kickoff_prompt_Task_317.md)
 - Type: governance script + npm script entry (NO production code, NO locale data)
 - Output: `scripts/governance/i18n-missing-keys.mjs` (NEW) + config + allowlist + `package.json` script entry; `docs/i18n-rules.md` (EXTEND with "Missing-key scanner" section); session log; backlog.
 - Scope: Strategy A (TS parser) or B (hand-maintained config map) — STOP & ASK; orchestrator recommends B.

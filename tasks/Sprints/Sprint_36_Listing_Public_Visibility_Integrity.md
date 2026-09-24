@@ -23,7 +23,7 @@ This sprint removes the divergence at its source and makes the failure mode un-m
 ## Task 454 — LV.1: Canonical visibility predicate + public-eligible-but-hidden audit
 
 **Type:** DB / server-action (read-path refactor) + diagnostic audit. **Kickoff:**
-`tasks/Sprints/Sprint_36_kickoff_prompt_Task_454.md`.
+`tasks/Archive/Sprint_36_kickoff_prompt_Task_454.md`.
 
 > **⚠️ ALL statuses, not just `active` (owner directive 2026-06-18).** The policy and predicate must enumerate
 > **every** `ListingStatus` (`active | inactive | sold | rented | archived | pending` + future values), not a

@@ -4,7 +4,7 @@
 **Type:** Audit / spec only — zero product-code, zero locale-file, zero script changes.
 **Scope:** Every dynamic `t()` call site (`t(\`...${var}\`)` and bare `t(variableExpr)`) across
 `src/app`, `src/components`, `src/modules`, `src/lib`, `src/stories`.
-**Supersedes:** `tasks/Sprints/Sprint_24_kickoff_prompt_Task_316.md` (per
+**Supersedes:** `tasks/Archive/Sprint_24_kickoff_prompt_Task_316.md` (per
 `tasks/Epics/Epic_II_kickoff_prompt_Task_316.md`).
 
 This report supplies the evidence base for Task 317 (scanner), Task 318 (notification

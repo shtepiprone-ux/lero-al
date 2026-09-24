@@ -297,10 +297,10 @@ Optional-if-relevant, and here it is relevant: `docs/storybook-governance.md` §
 
 Task-specific, required:
 
-- `tasks/kickoff_prompt_Task_688_PopularLocationsView_DeTailwind_CssModule.md` §3.4 — the two binding module
+- `tasks/Archive/kickoff_prompt_Task_688_PopularLocationsView_DeTailwind_CssModule.md` §3.4 — the two binding module
   conventions — and the landed `src/modules/locations/components/PopularLocationsView.module.css` header.
 - `src/components/shared/HeroSearchView.module.css:40-60` — D34's rationale and the `@layer utilities` wrapper.
-- `tasks/kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md` §3.4 only — the contract table.
+- `tasks/Archive/kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md` §3.4 only — the contract table.
 - `src/modules/listings/components/FavoriteButton.tsx:155` + `FavoriteButton.module.css` header.
 - `src/modules/listings/components/ListingFeatureIcon.tsx` (22 lines, read all).
 

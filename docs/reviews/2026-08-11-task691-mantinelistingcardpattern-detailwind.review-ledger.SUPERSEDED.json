@@ -9,7 +9,7 @@
       "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
       "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
       "docs/sessions/2026-08-11-task691-mantinelistingcardpattern-detailwind.md",
-      "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md",
+      "tasks/Archive/Sprint_46_kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md",
       ".screenshots/task691-delta/computed-before.json",
       ".screenshots/task691-delta/computed-after.json",
       ".screenshots/task691-delta/capture-computed-styles.mjs",

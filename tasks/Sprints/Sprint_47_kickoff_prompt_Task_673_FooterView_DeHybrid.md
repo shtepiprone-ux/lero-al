@@ -58,7 +58,7 @@ Nothing is inferred from a filename, a prior report, or a semantic-search hit.
 D28 is the **first written form** of the ruling `docs/backlog.md:52` had only summarised as "mechanism-only (owner
 2026-07-29, as in 672)". Task 672's D1 is the precedent it points at: *"Mechanism-only, zero visual change… does
 **not** authorize any TailAdmin restyle, token change, or spacing/typography edit"*
-(`tasks/kickoff_prompt_Task_672_MobileBottomNav_Mantine_Migration.md:45,:50-51`).
+(`tasks/Archive/kickoff_prompt_Task_672_MobileBottomNav_Mantine_Migration.md:45,:50-51`).
 
 ### 3.2 The file as it stands — read at source
 
@@ -240,7 +240,7 @@ Read exactly these. Do not read all docs.
 (per-story viewport mechanism).
 
 **Task-specific sources:** this file · `tasks/Sprints/Sprint_47_Layout_Shell_DeHybrid.md` ·
-`tasks/kickoff_prompt_Task_688_PopularLocationsView_DeTailwind_CssModule.md` (the pattern being inherited) ·
+`tasks/Archive/kickoff_prompt_Task_688_PopularLocationsView_DeTailwind_CssModule.md` (the pattern being inherited) ·
 `src/modules/locations/components/PopularLocationsView.module.css` (the reference output).
 
 ---

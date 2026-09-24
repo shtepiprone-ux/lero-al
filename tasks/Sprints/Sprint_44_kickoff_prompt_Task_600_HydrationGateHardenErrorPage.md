@@ -15,7 +15,7 @@ Sprint 44 (Epic MM Phase-2 / Epic RS — Regression Shield). Follow-up from the 
 ## Pre-read (rule-index → regression/critical-flow + governance)
 **Always:** `docs/agent-contract.md` (clauses 1–16, esp. 14 file-integrity + 15 regression), `docs/backlog.md`, `docs/critical-flow-registry.md` (the "Authenticated header hydration — NotificationBell SSR shell" row this task makes real).
 **Regression:** `tasks/Epics/Epic_RS_Regression_Shield.md`, `docs/qa-rules.md`.
-**Context:** `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`, `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`.
+**Context:** `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`, `tasks/Archive/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`.
 
 ## Scope (ONLY these files)
 - `scripts/check-hydration-console.mjs` — harden `checkRoute` (and add a second self-test).

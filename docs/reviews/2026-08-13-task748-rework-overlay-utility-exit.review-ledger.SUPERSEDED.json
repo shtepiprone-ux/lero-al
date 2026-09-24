@@ -671,7 +671,7 @@
       "requirementIds": [
         "RR6"
       ],
-      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt and a per-path git ls-files sweep: …-task748 -> 14 tracked; …-task748-rework -> 0; …-task748-round2 -> 0; the round-2 ledger -> 0; the REWORK2 kickoff -> 0. AC6 verbatim at tasks/Sprints/Sprint_46_kickoff_prompt_Task_748_REWORK_OverlayUtilityExit_DeTailwind.md:217-218."
+      "evidence": "docs/reviews/artifacts/2026-08-13-task748-round2/state-audit.txt and a per-path git ls-files sweep: …-task748 -> 14 tracked; …-task748-rework -> 0; …-task748-round2 -> 0; the round-2 ledger -> 0; the REWORK2 kickoff -> 0. AC6 verbatim at tasks/Archive/Sprint_46_kickoff_prompt_Task_748_REWORK_OverlayUtilityExit_DeTailwind.md:217-218."
     }
   ],
   "handoff": {

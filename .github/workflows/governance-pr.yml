@@ -269,7 +269,7 @@ jobs:
     timeout-minutes: 30
 
     # Task 727 (Sprint 52, closing task) — owner decision 2026-08-09, quoted verbatim in the
-    # kickoff (tasks/Sprints/Sprint_52_kickoff_prompt_Task_727_ClickShield_CI_And_Contextual_N6.md
+    # kickoff (tasks/Archive/Sprint_52_kickoff_prompt_Task_727_ClickShield_CI_And_Contextual_N6.md
     # §3.1): "CI запускає gate на локальному production build і він blocking. Не на production
     # URL. У PR CI: npm ci → Playwright Chromium → npm run build → npm start → wait-for-ready →
     # check:click-shield. Команда має йти з BASE_URL=http://127.0.0.1:3000, без continue-on-error;

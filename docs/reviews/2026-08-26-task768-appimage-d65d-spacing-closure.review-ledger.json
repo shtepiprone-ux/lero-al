@@ -339,7 +339,7 @@
     {
      "claim": "The two named deltas require a third confirmatory screenshots:assert run before AC4 can be accepted, per AC4's literal 'named cell by cell' language.",
      "kind": "REASONED",
-     "path": "tasks/Sprints/Sprint_65_kickoff_prompt_Task_768_AppImage_D65D_Spacing_Closure.md",
+     "path": "tasks/Archive/Sprint_65_kickoff_prompt_Task_768_AppImage_D65D_Spacing_Closure.md",
      "result": "REFUTED. Stop condition 14.3 fires only when a delta CANNOT be named cell by cell; section 13's 'or the run is repeated until it is' offers repetition as the alternative to naming, not in addition to it. Both deltas are named by storyId|locale|viewport. A rerun is separately prohibited by the owner's Task 768R instruction against chasing a favourable full-matrix result. The open item the executor raised in its handoff is answered and closed."
     }
    ],

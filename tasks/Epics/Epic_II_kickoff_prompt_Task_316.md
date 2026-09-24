@@ -4,7 +4,7 @@
 > current P0 contract. **AUDIT-ONLY: produces ONE documentation file, NO product-code changes, NO new/edited scripts
 > (Task 317 writes the scanner), NO `messages/*.json` edits (Task 320 fills gaps), NO new rules doc (the canonical rules
 > doc is Task 317/323 and extends the EXISTING `docs/i18n-governance.md` — do not create `docs/i18n-rules.md`).**
-> **This file is the single source of truth for Task 316** — supersedes `tasks/Sprints/Sprint_24_kickoff_prompt_Task_316.md`.
+> **This file is the single source of truth for Task 316** — supersedes `tasks/Archive/Sprint_24_kickoff_prompt_Task_316.md`.
 
 ```
 Type:        audit / spec (no product code, no scripts, no locale edits)

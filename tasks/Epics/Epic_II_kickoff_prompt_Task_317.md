@@ -3,7 +3,7 @@
 > **You are Claude Code Sonnet 4.6 in `lero-al`. Read `docs/agent-contract.md` (clauses 1–14) FIRST.** Conforms to the
 > current P0 contract. **SCRIPT + DOCS ONLY: a new governance script + npm wiring + a small checked-in manifest + a docs
 > rule. NO product runtime-code changes (`git diff --stat src` MUST be empty).**
-> Re-issue of `tasks/Sprints/Sprint_24_kickoff_prompt_Task_317.md`, refreshed 2026-06-13 to clauses 1–14 and to the
+> Re-issue of `tasks/Archive/Sprint_24_kickoff_prompt_Task_317.md`, refreshed 2026-06-13 to clauses 1–14 and to the
 > **actual** Task 316 audit output. **Depends on Task 316 audit (now COMMITTED `65a97a8cc`).**
 
 ```

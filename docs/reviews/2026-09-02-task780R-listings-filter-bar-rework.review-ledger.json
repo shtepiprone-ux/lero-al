@@ -622,7 +622,7 @@
         {
           "claim": "B is stale against the tree that produced P.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_68_kickoff_prompt_Task_780_ListingsFilterBar_ReviewRework.md",
+          "path": "tasks/Archive/Sprint_68_kickoff_prompt_Task_780_ListingsFilterBar_ReviewRework.md",
           "result": "REFUTED by the S0 comparator, re-run by the reviewer: git diff --name-only 3beabc9cc HEAD with no pathspec returns four paths, all under docs/ and tasks/. .storybook/main.ts:11-13 globs stories from ../src/** only and :47 serves staticDirs ../public, so none of the four is a rendering input."
         }
       ],

@@ -15,7 +15,7 @@
       ".storybook/stubs/crypto.ts",
       ".storybook/stubs/next-headers.ts",
       "docs/sessions/2026-08-20-task757-authsheet-detailwind.md",
-      "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+      "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
       "docs/backlog.md"
     ],
     "supersedes": [],
@@ -309,7 +309,7 @@
         {
           "claim": "The two success states are simply missing evidence rather than an amended requirement.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Owner decision D757-3 amends AC3 so the success states are not required in the formal matrix: they are unreachable headlessly (real Turnstile key) and the owner verified them manually across all breakpoints. The reviewer separately traced every substitution in both success blocks against theme.ts and the built CSS; the only delta found is the one recorded in F1. The amended scope, not the original, is what this row is measured against."
         }
       ],
@@ -410,7 +410,7 @@
         {
           "claim": "--tw-leading might not reach the h3, making 1.75rem the true before-value.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Refuted. @property --tw-leading{syntax:\"*\";inherits:false} makes inheritance irrelevant, but the h1..h6 base rule sets the property on the h3 element itself, so it applies. The session log's claim that the compiled rule is .text-lg{...line-height:1.75rem} elided the var() wrapper; corrected 2026-08-21."
         }
       ],
@@ -480,32 +480,32 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. The declaration moved from a class in @layer utilities to an inline style attribute."
           },
           {
             "field": "layer",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. An inline style is not layered and can no longer be overridden by any author rule."
           },
           {
             "field": "specificity",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. Inline styles outrank every author selector."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. Source order stops being the deciding factor once the declaration is inline."
           },
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. "
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-8 (2026-08-21) authorises this delta, scoped strictly to the two success-title h3 sites, as the technical consequence of the rendered value already authorised in D757-2. The custom-property indirection is removed, so the h1..h6 base rule can no longer influence this declaration."
           }
         ],
@@ -702,12 +702,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Same computed values (theme.ts fontSizes match the Tailwind sizes exactly), but the declarations are re-expressed."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Provably inert on these elements - inherits:false and no leading-* utility present - but it is an envelope change and needs explicit owner authorisation (proposed D757-7)."
           }
         ],
@@ -904,12 +904,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Same computed values (theme.ts fontSizes match the Tailwind sizes exactly), but the declarations are re-expressed."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Provably inert on these elements - inherits:false and no leading-* utility present - but it is an envelope change and needs explicit owner authorisation (proposed D757-7)."
           }
         ],
@@ -1113,12 +1113,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "declarations",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. No element in this tree carries a gradient and neither timing token is ever set here, so the change is inert - but unapproved."
           },
           {
             "field": "customProperties",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
             "reason": "Owner decision D757-7 (2026-08-21) authorises this envelope delta, conditional on the native validator confirming the exact generated rule and an equivalent negative probe for this row. Both are @property inherits:false and unset on these elements; inert but an envelope change requiring owner authorisation (proposed D757-7)."
           }
         ],
@@ -1190,7 +1190,7 @@
       },
       "evidence": [
         {
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "command": "owner-native manual verification of both success states at every breakpoint, on a local production build with real Supabase and real Turnstile",
           "observable": "Owner reached both success states and stepped through every breakpoint: no layout shift, no overflow, no clipping, in all four locales. Recorded as owner decision D757-3a on 2026-08-21.",
           "freshness": "owner-run on the final build",
@@ -1233,7 +1233,7 @@
         {
           "claim": "The owner's manual pass is equivalent to a captured before/after baseline.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "It is not, and this row does not record it as one. No pre-migration capture of either state exists or can be produced - the project's Turnstile site key is a real production key a headless browser cannot solve - so requiredScope.phases is declared as after only. The single property whose pre-migration value was established analytically rather than captured is the h3 line-height, recorded in D757-2 and authorised in D757-8."
         },
         {
@@ -1469,7 +1469,7 @@
       },
       "evidence": [
         {
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "command": "owner-run manual end-to-end against a local production build with real Supabase and real Turnstile",
           "observable": "Login: drawer closed, header authenticated. Forgot password: success state shown, email received, recovery link worked, password changed, new login succeeded. Register: success state shown, confirmation email received, email confirmed, user authenticated.",
           "freshness": "owner-run on the final build",
@@ -1505,7 +1505,7 @@
         {
           "claim": "The success states are technically unreachable, so AC6 cannot be satisfied.",
           "kind": "EXECUTED",
-          "path": "tasks/Sprints/Sprint_60_owner_decisions_Task_757.md",
+          "path": "tasks/Archive/Sprint_60_owner_decisions_Task_757.md",
           "result": "Refuted. The owner reached all three success states manually. The blocker is specific to headless automation (a real Turnstile key), not to the states themselves."
         }
       ],

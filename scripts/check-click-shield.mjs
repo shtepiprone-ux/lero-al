@@ -34,7 +34,7 @@
  *      defect: a modal/drawer is SUPPOSED to intercept background clicks while open. This is a
  *      mechanism only. Whether the gate becomes blocking in CI for routes that open a modal by
  *      default is an owner policy decision, not exercised by this task's homepage-only proof
- *      (OQ3, tasks/Sprints/Sprint_52_kickoff_prompt_Task_723_NotificationsClickShield.md).
+ *      (OQ3, tasks/Archive/Sprint_52_kickoff_prompt_Task_723_NotificationsClickShield.md).
  *   5. Hard-errors (exit 2, never a silent exit 0) if any single cell checks zero candidates —
  *      the same empty-candidate-set guard `check-stories-rendered.mjs` already applies
  *      (`mantineStories.length === 0` check) — a run that "checked nothing" must not read as a

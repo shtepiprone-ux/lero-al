@@ -224,7 +224,7 @@ boundary is set (§3.6).
 5. `docs/critical-flow-registry.md` — row 50.
 6. `docs/tailadmin-style-reference.md` — `:24` (theme-xs), `:48` (text-colour statement), `:79` (Label row).
 7. `docs/mantine-responsive-design-system.md`
-8. `tasks/kickoff_prompt_Task_671_FiltersPanel_DeTailwind_Canonical_FilterSection.md` — §3.4 D2 and §10 I4.
+8. `tasks/Archive/kickoff_prompt_Task_671_FiltersPanel_DeTailwind_Canonical_FilterSection.md` — §3.4 D2 and §10 I4.
 9. `docs/sessions/2026-07-28-task671-filterspanel-detailwind-filtersection.md` — §5, §8, §9, §12.
 
 **Source pre-read**
@@ -243,7 +243,7 @@ boundary is set (§3.6).
 | `src/design-system/mantine/patterns/MantineFilterSection.tsx` | modify | `c="dimmed"` → `c="gray.5"`; extend the doc block with the D4 provenance (R1, R2). |
 | `src/components/shared/FiltersPanel.tsx` | modify | Title `<Text component="span">` (R3); rename `isFirstVisible` → `withTopDivider` (R6). Nothing else. |
 | `src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx` | modify | Add **one** test asserting the title renders a non-`<p>` element (R3). Existing 18 assertions untouched. |
-| `tasks/kickoff_prompt_Task_671_FiltersPanel_DeTailwind_Canonical_FilterSection.md` | modify | §3.4 D2 hex correction only (R4). Do not restructure the file. |
+| `tasks/Archive/kickoff_prompt_Task_671_FiltersPanel_DeTailwind_Canonical_FilterSection.md` | modify | §3.4 D2 hex correction only (R4). Do not restructure the file. |
 | `docs/sessions/2026-07-28-task671-filterspanel-detailwind-filtersection.md` | modify | R4 + R5: hex corrections, §5 R7/R8 downgrades, §3.2 table, §3.3 blast-radius, D4 record. |
 | `docs/critical-flow-registry.md` | modify | Row 50 hex correction + this task's evidence. **Row 50 only.** |
 | `docs/backlog.md` | modify | Correct the 671 hex; add a concise 675 entry. Keep ≤80 lines — the file is **at** 80 now, so consolidate 671's over-long line rather than appending a second wall of text. |

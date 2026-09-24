@@ -1,0 +1,5 @@
+ M docs/backlog.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+?? docs/sessions/2026-09-24-task876-premise-drift-blocked.md
+?? docs/sessions/evidence/task876/

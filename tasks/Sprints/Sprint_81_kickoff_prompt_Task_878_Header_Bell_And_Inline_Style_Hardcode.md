@@ -1,7 +1,8 @@
 # Task 878 — the header renders the real bell everywhere it is proven, and the header tree loses its inline-style hardcode
 
 Sprint 81 · **P2** · QA profile **Q3** (navigation/header chrome) · depends on **875** (both edit `CaptchaWidget.tsx`) ·
-owner decision **D81-7** · owner action **O81-8** · **Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET after 875 lands**
+owner decision **D81-7** · owner action **O81-8** · **Status: 🔁 NEEDS REVISION (review 1, 2026-09-24) — Sonnet's
+next action is §16 (remediation re-entry), nothing else**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 The header's CSS modules and global classes are **879** (reserved, D81-7), not this task.
@@ -140,6 +141,8 @@ Files the executor may change:
 - `src/stories/mantine/primitives/HeaderView.stories.tsx`, `src/stories/mantine/primitives/HeaderActions.stories.tsx`:
   R2
 - `messages/*.json`: only the R2 key removal, if it applies
+- `scripts/surface-census-baseline.json`: **only** removal of rows that `check:surface-census:changed` reports as
+  stale because an F4 edit made it re-census their parent (Revision 1, §16.3). No row may be added or re-worded.
 - `docs/sessions/2026-09-2?-task878-*.md` and `docs/sessions/evidence/task878/**`
 - `docs/backlog.md`: the 878 state cell only
 
@@ -149,8 +152,9 @@ Files the executor may change:
   `notification-chrome.css` offset.
 - The containers `Header.tsx` and `NotificationBell.tsx`.
 - Any new Story file, export or title.
-- `scripts/mantine-migration-scope.json` and both census baselines. No node changes enrolment: all 9 files are
-  already `manifest:yes story:yes`, or container-exempt.
+- `scripts/mantine-migration-scope.json`, `scripts/rendered-scope-baseline.json`, and any **addition** to
+  `scripts/surface-census-baseline.json`. No node changes enrolment: all 9 files are already `manifest:yes story:yes`,
+  or container-exempt. Stale-row removal is in scope (§7, §16.3).
 - Behaviour: the popover, unread logic, the auth flows and the Turnstile token all stay unchanged.
 
 ## 9. Current and required behavior
@@ -258,10 +262,17 @@ Clicking it opens the same panel as today. The Storybook `HeaderView` shows that
 - **AC7 [all]** Given the §13.2 block, when run, then:
   - `typecheck`, `lint`, `test:auth`, `check:rendered-scope` (and `:verify`), `check:surface-census:changed --base`
     (and `:verify`), `check:file-integrity`, `check:mojibake` and `npm run build` exit 0;
-  - the census baseline diff is empty;
+  - `scripts/rendered-scope-baseline.json` has no diff, and `scripts/surface-census-baseline.json`'s diff contains
+    only removed rows, each one named as stale by the gate's own first run (Revision 1, §16.3);
   - the final status lists no path outside §7 beyond those in `01-status-before.txt`.
+- **AC8 [R3, R4] — Revision 1.** Given `32b-menu-label-fz-after.txt`, when read, then in
+  `Mantine/Primitives/UserMenu` → `Default` (admin fixture, "Dashboard" item) and `Mantine/Primitives/LocaleSwitcher`
+  → `Default` (the current-locale item), at 1440 and 390, the emphasised label's computed `font-size` and
+  `line-height` equal those of its sibling items' labels in the same open menu, and its `font-weight` is 500
+  (UserMenu) / 600 (LocaleSwitcher). `32a-menu-label-fz-before.txt`, run against the reviewed build before the fix,
+  shows the same probe reporting the mismatch.
 
-`GR-4 AC AUDIT — 7 criteria; each states an observable property; absolutes: AC3's "no … literal" is the GR-0 rule itself, scoped to the F4 sites and checked by the ledger, not a repo-wide absolute; AC5 is the pre-existing measured invariant (Task 684 D3).`
+`GR-4 AC AUDIT — 8 criteria (AC8 and AC7's baseline clause amended in Revision 1 — the original "baseline diff is empty" was an absolute a correct implementation violated); each states an observable property; absolutes: AC3's "no … literal" is the GR-0 rule itself, scoped to the F4 sites and checked by the ledger, not a repo-wide absolute; AC5 is the pre-existing measured invariant (Task 684 D3).`
 
 ## 13. QA profile and verification plan
 
@@ -319,6 +330,9 @@ Expected results:
    | `Mantine/Primitives/HeaderActions` | its existing exports | 320, 1440 | 8 per export | bell next to the heart |
    | `Mantine/Primitives/NotificationBellView` | its existing exports | 390, 1440 | 8 per export | open the panel: item text line heights, muted texts |
    | `Patterns/Mantine/AuthSheet` | `Login`, `Register`, `RegisterAgent`, `ForgotPassword` | 390 | 4 per export | muted helper texts, the company-logo hint at 10px (`RegisterAgent`), the "or" separator row |
+   | `Mantine/Primitives/UserMenu` *(Revision 1)* | `Default` | 390, 1440 | 8 | the admin "Dashboard" item is the same size as its siblings, only bolder |
+   | `Mantine/Primitives/LocaleSwitcher` *(Revision 1)* | `Default` | 390, 1440 | 8 | the current-language item is the same size as the others, only bolder |
+   | `Mantine/Primitives/MobileNavDrawer` *(Revision 1)* | its existing exports | 390 | 4 per export | the signed-in user's name line (raw `lh` removed) |
 
    Record accepted or returned with a concrete defect.
 
@@ -358,3 +372,81 @@ Update the 878 backlog state cell. Write the session log with a Files Changed ta
 | Two-armed control | this task adds no gate. Its proofs are the ledger (per-site, reviewable against the diff), the height measurement before and after, and the owner matrix. The Story change is itself the control that was missing. |
 | Sequencing | after 875 (shared `CaptchaWidget.tsx`); the I0 step 2 check enforces it |
 | Owner decision quoted | D81-7 verbatim |
+
+## 16. Revision 1 — review 1, 2026-09-24: `NEEDS REVISION`
+
+Re-entry mode: **remediation**. Everything not named here was verified in review 1 and must not be redone. That
+covers R1, R2, the 26 other ledger rows, AC4's 28 → 13 count, AC5's heights, the Header census, and the gate block.
+
+**Preserve these artifacts. Do not re-run or overwrite them:** `01-status-before.txt`, `02-style-sites.txt`,
+`02b-census-header.txt`, `03-heights-before.txt`.
+
+### 16.1 Finding R1-F1 (P2): two emphasised menu labels render larger than their siblings. Requirements: R3, R4, AC3, AC8.
+
+- **Where.** `src/components/layout/UserMenu.tsx:28` `<Text span fw={500}>` and
+  `src/components/shared/LocaleSwitcher.tsx:45` `<Text span fw={600}>`.
+- **What happens now.** Mantine `Text` without `inherit` sets
+  `font-size: var(--text-fz, var(--mantine-font-size-md))` and the matching `md` line height. Source:
+  `node_modules/@mantine/core/styles/Text.css:4-5`. The theme's `Menu.item` is 14px (`theme.ts` `Menu.styles.item`).
+- **Measured by the reviewer** against the executor's `storybook-static` build (win32, Node v22.22.3):
+
+  | Story | Emphasised label | Sibling labels | Row height |
+  |---|---|---|---|
+  | `usermenu--default` @1440, "Dashboard" | 16px, line height 24px, weight 500 | 14px | 44px vs 41px |
+  | `localeswitcher--default` @1440, "EN English" | 16px, line height 24px, weight 600 | 14px | 44px vs 41px |
+
+  The removed `<span style={{ fontWeight }}>` inherited the item's 14px, so this is a regression. Both GR-0
+  receipts cite `FavoritesTypeFilter.tsx` and `SaveToCollectionButton.tsx` as precedent. Both of those use
+  `<Text span … inherit>` (`FavoritesTypeFilter.tsx:40,48`, `SaveToCollectionButton.tsx:164`). The receipt and the
+  code contradict each other.
+- **Fix.** Add the `inherit` prop to both elements and keep `fw`:
+  - `<Text span inherit fw={500}>` in `UserMenu.tsx`;
+  - `<Text span inherit fw={600}>` in `LocaleSwitcher.tsx`.
+
+  `fw` is an inline style prop, so it wins over the `:where([data-inherit])` `font-weight: inherit` rule. AC8
+  measures the result. Correct both GR-0 receipts and both ledger rows in `04-style-ledger.md` so that they state
+  `inherit`.
+- **Two-armed proof (AC8).** Write `docs/sessions/evidence/task878/probe-menu-label-fz.mjs`, reusing the static-server
+  shape of `probe-header-heights.mjs` on its own port. For each Story at 1440 and 390, open the menu:
+  - `UserMenu` `Default`: the Story's `play` opens it;
+  - `LocaleSwitcher` `Default`: click the trigger, finding a selector that works at both widths. Below 640 the menu
+    is a bottom sheet.
+
+  Print, for every item, the label's computed `font-size`, `line-height` and `font-weight`, and the nested
+  `.mantine-Text-root` span's values when there is one. The probe exits non-zero when an emphasised span's
+  font-size or line-height differs from its siblings' labels.
+  1. **Before the fix**, against the current build: `32a-menu-label-fz-before.txt` must exit **non-zero** and show 16px.
+  2. Make the fix, run `npm.cmd run build-storybook`, and run the probe again: `32b-menu-label-fz-after.txt` must
+     exit **0**.
+
+### 16.2 Finding R1-F2 (P3): a stale comment. Requirement: R4.
+
+`src/modules/notifications/components/NotificationCenter.tsx:58-60` still says
+`lh=1.625 (leading-relaxed) matches this <p>'s …`. The `lh` it describes was removed on the next line. Replace it
+with a one-line comment in the style of the sibling `NotificationItem.tsx` comments: the raw `lh` was removed in
+Task 878 and the theme `sm` line height applies (D81-7).
+
+### 16.3 Accepted deviation: the stale census-baseline rows
+
+The executor's 4-row removal from `scripts/surface-census-baseline.json` is **accepted**. The reviewer re-verified it:
+- `LocaleSwitcher.tsx` and `PhoneField.tsx` are `manifest:yes story:yes` (`mantine-migration-scope.json:98-99`);
+- a live census of `src/app/admin/layout.tsx` and of `AdminUserCreate.tsx` reports neither as a FAIL;
+- the diff removes rows and adds none.
+
+The original AC7 clause "the census baseline diff is empty" was the orchestrator's GR-4 defect, and it is amended
+above. Keep the removal as it is. Do not re-run `--update-baseline` unless the gate's first run in §16.4 names a
+further stale row. In that case record the gate output and remove only that row.
+
+### 16.4 Re-validation
+
+After §16.1 and §16.2:
+1. Re-run the whole §13.2 block, overwriting `10`–`29`. The final hashes must describe the shipped files.
+2. Re-run §10.4 into `30-heights-after.txt`. Expected: still 97/97/65/65.
+3. Re-run `31-style-sites-after.txt`. Expected: 13, unchanged.
+
+Append a `## Revision 1` section to the existing session log, `docs/sessions/2026-09-24-task878-implemented.md`.
+It must include AC8's before/after, the corrected GR-0 receipts, and an updated Files Changed table. Set 878's
+backlog state cell back to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`.
+
+AC6 / O81-8 stays owner-owed. The owner matrix in §13.3 gained UserMenu, LocaleSwitcher and MobileNavDrawer rows in
+this revision.

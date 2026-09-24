@@ -1,7 +1,7 @@
 # Task 875 — the Turnstile captcha follows the app locale
 
 Sprint 81 · **P3** · QA profile **Q2** · depends on nothing · owner decision **D81-6** · owner actions **O81-6, O81-7** ·
-**Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET**
+**Status: 🟡 PARTIALLY VERIFIED 2026-09-24 (review 1)** — implemented by Sonnet and verified (AC1–AC5); **AC6 / O81-6 owner Storybook matrix is the only open gate before approval**. No executor action owed.
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md)
 (D81-6 is quoted verbatim there and in §5 below).

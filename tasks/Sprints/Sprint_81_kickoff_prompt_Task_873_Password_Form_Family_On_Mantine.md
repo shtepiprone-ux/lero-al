@@ -2,7 +2,8 @@
 
 Sprint 81 · **P2** · QA profile **Q4** (Q3 visual matrix + the "Recovery link → reset" critical flow) · **depends on
 872** (both regenerate the same two governance baselines, so run them one after the other) · owner action **O81-3** ·
-**Status: 📝 KICKOFF FILED 2026-09-24 — READY FOR SONNET after 872 is approved**
+**Status: 🔁 NEEDS REVISION 2026-09-24 (review 1) — READY FOR SONNET: re-enter at §16, which overrides every
+earlier section it names.**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 Owner decision **D81-3** (2026-09-24), in response to *"Який обсяг у задачі 873?"*, verbatim: *"Вся форма пароля
@@ -95,7 +96,7 @@ recovery flow), and **Regression / Critical Flow Coverage**.
 | **R2** | Extend `Mantine/Primitives/PasswordInput` (`src/stories/mantine/primitives/PasswordInput.stories.tsx`) so it imports `PasswordRequirementsHint` by name and renders the **real** hint in place of the inline rows (F2). Add one state each: empty, partial (`'Abc'`), all-met (`'Sample123!'`). Delete `src/components/ui/PasswordRequirementsHint.stories.tsx` (legacy title, no parallel page). In `src/components/ui/PasswordInput.stories.tsx`, change only the hint import to the new path. | P0 | AC2 |
 | **R3** | Auth card. Extract the `Paper` from F7 into an exported `MantineAuthCard({ children })`, **in the same file** `MantineAuthFormPattern.tsx`, with identical props and token path. `MantineAuthFormPattern` renders it; its rendered output must not change. Add an `AuthCard` export to `Patterns/Mantine/AuthFormPattern` that imports `MantineAuthCard` by name. | P0 | AC3 |
 | **R4** | `src/modules/auth/components/ResetPasswordView.tsx` (new, presentational: props only, no router, auth or network). Props: `pageState`, `password`, `errorKey`, `submitting`, `allMet`, `passwordVisible`, `onPasswordChange`, `onVisibilityChange`, `onSubmit`, `onRequestNew`, `onGoLogin`. Built from `MantineAuthCard` and native Mantine `Stack`/`Title`/`Text`/`Alert color="red"`/`PasswordInput`/`Button fullWidth loading`/`Loader`/`ThemeIcon` or lucide icons sized from `theme.other.iconSize`. The pattern is F4's: `label`, `visible`/`onVisibilityChange`, `visibilityToggleButtonProps` with the existing `common.hide_password`/`show_password` keys, then `<PasswordRequirementsHint>`. **No success/error ring** (F4: no canonical success state; the hint carries validity). `ResetPasswordClient.tsx` keeps **every** hook, effect and handler byte-for-byte and renders `<ResetPasswordView …/>` only. | P0 | AC4, AC6 |
-| **R5** | `src/modules/cabinet/components/CabinetPasswordSectionView.tsx` (new, presentational), the same way. It renders the section title, the error alert, the same-password alert (`isSamePassword && !errorKey`), both `PasswordInput`s (refs forwarded from the container; `aria-describedby="cabinet-password-hint"` kept on the new-password input), the hint and a submit `Button fullWidth loading disabled={submitDisabled}`. `CabinetPasswordSection.tsx` keeps its state, `submitDisabled`, `handleSubmit` and error mapping byte-for-byte. | P0 | AC5, AC6 |
+| **R5** | *(Amended by §16.2 and §16.3: both reveal toggles get localized labels, and the hint becomes the new-password input's Mantine `description`, replacing the hand-written `aria-describedby`.)* `src/modules/cabinet/components/CabinetPasswordSectionView.tsx` (new, presentational), the same way. It renders the section title, the error alert, the same-password alert (`isSamePassword && !errorKey`), both `PasswordInput`s (refs forwarded from the container; `aria-describedby="cabinet-password-hint"` kept on the new-password input), the hint and a submit `Button fullWidth loading disabled={submitDisabled}`. `CabinetPasswordSection.tsx` keeps its state, `submitDisabled`, `handleSubmit` and error mapping byte-for-byte. | P0 | AC5, AC6 |
 | **R6** | New canonical Stories (GR-3a: CREATE, zero candidates import either View). `src/stories/patterns/mantine/ResetPasswordView.stories.tsx` (`Patterns/Mantine/ResetPasswordView`): `Loading`, `Expired`, `Success`, `FormEmpty`, `FormPartial`, `FormAllMet`, `FormError`, `FormSubmitting`. `src/stories/patterns/mantine/CabinetPasswordSectionView.stories.tsx` (`Patterns/Mantine/CabinetPasswordSectionView`): `Empty`, `NewPartial`, `ReadyToSubmit`, `SamePassword`, `ErrorInvalidCurrent`, `RateLimited`, `Submitting`. Fixture props only; locale and viewport come from the toolbar. Manifest entries for both Views. | P0 | AC7 |
 | **R7** | *(Withdrawn: `PhoneField` enrolment moved to 872, amendment 1.)* At I0, confirm that `PhoneField`, `LocaleSwitcher` and `CaptchaWidget` are already in the manifest. If they are not, 872 has not landed: stop. | P1 | AC7 |
 | **R8** | `ResetPasswordClient.smoke.test.ts`: remove the stale ui mocks, render inside the project's Mantine test wrapper (use the one existing tests already use; search for it first), and keep every existing assertion meaningful. **Add** a planted-failure proof: comment out the verify-on-submit call and the test must fail. Also add `src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx`, which asserts submit is disabled for the same password, mapping `invalid_current` shows the alert, and success calls `signOut('global')`. | P0 | AC8 |
@@ -190,7 +191,7 @@ enables; the password is saved; the success state appears.
 
 ## 12. Acceptance criteria
 
-- **AC1 [R1]** No file imports `components/ui/PasswordRequirementsHint`: `git grep` with `--untracked` returns 0 hits.
+- **AC1 [R1]** *(Expected result amended by §16.4.)* No file imports `components/ui/PasswordRequirementsHint`: `git grep` with `--untracked` returns 0 hits.
   The new pattern is in the manifest. `check:pattern-enrolment` exits 0.
 - **AC2 [R2]** `Mantine/Primitives/PasswordInput` imports `PasswordRequirementsHint` by name and contains no inline
   rule-row markup. The legacy hint story file is gone. `check:story-coverage` exits 0.
@@ -199,7 +200,8 @@ enables; the password is saved; the success state appears.
 - **AC4 [R4]** Neither `ResetPasswordClient.tsx` nor `ResetPasswordView.tsx` imports `@/components/ui/`. The View
   imports no router, auth, Supabase or action module. The container's hook, effect and handler bodies are unchanged
   in the diff.
-- **AC5 [R5]** The same holds for the cabinet pair. `aria-describedby` and both refs are preserved.
+- **AC5 [R5]** The same holds for the cabinet pair. `aria-describedby` and both refs are preserved. *(Replaced by §16.3
+  AC5′ for `aria-describedby`; the refs clause stands.)*
 - **AC6 [R4, R5]** `className` count in both Views and both containers = 0. No raw hex/px/rem values. Icon sizes come
   from theme tokens.
 - **AC7 [R6, R7]** Both new Stories render every listed state. Each imports its View by name. The manifest has both
@@ -298,3 +300,236 @@ Update the 873 backlog row. Write the session log with a Files Changed table.
 | Two-armed control | recovery verify-on-submit plant (AC8); baseline diff restricted to named removals |
 | Detector blind spots | Census tier-2 is path-only (F9). The container exemption is a rule, not a census feature. The drift from the removed ring is visible and owner-reviewed. |
 | Owner decisions quoted | D81-3 (scope); the ring removal follows the canonical composition, and the owner matrix reviews it |
+
+## 16. Review 1 — `NEEDS REVISION` (2026-09-24): the re-entry route
+
+Reviewed diff: the working tree on top of `b5074e624`. The final hashes in the session log match the files on disk. Both
+smoke tests were re-run by the reviewer natively (`win32`, 8/8 pass). **Re-entry mode: remediation.** Start at §16.6.
+
+**Stays as delivered.** This covers R1–R3, R4 except §16.1, R6's Story set, R7, R8's existing tests and plants, and
+R9's doc edits and both baselines. Do not rewrite anything outside §16.1–§16.4.
+
+**Forbidden re-runs:**
+- `--update-baseline` on either baseline. Both baselines are final. A changed hash of `scripts/surface-census-baseline.json`
+  (`d4973d0c…`) or `scripts/rendered-scope-baseline.json` (`499f3c1e…`) is `SCOPE GUARD FAILED`.
+- `npm run catalog:components`. It overwrites three hand-maintained docs (§16.5).
+- Any edit to `messages/*.json`, `src/modules/cabinet/actions/**`, or `AuthSheet.tsx`.
+
+### 16.0 Owner decision D81-5 (2026-09-24), verbatim
+
+Asked: keep or drop the link between the cabinet new-password field and its requirements hint, now that Mantine
+`PasswordInput` overwrites the hand-written `aria-describedby`. Answer, verbatim:
+
+> *"Обираю 1 — зберегти зв’язок.Це accessibility-регресія P0 у 873: вимоги пароля є інструкціями до поля, тому мають
+> лишатися доступними при фокусі. aria-describedby прямо призначений для такого зв’язку. W3C ARIA APG, WCAG 3.3.2У 873
+> треба замінити R5/AC5 так:- Для cabinet PasswordInput передати description={<PasswordRequirementsHint
+> value={newPassword} />}.- Задати inputWrapperOrder={['label', 'input', 'description', 'error']}, щоб підказка
+> залишилася під полем.- Видалити ручні aria-describedby="cabinet-password-hint" і <div id="cabinet-password-hint">.- Не
+> додавати фіксований id: Mantine керує ним і зв’язком сам. PasswordInput підтримує можливості Input.Wrapper, включно з
+> description та inputWrapperOrder. Mantine PasswordInput, Mantine InputAC5 має перевіряти не конкретний Mantine id, а
+> результат у DOM: поле, знайдене за label, має непорожній aria-describedby, що посилається на наявний description-вузол
+> з усіма п’ятьма вимогами. Рефи й поведінка submit лишаються без змін.Це застосовується лише до cabinet, бо саме там
+> був попередній контракт зв’язку. Невеликий зсув відступів має пройти через існуючу матрицю O81‑3. Клієнтська
+> підказка не є security boundary: серверна перевірка password policy у changeCabinetPassword має залишатися
+> обов’язковою."*
+
+### 16.1 F1 (P2): raw `gap={6}` in both new Views [R4, R5, AC6, GR-0]
+
+**Observed:**
+- `ResetPasswordView.tsx:106` and `CabinetPasswordSectionView.tsx:66` both use `<Stack gap={6}>`.
+- The three hint-state Stacks added to `src/stories/mantine/primitives/PasswordInput.stories.tsx` use `<Stack gap={4}>`.
+- The session's GR-0 receipt says "new hardcoded visual values: NONE", which these lines contradict.
+
+**The tokens exist.** `src/design-system/mantine/theme.ts`, in `spacing`, defines `compact: '0.375rem' // 6px` and
+`tight: '0.25rem' // 4px`. Task 822 replaced exactly this literal with `gap="compact"`.
+
+**Out of scope.** `AuthSheet.tsx` has four pre-existing `gap={6}` sites. This task may change only its import lines
+there.
+
+**Correction:**
+- In both Views, replace `gap={6}` with `gap="compact"`.
+- In the primitives story, replace `gap={4}` with `gap="tight"` in the three hint-state Stacks this task added.
+- Change nothing else.
+
+**Verification:** artifact `31-gap-literals.txt` (§16.7) returns no match.
+
+### 16.2 F2 (P2): the cabinet reveal toggles lost their accessible name [R5, §9 "Password reveal", agent-contract 3]
+
+**Observed:**
+- `CabinetPasswordSectionView.tsx:56-76` renders both `PasswordInput`s without `visibilityToggleButtonProps`.
+- Without that prop, Mantine renders the toggle with `aria-hidden="true"`
+  (`node_modules/@mantine/core/esm/components/PasswordInput/PasswordInput.mjs:127`). The reviewer confirmed this with
+  an SSR render.
+- The legacy toggle (`git show HEAD:src/components/ui/PasswordInput.tsx`, lines 33–37) had
+  `aria-label={visible ? t('hide_password') : t('show_password')}` and `aria-pressed`.
+- §9 requires the Mantine toggle to carry the same localized labels. `ResetPasswordView.tsx:115-117` already does
+  this, using the F4 form.
+
+**Correction:**
+1. **View.**
+   - Add four props: `currentPasswordVisible: boolean`, `newPasswordVisible: boolean`,
+     `onCurrentVisibilityChange: (visible: boolean) => void` and `onNewVisibilityChange: (visible: boolean) => void`.
+   - Add `const tc = useTranslations('common')`.
+   - Give each `PasswordInput` its `visible`, its `onVisibilityChange` and
+     `visibilityToggleButtonProps={{ 'aria-label': <its visible> ? tc('hide_password') : tc('show_password') }}`. This is
+     the exact `ResetPasswordView.tsx:115-117` form.
+2. **Container (`CabinetPasswordSection.tsx`).**
+   - Add exactly two state lines, `const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false)` and the
+     matching `newPasswordVisible` line, and pass the four props.
+   - Against the current file (`6e21d038…`), the diff must be additions only.
+3. **Story.** In `CabinetPasswordSectionView.stories.tsx`, `Demo` holds both visibility states in `useState` and passes
+   the four props. Do not add a Story export.
+
+### 16.3 F3 (P0, owner D81-5): the new-password field is no longer linked to its hint [R5, AC5]
+
+**Observed:**
+- `CabinetPasswordSectionView.tsx:75` passes `aria-describedby="cabinet-password-hint"`.
+- Mantine's `PasswordInput` spreads `...rest` and then sets `"aria-describedby": describedBy`
+  (`PasswordInput.mjs:215-216`). That value is `undefined` unless an error or description is present.
+- In the rendered DOM, the input therefore has **no** `aria-describedby` (the reviewer's SSR probe). The session log's
+  claim that `aria-describedby` was preserved is wrong.
+
+**Correction, per D81-5 (cabinet only; `ResetPasswordView` and `AuthSheet` are unchanged):**
+1. Give the new-password `PasswordInput` the following props:
+   - `description={<PasswordRequirementsHint value={newPassword} />}`;
+   - `inputWrapperOrder={['label', 'input', 'description', 'error']}`;
+   - `descriptionProps={hintDescriptionProps}`, where `hintDescriptionProps` is a **module-level constant**,
+     `const hintDescriptionProps = { component: 'div' }`.
+2. Delete `aria-describedby="cabinet-password-hint"`, the `<div id="cabinet-password-hint">` wrapper and the now-empty
+   `<Stack gap=…>` that held the input and hint. Do not set any id; Mantine owns it.
+3. **Why the constant is required (reviewer-measured, not optional):**
+   - Mantine's `InputDescription` renders `component: "p"` and then spreads `...others`
+     (`node_modules/@mantine/core/esm/components/Input/InputDescription/InputDescription.mjs:59-67`).
+   - The hint's root is a `Stack` `<div>`, and it contains a `<p>` and a `<ul>`. Left as `<p>`, the result is invalid
+     nesting and a React hydration error.
+   - SSR probe: without `descriptionProps`, the description root is `p`; with `{ component: 'div' }`, it is `div`, and
+     the input gets `aria-describedby="<id>-description"` either way.
+   - Typecheck probe: an inline object literal `descriptionProps={{ component: 'div' }}` fails with **TS2769**
+     (`'component' does not exist in type 'InputDescriptionProps & DataAttributes'`). The same object as a non-literal
+     constant passes `tsc`.
+   - **No cast, `any` or `@ts-expect-error`.** If `npm run typecheck` rejects the constant form, STOP and report
+     `BLOCKED — §16.3 description root`. Make no other attempt.
+4. **The current-password input is unchanged** apart from §16.2. The refs, `submitDisabled`, `handleSubmit` and the
+   error mapping stay byte-identical.
+5. **Server policy.** `changeCabinetPassword` (`src/modules/cabinet/actions/index.ts:456`) keeps its server-side
+   password-policy check. The client hint is not a security boundary. Its diff must stay empty (`35-actions-diff.txt`).
+
+**AC5′ replaces AC5's `aria-describedby` clause.** It is judged by the rendered DOM, never by a Mantine id:
+- The input found by its label (`password_new_label` with the test's key-echo `next-intl` mock) has a non-empty
+  `aria-describedby`.
+- `document.getElementById(<that value>)` exists, is a `DIV`, and contains all five `password_rule_*` keys.
+- Both refs still reach their `<input>` (existing behaviour).
+
+### 16.4 F4 (P2): AC1's evidence artifact is missing, and its stated result is false [R1, AC1, R9]
+
+**Observed:**
+- The session log cites `03-hint-importers.txt` with "0 hits". No such file exists in
+  `docs/sessions/evidence/task873/`.
+- The kickoff's exact command, re-run by the reviewer, returns **1 hit**:
+  `scripts/surface-census-baseline.json:151`, key
+  `src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive`.
+- This is a **carried** key. The mapper excludes a deleted path (`16-census-changed.txt` lists
+  `PasswordRequirementsHint.tsx [deleted]`), and `computeReCensusSurfaces` (`scripts/check-surface-census-changed.mjs:152-165`)
+  re-censuses a parent only for a *changed candidate*.
+- As a result, `[locale]/layout.tsx` was never censused. The row is neither stale nor new, and it retires when that
+  surface is next censused. This is the same mechanism as 872's 8 carried keys.
+- It may not be removed by hand (§10.4).
+
+**Correction:**
+- **AC1's expected result is now:** exactly one hit, and it is that baseline key. Any hit in `src/` or `.storybook/`
+  fails AC1.
+- Produce `03-hint-importers.txt` with the §13 command.
+- Also produce `03b-census-layout.txt`:
+  `node.exe scripts\check-surface-census.mjs --surface "src/app/[locale]/layout.tsx"`. It must list **no** node whose
+  path contains `components/ui/PasswordRequirementsHint`. Its exit code is recorded, not asserted, because
+  `layout.tsx`'s other debt is out of scope.
+- Correct the session log's AC1 row to cite both artifacts.
+
+### 16.5 The executor's two questions, and evidence hygiene
+
+1. **`RelativeTime` key drop: accepted.** `src/app/[locale]/cabinet/page.tsx :: src/components/shared/RelativeTime.tsx ::
+   tier1-unenrolled-or-unstoried` is paid-off debt. The updater measured it stale on a surface this diff censuses. It
+   is an allowed removal under R9's own mechanism. No follow-up is needed.
+2. **`npm run catalog:components` overwrites `docs/component-catalog.md`, `component-coverage-matrix.md` and
+   `component-risk-register.md`.** The restore was correct. The JSON it also writes is gitignored, so it has no
+   committed effect. This is a note, not an 873 defect, and the command is forbidden on re-entry.
+3. **Session-log corrections:**
+   - `24-status-after.txt` shows `messages/*.json` as modified during the session. `git status` no longer shows them,
+     and they have no content diff. Replace the log's "messages/*.json untouched" with that fact.
+   - The I0 status/hash snapshot required by §10.1 was not retained (`01-head-before.txt` holds only the SHA). Record
+     the gap as-is and do not reconstruct it.
+   - Both other dirty paths are unrelated and must not be touched:
+     - `docs/sessions/evidence/task861/storybook-dev.log`;
+     - `scripts/schema-drift-check.sql` (generated 2026-09-23, before this task).
+
+### 16.6 Re-entry order
+
+1. Record `win32`. Capture `git hash-object` of the 25 files listed in `25-final-hashes.txt` as `30-reentry-start-hashes.txt`.
+   Any mismatch with `25-final-hashes.txt` is `PREMISE DRIFT`: stop.
+2. §16.1, then §16.2 and §16.3 together in the View, the container and the Story.
+3. Tests, in `CabinetPasswordSection.smoke.test.tsx`:
+   - Add one `it` for AC5′.
+   - Add one `it` for §16.2. For both inputs, the toggle (`.mantine-PasswordInput-visibilityToggle` inside that
+     input's `.mantine-PasswordInput-root`) has no `aria-hidden="true"` and `aria-label === 'show_password'`. After
+     `fireEvent.click` on the new-password toggle, its label is `'hide_password'` and the input `type` is `text`.
+4. **Plants.** Use the Node or Edit tool only, with a `git hash-object` witness before and after each plant:
+   - **P3:** remove `description` from the new-password input. The AC5′ test must fail.
+   - **P4:** remove `visibilityToggleButtonProps` from the new-password input. The §16.2 test must fail.
+   - Restore after each. The hash must match the pre-plant hash.
+5. §16.4 artifacts, then §16.7, then the session-log corrections (§16.4, §16.5.3) and the 873 backlog row.
+
+### 16.7 Verification plan (re-entry)
+
+```powershell
+$ev = "docs\sessions\evidence\task873"
+node.exe -p "process.platform + ' ' + process.version" *>&1 | Tee-Object "$ev\02b-platform-reentry.txt"
+git --no-optional-locks grep -n --untracked "components/ui/PasswordRequirementsHint" -- src scripts .storybook *>&1 | Tee-Object "$ev\03-hint-importers.txt"
+node.exe scripts\check-surface-census.mjs --surface "src/app/[locale]/layout.tsx" *>&1 | Tee-Object "$ev\03b-census-layout.txt"
+git --no-optional-locks grep -n -E "gap=\{[0-9]" -- src/modules/auth/components/ResetPasswordView.tsx src/modules/cabinet/components/CabinetPasswordSectionView.tsx src/stories/mantine/primitives/PasswordInput.stories.tsx *>&1 | Tee-Object "$ev\31-gap-literals.txt"
+npm.cmd run test:auth *>&1 | Tee-Object "$ev\32-test-auth.txt"
+npx.cmd vitest run src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx *>&1 | Tee-Object "$ev\33-cabinet-test.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\34-typecheck.txt"
+git --no-optional-locks diff --stat -- src/modules/cabinet/actions *>&1 | Tee-Object "$ev\35-actions-diff.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\36-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\37-story-coverage.txt"
+node.exe scripts\check-surface-census.mjs --surface src/modules/cabinet/components/CabinetPasswordSection.tsx *>&1 | Tee-Object "$ev\38-census-cabinet.txt"
+npm.cmd run check:surface-census:changed *>&1 | Tee-Object "$ev\39-census-changed.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\40-rendered-scope.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\41-enrolled-tailwind.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\42-build-storybook.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\43-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\44-mojibake.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\45-build.txt"
+git --no-optional-locks status --porcelain *>&1 | Tee-Object "$ev\46-status-final.txt"
+```
+
+**Expected results:**
+
+| Artifact(s) | Expected result |
+|---|---|
+| `03` | exactly the one §16.4 baseline hit |
+| `03b` | no `components/ui/PasswordRequirementsHint` node |
+| `31` | no match |
+| `32`–`34` | exit 0; `33` has 5 tests |
+| `35` | empty |
+| `36`, `37` | exit 0 |
+| `38` | exit 1, with the single container FAIL (unchanged from AC9) |
+| `39`–`45` | exit 0 |
+| `39` | "Blocks new: 0" |
+| both baseline hashes | unchanged |
+
+Add the final `git hash-object` of every changed file to the session log in the same pass. The Storybook build
+does **not** prove the visual result. **O81-3** remains the owner's, and `CabinetPasswordSectionView` must be reviewed
+after this revision because §16.2 and §16.3 change its markup.
+
+### 16.8 Completion report (re-entry)
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+
+Report:
+- §16.1–§16.4, one line each, with its artifact;
+- the P3/P4 plant records with their hashes;
+- the start-hash comparison;
+- every command's exit code.
+
+Update the 873 backlog row. Append a "Revision 1" section to the existing session log; do not write a new log.

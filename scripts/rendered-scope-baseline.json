@@ -1,9 +1,6 @@
 {
   "version": 1,
   "edges": {
-    "src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx": {
-      "tier": "tier1-unenrolled"
-    },
     "src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx": {
       "tier": "tier1-unenrolled"
     },
@@ -14,12 +11,6 @@
       "tier": "tier1-unenrolled"
     },
     "src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx": {
-      "tier": "tier1-unenrolled"
-    },
-    "src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx": {
-      "tier": "tier1-unenrolled"
-    },
-    "src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx": {
       "tier": "tier1-unenrolled"
     },
     "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {

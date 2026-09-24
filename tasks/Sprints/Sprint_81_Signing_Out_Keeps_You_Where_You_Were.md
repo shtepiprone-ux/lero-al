@@ -1,6 +1,6 @@
 # Sprint 81 — signing out keeps you where you were, and every node the header renders is proven
 
-**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (872, 873) · **Reserved:** 1 (874)
+**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (872) · **Kickoffs filed:** 1 (873) · **Reserved:** 2 (874, 875)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -60,16 +60,17 @@ transcript at 60 lines, and 872's executor caught the difference at I0 (872 kick
 
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **872** | Header sign-out stays on public pages: one route classifier with a drift test against the page guards; `CaptchaWidget` gets its own story export and a manifest entry; `Header`/`NotificationBell` exempt under D81-2 | **P2** | **Q4** (Logout is a registered critical flow) | — | 🔁 `AMENDED` 2026-09-24 (the executor's I0 PREMISE DRIFT stop was correct; amendment 1 enrols `LocaleSwitcher` and `PhoneField` too and names the exact baseline removals; review 2026-09-24 → `NEEDS REVISION`, amendment 2 corrects the census-baseline set to 3 + 3 and the gate block; re-entry implemented, review 2026-09-24 → `PARTIALLY VERIFIED`: the owner owes the local AC5 sign-out check and O81-2 before approval) → [`…Task_872…`](Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md) §17 |
+| **872** | Header sign-out stays on public pages: one route classifier with a drift test against the page guards; `CaptchaWidget` gets its own story export and a manifest entry; `Header`/`NotificationBell` exempt under D81-2 | **P2** | **Q4** (Logout is a registered critical flow) | — | ✅ `APPROVED WITH NOTES` 2026-09-24, review 3 (I0 stop → amendments 1–2 → re-entry at §17). The owner confirmed AC5 locally (listing page stays, `/favorites` → home, mobile menu closes); O81-2 found the Turnstile widget English in every locale, a pre-existing defect filed as **875** → [`…Task_872…`](Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md) |
 | **873** | The password-form family on canonical Mantine: `PasswordRequirementsHint` moves to `patterns/` and the duplicate rows in `Mantine/Primitives/PasswordInput` go; `ResetPasswordClient` and `CabinetPasswordSection` split into container + View on native Mantine `PasswordInput`/`Alert`/`Button` (per `AuthSheet`); the auth card is extracted from `MantineAuthFormPattern` | **P2** | **Q4** | 872 | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_873…`](Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md) |
 | **874** | The last `ui/PasswordInput` consumer (`AdminExchangeProvidersManager`) moves to Mantine, then the legacy file and its Story are deleted | P3 | Q3 | 873 | 🔒 **RESERVED** — full text → `docs/backlog-reserved.md` |
+| **875** | The Turnstile captcha follows the app locale: `CaptchaWidget` passes `useLocale()` to Turnstile's native `options.language` (filed 2026-09-24 by 872's O81-2 review) | P3 | Q2 | — | 🔒 **RESERVED** — full text → `docs/backlog-reserved.md` |
 
 ## Owner actions this sprint needs
 
 | ID | Action |
 |---|---|
-| **O81-1** | After 872 is deployed: sign out on a listing page (stays, shows the sign-in prompt), on `/favorites` or `/cabinet` (goes to the homepage), and from the mobile menu (the drawer closes). |
-| **O81-2** | 872's `OWNER VISUAL QA REQUIRED` matrix for the new `CaptchaWidget` story export. |
+| **O81-1** | ✅ Done locally 2026-09-24 (owner, before approval); repeat on the live site after deploy. After 872 is deployed: sign out on a listing page (stays, shows the sign-in prompt), on `/favorites` or `/cabinet` (goes to the homepage), and from the mobile menu (the drawer closes). |
+| **O81-2** | ✅ Reviewed 2026-09-24 — all 8 tuples show the Turnstile widget in English regardless of locale: pre-existing, filed as **875**. |
 | **O81-3** | 873's `OWNER VISUAL QA REQUIRED` matrix (ResetPasswordView, CabinetPasswordSectionView, PasswordInput hint states, AuthFormPattern + AuthCard). After deploy, complete one real password reset and one cabinet password change. Note: the green/red ring around the new-password field goes, matching the canonical `AuthSheet` registration form. |
 
 ## Exit criteria

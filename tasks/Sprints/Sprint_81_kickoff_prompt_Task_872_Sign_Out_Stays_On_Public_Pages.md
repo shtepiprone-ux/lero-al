@@ -1,7 +1,7 @@
 # Task 872 — signing out from the header stays on a public page; the header's tier-1 nodes are proven
 
 Sprint 81 · **P2** · QA profile **Q4** (Logout is a registered critical flow) · no dependencies · owner actions
-**O81-1, O81-2** · **Status: 🟡 PARTIALLY VERIFIED 2026-09-24. Re-entry at §17 is implemented. Before approval, the owner owes the local AC5 sign-out check and the O81-2 visual matrix. (Amended twice after the executor's I0 `PREMISE DRIFT` stop; §17 supersedes §16.3, §16.6 and §13.2.)**
+**O81-1, O81-2** · **Status: ✅ APPROVED WITH NOTES 2026-09-24 (review 3). AC5 was confirmed locally by the owner. O81-2 found the Turnstile widget English in every locale, a pre-existing defect filed as 875. Archived.**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md)
 (owner decisions **D81-1**, **D81-2** quoted verbatim there).

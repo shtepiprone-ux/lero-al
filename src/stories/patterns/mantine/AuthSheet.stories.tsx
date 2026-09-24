@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { within, userEvent } from 'storybook/test'
 import { Button } from '@mantine/core'
 import { AuthSheet } from '@/modules/auth/components/AuthSheet'
+import { CaptchaWidget } from '@/components/auth/CaptchaWidget'
 import { MantineStoryShell } from '../../mantine/_MantineStoryShell'
 import enMessages from '../../../../messages/en.json'
 import sqMessages from '../../../../messages/sq.json'
@@ -122,6 +123,20 @@ export const LoginValidationError: Story = {
     const submit = await canvas.findByRole('button', { name: authT(locale, 'auth', 'login') })
     await userEvent.click(submit)
   },
+}
+
+/**
+ * Task 872 (§17.2, D81-2) — the real production `CaptchaWidget`, rendered standalone (not
+ * through `AuthSheet`, which already renders it inside its Register/RegisterAgent/ForgotPassword
+ * views above). GR-1 container-exempt Header/NotificationBell still need this component enrolled
+ * with its own direct-import Story to close the census FAIL on `CaptchaWidget.tsx`.
+ */
+export const Captcha: Story = {
+  render: () => (
+    <MantineStoryShell>
+      <CaptchaWidget onSuccess={() => {}} onError={() => {}} onExpire={() => {}} />
+    </MantineStoryShell>
+  ),
 }
 
 /** MantineAddItemPanel (Task 756, consumed unmodified) open inside the real register-agent form. */

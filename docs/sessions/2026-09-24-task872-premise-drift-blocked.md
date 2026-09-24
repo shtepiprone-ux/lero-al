@@ -70,6 +70,7 @@ task — an owner/orchestrator call, not the executor's.
   `scripts/schema-drift-check.sql` — both unrelated to 872, untouched by this session)
 - `docs/sessions/evidence/task872/03-census-I0.txt`
 - `docs/sessions/evidence/task872/04-f3-grep.txt`
+- `docs/sessions/evidence/task872/05-status-final.txt` (added per §17.5 — this session's final `git status`)
 
 ## Files Changed
 
@@ -77,7 +78,7 @@ task — an owner/orchestrator call, not the executor's.
 |---|---|
 | `docs/backlog.md` | 872 row state cell → `BLOCKED — PREMISE DRIFT (I0)`, with the measured drift and this session log's path |
 | `docs/sessions/2026-09-24-task872-premise-drift-blocked.md` | this session log (new) |
-| `docs/sessions/evidence/task872/01-04-*.txt` | I0 evidence captures (new) |
+| `docs/sessions/evidence/task872/01-05-*.txt` | I0 evidence captures (new) — `05-status-final.txt` added per §17.5 |
 
 No product, test, story, manifest, baseline, or registry file was touched.
 

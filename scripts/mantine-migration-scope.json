@@ -93,5 +93,8 @@
   "src/design-system/mantine/patterns/MantineDashboardGrid.tsx",
   "src/modules/notifications/components/NotificationBellView.tsx",
   "src/modules/notifications/components/NotificationCenter.tsx",
-  "src/modules/notifications/components/NotificationItem.tsx"
+  "src/modules/notifications/components/NotificationItem.tsx",
+  "src/components/auth/CaptchaWidget.tsx",
+  "src/components/shared/LocaleSwitcher.tsx",
+  "src/components/shared/PhoneField.tsx"
 ]

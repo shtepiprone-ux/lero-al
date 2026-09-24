@@ -1,7 +1,7 @@
 'use client'
 
 import { useLocale } from 'next-intl'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
@@ -9,10 +9,12 @@ import { HeaderView } from '@/components/layout/HeaderView'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 import { NotificationBell } from '@/modules/notifications/components/NotificationBell'
+import { resolvePostSignOutPath } from '@/lib/auth/postSignOut'
 
 export function Header() {
   const locale = useLocale()
   const router = useRouter()
+  const pathname = usePathname()
 
   const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -44,7 +46,11 @@ export function Header() {
   }
 
   function handleLogout() {
-    signOut(() => router.push(`/${locale}`))
+    signOut(() => {
+      const target = resolvePostSignOutPath(pathname, locale)
+      if (target) router.push(target)
+      else router.refresh()
+    })
   }
 
   return (

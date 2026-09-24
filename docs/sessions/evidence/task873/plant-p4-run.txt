@@ -1,0 +1,35 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx (5 tests | 1 failed | 4 skipped) 2030ms
+     × both toggles are not aria-hidden and carry a localized label; clicking toggles the input type 2028ms
+npx.cmd : 
+At line:1 char:340
++ ... s\lero-al"; npx.cmd vitest run src/modules/cabinet/components/__tests ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — 
+reveal toggles have an accessible name (Task 873, §16.2) > both toggles are not aria-hidden and carry a localized 
+label; clicking toggles the input type
+AssertionError: expected 'true' not to be 'true' // Object.is equality
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:221:54
+    219|
+    220|     for (const toggle of [currentToggle, newToggle]) {
+    221|       expect(toggle.getAttribute('aria-hidden')).not.toBe('true')
+       |                                                      ^
+    222|       expect(toggle.getAttribute('aria-label')).toBe('show_password')
+    223|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  14:20:45
+   Duration  4.42s (transform 717ms, setup 124ms, import 1.17s, tests 2.03s, environment 915ms)
+
+EXIT=1

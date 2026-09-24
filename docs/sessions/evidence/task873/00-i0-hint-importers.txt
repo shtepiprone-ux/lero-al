@@ -1,0 +1,9 @@
+scripts/rendered-scope-baseline.json:16:    "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {
+scripts/surface-census-baseline.json:28:    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+scripts/surface-census-baseline.json:76:    "src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+scripts/surface-census-baseline.json:181:    "src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+scripts/surface-census-baseline.json:1117:    "src/modules/auth/components/AuthSheet.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+src/modules/auth/components/AuthSheet.tsx:17:import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
+src/modules/auth/components/ResetPasswordClient.tsx:12:import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
+src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:101:vi.mock('@/components/ui/PasswordRequirementsHint', () => ({
+src/modules/cabinet/components/CabinetPasswordSection.tsx:10:import { PasswordRequirementsHint } from '@/components/ui/PasswordRequirementsHint'

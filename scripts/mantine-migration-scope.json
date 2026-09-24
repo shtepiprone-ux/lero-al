@@ -96,5 +96,8 @@
   "src/modules/notifications/components/NotificationItem.tsx",
   "src/components/auth/CaptchaWidget.tsx",
   "src/components/shared/LocaleSwitcher.tsx",
-  "src/components/shared/PhoneField.tsx"
+  "src/components/shared/PhoneField.tsx",
+  "src/design-system/mantine/patterns/PasswordRequirementsHint.tsx",
+  "src/modules/auth/components/ResetPasswordView.tsx",
+  "src/modules/cabinet/components/CabinetPasswordSectionView.tsx"
 ]

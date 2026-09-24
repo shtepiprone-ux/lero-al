@@ -1,0 +1,34 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx (5 tests | 1 failed | 4 skipped) 121ms
+     × the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys 118ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — new-password hint stays linked (Task 873, §16.3, AC5′, owner D81-5) > the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:189:25
+    187|     const newInput = container!.querySelector<HTMLInputElement>('#cabi…
+    188|     const describedBy = newInput.getAttribute('aria-describedby')
+    189|     expect(describedBy).toBeTruthy()
+       |                         ^
+    190|
+    191|     const descriptionNode = document.getElementById(describedBy!)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  14:19:34
+   Duration  2.52s (transform 118ms, setup 113ms, import 1.20s, tests 121ms, environment 932ms)
+
+EXIT=1

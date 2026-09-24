@@ -2,8 +2,8 @@
 
 Sprint 81 · **P2** · QA profile **Q4** (Q3 visual matrix + the "Recovery link → reset" critical flow) · **depends on
 872** (both regenerate the same two governance baselines, so run them one after the other) · owner action **O81-3** ·
-**Status: 🟡 PARTIALLY VERIFIED 2026-09-24 (review 2). Revision 1 (§16) is verified in code, tests, plants, gates and
-build. Approval waits on the owner's O81-3 visual matrix and on the §16.4/§16.5.3 session-log corrections.**
+**Status: ✅ APPROVED WITH NOTES 2026-09-24 (review 5): archived. The owner accepted every O81-3 Storybook tuple. The
+live password reset and cabinet change after deploy remain owner action O81-3 in the sprint plan.**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 Owner decision **D81-3** (2026-09-24), in response to *"Який обсяг у задачі 873?"*, verbatim: *"Вся форма пароля
@@ -533,3 +533,78 @@ Report:
 - every command's exit code.
 
 Update the 873 backlog row. Append a "Revision 1" section to the existing session log; do not write a new log.
+
+## 17. Review 3 — `NEEDS REVISION` (2026-09-24): the O81-3 result, and a Story-only re-entry
+
+**Reviewed state.** Revision 1 (§16) and revision 2 are both verified:
+- Revision 2 found the AC5′ field by its label, re-ran the P3 plant (`plant-p3b-*`, hash `209de828…` restored) and
+  corrected the session log.
+- The files carry these production hashes: `CabinetPasswordSectionView.tsx` `209de828…`,
+  `CabinetPasswordSection.tsx` `e979b4b4…` and `ResetPasswordView.tsx` `310c3b4e…`.
+- Leave those three files unchanged.
+
+### 17.1 The owner's O81-3 result (2026-09-24), verbatim
+
+> *"Візуально все ок, переклади вірні. Одна лише сторі зламана"*
+
+The screenshot showed `Patterns/Mantine/CabinetPasswordSectionView → Empty` at 320px in `uk`. Every other O81-3 tuple
+is **accepted**: `ResetPasswordView` (8 states), `Mantine/Primitives/PasswordInput` (hint states) and
+`AuthFormPattern` (`Default`, `AuthCard`), in all four locales at 320 and 1440.
+
+### 17.2 F5 (P2): the `CabinetPasswordSectionView` Story renders the bare section edge-to-edge [R6, AC7, O81-3]
+
+**Observed, in the screenshot and in the source:**
+- The title, both labels, both inputs, the hint and the submit button start at x = 0 of the 320px canvas, with no
+  gutter and no page surface.
+- The Story sets `skipCanvas: true`. That turns off the legacy `.container-wide` wrapper (`.storybook/preview.tsx`,
+  `withCanvas`).
+- It then renders `<CabinetPasswordSectionView>` bare. There is no `MantineStoryShell` and no other canonical
+  harness, so nothing supplies a gutter.
+- In production, the gutter comes from the parent: the section renders inside `ProfileTab.tsx:431`. The View
+  correctly has no outer padding of its own.
+- `ResetPasswordView` does not have this problem, because its own `Center p="md"` is part of the page View.
+
+**Correction (Story only):**
+- In `src/stories/patterns/mantine/CabinetPasswordSectionView.stories.tsx`, wrap the View rendered by `Demo` in the
+  shared Storybook harness `MantineStoryShell` (`src/stories/mantine/_MantineStoryShell.tsx`). Import it from
+  `'../../mantine/_MantineStoryShell'`, the same way `Patterns/Mantine/SaveSearchButton` does
+  (`SaveSearchButton.stories.tsx:62-72`).
+- All seven exports render through `Demo`, so this one change covers every state.
+- Keep `skipCanvas: true` and `layout: 'fullscreen'`.
+- **Forbidden:**
+  - any change to `CabinetPasswordSectionView.tsx` or the container;
+  - a local `Box`/`p`/`px`/`style` wrapper;
+  - `layout: 'padded'`, which the lint gate forbids;
+  - a new Story export.
+
+**Verification:**
+
+```powershell
+$ev = "docs\sessions\evidence\task873"
+git --no-optional-locks hash-object src/modules/cabinet/components/CabinetPasswordSectionView.tsx src/modules/cabinet/components/CabinetPasswordSection.tsx *>&1 | Tee-Object "$ev\50-view-hashes.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\51-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\52-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\53-story-coverage.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\54-build-storybook.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\55-file-integrity.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\56-build.txt"
+```
+
+**Expected results:**
+- `50` prints `209de828db6ed98eb2ab6c7a8858d82914419640` and `e979b4b49571567fa474103e26beae6c6f87fc03`, unchanged.
+- `51` to `56` exit 0.
+- The final `git hash-object` of the Story file goes in the session log.
+
+**Owner re-check (O81-3, narrowed):** `Patterns/Mantine/CabinetPasswordSectionView`, all 7 states × `sq`/`en`/`uk`/`it`
+× 320 and 1440. Nothing else is re-reviewed. After deploy, the owner still does one real password reset and one
+cabinet password change. That becomes a separate owner action once 873 is approved.
+
+### 17.3 Completion report (re-entry)
+
+Report:
+- the Story diff;
+- `50`–`56`, with their exit codes;
+- the Story's final hash.
+
+Append a "Revision 3" section to the existing session log and update the 873 backlog row. Status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

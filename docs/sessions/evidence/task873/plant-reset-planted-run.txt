@@ -1,0 +1,56 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts (5 tests | 3 failed) 2562ms
+     × form submit: verifyOtp called with correct token_hash + type — NOT on mount 76ms
+     × success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 58ms
+     × expired/used token on submit → expired state + request-new CTA rendered 56ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:189:27
+    187|
+    188|     // NOW verifyOtp must be called, only after user gesture
+    189|     expect(mockVerifyOtp).toHaveBeenCalledOnce()
+       |                           ^
+    190|     expect(mockVerifyOtp).toHaveBeenCalledWith({
+    191|       token_hash: 'submit-test-hash',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount)
+AssertionError: expected "vi.fn()" to be called with arguments: [ { …(2) } ]
+
+Number of calls: 0
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:230:27
+    228|
+    229|     // verifyOtp called on submit only; updatePassword follows
+    230|     expect(mockVerifyOtp).toHaveBeenCalledWith({ token_hash: 'valid-on…
+       |                           ^
+    231|     expect(mockUpdatePassword).toHaveBeenCalledWith('NewP@ss123')
+    232|     // Success state: t('reset_password_success_title') is in the DOM
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:268:27
+    266|
+    267|     // verifyOtp was invoked (submit path worked)
+    268|     expect(mockVerifyOtp).toHaveBeenCalledOnce()
+       |                           ^
+    269|     // updatePassword must NOT be called when verifyOtp fails
+    270|     expect(mockUpdatePassword).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 passed (5)
+   Start at  13:11:43
+   Duration  5.26s (transform 804ms, setup 118ms, import 1.28s, tests 2.56s, environment 1.01s)
+
+EXIT=1

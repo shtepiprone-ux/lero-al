@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton`, and 2026-09-09 for Task 792's `ListingBackButton`/`ListingStatusBanner`/`SimilarListingsView`/`RecentlyViewedGridView` migration (+4 Storybook stories) — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton`, 2026-09-09 for Task 792's `ListingBackButton`/`ListingStatusBanner`/`SimilarListingsView`/`RecentlyViewedGridView` migration (+4 Storybook stories) — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift, and 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/` into `src/design-system/mantine/patterns/` — removed from "Canonical UI Primitives" below, one row, Total cataloged components 240→239)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,7 +8,7 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 240 |
+| Total cataloged components | 239 |
 | Storybook stories | 48 |
 | Locale-aware (useTranslations) | 108 |
 | Client components ('use client') | 156 |
@@ -16,7 +16,7 @@ See `docs/component-risk-register.md` for risk register.
 | Components with 2xl responsive step | 12 |
 | Components flagged for review | 50 |
 
-## Canonical UI Primitives (`src/components/ui/`) (33)
+## Canonical UI Primitives (`src/components/ui/`) (32)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -38,7 +38,6 @@ See `docs/component-risk-register.md` for risk register.
 | `navigation-menu` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
 | `pagination` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
 | `PasswordInput` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
-| `PasswordRequirementsHint` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
 | `popover` | CANONICAL | ✅ | — | —  |
 | `progress` | NEEDS_STORY | — | — | —  |
 | `radio-group` | NEEDS_STORY | — | — | —  |

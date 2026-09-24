@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Center, Stack } from '@mantine/core';
+import { Center, Stack, Text, Title } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
-import { MantineAuthFormPattern } from '@/design-system/mantine/patterns/MantineAuthFormPattern';
+import { MantineAuthFormPattern, MantineAuthCard } from '@/design-system/mantine/patterns/MantineAuthFormPattern';
 
 const meta: Meta<typeof MantineAuthFormPattern> = {
   title: 'Patterns/Mantine/AuthFormPattern',
@@ -50,6 +50,30 @@ export const Default: Story = {
           <MantineAuthFormPattern {...makeRegisterArgs(l)} />
         </Center>
       </Stack>
+    );
+  },
+};
+
+// The card chrome extracted for reuse by the password-reset and cabinet-password-change auth
+// Views (Task 873) — proven here with generic content reusing existing storybook.mantine.* keys
+// (§8 out-of-scope: no new locale key), since MantineAuthFormPattern's own Default story above
+// already proves the card with the login/register form content.
+export const AuthCard: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <Center p="xl">
+        <MantineAuthCard>
+          <Stack gap="md">
+            <Title order={2} size="h3" ta="center">
+              {storyT(l, 'storybook.mantine.auth_login_title')}
+            </Title>
+            <Text size="sm" ta="center" c="dimmed">
+              {storyT(l, 'storybook.mantine.ta_hint')}
+            </Text>
+          </Stack>
+        </MantineAuthCard>
+      </Center>
     );
   },
 };

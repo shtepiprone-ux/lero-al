@@ -136,9 +136,9 @@ declare module '@mantine/core' {
     // Task 822 (§3.3) — one-off body-text line-heights that name a rendered row/paragraph, a
     // different semantic owner from the heading `lineHeights` scale above (which is keyed by t-shirt
     // size, not by consumer). Each value is the exact pre-822 literal it replaces:
-    //   passwordHintRow (1rem) — `PasswordRequirementsHint.tsx:28`'s `lh="1rem"` requirement row.
+    //   passwordHintRow (1rem) — `patterns/PasswordRequirementsHint.tsx:22`'s `lh="1rem"` requirement row.
     //   authNoteParagraph (1.21875rem, 19.5px) — the measured pre-migration `<p>` value both
-    //     `PasswordRequirementsHint.tsx:56` and `CaptchaWidget.tsx:35` cite (`lh="19.5px"`, same
+    //     `patterns/PasswordRequirementsHint.tsx:51` and `CaptchaWidget.tsx:35` cite (`lh="19.5px"`, same
     //     value, same auth-note-paragraph role — one shared role, not two).
     //   notificationGlyph (1.5rem) — `NotificationItem.tsx:197`'s `lh="1.5rem"` icon/glyph row.
     // Task 825 (§3.2) — `lightboxCounter` = 1.25rem (20px), `LightboxView`'s counter's pre-825

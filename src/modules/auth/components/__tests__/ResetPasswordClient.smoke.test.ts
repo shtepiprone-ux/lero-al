@@ -15,14 +15,15 @@
  * server needed; contracts are fully exercised deterministically. Playwright would add
  * infra complexity (full Next.js server, live Supabase) without covering any new contract.
  *
- * ## Stubbing approach
- * All external I/O is isolated at the module boundary:
+ * ## Stubbing approach (Task 873 — updated for the container/View split)
+ * `ResetPasswordClient` no longer imports any `@/components/ui/*` module or Mantine
+ * component directly — it renders `ResetPasswordView` (real, unmocked) with a
+ * `<MantineProvider>` wrapper, the same convention `PhoneField.smoke.test.tsx` and
+ * `header-hydration-id-parity.test.tsx` already use for testing production Mantine trees.
+ * External I/O stays isolated at the module boundary:
  * - @/lib/auth/browser (verifyOtp, getSession, updatePassword, signOut) → vi.fn()
  *   Each mock is configured per-test in beforeEach / individual test to control exactly
  *   which path is exercised without Supabase credentials or network.
- * - UI components (Button, Label, Alert, PasswordInput, lucide icons) → thin wrappers
- *   that render as standard HTML elements so RTL can find and interact with them.
- *   These are visual-only; no business logic lives in them.
  * - next-intl / next/navigation → minimal stubs; translation keys returned as-is so
  *   assertions on visible text remain locale-independent.
  *
@@ -39,18 +40,20 @@
  * be replicated without a live Supabase project and real provider session. These are
  * documented as manual-only in the Task 441 session log. They are exempt per kickoff.
  *
- * Planted-violation proof (see session log for transcript):
- *   Add `verifyOtp({token_hash: tokenHash!, type: 'recovery'})` call inside the
- *   `if (tokenHash && otpType === 'recovery')` branch of useEffect (pre-Task-439 bug) →
- *   expect(mockVerifyOtp).not.toHaveBeenCalled() FAILS.
- *   Revert → PASS.
+ * Planted-violation proof (Task 873 session log has the transcript): comment out the
+ * `verifyOtp({token_hash: tokenHash!, type: 'recovery'})` call inside `handleSubmit`'s
+ * `verifyMode === 'token_hash'` branch → the "form submit: verifyOtp called ..." test and
+ * the "success path" test both FAIL (verifyOtp never called; updatePassword never called
+ * with the expected args). Revert → PASS.
  *
  * Command: npx vitest run src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 import { render, act, fireEvent } from '@testing-library/react'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 
 // ── Module mocks ──────────────────────────────────────────────────────────────
 
@@ -71,44 +74,30 @@ vi.mock('@/modules/auth/actions/recovery', () => ({
   logPasswordRecoveryRequest:    vi.fn().mockResolvedValue(undefined),
 }))
 
-// UI stubs — thin wrappers so RTL can find and interact with DOM elements
-vi.mock('@/components/ui/button', () => ({
-  Button: ({
-    children, onClick, type, disabled,
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children?: React.ReactNode; size?: string; variant?: string }) =>
-    React.createElement('button', { onClick, type, disabled }, children),
-}))
-vi.mock('@/components/ui/label', () => ({
-  Label: ({ children, htmlFor }: { children?: React.ReactNode; htmlFor?: string }) =>
-    React.createElement('label', { htmlFor }, children),
-}))
-vi.mock('@/components/ui/alert', () => ({
-  Alert: ({ children }: { children?: React.ReactNode }) =>
-    React.createElement('div', { role: 'alert' }, children),
-  AlertDescription: ({ children }: { children?: React.ReactNode }) =>
-    React.createElement('p', null, children),
-}))
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }))
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn(), prefetch: vi.fn() }),
 }))
-vi.mock('@/components/ui/PasswordInput', () => ({
-  PasswordInput: (props: React.InputHTMLAttributes<HTMLInputElement> & { inputState?: string }) =>
-    React.createElement('input', { ...props, inputState: undefined }),
-}))
-vi.mock('@/components/ui/PasswordRequirementsHint', () => ({
-  PasswordRequirementsHint: () => null,
-  allPasswordRulesMet: (pw: string) => pw.length >= 8,
-}))
-vi.mock('lucide-react', () => ({
-  Loader2:      () => null,
-  CheckCircle2: () => null,
-  XCircle:      () => null,
-}))
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
+
+beforeAll(() => {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  )
+})
 
 beforeEach(() => {
   vi.clearAllMocks()
@@ -120,6 +109,10 @@ beforeEach(() => {
   mockBrowserSignOut.mockResolvedValue({})
 })
 
+function withProvider(children: React.ReactNode) {
+  return React.createElement(MantineProvider, { theme, env: 'test' }, children)
+}
+
 // ── Mount-behavior tests ──────────────────────────────────────────────────────
 
 describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)', () => {
@@ -128,11 +121,13 @@ describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)', () => {
 
     await act(async () => {
       render(
-        React.createElement(ResetPasswordClient, {
-          locale: 'sq',
-          tokenHash: 'test-recovery-hash',
-          otpType: 'recovery',
-        })
+        withProvider(
+          React.createElement(ResetPasswordClient, {
+            locale: 'sq',
+            tokenHash: 'test-recovery-hash',
+            otpType: 'recovery',
+          })
+        )
       )
     })
 
@@ -147,7 +142,7 @@ describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)', () => {
     const { ResetPasswordClient } = await import('../ResetPasswordClient')
 
     await act(async () => {
-      render(React.createElement(ResetPasswordClient, { locale: 'sq' }))
+      render(withProvider(React.createElement(ResetPasswordClient, { locale: 'sq' })))
     })
 
     // verifyOtp must never be called on mount — regardless of path
@@ -166,11 +161,13 @@ describe('ResetPasswordClient — submit behavior smoke (AC3, Task 441)', () => 
 
     await act(async () => {
       ;({ container } = render(
-        React.createElement(ResetPasswordClient, {
-          locale: 'sq',
-          tokenHash: 'submit-test-hash',
-          otpType: 'recovery',
-        })
+        withProvider(
+          React.createElement(ResetPasswordClient, {
+            locale: 'sq',
+            tokenHash: 'submit-test-hash',
+            otpType: 'recovery',
+          })
+        )
       ))
     })
 
@@ -178,7 +175,7 @@ describe('ResetPasswordClient — submit behavior smoke (AC3, Task 441)', () => 
     expect(mockVerifyOtp).not.toHaveBeenCalled()
 
     // Fill password field (length ≥ 8 so allPasswordRulesMet = true → button enabled)
-    const input = container!.querySelector('input')!
+    const input = container!.querySelector('input#new-password')!
     await act(async () => {
       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
     })
@@ -206,11 +203,13 @@ describe('ResetPasswordClient — submit behavior smoke (AC3, Task 441)', () => 
 
     await act(async () => {
       ;({ container } = render(
-        React.createElement(ResetPasswordClient, {
-          locale: 'sq',
-          tokenHash: 'valid-once-hash',
-          otpType: 'recovery',
-        })
+        withProvider(
+          React.createElement(ResetPasswordClient, {
+            locale: 'sq',
+            tokenHash: 'valid-once-hash',
+            otpType: 'recovery',
+          })
+        )
       ))
     })
 
@@ -219,7 +218,7 @@ describe('ResetPasswordClient — submit behavior smoke (AC3, Task 441)', () => 
     // Form is present after mount (link is usable)
     expect(container!.querySelector('form')).toBeTruthy()
 
-    const input = container!.querySelector('input')!
+    const input = container!.querySelector('input#new-password')!
     await act(async () => {
       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
     })
@@ -247,15 +246,17 @@ describe('ResetPasswordClient — submit behavior smoke (AC3, Task 441)', () => 
 
     await act(async () => {
       ;({ container } = render(
-        React.createElement(ResetPasswordClient, {
-          locale: 'sq',
-          tokenHash: 'expired-hash',
-          otpType: 'recovery',
-        })
+        withProvider(
+          React.createElement(ResetPasswordClient, {
+            locale: 'sq',
+            tokenHash: 'expired-hash',
+            otpType: 'recovery',
+          })
+        )
       ))
     })
 
-    const input = container!.querySelector('input')!
+    const input = container!.querySelector('input#new-password')!
     await act(async () => {
       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
     })

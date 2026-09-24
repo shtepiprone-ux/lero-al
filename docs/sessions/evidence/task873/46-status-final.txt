@@ -1,0 +1,31 @@
+ M docs/component-catalog.md
+ M docs/component-coverage-matrix.md
+ M docs/component-risk-register.md
+ M docs/responsive-storybook-inventory.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M docs/storybook-governance.md
+ M docs/tailwind-governance.md
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/schema-drift-check.sql
+ M scripts/surface-census-baseline.json
+ M src/components/ui/PasswordInput.stories.tsx
+ D src/components/ui/PasswordRequirementsHint.stories.tsx
+ D src/components/ui/PasswordRequirementsHint.tsx
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/modules/auth/components/AuthSheet.tsx
+ M src/modules/auth/components/ResetPasswordClient.tsx
+ M src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts
+ M src/modules/cabinet/components/CabinetPasswordSection.tsx
+ M src/stories/mantine/primitives/PasswordInput.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+?? docs/sessions/2026-09-24-task873-password-form-family-implemented.md
+?? docs/sessions/evidence/task873/
+?? src/design-system/mantine/patterns/PasswordRequirementsHint.tsx
+?? src/modules/auth/components/ResetPasswordView.tsx
+?? src/modules/cabinet/components/CabinetPasswordSectionView.tsx
+?? src/modules/cabinet/components/__tests__/
+?? src/stories/patterns/mantine/CabinetPasswordSectionView.stories.tsx
+?? src/stories/patterns/mantine/ResetPasswordView.stories.tsx

@@ -13,9 +13,6 @@
     "src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx": {
       "tier": "tier1-unenrolled"
     },
-    "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {
-      "tier": "tier2-legacy-primitive"
-    },
     "src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
       "tier": "tier1-unenrolled"
     },

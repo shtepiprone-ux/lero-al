@@ -1,0 +1,78 @@
+diff --git a/scripts/rendered-scope-baseline.json b/scripts/rendered-scope-baseline.json
+index 3b0edc921..499f3c1e9 100644
+--- a/scripts/rendered-scope-baseline.json
++++ b/scripts/rendered-scope-baseline.json
+@@ -13,9 +13,6 @@
+     "src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx": {
+       "tier": "tier1-unenrolled"
+     },
+-    "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {
+-      "tier": "tier2-legacy-primitive"
+-    },
+     "src/modules/listings/components/FeaturedListingsView.tsx -> src/components/shared/ViewAllLink.tsx": {
+       "tier": "tier1-unenrolled"
+     },
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index ea8229a3b..d4973d0c7 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -22,21 +22,6 @@
+     "src/app/[locale]/auth/reset-password/page.tsx :: src/app/[locale]/auth/reset-password/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/alert.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/auth/reset-password/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/[locale]/auth/reset-password/page.tsx :: src/modules/auth/components/ResetPasswordClient.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -64,21 +49,6 @@
+     "src/app/[locale]/cabinet/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/[locale]/cabinet/page.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/[locale]/cabinet/page.tsx :: src/components/shared/RelativeTime.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/cabinet/page.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/[locale]/cabinet/page.tsx :: src/components/ui/alert.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/[locale]/cabinet/page.tsx :: src/components/ui/avatar.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -1108,15 +1078,6 @@
+     "src/components/ui/useAdaptiveImageConfig.ts :: src/components/ui/useAdaptiveImageConfig.ts :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+-    "src/modules/auth/components/AuthSheet.tsx :: src/components/auth/CaptchaWidget.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/modules/auth/components/AuthSheet.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/modules/auth/components/AuthSheet.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/modules/listings/components/FeaturedListingsView.tsx :: src/components/shared/ViewAllLink.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },

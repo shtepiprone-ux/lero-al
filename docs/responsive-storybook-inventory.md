@@ -25,7 +25,6 @@ are struck below.)
 | `src/components/ui/dropdown-menu.stories.tsx` | ✅ `primitives-dropdownmenu--default` | Product-rendering story |
 | `src/components/ui/input.stories.tsx` | ✅ `primitives-input--default` | Product-rendering story |
 | `src/components/ui/PasswordInput.stories.tsx` | ✅ `primitives-passwordinput--default` | Product-rendering story |
-| `src/components/ui/PasswordRequirementsHint.stories.tsx` | ✅ `primitives-passwordrequirementshint--idle` | Product-rendering story |
 | `src/components/ui/popover.stories.tsx` | ✅ `primitives-popover--default` | Product-rendering story |
 | `src/components/ui/select.stories.tsx` | ✅ `primitives-select--default` | Product-rendering story |
 | `src/components/ui/sheet.stories.tsx` | ✅ `primitives-sheet--filter-sheet-right` | Product-rendering story |

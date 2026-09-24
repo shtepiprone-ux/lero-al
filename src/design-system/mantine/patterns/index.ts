@@ -62,8 +62,10 @@ export type {
 export { MantineAdminSurfacePattern } from './MantineAdminSurfacePattern'
 export type { MantineAdminSurfacePatternProps, AdminFilter } from './MantineAdminSurfacePattern'
 
-export { MantineAuthFormPattern } from './MantineAuthFormPattern'
+export { MantineAuthFormPattern, MantineAuthCard } from './MantineAuthFormPattern'
 export type { MantineAuthFormPatternProps, AuthMode } from './MantineAuthFormPattern'
+
+export { PasswordRequirementsHint } from './PasswordRequirementsHint'
 
 export { useResponsiveDropdown, bottomSheetDrawerStyles, DragHandle, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
 export type { ResponsiveBottomSheetProps, SheetContentProps } from './responsiveBottomSheet'

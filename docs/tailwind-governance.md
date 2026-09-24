@@ -384,7 +384,8 @@ No drift from kickoff §3.2 B1. Evidence: `b1-build-wiring.txt`.
 `src/app/globals.css` has **10 live `@apply` rules** at lines 612, 616, 629, 635, 640, 641, 642, 651, 655 and
 660. The exact search below returns six other source hits, and opening every site confirms each is a comment:
 `CaptchaWidget.tsx:32`, `NotificationItem.tsx:214`, `NotificationCenter.tsx:57`,
-`PasswordRequirementsHint.tsx:53`, `FooterView.module.css:23`, and `MobileNavDrawer.tsx:52`. There are zero live
+`design-system/mantine/patterns/PasswordRequirementsHint.tsx:49` (Task 873 relocated this file out of
+`src/components/ui/`; same comment, new path/line), `FooterView.module.css:23`, and `MobileNavDrawer.tsx:52`. There are zero live
 rules outside `globals.css`.
 
 ```powershell

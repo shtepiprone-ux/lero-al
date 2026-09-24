@@ -1,0 +1,34 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx (3 tests | 1 failed) 2496ms
+     × submit stays disabled when current and new password are identical 2329ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — same-password guard (Task 873) > submit stays disabled when current and new password are identical
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:99:29
+     97|     })
+     98|
+     99|     expect(submit.disabled).toBe(true)
+       |                             ^
+    100|     expect(container!.textContent).toContain('password_error_same')
+    101|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  13:12:34
+   Duration  5.16s (transform 793ms, setup 121ms, import 1.29s, tests 2.50s, environment 982ms)
+
+EXIT=1

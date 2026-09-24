@@ -1,0 +1,6 @@
+310c3b4e89c4bb81bdf1bc069a62a65f46f7b7dd  src/modules/auth/components/ResetPasswordView.tsx
+209de828db6ed98eb2ab6c7a8858d82914419640  src/modules/cabinet/components/CabinetPasswordSectionView.tsx
+e979b4b49571567fa474103e26beae6c6f87fc03  src/modules/cabinet/components/CabinetPasswordSection.tsx
+ef602e062f713dc52b05406cc6d7ce81182b482d  src/stories/mantine/primitives/PasswordInput.stories.tsx
+95cf2edff490a6b4bb3a166b11fd45dd671c21bf  src/stories/patterns/mantine/CabinetPasswordSectionView.stories.tsx
+ff452ce6c912134fca3739c032115ee11949c0e8  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx

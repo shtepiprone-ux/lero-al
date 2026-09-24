@@ -3,13 +3,7 @@
 import { Check, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Group, Stack, Text, useMantineTheme } from '@mantine/core'
-import {
-  checkPasswordRules,
-  allPasswordRulesMet,
-  type PasswordRules,
-} from '@/lib/passwordRules'
-
-export { checkPasswordRules, allPasswordRulesMet, type PasswordRules }
+import { checkPasswordRules } from '@/lib/passwordRules'
 
 interface RuleRowProps {
   met: boolean

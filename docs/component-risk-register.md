@@ -1,5 +1,5 @@
 # Component Risk Register — Lero.al
-Last generated: 2026-07-24
+Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/`)
 
 ## Governance Violations (require fix)
 
@@ -145,7 +145,6 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `NumInputField` | listings-feature | MEDIUM |
 | `pagination` | canonical-primitive | MEDIUM |
 | `PasswordInput` | canonical-primitive | MEDIUM |
-| `PasswordRequirementsHint` | canonical-primitive | MEDIUM |
 | `PhoneField` | shared-ui | HIGH |
 | `PopularLocationsView` | locations-feature | MEDIUM |
 | `ProfileTab` | cabinet-feature | MEDIUM |

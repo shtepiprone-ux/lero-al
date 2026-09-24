@@ -1,0 +1,6 @@
+ M docs/backlog.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+?? docs/sessions/2026-09-24-task872-premise-drift-blocked.md
+?? docs/sessions/evidence/task872/
+?? tasks/Sprints/Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md

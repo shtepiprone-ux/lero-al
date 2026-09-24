@@ -1,0 +1,6 @@
+F3 re-check: pages containing auth/login?next=
+src/app/[locale]/cabinet/page.tsx
+src/app/[locale]/favorites/page.tsx
+src/app/[locale]/listings/create/page.tsx
+src/app/[locale]/listings/[slug]/edit/page.tsx
+EXIT_CODE=0

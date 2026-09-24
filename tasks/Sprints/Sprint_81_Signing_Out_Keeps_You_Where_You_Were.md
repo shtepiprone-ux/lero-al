@@ -1,6 +1,6 @@
 # Sprint 81 — signing out keeps you where you were, and every node the header renders is proven
 
-**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (872) · **Reserved:** 1 (873)
+**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (872, 873) · **Reserved:** 1 (874)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -15,16 +15,21 @@ mobile `MobileNavDrawer`, with `signOut(() => router.push(\`/${locale}\`))`. The
 who just signed out on a listing page lands on the homepage and loses their place.
 
 Fixing it edits `Header.tsx`, and that triggers GR-1 for the header's render tree. The census for
-`src/components/layout/Header.tsx` (run 2026-09-24, 21 nodes) fails on three tier-1 nodes, all baselined debt under
-`src/app/[locale]/layout.tsx`: `Header` itself, `NotificationBell` and `CaptchaWidget`. It also lists one tier-2 node
-through `AuthSheet`: `src/components/ui/PasswordRequirementsHint.tsx`.
+`src/components/layout/Header.tsx` (run 2026-09-24, 21 nodes) fails on **five** tier-1 nodes, all baselined debt:
+`Header` itself, `NotificationBell`, `CaptchaWidget`, `LocaleSwitcher` and `PhoneField`. It also lists one tier-2
+node through `AuthSheet`: `src/components/ui/PasswordRequirementsHint.tsx`.
+
+*Correction, 2026-09-24:* the first version of this plan said "three". The orchestrator had truncated the census
+transcript at 60 lines, and 872's executor caught the difference at I0 (872 kickoff §16).
 
 ## Owner decisions this sprint carries
 
 | ID | Decision (verbatim) | Date | Effect |
 |---|---|---|---|
 | **D81-1** | Q: "Як робимо?" (scope of 872 given the census) → *"Разом з обгортками, але треба перевірити які вже є Minetine Stories для Header"* | 2026-09-23 | The wrappers are in scope, and the existing Stories are checked first (done — see D81-2). |
-| **D81-2** | Q: "Як робимо з обгортками Header і NotificationBell у задачі 872?" → *"View-stories достатньо (Recommended)"*. The option read: *"Діє правило P0 про обгортки. Header і NotificationBell вважаються покритими вже наявними stories HeaderView і NotificationBellView: без нових stories і без підміни хуків. CaptchaWidget отримує власну story і реєстрацію."* | 2026-09-23 | Resolves the conflict between GR-1 (every tier-1 node needs its own Story) and `docs/component-rules.md` → "Container / Presentational Primitive Split" (owner P0, 2026-07-10: a container Story that mocks hooks is forbidden). A pure container whose entire UI is an enrolled, storied View is proven by that View's Story. It stays in the census as baselined debt, because the census cannot yet recognise the split. Recorded in `docs/golden-rules.md` → GR-1. |
+| **D81-2** | Q: "Як робимо з обгортками Header і NotificationBell у задачі 872?" → *"View-stories достатньо (Recommended)"*. The option read: *"Діє правило P0 про обгортки. Header і NotificationBell вважаються покритими вже наявними stories HeaderView і NotificationBellView: без нових stories і без підміни хуків. CaptchaWidget отримує власну story і реєстрацію."* | 2026-09-23 | *(D81-3 below.)* Resolves the conflict between GR-1 (every tier-1 node needs its own Story) and `docs/component-rules.md` → "Container / Presentational Primitive Split" (owner P0, 2026-07-10: a container Story that mocks hooks is forbidden). A pure container whose entire UI is an enrolled, storied View is proven by that View's Story. It stays in the census as baselined debt, because the census cannot yet recognise the split. Recorded in `docs/golden-rules.md` → GR-1. |
+
+| **D81-3** | Q: "Який обсяг у задачі 873?" → *"Вся форма пароля (Recommended)"*. The option read: *"873 переносить підказку, замінює старий PasswordInput на Mantine і мігрує обидві форми зміни пароля (ResetPasswordClient і CabinetPasswordSection) з власними stories. PhoneField просто додається в manifest."* | 2026-09-24 | 873 covers the whole password-form family, not only the hint. The `PhoneField` enrolment later moved to 872 (amendment 1), because 872 runs first and its census already fails on it. |
 
 ## Why a new sprint — goal fit checked against every open sprint
 
@@ -55,8 +60,9 @@ through `AuthSheet`: `src/components/ui/PasswordRequirementsHint.tsx`.
 
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **872** | Header sign-out stays on public pages: one route classifier with a drift test against the page guards; `CaptchaWidget` gets its own story export and a manifest entry; `Header`/`NotificationBell` exempt under D81-2 | **P2** | **Q4** (Logout is a registered critical flow) | — | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_872…`](Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md) |
-| **873** | `PasswordRequirementsHint` leaves `src/components/ui/`: the Mantine-native hint moves to its canonical design-system home, and its three importers (`AuthSheet`, `ResetPasswordClient`, `CabinetPasswordSection`) follow, so the header, reset-password and cabinet surfaces stop importing a tier-2 path | P3 | Q3 | — | 🔒 **RESERVED** — full text → `docs/backlog-reserved.md` |
+| **872** | Header sign-out stays on public pages: one route classifier with a drift test against the page guards; `CaptchaWidget` gets its own story export and a manifest entry; `Header`/`NotificationBell` exempt under D81-2 | **P2** | **Q4** (Logout is a registered critical flow) | — | 🔁 `AMENDED` 2026-09-24 (the executor's I0 PREMISE DRIFT stop was correct; amendment 1 enrols `LocaleSwitcher` and `PhoneField` too and names the exact baseline removals; review 2026-09-24 → `NEEDS REVISION`, amendment 2 corrects the census-baseline set to 3 + 3 and the gate block) → [`…Task_872…`](Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md) §17 |
+| **873** | The password-form family on canonical Mantine: `PasswordRequirementsHint` moves to `patterns/` and the duplicate rows in `Mantine/Primitives/PasswordInput` go; `ResetPasswordClient` and `CabinetPasswordSection` split into container + View on native Mantine `PasswordInput`/`Alert`/`Button` (per `AuthSheet`); the auth card is extracted from `MantineAuthFormPattern` | **P2** | **Q4** | 872 | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_873…`](Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md) |
+| **874** | The last `ui/PasswordInput` consumer (`AdminExchangeProvidersManager`) moves to Mantine, then the legacy file and its Story are deleted | P3 | Q3 | 873 | 🔒 **RESERVED** — full text → `docs/backlog-reserved.md` |
 
 ## Owner actions this sprint needs
 
@@ -64,6 +70,7 @@ through `AuthSheet`: `src/components/ui/PasswordRequirementsHint.tsx`.
 |---|---|
 | **O81-1** | After 872 is deployed: sign out on a listing page (stays, shows the sign-in prompt), on `/favorites` or `/cabinet` (goes to the homepage), and from the mobile menu (the drawer closes). |
 | **O81-2** | 872's `OWNER VISUAL QA REQUIRED` matrix for the new `CaptchaWidget` story export. |
+| **O81-3** | 873's `OWNER VISUAL QA REQUIRED` matrix (ResetPasswordView, CabinetPasswordSectionView, PasswordInput hint states, AuthFormPattern + AuthCard). After deploy, complete one real password reset and one cabinet password change. Note: the green/red ring around the new-password field goes, matching the canonical `AuthSheet` registration form. |
 
 ## Exit criteria
 

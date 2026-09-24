@@ -1,7 +1,7 @@
 # Task 872 — signing out from the header stays on a public page; the header's tier-1 nodes are proven
 
 Sprint 81 · **P2** · QA profile **Q4** (Logout is a registered critical flow) · no dependencies · owner actions
-**O81-1, O81-2** · **Status: 📝 KICKOFF FILED 2026-09-24 — READY FOR SONNET**
+**O81-1, O81-2** · **Status: 🔁 AMENDED TWICE 2026-09-24 after the executor's I0 `PREMISE DRIFT` stop — re-enter at §17 (which supersedes §16.3, §16.6 and §13.2), READY FOR SONNET**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md)
 (owner decisions **D81-1**, **D81-2** quoted verbatim there).
@@ -120,8 +120,8 @@ Files the executor may create or change:
 - `src/lib/auth/__tests__/postSignOut.test.ts` *(new)*
 - `src/components/layout/Header.tsx`: R2 only
 - `src/stories/patterns/mantine/AuthSheet.stories.tsx`: the `Captcha` export and its import only
-- `scripts/mantine-migration-scope.json`: one entry
-- `scripts/rendered-scope-baseline.json` and `scripts/surface-census-baseline.json`: regenerated per R6
+- `scripts/mantine-migration-scope.json`: three entries (§16.2)
+- `scripts/rendered-scope-baseline.json` and `scripts/surface-census-baseline.json`: regenerated per §17.2
 - `package.json`: `test:auth` only
 - `docs/critical-flow-registry.md`: the "Logout" row only
 - `docs/sessions/2026-09-2?-task872-*.md` and `docs/sessions/evidence/task872/**`
@@ -215,10 +215,10 @@ header shows the guest state, and the owner card becomes the sign-in prompt.
 - **AC6 [R5]** `AuthSheet.stories.tsx` has an `import { CaptchaWidget } from '@/components/auth/CaptchaWidget'`
   line and a `Captcha` export. The manifest lists `src/components/auth/CaptchaWidget.tsx`. `npm.cmd run
   check:story-coverage` exits 0. After the change, the F5 census FAILs only `Header.tsx` and `NotificationBell.tsx`.
-- **AC7 [R6]** Each regenerated baseline's `git diff` removes exactly the `CaptchaWidget` keys (2 + 1) and nothing
+- **AC7 [R6] — SUPERSEDED by §17.3; do not use.** Each regenerated baseline's `git diff` removes exactly the `CaptchaWidget` keys (2 + 1) and nothing
   else. `check:rendered-scope`, `check:rendered-scope:verify`, `check:surface-census:changed` and
   `check:surface-census:changed:verify` exit 0.
-- **AC8 [all]** `typecheck`, `lint`, `build-storybook` and `npm run build` all exit 0, and so do `check:file-integrity`
+- **AC8 [all] — SUPERSEDED by §17.3; do not use.** `typecheck`, `lint`, `build-storybook` and `npm run build` all exit 0, and so do `check:file-integrity`
   and `check:mojibake`. The final `git status` shows no path outside §7 beyond those in `01-status-before.txt`.
 
 `GR-4 AC AUDIT — 8 criteria; each states an observable property; absolutes: none. AC7's "exactly" names a fixed key set measured at design time (F5), with a stop branch if the regenerated set differs.`
@@ -233,7 +233,7 @@ story export (O81-2).
 
 From scratch. Evidence root: `docs/sessions/evidence/task872/`.
 
-### 13.2 Gate block (executor, Windows PowerShell, project root)
+### 13.2 Gate block (executor, Windows PowerShell, project root) — **SUPERSEDED by §17.4; do not run this block**
 
 ```powershell
 $ev = "docs\sessions\evidence\task872"
@@ -286,9 +286,9 @@ If the local environment cannot sign in, record `MISSING EVIDENCE` and leave AC5
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Never self-approved.
 Report:
-- changed files with their hashes (`18`);
-- R1–R6 and AC1–AC8 status;
-- every §13.2 command with its exit code;
+- changed files with their hashes (`28`, §17.4);
+- R1–R6 and AC1–AC6, AC7a, AC7b, AC8 (§17.3) status;
+- every §17.4 command with its exit code;
 - the I0 census and grep results;
 - the Storybook branch observed (F7);
 - the plant record (AC3);
@@ -320,3 +320,221 @@ Update the 872 backlog row's state cell. Write the session log with a Files Chan
 | agent-contract 15 (critical flow) | `test:auth` + a new test + the registry row | COMPLIANT |
 | agent-contract 9 (build) | `17-build.txt` | COMPLIANT |
 | agent-contract 14 (encoding, multi-file write) | the baselines are written by their own tools; diff limited by R6 | COMPLIANT |
+
+---
+
+## 16. Amendment 1 — orchestration defect caught by I0 (2026-09-24)
+
+**What happened.** The executor stopped correctly at §10.1 step 2
+(`docs/sessions/2026-09-24-task872-premise-drift-blocked.md`, `docs/sessions/evidence/task872/03-census-I0.txt`):
+the census FAIL set was 5 tier-1 nodes, not 3. **The kickoff was wrong, not the tree.** The orchestrator captured the
+design-time census with `Select-Object -First 60`. The FAIL lines for `LocaleSwitcher.tsx`, `PhoneField.tsx` and
+the tier-2 hint print after the barrel-hop section, beyond line 60, so F5 undercounted. Lesson: a gate transcript
+cited as a fact is read in full, never truncated.
+
+**Re-entry.** Remediation, from §10.1 step 3 onwards. Steps 1–2 are done and their evidence
+(`01`–`04`) is kept. Do not overwrite it.
+
+### 16.1 F5, corrected (measured 2026-09-24, executor evidence `03-census-I0.txt`, orchestrator re-verified)
+
+The FAIL lines are:
+- `Header.tsx` — tier1; container, exempt under D81-2.
+- `NotificationBell.tsx` — tier1; container, exempt under D81-2.
+- `CaptchaWidget.tsx` — tier1; R5.
+- `LocaleSwitcher.tsx` — tier1; manifest:no, story:yes (`Mantine/Primitives/LocaleSwitcher`).
+- `PhoneField.tsx` — tier1; manifest:no, story:yes (`Mantine/Primitives/PhoneField`).
+- `src/components/ui/PasswordRequirementsHint.tsx` — tier2; 873.
+
+`LocaleSwitcher` is already native Mantine: `Button` + `MantineDropdownMenu`. Its 2 `className` are the
+`className` prop pass-through and the CSS-module `styles.pendingIcon`. `PhoneField` is also native Mantine
+(`Group`/`InputLabel`/`Stack`/`TextInput` + `MantineCombobox`), with 0 `className`. Both render only
+already-enrolled patterns, so enrolling them adds no new unmigrated edge to `check:rendered-scope`'s walk.
+
+### 16.2 R5 amended
+
+`scripts/mantine-migration-scope.json` gains **three** entries:
+- `src/components/auth/CaptchaWidget.tsx`
+- `src/components/shared/LocaleSwitcher.tsx`
+- `src/components/shared/PhoneField.tsx`
+
+Their Stories already exist and import them by name, so no Story work is needed for `LocaleSwitcher` or
+`PhoneField`. `CaptchaWidget`'s `Captcha` export stays as in R5.
+
+### 16.3 R6 amended — **SUPERSEDED by §17.2**
+
+This section said 11 census keys would be removed. That count is wrong: the census updater only rewrites surfaces
+that the diff maps to, so it can remove 3 of those 11. The executor follows §17.2. The 3 rendered-scope edges listed
+here are unchanged in §17.2.
+
+### 16.4 AC6 amended
+
+After the change, the census for `Header.tsx` has exactly these FAIL lines:
+- `Header.tsx` and `NotificationBell.tsx` (container-exempt, D81-2);
+- the tier-2 `PasswordRequirementsHint.tsx` (873).
+
+`check:story-coverage` exits 0 with the three new manifest entries.
+
+### 16.5 Receipt amended
+
+`GR-1 CENSUS COMPLETE — 21 nodes; tier1 3 migrated+enrolled+story (CaptchaWidget, LocaleSwitcher, PhoneField) + 2
+container-exempt (Header, NotificationBell — D81-2); tier2 0 imports removed (PasswordRequirementsHint → 873); tier3 0.`
+
+### 16.6 Unchanged — **corrected by §17**
+
+R1–R4, AC1–AC5 and §13.3 stand. **AC7, AC8 and the §13.2 gate block do not stand as written. §17.2, §17.3 and
+§17.4 replace them.** **Task 873 no longer enrols `PhoneField`**; 872 does, and 873's kickoff says so.
+
+---
+
+## 17. Amendment 2 — review of the I0 stop and of amendment 1 (2026-09-24)
+
+**The executor's stop was correct.** The reviewer re-ran the census natively (`win32 v22.22.3`) and got the same 21
+nodes and the same FAIL set as `03-census-I0.txt`: 5 tier-1 nodes and 1 tier-2. Amendment 1 corrected the node set,
+but three of its instructions cannot be carried out as written. The facts below are measured.
+
+### 17.1 Facts measured by the reviewer (2026-09-24, win32)
+
+- **F8 (FACT).** `check:surface-census:changed` is diff-scoped:
+  - `--update-baseline` rewrites only the surfaces the diff maps to (`mapping.included`), plus any parent whose
+    baseline row names a **changed file** as its node (`computeReCensusSurfaces`,
+    `scripts/check-surface-census-changed.mjs:152-165`).
+  - Every other row is carried unchanged (`:167-176`).
+  - A change to `scripts/mantine-migration-scope.json` is excluded as `outside-src` (`map-changed-surfaces.mjs:198`).
+  - 872 does not edit `CaptchaWidget.tsx`, `LocaleSwitcher.tsx` or `PhoneField.tsx`.
+
+  So enrolling those three files re-censuses nothing.
+- **F9 (FACT).** A simulation used the gate's own exported functions (`resolveSurfacesFor`, `computeReCensusSurfaces`),
+  with the three entries enrolled in memory only. 872's production candidate `Header.tsx` maps to
+  `src/app/[locale]/layout.tsx`, and the re-census set is empty. Of the 11 keys that §16.3 listed, 3 can be dropped
+  and 8 are carried.
+  - **Droppable:** `src/app/[locale]/layout.tsx` × `CaptchaWidget`, `LocaleSwitcher`, `PhoneField`.
+  - **Carried:**
+    - `src/modules/auth/components/AuthSheet.tsx` × `CaptchaWidget` and `PhoneField`;
+    - `src/components/layout/HeaderView.tsx` × `LocaleSwitcher`;
+    - `src/app/admin/layout.tsx` × `LocaleSwitcher`;
+    - `PhoneField` under each of `src/app/[locale]/cabinet/page.tsx`, `src/app/admin/users/[id]/page.tsx`,
+      `src/app/admin/users/new/page.tsx` and `src/components/admin/AdminUserCreate.tsx`.
+
+  Today the census of `src/app/[locale]/layout.tsx` prints 12 FAIL lines, and the baseline holds the same 12 keys
+  under that surface. Nothing else under that surface can go stale.
+- **F10 (FACT).** With no `--base` and no `SURFACE_CENSUS_BASE_SHA`, both the gate and `--update-baseline` exit 1
+  with `--base <ref> is required` (`check-surface-census-changed.mjs:739-742`). `--verify-gate` needs no base
+  (`:852`). With `--base` and no `--head`, the gate diffs the base against the working tree
+  (`map-changed-surfaces.mjs:169-174`).
+  - **Untracked files are not in that diff.** A local run therefore does not see the new `postSignOut.ts`; CI sees it
+    once it is committed.
+  - That file is a `.ts` module that renders nothing, so this changes no census result.
+- **F11 (FACT).** CI (`.github/workflows/governance-pr.yml:128,131`) runs `check:enrolled-tailwind` and `:verify`.
+  Both are scoped to the manifest, and the old §13.2 did not run them. Enrolment brings the three files into their
+  scope.
+  - **INFERENCE:** they pass. `LocaleSwitcher`'s two `className` values are a prop and an imported CSS-module member,
+    and the gate resolves neither. `PhoneField` and `CaptchaWidget` have 0 `className`.
+  - The executor measures the result.
+- **F12 (FACT).** `check:rendered-scope` passes today: 26 baselined edges, 0 new, 0 stale. It walks the whole
+  manifest, so enrolment makes the 3 edges named in §17.2 stale, and its `update-baseline` removes them.
+
+### 17.2 R6 replaced — the exact removal set
+
+Run the two writers **after** the `Header.tsx` edit and the three manifest entries. The census updater sees only the
+surfaces the working-tree diff maps to. Before `Header.tsx` changes, the diff maps none.
+
+```powershell
+$base = git --no-optional-locks rev-parse HEAD
+npm.cmd run check:rendered-scope:update-baseline
+node.exe scripts\check-surface-census-changed.mjs --base $base --update-baseline
+```
+
+- `scripts/rendered-scope-baseline.json`: **exactly 3 edges removed**:
+  - `HeaderView.tsx -> LocaleSwitcher.tsx`
+  - `AuthSheet.tsx -> CaptchaWidget.tsx`
+  - `AuthSheet.tsx -> PhoneField.tsx`
+- `scripts/surface-census-baseline.json`: **exactly 3 keys removed**, each ending in
+  `:: tier1-unenrolled-or-unstoried`. Each starts with `src/app/[locale]/layout.tsx ::` and names one of:
+  - `src/components/auth/CaptchaWidget.tsx`
+  - `src/components/shared/LocaleSwitcher.tsx`
+  - `src/components/shared/PhoneField.tsx`
+- The 8 carried keys of F9 **stay**.
+  - Never remove them by hand. A hand edit to either baseline is forbidden.
+  - List them in the session log under "carried by design".
+  - Each one retires when a later diff censuses its surface. 873 does this for `AuthSheet.tsx`, and its R9 allows
+    that removal.
+- Any other added or removed key, in either file, is `SCOPE GUARD FAILED`. Stop and report it; do not keep the
+  regenerated file.
+
+`GR-2 SCOPE STATED — check:surface-census:changed inspects only the surfaces the diff maps to (here src/app/[locale]/layout.tsx); it cannot see the surfaces of the 8 carried rows, so it neither confirms nor retires them; the three enrolments are closed by check:story-coverage (manifest entry + own Story each) and the Header census (AC7b).`
+
+**Stated blind spot, not fixed here.** An enrolment made only through the manifest never re-censuses the enrolled
+file's other parents. The rows for those parents therefore outlive the debt they recorded.
+
+### 17.3 AC7 and AC8 replaced
+
+- **AC7a [R6]** Given `23-baseline-diff.txt`, when read, then it shows exactly the 3 + 3 removals of §17.2 and no
+  added key.
+- **AC7b [R5, R6]** Given the §17.4 block, when run, then captures `17`–`22` exit 0, and `16` (the Header census)
+  exits 1 with exactly the FAIL lines of §16.4.
+- **AC8 [all]** These captures exit 0: `13` typecheck, `14` lint, `24` build-storybook, `25` file-integrity,
+  `26` mojibake and `27` build. `29` (final status) lists no path outside §7 beyond those in
+  `07-status-before-reentry.txt`.
+
+`GR-4 AC AUDIT — AC7a, AC7b, AC8 each state an observable property; the "exactly 3 + 3" set is measured (F9, F12) and has a stop branch if the regenerated set differs; absolutes: none.`
+
+### 17.4 Re-entry and gate block (replaces §13.2)
+
+**Re-entry mode: remediation.** I0 steps 1–2 are done, and their evidence `01`–`05` is kept. Do not overwrite it.
+
+1. **Precondition.** The owner has committed this amendment. Run `git --no-optional-locks show
+   HEAD:tasks/Sprints/Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md` and check that the output
+   contains `## 17. Amendment 2`. Save the matching line as `06-reentry-head.txt`. If the heading is missing, stop
+   with `BLOCKED — AMENDMENT 2 NOT COMMITTED`.
+2. Save `07-status-before-reentry.txt`: `git --no-optional-locks status --porcelain`, plus a `git hash-object` of
+   every ` M` path. It is AC8's comparator.
+3. Re-run the Header census and save it as `08-census-reentry.txt`. It must show the §16.1 FAIL set, which is the
+   same as in `03-census-I0.txt`. A different set means `PREMISE DRIFT`: stop.
+4. Re-run the F3 grep and save it as `09-f3-grep-reentry.txt`. It must return the same four pages.
+5. Do §10.1 step 4 (the F7 Storybook branch) and record the result in the session log.
+6. Implement R1–R5, with the three manifest entries of §16.2. Then do §17.2, then run this block:
+
+```powershell
+$ev = "docs\sessions\evidence\task872"
+$base = git --no-optional-locks rev-parse HEAD
+node.exe -p "process.platform + ' ' + process.version" *>&1 | Tee-Object "$ev\10-platform.txt"
+npx.cmd vitest run src/lib/auth/__tests__/postSignOut.test.ts *>&1 | Tee-Object "$ev\11-postSignOut-test.txt"
+npm.cmd run test:auth *>&1 | Tee-Object "$ev\12-test-auth.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\13-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\14-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\15-story-coverage.txt"
+node.exe scripts\check-surface-census.mjs --surface src/components/layout/Header.tsx *>&1 | Tee-Object "$ev\16-census-header.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\17-rendered-scope.txt"
+npm.cmd run check:rendered-scope:verify *>&1 | Tee-Object "$ev\18-rendered-scope-verify.txt"
+node.exe scripts\check-surface-census-changed.mjs --base $base *>&1 | Tee-Object "$ev\19-census-changed.txt"
+npm.cmd run check:surface-census:changed:verify *>&1 | Tee-Object "$ev\20-census-changed-verify.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\21-enrolled-tailwind.txt"
+npm.cmd run check:enrolled-tailwind:verify *>&1 | Tee-Object "$ev\22-enrolled-tailwind-verify.txt"
+git --no-optional-locks diff -- scripts/rendered-scope-baseline.json scripts/surface-census-baseline.json *>&1 | Tee-Object "$ev\23-baseline-diff.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\24-build-storybook.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\27-build.txt"
+git --no-optional-locks hash-object src/lib/auth/postSignOut.ts src/lib/auth/__tests__/postSignOut.test.ts src/components/layout/Header.tsx src/stories/patterns/mantine/AuthSheet.stories.tsx scripts/mantine-migration-scope.json scripts/rendered-scope-baseline.json scripts/surface-census-baseline.json package.json docs/critical-flow-registry.md *>&1 | Tee-Object "$ev\28-hash-object.txt"
+git --no-optional-locks status --porcelain *>&1 | Tee-Object "$ev\29-status-after.txt"
+```
+
+Expected results:
+- `10` prints `win32`.
+- `11` and `12` pass. `13`–`15` exit 0.
+- `16` exits 1, with only the FAIL lines of §16.4.
+- `17`–`22` exit 0.
+- `23` shows exactly the removals of §17.2.
+- `24`–`27` exit 0.
+
+Record every exit code in the session log. Stop the dev server before `27`. The AC3 plant and the AC5 manual check
+are unchanged. Save them as `plant.txt` and `30-manual-signout.md`.
+
+### 17.5 Session log and receipts
+
+- In the I0 session log's Files Changed table, the evidence row lists `01`–`04` only. Add `05-status-final.txt`.
+- Record the implementation in the same session log or in a new one; both fit §7's pattern. The log includes:
+  - the §17.2 carried-keys list;
+  - the F7 branch observed;
+  - every exit code.
+- Emit the GR-1 receipt of §16.5, and the GR-0 and GR-3a receipts of §10.2.

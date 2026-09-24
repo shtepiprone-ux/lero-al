@@ -88,6 +88,15 @@ The census cannot yet recognise the split, so the container stays as baselined d
 separately: `tier1 <a> migrated+enrolled+story + <e> container-exempt (<names>)`. A node that fails any of the three
 conditions is not exempt.
 
+**Non-visual provider exemption. Owner decision 2026-09-24 (Task 876, Sprint 81 D81-4), verbatim:** *"AuthContext /
+AuthProvider є non-visual state provider: він рендерить лише Context.Provider та children, не створює DOM/UI, має 0
+className і не імпортує legacy UI primitives. Зміна лише його state/command contract не розширює GR‑1 на весь
+src/app/[locale]/layout.tsx. Він не отримує Story або manifest entry; baseline entry layout лишається. GR‑1
+застосовується до кожного візуального consumer-а, який показує цей стан; його canonical View Story має перевіряти
+pending UI. Виняток не поширюється на provider, який сам рендерить будь-який UI."* The census for such a change is
+the census of the visual consumer's surface, not of the provider's parent layout. A provider that renders any element
+other than `Context.Provider` and `children` is not exempt.
+
 ## GR-2 — A green gate is never evidence that a gate's blind spot is clean
 
 **Forbidden:** citing `check:story-coverage` (or any gate) as proof for a component that gate does not inspect.

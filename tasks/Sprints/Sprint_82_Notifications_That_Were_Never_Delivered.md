@@ -1,6 +1,6 @@
 # Sprint 82 — notifications the code writes and the database has always refused
 
-**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (880)
+**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (880, 882)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -49,6 +49,7 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 | **D82-3** | Q: "Where should the new 'you received a message' notification link?" → *"To the listing (Recommended)"*. The option read: *"The notification opens the listing the message was about; the email stays the main channel for the message text. The inquiries inbox becomes a separate task."* | 2026-09-24 | 880 R3 links to `/listings/<slug>`. There is no inquiries inbox, and none is built here. |
 | **D82-5** | Added while 880 was being designed, verbatim: *"ітакож додай функціонал сповіщень про неадіслані повідомлення на пошту"*. Q: who is notified → *"Listing owner (Recommended)"*. The option read: *"The owner gets a separate on-site notification saying a message about the listing arrived but the email wasn't delivered. The sender's contact details (name and email) are included so the owner can reply, since there's no inbox on the site."* Q: which emails → *"Only the 'send message' button (Recommended)"*. | 2026-09-24 | 880 R3: when the inquiry email fails, the owner gets `listing_inquiry_email_failed` with the sender's name and email **instead of** the plain `listing_inquiry`. Other emails are out of scope. |
 | **D82-6** | Owner, 2026-09-24, first to the executor (as recorded in 880's session log): *"роби задачу, саме через неї я не можу завершити задачу 878"*; and to the orchestrator the same day: *"я не можу це підтвердити бо на реальному сайті не приходять сповіщення і я візуально не можу це перевірити, тому спочатку має бути виконана задача 880"*. | 2026-09-24 | 880's I0 gate (878 archived first) is overridden. 880 was implemented on top of 878's open diff, so the two share `NotificationItem.tsx` and `messages/*.json`. **They are approved and committed together, in one owner-run commit and push**, once both are approved: 880 after its §16 revision and O82-2; 878 after its §18 revision and the §18.5 re-check. |
+| **D82-7** | Owner, 2026-09-24, verbatim: *"на Lero.al сповіщення приходе швидко, але треба перезавантажувати стоірнку, що не зручно. Сповіщення мають приходити без перезавантаження сторінки"*. | 2026-09-24 | **882**: the bell updates live. The subscription is scoped to the signed-in user and status-aware, and recovers missed events. An owner-run authenticated probe proves delivery. Polling is a STOP decision, not built now. |
 | **D82-4** | Q: the live `notifications` grants (`anon`/`authenticated` hold every privilege) → *"Separate task (Recommended)"*. The option read: *"Its own number in Sprint 80 (Data API privileges), so the notifications task stays narrow."* | 2026-09-24 | **881** is reserved in **Sprint 80**. 880 changes no grant. |
 
 ## Why a new sprint — goal fit checked against every open sprint
@@ -80,6 +81,7 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
 | **880** | The notification enum accepts every type the code writes (`report_outcome`, `price_change`), a CI gate keeps the two equal, and the listing owner is notified on a message (with the sender's contacts when its email fails, D82-5), a report and its outcome | **P1** | **Q4** | **878** archived (both touch `NotificationItem.tsx` and the shared fixture) | 🔍 `PARTIALLY VERIFIED` 2026-09-24 (review 2 — code and gates verified; O82-1 ✅; approval waits on O82-2 and lands with 878, D82-6) → [`…Task_880…`](Sprint_82_kickoff_prompt_Task_880_Notification_Enum_Report_And_Inquiry_Notifications.md) |
+| **882** | The notification bell updates live, without a page reload: `useNotifications` subscribes only for the signed-in user (filtered), logs every Realtime status, refetches on reconnect and on tab return; an owner-run two-armed live probe | **P1** | **Q4** | — (no shared file with 878/880) | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_882…`](Sprint_82_kickoff_prompt_Task_882_Notification_Bell_Updates_Live.md) |
 
 ## Owner actions this sprint needs
 
@@ -88,6 +90,8 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 | **O82-1** | ✅ **Done 2026-09-24** (owner): the migration was applied and the verify query returned no rows. After 880's executor reports: apply `scripts/task-880-notification-type-enum.sql`, then run `scripts/task-880-verify.sql` and return its result (kickoff §13.3). It is additive, and it is safe to apply before the deploy. |
 | **O82-2** | 880's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.3). |
 | **O82-3** | After deploy, repeat the D82-1 test with two accounts, and also send a message on account 2's listing. Expected results are in kickoff §13.3. |
+| **O82-4** | 882's live probe with a **test** account (kickoff §13.3), after the executor reports and before approval. |
+| **O82-5** | After 882 deploys: two browsers; the receiving user's bell shows a new notification **without a reload**. |
 
 ## Explicitly not in this sprint
 

@@ -1,0 +1,6 @@
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+ M src/components/auth/CaptchaWidget.tsx
+?? docs/sessions/evidence/task875/
+?? src/components/auth/__tests__/
+EXIT_CODE=0

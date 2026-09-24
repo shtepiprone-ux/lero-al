@@ -1,0 +1,116 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx (5 tests | 4 failed) 127ms
+     × locale=sq -> Turnstile options.language=auto 61ms
+     × locale=en -> Turnstile options.language=en 20ms
+     × locale=uk -> Turnstile options.language=uk 14ms
+     × locale=it -> Turnstile options.language=it 10ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/components/auth/__tests__/CaptchaWidget.langua ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the 
+app locale (Task 875) > locale=sq -> Turnstile options.language=auto
+AssertionError: expected { theme: 'auto', size: 'flexible' } to deeply equal { theme: 'auto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "language": "auto",
+    "size": "flexible",
+    "theme": "auto",
+  }
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101:30
+     99|       options: unknown
+    100|     }
+    101|     expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible'…
+       |                              ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the 
+app locale (Task 875) > locale=en -> Turnstile options.language=en
+AssertionError: expected { theme: 'auto', size: 'flexible' } to deeply equal { theme: 'auto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "language": "en",
+    "size": "flexible",
+    "theme": "auto",
+  }
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101:30
+     99|       options: unknown
+    100|     }
+    101|     expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible'…
+       |                              ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the 
+app locale (Task 875) > locale=uk -> Turnstile options.language=uk
+AssertionError: expected { theme: 'auto', size: 'flexible' } to deeply equal { theme: 'auto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "language": "uk",
+    "size": "flexible",
+    "theme": "auto",
+  }
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101:30
+     99|       options: unknown
+    100|     }
+    101|     expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible'…
+       |                              ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the 
+app locale (Task 875) > locale=it -> Turnstile options.language=it
+AssertionError: expected { theme: 'auto', size: 'flexible' } to deeply equal { theme: 'auto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "language": "it",
+    "size": "flexible",
+    "theme": "auto",
+  }
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101:30
+     99|       options: unknown
+    100|     }
+    101|     expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible'…
+       |                              ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed (5)
+   Start at  19:20:51
+   Duration  2.37s (transform 92ms, setup 111ms, import 1.09s, tests 127ms, environment 878ms)
+
+EXIT_CODE=1

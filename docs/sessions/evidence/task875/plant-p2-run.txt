@@ -1,0 +1,45 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx (5 tests | 1 failed) 124ms
+     × locale=sq -> Turnstile options.language=auto 60ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/components/auth/__tests__/CaptchaWidget.langua ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the 
+app locale (Task 875) > locale=sq -> Turnstile options.language=auto
+AssertionError: expected { theme: 'auto', …(2) } to deeply equal { theme: 'auto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "language": "auto",
++   "language": "sq",
+    "size": "flexible",
+    "theme": "auto",
+  }
+
+ ❯ src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101:30
+     99|       options: unknown
+    100|     }
+    101|     expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible'…
+       |                              ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  19:21:26
+   Duration  2.34s (transform 98ms, setup 107ms, import 1.10s, tests 124ms, environment 865ms)
+
+EXIT_CODE=1

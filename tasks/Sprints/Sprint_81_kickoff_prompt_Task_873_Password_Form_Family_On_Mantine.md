@@ -2,8 +2,8 @@
 
 Sprint 81 · **P2** · QA profile **Q4** (Q3 visual matrix + the "Recovery link → reset" critical flow) · **depends on
 872** (both regenerate the same two governance baselines, so run them one after the other) · owner action **O81-3** ·
-**Status: 🔁 NEEDS REVISION 2026-09-24 (review 1) — READY FOR SONNET: re-enter at §16, which overrides every
-earlier section it names.**
+**Status: 🟡 PARTIALLY VERIFIED 2026-09-24 (review 2). Revision 1 (§16) is verified in code, tests, plants, gates and
+build. Approval waits on the owner's O81-3 visual matrix and on the §16.4/§16.5.3 session-log corrections.**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 Owner decision **D81-3** (2026-09-24), in response to *"Який обсяг у задачі 873?"*, verbatim: *"Вся форма пароля

@@ -1,8 +1,8 @@
 # Task 878 — the header renders the real bell everywhere it is proven, and the header tree loses its inline-style hardcode
 
 Sprint 81 · **P2** · QA profile **Q3** (navigation/header chrome) · depends on **875** (both edit `CaptchaWidget.tsx`) ·
-owner decision **D81-7** · owner action **O81-8** · **Status: 🔍 PARTIALLY VERIFIED (review 3, 2026-09-24) — §16 and §17 verified,
-no executor action; approval waits only on the owner's §17.5 re-check**
+owner decision **D81-7** · owner action **O81-8** · **Status: 🔁 NEEDS REVISION (review 4, 2026-09-24) — the owner returned §17.5: the
+badge is not round (D81-9). Sonnet's next action is §18, nothing else**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 The header's CSS modules and global classes are **879** (reserved, D81-7), not this task.
@@ -133,7 +133,10 @@ Bundles:
 Files the executor may change:
 - `src/modules/notifications/components/NotificationBellView.tsx`: R1, R3, R6 (Revision 2, §17)
 - `src/design-system/mantine/theme.ts`: **R6 only** — rename `other.layout.notificationPopoverOffset` →
-  `iconButtonIndicatorOffset`, value 12, type + comment (Revision 2, §17.3). No other theme change.
+  `iconButtonIndicatorOffset`, value 12, type + comment (Revision 2, §17.3); **add** `other.layout.iconButtonIndicatorSize`
+  = 20, type + comment (Revision 3, §18.3). No other theme change.
+- `src/stories/mantine/primitives/NotificationBellView.stories.tsx`: **Revision 3 only** — two labelled sections
+  (12 and 120 unread) inside the existing `Default` export (§18.3)
 - `src/modules/notifications/components/NotificationCenter.tsx`, `NotificationItem.tsx`: R3, R4
 - `src/modules/auth/components/AuthSheet.tsx`: R3, R4. **Not** its `.module.css` or any `className` (879).
 - `src/components/layout/UserMenu.tsx`, `src/components/shared/LocaleSwitcher.tsx`,
@@ -226,7 +229,7 @@ Run it against a `build-storybook` output served locally, and record the exact c
 
 - No new `className`, CSS rule, module, token, `theme.other` key or Story. Sole exception, Revision 2 (§17.3): the
   rename of `notificationPopoverOffset` → `iconButtonIndicatorOffset`. It replaces the key, and the key count is
-  unchanged.
+  unchanged. Revision 3 (§18.3) adds one key, `iconButtonIndicatorSize`, whose provenance is owner decision D81-9.
 - UTF-8 without BOM. Use the Edit tool or Node `fs`.
 - **Do not re-order or re-structure JSX** beyond what a disposition requires.
 
@@ -276,7 +279,7 @@ Clicking it opens the same panel as today. The Storybook `HeaderView` shows that
   (UserMenu) / 600 (LocaleSwitcher). `32a-menu-label-fz-before.txt`, run against the reviewed build before the fix,
   shows the same probe reporting the mismatch.
 
-`GR-4 AC AUDIT — 8 criteria (AC8 and AC7's baseline clause amended in Revision 1 — the original "baseline diff is empty" was an absolute a correct implementation violated); each states an observable property; absolutes: AC3's "no … literal" is the GR-0 rule itself, scoped to the F4 sites and checked by the ledger, not a repo-wide absolute; AC5 is the pre-existing measured invariant (Task 684 D3).`
+`GR-4 AC AUDIT — 10 criteria (AC9 added in Revision 2, AC10 in Revision 3; AC8 and AC7's baseline clause amended in Revision 1 — the original "baseline diff is empty" was an absolute a correct implementation violated); each states an observable property; absolutes: AC3's "no … literal" is the GR-0 rule itself, scoped to the F4 sites and checked by the ledger, not a repo-wide absolute; AC5 is the pre-existing measured invariant (Task 684 D3).`
 
 ## 13. QA profile and verification plan
 
@@ -561,3 +564,83 @@ Toolbar locale `en`: the count is numerals only, so locale-independent. Viewport
 - `Mantine/Primitives/NotificationBellView` → `Default`.
 
 Accept when the red count overlaps the bell's top-right corner, as in the D81-8 screenshot.
+
+## 18. Revision 3 — review 4, 2026-09-24: `NEEDS REVISION` (the owner returned §17.5: the badge is not round)
+
+Re-entry mode: **remediation**. §17 verified: the badge centre sits exactly on the glyph corner (dx/dy 0), and it
+stays there. **Preserve, do not re-run:** `01`, `02`, `02b`, `03`, `32a`, `32b`, `33a`, `33b`.
+
+### 18.1 The returned tuple: D81-9, verbatim in the sprint file
+
+> *"в Storybook ці count overlaps не круглі!"* … *"я хочу щоб ці red count overlaps були як на Rozetka.com.ua або
+> Prom.ua, круглі"*, with a Rozetka header screenshot (a round count badge about the size of its icon, centred on the
+> icon's top-right corner) next to the current Lero header. On two or more digits: *"Pill is fine (Recommended)"*.
+
+### 18.2 Verified context — measured by the reviewer, 2026-09-24
+
+The badge was measured against the §17 `storybook-static` build (win32, Node v22.22.3). Computed styles, identical in
+`headerview--default` and `notificationbellview--default` at 1440 and at DPR 1 and 2:
+- size 16×16, `border-radius: 16000px`, padding `0 4px`, font-size 12px, line-height 18px;
+- no border and no shadow;
+- no clipping ancestor. The only effect found is `backdrop-filter: blur(8px)` on `header.site-header`, which does not
+  clip.
+
+**It is not a CSS defect.** The same browser renders a plain 16px `border-radius: 50%` circle **pixel-identical** to
+the badge. At DPR 1, any 16px circle shows flat facets. 18px and 20px render visibly rounder. That is the root cause:
+the size, `theme.other.iconSize.standard` = 16, is an icon token being reused for the badge.
+
+The live Rozetka and Prom.ua headers render **no** badge for a signed-out visitor, so live CSS could not be captured.
+The provenance is therefore the owner's screenshot (D81-9) plus the reviewer's size comparison, which the reviewer
+already saved as `docs/sessions/evidence/task878/review4-badge-size-comparison.png`. Preserve it.
+
+### 18.3 Requirement R7 (P1) and AC10
+
+**R7.**
+- Add `theme.other.layout.iconButtonIndicatorSize: 20` to `theme.ts`, with its type and a comment citing D81-9. 20 is
+  the owner's reference (a badge about as large as the 20px `iconSize.roomy` glyph) and is the smallest size in the
+  comparison that renders round at DPR 1.
+- `NotificationBellView`'s `Indicator` takes `size={theme.other.layout.iconButtonIndicatorSize}` instead of
+  `theme.other.iconSize.standard`.
+- Nothing else changes: the offset stays `iconButtonIndicatorOffset` (12), the centre stays on the corner, and the
+  colour, the `99+` label and `disabled` at 0 are unchanged.
+- Two or more digits render as Mantine's native pill (owner: *"Pill is fine"*). Do not override padding or font size.
+
+**Story (GR-3a EXTEND, `Mantine/Primitives/NotificationBellView` → `Default`):** add two labelled sections to the
+existing `Default` export:
+- `unreadCount={12}`;
+- `unreadCount={120}`, which renders `99+`.
+
+Both are real production states. No new export and no new file. This corrects the original §11 row "`>99` unread →
+existing Story state": no such state existed.
+
+**AC10 [R7].** Extend `probe-bell-indicator.mjs` (do not fork it) → `36b-bell-indicator-size-after.txt`:
+- **Single digit**, on the six §17.3 tuples: the badge is **20×20** (±0.5), width equals height, and |dx|, |dy| ≤ 1
+  from the glyph corner.
+- **Multi-digit**, on the new `NotificationBellView` sections at 1440: height 20 (±0.5), width ≥ height, and the
+  centre within 1px of the glyph corner.
+- The probe exits 1 on any miss, and on a missing badge.
+
+Before the edit, the same extended probe against the current build → `36a-bell-indicator-size-before.txt` must exit 1,
+reporting 16×16.
+
+### 18.4 Steps
+
+1. Confirm that `review4-badge-size-comparison.png` exists, and record its `git hash-object`. Do not regenerate it.
+2. Extend the probe, then run it → `36a`. Expect exit 1.
+3. Make the R7 edit and the Story sections, run `npm.cmd run build-storybook`, then run the probe → `36b`. Expect exit
+   0.
+4. Capture a DPR 1 and DPR 2 zoomed crop of the new badge → `36c-badge-crop-dpr1.png` and `36c-badge-crop-dpr2.png`.
+5. Re-run the §13.2 block (overwrite `10`–`29`) and §10.4 (→ `30`; expect 97/97/65/65). Record every
+   `$LASTEXITCODE` immediately after its command.
+6. Append `## Revision 3` to the session log and set the backlog cell to
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 3)`.
+
+### 18.5 Owner re-check (O81-8, only the returned tuple)
+
+Toolbar locale `en`, viewports 320 and 1440:
+- `Mantine/Primitives/HeaderView` → `Default`;
+- `Mantine/Primitives/HeaderActions` → `Default`;
+- `Mantine/Primitives/NotificationBellView` → `Default`, including its new 12 and `99+` sections.
+
+Accept when the single-digit count is a round badge on the bell's top-right corner, as in the Rozetka reference, and
+multi-digit counts are pills.

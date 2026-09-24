@@ -1,8 +1,8 @@
 # Task 878 — the header renders the real bell everywhere it is proven, and the header tree loses its inline-style hardcode
 
 Sprint 81 · **P2** · QA profile **Q3** (navigation/header chrome) · depends on **875** (both edit `CaptchaWidget.tsx`) ·
-owner decision **D81-7** · owner action **O81-8** · **Status: 🔍 PARTIALLY VERIFIED (review 2, 2026-09-24) — §16 remediation
-verified; no executor action; approval waits only on the owner's O81-8 matrix (§13.3)**
+owner decision **D81-7** · owner action **O81-8** · **Status: 🔁 NEEDS REVISION (review 2, 2026-09-24) — §16 verified; the owner
+returned the bell counter position (D81-8). Sonnet's next action is §17, nothing else**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 The header's CSS modules and global classes are **879** (reserved, D81-7), not this task.
@@ -131,7 +131,9 @@ Bundles:
 ## 7. Scope
 
 Files the executor may change:
-- `src/modules/notifications/components/NotificationBellView.tsx`: R1, R3
+- `src/modules/notifications/components/NotificationBellView.tsx`: R1, R3, R6 (Revision 2, §17)
+- `src/design-system/mantine/theme.ts`: **R6 only** — rename `other.layout.notificationPopoverOffset` →
+  `iconButtonIndicatorOffset`, value 12, type + comment (Revision 2, §17.3). No other theme change.
 - `src/modules/notifications/components/NotificationCenter.tsx`, `NotificationItem.tsx`: R3, R4
 - `src/modules/auth/components/AuthSheet.tsx`: R3, R4. **Not** its `.module.css` or any `className` (879).
 - `src/components/layout/UserMenu.tsx`, `src/components/shared/LocaleSwitcher.tsx`,
@@ -222,7 +224,9 @@ Run it against a `build-storybook` output served locally, and record the exact c
 
 ### 10.5 Rules
 
-- No new `className`, CSS rule, module, token, `theme.other` key or Story.
+- No new `className`, CSS rule, module, token, `theme.other` key or Story. Sole exception, Revision 2 (§17.3): the
+  rename of `notificationPopoverOffset` → `iconButtonIndicatorOffset`. It replaces the key, and the key count is
+  unchanged.
 - UTF-8 without BOM. Use the Edit tool or Node `fs`.
 - **Do not re-order or re-structure JSX** beyond what a disposition requires.
 
@@ -450,3 +454,110 @@ backlog state cell back to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision
 
 AC6 / O81-8 stays owner-owed. The owner matrix in §13.3 gained UserMenu, LocaleSwitcher and MobileNavDrawer rows in
 this revision.
+
+## 17. Revision 2 — review 2, 2026-09-24: `NEEDS REVISION` (the owner returned one O81-8 tuple)
+
+Re-entry mode: **remediation**. Review 2 verified §16:
+- the `inherit` fix;
+- AC8, which the reviewer re-ran (exit 0);
+- the full gate block, whose hashes match the files on disk.
+
+The owner accepted every other O81-8 tuple. **Preserve, do not re-run:** `01`, `02`, `02b`, `03`, `32a`, `32b`.
+
+### 17.1 The returned tuple: D81-8, verbatim in the sprint file
+
+> *"все ок, але б я хотів, щоб counter був ближче до іконки як показано на скріншоті. Наразі я бачу цей counter
+> далеко від іконок, допоки не наведеш мишкою не зрозуміло до чого саме відноситься цей counter"*
+
+The owner's screenshot shows a count badge overlapping the top-right corner of a heart or cart glyph.
+
+### 17.2 Verified context — measured by the reviewer, 2026-09-24
+
+The measurement ran against the §16 `storybook-static` build (win32, Node v22.22.3). It compares the centre of
+`.mantine-Indicator-indicator` with the bell `<svg>`'s top-right corner.
+
+| Story | Width | Button | Glyph | Badge | Badge centre − glyph corner |
+|---|---|---|---|---|---|
+| `mantine-primitives-headerview--default` | 320 | 44×44 | 20×20 | 16×16 | dx **+8**, dy **−8** |
+| `mantine-primitives-headerview--default` | 1440 | 44×44 | 20×20 | 16×16 | dx **+8**, dy **−8** |
+| `mantine-primitives-notificationbellview--default` | 1440 | 44×44 | 20×20 | 16×16 | dx **+8**, dy **−8** |
+
+**Why it is off.** The `Indicator` wraps the whole 44px touch-target `ActionIcon`, and its `offset` is
+`theme.other.layout.notificationPopoverOffset` = **4** (`theme.ts:717`). Mantine places the badge centre at
+(width − offset, offset) of that box (`get-position-variables.mjs`, `top-end`), which is (40, 4). The glyph's
+top-right corner is at ((44 + 20) / 2, (44 − 20) / 2) = (32, 12).
+
+Before R1, the `default` variant drew a border around the 44px box, so the badge sat on a visible corner. With
+`subtle`, that box is invisible, and the badge floats 8px away from the glyph. So this is a consequence of R1, and
+it belongs to this task.
+
+**Where the counter appears.** The reviewer scanned all 408 built stories for an absolutely-positioned numeric
+badge.
+- The icon counter appears in exactly 4: `HeaderView` `Default` and `SigningOut`, `HeaderActions` `Default`, and
+  `NotificationBellView` `Default`. All four render this one `NotificationBellView`.
+- No cabinet or admin Story renders an icon counter.
+- On the site, the bell renders on every `/[locale]/…` page through `src/app/[locale]/layout.tsx:49`, which
+  includes the cabinet. `/admin` uses its own shell with no bell.
+
+So one change in `NotificationBellView` fixes every instance. `<Indicator` has no other production consumer
+(`git grep`).
+
+**Why the badge cannot move inside the button.** Mantine `ActionIcon` has `overflow: hidden`
+(`@mantine/core/styles/ActionIcon.css:23`). An `Indicator` placed inside the button would be clipped. The `Indicator`
+stays outside the button, and only its `offset` changes.
+
+### 17.3 Requirement R6 (P1) and AC9
+
+**R6.** Rename `theme.other.layout.notificationPopoverOffset` (it is not a popover offset) to
+**`iconButtonIndicatorOffset`**, a role that any future icon-button counter reuses (D81-8: *"у багатьох сторісах"*).
+Set its value to **12**, which is (touch target 44 − `iconSize.roomy` 20) / 2. Change these, in the same diff:
+- the `theme.ts` type at `:218`;
+- the value at `:717`;
+- the Task 822 comment at `:203`, rewritten to cite this derivation and D81-8;
+- the consumer at `NotificationBellView.tsx:38`.
+
+Leave historical mentions in closed task files and review ledgers untouched. They record the past.
+
+GR-0 receipt, decision **EXTEND**:
+- owner: `theme.ts` `other.layout`;
+- Mantine path: `Indicator` `offset`;
+- provenance: D81-8's screenshot, plus the geometry derivation above;
+- new hardcoded visual values: NONE (12 is derived from two existing tokens and documented).
+
+Nothing else about the `Indicator` changes: colour, size, the `99+` label, and `disabled` at 0.
+
+**AC9 [R6].** Given `33b-bell-indicator-after.txt`, when read, then for all six tuples the badge centre's distance
+from the bell glyph's top-right corner has |dx| ≤ 1 and |dy| ≤ 1. The six tuples are `headerview--default`,
+`headeractions--default` and `notificationbellview--default`, each at 320 and 1440. The ±1 is sub-pixel rounding,
+because the target is exact coincidence.
+
+`33a-bell-indicator-before.txt`, run before the edit against the current build, shows dx +8 / dy −8 and exits
+non-zero. `git grep notificationPopoverOffset -- src` returns nothing.
+
+### 17.4 Steps
+
+1. Write `docs/sessions/evidence/task878/probe-bell-indicator.mjs` in the same static-server shape as
+   `probe-menu-label-fz.mjs`, on its own port.
+   - For each tuple, measure every `.mantine-Indicator-indicator` against the `<svg>` inside the button of its
+     `.mantine-Indicator-root`.
+   - Exit 1 when any |dx| or |dy| is greater than 1, **or when no indicator is found**, so an absent badge cannot
+     pass.
+2. Run the probe → `33a`. Expect exit 1.
+3. Make the R6 edit, then run `npm.cmd run build-storybook`.
+4. Run the probe → `33b`. Expect exit 0.
+5. Re-run the §13.2 block, overwriting `10`–`29`.
+6. Re-run §10.4 → `30`. Expect 97/97/65/65: the `Indicator` badge is absolutely positioned and must not move the
+   header.
+7. Record the exit code as `$LASTEXITCODE` **immediately after** each probe command, before any other command runs.
+   Review 2 found `32a` recorded `EXIT_CODE=0` for a run whose output took the `process.exit(1)` branch.
+8. Append `## Revision 2` to the session log, with the files changed, AC9 before/after and the GR-0 receipt. Set
+   the backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 2)`.
+
+### 17.5 Owner re-check (O81-8, only the returned tuple)
+
+Toolbar locale `en`: the count is numerals only, so locale-independent. Viewports 320 and 1440.
+- `Mantine/Primitives/HeaderView` → `Default`;
+- `Mantine/Primitives/HeaderActions` → `Default`;
+- `Mantine/Primitives/NotificationBellView` → `Default`.
+
+Accept when the red count overlaps the bell's top-right corner, as in the D81-8 screenshot.

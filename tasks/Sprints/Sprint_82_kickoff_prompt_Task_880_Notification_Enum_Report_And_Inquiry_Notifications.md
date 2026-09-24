@@ -2,7 +2,8 @@
 
 Sprint 82 · **P1** · QA profile **Q4** (critical flows: Report listing, Inquiry / send message, notification template
 localization) · depends on **878 archived** · owner decisions **D82-1…D82-5** · owner actions **O82-1…O82-3** ·
-**Status: 📝 KICKOFF FILED 2026-09-24**
+**Status: 🔁 NEEDS REVISION (review 1, 2026-09-24) — Sonnet's next action is §16, nothing else.**
+The 878-first sequencing gate is overridden by owner decision **D82-6**.
 
 Sprint plan: [`Sprint_82_Notifications_That_Were_Never_Delivered.md`](Sprint_82_Notifications_That_Were_Never_Delivered.md).
 
@@ -210,7 +211,7 @@ Files the executor may change:
   - `NotificationItem.tsx`: EXTEND `resolveTitleParams`;
   - the locale keys: EXTEND the `notifications` namespace;
   - new hardcoded visual values: NONE.
-- **GR-3a:** `NotificationItem × four new template rows` → EXTEND the data of `Mantine/Primitives/NotificationItem`
+- **GR-3a:** `NotificationItem × five new template rows` (corrected in review 1: D82-5 made it five) → EXTEND the data of `Mantine/Primitives/NotificationItem`
   `Default` through the shared fixture. `CREATE` is not permitted.
 - **GR-3:** `NotificationItem ← src/stories/mantine/primitives/NotificationItem.stories.tsx`.
 - **GR-1**, at the end: re-run the F12 census. Expected: 5 nodes, all migrated+enrolled+story.
@@ -409,3 +410,51 @@ Update the 880 backlog state cell. Write the session log with a Files Changed ta
 | Story | EXTEND through the fixture, no new Story or export (GR-3a); read rows, so the header's unread count is untouched (R8) |
 | Owner decisions quoted | D82-1…D82-4, verbatim in the sprint file |
 | Sequencing | after 878 (shared `NotificationItem.tsx` and fixture); I0 step 2 enforces it |
+
+## 16. Revision 1 — review 1, 2026-09-24: `NEEDS REVISION`
+
+Re-entry mode: **remediation**. Review 1 verified the following, and none of it may be redone:
+- R1: the SQL files, whose value list equals the TS union;
+- R3–R6: the code read against the diff;
+- R7: the `sq` fallback strings equal `messages/sq.json` character for character;
+- R8, R9;
+- AC2's four gate transcripts;
+- the three product plants;
+- 65/65 tests re-run by the reviewer on win32, covering `reportListing`, `submitListingInquiry`, `deleteReport` and
+  `src/modules/notifications`.
+
+**Preserve, do not re-run:** `00-i0.txt`, `10`–`13`.
+
+### 16.1 Sequencing: owner decision D82-6
+
+The I0 step-2 gate (878 archived first) is **overridden by the owner**. The decision is recorded verbatim in the sprint
+file. From now on, this task's diff and 878's still-open diff share `NotificationItem.tsx` and `messages/*.json`.
+They land together: see D82-6's effect.
+
+### 16.2 Finding R1-F1 (P2): the gate's record states the opposite of R2. Requirement: R2, AC2.
+
+- **Where.** `scripts/notification-type-enum.json` → `_comment` reads: *"Update this file in the SAME commit as any
+  NotificationType change. This file records what the TypeScript type declares, not the live database."*
+- **Why it matters.** R2 defines the file as *"the enum values confirmed live"*. With the comment's instruction, a
+  developer adds a TS value and the JSON value together, and the gate stays green while the live enum lacks the value.
+  That is exactly the failure this task exists to stop. The gate code is correct, and its printed scope is correct.
+  Only the record's rule is inverted.
+- **Fix.** Replace `_comment` with this, wording free, meaning fixed: *this file lists the `notification_type` values
+  confirmed on the live database by the owner-run verify query. Add a value here only after its `alter type`
+  migration is applied and the verify query returns zero rows, and cite that evidence in the commit. A
+  `NotificationType` change without that evidence must leave this gate red.*
+
+### 16.3 Finding R1-F2 (P3): a failed report lookup is silent. Requirement: R6.
+
+`updateReportStatusAction`'s terminal branch reads `const { data: reportRow } = await db.from('listing_reports')…`
+and discards `error`. If that select fails, neither the reporter nor the owner is notified and nothing is logged.
+Destructure `error` and, when it is set, `console.error('[updateReportStatus] report lookup failed', { reportId, error })`.
+Behavior is otherwise unchanged. Add one test: the select returns an error → `console.error` is called, no
+`createNotification` call happens, and the result is `{}`.
+
+### 16.4 Re-validation
+
+1. Re-run `npm.cmd run check:notification-type-enum` → `40-gate-after-r1.txt`. Expect exit 0.
+2. Re-run the whole §13.2 block, writing to `20`–`35` through the BOM-free write the session log already uses.
+3. Append `## Revision 1` to the session log. Set the backlog cell to
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`.

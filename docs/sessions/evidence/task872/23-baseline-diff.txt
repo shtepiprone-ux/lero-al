@@ -1,0 +1,60 @@
+diff --git a/scripts/rendered-scope-baseline.json b/scripts/rendered-scope-baseline.json
+index c86f7f9b9..3b0edc921 100644
+--- a/scripts/rendered-scope-baseline.json
++++ b/scripts/rendered-scope-baseline.json
+@@ -1,9 +1,6 @@
+ {
+   "version": 1,
+   "edges": {
+-    "src/components/layout/HeaderView.tsx -> src/components/shared/LocaleSwitcher.tsx": {
+-      "tier": "tier1-unenrolled"
+-    },
+     "src/components/shared/FiltersPanel.tsx -> src/components/shared/FilterChoiceGroup.tsx": {
+       "tier": "tier1-unenrolled"
+     },
+@@ -16,12 +13,6 @@
+     "src/components/shared/FiltersPanel.tsx -> src/components/shared/YearCombobox.tsx": {
+       "tier": "tier1-unenrolled"
+     },
+-    "src/modules/auth/components/AuthSheet.tsx -> src/components/auth/CaptchaWidget.tsx": {
+-      "tier": "tier1-unenrolled"
+-    },
+-    "src/modules/auth/components/AuthSheet.tsx -> src/components/shared/PhoneField.tsx": {
+-      "tier": "tier1-unenrolled"
+-    },
+     "src/modules/auth/components/AuthSheet.tsx -> src/components/ui/PasswordRequirementsHint.tsx": {
+       "tier": "tier2-legacy-primitive"
+     },
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index 04c3c5278..ea8229a3b 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -163,27 +163,18 @@
+     "src/app/[locale]/layout.tsx :: src/app/[locale]/layout.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/[locale]/layout.tsx :: src/components/auth/CaptchaWidget.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/[locale]/layout.tsx :: src/components/layout/Footer.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/[locale]/layout.tsx :: src/components/layout/Header.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/[locale]/layout.tsx :: src/components/shared/LocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/[locale]/layout.tsx :: src/components/shared/PerfDevOverlay.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/[locale]/layout.tsx :: src/components/shared/PerformanceStoreInit.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/[locale]/layout.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/[locale]/layout.tsx :: src/components/shared/WebVitalsReporter.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+EXIT_CODE=0

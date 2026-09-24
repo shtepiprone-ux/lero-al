@@ -1,0 +1,40 @@
+=== pre-plant hash ===
+b396685a918ca0dfd3d8a3c6c7708040cfbe5aac
+=== planted violation: removed '/favorites' from SESSION_REQUIRED_ROUTE_PATTERNS ===
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts (25 tests | 1 failed | 24 skipped) 10ms
+     × SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — drift test against real guest guards > SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages
+AssertionError: SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [], extra: [/favorites]: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:99:7
+     97|       missing.length === 0 && extra.length === 0,
+     98|       `SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [${missing.joi…
+     99|     ).toBe(true)
+       |       ^
+    100|   })
+    101| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 24 skipped (25)
+   Start at  10:25:47
+   Duration  1.40s (transform 50ms, setup 119ms, import 36ms, tests 10ms, environment 962ms)
+
+EXIT_CODE=1
+=== post-restore hash ===
+b396685a918ca0dfd3d8a3c6c7708040cfbe5aac
+MATCH — restoration verified

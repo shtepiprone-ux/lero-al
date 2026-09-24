@@ -1,0 +1,29 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: 472e41977b4ff48f8a26aecd62d6f1c02caa8a27  Head: (working tree)  Merge base: 472e41977b4ff48f8a26aecd62d6f1c02caa8a27
+    Changed paths seen: 9
+    Excluded (8):
+      docs/critical-flow-registry.md  [outside-src]
+      docs/sessions/evidence/task861/storybook-dev.log  [outside-src]
+      package.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      scripts/schema-drift-check.sql  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/stories/patterns/mantine/AuthSheet.stories.tsx  [story-or-test-file]
+    Included surfaces (1):
+      src/app/[locale]/layout.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 1
+    Blocks baselined (recorded debt, does not fail): 9
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 472
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

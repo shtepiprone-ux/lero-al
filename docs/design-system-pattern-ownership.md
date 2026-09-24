@@ -232,7 +232,7 @@ patterns.mjs`.
 ## 8. A sibling directory for the project's non-Mantine image primitive (Task 813, 2026-09-11)
 
 Owner decision §5.1 (C) on Task 813 (recorded verbatim in
-`tasks/Sprints/Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md` §5.1) needed a destination for
+`tasks/Archive/Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md` §5.1) needed a destination for
 `AppImage.tsx` — the project's canonical, non-Mantine `<img>` render site — outside `src/components/ui/`, whose path
 prefix both `check-rendered-scope.mjs` and `check-surface-census.mjs` classify as `tier2-legacy-primitive`. The
 decision refused this file's own directory by name: `AppImage` is a bespoke `<img>` renderer, not a Mantine pattern,

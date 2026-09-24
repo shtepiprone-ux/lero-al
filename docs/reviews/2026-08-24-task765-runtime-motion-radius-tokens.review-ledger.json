@@ -9,7 +9,7 @@
     "reviewedPaths": [
       "src/app/globals.css",
       "src/components/ui/AppImage.module.css",
-      "tasks/Sprints/Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md",
+      "tasks/Archive/Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md",
       "docs/sessions/2026-08-24-task765-runtime-motion-radius-tokens-blocked.md",
       "docs/sessions/2026-08-24-task765-revision-1-2-p3doubleprime.md",
       "docs/sessions/evidence/task765/phase4/clean-post-edit.diff",

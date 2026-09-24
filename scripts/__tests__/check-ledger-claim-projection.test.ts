@@ -2,7 +2,7 @@
 /**
  * Detector test suite for scripts/check-ledger-claim-projection.mjs (Task 747 Phase 2).
  *
- * Spec: tasks/Sprints/Sprint_61_Task_747_phase1_decision.md (REVISION 5, owner-approved
+ * Spec: tasks/Archive/Sprint_61_Task_747_phase1_decision.md (REVISION 5, owner-approved
  * 2026-08-20). Covers: the fence/inline-code-span exemption (AC2a), the Task 691
  * reconstruction fixture (AC3), every enumerated bad-input message, and the D1
  * bidirectional comparator (CLAIM-STALE / LEDGER-MOVED / pass).

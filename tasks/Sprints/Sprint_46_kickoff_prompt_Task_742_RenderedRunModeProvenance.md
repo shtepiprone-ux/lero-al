@@ -164,7 +164,7 @@ Task-specific, required:
 - `scripts/check-stories-rendered.mjs` `:1461-1480` (banner), `:1570-1582` (composition line), `:1630-1640`
   (Phase 1 skip), `:1676-1686` (Phase 2 skip), `:1780-1810` (manifest + inventory header), `:1925` (inventory write).
 - `scripts/check-stories-rendered.mjs` `:170-182` — the four `.listing-card` anchor rows R4 must name.
-- `tasks/Sprints/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` §0.2 C3 — the defect that filed this.
+- `tasks/Archive/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` §0.2 C3 — the defect that filed this.
 - `docs/sessions/2026-08-09-task733-overlay-hosted-controls.md` §R1 — the standing comparator R6 must preserve.
 
 Do **not** read the UI rule bundle, the Mantine/TailAdmin design docs, or any `.module.css`. **This task changes no

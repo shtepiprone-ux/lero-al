@@ -3,7 +3,7 @@
 **Authority chain (all three bind, in this order):**
 
 1. `tasks/Sprints/Sprint_61_kickoff_prompt_Task_747_Ledger_State_Projection_Gate.md` — the task kickoff. Still binding in full.
-2. `tasks/Sprints/Sprint_61_Task_747_phase1_decision.md` (`REVISION 5`, 69 lines) — **owner-approved 2026-08-20**. This is the build contract.
+2. `tasks/Archive/Sprint_61_Task_747_phase1_decision.md` (`REVISION 5`, 69 lines) — **owner-approved 2026-08-20**. This is the build contract.
 3. This document — Phase 2 execution constraints and evidence discipline. It adds nothing to the design.
 
 **Preflight:** `tasks/Sprints/Sprint_61_Task_747_evidence_preflight.md` §2 and §4 — read before writing anything.
@@ -51,7 +51,7 @@ Exactly what the decision authorises, nothing more:
 - `docs/backlog.md` update (index-sized, ≤80 lines)
 - one new session log under `docs/sessions/`
 
-**Zero diff, no exceptions:** `docs/backlog-archive.md` · every `*.SUPERSEDED.json` · every closed session log · `scripts/check-review-ledger.mjs` · `.github/workflows/governance-pr.yml` · `tasks/Sprints/Sprint_61_Task_747_phase1_decision.md` (approved and frozen) · Task 746 · Task 750.
+**Zero diff, no exceptions:** `docs/backlog-archive.md` · every `*.SUPERSEDED.json` · every closed session log · `scripts/check-review-ledger.mjs` · `.github/workflows/governance-pr.yml` · `tasks/Archive/Sprint_61_Task_747_phase1_decision.md` (approved and frozen) · Task 746 · Task 750.
 
 **Do not wire the new gate into CI.** Making it blocking is a separate owner decision.
 
@@ -60,7 +60,7 @@ Exactly what the decision authorises, nothing more:
 AC1 is closed by the owner approval above. AC2–AC8 carry over from the task kickoff §6, refined by `REVISION 5`:
 
 - **AC2** — the checker exits **0** on today's tree, with the real marker in place. No allowlist, no baseline file. If it opens with pre-existing violations, the format is wrong; report `BLOCKED` rather than suppressing them.
-- **AC2a** *(fence rule, prove it)* — `tasks/Sprints/Sprint_61_Task_747_phase1_decision.md` is inside the scan scope (`tasks/Sprints/*.md`) and contains a marker example inside a fenced code block. AC2 passes **only** if fence and inline-code skipping is genuinely implemented. Add a unit arm asserting a marker inside a fence and inside backticks is ignored.
+- **AC2a** *(fence rule, prove it)* — `tasks/Archive/Sprint_61_Task_747_phase1_decision.md` is inside the scan scope (`tasks/Sprints/*.md`) and contains a marker example inside a fenced code block. AC2 passes **only** if fence and inline-code skipping is genuinely implemented. Add a unit arm asserting a marker inside a fence and inside backticks is ignored.
 - **AC3** — test-only reconstruction under `scripts/__tests__/fixtures/`: Task 691 state `openP0: 4` against a visible `2 P0` claim. The checker rejects it and names the file, the claimed text, and the ledger-derived text. A bare "mismatch" is insufficient.
 - **AC4** *(forward arm)* — edit **only** the visible element body, leave the ledger byte-identical → `CLAIM-STALE`, exit 1. Restore → pass. Record both runs and `git hash-object` before/during/after.
 - **AC5** *(reverse arm)* — edit a **real retained** ledger, keep it valid (`check:review-ledger --file` still green under every coordinated change the edit requires), leave the markdown untouched → `LEDGER-MOVED`, exit 1, a **distinct** name from AC4. Fully restore, proven by hash. **Do not describe any edit recipe as viable until you have demonstrated it in this session** — the unvalidated four-edit recipe is exactly what sank an earlier revision.
@@ -86,7 +86,7 @@ Phase 1 lost evidence it could have captured. Do not repeat it.
 ?? docs/sessions/2026-08-20-task747-ledger-state-projection-phase1.md
 ?? docs/sessions/2026-08-20-task747-phase1-revision3-rework.md
 ?? docs/sessions/2026-08-20-task747-phase1-revision5-rework.md
-?? tasks/Sprints/Sprint_61_Task_747_phase1_decision.md
+?? tasks/Archive/Sprint_61_Task_747_phase1_decision.md
 ?? tasks/Sprints/Sprint_61_Task_747_phase2_kickoff.md
 ```
 
@@ -107,7 +107,7 @@ locally, and required if any agent tooling touches the repo concurrently.
 ```
 # ── 0 · START SNAPSHOT — before the first write, no exceptions ───────────────
 git --no-optional-locks status --porcelain -uall
-git --no-optional-locks hash-object -- tasks/Sprints/Sprint_61_Task_747_phase1_decision.md   # expect 2463dfa6d…
+git --no-optional-locks hash-object -- tasks/Archive/Sprint_61_Task_747_phase1_decision.md   # expect 2463dfa6d…
 git --no-optional-locks hash-object -- docs/backlog.md                                       # expect 1fafdc61f…
 git --no-optional-locks hash-object -- tasks/Sprints/Sprint_61_Task_747_phase2_kickoff.md    # record it; a file
                                                                                              # cannot carry its own hash
@@ -170,7 +170,7 @@ git --no-optional-locks diff --check                                   # expect 
 git --no-optional-locks status --porcelain -uall                       # diff against §0; every new entry
                                                                        # must be one you can name
 # ── 9 · FROZEN-FILE ASSERTIONS — all must hold at the end ───────────────────
-git --no-optional-locks hash-object -- tasks/Sprints/Sprint_61_Task_747_phase1_decision.md   # STILL 2463dfa6d…
+git --no-optional-locks hash-object -- tasks/Archive/Sprint_61_Task_747_phase1_decision.md   # STILL 2463dfa6d…
 git --no-optional-locks hash-object -- tasks/Sprints/Sprint_61_Task_747_phase2_kickoff.md    # STILL the §0 value
 git --no-optional-locks status --porcelain -uall -- .github/workflows/ scripts/check-review-ledger.mjs
                                                                        # expect EMPTY output

@@ -213,7 +213,7 @@ Task-specific, required:
 - `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` — all 397 lines.
 - `src/design-system/mantine/patterns/MantineListingCardPattern.module.css` — all 82, **including the header**.
 - `src/modules/listings/components/ListingCard.tsx` `:203`, `:299`, `:208`, `:304` — to confirm §3.2/§3.3 yourself.
-- `tasks/Sprints/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` **§0** (C1–C3), §3.4/§3.5 and
+- `tasks/Archive/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` **§0** (C1–C3), §3.4/§3.5 and
   **§10.2/§10.5** — the compiled-output
   discipline and the three defects that document trail cost.
 - `src/components/shared/HeroSearchView.module.css:40-60` — D34's layered precedent.

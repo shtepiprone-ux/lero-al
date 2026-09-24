@@ -7,7 +7,7 @@
  * moves while the marker's declared hash stands still (`LEDGER-MOVED`).
  *
  * Spec: Task 747 Phase 1 REVISION 5
- * (tasks/Sprints/Sprint_61_Task_747_phase1_decision.md). That document is specification,
+ * (tasks/Archive/Sprint_61_Task_747_phase1_decision.md). That document is specification,
  * not suggestion — this file transcribes its marker syntax, v1 field set, source-path
  * policy, preflight order, and fail-closed enumeration. It does not redesign any of it.
  *

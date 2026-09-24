@@ -1626,7 +1626,17 @@
     "report_dismissed_title": "Raporti juaj u rishikua",
     "report_dismissed_body": "Faleminderit për raportimin tuaj. Pas shqyrtimit të kujdesshëm, nuk kemi gjetur shkelje të rregullave tona për listimin e raportuar.",
     "price_change_title": "Ndryshim çmimi: {listingName}",
-    "price_change_body": "{oldPrice} → {newPrice}"
+    "price_change_body": "{oldPrice} → {newPrice}",
+    "listing_inquiry_title": "Mesazh i ri: {listingName}",
+    "listing_inquiry_body": "Dikush ju dërgoi një mesazh në lidhje me këtë njoftim.",
+    "listing_inquiry_email_failed_title": "Mesazhi nuk u dërgua me email: {listingName}",
+    "listing_inquiry_email_failed_body": "{senderName} ({senderEmail}) ju dërgoi një mesazh, por email-i nuk u dërgua. Mund t'i përgjigjeni direkt në këtë adresë.",
+    "listing_report_filed_title": "Njoftimi juaj u raportua: {listingName}",
+    "listing_report_filed_body": "Dikush raportoi këtë njoftim. Ekipi ynë do ta shqyrtojë.",
+    "listing_report_resolved_owner_title": "Raporti për njoftimin tuaj u zgjidh: {listingName}",
+    "listing_report_resolved_owner_body": "Raporti për këtë njoftim është shqyrtuar dhe zgjidhur nga ekipi ynë.",
+    "listing_report_dismissed_owner_title": "Raporti për njoftimin tuaj u hodh poshtë: {listingName}",
+    "listing_report_dismissed_owner_body": "Raporti për këtë njoftim është shqyrtuar dhe hedhur poshtë nga ekipi ynë."
   },
   "saved_search": {
     "save_action": "Ruaj kërkimin",
@@ -2361,7 +2371,6 @@
       "notification_neutral_message": "Skica e shpalljes suaj u ruajt automatikisht.",
       "header_actions_guest_caption": "Vizitor — Favoritet hap fletën e identifikimit (login); Hyrja/Regjistrimi shfaqen te md+",
       "header_actions_authed_caption": "I identifikuar — Favoritet çon te /favorites; zilja e njoftimeve kalohet si slot; pa Hyrje/Regjistrim",
-      "header_actions_bell_slot_aria": "Njoftimet (slot placeholder)",
       "locale_switcher_default_caption": "Parazgjedhje — klikoni për të ndryshuar gjuhën (menu ≥640, fletë e poshtme <640)",
       "locale_switcher_showlabel_caption": "showLabel — shkaktari përfshin emrin e plotë të gjuhës krahas shkurtimit",
       "locale_switcher_pending_caption": "isPending — shkaktari çaktivizohet me një rrotullues ndërsa ndryshimi është në proces",

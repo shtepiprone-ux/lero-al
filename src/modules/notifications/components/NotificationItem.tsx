@@ -59,7 +59,12 @@ function resolveTitleParams(templateId: string, params: Record<string, unknown>)
   switch (templateId) {
     case 'saved_search_match':
       return { searchName: typeof params.searchName === 'string' ? params.searchName : '' }
-    case 'price_change': {
+    case 'price_change':
+    case 'listing_inquiry':
+    case 'listing_inquiry_email_failed':
+    case 'listing_report_filed':
+    case 'listing_report_resolved_owner':
+    case 'listing_report_dismissed_owner': {
       const listingName = typeof params.listingName === 'string' && params.listingName
         ? params.listingName
         : typeof params.listingId === 'string' ? params.listingId : ''
@@ -93,6 +98,22 @@ function resolvePriceChangeBody(
     oldPrice: `${formatCount(oldPrice, locale)} ${currency}`,
     newPrice: `${formatCount(newPrice, locale)} ${currency}`,
   })
+}
+
+/**
+ * Resolve the `listing_inquiry_email_failed` body: interpolates the sender's name/email so
+ * the owner can reply directly (D82-5). Returns `null` (→ sq-fallback body) when either
+ * sender param is not a non-empty string — the same guard shape as `resolvePriceChangeBody`.
+ */
+function resolveInquiryEmailFailedBody(
+  t: ReturnType<typeof useTranslations<'notifications'>>,
+  params: Record<string, unknown>,
+): string | null {
+  const { senderName, senderEmail } = params
+  if (typeof senderName !== 'string' || !senderName || typeof senderEmail !== 'string' || !senderEmail) {
+    return null
+  }
+  return safeT(t, 'listing_inquiry_email_failed_body', { senderName, senderEmail })
 }
 
 /**
@@ -163,6 +184,8 @@ export function NotificationItem({ notification, onRead }: Props) {
       displayBody = t('saved_search_match_body', { count })
     } else if (templateId === 'price_change') {
       displayBody = resolvePriceChangeBody(t, templateParams, locale) ?? notification.body
+    } else if (templateId === 'listing_inquiry_email_failed') {
+      displayBody = resolveInquiryEmailFailedBody(t, templateParams) ?? notification.body
     } else {
       displayBody = safeT(t, `${templateId}_body`) ?? notification.body
     }
@@ -204,29 +227,28 @@ export function NotificationItem({ notification, onRead }: Props) {
         component="span"
         fz="md"
         lh={theme.other.lineHeight.notificationGlyph}
-        style={{ flexShrink: 0, marginTop: 'var(--mantine-spacing-micro)' }}
+        mt="micro"
+        style={{ flexShrink: 0 }}
         aria-hidden
       >
         {TYPE_ICON[notification.type] ?? '🔔'}
       </Text>
-      <Box style={{ flex: '1 1 0%', minWidth: 0 }}>
-        {/* lh=1.375 (leading-snug) — this <p> keeps its explicit leading-snug class pre-migration,
-            so text-sm's own paired 20px line-height never applied; reproduced exactly. */}
+      <Box flex="1 1 0%" miw={0}>
+        {/* Task 878: raw lh={1.375} removed — theme `sm` lineHeight (1.43) now applies (D81-7,
+            an authorized visual-scale change; the pre-migration leading-snug 1.375 rung was
+            reproduced exactly until this task closed the last inline-style hardcode). */}
         <Text
           size="sm"
           fw={!notification.is_read ? 500 : undefined}
-          lh={1.375}
           style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
         >
           {displayTitle}
         </Text>
-        {/* lh=1.625 (leading-relaxed) — no explicit leading-* class pre-migration, so globals.css's
-            `p { @apply leading-relaxed }` base rule won over text-xs's own paired 16px line-height
-            (see Task 753 finding); reproduced exactly, not approximated. */}
+        {/* Task 878: raw lh={1.625} removed (theme `xs`=1.5 now applies) and c="var(--muted-foreground)"
+            changed to c="dimmed" — D81-7, same authorized migration as the sibling texts in this tree. */}
         <Text
           size="xs"
-          c="var(--muted-foreground)"
-          lh={1.625}
+          c="dimmed"
           lineClamp={2}
           mt="micro"
           style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
@@ -236,11 +258,11 @@ export function NotificationItem({ notification, onRead }: Props) {
         {/* text-2xs = 10px (globals.css --text-2xs, no Mantine token — D28 raw-literal exemption).
             text-muted-foreground/60 is an opacity-modified token (D35): reproduced as the exact
             color-mix() Tailwind itself compiles to (verified in the built CSS), not aliased to a
-            bare var() and not approximated to a flat color. */}
+            bare var() and not approximated to a flat color. Task 878: raw lh={1.625} removed — no
+            fontSizes.micro-paired lineHeight token exists, so Mantine's Text default now applies. */}
         <Text
           fz="micro"
           c="color-mix(in oklab, var(--muted-foreground) 60%, transparent)"
-          lh={1.625}
           mt="tight"
         >
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}

@@ -1,0 +1,48 @@
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 6680 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 38 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  tasks/Sprints/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md
+  tasks/Sprints/Sprint_61_Task_747_phase1_decision.md
+  tasks/Sprints/Sprint_64_kickoff_prompt_Task_765_Runtime_Motion_Radius_Tokens.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_743_CSS_Var_Ownership_Snapshot.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_797_Responsive_Object_Raw_Dimension_Detector.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_813_AppImage_Tier2_Root_Cause.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_815_Card_Track_Monotonicity_Gate.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_820_One_Rule_For_The_Pattern_Directory.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_821_Last_Two_Tier3_Allowlist_Entries.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_822_Design_Tokens_Strict_Inherited_Violations.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_823_Track_Control_Shadow_Tailwind_Token.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_826_Task821_Story_Record_Corrections_And_Detail_Call_Site.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_827_System_Listing_Stories_Mantine_Shell_And_Gate_Coverage.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_828_Homepage_Grid_Gate_Retarget_To_Mantine.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_829_Enrolled_Files_Tailwind_Utility_Detector.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_830_Responsive_Object_Unbalanced_Scan_Reported.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_831_Census_Changed_Retires_Stale_Parent_Rows.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_832_Click_Shield_Drawer_Trigger_And_Edge_Null_Hit.md
+  tasks/Sprints/Sprint_75_kickoff_prompt_Task_837_Detail_Pattern_Favorite_Stand_In_And_Pill_Deletion.md
+  tasks/Sprints/Sprint_76_kickoff_prompt_Task_841_Hero_Search_Container_And_Property_Type_Combobox.md
+  tasks/Sprints/Sprint_76_kickoff_prompt_Task_842_Avatar_Crop_Modal_Mantine.md
+  tasks/Sprints/Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_843_Dashboard_Card_Patterns.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_844_Dashboard_Work_List_Status_Tone_Relative_Time.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_845_Dashboard_Chart_Patterns.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_847_Admin_Dashboard_Data_Layer.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_848_Agent_Statistics_Data_Layer.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_849_Listing_Activity_Daily_Aggregate.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_850_WhatsApp_Event_Server_Owner.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_851_Cron_Routes_Answer_GET.md
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_861_Keyboard_Operable_RangeDatePicker_Trigger.md
+  tasks/Sprints/Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md
+  tasks/Sprints/Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md
+  tasks/Sprints/Sprint_81_kickoff_prompt_Task_872_Sign_Out_Stays_On_Public_Pages.md
+  tasks/Sprints/Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md
+  tasks/Sprints/Sprint_81_kickoff_prompt_Task_875_Turnstile_Follows_App_Locale.md
+  tasks/Sprints/Sprint_81_kickoff_prompt_Task_876_Sign_Out_Is_One_Visible_Step.md
+
+check:mojibake: 0 artifacts in 6680 files
+EXIT_CODE=0

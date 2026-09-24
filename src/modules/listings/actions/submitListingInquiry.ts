@@ -5,7 +5,20 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { isListingClosed } from '@/modules/listings/domain'
 import { sendListingInquiryNotification } from '@/modules/notifications/lib/emails/listingInquiry'
+import { createNotification } from '@/modules/notifications/lib/mutations'
 import type { ListingStatus } from '@/types/database'
+
+// sq-fallback strings for the `title`/`body` columns (Owner decision 2, Task 319, same
+// SUPPORT_NOTIFY_SQ pattern as src/modules/admin/actions/index.ts). The viewer-locale
+// rendering comes from notifications.listing_inquiry*_title/_body (messages/{sq,en,uk,it}.json),
+// resolved at render time by NotificationItem.
+const INQUIRY_NOTIFY_SQ = {
+  title: (listingName: string) => `Mesazh i ri: ${listingName}`,
+  body: 'Dikush ju dërgoi një mesazh në lidhje me këtë njoftim.',
+  emailFailedTitle: (listingName: string) => `Mesazhi nuk u dërgua me email: ${listingName}`,
+  emailFailedBody: (senderName: string, senderEmail: string) =>
+    `${senderName} (${senderEmail}) ju dërgoi një mesazh, por email-i nuk u dërgua. Mund t'i përgjigjeni direkt në këtë adresë.`,
+}
 
 // ── Rate limit ────────────────────────────────────────────────────────────────
 //
@@ -61,7 +74,7 @@ export async function submitListingInquiry(
   // Fetch listing
   const { data: listing, error: listingError } = await db
     .from('listings')
-    .select('id, user_id, title, status')
+    .select('id, user_id, title, status, slug')
     .eq('id', input.listingId)
     .maybeSingle()
 
@@ -93,21 +106,63 @@ export async function submitListingInquiry(
     return { error: 'save_failed' }
   }
 
-  // Owner notification — DB inserted first; email second; failures surface to caller
-  const emailResult = await sendListingInquiryNotification({
-    to: ownerEmail,
-    replyTo: email,
-    listingTitle: listing.title,
-    name,
-    email,
-    message,
-    locale: 'sq', // Albanian-only policy (Task 251)
-  })
-
-  if (!emailResult.ok) {
-    console.error('[listing-inquiry] email notification failed', { reason: emailResult.reason })
-    return { error: 'email_transient' }
+  // Owner email — DB inserted first; email second; failures surface to caller
+  let emailFailed = false
+  let emailReason = 'unknown'
+  try {
+    const emailResult = await sendListingInquiryNotification({
+      to: ownerEmail,
+      replyTo: email,
+      listingTitle: listing.title,
+      name,
+      email,
+      message,
+      locale: 'sq', // Albanian-only policy (Task 251)
+    })
+    if (!emailResult.ok) {
+      emailFailed = true
+      emailReason = emailResult.reason
+    }
+  } catch (e) {
+    emailFailed = true
+    emailReason = e instanceof Error ? e.message : 'threw'
   }
+
+  if (emailFailed) {
+    console.error('[listing-inquiry] email notification failed', { reason: emailReason })
+  }
+
+  // Owner in-app notification (D82-5) — exactly one, awaited, never fails the action's result.
+  // Email delivered -> 'listing_inquiry'; email failed/threw -> 'listing_inquiry_email_failed'
+  // carrying the sender's contacts so the owner can reply directly (email stays the main channel).
+  const link = `/listings/${listing.slug}`
+  try {
+    if (emailFailed) {
+      await createNotification({
+        userId: listing.user_id,
+        type: 'new_message',
+        templateId: 'listing_inquiry_email_failed',
+        templateParams: { listingName: listing.title, senderName: name, senderEmail: email },
+        title: INQUIRY_NOTIFY_SQ.emailFailedTitle(listing.title),
+        body: INQUIRY_NOTIFY_SQ.emailFailedBody(name, email),
+        link,
+      })
+    } else {
+      await createNotification({
+        userId: listing.user_id,
+        type: 'new_message',
+        templateId: 'listing_inquiry',
+        templateParams: { listingName: listing.title },
+        title: INQUIRY_NOTIFY_SQ.title(listing.title),
+        body: INQUIRY_NOTIFY_SQ.body,
+        link,
+      })
+    }
+  } catch (e) {
+    console.error('[listing-inquiry] notification failed', e)
+  }
+
+  if (emailFailed) return { error: 'email_transient' }
 
   return {}
 }

@@ -11,7 +11,7 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Alert, Box, Button, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+import { Alert, Box, Button, Divider, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
 import styles from './AuthSheet.module.css'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
@@ -56,6 +56,7 @@ function LoginView({
 }) {
   const t = useTranslations('auth')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -157,7 +158,7 @@ function LoginView({
         fullWidth
         onClick={handleGoogle}
         leftSection={
-          <svg style={{ width: 16, height: 16, flexShrink: 0 }} viewBox="0 0 24 24" aria-hidden="true">
+          <svg width={theme.other.iconSize.standard} height={theme.other.iconSize.standard} style={{ flexShrink: 0 }} viewBox="0 0 24 24" aria-hidden="true">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
@@ -168,7 +169,7 @@ function LoginView({
         Google
       </Button>
 
-      <Text ta="center" size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>
+      <Text ta="center" size="sm" c="dimmed">
         {t('no_account')}{' '}
         <button
           type="button"
@@ -222,9 +223,9 @@ function ForgotPasswordView({
   if (submitted) {
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
-        <CheckCircle2 size={theme.other.iconSize.hero} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
-        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('forgot_password_success_title')}</Text>
-        <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('forgot_password_success_body')}</Text>
+        <CheckCircle2 size={theme.other.iconSize.hero} color="var(--mantine-color-green-6)" style={{ flexShrink: 0 }} aria-hidden="true" />
+        <Text component="h3" fw={600} size="lg">{t('forgot_password_success_title')}</Text>
+        <Text size="sm" c="dimmed">{t('forgot_password_success_body')}</Text>
         <button
           type="button"
           onClick={onBack}
@@ -238,7 +239,7 @@ function ForgotPasswordView({
 
   return (
     <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
-      <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>{t('forgot_password_body')}</Text>
+      <Text size="sm" c="dimmed">{t('forgot_password_body')}</Text>
 
       <TextInput
         id="forgot-email"
@@ -470,7 +471,7 @@ function CompanyField({
                 />
               ) : (
                 <div className={styles.logoPlaceholder}>
-                  <ImagePlus size={theme.other.iconSize.standard} style={{ color: 'var(--muted-foreground)' }} />
+                  <ImagePlus size={theme.other.iconSize.standard} color="var(--mantine-color-gray-6)" />
                 </div>
               )}
               <Button
@@ -508,9 +509,9 @@ function CompanyField({
               />
             </Group>
             {logoError ? (
-              <Text size="xs" style={{ color: 'var(--destructive)', lineHeight: '1.625' }}>{logoError}</Text>
+              <Text size="xs" c="red.6">{logoError}</Text>
             ) : (
-              <Text fz={10} style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>{t('company_logo_hint')}</Text>
+              <Text fz="micro" c="dimmed">{t('company_logo_hint')}</Text>
             )}
           </Stack>
 
@@ -653,9 +654,9 @@ function RegisterView({
   if (success) {
     return (
       <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
-        <CheckCircle2 size={theme.other.iconSize.hero} style={{ color: 'var(--status-success)', flexShrink: 0 }} aria-hidden="true" />
-        <Text component="h3" fw={600} size="lg" lh={1.25}>{t('register_success_title')}</Text>
-        <Text size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.625 }}>{t('register_success_body')}</Text>
+        <CheckCircle2 size={theme.other.iconSize.hero} color="var(--mantine-color-green-6)" style={{ flexShrink: 0 }} aria-hidden="true" />
+        <Text component="h3" fw={600} size="lg">{t('register_success_title')}</Text>
+        <Text size="sm" c="dimmed">{t('register_success_body')}</Text>
         <Button fullWidth mt="xs" onClick={onClose}>
           {t('register_success_go_home')}
         </Button>
@@ -751,7 +752,7 @@ function RegisterView({
         {t('register')}
       </Button>
 
-      <Text ta="center" size="sm" style={{ color: 'var(--muted-foreground)', lineHeight: '1.625' }}>
+      <Text ta="center" size="sm" c="dimmed">
         {t('have_account')}{' '}
         <button
           type="button"
@@ -763,10 +764,13 @@ function RegisterView({
       </Text>
 
       {!isAgent && onAgentRegister && (
-        <Box pt="md" style={{ borderTop: '1px solid var(--border)' }}>
-          <Button type="button" variant="default" fullWidth onClick={onAgentRegister}>
-            {t('register_agent')}
-          </Button>
+        <Box>
+          <Divider />
+          <Box pt="md">
+            <Button type="button" variant="default" fullWidth onClick={onAgentRegister}>
+              {t('register_agent')}
+            </Button>
+          </Box>
         </Box>
       )}
     </Stack>
@@ -802,7 +806,7 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
     <>
       <Text component="span" fw={600} size="lg">{titles[view]}</Text>
       {view === 'register-agent' && (
-        <Text component="span" c="dimmed" size="xs" style={{ display: 'block' }}>
+        <Text component="span" c="dimmed" size="xs" display="block">
           {t('register_as')} {t('agent')}
         </Text>
       )}

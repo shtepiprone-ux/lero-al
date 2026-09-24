@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { ActionIcon, Box, Indicator, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Flex, Indicator, useMantineTheme } from '@mantine/core'
 import { Bell } from 'lucide-react'
 import { MantinePopover } from '@/design-system/mantine/patterns'
 import { NotificationCenter } from './NotificationCenter'
@@ -34,12 +34,12 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
           inline
           label={unreadCount > 99 ? '99+' : unreadCount}
           color="red.5"
-          size={theme.other.iconSize.standard}
-          offset={theme.other.layout.notificationPopoverOffset}
+          size={theme.other.layout.iconButtonIndicatorSize}
+          offset={theme.other.layout.iconButtonIndicatorOffset}
           disabled={unreadCount === 0}
         >
           <ActionIcon
-            variant="default"
+            variant="subtle"
             aria-label={t('title')}
             aria-haspopup="dialog"
             aria-expanded={opened}
@@ -54,9 +54,9 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
       position="bottom-end"
       width={theme.other.layout.notificationPanelWidth}
     >
-      <Box style={{ display: 'flex', flexDirection: 'column', maxHeight: theme.other.layout.notificationPanelMaxHeight, overflow: 'hidden' }}>
+      <Flex direction="column" mah={theme.other.layout.notificationPanelMaxHeight} style={{ overflow: 'hidden' }}>
         <NotificationCenter notifications={notifications} onRead={onRead} />
-      </Box>
+      </Flex>
     </MantinePopover>
   )
 }

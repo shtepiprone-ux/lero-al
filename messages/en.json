@@ -1626,7 +1626,17 @@
     "report_dismissed_title": "Your report has been reviewed",
     "report_dismissed_body": "Thank you for your report. After careful review, we did not find a violation of our guidelines for the reported listing.",
     "price_change_title": "Price change: {listingName}",
-    "price_change_body": "{oldPrice} → {newPrice}"
+    "price_change_body": "{oldPrice} → {newPrice}",
+    "listing_inquiry_title": "New message: {listingName}",
+    "listing_inquiry_body": "Someone sent you a message about this listing.",
+    "listing_inquiry_email_failed_title": "Message not delivered by email: {listingName}",
+    "listing_inquiry_email_failed_body": "{senderName} ({senderEmail}) sent you a message, but the email could not be delivered. You can reply directly to this address.",
+    "listing_report_filed_title": "Your listing was reported: {listingName}",
+    "listing_report_filed_body": "Someone reported this listing. Our team will review it.",
+    "listing_report_resolved_owner_title": "The report on your listing has been resolved: {listingName}",
+    "listing_report_resolved_owner_body": "The report on this listing has been reviewed and resolved by our team.",
+    "listing_report_dismissed_owner_title": "The report on your listing has been dismissed: {listingName}",
+    "listing_report_dismissed_owner_body": "The report on this listing has been reviewed and dismissed by our team."
   },
   "saved_search": {
     "save_action": "Save search",
@@ -2361,7 +2371,6 @@
       "notification_neutral_message": "Your listing draft was saved automatically.",
       "header_actions_guest_caption": "Guest — Favorites opens the auth sheet (login); Login/Register visible at md+",
       "header_actions_authed_caption": "Authenticated — Favorites links to /favorites; notification bell passed as a slot; no Login/Register",
-      "header_actions_bell_slot_aria": "Notifications (placeholder slot)",
       "locale_switcher_default_caption": "Default — click to switch locale (menu ≥640, bottom sheet <640)",
       "locale_switcher_showlabel_caption": "showLabel — trigger includes the full language name alongside the abbreviation",
       "locale_switcher_pending_caption": "isPending — trigger disabled with a spinner while the switch is in flight",

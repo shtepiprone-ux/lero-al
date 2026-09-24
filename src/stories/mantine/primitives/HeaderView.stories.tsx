@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text, ActionIcon, useMantineTheme } from '@mantine/core'
-import { Bell } from 'lucide-react'
+import { Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { HeaderView } from '@/components/layout/HeaderView'
 import { MantineStoryShell } from '../_MantineStoryShell'
+import { NotificationBellView } from '@/modules/notifications/components/NotificationBellView'
+import { notificationRows } from '../../fixtures/notifications.fixture'
 
 /**
  * Title under `Mantine/Primitives/` (Task 590, same rationale as `HeaderActions`/`FiltersPanelShell`):
@@ -15,6 +16,12 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * Split-gate proof (docs/component-rules.md → "Container / Presentational Primitive Split"): both
  * fixtures below are PLAIN props — no `useUser`/`useRouter` mock, no `.storybook` module alias, no
  * live Supabase. `HeaderView` only calls `useTranslations`/`useLocale` internally (i18n, allowed).
+ *
+ * Task 878: `notificationSlot` now renders the real, presentational `NotificationBellView` (plain
+ * `notifications`/`unreadCount`/`onRead` props, no data-fetching hook — same split-gate guarantee as
+ * `HeaderView` itself) fed from the shared `notifications.fixture.ts` rows, replacing the previous
+ * hand-made `ActionIcon` stand-in that rendered `variant="subtle"` with no `Indicator` and no popover
+ * while production rendered `variant="default"` with both — the exact divergence the owner reported.
  *
  * `HeaderView` is NOT in the harness's `MANTINE_OVERLAY_PRIMITIVES` open-trigger set, so it renders
  * inline with no auto-click needed. Header bars are NOT overlays (unlike `MobileNavDrawer`'s Drawer/
@@ -36,14 +43,13 @@ export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
-    const theme = useMantineTheme()
-
-    // Placeholder standing in for the real NotificationBell (own hooks, dynamic ssr:false in the
-    // app) — same placeholder pattern as HeaderActions.stories.tsx; never hook-calls the real bell.
-    const bellPlaceholder = (
-      <ActionIcon variant="subtle" mih={theme.other.touchTarget} miw={theme.other.touchTarget} aria-label={t('header_actions_bell_slot_aria')}>
-        <Bell size={theme.other.iconSize.roomy} />
-      </ActionIcon>
+    const rows = notificationRows(locale)
+    const realBell = (
+      <NotificationBellView
+        notifications={rows}
+        unreadCount={rows.filter(row => !row.is_read).length}
+        onRead={() => {}}
+      />
     )
 
     return (
@@ -86,7 +92,7 @@ export const Default: Story = {
               mobileOpen={false}
               onOpenMobile={() => {}}
               onCloseMobile={() => {}}
-              notificationSlot={bellPlaceholder}
+              notificationSlot={realBell}
               authSheetSlot={null}
             />
           </Stack>
@@ -98,18 +104,19 @@ export const Default: Story = {
 
 // Task 876 (GR-3a EXTEND — Mantine/Primitives/HeaderView): the sign-out pending state — the
 // header keeps its signed-in layout while UserMenu's trigger and the mobile hamburger both show
-// the native Mantine `loading` state (R3). Same authenticated fixture and bell placeholder as
-// `Default`, so this proves only the added `isSigningOut` prop, not a new shell composition.
+// the native Mantine `loading` state (R3). Same authenticated fixture and real bell as `Default`
+// (Task 878), so this proves only the added `isSigningOut` prop, not a new shell composition.
 export const SigningOut: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
-    const theme = useMantineTheme()
-
-    const bellPlaceholder = (
-      <ActionIcon variant="subtle" mih={theme.other.touchTarget} miw={theme.other.touchTarget} aria-label={t('header_actions_bell_slot_aria')}>
-        <Bell size={theme.other.iconSize.roomy} />
-      </ActionIcon>
+    const rows = notificationRows(locale)
+    const realBell = (
+      <NotificationBellView
+        notifications={rows}
+        unreadCount={rows.filter(row => !row.is_read).length}
+        onRead={() => {}}
+      />
     )
 
     return (
@@ -131,7 +138,7 @@ export const SigningOut: Story = {
             mobileOpen={false}
             onOpenMobile={() => {}}
             onCloseMobile={() => {}}
-            notificationSlot={bellPlaceholder}
+            notificationSlot={realBell}
             authSheetSlot={null}
           />
         </Stack>

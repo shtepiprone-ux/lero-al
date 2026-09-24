@@ -113,6 +113,31 @@ export const Default: Story = {
           />
         </Stack>
 
+        {/* 4 — unread count 12 (Task 878 Revision 3, D81-9): two-digit count, Mantine's native pill
+            shape (owner: "Pill is fine on 2+ digits"), still 20px tall via iconButtonIndicatorSize. */}
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            unread count 12 — two-digit badge renders as Mantine&apos;s native pill, not a circle
+          </Text>
+          <NotificationBellView
+            notifications={UNREAD_ROWS}
+            unreadCount={12}
+            onRead={() => {}}
+          />
+        </Stack>
+
+        {/* 5 — unread count 120 (Task 878 Revision 3, D81-9): renders "99+" (NotificationBellView:35). */}
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            unread count 120 — renders &quot;99+&quot;
+          </Text>
+          <NotificationBellView
+            notifications={UNREAD_ROWS}
+            unreadCount={120}
+            onRead={() => {}}
+          />
+        </Stack>
+
       </Stack>
     </MantineStoryShell>
   ),

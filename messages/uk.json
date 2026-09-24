@@ -1626,7 +1626,17 @@
     "report_dismissed_title": "Ваш звіт розглянуто",
     "report_dismissed_body": "Дякуємо за ваш звіт. Після ретельного розгляду ми не виявили порушень наших правил щодо зазначеного оголошення.",
     "price_change_title": "Зміна ціни: {listingName}",
-    "price_change_body": "{oldPrice} → {newPrice}"
+    "price_change_body": "{oldPrice} → {newPrice}",
+    "listing_inquiry_title": "Нове повідомлення: {listingName}",
+    "listing_inquiry_body": "Хтось надіслав вам повідомлення щодо цього оголошення.",
+    "listing_inquiry_email_failed_title": "Повідомлення не доставлено на пошту: {listingName}",
+    "listing_inquiry_email_failed_body": "{senderName} ({senderEmail}) надіслав(ла) вам повідомлення, але лист не вдалося доставити. Ви можете відповісти прямо на цю адресу.",
+    "listing_report_filed_title": "На ваше оголошення надійшла скарга: {listingName}",
+    "listing_report_filed_body": "Хтось поскаржився на це оголошення. Наша команда розгляне скаргу.",
+    "listing_report_resolved_owner_title": "Скаргу на ваше оголошення вирішено: {listingName}",
+    "listing_report_resolved_owner_body": "Скаргу на це оголошення розглянуто і вирішено нашою командою.",
+    "listing_report_dismissed_owner_title": "Скаргу на ваше оголошення відхилено: {listingName}",
+    "listing_report_dismissed_owner_body": "Скаргу на це оголошення розглянуто і відхилено нашою командою."
   },
   "saved_search": {
     "save_action": "Зберегти пошук",
@@ -2361,7 +2371,6 @@
       "notification_neutral_message": "Чернетку вашого оголошення збережено автоматично.",
       "header_actions_guest_caption": "Гість — «Обране» відкриває аркуш автентифікації (вхід); Вхід/Реєстрація видно від md+",
       "header_actions_authed_caption": "Авторизований — «Обране» веде на /favorites; дзвіночок сповіщень передається як слот; без Входу/Реєстрації",
-      "header_actions_bell_slot_aria": "Сповіщення (заповнювач слота)",
       "locale_switcher_default_caption": "За замовчуванням — натисніть, щоб змінити мову (меню ≥640, нижній аркуш <640)",
       "locale_switcher_showlabel_caption": "showLabel — тригер містить повну назву мови поруч зі скороченням",
       "locale_switcher_pending_caption": "isPending — тригер вимкнено зі спінером, доки перемикання виконується",

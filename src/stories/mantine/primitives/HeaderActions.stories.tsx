@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text, ActionIcon, useMantineTheme } from '@mantine/core'
-import { Bell } from 'lucide-react'
+import { Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { MantineStoryShell } from '../_MantineStoryShell'
+import { NotificationBellView } from '@/modules/notifications/components/NotificationBellView'
+import { notificationRows } from '../../fixtures/notifications.fixture'
 
 /**
  * Title under `Mantine/Primitives/` (Task 575 correction, owner 2026-07-11): the rendered-assert
@@ -14,6 +15,10 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  *
  * `HeaderActions` is NOT in the harness's `MANTINE_OVERLAY_PRIMITIVES` open-trigger set, so it
  * renders inline with no auto-click needed — both fixture states are always visible for capture.
+ *
+ * Task 878: `notificationSlot` now renders the real, presentational `NotificationBellView` fed from
+ * the shared `notifications.fixture.ts` rows, replacing the previous hand-made `ActionIcon` stand-in
+ * — same fix and rationale as `HeaderView.stories.tsx`.
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/HeaderActions',
@@ -26,15 +31,13 @@ export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
-    const theme = useMantineTheme()
-
-    // Placeholder standing in for the real NotificationBell (which owns its own hooks and is
-    // dynamic ssr:false in the app) — the story only proves the slot is rendered, never hook-calls
-    // the real bell (Sprint 44 plan STOP-AND-ASK #1).
-    const bellPlaceholder = (
-      <ActionIcon variant="subtle" mih={theme.other.touchTarget} miw={theme.other.touchTarget} aria-label={t('header_actions_bell_slot_aria')}>
-        <Bell size={theme.other.iconSize.roomy} />
-      </ActionIcon>
+    const rows = notificationRows(locale)
+    const realBell = (
+      <NotificationBellView
+        notifications={rows}
+        unreadCount={rows.filter(row => !row.is_read).length}
+        onRead={() => {}}
+      />
     )
 
     return (
@@ -59,7 +62,7 @@ export const Default: Story = {
               isAuthenticated
               favoritesHref={`/${locale}/favorites`}
               onOpenAuth={() => {}}
-              notificationSlot={bellPlaceholder}
+              notificationSlot={realBell}
             />
           </Stack>
         </Stack>

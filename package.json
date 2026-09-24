@@ -96,6 +96,7 @@
     "check:header-id-parity:verify": "node scripts/check-header-id-parity.mjs --verify-gate",
     "test:header-hydration-id-parity": "vitest run src/components/layout/__tests__/header-hydration-id-parity.test.tsx",
     "check:listing-reports-grants": "node scripts/check-listing-reports-grants.mjs",
+    "check:notification-type-enum": "node scripts/check-notification-type-enum.mjs",
     "check:listing-visibility": "node scripts/check-listing-visibility.mjs",
     "check:listing-visibility:report": "node scripts/check-listing-visibility.mjs --report",
     "check:listing-visibility:verify": "node scripts/check-listing-visibility.mjs --verify-gate",

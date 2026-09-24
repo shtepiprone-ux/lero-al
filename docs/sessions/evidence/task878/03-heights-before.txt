@@ -1,0 +1,16 @@
+probe-header-heights.mjs — Task 878 §10.4 header bar height measurement
+platform: win32
+node: v22.22.3
+command: node docs/sessions/evidence/task878/probe-header-heights.mjs
+
+locale=en width=320 -> header.site-header height=97
+locale=en width=389 -> header.site-header height=97
+locale=en width=390 -> header.site-header height=65
+locale=en width=1440 -> header.site-header height=65
+locale=uk width=320 -> header.site-header height=97
+locale=uk width=389 -> header.site-header height=97
+locale=uk width=390 -> header.site-header height=65
+locale=uk width=1440 -> header.site-header height=65
+
+All heights match the expected 97/97/65/65 invariant (Task 684 D3).
+EXIT_CODE=0

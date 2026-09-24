@@ -14,6 +14,19 @@ import {
 } from '@/modules/notifications/lib/emails/ReporterNotificationEmail'
 import { createNotification } from '@/modules/notifications/lib/mutations'
 
+// sq-fallback strings for the `title`/`body` columns (Owner decision 2, Task 319, same
+// SUPPORT_NOTIFY_SQ pattern as src/modules/admin/actions/index.ts). The viewer-locale
+// rendering comes from notifications.listing_report_*_title/_body (messages/{sq,en,uk,it}.json),
+// resolved at render time by NotificationItem.
+const REPORT_NOTIFY_SQ = {
+  filedTitle: (listingName: string) => `Njoftimi juaj u raportua: ${listingName}`,
+  filedBody: 'Dikush raportoi këtë njoftim. Ekipi ynë do ta shqyrtojë.',
+  resolvedOwnerTitle: (listingName: string) => `Raporti për njoftimin tuaj u zgjidh: ${listingName}`,
+  resolvedOwnerBody: 'Raporti për këtë njoftim është shqyrtuar dhe zgjidhur nga ekipi ynë.',
+  dismissedOwnerTitle: (listingName: string) => `Raporti për njoftimin tuaj u hodh poshtë: ${listingName}`,
+  dismissedOwnerBody: 'Raporti për këtë njoftim është shqyrtuar dhe hedhur poshtë nga ekipi ynë.',
+}
+
 const VALID_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dismissed']
 
 const VALID_REASONS: ReportReason[] = [
@@ -60,6 +73,33 @@ export async function reportListingAction(
   if (error) {
     console.error('[reportListing] insert failed', error)
     return { error: 'save_failed' }
+  }
+
+  // Owner notification — best-effort, service-role lookup; never blocks the reporter's result.
+  // The row carries only the listing name and link — no reporter identity, no reason (R4).
+  try {
+    const admin = createAdminClient()
+    const { data: listingRow, error: listingErr } = await admin
+      .from('listings')
+      .select('user_id, title, slug')
+      .eq('id', listingId)
+      .single()
+
+    if (listingErr || !listingRow) {
+      console.error('[reportListing] listing lookup failed', listingErr)
+    } else if (listingRow.user_id !== user.id) {
+      await createNotification({
+        userId: listingRow.user_id,
+        type: 'report_outcome',
+        templateId: 'listing_report_filed',
+        templateParams: { listingName: listingRow.title },
+        title: REPORT_NOTIFY_SQ.filedTitle(listingRow.title),
+        body: REPORT_NOTIFY_SQ.filedBody,
+        link: listingRow.slug ? `/listings/${listingRow.slug}` : undefined,
+      })
+    }
+  } catch (e) {
+    console.error('[reportListing] owner notification failed', e)
   }
 
   return {}
@@ -156,9 +196,53 @@ export async function updateReportStatusAction(
 
   const TERMINAL: ReportStatus[] = ['resolved', 'dismissed']
   if (TERMINAL.includes(newStatus as ReportStatus)) {
-    notifyReporter(db, reportId, newStatus as 'resolved' | 'dismissed').catch(e =>
-      console.error('[reporter-notification] failed', { reportId, newStatus, error: e }),
-    )
+    const outcomeStatus = newStatus as 'resolved' | 'dismissed'
+
+    const { data: reportRow, error: reportRowError } = await db
+      .from('listing_reports')
+      .select('user_id, listings(user_id, title, slug)')
+      .eq('id', reportId)
+      .single()
+
+    if (reportRowError) {
+      console.error('[updateReportStatus] report lookup failed', { reportId, error: reportRowError })
+    }
+
+    const reporterUserId = (reportRow as unknown as { user_id?: string } | null)?.user_id
+    const listing = (reportRow as unknown as {
+      listings: { user_id: string; title: string; slug: string } | null
+    } | null)?.listings ?? null
+
+    // Reporter — awaited (R6: no longer fire-and-forget; a freeze mid-request can no longer
+    // drop the notification, see F5). Isolated try/catch: a reporter-side failure never blocks
+    // the owner notification below, and neither ever changes this action's return value.
+    if (reporterUserId) {
+      try {
+        await notifyReporter(db, reporterUserId, listing?.title ?? '', outcomeStatus)
+      } catch (e) {
+        console.error('[updateReportStatus] reporter notification failed', { reportId, newStatus, error: e })
+      }
+    }
+
+    // Listing owner — skipped when the owner is also the reporter, in which case the
+    // reporter notification alone is sent (R5).
+    if (listing?.user_id && listing.user_id !== reporterUserId) {
+      try {
+        await createNotification({
+          userId: listing.user_id,
+          type: 'report_outcome',
+          templateId: outcomeStatus === 'resolved' ? 'listing_report_resolved_owner' : 'listing_report_dismissed_owner',
+          templateParams: { listingName: listing.title },
+          title: outcomeStatus === 'resolved'
+            ? REPORT_NOTIFY_SQ.resolvedOwnerTitle(listing.title)
+            : REPORT_NOTIFY_SQ.dismissedOwnerTitle(listing.title),
+          body: outcomeStatus === 'resolved' ? REPORT_NOTIFY_SQ.resolvedOwnerBody : REPORT_NOTIFY_SQ.dismissedOwnerBody,
+          link: listing.slug ? `/listings/${listing.slug}` : undefined,
+        })
+      } catch (e) {
+        console.error('[updateReportStatus] owner notification failed', { reportId, newStatus, error: e })
+      }
+    }
   }
 
   return {}
@@ -196,22 +280,10 @@ export async function deleteReportAction(
 
 async function notifyReporter(
   db: ReturnType<typeof createAdminClient>,
-  reportId: string,
+  reporterUserId: string,
+  listingTitle: string,
   status: 'resolved' | 'dismissed',
 ): Promise<void> {
-  // Fetch reporter + listing title in one query
-  const { data } = await db
-    .from('listing_reports')
-    .select('user_id, listings(title)')
-    .eq('id', reportId)
-    .single()
-
-  if (!data?.user_id) return
-
-  const reporterUserId: string = data.user_id
-  const listingTitle: string =
-    (data as unknown as { listings: { title: string } | null }).listings?.title ?? ''
-
   // Albanian-only policy (Task 251): reporter notification email always in sq.
   const emailLocale = 'sq'
   const s = getReporterNotificationEmailStrings(emailLocale, status)

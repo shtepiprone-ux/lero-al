@@ -105,3 +105,50 @@ describe('NotificationItem — template-driven notification renders localized pe
     expect(screen.getByText('Legacy stored body')).toBeInTheDocument()
   })
 })
+
+describe('NotificationItem — Task 880 producers (listing_report_filed / listing_inquiry_email_failed)', () => {
+  it('uk: listing_report_filed title interpolates {listingName}', () => {
+    renderNotification('uk', makeNotification({
+      type: 'report_outcome',
+      template_id: 'listing_report_filed',
+      template_params: { listingName: 'Квартира 2+1 Тирана' },
+    }))
+    expect(screen.getByText('На ваше оголошення надійшла скарга: Квартира 2+1 Тирана')).toBeInTheDocument()
+  })
+
+  it('sq: the SAME listing_report_filed row resolves to the Albanian template key', () => {
+    renderNotification('sq', makeNotification({
+      type: 'report_outcome',
+      template_id: 'listing_report_filed',
+      template_params: { listingName: 'Apartament 2+1 Tiranë' },
+    }))
+    expect(screen.getByText('Njoftimi juaj u raportua: Apartament 2+1 Tiranë')).toBeInTheDocument()
+  })
+
+  it('uk: listing_inquiry_email_failed body renders the sender\'s name and email', () => {
+    renderNotification('uk', makeNotification({
+      type: 'new_message',
+      template_id: 'listing_inquiry_email_failed',
+      template_params: {
+        listingName: 'Квартира 2+1 Тирана',
+        senderName: 'Арбен',
+        senderEmail: 'arben@example.al',
+      },
+    }))
+    expect(screen.getByText('Повідомлення не доставлено на пошту: Квартира 2+1 Тирана')).toBeInTheDocument()
+    expect(screen.getByText(
+      'Арбен (arben@example.al) надіслав(ла) вам повідомлення, але лист не вдалося доставити. Ви можете відповісти прямо на цю адресу.',
+    )).toBeInTheDocument()
+  })
+
+  it('missing senderEmail → body falls back to the stored (sq-fallback) body, not a broken interpolation', () => {
+    renderNotification('uk', makeNotification({
+      type: 'new_message',
+      title: 'stub-stored-title',
+      body: 'stub-stored-body',
+      template_id: 'listing_inquiry_email_failed',
+      template_params: { listingName: 'Квартира 2+1 Тирана', senderName: 'Арбен' },
+    }))
+    expect(screen.getByText('stub-stored-body')).toBeInTheDocument()
+  })
+})

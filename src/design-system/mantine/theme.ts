@@ -200,7 +200,20 @@ declare module '@mantine/core' {
     //     (identical value, identical "space below a section heading" role — one shared role).
     //   phoneCountryDropdownMinWidth (240) — `PhoneField.tsx:165`'s `dropdownMinWidth={240}`.
     //   listingsFiltersSkeletonRowHeight (32) — `ListingsShell.tsx:16`'s `height={32}`.
-    //   notificationPopoverOffset (4) — `NotificationBellView.tsx:36`'s `offset={4}`.
+    //   iconButtonIndicatorOffset (12) — Task 878 Revision 2 (D81-8, owner screenshot): this role
+    //     was previously named for one consumer and held a stale value of 4 — R1's `subtle` bell
+    //     variant removed the 44px touch-target box's visible border, so the badge's true
+    //     `Indicator offset` target became the icon GLYPH's corner, not the box edge. Derived, not
+    //     re-measured: (touchTarget 44 − iconSize.roomy 20) / 2 = 12 places the badge centre
+    //     exactly on the icon's top-right corner for any icon-button using this touch target and
+    //     icon size — the role generalizes to any future icon-button counter, not only this bell.
+    //   iconButtonIndicatorSize (20) — Task 878 Revision 3 (D81-9, owner screenshot: the count badge
+    //     must be round, "as on Rozetka.com.ua or Prom.ua"): the badge was reusing `iconSize.standard`
+    //     (16) as its diameter — an icon-token role collision (rule 3). At DPR 1 any 16px circle
+    //     renders visibly faceted, not round, in every browser; 20 is the smallest size in the
+    //     reviewer's size comparison that renders round, and matches the owner's reference (a badge
+    //     about as large as the bell's own `iconSize.roomy` (20) glyph). Two-or-more-digit counts
+    //     keep Mantine's native pill shape unchanged (owner: "Pill is fine").
     //   notificationPanelWidth (320) — `NotificationBellView.tsx:46`'s `width={320}`.
     //   notificationPanelMaxHeight (480) — `NotificationBellView.tsx:48`'s `maxHeight: 480`.
     // Task 797 — `heroSearchFallbackHeight`: `HeroSearchFallback.tsx`'s `Skeleton` `h={{ base,
@@ -215,7 +228,8 @@ declare module '@mantine/core' {
       headingBlockGap: number
       phoneCountryDropdownMinWidth: number
       listingsFiltersSkeletonRowHeight: number
-      notificationPopoverOffset: number
+      iconButtonIndicatorOffset: number
+      iconButtonIndicatorSize: number
       notificationPanelWidth: number
       notificationPanelMaxHeight: number
       heroSearchFallbackHeight: { base: number; sm: number; md: number }
@@ -714,7 +728,8 @@ export const theme = createTheme({
       headingBlockGap: 40,
       phoneCountryDropdownMinWidth: 240,
       listingsFiltersSkeletonRowHeight: 32,
-      notificationPopoverOffset: 4,
+      iconButtonIndicatorOffset: 12,
+      iconButtonIndicatorSize: 20,
       notificationPanelWidth: 320,
       notificationPanelMaxHeight: 480,
       heroSearchFallbackHeight: { base: 279, sm: 175, md: 123 }, // Task 797: HeroSearchFallback.tsx

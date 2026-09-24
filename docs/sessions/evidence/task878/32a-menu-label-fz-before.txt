@@ -1,0 +1,45 @@
+probe-menu-label-fz.mjs — Task 878 Revision 1 §16.1 AC8
+platform: win32
+node: v22.22.3
+
+--- UserMenu Default (admin fixture) (1440x900) ---
+              "Profile" fontSize=14px lineHeight=21px fontWeight=400
+              "My listings" fontSize=14px lineHeight=21px fontWeight=400
+              "Add listing" fontSize=14px lineHeight=21px fontWeight=400
+  [EMPHASISED] "Dashboard" fontSize=16px lineHeight=24px fontWeight=500
+              "Logout" fontSize=14px lineHeight=21px fontWeight=400
+  PROBLEMS: emphasised "Dashboard" fontSize=16px != siblings' 14px; emphasised "Dashboard" lineHeight=24px != siblings' 21px
+
+--- LocaleSwitcher Default (current-locale item) (1440x900) ---
+              "SQ Albanian" fontSize=14px lineHeight=21px fontWeight=400
+  [EMPHASISED] "EN English" fontSize=16px lineHeight=24px fontWeight=600
+              "UA Ukrainian" fontSize=14px lineHeight=21px fontWeight=400
+              "IT Italian" fontSize=14px lineHeight=21px fontWeight=400
+  PROBLEMS: emphasised "EN English" fontSize=16px != siblings' 14px; emphasised "EN English" lineHeight=24px != siblings' 21px
+
+--- UserMenu Default (admin fixture) (390x900) ---
+              "Profile" fontSize=14px lineHeight=20.02px fontWeight=400
+              "My listings" fontSize=14px lineHeight=20.02px fontWeight=400
+              "Add listing" fontSize=14px lineHeight=20.02px fontWeight=400
+  [EMPHASISED] "Dashboard" fontSize=14px lineHeight=20.02px fontWeight=500
+              "Logout" fontSize=14px lineHeight=20.02px fontWeight=400
+
+--- LocaleSwitcher Default (current-locale item) (390x900) ---
+              "SQ Albanian" fontSize=14px lineHeight=20.02px fontWeight=400
+  [EMPHASISED] "EN English" fontSize=14px lineHeight=20.02px fontWeight=600
+              "UA Ukrainian" fontSize=14px lineHeight=20.02px fontWeight=400
+              "IT Italian" fontSize=14px lineHeight=20.02px fontWeight=400
+
+FAIL — 4 problem(s):
+  - UserMenu@1440: emphasised "Dashboard" fontSize=16px != siblings' 14px
+  - UserMenu@1440: emphasised "Dashboard" lineHeight=24px != siblings' 21px
+  - LocaleSwitcher@1440: emphasised "EN English" fontSize=16px != siblings' 14px
+  - LocaleSwitcher@1440: emphasised "EN English" lineHeight=24px != siblings' 21px
+CORRECTION (Revision 2, review 2 finding): the line below was captured as `EXIT_CODE=$?` after a
+`node ... | tee <file>` bash pipeline, which captures `tee`'s exit code, not `node`'s — `tee` always
+exits 0 on a successful write regardless of the piped command's own status. The transcript above
+shows the script's own `FAIL — 4 problem(s):` branch, which calls `process.exit(1)` (see
+probe-menu-label-fz.mjs's `main()`), so the true result is EXIT_CODE=1. The stale, wrongly-captured
+line is struck through below and replaced with the correct one; the run itself was not repeated.
+~~EXIT_CODE=0~~ (mis-captured, see CORRECTION above)
+EXIT_CODE=1

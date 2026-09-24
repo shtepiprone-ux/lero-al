@@ -1,0 +1,14 @@
+probe-bell-indicator.mjs — Task 878 Revision 2 §17.3 AC9 + Revision 3 §18.3 AC10
+platform: win32
+node: v22.22.3
+  HeaderView Default @320: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderView Default @1440: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderActions Default @320: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderActions Default @1440: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default @320: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default @1440: badge=20x20 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default — unreadCount=12: text="12" badge=21.734375x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default — unreadCount=120 (99+): text="99+" badge=28.59375x20 dx=+0.00 dy=+0.00
+
+PASS — every badge centre coincides with its glyph's top-right corner (|dx|<=1, |dy|<=1), single-digit badges are 20x20 circles, and multi-digit badges are 20-tall pills.
+EXIT_CODE=0

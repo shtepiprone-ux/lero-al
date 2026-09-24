@@ -32,7 +32,9 @@ export function NotificationCenter({ notifications, onRead }: Props) {
     <Stack
       data-testid="notification-center"
       gap={0}
-      style={{ flex: '1 1 0%', minHeight: 0, overflow: 'hidden' }}
+      flex="1 1 0%"
+      mih={0}
+      style={{ overflow: 'hidden' }}
     >
       {/* Header — Task 593: <640px the mark-all button drops to its own row below the title,
           full-width with flush-left content (owner decision 2026-07-14); >=640px reverts to the
@@ -53,10 +55,8 @@ export function NotificationCenter({ notifications, onRead }: Props) {
         py="sm"
         style={{ flexShrink: 0 }}
       >
-        {/* lh=1.625 (leading-relaxed) matches this <p>'s pre-migration base-rule line-height —
-            globals.css's `p { @apply leading-relaxed }` wins over text-sm's own paired 20px
-            line-height for any <p> with no explicit leading-* class (see Task 753 finding). */}
-        <Text size="sm" fw={600} lh={1.625}>{t('title')}</Text>
+        {/* Task 878: raw lh={1.625} removed — theme `sm` lineHeight (1.43) now applies (D81-7). */}
+        <Text size="sm" fw={600}>{t('title')}</Text>
         {hasUnread && (
           <Button
             variant="transparent"
@@ -76,9 +76,9 @@ export function NotificationCenter({ notifications, onRead }: Props) {
 
       {/* List — Task 861 R4c: the CSS module's `divide-y` reproduction is now a canonical `Divider`
           between adjacent rows (same primitive `MantineDashboardWorkList` uses), and the module is deleted. */}
-      <Box style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto' }}>
+      <Box flex="1 1 0%" mih={0} style={{ overflowY: 'auto' }}>
         {notifications.length === 0 ? (
-          <Text size="sm" c="var(--muted-foreground)" ta="center" lh={1.625} px="md" py="2xl">
+          <Text size="sm" c="dimmed" ta="center" px="md" py="2xl">
             {t('empty')}
           </Text>
         ) : (

@@ -142,7 +142,7 @@ export function LocationCombobox({
             fw={500}
             c="brand.7"
             mih={theme.other.touchTarget}
-            style={{ width: 'fit-content' }}
+            w="fit-content"
             onClick={() => setShowAdd(v => !v)}
           >
             + {tc('add_location')}

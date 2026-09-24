@@ -1,0 +1,48 @@
+ M .github/workflows/governance-pr.yml
+ M docs/backlog-archive.md
+ M docs/backlog.md
+ M docs/critical-flow-registry.md
+ M docs/design-system-pattern-ownership.md
+ M docs/reviews/2026-08-24-task765-runtime-motion-radius-tokens.review-ledger.json
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package.json
+ M scripts/__tests__/check-ledger-claim-projection.test.ts
+ M scripts/check-ledger-claim-projection.mjs
+ M scripts/schema-drift-check.sql
+ M scripts/surface-census-baseline.json
+ M src/components/auth/CaptchaWidget.tsx
+ M src/components/layout/MobileNavDrawer.tsx
+ M src/components/layout/UserMenu.tsx
+ M src/components/shared/LocaleSwitcher.tsx
+ M src/components/shared/LocationCombobox.tsx
+ M src/components/shared/PhoneField.tsx
+ M src/design-system/mantine/theme.ts
+ M src/modules/auth/components/AuthSheet.tsx
+ M src/modules/listings/actions/__tests__/reportListing.smoke.test.ts
+ M src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts
+ M src/modules/listings/actions/reportListing.ts
+ M src/modules/listings/actions/submitListingInquiry.ts
+ M src/modules/notifications/components/NotificationBellView.tsx
+ M src/modules/notifications/components/NotificationCenter.tsx
+ M src/modules/notifications/components/NotificationItem.tsx
+ M src/modules/notifications/components/__tests__/NotificationItem.templateLocalization.smoke.test.tsx
+ M src/stories/fixtures/notifications.fixture.ts
+ M src/stories/mantine/primitives/HeaderActions.stories.tsx
+ M src/stories/mantine/primitives/HeaderView.stories.tsx
+ M src/stories/mantine/primitives/NotificationBellView.stories.tsx
+ M tasks/Sprints/Sprint_46_kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md
+ M tasks/Sprints/Sprint_46_kickoff_prompt_Task_742_RenderedRunModeProvenance.md
+ M tasks/Sprints/Sprint_61_Task_747_phase2_kickoff.md
+?? docs/sessions/2026-09-24-task878-implemented.md
+?? docs/sessions/2026-09-24-task880-implemented.md
+?? docs/sessions/evidence/task878/
+?? docs/sessions/evidence/task880/
+?? scripts/check-notification-type-enum.mjs
+?? scripts/notification-type-enum.json
+?? scripts/task-880-notification-type-enum.sql
+?? scripts/task-880-verify.sql
+EXIT_CODE=0

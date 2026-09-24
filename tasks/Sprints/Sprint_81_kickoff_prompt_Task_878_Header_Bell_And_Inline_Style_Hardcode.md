@@ -1,8 +1,7 @@
 # Task 878 — the header renders the real bell everywhere it is proven, and the header tree loses its inline-style hardcode
 
 Sprint 81 · **P2** · QA profile **Q3** (navigation/header chrome) · depends on **875** (both edit `CaptchaWidget.tsx`) ·
-owner decision **D81-7** · owner action **O81-8** · **Status: 🔁 NEEDS REVISION (review 4, 2026-09-24) — the owner returned §17.5: the
-badge is not round (D81-9). Sonnet's next action is §18, nothing else**
+owner decision **D81-7** · owner action **O81-8** · **Status: ✅ APPROVED WITH NOTES (review 5, 2026-09-24; archived, landed together with 880 per D82-6)**
 
 Sprint plan: [`Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`](Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md).
 The header's CSS modules and global classes are **879** (reserved, D81-7), not this task.

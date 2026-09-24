@@ -1,9 +1,11 @@
 /**
- * Notification fixtures (Task 861 R4c) — shared, labelled fixture DATA for the `NotificationItem` and
- * `NotificationCenter` Mantine Stories. Moved verbatim from the retired
+ * Notification fixtures (Task 861 R4c; extended Task 880 R8) — shared, labelled fixture DATA for the
+ * `NotificationItem` and `NotificationCenter` Mantine Stories. Moved verbatim from the retired
  * `src/modules/notifications/components/NotificationItem.stories.tsx` (title `Notifications/NotificationItem`), the
  * four prose titles now resolved per toolbar locale:
- * the eight rows cover every Task 319 producer plus the three legacy `template_id = null` fallbacks. Plain
+ * thirteen rows cover every Task 319 producer, the three legacy `template_id = null` fallbacks, and the five
+ * Task 880 producers (inquiry, inquiry-email-failed, report filed, report resolved/dismissed for the OWNER —
+ * distinct from the pre-existing reporter-facing report_resolved/report_dismissed rows above). Plain
  * data — no Supabase, no wall-clock (frozen `NOW`).
  */
 import type { Notification } from '@/types/database'
@@ -124,6 +126,66 @@ export function notificationRows(locale: string): Notification[] {
       body: 'Eksploroni listimet më të fundit në platformën tonë.',
       template_id: null,
       template_params: null,
+      is_read: true,
+    }),
+    // Task 880 producer — submitListingInquiry, email delivered (template_id, {listingName})
+    n({
+      id: '9',
+      type: 'new_message',
+      title: 'Mesazh i ri: Apartament 1+1 Komuna e Parisit',
+      body: 'Dikush ju dërgoi një mesazh në lidhje me këtë njoftim.',
+      template_id: 'listing_inquiry',
+      template_params: { listingName: 'Apartament 1+1 Komuna e Parisit' },
+      link: '/sq/listings/apartament-1-1-komuna-e-parisit',
+      is_read: true,
+    }),
+    // Task 880 producer — submitListingInquiry, email FAILED (D82-5; sender contacts, fictional)
+    n({
+      id: '10',
+      type: 'new_message',
+      title: 'Mesazhi nuk u dërgua me email: Apartament 1+1 Komuna e Parisit',
+      body: "Arben Fixture (arben.fixture@example.com) ju dërgoi një mesazh, por email-i nuk u dërgua. Mund t'i përgjigjeni direkt në këtë adresë.",
+      template_id: 'listing_inquiry_email_failed',
+      template_params: {
+        listingName: 'Apartament 1+1 Komuna e Parisit',
+        senderName: 'Arben Fixture',
+        senderEmail: 'arben.fixture@example.com',
+      },
+      link: '/sq/listings/apartament-1-1-komuna-e-parisit',
+      is_read: true,
+    }),
+    // Task 880 producer — reportListingAction, owner notified their listing was reported
+    n({
+      id: '11',
+      type: 'report_outcome',
+      title: 'Njoftimi juaj u raportua: Vilë private me oborr dhe pishinë, Durrës',
+      body: 'Dikush raportoi këtë njoftim. Ekipi ynë do ta shqyrtojë.',
+      template_id: 'listing_report_filed',
+      template_params: { listingName: 'Vilë private me oborr dhe pishinë, Durrës' },
+      link: '/sq/listings/listing-1',
+      is_read: true,
+    }),
+    // Task 880 producer — updateReportStatusAction → resolved, OWNER side (distinct from the
+    // reporter-facing report_resolved row above; the reporter and owner never share a row)
+    n({
+      id: '12',
+      type: 'report_outcome',
+      title: 'Raporti për njoftimin tuaj u zgjidh: Vilë private me oborr dhe pishinë, Durrës',
+      body: 'Raporti për këtë njoftim është shqyrtuar dhe zgjidhur nga ekipi ynë.',
+      template_id: 'listing_report_resolved_owner',
+      template_params: { listingName: 'Vilë private me oborr dhe pishinë, Durrës' },
+      link: '/sq/listings/listing-1',
+      is_read: true,
+    }),
+    // Task 880 producer — updateReportStatusAction → dismissed, OWNER side
+    n({
+      id: '13',
+      type: 'report_outcome',
+      title: 'Raporti për njoftimin tuaj u hodh poshtë: Tokë / Truall Vlorë',
+      body: 'Raporti për këtë njoftim është shqyrtuar dhe hedhur poshtë nga ekipi ynë.',
+      template_id: 'listing_report_dismissed_owner',
+      template_params: { listingName: 'Tokë / Truall Vlorë' },
+      link: '/sq/listings',
       is_read: true,
     }),
   ]

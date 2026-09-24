@@ -1,0 +1,22 @@
+probe-bell-indicator.mjs — Task 878 Revision 2 §17.3 AC9 + Revision 3 §18.3 AC10
+platform: win32
+node: v22.22.3
+  HeaderView Default @320: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderView Default @1440: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderActions Default @320: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  HeaderActions Default @1440: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default @320: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default @1440: badge=16x16 glyph=20x20 dx=+0.00 dy=+0.00
+  NotificationBellView Default — unreadCount=12: NO INDICATOR FOUND
+  NotificationBellView Default — unreadCount=120 (99+): NO INDICATOR FOUND
+
+FAIL — 8 problem(s):
+  - HeaderView Default@320: badge=16x16 (expected 20x20 +/-0.5)
+  - HeaderView Default@1440: badge=16x16 (expected 20x20 +/-0.5)
+  - HeaderActions Default@320: badge=16x16 (expected 20x20 +/-0.5)
+  - HeaderActions Default@1440: badge=16x16 (expected 20x20 +/-0.5)
+  - NotificationBellView Default@320: badge=16x16 (expected 20x20 +/-0.5)
+  - NotificationBellView Default@1440: badge=16x16 (expected 20x20 +/-0.5)
+  - NotificationBellView Default — unreadCount=12: no indicator badge found
+  - NotificationBellView Default — unreadCount=120 (99+): no indicator badge found
+EXIT_CODE=1

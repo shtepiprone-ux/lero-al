@@ -1,0 +1,60 @@
+cmd.exe : warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+At line:5 char:13
++   $output = & cmd.exe /c $cmd 2>&1 | Out-String
++             ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: 6ac47150444020c4524ea4875a0099bb166adcfe  Head: (working tree)  Merge base: 6ac47150444020c4524ea4875a0099bb166adcfe
+    Changed paths seen: 30
+    Excluded (17):
+      .github/workflows/governance-pr.yml  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      docs/sessions/evidence/task861/storybook-dev.log  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      package.json  [outside-src]
+      scripts/schema-drift-check.sql  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/modules/listings/actions/__tests__/reportListing.smoke.test.ts  [story-or-test-file]
+      src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts  [story-or-test-file]
+      src/modules/notifications/components/__tests__/NotificationItem.templateLocalization.smoke.test.tsx  [story-or-test-file]
+      src/stories/fixtures/notifications.fixture.ts  [non-production-directory]
+      src/stories/mantine/primitives/HeaderActions.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/HeaderView.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/NotificationBellView.stories.tsx  [story-or-test-file]
+    Included surfaces (13):
+      src/components/auth/CaptchaWidget.tsx
+      src/components/layout/MobileNavDrawer.tsx
+      src/components/layout/UserMenu.tsx
+      src/components/shared/LocaleSwitcher.tsx
+      src/components/shared/LocationCombobox.tsx
+      src/components/shared/PhoneField.tsx
+      src/design-system/mantine/theme.ts
+      src/modules/auth/components/AuthSheet.tsx
+      src/modules/listings/actions/reportListing.ts
+      src/modules/listings/actions/submitListingInquiry.ts
+      src/modules/notifications/components/NotificationBellView.tsx
+      src/modules/notifications/components/NotificationCenter.tsx
+      src/modules/notifications/components/NotificationItem.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 13
+    Blocks baselined (recorded debt, does not fail): 0
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 462
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

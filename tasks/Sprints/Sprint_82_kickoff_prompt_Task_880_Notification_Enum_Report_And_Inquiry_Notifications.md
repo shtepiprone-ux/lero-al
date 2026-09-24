@@ -2,7 +2,7 @@
 
 Sprint 82 · **P1** · QA profile **Q4** (critical flows: Report listing, Inquiry / send message, notification template
 localization) · depends on **878 archived** · owner decisions **D82-1…D82-5** · owner actions **O82-1…O82-3** ·
-**Status: 🔍 PARTIALLY VERIFIED (review 2, 2026-09-24) — §16 verified; O82-1 done (the live verify query returned 0 rows); no executor action. Approval waits on O82-2 and lands together with 878 (D82-6).**
+**Status: ✅ APPROVED WITH NOTES (review 3, 2026-09-24; archived, landed together with 878 per D82-6; O82-3 remains an owner action after deploy)**
 The 878-first sequencing gate is overridden by owner decision **D82-6**.
 
 Sprint plan: [`Sprint_82_Notifications_That_Were_Never_Delivered.md`](Sprint_82_Notifications_That_Were_Never_Delivered.md).

@@ -1,0 +1,14 @@
+{
+  "_comment": "Task 880 (review 1, 2026-09-24 — R1-F1 fix) — this file lists the public.notification_type values CONFIRMED ON THE LIVE DATABASE by the owner-run verify query (scripts/task-880-verify.sql). Add a value here ONLY after its `alter type ... add value` migration has been applied and the verify query returns zero rows; cite that evidence in the commit that adds it. scripts/check-notification-type-enum.mjs compares this file against the NotificationType union in src/types/database.ts and cannot see the live database itself — a NotificationType change without that live-verify evidence must leave the gate red, not be added here to make it pass.",
+  "values": [
+    "new_message",
+    "saved_search_match",
+    "listing_status_change",
+    "support_reply",
+    "listing_expires_soon",
+    "agent_verified",
+    "marketing",
+    "report_outcome",
+    "price_change"
+  ]
+}

@@ -1,0 +1,46 @@
+win32
+---git-status---
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/schema-drift-check.sql
+ M scripts/surface-census-baseline.json
+ M src/components/auth/CaptchaWidget.tsx
+ M src/components/layout/MobileNavDrawer.tsx
+ M src/components/layout/UserMenu.tsx
+ M src/components/shared/LocaleSwitcher.tsx
+ M src/components/shared/LocationCombobox.tsx
+ M src/components/shared/PhoneField.tsx
+ M src/design-system/mantine/theme.ts
+ M src/modules/auth/components/AuthSheet.tsx
+ M src/modules/notifications/components/NotificationBellView.tsx
+ M src/modules/notifications/components/NotificationCenter.tsx
+ M src/modules/notifications/components/NotificationItem.tsx
+ M src/stories/mantine/primitives/HeaderActions.stories.tsx
+ M src/stories/mantine/primitives/HeaderView.stories.tsx
+?? docs/sessions/2026-09-24-task878-implemented.md
+?? docs/sessions/evidence/task878/
+?? docs/sessions/evidence/task880/
+---hash-object (all M paths)---
+f371f9119df3f4504cbc0980557a0e4961081787
+7c3cc7657a4b7d98351e9629f3562c5a5849b1df
+4db3abddb14548e8f09a9f18931dbc2ca201ed0f
+23ddd80611a7f3eb80590bac1b369a132379ca93
+92e95134e194f43da36b284e4b81ab2108e5b3c0
+92ada5e52162b266dc394ec8817c75c284e9e99a
+df7233730be13a936e958ebf52ad7d7059d43e9e
+977c4aef700e6cf0e652b9e9ba1230e74d7374c5
+5ff77559ff9050d36c9e6333efa0c8e44842cafa
+a1dda37ccb35a0555f4cb2cd6c0eedca498fdcba
+5381851d193b270355f86aeb02ea3ad1256cc986
+4323b0bf94b7242610fbef5d1b991c2734f116eb
+03607e68b2fdc565d2fa866f22d8f0650eb4b7da
+a51a4b4300b88b55f032688475024005bd698aac
+df7a4200a3d5bbaa9c252efaa5dd145aeb3eb4db
+e76a0bd7443e68d9f4fac4e0e07e6ced2ce10e5c
+fd4bdd1c730471834d4054bdf18c930cc08654a2
+a6b2e60fd603195c0702886719f7f5807d4286a6
+d0b57af2788c78be7fc0dbc37486670883e9616b
+d45daa29d2cd7b0e83b42a3334d18613c75e97ae

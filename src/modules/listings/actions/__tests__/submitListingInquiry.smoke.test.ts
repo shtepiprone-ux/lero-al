@@ -49,6 +49,11 @@ vi.mock('@/modules/notifications/lib/emails/listingInquiry', () => ({
   sendListingInquiryNotification: (...args: unknown[]) => mockSendNotification(...args),
 }))
 
+const mockCreateNotification = vi.fn()
+vi.mock('@/modules/notifications/lib/mutations', () => ({
+  createNotification: (...args: unknown[]) => mockCreateNotification(...args),
+}))
+
 // DB chains — rate-limit (listing_inquiries SELECT) + main body (listing_inquiries INSERT)
 const mockRateLimitGte    = vi.fn()
 const mockInquiryInsert   = vi.fn()
@@ -96,7 +101,7 @@ const OWNER_ID    = 'owner-user-1'
 const OWNER_EMAIL = 'owner@example.al'
 
 const VALID_LISTING = {
-  id: LISTING_ID, user_id: OWNER_ID, title: 'Apartament Tiranë', status: 'active',
+  id: LISTING_ID, user_id: OWNER_ID, title: 'Apartament Tiranë', status: 'active', slug: 'apartament-tirane',
 }
 
 const VALID_INPUT = {
@@ -128,8 +133,11 @@ beforeEach(() => {
   // Inquiry insert
   mockInquiryInsert.mockResolvedValue({ error: null })
 
-  // Notification
+  // Email
   mockSendNotification.mockResolvedValue({ ok: true })
+
+  // In-app notification (Task 880 R3)
+  mockCreateNotification.mockResolvedValue(undefined)
 })
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
@@ -151,6 +159,16 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
     expect(mockSendNotification).toHaveBeenCalledWith(
       expect.objectContaining({ to: OWNER_EMAIL, listingTitle: VALID_LISTING.title }),
     )
+
+    // Task 880 R3: exactly one in-app notification, 'listing_inquiry' template, listingName only
+    expect(mockCreateNotification).toHaveBeenCalledOnce()
+    expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectContaining({
+      userId: OWNER_ID,
+      type: 'new_message',
+      templateId: 'listing_inquiry',
+      templateParams: { listingName: VALID_LISTING.title },
+      link: `/listings/${VALID_LISTING.slug}`,
+    }))
   })
 
   it('validation: message too short → { error: "validation" }, no DB touched', async () => {
@@ -160,6 +178,7 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
     expect(result).toEqual({ error: 'validation' })
     expect(mockInquiryInsert).not.toHaveBeenCalled()
     expect(mockSendNotification).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
   })
 
   it('validation: bad email format → { error: "validation" }', async () => {
@@ -168,6 +187,7 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
 
     expect(result).toEqual({ error: 'validation' })
     expect(mockInquiryInsert).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
   })
 
   it('rate_limited: 5th+ request from real IP → { error: "rate_limited" }', async () => {
@@ -183,6 +203,7 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
 
     expect(result).toEqual({ error: 'rate_limited' })
     expect(mockInquiryInsert).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
   })
 
   it('not_found: listing query returns null → { error: "not_found" }', async () => {
@@ -193,6 +214,29 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
 
     expect(result).toEqual({ error: 'not_found' })
     expect(mockInquiryInsert).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
+  })
+
+  it('self-inquiry: viewer is the listing owner → { error: "validation" }, no notification', async () => {
+    mockGetUser.mockResolvedValue({ id: OWNER_ID })
+
+    const { submitListingInquiry } = await import('../submitListingInquiry')
+    const result = await submitListingInquiry(VALID_INPUT)
+
+    expect(result).toEqual({ error: 'validation' })
+    expect(mockInquiryInsert).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
+  })
+
+  it('owner_unavailable: owner email cannot be resolved → { error: "owner_unavailable" }, no notification', async () => {
+    mockGetUserById.mockResolvedValue({ data: { user: null } })
+
+    const { submitListingInquiry } = await import('../submitListingInquiry')
+    const result = await submitListingInquiry(VALID_INPUT)
+
+    expect(result).toEqual({ error: 'owner_unavailable' })
+    expect(mockInquiryInsert).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
   })
 
   it('save_failed: insert fails → { error: "save_failed" } + console.error with root cause (Guard 4)', async () => {
@@ -207,8 +251,9 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
     expect(result).toEqual({ error: 'save_failed' })
     expect(consoleSpy).toHaveBeenCalledWith('[listing-inquiry] insert failed', dbError)
 
-    // No email attempted after a failed insert (row not in DB yet)
+    // No email/notification attempted after a failed insert (row not in DB yet)
     expect(mockSendNotification).not.toHaveBeenCalled()
+    expect(mockCreateNotification).not.toHaveBeenCalled()
     consoleSpy.mockRestore()
   })
 
@@ -226,6 +271,51 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
       '[listing-inquiry] email notification failed',
       expect.objectContaining({ reason: 'resend_error' }),
     )
+
+    // Task 880 R3: exactly one 'listing_inquiry_email_failed' notification, sender contacts included
+    expect(mockCreateNotification).toHaveBeenCalledOnce()
+    expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectContaining({
+      userId: OWNER_ID,
+      type: 'new_message',
+      templateId: 'listing_inquiry_email_failed',
+      templateParams: {
+        listingName: VALID_LISTING.title,
+        senderName: VALID_INPUT.name,
+        senderEmail: VALID_INPUT.email,
+      },
+    }))
+    consoleSpy.mockRestore()
+  })
+
+  it('email_transient: sendListingInquiryNotification THROWS → caught, same email_failed notification, { error: "email_transient" }', async () => {
+    mockSendNotification.mockRejectedValue(new Error('resend network error'))
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const { submitListingInquiry } = await import('../submitListingInquiry')
+    const result = await submitListingInquiry(VALID_INPUT)
+
+    expect(result).toEqual({ error: 'email_transient' })
+    expect(mockCreateNotification).toHaveBeenCalledOnce()
+    expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectContaining({
+      templateId: 'listing_inquiry_email_failed',
+    }))
+    consoleSpy.mockRestore()
+  })
+
+  it('never calls createNotification twice for one inquiry (either branch, exactly once)', async () => {
+    const { submitListingInquiry } = await import('../submitListingInquiry')
+    await submitListingInquiry(VALID_INPUT)
+    expect(mockCreateNotification).toHaveBeenCalledTimes(1)
+  })
+
+  it('createNotification rejects → the action result is still unaffected ({})', async () => {
+    mockCreateNotification.mockRejectedValue(new Error('insert failed'))
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const { submitListingInquiry } = await import('../submitListingInquiry')
+    const result = await submitListingInquiry(VALID_INPUT)
+
+    expect(result).toEqual({})
     consoleSpy.mockRestore()
   })
 })

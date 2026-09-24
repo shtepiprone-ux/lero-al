@@ -25,7 +25,7 @@ export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout, isSi
     { label: t('add_listing'), icon: <ListPlus size={theme.other.iconSize.standard} />, onClick: () => onNavigate(`/${locale}/listings/create`), separator: true },
     ...(user.role === 'admin' || user.role === 'moderator'
       ? [{
-          label: <span style={{ fontWeight: 500 }}>{t('admin_dashboard')}</span>,
+          label: <Text span inherit fw={500}>{t('admin_dashboard')}</Text>,
           icon: <LayoutDashboard size={theme.other.iconSize.standard} />,
           color: 'brand',
           onClick: onOpenAdmin,

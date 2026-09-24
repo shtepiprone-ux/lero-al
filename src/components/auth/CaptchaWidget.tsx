@@ -44,7 +44,7 @@ function CaptchaDevFallback({
     // lh is 19.5px (not text-xs's paired 16px): globals.css's `p { @apply leading-relaxed }`
     // base rule applies to this element's underlying <p> and measures 19.5px in the real
     // AuthSheet render — matched here for zero visual delta, not derived from text-xs.
-    <Text size="xs" lh={mantineTheme.other.lineHeight.authNoteParagraph} c="var(--muted-foreground)" ta="center" py="tight" role="note">
+    <Text size="xs" lh={mantineTheme.other.lineHeight.authNoteParagraph} c="dimmed" ta="center" py="tight" role="note">
       {label}
     </Text>
   )

@@ -49,10 +49,9 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
           <Stack gap="md">
             <Group gap="sm">
               <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={theme.other.iconSize.banner} />
-              {/* lh=1.625 (leading-relaxed) — this <p> had no explicit leading-* class
-                  pre-migration, so globals.css's `p { @apply leading-relaxed }` base rule won
-                  over text-sm's own paired 20px line-height (see Task 753/754 finding). */}
-              <Text size="sm" fw={500} lh={1.625}>{user.name}</Text>
+              {/* Task 878: raw lh={1.625} removed — theme `sm` lineHeight (1.43) now applies
+                  (D81-7, authorized visual-scale change closing the last inline-style hardcode). */}
+              <Text size="sm" fw={500}>{user.name}</Text>
             </Group>
             <Divider color="var(--border)" />
           </Stack>

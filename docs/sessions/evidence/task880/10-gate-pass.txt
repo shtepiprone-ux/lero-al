@@ -1,0 +1,10 @@
+
+> lero-al@0.1.0 check:notification-type-enum
+> node scripts/check-notification-type-enum.mjs
+
+SCOPE: this gate compares the TS NotificationType union with the committed
+       record (scripts/notification-type-enum.json). It cannot see the live database — O82-1's
+       scripts/task-880-verify.sql closes that gap separately.
+
+✅ notification-type-enum check PASSED — 9 values match between src/types/database.ts and scripts/notification-type-enum.json.
+EXIT_CODE=0

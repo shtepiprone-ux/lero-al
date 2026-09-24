@@ -1626,7 +1626,17 @@
     "report_dismissed_title": "La tua segnalazione è stata esaminata",
     "report_dismissed_body": "Grazie per la tua segnalazione. Dopo un'attenta revisione, non abbiamo riscontrato violazioni delle nostre linee guida per l'annuncio segnalato.",
     "price_change_title": "Variazione prezzo: {listingName}",
-    "price_change_body": "{oldPrice} → {newPrice}"
+    "price_change_body": "{oldPrice} → {newPrice}",
+    "listing_inquiry_title": "Nuovo messaggio: {listingName}",
+    "listing_inquiry_body": "Qualcuno ti ha inviato un messaggio riguardo a questo annuncio.",
+    "listing_inquiry_email_failed_title": "Messaggio non recapitato via email: {listingName}",
+    "listing_inquiry_email_failed_body": "{senderName} ({senderEmail}) ti ha inviato un messaggio, ma l'email non è stata recapitata. Puoi rispondere direttamente a questo indirizzo.",
+    "listing_report_filed_title": "Il tuo annuncio è stato segnalato: {listingName}",
+    "listing_report_filed_body": "Qualcuno ha segnalato questo annuncio. Il nostro team lo esaminerà.",
+    "listing_report_resolved_owner_title": "La segnalazione sul tuo annuncio è stata risolta: {listingName}",
+    "listing_report_resolved_owner_body": "La segnalazione su questo annuncio è stata esaminata e risolta dal nostro team.",
+    "listing_report_dismissed_owner_title": "La segnalazione sul tuo annuncio è stata respinta: {listingName}",
+    "listing_report_dismissed_owner_body": "La segnalazione su questo annuncio è stata esaminata e respinta dal nostro team."
   },
   "saved_search": {
     "save_action": "Salva ricerca",
@@ -2361,7 +2371,6 @@
       "notification_neutral_message": "La bozza del tuo annuncio è stata salvata automaticamente.",
       "header_actions_guest_caption": "Ospite — Preferiti apre il foglio di autenticazione (login); Login/Registrati visibili da md+",
       "header_actions_authed_caption": "Autenticato — Preferiti porta a /favorites; la campanella notifiche passata come slot; senza Login/Registrati",
-      "header_actions_bell_slot_aria": "Notifiche (slot segnaposto)",
       "locale_switcher_default_caption": "Predefinito — clic per cambiare lingua (menu ≥640, foglio inferiore <640)",
       "locale_switcher_showlabel_caption": "showLabel — il trigger include il nome completo della lingua accanto all'abbreviazione",
       "locale_switcher_pending_caption": "isPending — il trigger è disabilitato con uno spinner mentre il cambio è in corso",

@@ -176,7 +176,8 @@ export function PhoneField({
           placeholder={getPhonePlaceholder(iso2)}
           autoComplete="tel"
           error={error}
-          style={{ flex: 1, minWidth: 0 }}
+          flex={1}
+          miw={0}
         />
       </Group>
     </Stack>

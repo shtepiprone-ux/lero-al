@@ -1,0 +1,6 @@
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M scripts/schema-drift-check.sql
+?? docs/sessions/evidence/task878/
+---hashes---
+docs/sessions/evidence/task861/storybook-dev.log f371f9119df3f4504cbc0980557a0e4961081787
+scripts/schema-drift-check.sql 92ada5e52162b266dc394ec8817c75c284e9e99a

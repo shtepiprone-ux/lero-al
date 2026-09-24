@@ -2,7 +2,7 @@
 
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { Button, useMantineTheme } from '@mantine/core'
+import { Button, Text, useMantineTheme } from '@mantine/core'
 import { MantineDropdownMenu, type DropdownMenuItemDef } from '@/design-system/mantine/patterns'
 import styles from './LocaleSwitcher.module.css'
 
@@ -42,7 +42,7 @@ export function LocaleSwitcher({
 
   const items: DropdownMenuItemDef[] = LOCALES.map(loc => ({
     label: currentLocale === loc.code
-      ? <span style={{ fontWeight: 600 }}>{loc.abbr} {langLabels[loc.code]}</span>
+      ? <Text span inherit fw={600}>{loc.abbr} {langLabels[loc.code]}</Text>
       : <>{loc.abbr} {langLabels[loc.code]}</>,
     onClick: () => onSwitch(loc.code),
   }))

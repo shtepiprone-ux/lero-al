@@ -1,0 +1,10 @@
+src/modules/auth/components/AuthSheet.tsx: 3
+src/modules/notifications/components/NotificationItem.tsx: 5
+src/modules/notifications/components/NotificationCenter.tsx: 3
+src/modules/notifications/components/NotificationBellView.tsx: 1
+src/components/layout/UserMenu.tsx: 0
+src/components/shared/LocaleSwitcher.tsx: 0
+src/components/shared/LocationCombobox.tsx: 0
+src/components/shared/PhoneField.tsx: 0
+src/components/auth/CaptchaWidget.tsx: 1
+src/components/layout/MobileNavDrawer.tsx: 0

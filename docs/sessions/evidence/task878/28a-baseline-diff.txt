@@ -1,0 +1,45 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index 5df3ae1fb..df7233730 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -460,9 +460,6 @@
+     "src/app/admin/layout.tsx :: src/components/admin/AdminSidebar.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/layout.tsx :: src/components/shared/LocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/layout.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -838,9 +835,6 @@
+     "src/app/admin/users/[id]/page.tsx :: src/components/shared/DatePicker.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/users/[id]/page.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/users/[id]/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -886,9 +880,6 @@
+     "src/app/admin/users/new/page.tsx :: src/components/shared/DatePicker.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/users/new/page.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/users/new/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -970,9 +961,6 @@
+     "src/components/admin/AdminUserCreate.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/components/admin/AdminUserCreate.tsx :: src/components/shared/PhoneField.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/components/admin/AdminUserCreate.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+EXIT_CODE=0

@@ -1,0 +1,38 @@
+ M docs/critical-flow-registry.md
+ M docs/sessions/evidence/task861/storybook-dev.log
+ M package.json
+ M scripts/schema-drift-check.sql
+ M scripts/surface-census-baseline.json
+ M src/components/layout/Header.tsx
+ M src/components/layout/HeaderView.tsx
+ M src/components/layout/UserMenu.tsx
+ M src/modules/auth/__tests__/AuthContext.test.tsx
+ M src/modules/auth/context/AuthContext.tsx
+ M src/stories/mantine/primitives/HeaderView.stories.tsx
+ M src/stories/mantine/primitives/UserMenu.stories.tsx
+?? docs/sessions/evidence/task876/01b-status-before.txt
+?? docs/sessions/evidence/task876/02b-census-I0.txt
+?? docs/sessions/evidence/task876/02c-census-sim-I0.txt
+?? docs/sessions/evidence/task876/02d-baseline-keys-I0.txt
+?? docs/sessions/evidence/task876/03-baseline-diff.txt
+?? docs/sessions/evidence/task876/03a-census-update-baseline.txt
+?? docs/sessions/evidence/task876/11-new-tests.txt
+?? docs/sessions/evidence/task876/12-test-auth.txt
+?? docs/sessions/evidence/task876/13-typecheck.txt
+?? docs/sessions/evidence/task876/14-lint.txt
+?? docs/sessions/evidence/task876/15-story-coverage.txt
+?? docs/sessions/evidence/task876/16-census-header.txt
+?? docs/sessions/evidence/task876/17-rendered-scope.txt
+?? docs/sessions/evidence/task876/18-rendered-scope-verify.txt
+?? docs/sessions/evidence/task876/19-census-changed.txt
+?? docs/sessions/evidence/task876/20-census-changed-verify.txt
+?? docs/sessions/evidence/task876/21-enrolled-tailwind.txt
+?? docs/sessions/evidence/task876/22-enrolled-tailwind-verify.txt
+?? docs/sessions/evidence/task876/24-build-storybook.txt
+?? docs/sessions/evidence/task876/25-file-integrity.txt
+?? docs/sessions/evidence/task876/26-mojibake.txt
+?? docs/sessions/evidence/task876/27-build.txt
+?? docs/sessions/evidence/task876/28-hash-object.txt
+?? docs/sessions/evidence/task876/29-status-after.txt
+?? docs/sessions/evidence/task876/plant.txt
+?? src/components/layout/__tests__/Header.signOut.test.tsx

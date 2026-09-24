@@ -73,3 +73,31 @@ export const Default: Story = {
     await userEvent.click(adminTrigger)
   },
 }
+
+// Task 876 (GR-3a EXTEND — Mantine/Primitives/UserMenu): the sign-out pending state on the
+// trigger. The regular-user fixture (native Mantine `Button` `loading` prop, R4) — no `play`,
+// since a `loading` Button is `disabled` and the harness's auto-click convention does not apply.
+export const SigningOut: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {t('user_menu_regular_caption')}
+          </Text>
+          <UserMenu
+            user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }}
+            locale={locale}
+            onNavigate={() => {}}
+            onOpenAdmin={() => {}}
+            onLogout={() => {}}
+            isSigningOut
+          />
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+}

@@ -15,7 +15,7 @@
  * global fetch are mocked; AuthController and AuthContext run real code.
  */
 
-import React from 'react'
+import React, { Suspense, use, useState } from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, act } from '@testing-library/react'
 import { AuthProvider, useAuth } from '../context/AuthContext'
@@ -352,5 +352,85 @@ describe('Controller lifecycle', () => {
     expect(mockUnsubscribe).not.toHaveBeenCalled()
     unmount()
     expect(mockUnsubscribe).toHaveBeenCalledTimes(1)
+  })
+})
+
+// ─────────────────────────────────────────────────────────────────────────────
+// isSigningOut pending state (Task 876)
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe('isSigningOut pending state', () => {
+  it('stays true until the post-sign-out navigation commits', async () => {
+    let resolveCoreSignOut!: (r: { error: null }) => void
+    mockCoreSignOut.mockImplementationOnce(
+      () => new Promise(resolve => { resolveCoreSignOut = resolve })
+    )
+
+    let resolveNav!: () => void
+    const navPromise = new Promise<void>(resolve => { resolveNav = resolve })
+
+    // Reads navPromise via `use()` only once `show` is true — mirrors the real
+    // "navigate() triggers a Next transition" shape without a Next.js router.
+    function Target({ show }: { show: boolean }) {
+      if (!show) return <span data-testid="target-idle">idle</span>
+      use(navPromise)
+      return <span data-testid="target-shown">shown</span>
+    }
+
+    function Harness() {
+      const { isSigningOut, signOut } = useAuth()
+      const [show, setShow] = useState(false)
+      return (
+        <div>
+          <span data-testid="is-signing-out">{String(isSigningOut)}</span>
+          <button data-testid="do-sign-out" onClick={() => signOut(() => setShow(true))}>
+            Sign out
+          </button>
+          <Suspense fallback={<span data-testid="target-fallback">fallback</span>}>
+            <Target show={show} />
+          </Suspense>
+        </div>
+      )
+    }
+
+    render(
+      <AuthProvider initialUser={MOCK_USER}>
+        <Harness />
+      </AuthProvider>
+    )
+
+    expect(screen.getByTestId('is-signing-out')).toHaveTextContent('false')
+    expect(screen.getByTestId('target-idle')).toBeInTheDocument()
+
+    await act(async () => {
+      screen.getByTestId('do-sign-out').click()
+    })
+
+    // Flips true synchronously when the transition starts — before coreSignOut settles.
+    expect(screen.getByTestId('is-signing-out')).toHaveTextContent('true')
+
+    await act(async () => {
+      resolveCoreSignOut({ error: null })
+      // Flush the controller's post-await commit and the re-entrant
+      // startSignOutTransition(() => navigate()) it triggers.
+      await new Promise(r => setTimeout(r, 0))
+    })
+
+    // navigate() ran (show=true) and Target suspended on navPromise, but because that
+    // update belongs to the re-entered transition, React keeps the OLD committed UI —
+    // no fallback, isSigningOut still true — until navPromise itself resolves.
+    expect(screen.getByTestId('is-signing-out')).toHaveTextContent('true')
+    expect(screen.queryByTestId('target-fallback')).not.toBeInTheDocument()
+    expect(screen.getByTestId('target-idle')).toBeInTheDocument()
+
+    await act(async () => {
+      resolveNav()
+      await new Promise(r => setTimeout(r, 0))
+    })
+
+    await waitFor(() =>
+      expect(screen.getByTestId('is-signing-out')).toHaveTextContent('false')
+    )
+    expect(screen.getByTestId('target-shown')).toBeInTheDocument()
   })
 })

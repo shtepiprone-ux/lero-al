@@ -1,0 +1,8 @@
+60ff6ee00fdb03a99ba514c9c8281d5d61af1da1
+P1: pre-plant hash above (AuthContext.tsx)
+60ff6ee00fdb03a99ba514c9c8281d5d61af1da1
+P1: post-restore hash above (AuthContext.tsx) — must equal pre-plant hash
+9ecbd53554cb0c53cf79ce9e849f9cee233583ac
+P2: pre-plant hash above (Header.tsx)
+9ecbd53554cb0c53cf79ce9e849f9cee233583ac
+P2: post-restore hash above (Header.tsx) — must equal pre-plant hash

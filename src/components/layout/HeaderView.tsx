@@ -61,6 +61,9 @@ export interface HeaderViewProps {
   onNavigate: (path: string) => void
   onOpenAdmin: () => void
   onLogout: () => void
+  /** True while the sign-out transition is pending (Task 876): shows a Mantine `loading` state on
+   *  the UserMenu trigger and the mobile hamburger, while the header itself keeps its signed-in layout. */
+  isSigningOut?: boolean
   mobileOpen: boolean
   onOpenMobile: () => void
   onCloseMobile: () => void
@@ -79,6 +82,7 @@ export function HeaderView({
   onNavigate,
   onOpenAdmin,
   onLogout,
+  isSigningOut,
   mobileOpen,
   onOpenMobile,
   onCloseMobile,
@@ -174,6 +178,7 @@ export function HeaderView({
                   onNavigate={onNavigate}
                   onOpenAdmin={onOpenAdmin}
                   onLogout={onLogout}
+                  isSigningOut={isSigningOut}
                 />
               </Group>
             )}
@@ -191,6 +196,7 @@ export function HeaderView({
               mih={theme.other.touchTarget}
               miw={theme.other.touchTarget}
               onClick={onOpenMobile}
+              loading={isSigningOut}
             >
               <Menu size={theme.other.iconSize.roomy} />
             </ActionIcon>

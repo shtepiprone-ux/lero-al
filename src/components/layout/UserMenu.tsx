@@ -11,9 +11,11 @@ export interface UserMenuProps {
   onNavigate: (path: string) => void
   onOpenAdmin: () => void
   onLogout: () => void
+  /** True while the sign-out transition is pending (Task 876): shows a Mantine `loading` state on the trigger. */
+  isSigningOut?: boolean
 }
 
-export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout }: UserMenuProps) {
+export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout, isSigningOut }: UserMenuProps) {
   const t = useTranslations('nav')
   const theme = useMantineTheme()
 
@@ -40,6 +42,7 @@ export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout }: Us
           variant="default"
           leftSection={<Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={theme.other.iconSize.feature} />}
           rightSection={<ChevronDown size={theme.other.iconSize.badge} />}
+          loading={isSigningOut}
         >
           <Text component="span" truncate inherit maw={theme.other.boxSize.truncateLabel}>{user.name}</Text>
         </Button>

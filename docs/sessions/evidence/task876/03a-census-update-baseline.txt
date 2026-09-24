@@ -1,0 +1,28 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: f7828d70514b93f6a1ba645114b03ca10e8d2fed  Head: (working tree)  Merge base: f7828d70514b93f6a1ba645114b03ca10e8d2fed
+    Changed paths seen: 11
+    Excluded (7):
+      docs/critical-flow-registry.md  [outside-src]
+      docs/sessions/evidence/task861/storybook-dev.log  [outside-src]
+      package.json  [outside-src]
+      scripts/schema-drift-check.sql  [outside-src]
+      src/modules/auth/__tests__/AuthContext.test.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/HeaderView.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/UserMenu.stories.tsx  [story-or-test-file]
+    Included surfaces (3):
+      src/app/[locale]/layout.tsx
+      src/components/layout/HeaderView.tsx
+      src/components/layout/UserMenu.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 466 (carried-forward entries for the 468-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0

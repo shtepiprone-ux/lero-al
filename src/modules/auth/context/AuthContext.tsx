@@ -18,7 +18,7 @@ import {
   useContext,
   useEffect,
   useRef,
-  startTransition,
+  useTransition,
   useSyncExternalStore,
 } from 'react'
 import { AuthController, type AuthState, type AuthStatus } from '@/lib/auth/controller'
@@ -31,6 +31,9 @@ export interface AuthContextValue {
   status: AuthStatus
   /** @deprecated — prefer `status`. Kept for backward-compatibility. */
   loading: boolean
+  /** True from the sign-out click until the post-sign-out navigation transition commits (Task 876). Optional —
+   *  eight AuthContext-mocking stories build this value as a literal and must not be forced to add it. */
+  isSigningOut?: boolean
   signOut: (navigate?: () => void) => void
   /** Re-syncs user state from the server. Call after profile updates so the header
    *  reflects the new name/avatar immediately without a full page reload. */
@@ -47,6 +50,7 @@ export const AuthContext = createContext<AuthContextValue>({
   user: null,
   status: 'initializing',
   loading: true,
+  isSigningOut: false,
   signOut: () => {},
   refreshUser: () => {},
 })
@@ -101,15 +105,21 @@ export function AuthProvider({ children, initialUser }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // signOut is a React 19 async action: wrapping controller.signOut() and the
-  // caller's navigate() inside startTransition means the RSC payload fetch
-  // triggered by router.push() is part of the same transition as the auth
-  // state update — preventing "Failed to fetch RSC payload" race conditions.
+  // signOut is a React 19 async action. useTransition's isPending (renamed
+  // isSigningOut below) stays true across the whole sequence: it flips true on
+  // the first startSignOutTransition call and only flips false once a LATER
+  // transition update commits. The inner startSignOutTransition(() => navigate?.())
+  // re-enters the transition after the `await`, so navigate()'s own router
+  // transition (router.push()/router.refresh() merging the new RSC payload) is
+  // what finally lets isSigningOut settle back to false — not the await itself.
+  const [isSigningOut, startSignOutTransition] = useTransition()
   const signOut = useCallback(
     (navigate?: () => void): void => {
-      startTransition(async () => {
+      startSignOutTransition(async () => {
         await controller.signOut()
-        navigate?.()
+        startSignOutTransition(() => {
+          navigate?.()
+        })
       })
     },
     [controller]
@@ -126,6 +136,7 @@ export function AuthProvider({ children, initialUser }: Props) {
         user: authState.user,
         status: authState.status,
         loading: authState.status === 'initializing',
+        isSigningOut,
         signOut,
         refreshUser,
       }}

@@ -1,0 +1,16 @@
+platform win32 v22.22.3
+mapped surfaces: [
+  'src/app/[locale]/layout.tsx',
+  'src/components/layout/HeaderView.tsx',
+  'src/components/layout/UserMenu.tsx'
+]
+re-census surfaces: []
+new blocks: 0 []
+stale keys: 2
+  STALE src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+  STALE src/components/layout/HeaderView.tsx :: src/components/shared/LocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried
+baselined: 8
+updater would remove 2 add 0 refusedTier2 0
+  - src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive
+  - src/components/layout/HeaderView.tsx :: src/components/shared/LocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried
+EXIT_CODE=0

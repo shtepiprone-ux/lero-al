@@ -1,7 +1,7 @@
 # Task 876 — sign-out is one visible step: the header holds its state and shows a pending control until the new page arrives
 
 Sprint 81 · **P2** · QA profile **Q4** (Logout is a registered critical flow) · depends on 872 (landed) · owner actions
-**O81-4, O81-5** · **Status: 📝 KICKOFF AMENDED 2026-09-24 (§16, after the I0 premise-drift stop), READY FOR SONNET**
+**O81-4, O81-5** · **Status: ✅ APPROVED 2026-09-24, review 3 (§19); archived**
 
 > **Read §16 before anything else.** It replaces F9, F10, R7, I0 steps 2–3, the GR-1 receipt, AC8, AC9's census
 > bullet and two §13.2 expected results. Every superseded passage below is marked in place.
@@ -528,3 +528,92 @@ Two design-time errors, both in derived claims:
 2. The F2/F3/F5/F6 line citations were off when written.
 
 The I0 gate caught the first error, as designed.
+
+## 17. Review 1 — PARTIALLY VERIFIED (2026-09-24)
+
+Reviewed: the real diff of the 11 §7 paths, the new test file, the session log
+`docs/sessions/2026-09-24-task876-implemented.md`, and every §13.2/§16.3 artifact.
+
+The reviewer re-ran these natively (`win32 v22.22.3`):
+- the two test files: 18/18 pass;
+- the Header census: 21 nodes, exactly the two F9′ FAIL lines;
+- `git hash-object` of the 11 changed paths: equal to `28-hash-object.txt`.
+
+R1–R5 and R7′ match their text. AC1, AC3, AC4, AC6, AC7, AC8′ and AC9′ are verified. **No code change is
+required.**
+
+Two items stay open. Approval waits on both.
+
+### 17.1 Owed by Sonnet — the plant failure transcripts (AC2, AC5; Q4 planted-violation proof)
+
+`plant.txt` holds only the four `git hash-object` witnesses. It contains no output of the planted runs. The session
+log's statement that T1 and T2 failed is a report, not evidence. Re-run both plants and keep their output. Change no
+other file.
+
+Order: pre-hash → apply the plant with the Edit tool → run → restore with the Edit tool → post-hash.
+- **P1:** in `AuthContext.tsx`, replace `startSignOutTransition(() => { navigate?.() })` with `navigate?.()`.
+- **P2:** in `Header.tsx`, pass `user={user}` instead of `user={headerUser}` to `HeaderView`.
+
+```powershell
+$ev = "docs\sessions\evidence\task876"
+git --no-optional-locks hash-object src/modules/auth/context/AuthContext.tsx *>&1 | Tee-Object "$ev\plant-p1-pre-hash.txt"
+npx.cmd vitest run src/modules/auth/__tests__/AuthContext.test.tsx *>&1 | Tee-Object "$ev\plant-p1-run.txt"
+"EXIT_CODE=$LASTEXITCODE" | Add-Content "$ev\plant-p1-run.txt"
+git --no-optional-locks hash-object src/modules/auth/context/AuthContext.tsx *>&1 | Tee-Object "$ev\plant-p1-post-hash.txt"
+git --no-optional-locks hash-object src/components/layout/Header.tsx *>&1 | Tee-Object "$ev\plant-p2-pre-hash.txt"
+npx.cmd vitest run src/components/layout/__tests__/Header.signOut.test.tsx *>&1 | Tee-Object "$ev\plant-p2-run.txt"
+"EXIT_CODE=$LASTEXITCODE" | Add-Content "$ev\plant-p2-run.txt"
+git --no-optional-locks hash-object src/components/layout/Header.tsx *>&1 | Tee-Object "$ev\plant-p2-post-hash.txt"
+npx.cmd vitest run src/modules/auth/__tests__/AuthContext.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx *>&1 | Tee-Object "$ev\11b-new-tests.txt"
+git --no-optional-locks hash-object src/modules/auth/context/AuthContext.tsx src/components/layout/Header.tsx src/components/layout/HeaderView.tsx src/components/layout/UserMenu.tsx src/stories/mantine/primitives/UserMenu.stories.tsx src/stories/mantine/primitives/HeaderView.stories.tsx src/modules/auth/__tests__/AuthContext.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx package.json docs/critical-flow-registry.md scripts/surface-census-baseline.json *>&1 | Tee-Object "$ev\28b-hash-object.txt"
+```
+
+Apply the plant between each pre-hash line and its run line. Restore it between the run's `EXIT_CODE` line and its
+post-hash line.
+
+Expected results:
+- `plant-p1-run.txt`: `EXIT_CODE=1`. Only the new T1 case fails, on its "still `true` after `coreSignOut`
+  resolves" assertion or its "no fallback" assertion. Every pre-existing `AuthContext` test passes.
+- `plant-p2-run.txt`: `EXIT_CODE=1`. T2 fails on a "while pending" assertion: the name, `data-loading`, or no Login.
+- Each post-hash equals its pre-hash: P1 `60ff6ee00fdb03a99ba514c9c8281d5d61af1da1`, P2
+  `9ecbd53554cb0c53cf79ce9e849f9cee233583ac`.
+- `11b`: 18/18 pass.
+- `28b`: identical to `28-hash-object.txt`. The `27-build.txt` build therefore still describes the shipped bytes;
+  do not re-run the build.
+
+Any other result is `BLOCKED`: report it and do not change the implementation. Add the artifacts to the session log's
+Files Changed table and its plant record. Then set the 876 backlog cell to
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (review 1 evidence supplied)`.
+
+### 17.2 Owed by the owner — O81-4 and O81-5 (§13.3)
+
+- **O81-4:** the 12 Storybook tuples.
+- **O81-5 (AC10):** the three signed-in observations.
+
+Both are owner-only by design. The review collects them. Neither blocks §17.1.
+
+## 18. Review 2 — PARTIALLY VERIFIED (2026-09-24)
+
+- **§17.1 — verified.** Transcripts read by the reviewer:
+  - `plant-p1-run.txt`: 1 failed and 16 passed, `EXIT_CODE=1`. The only failure is T1's "still `true` after
+    `coreSignOut` resolves" assertion (`AuthContext.test.tsx:422`, expected `true`, received `false`).
+  - `plant-p2-run.txt`: `EXIT_CODE=1`. T2 fails on `Unable to find an element with the text: Dritan Gjoka`.
+  - Each pre-hash equals its post-hash, and both equal the current files.
+  - `11b`: 18/18. `28b` is identical to `28`.
+
+  AC2 and AC5 are verified. The session log records these artifacts.
+- **O81-4 — accepted by the owner, 2026-09-24**, all 12 tuples: *"все ок"*.
+- **Open: O81-5 / AC10.** The three signed-in observations of §13.3 item 2. This is the only item between this task
+  and approval. Sonnet has no further action.
+
+## 19. Review 3 — APPROVED (2026-09-24)
+
+- **O81-5 / AC10 — confirmed by the owner, 2026-09-24:** *"По кожному пункту все ок"*. This covers all three
+  §13.3 item 2 observations:
+  - on a listing page, the avatar-button loader, then the header and the contact card switch together, and the URL
+    is unchanged;
+  - on `/favorites`, the loader, then a guest homepage;
+  - at 390px, the drawer closes and the hamburger shows the loader, then the page switches.
+- All R1–R6 and R7′ requirements, and all AC1–AC7, AC8′, AC9′ and AC10 criteria, are verified (§17, §18, above).
+  The reviewed diff is unchanged since review 1: the 11 changed paths hash to `28-hash-object.txt` / `28b`.
+- No open notes. The task is archived.

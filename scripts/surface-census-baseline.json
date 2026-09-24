@@ -148,9 +148,6 @@
     "src/app/[locale]/layout.tsx :: src/components/shared/WebVitalsReporter.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/[locale]/layout.tsx :: src/components/ui/PasswordRequirementsHint.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/[locale]/layout.tsx :: src/modules/auth/context/AuthContext.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
@@ -987,9 +984,6 @@
     },
     "src/components/admin/AdminUserCreate.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
       "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/components/layout/HeaderView.tsx :: src/components/shared/LocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
     },
     "src/components/listing/WhatsAppContactButton.tsx :: src/components/listing/WhatsAppContactButton.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"

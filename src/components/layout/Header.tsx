@@ -16,10 +16,18 @@ export function Header() {
   const router = useRouter()
   const pathname = usePathname()
 
-  const { user, signOut } = useUser()
+  const { user, signOut, isSigningOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [authOpen, setAuthOpen] = useState(false)
   const [authView, setAuthView] = useState<AuthView>('login')
+
+  // Hold the pre-sign-out user across the ~0.5s window between the auth-state commit and the
+  // post-sign-out page arriving (Task 876, F4): "adjust state while rendering" (React-documented
+  // pattern) — while isSigningOut, the header keeps rendering the last real user instead of
+  // following `user` straight to null. Released the instant the sign-out transition commits.
+  const [heldUser, setHeldUser] = useState(user)
+  if (!isSigningOut && heldUser !== user) setHeldUser(user)
+  const headerUser = isSigningOut ? heldUser : user
 
   function openAuthSheet(view: AuthView) {
     setAuthView(view)
@@ -55,18 +63,19 @@ export function Header() {
 
   return (
     <HeaderView
-      isAuthenticated={!!user}
-      user={user}
+      isAuthenticated={!!headerUser}
+      user={headerUser}
       locale={locale}
       onOpenAuth={openAuthSheet}
       onSwitchLocale={switchLocale}
       onNavigate={(path) => router.push(path)}
       onOpenAdmin={() => window.open('/admin', '_blank', 'noopener,noreferrer')}
       onLogout={handleLogout}
+      isSigningOut={!!isSigningOut}
       mobileOpen={mobileOpen}
       onOpenMobile={() => setMobileOpen(true)}
       onCloseMobile={() => setMobileOpen(false)}
-      notificationSlot={user ? <NotificationBell /> : undefined}
+      notificationSlot={headerUser ? <NotificationBell /> : undefined}
       authSheetSlot={
         <AuthSheet
           open={authOpen}

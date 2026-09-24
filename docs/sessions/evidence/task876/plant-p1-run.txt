@@ -1,0 +1,39 @@
+﻿
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/auth/__tests__/AuthContext.test.tsx (17 tests | 1 failed) 184ms
+     × stays true until the post-sign-out navigation commits 14ms
+npx.cmd : 
+At line:3 char:1
++ npx.cmd vitest run src/modules/auth/__tests__/AuthContext.test.tsx *> ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/auth/__tests__/AuthContext.test.tsx > isSigningOut pending state > stays true until the 
+post-sign-out navigation commits
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  true
+Received:
+  false
+ ❯ src/modules/auth/__tests__/AuthContext.test.tsx:422:50
+    420|     // update belongs to the re-entered transition, React keeps the OL…
+    421|     // no fallback, isSigningOut still true — until navPromise itself …
+    422|     expect(screen.getByTestId('is-signing-out')).toHaveTextContent('tr…
+       |                                                  ^
+    423|     expect(screen.queryByTestId('target-fallback')).not.toBeInTheDocum…
+    424|     expect(screen.getByTestId('target-idle')).toBeInTheDocument()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  16:51:25
+   Duration  1.67s (transform 80ms, setup 114ms, import 151ms, tests 184ms, environment 949ms)
+
+EXIT_CODE=1

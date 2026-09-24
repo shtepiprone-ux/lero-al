@@ -95,3 +95,47 @@ export const Default: Story = {
     )
   },
 }
+
+// Task 876 (GR-3a EXTEND — Mantine/Primitives/HeaderView): the sign-out pending state — the
+// header keeps its signed-in layout while UserMenu's trigger and the mobile hamburger both show
+// the native Mantine `loading` state (R3). Same authenticated fixture and bell placeholder as
+// `Default`, so this proves only the added `isSigningOut` prop, not a new shell composition.
+export const SigningOut: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const theme = useMantineTheme()
+
+    const bellPlaceholder = (
+      <ActionIcon variant="subtle" mih={theme.other.touchTarget} miw={theme.other.touchTarget} aria-label={t('header_actions_bell_slot_aria')}>
+        <Bell size={theme.other.iconSize.roomy} />
+      </ActionIcon>
+    )
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {t('header_view_caption_authed')}
+          </Text>
+          <HeaderView
+            isAuthenticated
+            user={{ name: 'Alba Krasniqi', avatar_url: null, role: 'user' }}
+            locale={locale}
+            onOpenAuth={() => {}}
+            onSwitchLocale={() => {}}
+            onNavigate={() => {}}
+            onOpenAdmin={() => {}}
+            onLogout={() => {}}
+            isSigningOut
+            mobileOpen={false}
+            onOpenMobile={() => {}}
+            onCloseMobile={() => {}}
+            notificationSlot={bellPlaceholder}
+            authSheetSlot={null}
+          />
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+}

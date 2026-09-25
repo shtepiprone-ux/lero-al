@@ -9,6 +9,53 @@ The following external service accounts are already registered and available for
 | Resend | https://resend.com | Transactional emails |
 | Sentry | https://sentry.io | Error monitoring |
 | GitHub | https://github.com | Code repository |
+| Vercel | https://vercel.com | App hosting + deployments + runtime logs (agent access: see below) |
+
+### Vercel — agent access (owner decision 2026-09-25)
+
+The owner installed the Claude Code Vercel plugin and linked the repo. Agents may connect to the Vercel project for
+**read-only inspection**. Verified 2026-09-25: `vercel whoami` returns the owner's account, and `vercel ls` lists
+Production deployments.
+
+| Item | Value |
+|---|---|
+| Team and project IDs | Read them at runtime from `.vercel/repo.json` (gitignored): `projects[0].orgId` = team ID, `projects[0].id` = project ID, `projects[0].name` = project slug. **Owner rule 2026-09-25: never copy these IDs, the team slug, or the account username into a tracked file** (docs, kickoffs, session logs, reviews). Refer to them as "the team/project from `.vercel/repo.json`". |
+| Local link | `.vercel/repo.json` (gitignored). If it is missing, stop and ask the owner to run `vercel link`. Do not guess IDs. |
+| Primary access path | Vercel CLI (`vercel`, globally installed, owner already logged in) |
+| Secondary access path | Vercel MCP connector from the plugin (`mcp__plugin_vercel_vercel__*`). It authenticates with its own OAuth and does **not** use `.env.local`. If a call returns "needs you to sign in", ask the owner to run `/mcp` and re-authenticate, then use the CLI in the meantime. |
+
+**`VERCEL_OIDC_TOKEN` in `.env.local`** is a Vercel OIDC token scoped to
+`project:lero-al:environment:development`. It is short-lived (about 12 h) and is refreshed by the owner running
+`vercel env pull`. It is **not** an account API token and grants no dashboard or deployment access. Agents must never
+print, log, copy into a file, or commit its value. Decoding its non-secret claims (`scope`, `exp`) to diagnose expiry
+is allowed.
+
+**Allowed for agents (read-only):**
+
+- `vercel whoami`, `vercel ls [lero-al]`, `vercel inspect <url>`, `vercel inspect <url> --logs` (build logs),
+  `vercel logs <url>` (runtime logs), `vercel project ls`, `vercel env ls` (names and targets only), `vercel domains ls`
+- The MCP read tools: `list_teams`, `list_projects`, `get_project`, `list_deployments`, `get_deployment`,
+  `get_deployment_build_logs`, `get_runtime_logs`, `get_runtime_errors`, `get_web_analytics`,
+  `get_project_deployment_protection`, `search_vercel_documentation`, `get_access_to_vercel_url`,
+  `web_fetch_vercel_url`
+- Always pass the scope explicitly (`--scope <orgId from .vercel/repo.json>`, or its team/project IDs for MCP), so
+  the call cannot resolve to another account.
+
+**Owner-only (never run by an agent unless the owner explicitly asks for that specific action in the current
+message):** any action that changes Vercel state or publishes something. This includes `vercel deploy` / `--prod`,
+`promote`, `rollback`, `redeploy`, `remove`, `alias`, `env add` / `env rm` / `env update`, `vercel env pull` (it
+overwrites `.env.local`), `domains add/rm`, `project` settings changes, `link` / `unlink`, and `integration` installs.
+The MCP equivalents are also owner-only: `deploy_to_vercel`, `pause_project` / `unpause_project`,
+`update_project_deployment_protection`, every `buy_*` or purchase tool, and toolbar thread writes. Deploying happens
+through the owner's git push flow (see `CLAUDE.md` → Git policy), never from an agent session.
+
+**Secret values:** never decrypt or print environment-variable values (`vercel env ls` shows names only; do not use
+`--decrypt` or `env pull` to read them) unless the owner explicitly asks for a named variable.
+
+**Use in review and diagnostics:** production-only failures, build failures, cron (`/api/cron/*`) failures and
+runtime errors should be checked against the deployment's build logs and runtime logs before any code or config
+change is proposed. Quote the deployment URL and the time window in the evidence. Logs are evidence for a finding,
+not a replacement for the QA profile's required automated evidence.
 
 ### Exchange Rate Pipeline (Task 175 / Epic M.1; updated Task 214 / M.5)
 

@@ -227,6 +227,18 @@ Required:
 - `docs/env.md`
 - `docs/qa-rules.md`
 
+## Deployment / Production Diagnostics (Vercel)
+
+Required:
+
+- `docs/integrations.md` - "Vercel — agent access" (read-only access paths, owner-only actions, secret handling).
+- `docs/env.md`
+
+Optional if relevant:
+
+- `docs/performance.md`
+- `docs/qa-rules.md`
+
 ## Component Catalog / Coverage
 
 Required:

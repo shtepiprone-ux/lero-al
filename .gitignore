@@ -79,3 +79,5 @@ Codex-tasks/
 
 # Technical Materials
 tech-materials/
+.vercel
+.env*

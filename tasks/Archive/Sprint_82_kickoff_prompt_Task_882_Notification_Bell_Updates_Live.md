@@ -2,7 +2,7 @@
 
 Sprint 82 · **P1** · QA profile **Q4** (live delivery depends on the signed-in user's JWT passing RLS on the Realtime
 path; the change touches the header bell's data hook, which carries critical-flow rows `:39` and `:77`) · owner decision
-**D82-7** · owner actions **O82-4**, **O82-5** · **Status: 📝 KICKOFF FILED 2026-09-24**
+**D82-7** · owner actions **O82-4**, **O82-5** · **Status: ✅ APPROVED WITH NOTES 2026-09-25** (review 2: R1–R5 verified; O82-4 passed; AC7/O82-5 is the open post-deploy owner check)
 
 Sprint plan: [`Sprint_82_Notifications_That_Were_Never_Delivered.md`](Sprint_82_Notifications_That_Were_Never_Delivered.md).
 Independent of 878 and 880: no shared file.

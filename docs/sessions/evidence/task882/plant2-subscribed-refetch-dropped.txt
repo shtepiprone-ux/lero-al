@@ -1,0 +1,38 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts (9 tests | 1 failed) 1281ms
+     × status sequence CHANNEL_ERROR -> SUBSCRIBED: console.warn fires once, and fetchAll runs once more after SUBSCRIBED 1052ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — realtime status recovery (Task 882 R2) > status sequence CHANNEL_ERROR -> SUBSCRIBED: console.warn fires once, and fetchAll runs once more after SUBSCRIBED
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:179:41
+    177|     capturedStatusCallback?.('SUBSCRIBED')
+    178|
+    179|     await waitFor(() => expect(fromSpy).toHaveBeenCalledTimes(2))
+       |                                         ^
+    180|     expect(warnSpy).toHaveBeenCalledTimes(1) // SUBSCRIBED itself is n…
+    181|   })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  11:46:45
+   Duration  2.40s (transform 58ms, setup 87ms, import 108ms, tests 1.28s, environment 760ms)
+
+EXIT_CODE=1

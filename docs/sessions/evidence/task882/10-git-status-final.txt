@@ -1,0 +1,9 @@
+ M docs/backlog.md
+ M docs/critical-flow-registry.md
+ M src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts
+ M src/modules/notifications/hooks/useNotifications.ts
+?? docs/sessions/2026-09-25-task882-notification-bell-live-updates.md
+?? docs/sessions/evidence/task882/
+?? scripts/task-882-realtime-probe.mjs
+
+EXIT_CODE=0

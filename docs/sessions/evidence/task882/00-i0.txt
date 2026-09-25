@@ -1,0 +1,6 @@
+PLATFORM: win32 v22.22.3
+GIT STATUS --porcelain:
+ M src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts  M src/modules/notifications/hooks/useNotifications.ts ?? scripts/task-882-realtime-probe.mjs
+
+HASH-OBJECT (pre-plant baseline):
+972d6647c9a0724f4c91bb97650091b5a0cb930d ac729de9cfd955f5088020945228ce958d940976 bf984c0dc5727ec65cc3c3fef8e840fff2d016d9

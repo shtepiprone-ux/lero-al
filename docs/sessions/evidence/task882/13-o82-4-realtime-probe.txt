@@ -1,0 +1,14 @@
+PLATFORM: win32 v22.22.3
+CWD: C:\Claude_Code_Projects\lero-al
+COMMAND: node.exe scripts\task-882-realtime-probe.mjs (PROBE_EMAIL/PROBE_PASSWORD = raw .env.local HYDRATION_ADMIN_* as read by capture-admin-session.mjs, owner-updated password, not printed)
+RUN AT: 2026-09-25T13:12:25.0463196+02:00
+SUPERSEDES: the two 12:59/13:00 sign-in setup errors (stale password)
+
+Signing in as the probe (test) account...
+Signed in. Subscribing both arms (same shape the shipped hook uses)...
+Both arms SUBSCRIBED. Inserting the probe row via the service role...
+ARM A 716ms
+ARM B none
+probe row deleted
+
+EXIT_CODE=0

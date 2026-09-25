@@ -1,0 +1,238 @@
+
+> lero-al@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.18
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+   Creating an optimized production build ...
+npm.cmd : <w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization 
+performance (consider using Buffer instead and decode when needed)
+At line:8 char:8
++ $out = npm.cmd run build 2>&1 | Out-String
++        ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (<w> [webpack.ca...de when needed):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (195kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (139kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (231kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance 
+(consider using Buffer instead and decode when needed)
+ ✓ Compiled successfully in 82s
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/40) ...
+   Generating static pages (10/40) 
+   Generating static pages (20/40) 
+   Generating static pages (30/40) 
+ ✓ Generating static pages (40/40)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                      379 B         185 kB
+├ ƒ /_not-found                          1.16 kB         186 kB
+├ ƒ /[locale]                            7.72 kB         646 kB
+├ ƒ /[locale]/[slug]                       380 B         185 kB
+├ ƒ /[locale]/auth/confirm-email         2.18 kB         192 kB
+├ ƒ /[locale]/auth/login                   321 B         276 kB
+├ ƒ /[locale]/auth/register                320 B         276 kB
+├ ƒ /[locale]/auth/reset-password        3.82 kB         562 kB
+├ ƒ /[locale]/auth/verified              3.94 kB         258 kB
+├ ƒ /[locale]/cabinet                     149 kB         867 kB
+├ ƒ /[locale]/ci/click-shield-modal      5.59 kB         273 kB
+├ ƒ /[locale]/contact                    4.88 kB         231 kB
+├ ƒ /[locale]/favorites                  11.4 kB         583 kB
+├ ƒ /[locale]/listings                   13.5 kB         656 kB
+├ ƒ /[locale]/listings/[slug]              401 B         688 kB
+├ ƒ /[locale]/listings/[slug]/edit       2.39 kB         252 kB
+├ ƒ /[locale]/listings/create            2.39 kB         252 kB
+├ ƒ /admin                               7.19 kB         434 kB
+├ ƒ /admin/companies                     7.44 kB         347 kB
+├ ƒ /admin/currency                      10.3 kB         343 kB
+├ ƒ /admin/email-templates               9.16 kB         254 kB
+├ ƒ /admin/footer                        6.05 kB         233 kB
+├ ƒ /admin/inquiries                       379 B         185 kB
+├ ƒ /admin/inquiries/sales                 336 B         381 kB
+├ ƒ /admin/inquiries/support               336 B         381 kB
+├ ƒ /admin/legal                           379 B         185 kB
+├ ƒ /admin/listings                      9.86 kB         477 kB
+├ ƒ /admin/listings/[id]/preview           400 B         688 kB
+├ ƒ /admin/locations                     8.77 kB         262 kB
+├ ƒ /admin/pages                           11 kB         315 kB
+├ ƒ /admin/permissions                   8.93 kB         220 kB
+├ ƒ /admin/popular-locations             8.07 kB         261 kB
+├ ƒ /admin/property-types                5.44 kB         336 kB
+├ ƒ /admin/reports                         24 kB         329 kB
+├ ƒ /admin/settings                      5.13 kB         222 kB
+├ ƒ /admin/support                       6.82 kB         422 kB
+├ ƒ /admin/users                         8.21 kB         512 kB
+├ ƒ /admin/users/[id]                      397 B         632 kB
+├ ƒ /admin/users/new                       397 B         632 kB
+├ ƒ /api/auth-email-hook                   379 B         185 kB
+├ ƒ /api/auth/me                           379 B         185 kB
+├ ƒ /api/cron/inactivity                   379 B         185 kB
+├ ƒ /api/cron/listing-activity             379 B         185 kB
+├ ƒ /api/cron/listings-expiry              380 B         185 kB
+├ ƒ /api/cron/price-alerts                 379 B         185 kB
+├ ƒ /api/cron/saved-searches               378 B         185 kB
+├ ○ /api/exchange-rate                     379 B         185 kB          1h      1y
+├ ƒ /api/listings                          379 B         185 kB
+├ ƒ /api/listings/[slug]/view              379 B         185 kB
+├ ƒ /api/presence                          379 B         185 kB
+├ ƒ /api/property-types                    379 B         185 kB
+├ ƒ /api/upload-avatar                     379 B         185 kB
+├ ƒ /api/upload-company-logo               378 B         185 kB
+├ ƒ /api/upload-popular-location-photo     379 B         185 kB
+├ ƒ /auth/callback                         378 B         185 kB
+└ ƒ /auth/confirm                          379 B         185 kB
++ First Load JS shared by all             184 kB
+  ├ chunks/3434-d1c818adbce3217b.js       126 kB
+  ├ chunks/4bd1b696-ad216e4073dcea52.js  54.4 kB
+  └ other shared chunks (total)          4.47 kB
+
+
+ƒ Middleware                              165 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+EXIT_CODE=0

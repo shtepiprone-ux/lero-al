@@ -1,0 +1,39 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts (9 tests | 1 failed) 261ms
+     × with a user: channel is called with a name containing the id, and on is called with filter user_id=eq.<id> 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — subscription is scoped to the signed-in user (Task 882 R1) > with a user: channel is called with a name containing the id, and on is called with filter user_id=eq.<id>
+AssertionError: expected { event: '*', schema: 'public', …(1) } to match object { filter: 'user_id=eq.user-abc' }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "filter": "user_id=eq.user-abc",
++   "event": "*",
++   "schema": "public",
++   "table": "notifications",
+  }
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:141:33
+    139|     expect(channelSpy).toHaveBeenCalledTimes(1)
+    140|     expect(channelSpy.mock.calls[0][0]).toEqual(expect.stringContainin…
+    141|     expect(capturedOnArgs?.[1]).toMatchObject({ filter: 'user_id=eq.us…
+       |                                 ^
+    142|   })
+    143|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  11:46:28
+   Duration  1.27s (transform 55ms, setup 84ms, import 104ms, tests 261ms, environment 690ms)
+
+EXIT_CODE=1

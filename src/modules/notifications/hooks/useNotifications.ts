@@ -1,24 +1,35 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 import type { Notification } from '@/types/database'
 
 const PAGE_SIZE = 30
 
 export function useNotifications() {
+  const { user } = useAuth()
+  const userId = user?.id ?? null
+
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [loading, setLoading] = useState(true)
-  const channelRef = useRef<ReturnType<ReturnType<typeof createClient>['channel']> | null>(null)
 
   const fetchAll = useCallback(async () => {
     const supabase = createClient()
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('notifications')
       .select('id, user_id, type, title, body, link, is_read, created_at, template_id, template_params')
       .order('created_at', { ascending: false })
       .limit(PAGE_SIZE)
+
+    if (error) {
+      // Query failed — keep the previously loaded list rather than clearing it.
+      console.error('[notifications] fetch failed', error)
+      setLoading(false)
+      return
+    }
+
     const list = (data ?? []) as Notification[]
     setNotifications(list)
     setUnreadCount(list.filter(n => !n.is_read).length)
@@ -28,22 +39,56 @@ export function useNotifications() {
   useEffect(() => {
     fetchAll()
 
+    if (!userId) return
+
     const supabase = createClient()
-    // Subscribe to own notifications via Realtime.
-    // Supabase RLS filters to the authenticated user's rows server-side.
+    // cancelled guards against acting on a status callback fired by the hook's own
+    // removeChannel() cleanup (a CLOSED status), not only against a real disconnect.
+    let cancelled = false
+    // Tracks whether the channel has passed through a non-SUBSCRIBED status (error/timeout/
+    // close) since it was opened, so a later SUBSCRIBED knows to recover any events missed
+    // while disconnected. The very first SUBSCRIBED after mount does not need to refetch —
+    // fetchAll() above already ran.
+    let hadNonSubscribed = false
+
+    // Subscribe to this user's own notifications via Realtime.
+    // The filter scopes the subscription; Supabase RLS enforces it server-side too.
     const channel = supabase
-      .channel('user-notifications')
+      .channel(`user-notifications:user:${userId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'notifications' },
+        { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
         () => { fetchAll() },
       )
-      .subscribe()
+      .subscribe((status: string, err?: Error) => {
+        if (cancelled) return
 
-    channelRef.current = channel
+        if (status === 'SUBSCRIBED') {
+          if (hadNonSubscribed) {
+            fetchAll()
+          }
+          return
+        }
+
+        console.warn(`[notifications] realtime ${status}`, err)
+        hadNonSubscribed = true
+      })
 
     return () => {
+      cancelled = true
       supabase.removeChannel(channel)
+    }
+  }, [userId, fetchAll])
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchAll()
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange)
     }
   }, [fetchAll])
 

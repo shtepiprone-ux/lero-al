@@ -4,14 +4,12 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { Menu } from 'lucide-react'
-import { ActionIcon, Anchor, Box, Group, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Anchor, Box, Button, Divider, Flex, Group, Text, useMantineTheme } from '@mantine/core'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { UserMenu } from '@/components/layout/UserMenu'
 import { MobileNavDrawer } from '@/components/layout/MobileNavDrawer'
 import type { AuthView } from '@/modules/auth/components/AuthSheet'
-import { cn } from '@/lib/utils'
-import styles from './HeaderView.module.css'
 
 // ── NavLinks ──────────────────────────────────────────────────────────────────
 //
@@ -29,24 +27,22 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const locale = useLocale()
   return (
     <>
-      <Anchor
-        unstyled
+      <Button
         component={Link}
         href={`/${locale}`}
-        className={styles.navLink}
+        variant="transparent"
         onClick={onNavigate}
       >
         {t('home')}
-      </Anchor>
-      <Anchor
-        unstyled
+      </Button>
+      <Button
         component={Link}
         href={`/${locale}/listings`}
-        className={styles.navLink}
+        variant="transparent"
         onClick={onNavigate}
       >
         {t('listings')}
-      </Anchor>
+      </Button>
     </>
   )
 }
@@ -93,40 +89,35 @@ export function HeaderView({
   const theme = useMantineTheme()
 
   return (
-    <Box component="header" className={cn('site-header', styles.header)}>
-      {/* Task 590 (owner 2026-07-13): flex-wrap below a custom 390px breakpoint — the right
-          cluster's natural width (LocaleSwitcher + Favorites + notification bell + hamburger, all
-          icon-only/compact controls) sits at an exact 0px-margin fit alongside the logo at 320px
-          in production (no active overflow, but no safety buffer either); 390px+ already measures
-          a comfortable fit, so the wrap is scoped narrowly to <390 only (owner 2026-07-13) rather
-          than the standard `sm` (640px) breakpoint. Wrapping the logo alone onto row 1 and the full
-          control cluster onto row 2 below 390px gives real breathing room instead of a knife-edge
-          fit; ≥390px keeps the original single-row h-16 layout byte-for-byte (measured 0px overflow
-          margin at 390 itself, comfortable margin above it). Task 706 (D30) moved this breakpoint
-          from a Tailwind arbitrary-value utility into this module's own
-          `@media (min-width: 390px)` rule (`HeaderView.module.css`) — still a one-off inline value,
-          not a new named scale entry in the Mantine theme (§5.3 A3). */}
-      {/* Task 629: every Group/Anchor/Text below is `unstyled` — @mantine/core/styles.css ships with
-          no `@layer` wrapper (verified: zero `@layer` in the package's compiled CSS), so its own
-          classes (flex/gap/justify-content on Group, color/font-size/font-weight/text-decoration on
-          Anchor/Text) are unlayered and win over ANY Tailwind `@layer utilities` class regardless of
-          source order — the opposite of the "Tailwind overrides Mantine" assumption documented in
-          docs/mantine-responsive-design-system.md §4. `unstyled` strips each primitive's own CSS
-          module class, handing 100% of styling back to the classes below (Task 706: `HeaderView.
-          module.css`, same mechanism as the prior verbatim Tailwind classNames it replaces — the
-          only way to keep this chrome byte-for-byte identical). `Box` (the `<header>` wrapper above)
-          needs no `unstyled` — it ships zero baked CSS of its own. */}
-      <Group unstyled className={cn('container-wide', styles.bar)}>
+    <Box component="header" className="site-header" pos="sticky" top={0} w="100%" bg="white" style={{ zIndex: theme.other.zIndex.siteHeader }}>
+      {/* Task 590 (owner 2026-07-13) / D30, Task 879 (D81-7): flex-wrap below the `xs1` (390px)
+          theme breakpoint — the right cluster's natural width (LocaleSwitcher + Favorites +
+          notification bell + hamburger, all icon-only/compact controls) sits at an exact 0px-margin
+          fit alongside the logo at 320px in production (no active overflow, but no safety buffer
+          either); 390px+ already measures a comfortable fit, so the wrap is scoped narrowly to
+          <390 only rather than the standard `sm` (640px) breakpoint. Wrapping the logo alone onto
+          row 1 and the full control cluster onto row 2 below 390px gives real breathing room
+          instead of a knife-edge fit; ≥390px keeps the original single-row h-16 layout byte-for-byte
+          (measured 0px overflow margin at 390 itself, comfortable margin above it). */}
+      <Flex
+        className="container-wide"
+        wrap={{ base: 'wrap', xs1: 'nowrap' }}
+        align="center"
+        justify="space-between"
+        gap="xs"
+        py={{ base: 'xs', xs1: 0 }}
+        h={{ base: 'auto', xs1: theme.other.boxSize.siteHeaderBar }}
+      >
         {/* Logo */}
-        <Anchor unstyled component={Link} href={`/${locale}`} className={styles.logo}>
-          <Text unstyled component="span" className={styles.brandPrimary}>Lero</Text>
-          <Text unstyled component="span" className={styles.brandForeground}>.al</Text>
+        <Anchor component={Link} href={`/${locale}`} underline="never" fz="xl" fw={700} lh={theme.other.lineHeight.siteWordmark}>
+          <Group component="span" gap="tight" wrap="nowrap">
+            <Text span inherit c="brand">Lero</Text>
+            <Text span inherit c="gray.8">.al</Text>
+          </Group>
         </Anchor>
 
-        {/* Desktop nav — `visibleFrom="md"` replaces `hidden md:flex` (Box-level mechanism, unaffected
-            by `unstyled`); `display:flex` is explicit in the module since `unstyled` removes Group's own
-            `display:flex` default. */}
-        <Group unstyled visibleFrom="md" className={styles.desktopNav}>
+        {/* Desktop nav — `visibleFrom="md"` replaces `hidden md:flex`. */}
+        <Group gap={0} wrap="nowrap" visibleFrom="md">
           <NavLinks />
         </Group>
 
@@ -134,7 +125,12 @@ export function HeaderView({
             spans the full row width and distributes its controls edge-to-edge (`justify-between`)
             instead of clustering left; ≥390px reverts to the original compact inline `gap-2` row
             sharing the line with the logo (byte-identical to pre-Task-590 at that width). */}
-        <Group unstyled className={styles.rightCluster}>
+        <Flex
+          align="center"
+          gap="xs"
+          w={{ base: '100%', xs1: 'auto' }}
+          justify={{ base: 'space-between', xs1: 'flex-start' }}
+        >
           {/* Language switcher — the ONE canonical adaptive LocaleSwitcher at all breakpoints
               (Task 577): its MantineDropdownMenu is already adaptive (anchored menu ≥640,
               full-width bottom sheet <640), so the previous separate mobile combobox was a
@@ -145,17 +141,17 @@ export function HeaderView({
 
           {/* Trailing cluster — Task 787 (owner mobile top-bar contract, 2026-09-04): notifications,
               Favorites and the burger must sit GROUPED beside each other, Favorites nearest the
-              burger, below `md`. Below the `.bar`'s own 390px wrap point `.rightCluster` is
+              burger, below `md`. Below the bar's own 390px wrap point the right side is
               `width:100%; justify-content:space-between` (Task 590, unchanged) so it can spread a
               two-item row (locale switcher vs. everything else) full-width for breathing room; with
-              the individual controls as DIRECT `.rightCluster` children that same space-between
+              the individual controls as DIRECT right-side children that same space-between would
               spread every control evenly (measured ~37px gaps at 375px, not the ~8px `gap` token),
               scattering Favorites away from the burger. Wrapping notifications/Favorites/UserMenu/
-              burger/drawer in ONE inner group turns them into a single flex item, so
-              `.rightCluster`'s space-between spreads only [locale switcher] vs. [this cluster] and
-              the cluster's own `.trailingCluster` gap (same `--homepage-runtime-space-2` token as
-              `.rightCluster`, R7: no new token) keeps its members tightly adjacent at every width. */}
-          <Group unstyled className={styles.trailingCluster}>
+              burger/drawer in ONE inner group turns them into a single flex item, so the right
+              side's space-between spreads only [locale switcher] vs. [this cluster] and the
+              cluster's own `gap="xs"` (same token role as the right side, R7: no new token) keeps
+              its members tightly adjacent at every width. */}
+          <Group gap="xs" wrap="nowrap">
             {/* Favorites + notification-bell slot + guest login/register — HeaderActions primitive
                 (Task 575). NotificationBell stays container-owned (own hooks, dynamic ssr:false)
                 and is passed as a slot — never hook-called inside the primitive. */}
@@ -167,11 +163,9 @@ export function HeaderView({
             />
 
             {/* User menu — desktop, authenticated only (guest login/register live in HeaderActions).
-                `visibleFrom="md"` replaces `hidden md:flex`; `display:flex` is explicit in the module
-                since `unstyled` removes Group's own `display:flex` default (see the container-row
-                comment above). */}
+                `visibleFrom="md"` replaces `hidden md:flex`. */}
             {user && (
-              <Group unstyled visibleFrom="md" className={styles.userMenuSlot}>
+              <Group gap="xs" wrap="nowrap" visibleFrom="md">
                 <UserMenu
                   user={user}
                   locale={locale}
@@ -185,10 +179,7 @@ export function HeaderView({
 
             {/* Mobile hamburger — icon-only trigger (clause-11 documented exemption), mirrors the
                 canonical icon-only ActionIcon reference in DropdownMenu.stories.tsx block 3
-                (variant="default", 2.75rem/44px min touch target). `size={20}` replaces the prior
-                `h-5 w-5` Tailwind className (Task 706 §5.2): lucide's own `size` prop writes the SVG
-                `width`/`height` attributes directly (20/20) and was measured to produce the identical
-                20px computed box as the CSS class it replaces — "prop before module" (§3.7). */}
+                (variant="default", 2.75rem/44px min touch target). */}
             <ActionIcon
               variant="default"
               aria-label={tc('aria_open_menu')}
@@ -210,8 +201,10 @@ export function HeaderView({
               onLogout={onLogout}
             />
           </Group>
-        </Group>
-      </Group>
+        </Flex>
+      </Flex>
+
+      <Divider />
 
       {authSheetSlot}
     </Box>

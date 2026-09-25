@@ -687,7 +687,12 @@ Exception: `z-[9999]` (Combobox mobile bottom sheet, PerfDevOverlay) is intentio
 file under `src/` consumes any `--z-*` token — the two former consumers
 (`HeaderView.module.css:35`, `MobileBottomNavView.module.css:55`) carried a marked, unconsumed
 `z-index: 30` instead (Task 715 §5.3). `MobileBottomNavView.module.css` was deleted by Task 787
-(2026-09-04, mobile bottom bar removal); `HeaderView.module.css:35` remains the sole marked site.
+(2026-09-04, mobile bottom bar removal); `HeaderView.module.css:35` was the sole remaining marked
+site until Task 879 (D81-7, 2026-09-25) deleted that module too — the site header's `z-index: 30`
+is now `theme.other.zIndex.siteHeader`, a typed Mantine theme value consumed via a single
+`style={{ zIndex }}` on `HeaderView.tsx`'s `<Box component="header">`, still not a `--z-*` custom
+property (Task 718's finding that no such property is emitted at runtime remains true). No file
+under `src/` carries a marked, unconsumed `z-index: 30` any more.
 Defining the tokens therefore cannot change a rendered pixel;
 it only makes the documentation and `globals.css` agree, and makes the next `var(--z-sticky)`
 consumption resolve instead of silently computing to `auto`.
@@ -1238,11 +1243,15 @@ never substituted here.
 equality table instead of the rendered comparator — recorded in the Task 715 session log, not
 papered over.
 
-**The `z-index: 30` sites are marked, not tokenized (review finding F1).** 716's inventory classified
-`HeaderView.module.css:35` and `MobileBottomNavView.module.css:55` as `N1-VIOLATION → --z-sticky (30)`
-against §22.3's z-index table. That table is documentation-only — see its ⚠️ banner. Both sites keep
-`z-index: 30` with a `design-tokens-allow` marker, matching `PopularLocationsView.module.css:56`'s
-`z-index: 1`. Final split: **30 tokenized / 30 marked**.
+**The `z-index: 30` sites were marked, not tokenized (review finding F1) — historical.** 716's
+inventory classified `HeaderView.module.css:35` and `MobileBottomNavView.module.css:55` as
+`N1-VIOLATION → --z-sticky (30)` against §22.3's z-index table. That table is documentation-only —
+see its ⚠️ banner. `MobileBottomNavView.module.css` was deleted by Task 787; Task 879 (D81-7,
+2026-09-25) then replaced the header's marked `z-index: 30` with `theme.other.zIndex.siteHeader`,
+a typed Mantine theme value (see the §22.4 note above) — the site now uses that token instead of a
+`design-tokens-allow`-marked literal. `PopularLocationsView.module.css:56`'s `z-index: 1` is a
+separate site, unchanged by this task: it remains a `design-tokens-allow`-marked literal, not a
+token, and is not a precedent for the header's new value (out of this task's scope).
 
 **Standing gap, not closed here:** `scripts/design-tokens-allowlist.json`'s `src/design-system/mantine`
 entry allowlists the whole directory at the path level, exempting

@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl'
 import { Avatar, Button, Divider, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import { LogOut } from 'lucide-react'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
-import styles from './MobileNavDrawer.module.css'
 
 type MobileAuthView = 'login' | 'register' | 'register-agent'
 
@@ -53,39 +52,47 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
                   (D81-7, authorized visual-scale change closing the last inline-style hardcode). */}
               <Text size="sm" fw={500}>{user.name}</Text>
             </Group>
-            <Divider color="var(--border)" />
+            <Divider />
           </Stack>
         )}
 
-        <Stack component="nav" gap="md">
-          <Link href={`/${locale}`} className={styles.navLink} onClick={() => navigate(`/${locale}`)}>
+        <Stack component="nav" gap={0}>
+          <Button component={Link} href={`/${locale}`} variant="transparent" fullWidth justify="flex-start" pl={0} onClick={() => navigate(`/${locale}`)}>
             {t('home')}
-          </Link>
-          <Link href={`/${locale}/listings`} className={styles.navLink} onClick={() => navigate(`/${locale}/listings`)}>
+          </Button>
+          <Button component={Link} href={`/${locale}/listings`} variant="transparent" fullWidth justify="flex-start" pl={0} onClick={() => navigate(`/${locale}/listings`)}>
             {t('listings')}
-          </Link>
+          </Button>
           {user && (
             <>
-              <Link href={`/${locale}/cabinet`} className={styles.navLink} onClick={() => navigate(`/${locale}/cabinet`)}>
+              <Button component={Link} href={`/${locale}/cabinet`} variant="transparent" fullWidth justify="flex-start" pl={0} onClick={() => navigate(`/${locale}/cabinet`)}>
                 {t('profile')}
-              </Link>
-              <Link
+              </Button>
+              <Button
+                component={Link}
                 href={`/${locale}/cabinet?tab=listings`}
-                className={styles.navLink}
+                variant="transparent"
+                fullWidth
+                justify="flex-start"
+                pl={0}
                 onClick={() => navigate(`/${locale}/cabinet?tab=listings`)}
               >
                 {t('my_listings')}
-              </Link>
-              <Link href={`/${locale}/favorites`} className={styles.navLink} onClick={() => navigate(`/${locale}/favorites`)}>
+              </Button>
+              <Button component={Link} href={`/${locale}/favorites`} variant="transparent" fullWidth justify="flex-start" pl={0} onClick={() => navigate(`/${locale}/favorites`)}>
                 {t('favorites')}
-              </Link>
-              <Link
+              </Button>
+              <Button
+                component={Link}
                 href={`/${locale}/listings/create`}
-                className={styles.navLink}
+                variant="transparent"
+                fullWidth
+                justify="flex-start"
+                pl={0}
                 onClick={() => navigate(`/${locale}/listings/create`)}
               >
                 {t('add_listing')}
-              </Link>
+              </Button>
             </>
           )}
         </Stack>
@@ -94,7 +101,7 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
           // Divider first, then a nested gap="xs"(8px, matching gap-2) group of buttons —
           // same non-uniform-spacing reasoning as the user block above.
           <Stack gap="md">
-            <Divider color="var(--border)" />
+            <Divider />
             <Stack gap="xs">
               <Button variant="default" fullWidth onClick={() => openAuth('login')}>
                 {t('login')}
@@ -108,7 +115,7 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
                 variant="transparent"
                 fullWidth
                 justify="flex-start"
-                styles={{ root: { paddingLeft: 0 } }}
+                pl={0}
                 onClick={() => openAuth('register-agent')}
               >
                 {t('register_agent')}
@@ -119,14 +126,14 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
 
         {user && (
           <Stack gap="md">
-            <Divider color="var(--border)" />
+            <Divider />
             <Button
               variant="transparent"
               color="red"
               fullWidth
               justify="flex-start"
               leftSection={<LogOut size={theme.other.iconSize.standard} />}
-              styles={{ root: { paddingLeft: 0 } }}
+              pl={0}
               onClick={logout}
             >
               {t('logout')}

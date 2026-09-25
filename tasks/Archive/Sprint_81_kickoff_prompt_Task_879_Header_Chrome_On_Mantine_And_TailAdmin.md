@@ -2,8 +2,8 @@
 
 **Sprint:** 81 (`tasks/Sprints/Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`, goal 4) · **Priority:** P2 ·
 **QA profile:** Q4 (see §13) · **Depends on:** 878 (✅ archived 2026-09-24) · **Owner decision:** D81-7 ·
-**State:** `NEEDS REVISION` — **Revision 1** (2026-09-25, orchestrator review): execute **§16 only** (remediation
-re-entry, no `src/` edit) · **Written:** 2026-09-25 by the orchestrator (Opus).
+**State:** ✅ `APPROVED WITH NOTES` 2026-09-25 — review 2 (Revision 1, §16); owner matrix O81-9 accepted 2026-09-25 ·
+**Written:** 2026-09-25 by the orchestrator (Opus).
 
 Executor: follow `.claude/skills/execute-task/SKILL.md`. Your strongest allowed status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Never approve, and never run or suggest a mutating git command.

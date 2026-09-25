@@ -92,7 +92,6 @@ export const MIGRATION_INPUTS_REL = [
   'src/app/[locale]/layout.tsx',
   'src/app/[locale]/page.tsx',
   'src/components/layout/FooterView.module.css',
-  'src/components/layout/HeaderView.module.css',
   'src/components/shared/HeroSearchView.module.css',
   'src/design-system/mantine/patterns/MantineCopyIdButton.module.css',
   'src/design-system/mantine/patterns/MantineHomeSection.tsx',
@@ -112,6 +111,13 @@ export const EXPECTED_ZERO_PROPERTY = '--space-0';
 // Quote is historical (Task 770, twelve-input manifest). Task 787 (2026-09-04) deleted
 // `MobileBottomNavView.module.css` from the manifest — see the current FULL_CENSUS_*/
 // MIGRATION_TARGET_*/MIGRATION_SIGNATURE constants below (77/141 and 34/65) for the live values.
+// Task 879 (D81-7, R13) deleted `HeaderView.module.css` from the manifest — the header's chrome
+// moved to Mantine props/theme tokens (`theme.other.zIndex.siteHeader` etc.), so its four
+// migration-target rows (`--space-1`/`--space-16`/`--space-2`/`--space-6`) no longer exist to
+// migrate. `MIGRATION_INPUTS_REL` drops to ten files; `MIGRATION_TARGET_PAIRS/USES` become 30/58
+// (34-4 pairs, 66-8 uses — this manifest's four HeaderView rows totalled 1+1+5+1=8 uses); the
+// FULL_CENSUS_*/MIGRATION_SIGNATURE constants below are re-measured against the post-change tree
+// (this gate's own `--report` output), not derived by hand.
 // Each tuple is (file, legacyProperty, expectedToken, uses), derived from the kickoff §3.1 census
 // and the §10.2 replacement mapping, then re-verified against the migrated tree. Line numbers are
 // deliberately absent: re-indentation or an added declaration must never invalidate the signature,
@@ -121,10 +127,6 @@ export const MIGRATION_TARGETS = [
   { file: 'src/app/[locale]/page.tsx', legacyProperty: '--space-24', expectedToken: '--homepage-runtime-space-24', uses: 1 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-12', expectedToken: '--homepage-runtime-space-12', uses: 2 },
   { file: 'src/components/layout/FooterView.module.css', legacyProperty: '--space-2-5', expectedToken: '--homepage-runtime-space-2-5', uses: 1 },
-  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-1', expectedToken: '--homepage-runtime-space-1', uses: 1 },
-  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-16', expectedToken: '--homepage-runtime-space-16', uses: 1 },
-  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 5 },
-  { file: 'src/components/layout/HeaderView.module.css', legacyProperty: '--space-6', expectedToken: '--homepage-runtime-space-6', uses: 1 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 2 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-11', expectedToken: '--homepage-runtime-space-11', uses: 1 },
   { file: 'src/components/shared/HeroSearchView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 1 },
@@ -154,11 +156,14 @@ export const MIGRATION_TARGETS = [
 ];
 
 // The three independent invariants Case 5 asserts (owner decision 2026-08-27).
-export const FULL_CENSUS_PAIRS = 77;
-export const FULL_CENSUS_USES = 142;
-export const MIGRATION_TARGET_PAIRS = 34;
-export const MIGRATION_TARGET_USES = 66;
-export const MIGRATION_SIGNATURE = '9ed1b2c3d40b51bec82682f851bf2781181159eca188178a73263ef4eb40b3d8';
+export const MIGRATION_TARGET_PAIRS = 30;
+export const MIGRATION_TARGET_USES = 58;
+// FULL_CENSUS_PAIRS/USES and MIGRATION_SIGNATURE re-measured against the post-Task-879 tree via
+// this gate's own `--report` output (2026-09-25): "TOTAL CLASSIFIED (all categories): 65 pair(s) /
+// 123 use(s)" and "observed signature f3093b7d265f43b81b687420e4897f411c498f21ba44612a67b2496de896939f".
+export const FULL_CENSUS_PAIRS = 65;
+export const FULL_CENSUS_USES = 123;
+export const MIGRATION_SIGNATURE = 'f3093b7d265f43b81b687420e4897f411c498f21ba44612a67b2496de896939f';
 
 function canonicalTargetLine(t) {
   return `${t.file}|${t.legacyProperty}|${t.expectedToken}|${t.uses}`;
@@ -485,7 +490,7 @@ function runCase2() {
 function runCase3() {
   const tree = setupTempTree();
   try {
-    const targetRel = MIGRATION_INPUTS_REL[3]; // HeaderView.module.css
+    const targetRel = MIGRATION_INPUTS_REL[3]; // HeroSearchView.module.css (Task 879 shifted this index)
     rmSync(join(tree.base, targetRel));
     const outcome = evaluate(tree.base);
     const namesMissing = typeof outcome.fatal === 'string' && outcome.fatal.includes(targetRel);
@@ -519,10 +524,13 @@ function runCase4() {
 // it, so both the full census and the migrated-target subset dropped: 94/170 -> 77/141 and
 // 42/79 -> 34/65 — then (b) added one new `var(--homepage-runtime-space-2)` call site in
 // `HeaderView.module.css` (the `.trailingCluster` gap, R4 fix), an EXISTING approved-target
-// token reused, not a new one (R7): 77/141 -> 77/142 and 34/65 -> 34/66):
-//   FULL_CENSUS       — exactly 77 pairs / 142 uses across the eleven manifest files, all five
+// token reused, not a new one (R7): 77/141 -> 77/142 and 34/65 -> 34/66). Task 879 (D81-7, R13,
+// 2026-09-25) then deleted `HeaderView.module.css` from the manifest entirely — the header's
+// chrome moved to Mantine props/theme tokens — dropping both invariants again: 77/142 -> 65/123
+// and 34/66 -> 30/58, over ten manifest files, not eleven:
+//   FULL_CENSUS       — exactly 65 pairs / 123 uses across the ten manifest files, all five
 //                       categories.
-//   MIGRATED_TARGETS  — exactly 34 pairs / 66 uses, AND every approved (file, legacyProperty,
+//   MIGRATED_TARGETS  — exactly 30 pairs / 58 uses, AND every approved (file, legacyProperty,
 //                       expectedToken, uses) tuple matches, witnessed by an exact signature match.
 //   BLOCKING          — exactly 0 pairs / 0 uses, and 0 expected-zero violations.
 // A count alone is not sufficient: two wrong-but-root-owned substitutions can preserve every count.
@@ -561,10 +569,13 @@ function runCase5() {
 //   • `unknown` stays 0 — the name resolves;
 //   • FULL_CENSUS is unchanged in uses — one call site swapped, none added or removed.
 // Nothing but the approved-target comparison and its signature can see this defect.
+// Task 879 (D81-7, R13) moved the plant off `HeaderView.module.css` (deleted from the manifest)
+// onto `HeroSearchView.module.css`, an existing manifest file whose own `.gap` rule already
+// consumes the identical `var(--homepage-runtime-space-2)` token (single occurrence).
 function runCase6() {
   const tree = setupTempTree();
   try {
-    const targetRel = 'src/components/layout/HeaderView.module.css';
+    const targetRel = 'src/components/shared/HeroSearchView.module.css';
     const target = join(tree.base, targetRel);
     const raw = readFileSync(target, 'utf8');
     const from = 'var(--homepage-runtime-space-2)';

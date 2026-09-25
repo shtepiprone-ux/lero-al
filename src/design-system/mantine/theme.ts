@@ -125,10 +125,26 @@ declare module '@mantine/core' {
       | 'prose'           // 576px — homepage hero subtitle max-width
       | 'ctaSection'       // 672px — homepage CTA box max-width
       | 'content'        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
-      | 'dashboardContentMaxWidth', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1,
+      | 'dashboardContentMaxWidth' // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1,
                                     // "max content width 1440"). `MantineDashboardGrid` root `maw`.
+      // Task 879 (D81-7, F7) — the header bar's own block-size ≥390px. Same 4rem value as
+      // `mainViewportOffset` (they happen to coincide numerically) but a DISTINCT rendered role
+      // (rule 3): this one sizes the sticky header bar itself, not the main-content top offset.
+      | 'siteHeaderBar' // 4rem (64px) — Task 879: HeaderView `.bar` height ≥390px (R3/F7)
+      // Task 879 (D81-7, R10) — AuthSheet's register-agent company-logo tile, both the image and
+      // placeholder-icon variants (pre-879 `AuthSheet.module.css` `.logoImg`/`.logoPlaceholder`,
+      // migrated exactly, one shared role for the two visual states of the same tile).
+      | 'providerLogoTile', // 2.25rem (36px) — Task 879: AuthSheet company-logo tile (R10)
       string
     >
+    // Task 879 (D81-7, R2) — the site header's stacking level, the project's first `zIndex` role.
+    // `theme.other` was an untyped bag for numeric z-index values before this task (verified: no
+    // `zIndex` key existed anywhere in this file); typed the same way `iconSize`/`boxSize` are, one
+    // named role at a time, so a future collision is a rule-3 decision, never a silent overwrite.
+    // Value 30 = the pre-879 `HeaderView.module.css` `.header { z-index: 30; }` literal (F5): no
+    // `--z-*` custom property is emitted at runtime for this level (Task 718), so the value is kept
+    // as a plain theme number, not a `var(--z-…)` reference.
+    zIndex: Record<'siteHeader', number>
     // Task 784 Revision 3 (D69-18) — a single shared micro-tracking role for uppercase filter/
     // section headings. Source: the pre-D69-16 `MantineFilterSection.tsx`/`ListingsFilters.tsx`
     // `letterSpacing: '0.05em'` value (identical in both consumers — one shared role, not two).
@@ -144,7 +160,11 @@ declare module '@mantine/core' {
     // Task 825 (§3.2) — `lightboxCounter` = 1.25rem (20px), `LightboxView`'s counter's pre-825
     // Tailwind `text-sm` compiled line-height (`.text-sm{line-height:var(--tw-leading,1.25rem)}`,
     // `.next/static/css`, 2026-09-16 build). Same `lineHeight` group as the Task 822 roles above.
-    lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph' | 'lightboxCounter', string>
+    // Task 879 (D81-7) — `siteWordmark` = 1.75rem (28px), the header wordmark's paired line height
+    // (`docs/tailadmin-style-reference.md` §6v cites 20px/700 for the sign-in-page reference size;
+    // 28px is the exact pre-879 `HeaderView.module.css` `.logo` `--homepage-runtime-line-height-xl`
+    // value, migrated once, not re-derived).
+    lineHeight: Record<'passwordHintRow' | 'authNoteParagraph' | 'notificationGlyph' | 'lightboxCounter' | 'siteWordmark', string>
     // Task 784 Revision 3 (D69-18) — `MantineTooltip`'s two §6k-documented chrome values that have
     // no existing named contract. Source: docs/mantine-responsive-design-system.md §25.2/§25.4
     // (Task 524's own canonical documentation, cited verbatim: "px=\"0.875rem\" (14px — no theme
@@ -523,6 +543,11 @@ export const theme = createTheme({
   // Mantine breakpoints are em-based (assuming 16px root font).
   breakpoints: {
     xs: '20em',   // 320px — mobile minimum
+    // Task 590 (owner 2026-07-13) / D30, promoted to a named theme breakpoint by Task 879 (D81-7):
+    // the header's own wrap point, previously a one-off `@media (min-width: 390px)` rule inside
+    // `HeaderView.module.css`. 390px / 16px root = 24.375em. Sole consumer: `HeaderView.tsx`'s
+    // `.bar`/`.rightCluster` responsive props (R3/R4).
+    xs1: '24.375em', // 390px — HeaderView wrap point (Task 590/D30, Task 879 R3)
     // Task 784 (D69-22, owner instruction 2026-09-04) — a new rung between xs and sm. Sole
     // consumer: `MantineListingContactPattern.tsx`'s Call/WhatsApp CTA `Flex`, which the owner
     // directed to switch to a two-per-row layout starting at 480px — narrower than `sm` would
@@ -632,6 +657,12 @@ export const theme = createTheme({
   other: {
     touchTarget: '2.75rem',  // 44px minimum
     mobileGate: '40em',      // 640px — P0 full-width gate
+    // Task 879 (D81-7, R2, F5) — the site header's stacking level. No `--z-*` custom property is
+    // emitted at runtime for this value (Task 718); kept as a plain theme number, consumed via a
+    // single `style={{ zIndex }}` (MECHANISM-KEPT, the one permitted inline z-index on the header).
+    zIndex: {
+      siteHeader: 30,
+    },
     // Task 782 — canonical icon/control dimension scale (D69-6). Plain numbers, consumed directly
     // by a lucide `size` prop / Mantine `Avatar`/`Loader` numeric `size` — see the `MantineThemeOther`
     // augmentation above for the full role-name rationale and globals.css provenance citations.
@@ -688,6 +719,8 @@ export const theme = createTheme({
       ctaSection: '42rem',       // 672px
       content: '48rem',          // 768px
       dashboardContentMaxWidth: '90rem', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1)
+      siteHeaderBar: '4rem',      // 64px — Task 879: HeaderView `.bar` height ≥390px (R3/F7)
+      providerLogoTile: '2.25rem', // 36px — Task 879: AuthSheet company-logo tile (R10)
     },
     // Task 784 Revision 3 (D69-18) — see the `MantineThemeOther` augmentation above for full
     // per-role provenance. Every value below is an exact, one-time migration of a cited pre-D69-16
@@ -701,6 +734,7 @@ export const theme = createTheme({
       authNoteParagraph: '1.21875rem', // 19.5px
       notificationGlyph: '1.5rem',    // 24px
       lightboxCounter: '1.25rem',     // 20px — Task 825: LightboxView counter (was text-sm)
+      siteWordmark: '1.75rem',        // 28px — Task 879: HeaderView wordmark line height (R4)
     },
     tooltip: {
       inlinePadding: '0.875rem',  // 14px — §25.2 §6k chrome (px-3.5)

@@ -11,9 +11,8 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Alert, Box, Button, Divider, Flex, Group, InputLabel, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
-import styles from './AuthSheet.module.css'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -116,16 +115,12 @@ function LoginView({
         autoComplete="email"
       />
 
-      <Stack gap={6}>
+      <Stack gap="compact">
         <Group justify="space-between" wrap="nowrap">
           <InputLabel htmlFor="login-password">{t('password')}</InputLabel>
-          <button
-            type="button"
-            onClick={onForgotPassword}
-            className={styles.linkMutedXs}
-          >
+          <Anchor component="button" type="button" size="sm" c="brand" onClick={onForgotPassword}>
             {t('forgot_password')}
-          </button>
+          </Anchor>
         </Group>
         <PasswordInput
           id="login-password"
@@ -143,14 +138,7 @@ function LoginView({
         {t('login')}
       </Button>
 
-      <div className={styles.orSeparator}>
-        <div className={styles.orSeparatorLine}>
-          <span className={styles.orSeparatorLineInner} />
-        </div>
-        <div className={styles.orSeparatorLabelWrap}>
-          <span className={styles.orSeparatorLabel}>{t('or')}</span>
-        </div>
-      </div>
+      <Divider label={<Text span size="sm" c="gray.4" tt="uppercase">{t('or')}</Text>} labelPosition="center" />
 
       <Button
         type="button"
@@ -171,13 +159,9 @@ function LoginView({
 
       <Text ta="center" size="sm" c="dimmed">
         {t('no_account')}{' '}
-        <button
-          type="button"
-          onClick={onRegister}
-          className={styles.linkPrimarySm}
-        >
+        <Anchor component="button" type="button" size="sm" c="brand" onClick={onRegister}>
           {t('register')}
-        </button>
+        </Anchor>
       </Text>
     </Stack>
   )
@@ -226,13 +210,9 @@ function ForgotPasswordView({
         <CheckCircle2 size={theme.other.iconSize.hero} color="var(--mantine-color-green-6)" style={{ flexShrink: 0 }} aria-hidden="true" />
         <Text component="h3" fw={600} size="lg">{t('forgot_password_success_title')}</Text>
         <Text size="sm" c="dimmed">{t('forgot_password_success_body')}</Text>
-        <button
-          type="button"
-          onClick={onBack}
-          className={styles.linkPrimarySm}
-        >
+        <Anchor component="button" type="button" size="sm" c="brand" onClick={onBack}>
           {t('forgot_password_back')}
-        </button>
+        </Anchor>
       </Stack>
     )
   }
@@ -269,13 +249,9 @@ function ForgotPasswordView({
         {t('forgot_password_submit')}
       </Button>
 
-      <button
-        type="button"
-        onClick={onBack}
-        className={styles.linkMutedSm}
-      >
+      <Anchor component="button" type="button" size="sm" c="dimmed" ta="center" onClick={onBack}>
         ← {t('forgot_password_back')}
-      </button>
+      </Anchor>
     </Stack>
   )
 }
@@ -295,7 +271,7 @@ function AgentCityField({
 }) {
   const { locations } = useLocations()
   return (
-    <Stack gap={6}>
+    <Stack gap="compact">
       <InputLabel>{label}</InputLabel>
       <LocationCombobox
         locations={locations}
@@ -328,6 +304,7 @@ function CompanyField({
   const tc = useTranslations('common')
   const { companies, refetch } = useCompanies()
   const logoInputRef = useRef<HTMLInputElement>(null)
+  const tile = theme.other.boxSize.providerLogoTile
 
   const [showAdd, setShowAdd] = useState(false)
   const [newName, setNewName] = useState('')
@@ -428,7 +405,7 @@ function CompanyField({
   }
 
   return (
-    <Stack gap={6}>
+    <Stack gap="compact">
       <InputLabel>{label}</InputLabel>
       <MantineCombobox
         options={options}
@@ -459,21 +436,18 @@ function CompanyField({
           />
 
           {/* Logo upload */}
-          <Stack gap={4}>
+          <Stack gap="tight">
             <Text component="label" size="xs" c="dimmed">{t('company_logo')}</Text>
             <Group gap="xs" wrap="nowrap">
-              {logoPreview ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={logoPreview}
-                  alt="logo preview"
-                  className={styles.logoImg}
-                />
-              ) : (
-                <div className={styles.logoPlaceholder}>
-                  <ImagePlus size={theme.other.iconSize.standard} color="var(--mantine-color-gray-6)" />
-                </div>
-              )}
+              <Paper withBorder radius="lg" w={tile} h={tile} flex="none">
+                {logoPreview ? (
+                  <MantineImage src={logoPreview} alt="logo preview" fit="contain" h="100%" />
+                ) : (
+                  <Center h="100%">
+                    <ImagePlus size={theme.other.iconSize.standard} color="var(--mantine-color-gray-6)" />
+                  </Center>
+                )}
+              </Paper>
               <Button
                 type="button"
                 variant="default"
@@ -528,7 +502,7 @@ function CompanyField({
             </Flex>
           )}
 
-          <Flex direction={{ base: 'column', sm: 'row' }} gap="xs" pt={4}>
+          <Flex direction={{ base: 'column', sm: 'row' }} gap="xs" pt="tight">
             <Button
               type="button"
               size="sm"
@@ -671,13 +645,9 @@ function RegisterView({
       )}
 
       {isAgent && onBack && (
-        <button
-          type="button"
-          onClick={onBack}
-          className={styles.agentBackLink}
-        >
+        <Anchor component="button" type="button" size="sm" c="dimmed" onClick={onBack}>
           ← {t('register_back_to_standard')}
-        </button>
+        </Anchor>
       )}
 
       <TextInput
@@ -724,7 +694,7 @@ function RegisterView({
         />
       )}
 
-      <Stack gap={6}>
+      <Stack gap="compact">
         <PasswordInput
           id="reg-password"
           label={t('password')}
@@ -754,13 +724,9 @@ function RegisterView({
 
       <Text ta="center" size="sm" c="dimmed">
         {t('have_account')}{' '}
-        <button
-          type="button"
-          onClick={onLogin}
-          className={styles.linkPrimarySm}
-        >
+        <Anchor component="button" type="button" size="sm" c="brand" onClick={onLogin}>
           {t('login')}
-        </button>
+        </Anchor>
       </Text>
 
       {!isAgent && onAgentRegister && (

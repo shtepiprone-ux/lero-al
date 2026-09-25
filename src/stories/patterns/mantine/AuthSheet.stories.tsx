@@ -157,3 +157,57 @@ export const RegisterAgentAddCompany: Story = {
     await userEvent.click(addButton)
   },
 }
+
+/**
+ * Task 879 (D81-7, R14) — the ONE consumer state no existing Story renders: the register-agent
+ * company-logo tile with a real selected image (`AuthSheet.tsx`'s `logoPreview` branch, the
+ * `Paper`+`Image` composition R10 migrated). Same render as `RegisterAgentAddCompany`; its `play`
+ * additionally builds a tiny (32×32, well under the component's own 256×256/2MB limits) PNG
+ * in-browser via `<canvas>.toBlob` — no fixture file — and feeds it into the real hidden
+ * `<input type="file">`, exercising `handleLogoSelect`'s genuine dimension/size/type checks
+ * against a real `File`, not a fabricated preview URL.
+ */
+export const RegisterAgentAddCompanyLogo: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <MantineStoryShell>
+        <Button variant="default" disabled>trigger (Story opens the drawer directly)</Button>
+        <AuthSheet key={`register-agent-addcompany-logo-${locale}`} open onOpenChange={() => {}} initialView="register-agent" />
+      </MantineStoryShell>
+    )
+  },
+  play: async ({ canvasElement, context }) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const doc = canvasElement.ownerDocument
+    const win = doc.defaultView as (Window & typeof globalThis)
+    const canvas = within(doc.body)
+    const addButton = await canvas.findByRole('button', { name: `+ ${authT(locale, 'auth', 'company_add_new')}` })
+    await userEvent.click(addButton)
+
+    const logoCanvas = doc.createElement('canvas')
+    logoCanvas.width = 32
+    logoCanvas.height = 32
+    const ctx = logoCanvas.getContext('2d')
+    if (ctx) {
+      ctx.fillStyle = '#4665ff'
+      ctx.fillRect(0, 0, 32, 32)
+    }
+    const blob: Blob = await new Promise((resolve, reject) => {
+      logoCanvas.toBlob(b => (b ? resolve(b) : reject(new Error('canvas.toBlob returned null'))), 'image/png')
+    })
+    const file = new win.File([blob], 'logo.png', { type: 'image/png' })
+
+    const fileInput = await canvas.findByRole('button', { name: authT(locale, 'common', 'choose_file') })
+      .then(() => doc.querySelector('input[type="file"]') as HTMLInputElement)
+    const dataTransfer = new win.DataTransfer()
+    dataTransfer.items.add(file)
+    Object.defineProperty(fileInput, 'files', { value: dataTransfer.files, configurable: true })
+    fileInput.dispatchEvent(new win.Event('input', { bubbles: true }))
+    fileInput.dispatchEvent(new win.Event('change', { bubbles: true }))
+
+    // Wait for the preview <img> the successful selection renders (handleLogoSelect resolves
+    // asynchronously via `Image.onload`).
+    await canvas.findByAltText('logo preview')
+  },
+}

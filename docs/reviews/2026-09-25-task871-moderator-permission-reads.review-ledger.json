@@ -1,0 +1,726 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-871 — moderator permission checks read role_permissions through the service role (owner route a, 2026-09-23): roleHasPermission and getModeratorPermissions use createAdminClient(), fail closed with one console.error; no grant/policy change (R1-R7)",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "fd4204fc12fc7db36856a3c7e89d47bc69c21a7d",
+  "reviewedRevision": "uncommitted worktree on top of fd4204fc12fc7db36856a3c7e89d47bc69c21a7d (main). Blobs: permissions.ts 0a30e834, admin/actions/permissions.ts e54a43cf, census 9839f3dd.",
+  "reviewedPaths": [
+   "src/lib/auth/permissions.ts",
+   "src/modules/admin/actions/permissions.ts",
+   "src/lib/auth/__tests__/permissions.test.ts",
+   "src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts",
+   "package.json",
+   "scripts/task-871-moderator-census.sql",
+   "docs/critical-flow-registry.md",
+   "docs/rls-rules.md",
+   "docs/sessions/2026-09-25-task871-moderator-permission-reads.md",
+   "docs/sessions/evidence/task871"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 10,
+   "verified": 10,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-25-task871-moderator-permission-reads.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1 R5",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/lib/auth/permissions.ts",
+    "symbol": "roleHasPermission, hasPermission, assertPermission",
+    "diffHunks": [
+     "src/lib/auth/permissions.ts (blob 0a30e834)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "admin and non-moderator short-circuit without a client",
+     "moderator read issued on the admin client only",
+     "hasPermission/assertPermission end to end"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/05b-new-tests-postfix.txt",
+     "command": "npx.cmd vitest run the two new test files",
+     "observable": "14 passed (14), EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "admin and non-moderator short-circuit without a client",
+       "moderator read issued on the admin client only",
+       "hasPermission/assertPermission end to end"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The moderator-allowed test could pass against the old user-scoped read.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/05-new-tests-prefix.txt",
+     "result": "REFUTED: on the unchanged source 9 of 14 tests fail, including \"moderator, admin-client row { allowed: true } -> true\"."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R1",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/lib/auth/permissions.ts",
+    "symbol": "roleHasPermission error, throw and no-row branches",
+    "diffHunks": [
+     "src/lib/auth/permissions.ts (blob 0a30e834)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "error -> false + one console.error",
+     "createAdminClient throws -> false, resolves",
+     "no row -> false, no log"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/05b-new-tests-postfix.txt",
+     "command": "npx.cmd vitest run the two new test files",
+     "observable": "the error, throw and no-row cases pass",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "error -> false + one console.error",
+       "createAdminClient throws -> false, resolves",
+       "no row -> false, no log"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A throw from createAdminClient could reject and break /admin/reports (F8).",
+     "kind": "EXECUTED",
+     "path": "src/lib/auth/permissions.ts",
+     "result": "REFUTED: the whole moderator branch is inside try/catch (permissions.ts:13-31); the throw test resolves false."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R1 R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/lib/auth/permissions.ts",
+    "symbol": "plant A",
+    "diffHunks": [
+     "src/lib/auth/permissions.ts (blob 0a30e834)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "plant fails the moderator-allowed case",
+     "restore passes and matches the final blob"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/06-plant-a.txt",
+     "command": "plant A: role_permissions read pointed back at createClient()",
+     "observable": "4 failed incl. the moderator-allowed case; EXIT_CODE=1",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "plant fails the moderator-allowed case"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task871/07-restored-a.txt",
+     "command": "restore A",
+     "observable": "10 passed; the session log records hash 0a30e83 = the final 12z blob",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "restore passes and matches the final blob"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The restore could differ from the reviewed file.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/12z-hash-object.txt",
+     "result": "REFUTED: the reviewer measured permissions.ts at 0a30e834, equal to 12z. The pre/post hashes are in the session log only, not in 06/07 (finding F1)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R2 R5",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/admin/actions/permissions.ts",
+    "symbol": "getModeratorPermissions",
+    "diffHunks": [
+     "src/modules/admin/actions/permissions.ts (blob e54a43cf)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "admin caller gets stored rows via the admin client",
+     "unauthenticated and regular user rejected before any role_permissions read"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/05b-new-tests-postfix.txt",
+     "command": "npx.cmd vitest run the two new test files",
+     "observable": "admin-caller, unauthenticated and regular-user cases pass; mockAdminFrom never called with role_permissions on the rejections",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "admin caller gets stored rows via the admin client",
+       "unauthenticated and regular user rejected before any role_permissions read"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The service-role read could widen access to a regular user.",
+     "kind": "EXECUTED",
+     "path": "src/modules/admin/actions/permissions.ts",
+     "result": "REFUTED: the unauthenticated/forbidden throws (:46-50) run before createAdminClient() (:56); the regular-user test asserts no admin role_permissions read."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5 / R2 R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/admin/actions/permissions.ts",
+    "symbol": "plant B and error branch",
+    "diffHunks": [
+     "src/modules/admin/actions/permissions.ts (blob e54a43cf)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "plant fails the admin-caller case",
+     "error resolves the all-false map with one log"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/08-plant-b.txt",
+     "command": "plant B: role_permissions read pointed back at the user-scoped client",
+     "observable": "2 failed incl. the admin-caller case; EXIT_CODE=1",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "plant fails the admin-caller case"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task871/09-restored-b.txt",
+     "command": "restore B",
+     "observable": "4 passed, incl. the error case",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "error resolves the all-false map with one log"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The restore could differ from the reviewed file.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/12z-hash-object.txt",
+     "result": "REFUTED: the reviewer measured admin/actions/permissions.ts at e54a43cf, equal to 12z."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / R3",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-871-moderator-census.sql",
+    "symbol": "write set",
+    "diffHunks": [
+     "scripts/task-871-moderator-census.sql (blob 9839f3dd)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "every changed path inside the kickoff write set",
+     "no grant, revoke, policy or migration"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/13-status-after.txt",
+     "command": "git status --porcelain",
+     "observable": "Modified: registry, rls-rules, package.json, both source files; new: census SQL, two tests, evidence. Only *.sql is the census file.",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every changed path inside the kickoff write set",
+       "no grant, revoke, policy or migration"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A database change could hide in the census file.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/10-census-single-statement.txt",
+     "result": "REFUTED: semicolons=1, writeKeywords=none; the reviewer read the file: five count/has_table_privilege selects only."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC7 / R5",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "package.json",
+    "symbol": "test:admin",
+    "diffHunks": [
+     "package.json (blob f637a323)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "test:admin lists both new files and exits 0"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/11a-test-admin.txt",
+     "command": "npm.cmd run test:admin",
+     "observable": "5 files, 32 passed, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "test:admin lists both new files and exits 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Existing admin suites could break because permissions.ts changed.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/03-test-admin-before.txt",
+     "result": "REFUTED: 18/18 before, the same 18 plus 14 new after; the other suites mock permissions.ts wholesale (F9)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC8 / R6",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "docs/critical-flow-registry.md",
+    "symbol": "one registry row; one rls-rules bullet",
+    "diffHunks": [
+     "docs/critical-flow-registry.md (blob 1e096a8d)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "registry gains one row",
+     "rls-rules bullet names role_permissions"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/critical-flow-registry.md",
+     "command": "git diff -U0 docs/critical-flow-registry.md",
+     "observable": "One added row \"Moderator capability read (roleHasPermission / getModeratorPermissions)\", no other line.",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "registry gains one row"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/rls-rules.md",
+     "command": "git diff docs/rls-rules.md",
+     "observable": "The service-role-only bullet names role_permissions and createAdminClient (Task 871); no other change.",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rls-rules bullet names role_permissions"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Unrelated doc lines could have changed.",
+     "kind": "EXECUTED",
+     "path": "docs/rls-rules.md",
+     "result": "REFUTED: the diff is one bullet (+3/-1 lines) and one registry row (+1)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC9 / R7",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-871-moderator-census.sql",
+    "symbol": "census statement",
+    "diffHunks": [
+     "scripts/task-871-moderator-census.sql (blob 9839f3dd)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "one statement, no write keyword",
+     "five metrics, no identifying column"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/10-census-single-statement.txt",
+     "command": "node.exe single-statement check",
+     "observable": "semicolons=1 endsWithSemicolon=true writeKeywords=none",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "one statement, no write keyword",
+       "five metrics, no identifying column"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The census could return names or ids.",
+     "kind": "EXECUTED",
+     "path": "scripts/task-871-moderator-census.sql",
+     "result": "REFUTED: every branch selects a metric literal and count(*)/has_table_privilege as text."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC10 / all",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/lib/auth/permissions.ts",
+    "symbol": "final gate block",
+    "diffHunks": [
+     "src/lib/auth/permissions.ts (blob 0a30e834)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "build exits 0",
+     "typecheck, regression suites, integrity exit 0"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side permission reads, tests and a read-only census SQL; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task871/12-build.txt",
+     "command": "npm.cmd run build",
+     "observable": "Compiled successfully, 40/40 static pages, route table, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "build exits 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task871/11c-test-reports.txt",
+     "command": "typecheck (11d), test:rls-guards (11b), report suites (11c), file-integrity (11f), mojibake (11g)",
+     "observable": "all EXIT_CODE=0; reports 49/49; rls-guards 24/24",
+     "freshness": "final worktree 2026-09-25 on base fd4204fc1; reviewer git hash-object of all eight shipped files equals 12z-hash-object.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "typecheck, regression suites, integrity exit 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The build could predate the final source.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task871/12z-hash-object.txt",
+     "result": "REFUTED: 12z was captured in the same block as 12, and equals the reviewer-measured current blobs."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript client routing, tests and a catalog count query; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC3 / R1 R4",
+   "requirementIds": [
+    "AC3 / R1 R4",
+    "AC5 / R2 R4"
+   ],
+   "evidence": "The plant/restore hash witnesses the kickoff required inside 06-09 exist only as prose in the session log. The restore is proven independently: both files equal their 12z blobs, measured by the reviewer."
+  },
+  {
+   "id": "F2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC4 / R2 R5",
+   "requirementIds": [
+    "AC4 / R2 R5"
+   ],
+   "evidence": "getModeratorPermissions now constructs the admin client on every authorised call, so a missing SUPABASE_SERVICE_ROLE_KEY throws on /admin/permissions (it did not before, when the admin client was built only for actor names). R2 did not require catching construction; setModeratorPermission has the same dependency. Production has the key."
+  },
+  {
+   "id": "F3",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC10 / all",
+   "requirementIds": [
+    "AC10 / all"
+   ],
+   "evidence": "O80-4 (census; post-deploy /admin/permissions and moderator checks) is owner-native and open as a sprint owner action; the live moderator arm is reachable only if a moderator account exists."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC3 / R1 R4",
+  "reviewer": "Opus"
+ }
+}

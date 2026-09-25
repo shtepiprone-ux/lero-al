@@ -1,0 +1,9 @@
+ M docs/critical-flow-registry.md
+ M docs/rls-rules.md
+ M package.json
+ M src/lib/auth/permissions.ts
+ M src/modules/admin/actions/permissions.ts
+?? docs/sessions/evidence/task871/
+?? scripts/task-871-moderator-census.sql
+?? src/lib/auth/__tests__/permissions.test.ts
+?? src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts

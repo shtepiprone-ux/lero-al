@@ -1,0 +1,40 @@
+src/app/admin/permissions/page.tsx:2:import { getModeratorPermissions, getPermissionEvents } from '@/modules/admin/actions/permissions'
+src/app/admin/permissions/page.tsx:10:    getModeratorPermissions(),
+src/app/admin/reports/page.tsx:15:    hasPermission('reports.status_override'),
+src/app/admin/reports/page.tsx:16:    hasPermission('reports.delete'),
+src/app/admin/users/[id]/page.tsx:78:  const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
+src/app/admin/users/new/page.tsx:27:  const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
+src/lib/auth/permissions.ts:6:export async function roleHasPermission(role: string, key: PermissionKey): Promise<boolean> {
+src/lib/auth/permissions.ts:21:export async function hasPermission(key: PermissionKey): Promise<boolean> {
+src/lib/auth/permissions.ts:33:  return roleHasPermission(profile.role as string, key)
+src/lib/auth/permissions.ts:36:export async function assertPermission(key: PermissionKey): Promise<void> {
+src/lib/auth/permissions.ts:37:  if (!(await hasPermission(key))) throw new Error('forbidden')
+src/modules/__tests__/rls-write-guards.smoke.test.ts:48:  roleHasPermission: vi.fn().mockReturnValue(false),
+src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts:21:  roleHasPermission: vi.fn().mockReturnValue(false),
+src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts:28:  roleHasPermission: vi.fn().mockReturnValue(false),
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:38:  roleHasPermission: vi.fn().mockReturnValue(true),
+src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts:61:  roleHasPermission: (...args: unknown[]) => mockRoleHasPermission(...args),
+src/modules/admin/actions/clearHistory.ts:20:  const allowed = await hasPermission('audit.clear_history').catch(() => false)
+src/modules/admin/actions/index.ts:11:import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
+src/modules/admin/actions/index.ts:65:    await assertPermission('listings.set_premium')
+src/modules/admin/actions/index.ts:118:  await assertPermission('listings.delete')
+src/modules/admin/actions/index.ts:160:  await assertPermission('locations.manage')
+src/modules/admin/actions/index.ts:172:  await assertPermission('locations.manage')
+src/modules/admin/actions/index.ts:181:  await assertPermission('locations.manage')
+src/modules/admin/actions/index.ts:190:  await assertPermission('locations.manage')
+src/modules/admin/actions/index.ts:201:  await assertPermission('settings.manage')
+src/modules/admin/actions/index.ts:229:  await assertPermission('legal.manage')
+src/modules/admin/actions/index.ts:255:  await assertPermission('legal.manage')
+src/modules/admin/actions/index.ts:287:  await assertPermission('legal.manage')
+src/modules/admin/actions/index.ts:386:  const canChangeRole = await roleHasPermission(myProfile.role as string, 'users.change_role')
+src/modules/admin/actions/index.ts:445:  await assertPermission('users.create')
+src/modules/admin/actions/index.ts:499:  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+src/modules/admin/actions/index.ts:528:  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+src/modules/admin/actions/index.ts:556:  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+src/modules/admin/actions/index.ts:584:  const allowed = await hasPermission('users.hard_delete').catch(() => false)
+src/modules/admin/actions/permissions.ts:44:export async function getModeratorPermissions(): Promise<Record<PermissionKey, PermissionData>> {
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:33:  roleHasPermission: vi.fn(),
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:99:  roleHasPermission: vi.fn().mockReturnValue(false),
+src/modules/listings/actions/reportListing.ts:125:    hasPermission('reports.manage'),
+src/modules/listings/actions/reportListing.ts:126:    hasPermission('reports.status_override'),
+src/modules/listings/actions/reportListing.ts:257:  const canDelete = await hasPermission('reports.delete')

@@ -1,7 +1,7 @@
 # Task 871 — Moderator permission checks read `role_permissions` through the service role, so a granted capability actually grants
 
 Sprint 80 · **P2** · QA profile **Q4** (auth/permission path behind registered critical flows) · no dependencies ·
-owner action **O80-4** · **Status: `KICKOFF FILED` 2026-09-25**
+owner action **O80-4** · **Status: ✅ `APPROVED WITH NOTES` 2026-09-25 (review 1) — archived; O80-4 open; see §16**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Design-time evidence (owner grids, verbatim, read-only): `docs/sessions/evidence/task870/00-owner-grids-2026-09-23.txt`.
@@ -470,3 +470,29 @@ Sonnet updates the 871 cell of the `docs/backlog.md` registry row (state only). 
 | The fix is not a privilege widening | a regular user reaches the service-role read | AC4 negative cases | rejected before the read |
 | Fail-closed survives the new client | `createAdminClient` throws (F7) | AC2 | `false`, no reject |
 | No database change | a `grant`/`revoke` appears | AC6 comparator + AC9 keyword check | only the read-only census file |
+
+---
+
+## 16. Review 1 — 2026-09-25 (`APPROVED WITH NOTES`)
+
+Every acceptance criterion is verified against the real diff. Ledger: `docs/reviews/2026-09-25-task871-moderator-permission-reads.review-ledger.json` (`check:review-ledger` PASSED).
+
+- **`roleHasPermission`.** The moderator branch reads `role_permissions` through `createAdminClient()` with
+  `.maybeSingle()`, inside a try/catch. It returns `false` plus one `console.error` on an error or a throw, and
+  never throws.
+- **`getModeratorPermissions`.** The unauthenticated/forbidden throws still run before the admin client is built,
+  and one admin client serves both reads.
+- **Tests.** On the unchanged source, 9 of 14 new tests fail (`05`); after the fix, 14/14 pass. Plant A fails the
+  moderator-allowed case, plant B the admin-caller case.
+- **Gates.** `test:admin` 32/32, `test:rls-guards` 24/24, reports suites 49/49; typecheck, eslint, integrity and
+  build all exit 0.
+- **Freshness.** The reviewer-measured blobs equal `12z`.
+
+Notes:
+
+- **F1 (P3).** The plant hash witnesses are in the session log only, not in `06`–`09`. The restore is proven by
+  the final blobs.
+- **F2 (NOTE).** `/admin/permissions` now always builds the admin client, so a missing service-role key would throw
+  there. `setModeratorPermission` already has the same dependency.
+- **F3 (NOTE).** O80-4 is owner-native: census, then `/admin/permissions` and the moderator arm after deploy. It is
+  tracked in the sprint plan.

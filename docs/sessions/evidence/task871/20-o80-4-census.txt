@@ -1,0 +1,16 @@
+Task 871 O80-4 step 1 - owner-run scripts/task-871-moderator-census.sql in the Supabase SQL Editor (production), 2026-09-25,
+before the 871 deploy. Transcribed by the orchestrator from the owner's JSON export, row for row.
+
+metric                                  value
+moderators_total                        1
+moderators_not_deleted                  1
+role_permissions_allowed                8
+role_permissions_denied                 3
+authenticated_select_role_permissions   false
+
+Reading (orchestrator):
+- authenticated_select_role_permissions = false confirms kickoff F3 live: the user-scoped read has been refused, so before 871
+  every moderator check returned false.
+- 8 of the 11 stored moderator keys are allowed = true. Before 871, all 8 grants had no effect. The other 2 of the 13
+  PERMISSION_KEYS have no row, so they read false both before and after.
+- One active moderator exists, so O80-4 step 3 (the live moderator arm) is reachable after the deploy.

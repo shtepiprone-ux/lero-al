@@ -211,7 +211,9 @@ create policy "<name>_select_own" on public.<name>
   above). Never expose service-role key to the client.
 - Tables that should never be reachable through the Data API (e.g., `email_change_tokens`,
   `user_status_history` per existing rules) get **no GRANTs to `anon`/`authenticated`**, only
-  to `service_role`.
+  to `service_role`. `role_permissions` is one of these: `authenticated` has no SELECT grant
+  (Task 275 revoke), so the app reads it only through `createAdminClient()`
+  (`roleHasPermission`, `getModeratorPermissions` — Task 871).
 
 ### Existing-table audit
 

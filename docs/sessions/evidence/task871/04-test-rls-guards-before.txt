@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:rls-guards
+> vitest run src/modules/__tests__/rls-write-guards.smoke.test.ts src/modules/notifications/lib/__tests__/mutations.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  24 passed (24)
+   Start at  18:56:44
+   Duration  1.09s (transform 190ms, setup 165ms, import 117ms, tests 133ms, environment 1.41s)
+
+EXIT_CODE=0

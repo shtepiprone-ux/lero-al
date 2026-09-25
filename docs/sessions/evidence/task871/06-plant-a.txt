@@ -1,0 +1,131 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+npx.cmd : stderr | src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, admin-client row { 
+allowed: true } → true; queried on the admin client, never the user-scoped client
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src\lib\auth\__tests__\permissions.tes ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (stderr | src/li...r-scoped client:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[permissions] role_permissions read failed { key: 'reports.delete', code: 'exception' }
+
+stderr | src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > 
+hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+[permissions] role_permissions read failed { key: 'reports.delete', code: 'exception' }
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts (10 tests | 4 failed) 29ms
+     × moderator, admin-client row { allowed: true } → true; queried on the admin client, never the user-scoped client 6ms
+     × moderator, no row (data: null, error: null) → false; console.error not called 2ms
+     × moderator, admin client returns { error } → false; console.error called once with role_permissions read failed 2ms
+     × hasPermission → true for a moderator whose key is stored allowed:true (admin-client read) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, admin-client row { allowed: true } 
+→ true; queried on the admin client, never the user-scoped client
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:90:20
+     88|     const result = await roleHasPermission('moderator', 'reports.delet…
+     89|
+     90|     expect(result).toBe(true)
+       |                    ^
+     91|     expect(mockFrom).toHaveBeenCalledWith('role_permissions')
+     92|     expect(mockCreateClient).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, no row (data: null, error: null) → 
+false; console.error not called
+AssertionError: expected "error" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st error call:
+
+    Array [
+      "[permissions] role_permissions read failed",
+      Object {
+        "code": "exception",
+        "key": "reports.delete",
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:114:28
+    112|
+    113|     expect(result).toBe(false)
+    114|     expect(consoleSpy).not.toHaveBeenCalled()
+       |                            ^
+    115|     consoleSpy.mockRestore()
+    116|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, admin client returns { error } → 
+false; console.error called once with role_permissions read failed
+AssertionError: expected "error" to be called with arguments: [ …(2) ]
+
+Received:
+
+  1st error call:
+
+  [
+    "[permissions] role_permissions read failed",
+    {
+-     "code": "XX000",
++     "code": "exception",
+      "key": "reports.delete",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:128:24
+    126|     expect(result).toBe(false)
+    127|     expect(consoleSpy).toHaveBeenCalledTimes(1)
+    128|     expect(consoleSpy).toHaveBeenCalledWith('[permissions] role_permis…
+       |                        ^
+    129|       key: 'reports.delete',
+    130|       code: 'XX000',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > 
+hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:179:20
+    177|     const result = await hasPermission('reports.delete')
+    178|
+    179|     expect(result).toBe(true)
+       |                    ^
+    180|     expect(mockCreateClient).toHaveBeenCalled()
+    181|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 6 passed (10)
+   Start at  18:59:55
+   Duration  1.08s (transform 53ms, setup 88ms, import 31ms, tests 29ms, environment 773ms)
+
+EXIT_CODE=1

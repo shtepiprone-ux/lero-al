@@ -1,0 +1,75 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+npx.cmd : stderr | src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions 
+> admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src\modules\admin\actions\__tests__\ge ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (stderr | src/mo...13 keys present:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[permissions] getModeratorPermissions read failed { code: '42501' }
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts (4 tests | 2 failed) 32ms
+     × admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present 25ms
+     × admin client read error → resolves to the all-false map; console.error called 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin 
+caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:97:46
+     95|     expect(Object.keys(result)).toHaveLength(13)
+     96|     expect(PERMISSION_KEYS.every(k => k in result)).toBe(true)
+     97|     expect(result['reports.delete'].allowed).toBe(true)
+       |                                              ^
+     98|     expect(result['audit.clear_history'].allowed).toBe(false)
+     99|     for (const key of PERMISSION_KEYS) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin 
+client read error → resolves to the all-false map; console.error called
+AssertionError: expected "error" to be called with arguments: [ …(2) ]
+
+Received:
+
+  1st error call:
+
+  [
+    "[permissions] getModeratorPermissions read failed",
+    {
+-     "code": "XX000",
++     "code": "42501",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:143:24
+    141|     expect(Object.keys(result)).toHaveLength(13)
+    142|     expect(Object.values(result).every(v => v.allowed === false)).toBe…
+    143|     expect(consoleSpy).toHaveBeenCalledWith('[permissions] getModerato…
+       |                        ^
+    144|     consoleSpy.mockRestore()
+    145|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  19:00:24
+   Duration  1.12s (transform 66ms, setup 95ms, import 39ms, tests 32ms, environment 806ms)
+
+EXIT_CODE=1

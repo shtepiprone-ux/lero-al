@@ -1,0 +1,5 @@
+src/lib/auth/permissions.ts:12:    .from('role_permissions')
+src/modules/__tests__/rls-write-guards.smoke.test.ts:411:        if (table === 'role_permissions') {
+src/modules/admin/actions/permissions.ts:53:    .from('role_permissions')
+src/modules/admin/actions/permissions.ts:154:      .from('role_permissions')
+src/modules/admin/actions/permissions.ts:168:    const { error: upsertError } = await db.from('role_permissions').upsert(

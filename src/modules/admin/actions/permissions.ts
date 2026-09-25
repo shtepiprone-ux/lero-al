@@ -49,10 +49,25 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
   const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
   if (profile?.role !== 'admin' && profile?.role !== 'moderator') throw new Error('forbidden')
 
-  const { data: rows } = await supabase
+  // Single admin client instance for both the role_permissions read and the actor-name read below.
+  // `authenticated` has no SELECT grant on role_permissions (Task 275); a user-scoped read always
+  // fails closed with 42501, which is why every switch previously rendered off regardless of the
+  // stored value.
+  const adminDb = createAdminClient()
+
+  const { data: rows, error: rowsError } = await adminDb
     .from('role_permissions')
     .select('permission_key, allowed, updated_at, updated_by_user_id')
     .eq('role', 'moderator')
+
+  const result = Object.fromEntries(
+    PERMISSION_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
+  ) as Record<PermissionKey, PermissionData>
+
+  if (rowsError) {
+    console.error('[permissions] getModeratorPermissions read failed', { code: rowsError.code })
+    return result
+  }
 
   // Batch-resolve actor names for rows that have updated_by_user_id
   const actorIds = [
@@ -64,17 +79,11 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
   ]
   const actorNames: Record<string, string> = {}
   if (actorIds.length > 0) {
-    // Use admin client — session client can only self-read after Task 266 users_self_read policy.
-    const adminDb = createAdminClient()
     const { data: actors } = await adminDb.from('users').select('id, name').in('id', actorIds)
     for (const a of actors ?? []) {
       actorNames[a.id] = a.name ?? ''
     }
   }
-
-  const result = Object.fromEntries(
-    PERMISSION_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
-  ) as Record<PermissionKey, PermissionData>
 
   for (const row of rows ?? []) {
     if (PERMISSION_KEYS.includes(row.permission_key as PermissionKey)) {

@@ -1,0 +1,168 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts (10 tests | 7 failed) 25ms
+     × moderator, admin-client row { allowed: true } → true; queried on the admin client, never the user-scoped client 3ms
+     × moderator, row { allowed: false } → false 1ms
+     × moderator, no row (data: null, error: null) → false; console.error not called 1ms
+     × moderator, admin client returns { error } → false; console.error called once with role_permissions read failed 1ms
+     × moderator, createAdminClient throws → false; resolves (does not reject); console.error called 2ms
+     × hasPermission → true for a moderator whose key is stored allowed:true (admin-client read) 1ms
+     × assertPermission rejects forbidden for the same moderator with { allowed: false } 4ms
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts (4 tests | 2 failed) 27ms
+     × admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present 22ms
+     × admin client read error → resolves to the all-false map; console.error called 2ms
+npx.cmd : 
+At line:1 char:302
++ ... tch {} } }; npx.cmd vitest run src\lib\auth\__tests__\permissions.tes ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, admin-client row { allowed: true } 
+→ true; queried on the admin client, never the user-scoped client
+TypeError: Cannot read properties of undefined (reading 'from')
+ ❯ roleHasPermission src/lib/auth/permissions.ts:12:6
+     10|   const supabase = await createClient()
+     11|   const { data } = await supabase
+     12|     .from('role_permissions')
+       |      ^
+     13|     .select('allowed')
+     14|     .eq('role', 'moderator')
+ ❯ src/lib/auth/__tests__/permissions.test.ts:88:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, row { allowed: false } → false
+TypeError: Cannot read properties of undefined (reading 'from')
+ ❯ roleHasPermission src/lib/auth/permissions.ts:12:6
+     10|   const supabase = await createClient()
+     11|   const { data } = await supabase
+     12|     .from('role_permissions')
+       |      ^
+     13|     .select('allowed')
+     14|     .eq('role', 'moderator')
+ ❯ src/lib/auth/__tests__/permissions.test.ts:100:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, no row (data: null, error: null) → 
+false; console.error not called
+TypeError: Cannot read properties of undefined (reading 'from')
+ ❯ roleHasPermission src/lib/auth/permissions.ts:12:6
+     10|   const supabase = await createClient()
+     11|   const { data } = await supabase
+     12|     .from('role_permissions')
+       |      ^
+     13|     .select('allowed')
+     14|     .eq('role', 'moderator')
+ ❯ src/lib/auth/__tests__/permissions.test.ts:111:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, admin client returns { error } → 
+false; console.error called once with role_permissions read failed
+TypeError: Cannot read properties of undefined (reading 'from')
+ ❯ roleHasPermission src/lib/auth/permissions.ts:12:6
+     10|   const supabase = await createClient()
+     11|   const { data } = await supabase
+     12|     .from('role_permissions')
+       |      ^
+     13|     .select('allowed')
+     14|     .eq('role', 'moderator')
+ ❯ src/lib/auth/__tests__/permissions.test.ts:124:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > roleHasPermission > moderator, createAdminClient throws → false; 
+resolves (does not reject); console.error called
+AssertionError: promise rejected "TypeError: Cannot read properties of unde…" instead of resolving
+ ❯ src/lib/auth/__tests__/permissions.test.ts:142:66
+    140|
+    141|     const { roleHasPermission } = await import('@/lib/auth/permissions…
+    142|     await expect(roleHasPermission('moderator', 'reports.delete')).res…
+       |                                                                  ^
+    143|
+    144|     expect(consoleSpy).toHaveBeenCalledTimes(1)
+
+Caused by: TypeError: Cannot read properties of undefined (reading 'from')
+ ❯ roleHasPermission src/lib/auth/permissions.ts:12:6
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > 
+hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+TypeError: supabase.from(...).select(...).eq(...).eq is not a function
+ ❯ roleHasPermission src/lib/auth/permissions.ts:15:6
+     13|     .select('allowed')
+     14|     .eq('role', 'moderator')
+     15|     .eq('permission_key', key)
+       |      ^
+     16|     .single()
+     17|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > 
+assertPermission rejects forbidden for the same moderator with { allowed: false }
+AssertionError: expected [Function] to throw error including 'forbidden' but got 
+'supabase.from(...).select(...).eq(...…'
+
+Expected: "forbidden"
+Received: "supabase.from(...).select(...).eq(...).eq is not a function"
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:188:52
+    186|
+    187|     const { assertPermission } = await import('@/lib/auth/permissions')
+    188|     await expect(assertPermission('reports.delete')).rejects.toThrow('…
+       |                                                    ^
+    189|   })
+    190| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin 
+caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:97:46
+     95|     expect(Object.keys(result)).toHaveLength(13)
+     96|     expect(PERMISSION_KEYS.every(k => k in result)).toBe(true)
+     97|     expect(result['reports.delete'].allowed).toBe(true)
+       |                                              ^
+     98|     expect(result['audit.clear_history'].allowed).toBe(false)
+     99|     for (const key of PERMISSION_KEYS) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin 
+client read error → resolves to the all-false map; console.error called
+AssertionError: expected "error" to be called with arguments: [ …(2) ]
+
+Number of calls: 0
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:143:24
+    141|     expect(Object.keys(result)).toHaveLength(13)
+    142|     expect(Object.values(result).every(v => v.allowed === false)).toBe…
+    143|     expect(consoleSpy).toHaveBeenCalledWith('[permissions] getModerato…
+       |                        ^
+    144|     consoleSpy.mockRestore()
+    145|   })
+
+
+ Test Files  2 failed (2)
+      Tests  9 failed | 5 passed (14)
+   Start at  18:58:49
+   Duration  1.08s (transform 130ms, setup 173ms, import 93ms, tests 51ms, environment 1.53s)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+EXIT_CODE=1

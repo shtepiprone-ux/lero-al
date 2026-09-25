@@ -7,7 +7,7 @@
 
 ## Last Session (2026-09-25)
 
-**882 ✅ APPROVED WITH NOTES 2026-09-25** (review 2): the bell subscribes only for the signed-in user (filtered), logs every Realtime status, and refetches on reconnect and on tab return. Live probe O82-4 on production: arm A delivered in 716 ms, arm B (anonymous) received nothing. The owner confirmed **O82-5** and **O82-3** on lero.al with two accounts the same day and closed **Sprint 82** (archive ledger). Earlier the same day: 879 approved and Sprint 81 closed (archive ledger). Later: **881 ✅ APPROVED WITH NOTES** (review 4; `notifications` least privilege applied on production, fail-closed grant gate in CI; archive ledger); **883 ✅ APPROVED WITH NOTES** the same day (the bell never reads `notifications` without a user; owner check **O80-6** open after deploy, sprint plan). **871** kickoff filed in Sprint 80.
+**882 ✅ APPROVED WITH NOTES 2026-09-25** (review 2): the bell subscribes only for the signed-in user (filtered), logs every Realtime status, and refetches on reconnect and on tab return. Live probe O82-4 on production: arm A delivered in 716 ms, arm B (anonymous) received nothing. The owner confirmed **O82-5** and **O82-3** on lero.al with two accounts the same day and closed **Sprint 82** (archive ledger). Earlier the same day: 879 approved and Sprint 81 closed (archive ledger). Later: **881 ✅ APPROVED WITH NOTES** (review 4; `notifications` least privilege applied on production, fail-closed grant gate in CI; archive ledger); **883 ✅ APPROVED WITH NOTES** the same day (the bell never reads `notifications` without a user; **O80-6** confirmed on production the same day: no read after sign-out). **871** kickoff filed in Sprint 80.
 
 ## Open — needs action
 

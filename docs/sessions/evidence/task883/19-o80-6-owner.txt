@@ -1,0 +1,21 @@
+Task 883 O80-6 - owner check on lero.al (production, after the b496500e2 push was deployed), 2026-09-25.
+Recorded by the orchestrator from two owner screenshots (Firefox DevTools); the screenshots are not copied into the repo.
+
+Network panel (sign in, then sign out, on /uk):
+  POST  <project>.supabase.co  token?grant_type=password   200   (sign-in)
+  GET   lero.al                me                          200
+  GET   <project>.supabase.co  websocket?apikey=...        101   (Realtime subscription opened)
+  GET   <project>.supabase.co  notifications?select=id,user_id,type,title,body,link,is_read,created_at,template_id,template_params&order=created_at.desc&li...   200   (bell, signed in)
+  POST  <project>.supabase.co  logout?scope=global         204   (sign-out)
+  GET   lero.al                uk?_rsc=...                 200
+  GET   lero.al                favicon.ico                 200
+=> No notifications?select request after logout. Before 883 (881 O80-5 step 10) the same position showed GET notifications?select -> 401.
+
+Console panel after the same sequence:
+  warning  Ignoring unsupported entryTypes: layout-shift.                         (Firefox; PerformanceObserver in layout chunk)
+  error    Cookie "__cf_bm" has been rejected for invalid domain.                 (initiator: websocket - Cloudflare bot cookie on the Supabase Realtime host; Firefox cookie policy)
+  warning  x4  The resource at https://lero.al/_next/static/media/*.woff2 preloaded with link preload was not used within a few seconds.
+=> No "[notifications] fetch failed". None of the remaining lines comes from useNotifications.
+
+Not separately reported: step 3 (mark read / live delivery from a second account). The signed-in read (200) and the Realtime
+socket (101) were observed; 883 changed neither path for a signed-in user (hook tests R4 unchanged, 35/35).

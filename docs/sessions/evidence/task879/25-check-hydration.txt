@@ -1,0 +1,23 @@
+
+> lero-al@0.1.0 check:hydration
+> node scripts/check-hydration-console.mjs
+
+
+🔍 Hydration / console-error gate
+   Target: http://localhost:3100
+   Routes: 7 (public only)
+
+   Checking Homepage (en) … PASS ✅
+   Checking Listings list (en) … PASS ✅
+   Checking Homepage (sq/Albanian) … PASS ✅
+   Checking Homepage (uk/Ukrainian) … PASS ✅
+   Checking Listing detail — AC1 route (Task 448) … SKIP ⚠  (NOT-REAL-COVERAGE: HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing)
+   Checking Homepage authenticated (en) — header hydration (Task 599) … SKIP ⚠  (NOT-REAL-COVERAGE: no session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set))
+   Checking Homepage authenticated (uk) — header hydration (Task 599) … SKIP ⚠  (NOT-REAL-COVERAGE: no session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set))
+
+── Summary ──────────────────────────────────────────────────
+   PASS: 4  FAIL: 0  SKIP: 3
+
+✅ No hydration violations detected.
+
+EXIT_CODE=0

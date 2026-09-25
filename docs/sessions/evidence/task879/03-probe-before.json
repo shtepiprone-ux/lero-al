@@ -1,0 +1,447 @@
+{
+  "label": "before",
+  "capturedAt": "2026-09-25T09:14:13.779Z",
+  "storybookStaticDir": "C:\\Claude_Code_Projects\\lero-al-task879-head\\storybook-static",
+  "checks": [
+    {
+      "name": "header-en-320-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 320,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-320-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 320,
+      "locale": "en",
+      "expectedHeight": 97,
+      "measuredHeight": 97
+    },
+    {
+      "name": "header-en-375-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 375,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-375-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 375,
+      "locale": "en",
+      "expectedHeight": 97,
+      "measuredHeight": 97
+    },
+    {
+      "name": "header-en-389-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 389,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-389-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 389,
+      "locale": "en",
+      "expectedHeight": 97,
+      "measuredHeight": 97
+    },
+    {
+      "name": "header-en-390-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 390,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-390-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 390,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-480-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 480,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-480-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 480,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-640-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 640,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-640-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 640,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-768-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 768,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-768-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 768,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-768-ac4-navlinks",
+      "ac": "AC4",
+      "pass": false,
+      "width": 768,
+      "locale": "en",
+      "homeLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      },
+      "listingsLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      }
+    },
+    {
+      "name": "header-en-1024-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 1024,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-1024-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 1024,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-1024-ac4-navlinks",
+      "ac": "AC4",
+      "pass": false,
+      "width": 1024,
+      "locale": "en",
+      "homeLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      },
+      "listingsLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      }
+    },
+    {
+      "name": "header-en-1440-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 1440,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-1440-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 1440,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-1440-ac4-chrome",
+      "ac": "AC4",
+      "pass": false,
+      "width": 1440,
+      "locale": "en",
+      "bgPass": false,
+      "backdropPass": false,
+      "dividerPass": false,
+      "wordmarkPass": true,
+      "backgroundColor": "oklab(0.985 0 0 / 0.6)",
+      "backdropFilter": "blur(8px)",
+      "dividerBorderTopWidth": null,
+      "dividerBorderTopColor": null,
+      "wordmark": {
+        "fontSize": "20px",
+        "fontWeight": "700",
+        "lineHeight": "28px"
+      }
+    },
+    {
+      "name": "header-en-1440-ac4-navlinks",
+      "ac": "AC4",
+      "pass": false,
+      "width": 1440,
+      "locale": "en",
+      "homeLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      },
+      "listingsLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      }
+    },
+    {
+      "name": "header-en-1920-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 1920,
+      "locale": "en",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-en-1920-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 1920,
+      "locale": "en",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "header-en-1920-ac4-navlinks",
+      "ac": "AC4",
+      "pass": false,
+      "width": 1920,
+      "locale": "en",
+      "homeLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      },
+      "listingsLink": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "color": "oklab(0.145 0 0 / 0.8)",
+        "height": 20,
+        "visible": true
+      }
+    },
+    {
+      "name": "header-uk-320-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 320,
+      "locale": "uk",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-uk-320-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 320,
+      "locale": "uk",
+      "expectedHeight": 97,
+      "measuredHeight": 97
+    },
+    {
+      "name": "header-uk-1440-ac2-stacking",
+      "ac": "AC2",
+      "pass": true,
+      "width": 1440,
+      "locale": "uk",
+      "position": "sticky",
+      "zIndex": "30"
+    },
+    {
+      "name": "header-uk-1440-ac3-height",
+      "ac": "AC3",
+      "pass": true,
+      "width": 1440,
+      "locale": "uk",
+      "expectedHeight": 65,
+      "measuredHeight": 65
+    },
+    {
+      "name": "mobilenavdrawer-loggedIn-true-ac5",
+      "ac": "AC5",
+      "pass": false,
+      "loggedIn": true,
+      "links": [
+        {
+          "text": "Home",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "Listings",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "Profile",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "My listings",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "Favorites",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "Add listing",
+          "height": 20,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "mobilenavdrawer-loggedIn-false-ac5",
+      "ac": "AC5",
+      "pass": false,
+      "loggedIn": false,
+      "links": [
+        {
+          "text": "Home",
+          "height": 20,
+          "visible": true
+        },
+        {
+          "text": "Listings",
+          "height": 20,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "authsheet-login-390-ac6",
+      "ac": "AC6",
+      "pass": false,
+      "width": 390,
+      "measured": {
+        "forgotLink": {
+          "fontSize": "16px",
+          "fontWeight": "400",
+          "color": "oklch(0.556 0 0)",
+          "textDecorationLine": "none",
+          "visible": true
+        },
+        "registerLink": {
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "color": "rgb(236, 84, 71)",
+          "textDecorationLine": "underline",
+          "visible": true
+        },
+        "dividerBorderTopWidth": null,
+        "dividerBorderTopColor": null,
+        "orLabel": null
+      },
+      "linkPassForgot": false,
+      "linkPassRegister": false,
+      "dividerPass": false,
+      "orLabelPass": false
+    },
+    {
+      "name": "authsheet-login-1440-ac6",
+      "ac": "AC6",
+      "pass": false,
+      "width": 1440,
+      "measured": {
+        "forgotLink": {
+          "fontSize": "16px",
+          "fontWeight": "400",
+          "color": "oklch(0.556 0 0)",
+          "textDecorationLine": "none",
+          "visible": true
+        },
+        "registerLink": {
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "color": "rgb(236, 84, 71)",
+          "textDecorationLine": "underline",
+          "visible": true
+        },
+        "dividerBorderTopWidth": null,
+        "dividerBorderTopColor": null,
+        "orLabel": null
+      },
+      "linkPassForgot": false,
+      "linkPassRegister": false,
+      "dividerPass": false,
+      "orLabelPass": false
+    },
+    {
+      "name": "authsheet-register-agent-add-company-logo-390",
+      "ac": "infra",
+      "pass": false,
+      "failReason": "navigation failed: {\"ok\":false,\"httpStatus\":200,\"readiness\":{\"ok\":false,\"reason\":\"root has zero rect (390x0)\"}} (story may not exist on this tree)"
+    }
+  ]
+}

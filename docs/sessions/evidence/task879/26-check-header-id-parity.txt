@@ -1,0 +1,36 @@
+
+> lero-al@0.1.0 check:header-id-parity
+> node scripts/check-header-id-parity.mjs
+
+
+🔍 Header id-parity gate — server SSR vs hydrated DOM (Task 601)
+   Target: http://localhost:3100
+   Locales: en, uk, sq, it
+   Session: C:\Claude_Code_Projects\lero-al\playwright\.auth\admin-storage-state.json
+
+   Checking Header id-parity (en) … FAIL ❌  (1 violation(s))
+   Checking Header id-parity (uk) … FAIL ❌  (1 violation(s))
+   Checking Header id-parity (sq) … FAIL ❌  (1 violation(s))
+   Checking Header id-parity (it) … FAIL ❌  (1 violation(s))
+
+── Summary ──────────────────────────────────────────────────
+   PASS: 0  FAIL: 4  SKIP: 0
+
+❌ Header Menu target id divergence found (server SSR ≠ hydrated DOM):
+
+   Route: Header id-parity (en) (http://localhost:3100/en)
+   [1] (id-mismatch) [0] "EN" server id="mantine-_R_amrrb9ivbdb_-target" !== client id="mantine-crdwzix73-target"
+
+   Route: Header id-parity (uk) (http://localhost:3100/uk)
+   [1] (id-mismatch) [0] "UA" server id="mantine-_R_amrrb9ivbdb_-target" !== client id="mantine-8kast4vnl-target"
+
+   Route: Header id-parity (sq) (http://localhost:3100/sq)
+   [1] (id-mismatch) [0] "SQ" server id="mantine-_R_amrrb9ivbdb_-target" !== client id="mantine-vain0zqgx-target"
+
+   Route: Header id-parity (it) (http://localhost:3100/it)
+   [1] (id-mismatch) [0] "IT" server id="mantine-_R_amrrb9ivbdb_-target" !== client id="mantine-l4xd98j5f-target"
+
+This is a REAL useId hydration mismatch — the header Menu target ids differ
+between what the server sent and what the client hydrated to.
+
+EXIT_CODE=1 (documented false positive — see this task's own header comment in scripts/check-header-id-parity.mjs; authoritative regression test is 27)

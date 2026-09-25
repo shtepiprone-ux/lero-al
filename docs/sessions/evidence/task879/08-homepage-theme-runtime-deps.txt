@@ -1,0 +1,7 @@
+🔍  check:homepage-theme-runtime-deps — scanned 10 migration input(s) + 1 expected-zero input
+    TOTAL CLASSIFIED (all categories): 65 pair(s) / 123 use(s)
+    BLOCKING (theme-inline-only + unknown): 0 pair(s) / 0 use(s)
+    MIGRATED_TARGETS (approved subset): 30 pair(s) / 58 use(s)  signature OK
+
+✅  check:homepage-theme-runtime-deps — 0 blocking pairs, 0 expected-zero findings, migration signature OK.
+EXIT_CODE=0

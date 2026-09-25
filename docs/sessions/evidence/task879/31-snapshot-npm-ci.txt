@@ -1,0 +1,77 @@
+npm.cmd : npm warn deprecated @react-email/components@1.0.12: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+At line:2 char:1
++ npm.cmd ci *> "C:\Claude_Code_Projects\lero-al\docs\sessions\evidence ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn deprec... for more info.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+npm warn deprecated @react-email/html@0.0.12: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/link@0.0.13: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/row@0.0.13: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/head@0.0.13: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/section@0.0.17: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/font@0.0.10: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/img@0.0.12: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/code-inline@0.0.6: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/column@0.0.14: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/container@0.0.16: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/heading@0.0.16: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/hr@0.0.12: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/text@0.1.6: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/preview@0.0.14: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/body@0.3.0: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/button@0.2.1: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/markdown@0.0.18: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/tailwind@2.0.7: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated @react-email/code-block@0.2.1: Package no longer supported. Contact Support at 
+https://www.npmjs.com/support for more info.
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 1232 packages, and audited 1233 packages in 1m
+
+311 packages are looking for funding
+  run `npm fund` for details
+
+47 vulnerabilities (4 low, 22 moderate, 20 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn allow-scripts 9 packages have install scripts not yet covered by allowScripts:
+npm warn allow-scripts   @parcel/watcher@2.5.6 (install: node scripts/build-from-source.js)
+npm warn allow-scripts   @sentry/cli@2.58.5 (postinstall: node ./scripts/install.js)
+npm warn allow-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn allow-scripts   msw@2.14.6 (postinstall: node -e "import('./config/scripts/postinstall.js').catch(() => void 
+0)")
+npm warn allow-scripts   @swc/core@1.15.33 (postinstall: node postinstall.js)
+npm warn allow-scripts   esbuild@0.28.0 (postinstall: node install.js)
+npm warn allow-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)
+npm warn allow-scripts   esbuild@0.28.1 (postinstall: node install.js)
+npm warn allow-scripts   unrs-resolver@1.11.1 (postinstall: napi-postinstall unrs-resolver 1.11.1 check)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to 
+allow.
+EXIT_CODE=0

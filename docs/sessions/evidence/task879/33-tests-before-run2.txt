@@ -1,0 +1,10 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al-task879-head
+
+
+ Test Files  27 passed (27)
+      Tests  322 passed (322)
+   Start at  11:13:43
+   Duration  23.61s (transform 8.38s, setup 4.46s, import 84.54s, tests 48.22s, environment 46.22s)
+
+EXIT_CODE=0

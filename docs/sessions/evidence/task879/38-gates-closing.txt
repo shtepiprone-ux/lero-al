@@ -1,0 +1,41 @@
+win32
+
+> lero-al@0.1.0 check:homepage-theme-runtime-deps
+> node scripts/check-homepage-theme-runtime-deps.mjs
+
+🔍  check:homepage-theme-runtime-deps — scanned 10 migration input(s) + 1 expected-zero input
+    TOTAL CLASSIFIED (all categories): 65 pair(s) / 123 use(s)
+    BLOCKING (theme-inline-only + unknown): 0 pair(s) / 0 use(s)
+    MIGRATED_TARGETS (approved subset): 30 pair(s) / 58 use(s)  signature OK
+
+✅  check:homepage-theme-runtime-deps — 0 blocking pairs, 0 expected-zero findings, migration signature OK.
+HOMEPAGE_DEPS_EXIT=0
+
+> lero-al@0.1.0 check:homepage-theme-runtime-deps:verify-gate
+> node scripts/check-homepage-theme-runtime-deps.mjs --verify-gate
+
+🔬  check:homepage-theme-runtime-deps self-test (--verify-gate) — 6 outcomes asserted (kickoff §10.4 + owner decision 2026-08-27)
+
+✅  Case 1 (CSS theme-inline-only plant) — expected exit 1, got exit 1 — reported src/components/shared/HeroSearchView.module.css:132 --space-2 [theme-inline-only]
+✅  Case 2 (TSX theme-inline-only plant) — expected exit 1, got exit 1 — reported src/design-system/mantine/patterns/MantineHomeSection.tsx:45 --home-section-py-base [theme-inline-only]
+✅  Case 3 (missing configured migration input is fatal) — expected exit 1, got exit 1 — fatal names the missing path: missing configured input(s): src/components/shared/HeroSearchView.module.css
+✅  Case 4 (expected-zero reintroduced, D65-E) — expected exit 1, got exit 1 — reported src/design-system/media/AppImage.module.css:143 --space-0
+✅  Case 5 (unmodified copy — three invariants asserted) — expected exit 0, got exit 0 — FULL_CENSUS=65/123; MIGRATED_TARGETS=30/58; BLOCKING=0/0; expected-zero=0; signature=f3093b7d265f43b81b687420e4897f411c498f21ba44612a67b2496de896939f
+✅  Case 6 (wrong-but-root-owned token substitution) — expected exit 1, got exit 1 — migration signature mismatch — src/components/shared/HeroSearchView.module.css  --homepage-runtime-space-2  expected 1 use(s), found 0  (approved migration of --space-2); blocking stayed 0/0 and expected-zero stayed 0 (the substitute is legitimately root-owned), so ONLY the signature caught it; observed 6c87e25ee61677d977b92ce0f32af583c0b3b0bbae249f8d5a50cfcadbb39a8c
+
+✅  6/6 verify-gate assertions behaved as expected.
+VERIFY_GATE_EXIT=0
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 6723 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 4 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  src/components/layout/HeaderView.module.css
+  src/components/layout/MobileNavDrawer.module.css
+  src/components/shared/LocaleSwitcher.module.css
+  src/modules/auth/components/AuthSheet.module.css
+
+check:mojibake: 0 artifacts in 6723 files
+MOJIBAKE_EXIT=0

@@ -1,0 +1,134 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts (5 tests | 4 failed) 12161ms
+     × tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 10265ms
+     × form submit: verifyOtp called with correct token_hash + type — NOT on mount 32ms
+     × success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 35ms
+     × expired/used token on submit → expired state + request-new CTA rendered 20ms
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 2 failed) 21347ms
+     × hydrates the trigger from values.date_from/date_to 6347ms
+     × picking a range then Apply filters commits BOTH date_from + date_to atomically 5764ms
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx (19 tests | 1 failed) 24575ms
+     × Apply fires onApply with the composed local values 5662ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — Apply / Reset wiring > Apply fires onApply with the composed local values
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:141:3
+    139|
+    140| describe('FiltersPanel shell — Apply / Reset wiring', () => {
+    141|   it('Apply fires onApply with the composed local values', () => {
+       |   ^
+    142|     const { onApply } = renderPanel({ values: { rooms: [2] } })
+    143|     fireEvent.click(screen.getByText('Apply filters'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > hydrates the trigger from values.date_from/date_to
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:131:3
+    129|
+    130| describe('FiltersPanel — RangeDatePicker wiring (Task 559)', () => {
+    131|   it('hydrates the trigger from values.date_from/date_to', () => {
+       |   ^
+    132|     const values: FilterValues = { date_from: DAY_10, date_to: DAY_15 }
+    133|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > picking a range then Apply filters commits BOTH date_from + date_to atomically
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:150:3
+    148|   })
+    149|
+    150|   it('picking a range then Apply filters commits BOTH date_from + date…
+       |   ^
+    151|     const onChange = vi.fn()
+    152|     const onApply = vi.fn()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:119:3
+    117|
+    118| describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)',…
+    119|   it('tokenHash + type=recovery: shows form WITHOUT calling verifyOtp …
+       |   ^
+    120|     const { ResetPasswordClient } = await import('../ResetPasswordClie…
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:180:17
+    178|     const input = container!.querySelector('input#new-password')!
+    179|     await act(async () => {
+    180|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    181|     })
+    182|
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:179:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount)
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:219:46
+    217|     expect(mockVerifyOtp).not.toHaveBeenCalled()
+    218|     // Form is present after mount (link is usable)
+    219|     expect(container!.querySelector('form')).toBeTruthy()
+       |                                              ^
+    220|
+    221|     const input = container!.querySelector('input#new-password')!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:261:17
+    259|     const input = container!.querySelector('input#new-password')!
+    260|     await act(async () => {
+    261|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    262|     })
+    263|     await act(async () => {
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:260:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  3 failed | 24 passed (27)
+      Tests  7 failed | 315 passed (322)
+   Start at  09:59:47
+   Duration  54.54s (transform 26.26s, setup 3.92s, import 276.63s, tests 167.16s, environment 38.77s)
+
+EXIT_CODE=1 (repro run — same pre-existing flakiness, confirms non-determinism, see 23/24)

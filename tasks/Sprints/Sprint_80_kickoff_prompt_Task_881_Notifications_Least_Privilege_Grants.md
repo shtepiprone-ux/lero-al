@@ -1,7 +1,7 @@
 # Task 881 — `notifications` least privilege: `anon` loses everything, `authenticated` keeps exactly read-own and mark-as-read
 
 Sprint 80 · **P2** · QA profile **Q4** (Data API grants on a table behind a registered critical flow) · no
-dependencies · owner action **O80-5** · **Status: `NEEDS REVISION` 2026-09-25 (review 2) — the executor starts at §17**
+dependencies · owner action **O80-5** · **Status: `PARTIALLY VERIFIED` 2026-09-25 (review 3) — code-side ACs verified; O80-5 owed (owner, now); P3 gate hardening RV7 at §18**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Pattern to follow: archived Task 870 (`tasks/Archive/Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md`
@@ -716,3 +716,72 @@ other re-run is owed.
 
 Completion report: as §16.5, plus the RF6/RF7 → RV6 mapping, the eleven `r2-p*` files with their hash pairs, the
 superseded list above, and the 881 backlog cell set to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 2).
+
+---
+
+## 18. Review 3 — 2026-09-25 (`PARTIALLY VERIFIED`)
+
+**What is verified.** Revision 2's gate meets every clause of the amended R8 (a)–(f). `r2-p2` … `r2-p12` each exit 1
+naming their cause, and each carries two equal hashes. `r2-16z` equals the current tree, and against `r1-16z` it
+differs only in `check-notifications-grants.mjs`. Review 3 also planted ten more lines on scratch copies. Eight exit 1:
+`begin; … commit;`, `to group anon`, `all tables in schema "public"`, `to authenticated, anon`, `all privileges`,
+mixed-case quoted `"Notifications"`, and `grant anon to authenticated`. Two exit 0 correctly: `update ( is_read )` and
+`select … with grant option` to `authenticated`. With this, AC1, AC2, AC6, AC7, AC8, AC9, AC10 and AC3's guard-`diff`
+half are closed on the executor's evidence.
+
+**What is not.** AC3's live selftest, AC4 (the BEFORE/AFTER probe) and AC5 (the AFTER audit grid) are owner-native,
+under O80-5 (§13.3). No approval is possible until they are returned.
+
+### 18.1 One P3 left in the gate (RF8), fixed in parallel with O80-5
+
+| # | Severity | Finding | Evidence (review 3) |
+|---|---|---|---|
+| RF8 | P3 | Two spellings of a real grant still exit 0. (1) `/* hotfix */ grant select on public.notifications to anon;`: R8 says "comments stripped", but only `--` is stripped, so the fragment starts with `/*` and is skipped. (2) `do $$ begin grant select on public.notifications to anon; end $$;`: the fragment starts with `do`. The scope line names only `execute format(…)` as a blind class. Separately, `with grant option` is stripped silently for `authenticated`. | Scratch plants on copies of the gate and both SQL sources |
+
+**RV7 (RF8 → R8).** In `scripts/check-notifications-grants.mjs` only:
+
+1. Strip `/* … */` block comments (non-greedy, across lines) before the `--` strip.
+2. Add clause **(g)**: a fragment that does not start with `grant` but contains the word `grant` and, with quotes
+   removed, `notifications` fails as "GRANT inside a block or after other text — cannot be verified".
+3. Add clause **(h)**: a grantee `authenticated` carrying `with grant option` fails.
+4. Name `(g)` and `(h)` in the header comment and the scope line. The scope line also states that grants inside
+   function bodies stored elsewhere are invisible.
+
+Review 3 measured the current tree against these rules: no block comments, no mid-fragment `grant` naming the table,
+and no `with grant option`, in either source. The final tree must still exit 0.
+
+**Evidence** (RV5 format, `r3-` prefix, nothing earlier overwritten):
+
+- `r3-p13.txt` — the block-comment line, exit 1.
+- `r3-p14.txt` — the `DO`-block line, exit 1.
+- `r3-p15.txt` — `grant select on public.notifications to authenticated with grant option;`, exit 1.
+- `r3-p2.txt`, `r3-p3.txt`, `r3-p7.txt`, `r3-p12.txt` — re-runs of those plants, each exit 1.
+
+Each plant is appended to the hardening script and restored, with equal hashes. Then:
+
+```powershell
+$ev = "docs\sessions\evidence\task881"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r3-02-platform.txt"
+npm.cmd run check:notifications-grants *>&1 | Tee-Object "$ev\r3-13-check-notifications-grants.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r3-15e-check-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r3-15f-check-mojibake.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r3-16-build.txt"
+git --no-optional-locks hash-object scripts\task-881-notifications-audit.sql scripts\task-881-notifications-least-privilege.sql scripts\task-881-guard-selftest.sql scripts\task-881-rollback.sql scripts\task-881-notifications-probe.mjs scripts\check-notifications-grants.mjs scripts\grant-discipline-audit.sql package.json .github\workflows\governance-pr.yml src\modules\notifications\lib\__tests__\mutations.smoke.test.ts docs\rls-write-path-manifest.md docs\critical-flow-registry.md docs\rls-rules.md | Tee-Object "$ev\r3-16z-hash-object.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r3-17-status-after.txt"
+```
+
+Expected:
+
+- `r3-13`: exit 0.
+- `r3-15e`, `r3-15f`, `r3-16`: exit 0.
+- `r3-16z`: every line equals `r2-16z` except `check-notifications-grants.mjs`.
+- `r3-17`: no path outside §7.
+
+The session log gains a "Revision 3" section. The 881 backlog cell reads
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 3); O80-5 …` with the owner's O80-5 state.
+
+### 18.2 O80-5 can run now
+
+RV7 touches no owner-facing file: the audit, selftest, hardening, rollback and probe hashes stay equal to `r2-16z`.
+The owner runs §13.3 now, in parallel with RV7. The final review then takes RV7's `r3-` evidence and the owner's
+O80-5 outputs together.

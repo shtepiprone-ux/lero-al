@@ -1153,6 +1153,66 @@ lero's DatePicker is single-date, no time, Monday-first. Those flatpickr sub-par
 
 **Brand note:** the metric card uses NO brand color — it is a neutral white/gray tile. This is a deliberate visual change from lero's legacy brand-red stats strip (owner decision 2026-07-14: adopt TailAdmin white metric cards). The icon color stays `gray-800`, not brand.
 
+## 6v. Site header + auth text links + "Or" divider — zip-cited header, live-captured auth chrome (Task 879 design, 2026-09-25)
+
+> **Step 0 result — the header is NOT an honest-negative.** `demo_tailadmin_com.zip` → `index.html` carries exactly one
+> `<header>`, the dashboard app header. An earlier note (the Task 879 reserved row, 2026-09-24, and Task 878's F6) said
+> "TailAdmin has no header" — that was wrong for the zip; only this reference file lacked a section. The sign-in page's
+> auth links and "Or" divider ARE absent from the zip (§6o already records "labeled divider — NOT found"), so those rows
+> carry a live capture (clause 16a).
+>
+> **Provenance (both halves):** captured by the orchestrator on 2026-09-25 with Playwright 1.60.0 headless Chromium on
+> `win32` / Node v22.22.3 — `page.goto(url, {waitUntil:'networkidle'})`, then `getComputedStyle` +
+> `getBoundingClientRect` on the named selectors, plus a screenshot, at 390px and 1440px. URLs:
+> `https://demo.tailadmin.com/` (HTTP 200) and `https://demo.tailadmin.com/signin` (HTTP 200). Retained:
+> `docs/sessions/evidence/task879/design/tailadmin-live-capture.json`, `dashboard-{390,1440}.png`,
+> `signin-{390,1440}.png`, and the capture script `ta-capture.mjs` in the same folder. The Chrome extension was not
+> connected, which is why this is a Playwright capture and not a DevTools one; the method is the same
+> (`getComputedStyle` on the real rendered element).
+
+**Header shell (zip `index.html` class literal + live computed):**
+`<header class="sticky top-0 z-99999 flex w-full border-gray-200 bg-white xl:border-b">`, inner row
+`flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:py-4 xl:border-b-0 xl:px-0`.
+
+| Property | 390px (measured) | 1440px (measured) | lero mapping |
+|---|---|---|---|
+| position / top | `sticky` / 0 | `sticky` / 0 | Mantine `pos="sticky" top={0}` |
+| background | `rgb(255,255,255)` — solid, **no** translucency | same | `bg="white"` |
+| backdrop-filter | `none` | `none` | none (lero's 8px blur has no TailAdmin source) |
+| bottom border | 1px `rgb(228,231,236)` (gray-200) on the inner row | 1px gray-200 on the header | `<Divider />` — `theme.components.Divider.defaultProps.color = 'gray.2'` (§6o) |
+| height | **65px** (64 row + 1 border) | **77px** (`lg:py-4` 16+44+16, + 1) | lero keeps 65 ≥390 / 97 <390 — see the note below |
+| row gap | 8px (`gap-2`) | 16px (`sm:gap-4`) | `gap="xs"` (8) — lero's existing value |
+| z-index | `99999` | `99999` | **not adopted** — see the note below |
+
+**Header controls (zip class literals; live computed at 1440):** icon button
+`h-11 w-11 rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700`; the
+sidebar toggle measured 40×40 below `xl`, 44×44 with a 1px gray-200 border from `xl`, radius 8px, colour
+`rgb(102,112,133)` (gray-500). User name `text-theme-sm font-medium` measured **14px / 20px / 500 /
+`rgb(52,64,84)` (gray-700)**; avatar 44×44 round. The header has **no text nav links** of its own — the nav-item
+reference remains the §6a-link sidebar `menu-item` (14px / 500 / gray-700, owner override: no hover fill), which is
+Mantine `Button variant="transparent"` as themed in `theme.ts` (Task 587).
+
+**Not adopted, and why (both are stacking/geometry mechanics, not chrome):**
+- **z-index `99999`.** It would put the sticky header above every Mantine overlay (`--mantine-z-index-modal` 200 …
+  `overlay` 400) and every legacy `z-40`/`z-50` dialog still in use. lero keeps its measured `30`.
+- **Height 77px ≥`lg`.** `src/design-system/mantine/notification-chrome.css` offsets top-positioned toasts by 97px
+  below 640px and 65px from 640px (Task 684 D3, Task 723). lero keeps its header at 97px below 390px and 65px from
+  390px; at 390px TailAdmin measures the same 65px.
+
+**Auth text links (live, `demo.tailadmin.com/signin`, identical at 390 and 1440):**
+- "Forgot password?" `class="text-brand-500 hover:text-brand-600 text-sm"` → **14px / 20px / 400**, colour
+  `rgb(70,95,255)` (TailAdmin brand-500 → lero `brand`, per §6s's brand mapping), **no underline at rest**.
+- "Sign Up" inside "Don't have an account?" → the same: 14px / 20px / 400, brand, no underline. The surrounding
+  paragraph is `text-sm font-normal text-gray-700` → 14px / 20px / 400 / `rgb(52,64,84)`.
+- lero mapping: the canonical auth switch link already in `MantineAuthFormPattern.tsx`
+  (`<Anchor size="sm" component="button" type="button" c="brand">`), reused — not re-derived.
+
+**"Or" divider (live, `demo.tailadmin.com/signin`):** wrapper `relative py-3 sm:py-5` (12px → 20px vertical);
+line `w-full border-t border-gray-200` → 1px `rgb(228,231,236)`; label
+`bg-white p-2 text-gray-400 sm:px-5 sm:py-2` → **14px / 20px / 400, `rgb(152,162,179)` (gray-400)**, padding 8px
+(390) → 8px 20px (1440), text "Or" (sentence case in the markup; no `text-transform`). lero mapping: Mantine
+`Divider label labelPosition="center"` with the §6o default colour; label text `size="sm"` `c="gray.4"`.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

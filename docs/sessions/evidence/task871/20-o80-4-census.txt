@@ -14,3 +14,8 @@ Reading (orchestrator):
 - 8 of the 11 stored moderator keys are allowed = true. Before 871, all 8 grants had no effect. The other 2 of the 13
   PERMISSION_KEYS have no row, so they read false both before and after.
 - One active moderator exists, so O80-4 step 3 (the live moderator arm) is reachable after the deploy.
+
+O80-4 steps 2-3 - owner, on lero.al after the 93d6d2677 deploy, 2026-09-25. Owner's words: "Підтверджую, все ок." ("I confirm, all OK.")
+  step 2 (admin): /admin/permissions shows the stored values instead of all switches off; a toggle survives a reload.
+  step 3 (moderator): with reports.delete on, the moderator sees the delete control on /admin/reports; after the admin
+          switches it off and the moderator reloads, the control is gone.

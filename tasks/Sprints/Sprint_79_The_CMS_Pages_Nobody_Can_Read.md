@@ -1,6 +1,6 @@
 # Sprint 79 — the CMS pages the site publishes, and nobody outside the admin can read
 
-**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (867) · **Kickoffs filed:** 2 (867, 869) · **Reserved:** 0 (868 kickoff filed in Sprint 78, 2026-09-25)
+**Opened:** 2026-09-21 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (867) · **Kickoffs filed:** 3 (867, 869, 884) · **Reserved:** 0 (868 kickoff filed in Sprint 78, 2026-09-25)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -82,6 +82,7 @@ and the corrected command ships in the kickoff's §13.3.
 | **867** | The `pages` public read path (GRANT + `pages_select_public` policy, owner-applied SQL), Footer link validation against published slugs, and the empty-body publish guard | **P1** | **Q4** | — | ✅ `APPROVED WITH NOTES` 2026-09-23 (review 2; archived — P3: the executor attempted and suggested a mutating `git checkout`; ledger `docs/reviews/2026-09-23-task867-cms-read-path-footer-slug-validation.review-ledger.json`) → [`…Task_867…`](../Archive/Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md) |
 | **869** | The CMS route stops swallowing its read error (both queries — the page query **and** `generateMetadata`'s, which 867's F5 did not name), its view moves into `CmsPageView` with a canonical Mantine Story and manifest entry, and the three dead `prose` classes go — `@tailwindcss/typography` is not installed and `globals.css` loads no `@plugin`, so they have emitted zero CSS since 326A | **P1** | **Q3** | 867 (sequencing, not function) | 📝 `KICKOFF FILED` 2026-09-23 → [`…Task_869…`](Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md) |
 | **868** | `/admin/pages` tells the admin *why* a publish was refused — the specific `sq_body_required` message, which requires the GR-1 census and Mantine migration of `/admin/pages` (6 nodes; `AdminPagesManager` 367 ln / 58 `className` / 6 shadcn primitives) | P3 | Q3 | 867 | 📝 `KICKOFF FILED` 2026-09-25 **in Sprint 78** (routed by goal fit; runs after 877) → [`…Task_868…`](Sprint_78_kickoff_prompt_Task_868_Admin_Pages_On_Mantine_With_Publish_Refusal_Reason.md) |
+| **884** | A CMS page body is sanitised before render: one allowlist sanitiser (`sanitize-html`, server-side) at the single injection site `CmsPageView`; payload tests + plants; owner content census before approval. Filed 2026-09-25 by owner instruction (*"заведи окрему задачу"*) after the automated security review flagged `dangerouslySetInnerHTML` — the "new number" 869 §3.6 anticipated; urgent because 871 made a moderator's `legal.manage` effective | **P1** | Q4 | **869** | 📝 `KICKOFF FILED` 2026-09-25 → [`…Task_884…`](Sprint_79_kickoff_prompt_Task_884_CMS_Body_HTML_Sanitized_Before_Render.md) |
 
 ## Owner actions this sprint needs
 
@@ -93,6 +94,8 @@ and the corrected command ships in the kickoff's §13.3.
 | **O79-3** | Create and then delete a throwaway **draft** page with slug `rls-probe-867` in `/admin/pages`, so the negative arm has a subject — required only if `scripts/task-867-verify.sql` reports zero draft rows. |
 | **O79-4** | After the approved review is deployed: open `https://lero.al/en/privacy-policy` in a private window, save a Footer legal link to `/privacy-policy`, and confirm the saved social links render. |
 | **O79-5** | Task 869's `OWNER VISUAL QA REQUIRED` matrix: open `Patterns/Mantine/CmsPageView` in Storybook and record accepted / returned for each state × locale × viewport tuple listed in that kickoff's §13.3. No automated screenshot verdict substitutes for it. |
+| **O79-7** | **Now, before any 884 code lands:** as admin, open `/admin/permissions` and report whether moderators hold `legal.manage`; if a moderator does not need it, switch it off until 884 is deployed (884 kickoff §13.3). |
+| **O79-6** | Task 884, after its executor reports and before approval: run `scripts/task-884-cms-html-census.sql` (one grid) and return it. A flagged **published** row is an owner decision (widen the allowlist or accept stripping, 884 §5.1). After deploy: open two published CMS pages in a private window and confirm the formatting is unchanged. |
 
 ## Explicitly not in this sprint
 

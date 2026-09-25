@@ -1,7 +1,7 @@
 # Task 881 — `notifications` least privilege: `anon` loses everything, `authenticated` keeps exactly read-own and mark-as-read
 
 Sprint 80 · **P2** · QA profile **Q4** (Data API grants on a table behind a registered critical flow) · no
-dependencies · owner action **O80-5** · **Status: `NEEDS REVISION` 2026-09-25 (review 1) — the executor starts at §16**
+dependencies · owner action **O80-5** · **Status: `NEEDS REVISION` 2026-09-25 (review 2) — the executor starts at §17**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Pattern to follow: archived Task 870 (`tasks/Archive/Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md`
@@ -125,7 +125,7 @@ the test.
 | **R5** | Q4 reversibility | `scripts/task-881-rollback.sql`: `begin;` → `grant select, insert, update, delete, truncate, references, trigger on public.notifications to authenticated;` → `notify pgrst, 'reload schema';` → `commit;`. **It does not re-grant `anon`.** Rationale in the header comment: no app path reads `notifications` as `anon` (F8), so restoring `anon` would restore only exposure. The rollback exists to restore the app if the column-level grant breaks mark-as-read. | P1 | AC2 | Confirmed (design choice, reversible) |
 | **R6** | reserved row ("two-armed anon probe … and a signed-in mark-as-read proof"); F14 | `scripts/task-881-notifications-probe.mjs --phase before\|after`, owner-run (§5, Assumption 2). Setup: a service-role insert of one probe row for the probe user (`title = '[task-881 probe]'`); a `finally` deletes every row with that title for that user. Arms, in this order, each printing `phase arm role method http_status pg_code reason` where `reason ∈ {none, grant, rls, other}` (`grant` = message matches `/permission denied for (table\|relation) notifications/`; `rls` = `/row-level security/`): **A1** anon `GET ?select=id&limit=0`; **A2** anon `POST` insert; **A3** anon `PATCH is_read` on the probe id; **A4** anon `DELETE` on the probe id; **U1** user `GET` own probe row (prints the row **count** only); **U2** user `PATCH {is_read:true}` on the probe id, then a service-role re-read printing `is_read_after=true\|false`; **U3** user `PATCH {title:'x'}` on the probe id; **U4** user `POST` insert; **RT** Realtime: the user's client subscribes exactly as `useNotifications.ts:56-62`, a second probe row is inserted through the service role, and the probe prints `received_ms=<n>\|MISSING` within 10 s; **U5** user `DELETE` on the probe id — **last**. Exit 0 when every arm matches §11's table for the phase, 1 on any mismatch, 2 on setup error (missing env var, sign-in failure, insert failure). No key, password, token or row content is printed. `.env.local` is read with `dotenv`, never PowerShell. **Cleanup (review 1):** once the setup insert has succeeded, no path calls `process.exit()` (Node skips `finally` on it); every later failure sets `process.exitCode` and leaves through `finally`. The `finally` deletes by the ids the script inserted (setup row + RT row) **and** by title, because U3 BEFORE renames the setup row to `'x'`. | P0 | AC4 | Confirmed |
 | **R7** | F10; reserved row ("the audit SQL corrected to match") | `scripts/grant-discipline-audit.sql`: `:158-160` become the correct declaration (`grant select, update (is_read) on public.notifications to authenticated;` + the unchanged `service_role` line), with a comment naming Task 881, the consumer matrix and that `anon` holds nothing. The footer list (`:224-230`) no longer claims `notifications` is "no changes required" and points to Task 881. No other statement in the file changes. | P1 | AC6 | Confirmed |
-| **R8** | F12 precedent; recurring failure mode M1 | `scripts/check-notifications-grants.mjs` + `package.json` `"check:notifications-grants"` + a `governance-pr.yml` step right after the Task 460 step. Sources: `scripts/grant-discipline-audit.sql` and `scripts/task-881-notifications-least-privilege.sql`. **Relation match (review 1):** a statement targets the table when it names it as `notifications`, `public.notifications`, `"notifications"` or `"public"."notifications"` (case-insensitive, optional `table` keyword), **or** is a `grant … on all tables in schema public …`. It exits 1, naming the statement, when: no statement grants `authenticated` **table-level** `select` (a column-list `select (…)` does not count); no statement grants `authenticated` `update (is_read)`; **any** statement grants `authenticated` an `update` whose column list is anything other than exactly `(is_read)` — bare, widened (`(is_read, title)`) or a different column (`(user_id)`); any statement grants `anon` anything; any statement grants `authenticated` `insert`, `delete`, `truncate`, `references`, `trigger` or `all`. It ignores the rollback file by design; its header says so. It prints its scope every run: the files read, the spellings it recognises, and that it cannot see live grants (N1–N5 do) or grants built with dynamic SQL (`execute format(…)`). | P1 | AC7 | Confirmed |
+| **R8** | F12 precedent; recurring failure mode M1; **rewritten at review 2 as a fail-closed allowlist** | `scripts/check-notifications-grants.mjs` + `package.json` `"check:notifications-grants"` + a `governance-pr.yml` step right after the Task 460 step. Sources: `scripts/grant-discipline-audit.sql` and `scripts/task-881-notifications-least-privilege.sql`. Comments stripped, split on `;`, whitespace normalised, lower-cased. **In scope:** every statement starting `grant` whose text, with double quotes removed, contains the token `notifications`, or whose `on` clause is `all tables in schema …` listing `public`. **Parse** each in-scope statement into privilege list / `on` target list / `to` grantee list. Split every list at top-level commas only. Strip a leading `table` from the targets and remove double quotes and whitespace around dots. Strip a trailing `with grant option` and `granted by <role>`, in either order, from the grantees, and remove double quotes. **It exits 1, naming the statement, when:** (a) an in-scope statement does not parse, or a privilege token is not one of `select`, `insert`, `update`, `delete`, `truncate`, `references`, `trigger` or `all [privileges]` (each with an optional column list); (b) any grantee of an in-scope statement is anything other than `authenticated` or `service_role` (so `anon`, `public` and every other role fail); (c) `authenticated` is granted any privilege other than table-level `select` or `update (is_read)` exactly; (d) no statement grants `authenticated` table-level `select`; (e) no statement grants `authenticated` `update (is_read)`; (f) any statement with no `on` clause (a role-membership grant) names `anon`, `authenticated` or `public` as grantee. It ignores the rollback file by design; its header says so. It prints its scope every run: the files read, the allowlist, and that it cannot see live grants (N1–N5 do) or grants built with dynamic SQL (`execute format(…)`). | P1 | AC7 | Confirmed |
 | **R9** | `rls-rules.md` RLS-Change Test Requirement §1–§3; F11 | `src/modules/notifications/lib/__tests__/mutations.smoke.test.ts`, appended to `test:rls-guards` in `package.json`. It asserts: both mark-as-read actions construct the user-scoped client and never the admin client; the `update()` payload's keys are exactly `['is_read']` with value `true` (the column contract R2 grants); `markNotificationRead` filters `eq('id', id)` and `eq('is_read', false)`; `markAllNotificationsRead` filters `eq('is_read', false)`; an `{ error }` result logs the existing message once and resolves; `createNotification` uses the admin client and never the user-scoped one. | P1 | AC8 | Confirmed |
 | **R10** | `agent-contract` 15; RLS-Change §1 | Docs: `docs/rls-write-path-manifest.md` Table 1 gains three rows (`createNotification` service-role; `markNotificationRead`, `markAllNotificationsRead` archetype B, guard "none in code — RLS `auth.uid() = user_id` + `UPDATE (is_read)` grant (881)", `npm run test:rls-guards`). `docs/critical-flow-registry.md` "P0 — Server-action / RLS write paths" gains one row, **"Notification read-state write + `notifications` grant contract"**, naming the test, `check:notifications-grants` and the owner probe. `docs/rls-rules.md` → "Existing-table audit" gains one paragraph recording the 881 contract, the scripts and the gate. | P2 | AC9 | Confirmed |
 
@@ -252,6 +252,12 @@ R10 docs → §13.2 gate block → report. The executor **writes** the SQL. The 
 | **P4** (R8, review 1) | in `grant-discipline-audit.sql`, `update (is_read)` becomes `update (is_read, title)` | exit 1 naming the widened column grant | `07b-plant-p4.txt` |
 | **P5** (R8, review 1) | append `grant update (user_id) on public.notifications to authenticated;` to the hardening script | exit 1 naming the column grant | `07c-plant-p5.txt` |
 | **P6** (R8, review 1) | append `grant select on notifications to anon;` (unqualified) to the hardening script | exit 1 naming the anon grant | `08b-plant-p6.txt` |
+| **P7** (R8, review 2) | append `grant select on public.listings, public.notifications to anon;` to the hardening script | exit 1 naming the `anon` grantee | `r2-p7.txt` |
+| **P8** (R8, review 2) | append `grant select on public.notifications to public;` | exit 1 naming the `public` grantee | `r2-p8.txt` |
+| **P9** (R8, review 2) | append `grant select on public.notifications to "anon" granted by postgres;` | exit 1 naming the `anon` grantee | `r2-p9.txt` |
+| **P10** (R8, review 2) | append `grant insert on table public.notifications to "authenticated";` | exit 1 naming the insert overgrant | `r2-p10.txt` |
+| **P11** (R8, review 2) | append `grant maintain on public.notifications to authenticated;` | exit 1 naming the unrecognised privilege | `r2-p11.txt` |
+| **P12** (R8, review 2) | append `grant authenticated to anon;` | exit 1 naming the role-membership grant | `r2-p12.txt` |
 | restore | all reverted | exit 0 | `09-gate-restored.txt` |
 
 Record `git hash-object` of each planted file before the plant and after the restore **inside that plant's own
@@ -327,7 +333,7 @@ U2 resets the probe row between phases: the setup inserts a fresh row in each ph
 - **AC6 [R7]** Given `git diff scripts/grant-discipline-audit.sql`, then only `:158-160` and the footer list changed,
   and the new declaration grants `authenticated` `select` and `update (is_read)` only.
 - **AC7 [R8]** Given `check:notifications-grants`, then it exits 0 on the final tree (`13`), exits 1 naming the cause
-  under P2 (`07`), P3 (`08`), P4 (`07b`), P5 (`07c`) and P6 (`08b`), and exits 0 after the restore (`09`). Each plant's
+  under P2 (`07`), P3 (`08`), P4 (`07b`), P5 (`07c`), P6 (`08b`) and P7–P12 (`r2-p7` … `r2-p12`), and exits 0 after the restore (`09`). Each plant's
   evidence file itself contains the planted file's `git hash-object` before the plant and after the restore, and the
   two are equal. It prints its scope statement on every run. The workflow step exists after the Task 460 step.
 - **AC8 [R9]** Given `mutations.smoke.test.ts`, then every R9 assertion passes on the final source (`14`). Under P1
@@ -640,3 +646,73 @@ unchanged.
 Same as §14, plus: the RF1–RF5 → RV1–RV5 mapping with the evidence file for each; the five plant files with their hash
 pairs; the superseded-artifact list; and the updated 881 backlog cell, set to `IMPLEMENTED - AWAITING ORCHESTRATOR
 REVIEW` (revision 1). O80-5 is stated as owed.
+
+---
+
+## 17. Revision 2 — review 2026-09-25 (`NEEDS REVISION`)
+
+**Re-entry mode: `remediation`.** Start at §17.2. §16's RV2–RV5 are **accepted**, and their `r1-` evidence stays final:
+the probe, the audit, the `grant-discipline-audit.sql` comments and the hash-witness format. Do not edit the probe, the
+audit, any SQL file, the test, `package.json`, the workflow or the R10 docs. The only file that changes is
+`scripts/check-notifications-grants.mjs`, plus the session log and the 881 backlog cell.
+
+- **Do not overwrite `r1-` evidence.** Revision 2 writes `r2-` files. `r1-07`, `r1-08`, `r1-07b`, `r1-07c`,
+  `r1-08b`, `r1-09`, `r1-13`, `r1-15b`, `r1-15c`, `r1-15e`, `r1-15f`, `r1-16`, `r1-16z` and `r1-17` become
+  **superseded** by their `r2-` counterparts. All other `r1-` files remain final.
+
+### 17.1 What review 2 found
+
+| # | Severity | Finding | Evidence (review 2) |
+|---|---|---|---|
+| RF6 | P2 | The RV1 gate still exits 0 on six violations of R8's own conditions ("any statement grants `anon` anything"; no `insert` to `authenticated`). `grant select on public.listings, public.notifications to anon`: a multi-table `on` list fails `TABLE_TARGET_RE`, so the statement is skipped. `… to public`: `public` is not `anon`. `… to "anon"` and `… to anon granted by postgres`: the role compare is exact on the raw token. `grant insert on table public.notifications to "authenticated"`: the role is quoted. `grant authenticated to anon`: no `on` clause. | Scratch copies of the gate and both SQL sources, one appended line each: all six exit 0. Unqualified, upper-case, all-tables and `public . notifications` forms correctly exit 1 |
+| RF7 | P3 | The header says a GRANT the parser "cannot decompose" is "treated as unrecognised rather than silently ignored". The code `continue`s on `!parsed`, and an unparsed privilege token (`unparsed: true`) is never checked, so both are silently ignored. | `check-notifications-grants.mjs:109-111`, `:118`, `:144` |
+
+**Root cause is the kickoff, not the executor.** Review 1's R8 enumerated relation spellings instead of requiring
+fail-closed parsing, and RV1 implemented exactly what it named. R8 is now an allowlist (§4): a statement that mentions
+the table and does not parse, names a grantee outside `{authenticated, service_role}`, or grants `authenticated`
+anything beyond `select` / `update (is_read)` fails. No spelling list remains to extend.
+
+### 17.2 Correction
+
+**RV6 (RF6, RF7 → R8).** Rewrite `scripts/check-notifications-grants.mjs` to the R8 row in §4 as amended at review 2.
+Keep the file's shape, precedent and exit codes. Make the header comment and scope line match the code: allowlist,
+fail-closed parse, and the dynamic-SQL/live-grant blind spots. Before writing, confirm the final tree has no
+role-membership grant naming `anon`, `authenticated` or `public` in either source. Review 2 measured none: 57 + 2
+`grant` statements, 0 without `on`, 0 multi-target, 0 `to public`.
+
+### 17.3 Revision-2 gate block (executor, Windows PowerShell, project root)
+
+Plants first, by hand, against the rewritten gate, using the RV5 format: pre-plant hash, gate output with
+`EXIT_CODE=`, post-restore hash, all in one file. Plant through Node or the Edit tool. Re-run P2–P6 (§10.4) as
+`r2-p2.txt` … `r2-p6.txt`, then P7–P12 as `r2-p7.txt` … `r2-p12.txt`. Then:
+
+```powershell
+$ev = "docs\sessions\evidence\task881"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r2-02-platform.txt"
+npm.cmd run check:notifications-grants *>&1 | Tee-Object "$ev\r2-09-gate-restored.txt"
+npm.cmd run check:notifications-grants *>&1 | Tee-Object "$ev\r2-13-check-notifications-grants.txt"
+npm.cmd run check:listing-reports-grants *>&1 | Tee-Object "$ev\r2-15b-check-listing-reports-grants.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r2-15c-typecheck.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r2-15e-check-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r2-15f-check-mojibake.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r2-16-build.txt"
+git --no-optional-locks hash-object scripts\task-881-notifications-audit.sql scripts\task-881-notifications-least-privilege.sql scripts\task-881-guard-selftest.sql scripts\task-881-rollback.sql scripts\task-881-notifications-probe.mjs scripts\check-notifications-grants.mjs scripts\grant-discipline-audit.sql package.json .github\workflows\governance-pr.yml src\modules\notifications\lib\__tests__\mutations.smoke.test.ts docs\rls-write-path-manifest.md docs\critical-flow-registry.md docs\rls-rules.md | Tee-Object "$ev\r2-16z-hash-object.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r2-17-status-after.txt"
+```
+
+Expected:
+
+- `r2-02` starts with `win32`.
+- `r2-p2` … `r2-p12`: each `EXIT_CODE=1`, naming its cause, with two equal hashes.
+- `r2-09` and `r2-13`: exit 0, with the allowlist scope line.
+- `r2-15b`, `r2-15c`, `r2-15e`, `r2-15f`, `r2-16`: exit 0.
+- `r2-16z`: every line except `check-notifications-grants.mjs` equals `r1-16z`.
+- `r2-17` vs `01`: no path outside §7.
+
+### 17.4 O80-5 timing and completion
+
+O80-5 (§13.3) still runs after this revision is reviewed. The owner-facing files do not change in revision 2, so no
+other re-run is owed.
+
+Completion report: as §16.5, plus the RF6/RF7 → RV6 mapping, the eleven `r2-p*` files with their hash pairs, the
+superseded list above, and the 881 backlog cell set to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 2).

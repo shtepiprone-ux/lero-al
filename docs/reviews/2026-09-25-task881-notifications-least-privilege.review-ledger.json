@@ -1,0 +1,926 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-881 — notifications least privilege: anon holds nothing, authenticated keeps table-level SELECT + UPDATE (is_read); applied to production 2026-09-25 (O80-5), fail-closed CI grant gate, action contract test (R1-R10, revisions 1-3)",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "1f3c2114d4f2cd97fbf17b4d2cae18f5f9c0725a",
+  "reviewedRevision": "uncommitted worktree on top of 1f3c2114d4f2cd97fbf17b4d2cae18f5f9c0725a (main). Blobs: audit b1c29ae0, hardening a6fd627e, selftest 57045ad5, rollback 3df6192e, probe b437d5d6, gate a3a294c6, test af14fc65.",
+  "reviewedPaths": [
+   "scripts/task-881-notifications-audit.sql",
+   "scripts/task-881-notifications-least-privilege.sql",
+   "scripts/task-881-guard-selftest.sql",
+   "scripts/task-881-rollback.sql",
+   "scripts/task-881-notifications-probe.mjs",
+   "scripts/check-notifications-grants.mjs",
+   "scripts/grant-discipline-audit.sql",
+   "package.json",
+   ".github/workflows/governance-pr.yml",
+   "src/modules/notifications/lib/__tests__/mutations.smoke.test.ts",
+   "docs/rls-write-path-manifest.md",
+   "docs/critical-flow-registry.md",
+   "docs/rls-rules.md",
+   "docs/sessions/2026-09-25-task881-notifications-least-privilege.md",
+   "docs/sessions/evidence/task881"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 10,
+   "verified": 10,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-25-task881-notifications-least-privilege.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-881-notifications-audit.sql",
+    "symbol": "single statement, checks N1-N5",
+    "diffHunks": [
+     "scripts/task-881-notifications-audit.sql (blob b1c29ae0)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "single statement, no write keyword",
+     "every check prints a (count) row"
+    ],
+    "phases": [
+     "pre-apply",
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/r3-10-audit-single-statement.txt",
+     "command": "node.exe single-statement check (kickoff 13.2 line 10)",
+     "observable": "semicolons=1 endsWithSemicolon=true writeKeywords=none",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "single statement, no write keyword"
+      ],
+      "phases": [
+       "pre-apply",
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/18-audit-before.tsv",
+     "command": "owner-run audit in the SQL Editor, O80-5 step 2",
+     "observable": "One grid; N1..N5 each print a (count) row: 14, 20, 6, 16, 0 (N5 prints 0).",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every check prints a (count) row"
+      ],
+      "phases": [
+       "pre-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/19-audit-after.tsv",
+     "command": "owner-run audit in the SQL Editor, O80-5 step 6",
+     "observable": "One grid; N1..N5 each print a (count) row: 1, 1, 6, 1, 1.",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every check prints a (count) row"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A statically valid audit can still fail at runtime.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/19b-selftest-and-apply.txt",
+     "result": "CONFIRMED then fixed: the first live run raised 22023 (aclexplode on an empty ACL, RF9); after the section 18.3 hotfix both live grids ran. Recorded as finding F2."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R2 R4 R5",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-881-notifications-least-privilege.sql",
+    "symbol": "revoke/grant statements, post-condition block; rollback file",
+    "diffHunks": [
+     "scripts/task-881-notifications-least-privilege.sql (blob a6fd627e)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "hardening revokes all from anon and authenticated, grants select + update (is_read)",
+     "rollback re-grants authenticated only",
+     "post-condition passed live"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/11-sql-targets.txt",
+     "command": "node.exe grant/revoke extraction (kickoff 13.2 line 11)",
+     "observable": "Four hardening statements exactly as R2; rollback grants seven privileges to authenticated, no anon, no service_role/postgres.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "hardening revokes all from anon and authenticated, grants select + update (is_read)",
+       "rollback re-grants authenticated only"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/19b-selftest-and-apply.txt",
+     "command": "owner-run hardening script, O80-5 step 5",
+     "observable": "Success. No rows returned - the post-condition block raised nothing, so every R4 clause held inside the transaction.",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "post-condition passed live"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A revoke could be silently ineffective under another grantor.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/18-audit-before.tsv",
+     "result": "REFUTED: every anon/authenticated N4 entry BEFORE reads granted_by=postgres, the role the SQL Editor runs as; AFTER N4 lists only authenticated SELECT."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R3",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-881-guard-selftest.sql",
+    "symbol": "guard do-block",
+    "diffHunks": [
+     "scripts/task-881-guard-selftest.sql (blob 57045ad5)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "guard byte-identical apart from the table literal",
+     "selftest raises naming public_user_profiles"
+    ],
+    "phases": [
+     "pre-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/_guard1.txt",
+     "command": "executor normalised extraction of both guard blocks (session log, R3)",
+     "observable": "_guard1.txt and _guard2.txt identical after replacing the table literal.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "guard byte-identical apart from the table literal"
+      ],
+      "phases": [
+       "pre-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/19b-selftest-and-apply.txt",
+     "command": "owner-run selftest, O80-5 step 4",
+     "observable": "ERROR P0001 Task 881 guard: 1 violation(s) found - g2: view(s) public_user_profiles depend on users",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "selftest raises naming public_user_profiles"
+      ],
+      "phases": [
+       "pre-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The selftest error could come from a different guard than the one in the hardening script.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/_guard2.txt",
+     "result": "REFUTED: the reviewer diffed _guard1.txt and _guard2.txt (review 1); identical."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R6",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-881-notifications-probe.mjs",
+    "symbol": "arms A1-A4, U1-U5, RT; cleanup",
+    "diffHunks": [
+     "scripts/task-881-notifications-probe.mjs (blob b437d5d6)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "every arm matches the kickoff 11 row for its phase",
+     "no-env exits 2 without a secret",
+     "no process.exit after the first insert"
+    ],
+    "phases": [
+     "pre-apply",
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/20-probe-before.txt",
+     "command": "owner-run probe --phase before (normalised to UTF-8 by revision 3, content line-identical)",
+     "observable": "A1 200 none; A2 401 rls; A3/A4 204; U1 count=1; U2 is_read_after=true; U3 204; U4 403 rls; RT 492 ms; U5 204; all arms matched; EXIT_CODE=0",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every arm matches the kickoff 11 row for its phase"
+      ],
+      "phases": [
+       "pre-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/21-probe-after.txt",
+     "command": "owner-run probe --phase after",
+     "observable": "A1-A4 401 42501 grant; U1 count=1; U2 204 is_read_after=true; U3/U4/U5 403 42501 grant; RT 487 ms; all arms matched; EXIT_CODE=0",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every arm matches the kickoff 11 row for its phase"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r1-12-probe-no-env.txt",
+     "command": "node.exe probe --phase before without PROBE_EMAIL",
+     "observable": "Missing PROBE_EMAIL or PROBE_PASSWORD...; EXIT_CODE=2; no secret printed",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no-env exits 2 without a secret"
+      ],
+      "phases": [
+       "pre-apply",
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r1-12b-probe-exit-lines.txt",
+     "command": "node.exe process.exit line census (kickoff 16.3)",
+     "observable": "all exits before first insert=true",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no process.exit after the first insert"
+      ],
+      "phases": [
+       "pre-apply",
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The AFTER refusals could be RLS refusals mislabelled as grant refusals.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/20-probe-before.txt",
+     "result": "REFUTED: A2 and U4 read reason=rls BEFORE and reason=grant AFTER with the same 42501 code, so the classifier distinguishes the two."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5 / R2 R4",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-881-notifications-least-privilege.sql",
+    "symbol": "applied grant state",
+    "diffHunks": [
+     "scripts/task-881-notifications-least-privilege.sql (blob a6fd627e)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "N1 count 1",
+     "N2 count 1",
+     "N4 only authenticated SELECT",
+     "N5 only authenticated is_read UPDATE",
+     "service_role unchanged"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/19-audit-after.tsv",
+     "command": "owner-run audit, O80-5 step 6",
+     "observable": "N1 (count)=1 authenticated SELECT; N2 (count)=1 authenticated/is_read; N4 1 row authenticated SELECT granted_by=postgres (MAINTAIN gone); N5 1 row is_read/authenticated UPDATE; service_role all seven true",
+     "freshness": "live production database 2026-09-25, owner-run O80-5 against the same hardening blob a6fd627e and the section 18.3 audit statement",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "N1 count 1",
+       "N2 count 1",
+       "N4 only authenticated SELECT",
+       "N5 only authenticated is_read UPDATE",
+       "service_role unchanged"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The column-level grant could break mark-as-read through PostgREST (kickoff Assumption 1).",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/19c-manual-checks.txt",
+     "result": "REFUTED: probe U2 AFTER is_read_after=true and the owner confirmed mark one / mark all / reload on lero.al."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / R7",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/grant-discipline-audit.sql",
+    "symbol": "notifications declaration and footer",
+    "diffHunks": [
+     "scripts/grant-discipline-audit.sql (blob 2b2da09c)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "declaration grants authenticated select and update (is_read) only",
+     "no other statement changed"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/r1-17b-grant-discipline-diff.txt",
+     "command": "git diff -U0 scripts/grant-discipline-audit.sql",
+     "observable": "The only added statement is grant update (is_read) on public.notifications to authenticated; every other hunk is comment lines.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "declaration grants authenticated select and update (is_read) only",
+       "no other statement changed"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "An unrelated statement in the shared file could have changed.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/r2-15b-check-listing-reports-grants.txt",
+     "result": "REFUTED: the Task 460 gate over the same file still passes (EXIT_CODE=0) and the -U0 diff shows no other statement line."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC7 / R8",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-notifications-grants.mjs",
+    "symbol": "fail-closed allowlist, clauses (a)-(h)",
+    "diffHunks": [
+     "scripts/check-notifications-grants.mjs (blob a3a294c6)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "final tree exits 0",
+     "every plant P2-P15 exits 1 naming its cause",
+     "plants restored with equal hashes",
+     "CI step after the Task 460 step"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/r3-13-check-notifications-grants.txt",
+     "command": "npm.cmd run check:notifications-grants",
+     "observable": "EXIT_CODE=0 with the hardened scope line",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "final tree exits 0"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r4-reviewer-plants.txt",
+     "command": "reviewer-run plants P4-P6, P8-P11 and X1-X3 against the final gate blob on scratch copies",
+     "observable": "Every plant exit=1 naming its cause; the unplanted scratch copy exits 0.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every plant P2-P15 exits 1 naming its cause"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r3-p13.txt",
+     "command": "executor plants r3-p2/p3/p7/p12/p13/p14/p15 (RV5 format)",
+     "observable": "Each EXIT_CODE=1 naming its cause, with two equal hashes in the same file.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every plant P2-P15 exits 1 naming its cause",
+       "plants restored with equal hashes"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": ".github/workflows/governance-pr.yml",
+     "command": "git diff .github/workflows/governance-pr.yml",
+     "observable": "New step \"notifications least-privilege grant check (Task 881 / Sprint 80)\" runs npm run check:notifications-grants directly after the Task 460 step.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "CI step after the Task 460 step"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A realistic spelling of an anon grant could still pass the gate.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/r4-reviewer-plants.txt",
+     "result": "REFUTED for every shape found across reviews 1-4 (unqualified, quoted, PUBLIC, GRANTED BY, multi-table ON, role membership, block comment incl. nested, DO block, SET prefix, WITH GRANT OPTION, unknown privilege). Remaining blind spots (dynamic SQL, function bodies stored elsewhere, live grants) are printed on every run."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC8 / R9",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/notifications/lib/__tests__/mutations.smoke.test.ts",
+    "symbol": "9 contract tests",
+    "diffHunks": [
+     "src/modules/notifications/lib/__tests__/mutations.smoke.test.ts (blob af14fc65)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "payload keys exactly is_read",
+     "user-scoped client only",
+     "test:rls-guards runs both files"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/05-plant-p1.txt",
+     "command": "P1 plant: payload becomes { is_read: true, title: x }",
+     "observable": "The payload-keys test fails: expected [is_read, title] to deeply equal [is_read]; EXIT_CODE=1",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "payload keys exactly is_read"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r1-14-test-rls-guards.txt",
+     "command": "npm.cmd run test:rls-guards",
+     "observable": "2 files, 24 tests passed, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "user-scoped client only",
+       "test:rls-guards runs both files"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The P1 restore could have left mutations.ts altered.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/06-restored-p1.txt",
+     "result": "REFUTED: 06 records 563f0f0b, and the reviewer measured git hash-object mutations.ts == HEAD blob 563f0f0be0a83d32fd9c9938b9e989ce6126afdb at review 4."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC9 / R10",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "docs/rls-rules.md",
+    "symbol": "Existing-table audit paragraph; manifest rows; registry row",
+    "diffHunks": [
+     "docs/rls-rules.md (blob de5ed03f)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "rls-write-path-manifest three rows",
+     "critical-flow-registry one row",
+     "rls-rules one paragraph"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/rls-write-path-manifest.md",
+     "command": "git diff docs/rls-write-path-manifest.md",
+     "observable": "Three Table 1 rows: createNotification, markNotificationRead, markAllNotificationsRead.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rls-write-path-manifest three rows"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/critical-flow-registry.md",
+     "command": "git diff docs/critical-flow-registry.md",
+     "observable": "One row \"Notification read-state write + notifications grant contract\".",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "critical-flow-registry one row"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/rls-rules.md",
+     "command": "git diff docs/rls-rules.md",
+     "observable": "One Existing-table audit paragraph for Task 881 (plus the reviewer applied-state sentence at approval).",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rls-rules one paragraph"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The doc edits could reach beyond R10.",
+     "kind": "EXECUTED",
+     "path": "docs/critical-flow-registry.md",
+     "result": "REFUTED: git diff --stat shows +1 line in the registry, +3 in the manifest, and one paragraph in rls-rules.md."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC10 / all",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-notifications-grants.mjs",
+    "symbol": "final gate block",
+    "diffHunks": [
+     "scripts/check-notifications-grants.mjs (blob a3a294c6)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "build exits 0",
+     "typecheck exits 0",
+     "file-integrity and mojibake exit 0",
+     "no path outside the write set"
+    ],
+    "phases": [
+     "post-apply"
+    ],
+    "notApplicable": {
+     "stories": "SQL grants, a read-only catalog query, a Node probe, a static gate and an action test; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task881/r3-16-build.txt",
+     "command": "npm.cmd run build",
+     "observable": "Route table printed; EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "build exits 0"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r2-15c-typecheck.txt",
+     "command": "npm.cmd run typecheck (no .ts change after revision 2)",
+     "observable": "EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "typecheck exits 0"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r3-15e-check-file-integrity.txt",
+     "command": "npm.cmd run check:file-integrity; npm.cmd run check:mojibake (r3-15f)",
+     "observable": "all files clean, EXIT_CODE=0; mojibake 0 artifacts, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "file-integrity and mojibake exit 0"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task881/r3-17-status-after.txt",
+     "command": "git status --porcelain",
+     "observable": "Every path is inside kickoff section 7.",
+     "freshness": "final worktree 2026-09-25 on base 1f3c2114d; reviewer git hash-object equals r3-16z-hash-object.txt for every shipped file except the audit, whose comment-only reviewer edit is proven statement-identical in r4-reviewer-audit-comment.txt",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no path outside the write set"
+      ],
+      "phases": [
+       "post-apply"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The retained build could predate the final gate.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task881/r3-16z-hash-object.txt",
+     "result": "REFUTED: r3-16z was captured in the same pass as r3-16 and equals the reviewer-measured current blobs (the audit differs only by the proven comment-only edit)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL grants, a catalog query, a Node probe and a static gate; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC7 / R8",
+   "requirementIds": [
+    "AC7 / R8"
+   ],
+   "evidence": "Orchestration defect, closed across revisions 1-3: review 1 specified the gate as a list of relation spellings instead of a fail-closed allowlist, and each pass found new bypass shapes (RF1, RF6, RF8). Final gate verified by r4-reviewer-plants.txt. Lesson: specify detectors as allowlists from the start."
+  },
+  {
+   "id": "F2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC1 / R1",
+   "requirementIds": [
+    "AC1 / R1"
+   ],
+   "evidence": "RF9: the audit passed every static check yet raised 22023 live (aclexplode on an empty ACL array). The orchestrator hotfixed N5 mid-procedure (kickoff 18.3); both live grids then ran. A static single-statement check cannot prove a catalog query runs."
+  },
+  {
+   "id": "F3",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC4 / R6",
+   "requirementIds": [
+    "AC4 / R6"
+   ],
+   "evidence": "Kickoff F9 materialised (19c-manual-checks.txt): on sign-out useNotifications.ts calls fetchAll() before its userId guard, so one anonymous read now returns 401 and logs [notifications] fetch failed. No functional break. Out of 881 scope; filed as Task 883 (Sprint 80)."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC3 / R3",
+  "reviewer": "Opus"
+ }
+}

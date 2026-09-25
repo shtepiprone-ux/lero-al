@@ -1,0 +1,5 @@
+scripts/task-881-notifications-least-privilege.sql: revoke all on public.notifications from anon;
+scripts/task-881-notifications-least-privilege.sql: revoke all on public.notifications from authenticated;
+scripts/task-881-notifications-least-privilege.sql: grant select on public.notifications to authenticated;
+scripts/task-881-notifications-least-privilege.sql: grant update (is_read) on public.notifications to authenticated;
+scripts/task-881-rollback.sql: grant select, insert, update, delete, truncate, references, trigger on public.notifications to authenticated;

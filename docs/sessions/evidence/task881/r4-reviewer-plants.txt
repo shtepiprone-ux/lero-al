@@ -1,0 +1,16 @@
+Task 881 final review (review 4) - reviewer-run plants against the FINAL gate, on scratch copies (the repository files are never edited).
+platform: win32 v22.22.3
+gate blob: a3a294c6fc52d8a67769809f83e0d3f34192249e
+sources: 2b2da09c3d49556cb08b0cab655712afe4e92755 scripts/grant-discipline-audit.sql ; a6fd627e8e78bacd1853e9a35f5bf673fc6928f0 scripts/task-881-notifications-least-privilege.sql
+
+P4 exit=1 :: update (is_read) -> update (is_read, title) in grant-discipline-audit.sql :: authenticated granted "update (is_read, title)", outside table-level select / update (is_read), on an in-scope GRANT: scripts/grant-discipli
+P5 exit=1 :: grant update (user_id) on public.notifications to authenticated; :: authenticated granted "update (user_id)", outside table-level select / update (is_read), on an in-scope GRANT: scripts/task-881-notification
+P6 exit=1 :: grant select on notifications to anon; :: Grantee "anon" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege.s
+P8 exit=1 :: grant select on public.notifications to public; :: Grantee "public" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege
+P9 exit=1 :: grant select on public.notifications to "anon" granted by postgres; :: Grantee "anon" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege.s
+P10 exit=1 :: grant insert on table public.notifications to "authenticated"; :: authenticated granted "insert", outside table-level select / update (is_read), on an in-scope GRANT: scripts/task-881-notifications-least-pr
+P11 exit=1 :: grant maintain on public.notifications to authenticated; :: Unrecognised privilege token in an in-scope GRANT: scripts/task-881-notifications-least-privilege.sql → grant maintain on public.notificat
+X1 exit=1 :: /* outer /* inner */ grant select on public.notifications to anon; */ :: Grantee "anon" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege.s
+X2 exit=1 :: set role postgres; grant select on public.notifications to anon; :: Grantee "anon" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege.s
+X3 exit=1 :: grant select on public.notifications to authenticated granted by postgres with grant option; :: authenticated granted WITH GRANT OPTION on an in-scope GRANT: scripts/task-881-notifications-least-privilege.sql → grant select on public.
+unplanted scratch copy exit=0

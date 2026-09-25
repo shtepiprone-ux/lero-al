@@ -1,0 +1,71 @@
+# Task 881 O80-5 step 2 - BEFORE audit grid (scripts/task-881-notifications-audit.sql after the section 18.3 hotfix)
+# Owner-run in the Supabase SQL Editor 2026-09-25; transcribed by the orchestrator from the owner's JSON export, row for row.
+check_id	sort_key	object_name	detail
+N1	0	(count)	14
+N1	1	anon	TRUNCATE=true
+N1	1	anon	DELETE=true
+N1	1	anon	INSERT=true
+N1	1	anon	SELECT=true
+N1	1	anon	REFERENCES=true
+N1	1	anon	TRIGGER=true
+N1	1	anon	UPDATE=true
+N1	1	authenticated	DELETE=true
+N1	1	authenticated	SELECT=true
+N1	1	authenticated	INSERT=true
+N1	1	authenticated	UPDATE=true
+N1	1	authenticated	TRUNCATE=true
+N1	1	authenticated	REFERENCES=true
+N1	1	authenticated	TRIGGER=true
+N1	1	service_role	TRUNCATE=true
+N1	1	service_role	INSERT=true
+N1	1	service_role	TRIGGER=true
+N1	1	service_role	REFERENCES=true
+N1	1	service_role	SELECT=true
+N1	1	service_role	DELETE=true
+N1	1	service_role	UPDATE=true
+N2	0	(count)	20
+N2	1	anon/body	true
+N2	1	anon/created_at	true
+N2	1	anon/id	true
+N2	1	anon/is_read	true
+N2	1	anon/link	true
+N2	1	anon/template_id	true
+N2	1	anon/template_params	true
+N2	1	anon/title	true
+N2	1	anon/type	true
+N2	1	anon/user_id	true
+N2	1	authenticated/body	true
+N2	1	authenticated/created_at	true
+N2	1	authenticated/id	true
+N2	1	authenticated/is_read	true
+N2	1	authenticated/link	true
+N2	1	authenticated/template_id	true
+N2	1	authenticated/template_params	true
+N2	1	authenticated/title	true
+N2	1	authenticated/type	true
+N2	1	authenticated/user_id	true
+N3	0	(count)	6
+N3	1	Users can update own notifications	cmd=UPDATE | roles=public | qual=(auth.uid() = user_id) | with_check=
+N3	1	Users can view own notifications	cmd=SELECT | roles=public | qual=(auth.uid() = user_id) | with_check=
+N3	1	notifications_delete	cmd=DELETE | roles=public | qual=(user_id = auth.uid()) | with_check=
+N3	1	notifications_insert_service_role	cmd=INSERT | roles=service_role | qual= | with_check=true
+N3	1	notifications_select	cmd=SELECT | roles=public | qual=(user_id = auth.uid()) | with_check=
+N3	1	notifications_update	cmd=UPDATE | roles=public | qual=(user_id = auth.uid()) | with_check=
+N4	0	(count)	16
+N4	1	anon	INSERT granted_by=postgres
+N4	1	anon	SELECT granted_by=postgres
+N4	1	anon	UPDATE granted_by=postgres
+N4	1	anon	DELETE granted_by=postgres
+N4	1	anon	TRUNCATE granted_by=postgres
+N4	1	anon	REFERENCES granted_by=postgres
+N4	1	anon	TRIGGER granted_by=postgres
+N4	1	anon	MAINTAIN granted_by=postgres
+N4	1	authenticated	INSERT granted_by=postgres
+N4	1	authenticated	SELECT granted_by=postgres
+N4	1	authenticated	UPDATE granted_by=postgres
+N4	1	authenticated	DELETE granted_by=postgres
+N4	1	authenticated	TRUNCATE granted_by=postgres
+N4	1	authenticated	REFERENCES granted_by=postgres
+N4	1	authenticated	TRIGGER granted_by=postgres
+N4	1	authenticated	MAINTAIN granted_by=postgres
+N5	0	(count)	0

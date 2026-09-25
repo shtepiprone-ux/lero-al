@@ -155,8 +155,14 @@ grant all on public.recently_viewed to service_role;
 grant select, insert, update, delete on public.saved_searches to authenticated;
 grant all on public.saved_searches to service_role;
 
--- notifications — user reads own; service_role writes.
+-- notifications — Task 881 (Sprint 80): anon holds nothing; authenticated reads its own
+--   rows (useNotifications.ts fetchAll + Realtime subscription) and marks them read via
+--   markNotificationRead/markAllNotificationsRead (mutations.ts), which write ONLY the
+--   is_read column — no consumer needs INSERT/DELETE/TRUNCATE/REFERENCES/TRIGGER or
+--   table-level UPDATE. createNotification always uses the service-role client.
+--   See scripts/task-881-notifications-least-privilege.sql and check:notifications-grants.
 grant select on public.notifications to authenticated;
+grant update (is_read) on public.notifications to authenticated;
 grant all on public.notifications to service_role;
 
 -- users — authenticated reads own row via users_self_read policy (Task 266).
@@ -223,8 +229,14 @@ notify pgrst, 'reload schema';
 -- ═══════════════════════════════════════════════════════════════════════════
 -- TABLES WITH NO CHANGES REQUIRED (✅ OK — grants already match rule):
 --   listings, listing_images, favorites, collections, collection_items,
---   recently_viewed, favorite_price_alerts, notifications, users,
+--   recently_viewed, favorite_price_alerts, users,
 --   user_change_log, user_status_history, email_change_tokens,
 --   public_user_profiles (view), site_footer, listing_views
 --   (GRANT confirmations above are idempotent no-ops for these)
+-- NOTE (review 1 correction): notifications is corrected above by Task 881 (Sprint 80). This
+--   file's own declaration for it was `select` only (never table-level UPDATE — this file
+--   never granted that); the live database separately held full DML for both anon and
+--   authenticated (Task 881 F1, F10), which applying this file's `select`-only declaration
+--   literally would have silently broken mark-as-read. See the notifications section above
+--   and scripts/task-881-notifications-least-privilege.sql.
 -- ═══════════════════════════════════════════════════════════════════════════

@@ -169,6 +169,9 @@ jobs:
       - name: listing_reports authenticated grant check (Task 460 / Epic BB)
         run: npm run check:listing-reports-grants
 
+      - name: notifications least-privilege grant check (Task 881 / Sprint 80)
+        run: npm run check:notifications-grants
+
       - name: notification_type enum / NotificationType drift check (Task 880)
         run: npm run check:notification-type-enum
 

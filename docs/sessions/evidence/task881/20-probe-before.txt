@@ -1,0 +1,15 @@
+Signing in as the probe (test) account...
+Inserting the setup probe row via the service role...
+phase=before arm=A1 role=anon method=GET http_status=200 pg_code=null reason=none
+phase=before arm=A2 role=anon method=POST http_status=401 pg_code=42501 reason=rls
+phase=before arm=A3 role=anon method=PATCH http_status=204 pg_code=null reason=none
+phase=before arm=A4 role=anon method=DELETE http_status=204 pg_code=null reason=none
+phase=before arm=U1 role=user method=GET http_status=200 pg_code=null reason=none count=1
+phase=before arm=U2 role=user method=PATCH http_status=204 pg_code=null reason=none is_read_after=true
+phase=before arm=U3 role=user method=PATCH http_status=204 pg_code=null reason=none
+phase=before arm=U4 role=user method=POST http_status=403 pg_code=42501 reason=rls
+phase=before arm=RT role=user method=REALTIME received_ms=492
+phase=before arm=U5 role=user method=DELETE http_status=204 pg_code=null reason=none
+phase=before: all arms matched the expected shape.
+probe rows deleted
+EXIT_CODE=0

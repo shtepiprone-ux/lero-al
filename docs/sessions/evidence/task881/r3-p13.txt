@@ -1,0 +1,17 @@
+=== pre-plant hash ===
+a6fd627e8e78bacd1853e9a35f5bf673fc6928f0
+=== gate output (planted) ===
+
+> lero-al@0.1.0 check:notifications-grants
+> node scripts/check-notifications-grants.mjs
+
+Scope: reads scripts/grant-discipline-audit.sql and scripts/task-881-notifications-least-privilege.sql only (task-881-rollback.sql excluded by design). Allowlist (fail-closed, hardened review 3): an in-scope GRANT (mentions "notifications", or targets "ALL TABLES IN SCHEMA ..." including public) may grant only to {authenticated, service_role}; authenticated may hold only table-level SELECT or UPDATE (is_read) exactly, and never WITH GRANT OPTION; a role-membership GRANT with no ON clause may not name anon/authenticated/public as grantee; a fragment that mentions GRANT and notifications without itself starting with GRANT (a DO block, text after other leading tokens, or a /* */-commented prefix once stripped) fails as unverifiable rather than being skipped. It cannot see live database grants — scripts/task-881-notifications-audit.sql's N1/N2/N4/N5 checks do (owner-run) — a grant built with dynamic SQL (execute format(...)), or a grant issued from inside a function body stored elsewhere.
+✅ authenticated table-level SELECT grant found.
+✅ authenticated UPDATE (is_read) grant found.
+
+❌ notifications grant check FAILED:
+
+   Grantee "anon" is outside the allowlist {authenticated, service_role} on an in-scope GRANT: scripts/task-881-notifications-least-privilege.sql → grant select on public.notifications to anon
+EXIT_CODE=1
+=== post-restore hash ===
+a6fd627e8e78bacd1853e9a35f5bf673fc6928f0

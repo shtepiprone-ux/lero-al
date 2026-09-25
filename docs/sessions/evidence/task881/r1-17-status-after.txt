@@ -1,0 +1,15 @@
+ M .github/workflows/governance-pr.yml
+ M docs/critical-flow-registry.md
+ M docs/rls-rules.md
+ M docs/rls-write-path-manifest.md
+ M package.json
+ M scripts/grant-discipline-audit.sql
+?? docs/sessions/2026-09-25-task881-notifications-least-privilege.md
+?? docs/sessions/evidence/task881/
+?? scripts/check-notifications-grants.mjs
+?? scripts/task-881-guard-selftest.sql
+?? scripts/task-881-notifications-audit.sql
+?? scripts/task-881-notifications-least-privilege.sql
+?? scripts/task-881-notifications-probe.mjs
+?? scripts/task-881-rollback.sql
+?? src/modules/notifications/lib/__tests__/

@@ -1,0 +1,36 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts (9 tests | 1 failed) 21ms
+     × markNotificationRead — update() payload keys are exactly [is_read]=true 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — update() payload keys are exactly [is_read]=true
+AssertionError: expected [ 'is_read', 'title' ] to deeply equal [ 'is_read' ]
+
+- Expected
++ Received
+
+  [
+    "is_read",
++   "title",
+  ]
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:88:34
+     86|     expect(mockUpdate).toHaveBeenCalledOnce()
+     87|     const payload = mockUpdate.mock.calls[0][0] as Record<string, unkn…
+     88|     expect(Object.keys(payload)).toEqual(['is_read'])
+       |                                  ^
+     89|     expect(payload.is_read).toBe(true)
+     90|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  14:42:50
+   Duration  976ms (transform 46ms, setup 84ms, import 27ms, tests 21ms, environment 710ms)
+
+EXIT_CODE=1

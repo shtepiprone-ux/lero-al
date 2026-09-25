@@ -1,0 +1,11 @@
+Task 881 O80-5 - owner-run SQL Editor results, 2026-09-25, transcribed verbatim by the orchestrator from the owner's messages.
+
+Step 4 - scripts/task-881-guard-selftest.sql (expected: an ERROR naming public_user_profiles; nothing changed):
+Failed to run sql query: ERROR:  P0001: Task 881 guard: 1 violation(s) found — g2: view(s) public_user_profiles depend on users
+CONTEXT:  PL/pgSQL function inline_code_block line 47 at RAISE
+
+Step 5 - scripts/task-881-notifications-least-privilege.sql (expected: Success. No rows returned):
+Success. No rows returned
+
+Earlier step 2 attempt (superseded, before the kickoff section 18.3 hotfix to the audit's N5 branch):
+Error: Failed to run sql query: ERROR: 22023: ACL arrays must be one-dimensional

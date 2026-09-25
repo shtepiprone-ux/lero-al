@@ -1,0 +1,24 @@
+diff --git a/scripts/grant-discipline-audit.sql b/scripts/grant-discipline-audit.sql
+index 2967b7e61..2b2da09c3 100644
+--- a/scripts/grant-discipline-audit.sql
++++ b/scripts/grant-discipline-audit.sql
+@@ -158 +158,6 @@ grant all on public.saved_searches to service_role;
+--- notifications — user reads own; service_role writes.
++-- notifications — Task 881 (Sprint 80): anon holds nothing; authenticated reads its own
++--   rows (useNotifications.ts fetchAll + Realtime subscription) and marks them read via
++--   markNotificationRead/markAllNotificationsRead (mutations.ts), which write ONLY the
++--   is_read column — no consumer needs INSERT/DELETE/TRUNCATE/REFERENCES/TRIGGER or
++--   table-level UPDATE. createNotification always uses the service-role client.
++--   See scripts/task-881-notifications-least-privilege.sql and check:notifications-grants.
+@@ -159,0 +165 @@ grant select on public.notifications to authenticated;
++grant update (is_read) on public.notifications to authenticated;
+@@ -226 +232 @@ notify pgrst, 'reload schema';
+---   recently_viewed, favorite_price_alerts, notifications, users,
++--   recently_viewed, favorite_price_alerts, users,
+@@ -229,0 +236,6 @@ notify pgrst, 'reload schema';
++-- NOTE (review 1 correction): notifications is corrected above by Task 881 (Sprint 80). This
++--   file's own declaration for it was `select` only (never table-level UPDATE — this file
++--   never granted that); the live database separately held full DML for both anon and
++--   authenticated (Task 881 F1, F10), which applying this file's `select`-only declaration
++--   literally would have silently broken mark-as-read. See the notifications section above
++--   and scripts/task-881-notifications-least-privilege.sql.

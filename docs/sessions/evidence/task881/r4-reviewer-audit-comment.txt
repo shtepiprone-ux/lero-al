@@ -1,0 +1,11 @@
+Task 881 final review (review 4) - reviewer comment-only correction to scripts/task-881-notifications-audit.sql, 2026-09-25.
+
+Why: the header's "Expected BEFORE" said N3 count=5; the owner's live BEFORE grid (18-audit-before.tsv) shows 6
+(the service_role INSERT policy is the sixth) and N4=16 (MAINTAIN on PostgreSQL 17). Comment lines only.
+
+Proof the SQL statement did not change (comments stripped, whitespace collapsed, then SHA-1):
+  before the edit: stripped_statement_chars=3411 sha1=f576b42af912de3bee543dec8d06aedf0727d097
+  after the edit:  stripped_statement_chars=3411 sha1=f576b42af912de3bee543dec8d06aedf0727d097
+File blob: r3-16z recorded 674e76d4aeb3719710f400268dc4867f923fd2e4 (after the section 18.3 N5 hotfix);
+after this comment edit: b1c29ae0ceadfe8bc744ab77b31a771460cc0a7e.
+The owner ran the section 18.3 statement (identical to this one) for both live grids.

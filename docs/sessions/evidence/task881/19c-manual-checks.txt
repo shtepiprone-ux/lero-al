@@ -1,0 +1,18 @@
+Task 881 O80-5 steps 9-10 - owner manual checks on lero.al (production), 2026-09-25, after the hardening was applied.
+Recorded by the orchestrator from the owner's messages.
+
+Step 9 (bell / mark one read / mark all read / reload holds / second account's notification appears live without reload):
+Owner: "Підтверджую - все ок." (confirmed - all OK)
+
+Step 10 (signed out -> /sq -> sign in -> sign out, DevTools open):
+Owner screenshot of the Network panel (C:\Users\Nox\Downloads\Screenshot_2.png, not copied into the repo). Relevant rows, in order:
+  POST  <project>.supabase.co  token?grant_type=password            200   (sign-in)
+  GET   <project>.supabase.co  notifications?select=id,user_id,type,title,body,link,is_read,created_at,template_id,template_params&order=cre...   200   (bell fetch while signed in)
+  POST  <project>.supabase.co  logout?scope=global                  204   (sign-out)
+  GET   <project>.supabase.co  notifications?select=id,user_id,...  401   (bell fetch AFTER sign-out, as anon)
+The DevTools error badge showed 5.
+
+Interpretation (orchestrator): kickoff F9 materialised. useNotifications.ts calls fetchAll() before its `if (!userId) return`
+guard, so the effect re-run on sign-out issues one anonymous read. Before Task 881 it returned 200 [] (RLS); it now returns
+401 / 42501 (grant) and logs "[notifications] fetch failed" (useNotifications.ts:28). No functional break: the bell unmounts
+for a signed-out header (Header.tsx:78). Changing the hook is out of 881's scope (kickoff section 8); a follow-up task is owed.

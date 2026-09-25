@@ -87,6 +87,9 @@
 | locations | `setLocationFeatured` | `locations/actions/popularLocationActions.ts:29` | `locations` | C (admin/mod) | `requireAdminOrModerator()` | service-role | ⬜ | — |
 | locations | `setLocationUnfeatured` | `locations/actions/popularLocationActions.ts:54` | `locations` | C (admin/mod) | `requireAdminOrModerator()` | service-role | ⬜ | — |
 | admin/locale | `setAdminLocale` | `admin/actions/locale.ts:9` | `users` (best-effort) | B (self, optional) | `getUser()` (optional) | user-scoped | ⬜ | — |
+| notifications | `createNotification` | `notifications/lib/mutations.ts:9` | `notifications` | — (service-role, no user-facing caller boundary) | none — always the admin client | service-role | 🟢 (881) | `npm run test:rls-guards` |
+| notifications | `markNotificationRead` | `notifications/lib/mutations.ts:43` | `notifications` | B (self) | none in code — RLS `auth.uid() = user_id` + `UPDATE (is_read)` grant (881) | user-scoped | 🟢 (881) | `npm run test:rls-guards` |
+| notifications | `markAllNotificationsRead` | `notifications/lib/mutations.ts:55` | `notifications` | B (self) | none in code — RLS `auth.uid() = user_id` + `UPDATE (is_read)` grant (881) | user-scoped | 🟢 (881) | `npm run test:rls-guards` |
 
 ## Table 2 — Live-DB-only gaps (deferred → Slice 5b)
 

@@ -1,0 +1,2 @@
+Missing PROBE_EMAIL or PROBE_PASSWORD in the process environment (never .env.local)
+EXIT_CODE=2

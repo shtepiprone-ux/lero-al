@@ -1,7 +1,7 @@
 # Task 881 — `notifications` least privilege: `anon` loses everything, `authenticated` keeps exactly read-own and mark-as-read
 
 Sprint 80 · **P2** · QA profile **Q4** (Data API grants on a table behind a registered critical flow) · no
-dependencies · owner action **O80-5** · **Status: `PARTIALLY VERIFIED` 2026-09-25 (review 3) — code-side ACs verified; O80-5 owed (owner, now); P3 gate hardening RV7 at §18**
+dependencies · owner action **O80-5** · **Status: ✅ `APPROVED WITH NOTES` 2026-09-25 (review 4) — archived; see §19**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Pattern to follow: archived Task 870 (`tasks/Archive/Sprint_80_kickoff_prompt_Task_870_Data_API_Privilege_Hardening.md`
@@ -815,3 +815,18 @@ O80-5 outputs together.
 | 10 signed-out console | **F9 materialised:** after `logout` (204), one `GET notifications?select=…` as anon returns **401** and `useNotifications.ts:28` logs `[notifications] fetch failed`. No functional break (the bell unmounts, `Header.tsx:78`). Out of 881 scope (§8). **Follow-up owed: file a numbered task at the final review** (move `fetchAll()` behind the `userId` guard and clear the list on sign-out) | `19c-manual-checks.txt` |
 
 O80-5 is complete. The remaining open item for approval is RV7 (§18.1). Its `r3-` evidence must also normalise `20-probe-before.txt` and `21-probe-after.txt` to UTF-8 without BOM through Node if `check:file-integrity` flags them: Windows PowerShell 5.1 `Tee-Object` writes UTF-16LE. The content must stay line-for-line identical.
+
+---
+
+## 19. Review 4 — 2026-09-25 (`APPROVED WITH NOTES`)
+
+Every acceptance criterion is verified. Ledger: `docs/reviews/2026-09-25-task881-notifications-least-privilege.review-ledger.json` (`check:review-ledger` PASSED). RV7's `r3-` evidence
+and the reviewer's own plants against the final gate are in `docs/sessions/evidence/task881/r4-reviewer-plants.txt`:
+P4–P6, P8–P11, a nested block comment, a `SET` prefix and `GRANTED BY … WITH GRANT OPTION`, each exit 1. O80-5 is
+complete (§18.4). At approval the reviewer made a comment-only fix to the audit's expected N3/N4 values, proven to
+leave the statement identical (`r4-reviewer-audit-comment.txt`), and appended the applied-state sentence to
+`docs/rls-rules.md`.
+
+Notes: **F1** (orchestration) — R8 was first specified as a spelling list, which cost three gate revisions.
+Specify detectors as allowlists from the start. **F2** — a static single-statement check cannot prove a catalog
+query runs (RF9). **F3 (P3)** — the F9 401 on sign-out is filed as **Task 883** (Sprint 80, reserved).

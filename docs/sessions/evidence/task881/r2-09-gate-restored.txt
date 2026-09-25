@@ -1,0 +1,11 @@
+
+> lero-al@0.1.0 check:notifications-grants
+> node scripts/check-notifications-grants.mjs
+
+Scope: reads scripts/grant-discipline-audit.sql and scripts/task-881-notifications-least-privilege.sql only (task-881-rollback.sql excluded by design). Allowlist (fail-closed, review 2): an in-scope GRANT (mentions "notifications", or targets "ALL TABLES IN SCHEMA ..." including public) may grant only to {authenticated, service_role}; authenticated may hold only table-level SELECT or UPDATE (is_read) exactly; a role-membership GRANT with no ON clause may not name anon/authenticated/public as grantee. It cannot see live database grants — scripts/task-881-notifications-audit.sql's N1/N2/N4/N5 checks do (owner-run) — or a grant built with dynamic SQL (execute format(...)).
+✅ authenticated table-level SELECT grant found.
+✅ authenticated UPDATE (is_read) grant found.
+✅ Every in-scope GRANT stays inside the allowlist (authenticated/service_role; authenticated limited to select / update (is_read)); no role-membership grant names anon/authenticated/public.
+
+✅ notifications grant check PASSED — 5 in-scope GRANT statement(s) scanned across 2 files.
+EXIT_CODE=0

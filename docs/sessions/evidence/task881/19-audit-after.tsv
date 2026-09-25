@@ -1,0 +1,57 @@
+# Task 881 O80-5 step 6 - AFTER audit grid (same audit file as 18-audit-before.tsv)
+# Owner-run in the Supabase SQL Editor 2026-09-25, after step 5 returned "Success. No rows returned"; transcribed by the orchestrator from the owner's JSON export, row for row.
+check_id	sort_key	object_name	detail
+N1	0	(count)	1
+N1	1	anon	SELECT=false
+N1	1	anon	TRUNCATE=false
+N1	1	anon	INSERT=false
+N1	1	anon	UPDATE=false
+N1	1	anon	DELETE=false
+N1	1	anon	REFERENCES=false
+N1	1	anon	TRIGGER=false
+N1	1	authenticated	UPDATE=false
+N1	1	authenticated	DELETE=false
+N1	1	authenticated	TRUNCATE=false
+N1	1	authenticated	REFERENCES=false
+N1	1	authenticated	SELECT=true
+N1	1	authenticated	TRIGGER=false
+N1	1	authenticated	INSERT=false
+N1	1	service_role	SELECT=true
+N1	1	service_role	INSERT=true
+N1	1	service_role	UPDATE=true
+N1	1	service_role	TRIGGER=true
+N1	1	service_role	DELETE=true
+N1	1	service_role	TRUNCATE=true
+N1	1	service_role	REFERENCES=true
+N2	0	(count)	1
+N2	1	anon/body	false
+N2	1	anon/created_at	false
+N2	1	anon/id	false
+N2	1	anon/is_read	false
+N2	1	anon/link	false
+N2	1	anon/template_id	false
+N2	1	anon/template_params	false
+N2	1	anon/title	false
+N2	1	anon/type	false
+N2	1	anon/user_id	false
+N2	1	authenticated/body	false
+N2	1	authenticated/created_at	false
+N2	1	authenticated/id	false
+N2	1	authenticated/is_read	true
+N2	1	authenticated/link	false
+N2	1	authenticated/template_id	false
+N2	1	authenticated/template_params	false
+N2	1	authenticated/title	false
+N2	1	authenticated/type	false
+N2	1	authenticated/user_id	false
+N3	0	(count)	6
+N3	1	Users can update own notifications	cmd=UPDATE | roles=public | qual=(auth.uid() = user_id) | with_check=
+N3	1	Users can view own notifications	cmd=SELECT | roles=public | qual=(auth.uid() = user_id) | with_check=
+N3	1	notifications_delete	cmd=DELETE | roles=public | qual=(user_id = auth.uid()) | with_check=
+N3	1	notifications_insert_service_role	cmd=INSERT | roles=service_role | qual= | with_check=true
+N3	1	notifications_select	cmd=SELECT | roles=public | qual=(user_id = auth.uid()) | with_check=
+N3	1	notifications_update	cmd=UPDATE | roles=public | qual=(user_id = auth.uid()) | with_check=
+N4	0	(count)	1
+N4	1	authenticated	SELECT granted_by=postgres
+N5	0	(count)	1
+N5	1	is_read/authenticated	UPDATE granted_by=postgres

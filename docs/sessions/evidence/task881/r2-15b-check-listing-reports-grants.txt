@@ -1,0 +1,12 @@
+
+> lero-al@0.1.0 check:listing-reports-grants
+> node scripts/check-listing-reports-grants.mjs
+
+✅ authenticated INSERT grant found.
+✅ authenticated SELECT grant found.
+✅ No revoke of INSERT/SELECT from authenticated on listing_reports.
+✅ anon is NOT granted INSERT/SELECT on listing_reports.
+✅ No overgrant (UPDATE/DELETE/ALL) to authenticated on listing_reports.
+
+✅ listing_reports grant check PASSED — 5 statements scanned across 2 files.
+EXIT_CODE=0

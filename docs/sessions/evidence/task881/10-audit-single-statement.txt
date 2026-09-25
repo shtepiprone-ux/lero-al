@@ -1,0 +1,1 @@
+semicolons=1 endsWithSemicolon=true writeKeywords=none

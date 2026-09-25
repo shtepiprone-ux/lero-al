@@ -1,0 +1,18 @@
+=== pre-plant hash ===
+a6fd627e8e78bacd1853e9a35f5bf673fc6928f0
+=== gate output (planted) ===
+
+> lero-al@0.1.0 check:notifications-grants
+> node scripts/check-notifications-grants.mjs
+
+Scope: reads scripts/grant-discipline-audit.sql and scripts/task-881-notifications-least-privilege.sql only. Recognises the relation spelled as notifications, public.notifications, "notifications", "public"."notifications", table notifications (case-insensitive, optional TABLE keyword) or a "GRANT ... ON ALL TABLES IN SCHEMA public ..." statement. It cannot see live database grants — scripts/task-881-notifications-audit.sql's N1/N2/N4/N5 checks do (owner-run) — or a grant built with dynamic SQL (execute format(...)).
+✅ authenticated table-level SELECT grant found.
+✅ authenticated UPDATE (is_read) grant found.
+✅ No overgrant (INSERT/DELETE/TRUNCATE/REFERENCES/TRIGGER/ALL, or an UPDATE column list other than exactly is_read) to authenticated on notifications.
+
+❌ notifications grant check FAILED:
+
+   anon granted something on notifications (must hold nothing): scripts/task-881-notifications-least-privilege.sql → grant select on notifications to anon
+EXIT_CODE=1
+=== post-restore hash ===
+a6fd627e8e78bacd1853e9a35f5bf673fc6928f0

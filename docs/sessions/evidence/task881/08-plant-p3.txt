@@ -1,0 +1,13 @@
+
+> lero-al@0.1.0 check:notifications-grants
+> node scripts/check-notifications-grants.mjs
+
+Scope: reads scripts/grant-discipline-audit.sql and scripts/task-881-notifications-least-privilege.sql only. It cannot see live database grants — scripts/task-881-notifications-audit.sql's N1/N2/N4/N5 checks do (owner-run).
+✅ authenticated SELECT grant found.
+✅ authenticated UPDATE (is_read) grant found.
+✅ No overgrant (INSERT/DELETE/TRUNCATE/REFERENCES/TRIGGER/ALL/table-level UPDATE) to authenticated on notifications.
+
+❌ notifications grant check FAILED:
+
+   anon granted something on notifications (must hold nothing): scripts/task-881-notifications-least-privilege.sql → grant select on public.notifications to anon
+EXIT_CODE=1

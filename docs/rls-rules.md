@@ -240,6 +240,30 @@ Checks A1 (`view_write_grant`), A3 (`rls_disabled_reachable`), A4 (`service_only
 Supabase SQL Editor shows only the last statement's result, and a batch that mixes SQL with
 explanatory prose is rejected at parse time and applies nothing (Task 870 F22/F23).
 
+Task 881 (Sprint 80, 2026-09-25) applied the same least-privilege discipline to a single named
+table found by Task 880's design: `public.notifications` held full `anon`/`authenticated`
+table-level DML while the repo's own declaration claimed `authenticated` was SELECT-only —
+applying that stale declaration literally would have silently broken mark-as-read.
+`scripts/task-881-notifications-audit.sql` (read-only, one grid, five checks: table/column
+privileges, policies, table/column ACL) is the repeatable per-table companion to Task 870's
+schema-wide audit. `scripts/task-881-notifications-least-privilege.sql` (guarded, post-conditioned,
+transactional) revokes everything from `anon` and narrows `authenticated` to table-level `SELECT`
+plus column-level `UPDATE (is_read)` — the exact and only two privileges the code uses
+(`useNotifications.ts`'s read + Realtime subscription, `markNotificationRead`/
+`markAllNotificationsRead`'s `is_read`-only writes); `scripts/task-881-rollback.sql` restores
+`authenticated`'s full grant set (never `anon`) if the column-level grant breaks mark-as-read.
+`npm run check:notifications-grants` is a blocking CI gate over the SQL source-of-truth
+(`scripts/grant-discipline-audit.sql` + the hardening file), and
+`scripts/task-881-notifications-probe.mjs --phase before|after` is the owner-run two-armed live
+proof, classifying each refusal as a grant or an RLS reason. See `docs/critical-flow-registry.md`
+→ "Notification read-state write + `notifications` grant contract". **Applied to production
+2026-09-25 (O80-5):** the AFTER audit shows `authenticated` with only table-level `SELECT` and
+`UPDATE (is_read)` (the PostgreSQL 17 `MAINTAIN` privilege also went with `revoke all`), `anon` with
+nothing, and the AFTER probe exits 0. Mark-as-read through PostgREST works with the column-level
+grant (probe U2). A catalog query that passes every static check can still fail at runtime:
+`aclexplode` rejects an empty (zero-dimensional) ACL array, so filter `attacl is not null` before
+exploding column ACLs.
+
 ---
 
 ## Function Security: `search_path` discipline

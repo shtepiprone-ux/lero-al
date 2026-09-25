@@ -1,0 +1,57 @@
+--- PRE-PLANT HASH ---
+b5d7c5eaae889bc3ae8bcf664c3431a09bff32f2
+--- TEST OUTPUT (P2: kept early return, deleted state clear) ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts (12 tests | 1 failed) 1367ms
+     × sign-out: state clears and no extra read is issued (R5 b) 1096ms
+npx.cmd : 
+At line:5 char:1
++ npx.cmd vitest run src/modules/notifications *>&1 | Tee-Object -Appen ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — no read without a 
+user (Task 883) > sign-out: state clears and no extra read is issued (R5 b)
+AssertionError: expected [ { id: '1', is_read: false } ] to have a length of +0 but got 1
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:268:62
+    266|     rerender()
+    267|
+    268|     await waitFor(() => expect(result.current.notifications).toHaveLen…
+       |                                                              ^
+    269|
+    270|     expect(fromSpy.mock.calls.length).toBe(fromCallCountAtSignOut)
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 34 passed (35)
+   Start at  18:31:47
+   Duration  6.18s (transform 1.12s, setup 447ms, import 10.21s, tests 2.93s, environment 4.06s)
+
+EXIT_CODE=1
+--- POST-RESTORE HASH ---
+c053f59fe4306a678db3498fc16f1b6053f40fb1

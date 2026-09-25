@@ -2,7 +2,7 @@
 
 Sprint 80 · **P3** · QA profile **Q4** (the change is in `useNotifications.ts`, the data source of critical-flow rows
 `docs/critical-flow-registry.md:39` and `:77`; same profile as Task 882 on the same hook) · depends on **881** (archived)
-· owner action **O80-6** · **Status: `KICKOFF FILED` 2026-09-25**
+· owner action **O80-6** · **Status: ✅ `APPROVED WITH NOTES` 2026-09-25 (review 2) — archived; owner check O80-6 stays open after deploy; see §16**
 
 Sprint plan: [`Sprint_80_The_Data_API_Privileges_Nobody_Audited.md`](Sprint_80_The_Data_API_Privileges_Nobody_Audited.md).
 Hosted in Sprint 80 by discovery, not goal fit: it is the consequence of 881's grant change. The owner may move it.
@@ -364,3 +364,27 @@ Sonnet updates the 883 cell of the `docs/backlog.md` registry row (state only). 
 | 4 | Plants | §10.3 → `05`–`07` | a plant passes → a test defect |
 | 5 | Gates | §13.2 → `08`–`18` | any non-zero → `PARTIALLY IMPLEMENTED` |
 | 6 | Owner live | O80-6 | a request after `logout` or the Console line → finding |
+
+---
+
+## 16. Reviews
+
+**Review 1 — `PARTIALLY VERIFIED` (2026-09-25).** R1–R6 were verified against the real diff. `fetchAll` returns and
+clears state when `userId` is null, which covers the effect, visibility and `refetch` paths. A post-`await` ref
+comparison drops stale responses. Only test `:124` and the `act` import changed among the existing tests. The
+red-first run failed 4 tests (`04`), then 35/35 passed. P1 failed a, b and c; P2 failed only b; P3 failed only d. The
+one blocking gap was `npm run build`: a Next server of this repository held port 3000 (PID 31408), and building over
+it would overwrite its `.next`.
+
+**Review 2 — ✅ `APPROVED WITH NOTES` (2026-09-25).** The owner ran the build natively: `15-build.txt` shows
+`Compiled successfully`, `Generating static pages (40/40)` and `EXIT_CODE=0`. It ran against the same blobs as
+`16-hash-object.txt` (hook `c053f59f`, test `18840aa2`, registry `ef32c9d4`). The reviewer normalised the file from
+UTF-16LE to UTF-8, line-for-line identical, 172 lines. `check:file-integrity` and `check:mojibake` then passed.
+
+Notes (P3, not blocking):
+
+- `05`–`07` label the *planted* file's hash "PRE-PLANT HASH": three different values, none equal to `c053f59f`.
+  The restore is still proven, because each post-restore hash equals the final `16` value.
+- The session log says 3 tests failed red; `04-tests-red.txt` shows 4.
+
+**Open owner action:** O80-6 after deploy (§13.3), tracked in the sprint plan's owner-actions table.

@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:header-hydration-id-parity
+> vitest run src/components/layout/__tests__/header-hydration-id-parity.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:26:02
+   Duration  4.31s (transform 625ms, setup 85ms, import 2.90s, tests 476ms, environment 715ms)
+
+EXIT_CODE=0

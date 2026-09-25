@@ -1,0 +1,4 @@
+ M docs/critical-flow-registry.md
+ M src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts
+ M src/modules/notifications/hooks/useNotifications.ts
+?? docs/sessions/evidence/task883/

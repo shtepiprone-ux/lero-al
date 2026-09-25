@@ -1,0 +1,104 @@
+diff --git a/src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts b/src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts
+index ac729de9c..18840aa29 100644
+--- a/src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts
++++ b/src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts
+@@ -24,7 +24,7 @@
+  */
+ 
+ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+-import { renderHook, waitFor } from '@testing-library/react'
++import { renderHook, waitFor, act } from '@testing-library/react'
+ 
+ // ── Supabase query-builder chain spies ──────────────────────────────────────────────
+ // fetchData/fetchError are read live (not captured at define-time) so a test can flip the
+@@ -125,8 +125,14 @@ describe('useNotifications — subscription is scoped to the signed-in user (Tas
+     mockUser = null
+     renderHook(() => useNotifications())
+ 
+-    await waitFor(() => expect(limitSpy).toHaveBeenCalled())
++    // Task 883: with no user, there is no read at all, so there is nothing to wait for.
++    // Wait a tick instead of for limitSpy — waiting for limitSpy would hang forever now
++    // that the guarded hook never calls it.
++    await act(async () => {
++      await new Promise(resolve => setTimeout(resolve, 0))
++    })
+ 
++    expect(fromSpy).not.toHaveBeenCalled()
+     expect(channelSpy).not.toHaveBeenCalled()
+   })
+ 
+@@ -239,3 +245,74 @@ describe('useNotifications — a failed fetch keeps the previous list (Task 882
+     expect(result.current.notifications).toHaveLength(1)
+   })
+ })
++
++describe('useNotifications — no read without a user (Task 883)', () => {
++  // (a) is the rewritten "no user: channel is never called" test above, in the Task 882 R1
++  // describe block — it already asserts fromSpy/channelSpy are never called at mount with no user.
++
++  it('sign-out: state clears and no extra read is issued (R5 b)', async () => {
++    mockUser = { id: 'user-signing-out' }
++    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
++
++    fetchData = [{ id: '1', is_read: false }] as unknown[]
++    fetchError = null
++
++    const { result, rerender } = renderHook(() => useNotifications())
++
++    await waitFor(() => expect(result.current.notifications).toHaveLength(1))
++    const fromCallCountAtSignOut = fromSpy.mock.calls.length
++
++    mockUser = null
++    rerender()
++
++    await waitFor(() => expect(result.current.notifications).toHaveLength(0))
++
++    expect(fromSpy.mock.calls.length).toBe(fromCallCountAtSignOut)
++    expect(result.current.unreadCount).toBe(0)
++    expect(errorSpy).not.toHaveBeenCalled()
++  })
++
++  it('no user: visibility refetch and refetch() both issue no read (R5 c)', async () => {
++    mockUser = null
++    const { result } = renderHook(() => useNotifications())
++
++    await act(async () => {
++      await new Promise(resolve => setTimeout(resolve, 0))
++    })
++    fromSpy.mockClear()
++
++    await act(async () => {
++      Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true })
++      document.dispatchEvent(new Event('visibilitychange'))
++      await result.current.refetch()
++    })
++
++    expect(fromSpy).not.toHaveBeenCalled()
++  })
++
++  it('a stale response for a signed-out user is dropped (R5 d)', async () => {
++    mockUser = { id: 'user-a' }
++
++    let resolveDeferred: (value: { data: unknown[]; error: null }) => void = () => {}
++    const deferred = new Promise<{ data: unknown[]; error: null }>(resolve => {
++      resolveDeferred = resolve
++    })
++    limitSpy.mockImplementationOnce(() => deferred)
++
++    const { result, rerender } = renderHook(() => useNotifications())
++
++    await waitFor(() => expect(limitSpy).toHaveBeenCalled())
++
++    mockUser = null
++    await act(async () => {
++      rerender()
++    })
++
++    await act(async () => {
++      resolveDeferred({ data: [{ id: 'late-row', is_read: false }], error: null })
++      await deferred
++    })
++
++    expect(result.current.notifications).toHaveLength(0)
++  })
++})

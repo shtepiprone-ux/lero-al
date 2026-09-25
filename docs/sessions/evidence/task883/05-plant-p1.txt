@@ -1,0 +1,115 @@
+--- PRE-PLANT HASH ---
+0059fed0f38be2b0a85849fdb6304ac1d554cc40
+--- TEST OUTPUT (P1: removed null-userId early return) ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts (12 tests | 3 failed) 1360ms
+     × no user: channel is never called 20ms
+     × sign-out: state clears and no extra read is issued (R5 b) 1097ms
+     × no user: visibility refetch and refetch() both issue no read (R5 c) 5ms
+npx.cmd : 
+At line:5 char:1
++ npx.cmd vitest run src/modules/notifications *>&1 | Tee-Object -Appen ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — subscription is 
+scoped to the signed-in user (Task 882 R1) > no user: channel is never called
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "notifications",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:135:25
+    133|     })
+    134|
+    135|     expect(fromSpy).not.toHaveBeenCalled()
+       |                         ^
+    136|     expect(channelSpy).not.toHaveBeenCalled()
+    137|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — no read without a 
+user (Task 883) > sign-out: state clears and no extra read is issued (R5 b)
+AssertionError: expected [ { id: '1', is_read: false } ] to have a length of +0 but got 1
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:268:62
+    266|     rerender()
+    267|
+    268|     await waitFor(() => expect(result.current.notifications).toHaveLen…
+       |                                                              ^
+    269|
+    270|     expect(fromSpy.mock.calls.length).toBe(fromCallCountAtSignOut)
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts > useNotifications — no read without a 
+user (Task 883) > no user: visibility refetch and refetch() both issue no read (R5 c)
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 2 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "notifications",
+    ]
+
+  2nd vi.fn() call:
+
+    Array [
+      "notifications",
+    ]
+
+
+Number of calls: 2
+
+ ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:290:25
+    288|     })
+    289|
+    290|     expect(fromSpy).not.toHaveBeenCalled()
+       |                         ^
+    291|   })
+    292|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  3 failed | 32 passed (35)
+   Start at  18:31:17
+   Duration  6.26s (transform 1.15s, setup 458ms, import 10.59s, tests 2.96s, environment 4.10s)
+
+EXIT_CODE=1
+--- POST-RESTORE HASH ---
+c053f59fe4306a678db3498fc16f1b6053f40fb1

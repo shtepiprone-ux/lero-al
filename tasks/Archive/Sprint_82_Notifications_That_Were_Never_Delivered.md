@@ -1,6 +1,6 @@
 # Sprint 82 — notifications the code writes and the database has always refused
 
-**Opened:** 2026-09-24 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (880, 882) · **Kickoffs filed:** 0
+**Opened:** 2026-09-24 · **Status:** ✅ **CLOSED** 2026-09-25 (owner: *"спрінт 82 закритий? Якщо більше немає задач в ньому, закривай, переводь всі записи у архів"*) · **Landed tasks:** 2 (880, 882) · **Kickoffs filed:** 0 · **Reserved:** 0
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -89,7 +89,7 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 |---|---|
 | **O82-1** | ✅ **Done 2026-09-24** (owner): the migration was applied and the verify query returned no rows. After 880's executor reports: apply `scripts/task-880-notification-type-enum.sql`, then run `scripts/task-880-verify.sql` and return its result (kickoff §13.3). It is additive, and it is safe to apply before the deploy. |
 | **O82-2** | ✅ **Accepted 2026-09-24** (owner, including the 2-line body clamp on the email-failed row). 880's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.3). |
-| **O82-3** | After deploy, repeat the D82-1 test with two accounts, and also send a message on account 2's listing. Expected results are in kickoff §13.3. |
+| **O82-3** | ✅ **Confirmed by the owner 2026-09-25** on lero.al with two accounts, in the same check as O82-5 (verbatim: *"я ж написав, що підтверджено з двох акаунтів на lero.al що все ок, сповіщення тепер відпрацьовують так як треба!"*). After deploy, repeat the D82-1 test with two accounts, and also send a message on account 2's listing. Expected results are in kickoff §13.3. |
 | **O82-4** | ✅ **Done 2026-09-25** (run by the orchestrator with the owner-updated test account in `.env.local`): `ARM A 716ms`, `ARM B none`, probe row deleted, exit 0 (`docs/sessions/evidence/task882/13-o82-4-realtime-probe.txt`). 882's live probe with a **test** account (kickoff §13.3), after the executor reports and before approval. |
 | **O82-5** | ✅ **Confirmed 2026-09-25** (owner, after deploy, verbatim: *"Підтверджую, все ок."*). After 882 deploys: two browsers; the receiving user's bell shows a new notification **without a reload**. |
 
@@ -109,3 +109,5 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 3. `npm run test:listings` and 880's new tests pass, and `npm run build` exits 0.
 4. O82-3: account 2 receives the report-filed, report-outcome and new-message notifications, and account 1 receives
    its report outcome.
+
+**Closure audit, 2026-09-25.** 1 ✅ (O82-1, verify query returned no rows). 2 ✅ (`governance-pr.yml` runs `check:notification-type-enum`; 880 proved both plants). 3 ✅ (880's approved review). 4 ✅ (O82-3, confirmed by the owner with two accounts on lero.al: *"я ж написав, що підтверджено з двох акаунтів на lero.al що все ок, сповіщення тепер відпрацьовують так як треба!"*). All four exit criteria are met.

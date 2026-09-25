@@ -81,7 +81,7 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 | # | Title | Priority | QA | Depends on | State |
 |---|---|---|---|---|---|
 | **880** | The notification enum accepts every type the code writes (`report_outcome`, `price_change`), a CI gate keeps the two equal, and the listing owner is notified on a message (with the sender's contacts when its email fails, D82-5), a report and its outcome | **P1** | **Q4** | **878** archived (both touch `NotificationItem.tsx` and the shared fixture) | ✅ `APPROVED WITH NOTES` 2026-09-24 (review 3; archived; landed with 878, D82-6; O82-2 accepted by the owner) → [`…Task_880…`](../Archive/Sprint_82_kickoff_prompt_Task_880_Notification_Enum_Report_And_Inquiry_Notifications.md) |
-| **882** | The notification bell updates live, without a page reload: `useNotifications` subscribes only for the signed-in user (filtered), logs every Realtime status, refetches on reconnect and on tab return; an owner-run two-armed live probe | **P1** | **Q4** | — (no shared file with 878/880) | ✅ `APPROVED WITH NOTES` 2026-09-25 (review 2; archived; O82-4 passed: arm A 716 ms, arm B none; O82-5 after deploy) → [`…Task_882…`](../Archive/Sprint_82_kickoff_prompt_Task_882_Notification_Bell_Updates_Live.md) |
+| **882** | The notification bell updates live, without a page reload: `useNotifications` subscribes only for the signed-in user (filtered), logs every Realtime status, refetches on reconnect and on tab return; an owner-run two-armed live probe | **P1** | **Q4** | — (no shared file with 878/880) | ✅ `APPROVED WITH NOTES` 2026-09-25 (review 2; archived; O82-4 passed: arm A 716 ms, arm B none; O82-5 confirmed by the owner after deploy) → [`…Task_882…`](../Archive/Sprint_82_kickoff_prompt_Task_882_Notification_Bell_Updates_Live.md) |
 
 ## Owner actions this sprint needs
 
@@ -91,7 +91,7 @@ the last one on 2026-09-20; RLS is correct; and `notifications` is in the `supab
 | **O82-2** | ✅ **Accepted 2026-09-24** (owner, including the 2-line body clamp on the email-failed row). 880's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.3). |
 | **O82-3** | After deploy, repeat the D82-1 test with two accounts, and also send a message on account 2's listing. Expected results are in kickoff §13.3. |
 | **O82-4** | ✅ **Done 2026-09-25** (run by the orchestrator with the owner-updated test account in `.env.local`): `ARM A 716ms`, `ARM B none`, probe row deleted, exit 0 (`docs/sessions/evidence/task882/13-o82-4-realtime-probe.txt`). 882's live probe with a **test** account (kickoff §13.3), after the executor reports and before approval. |
-| **O82-5** | After 882 deploys: two browsers; the receiving user's bell shows a new notification **without a reload**. |
+| **O82-5** | ✅ **Confirmed 2026-09-25** (owner, after deploy, verbatim: *"Підтверджую, все ок."*). After 882 deploys: two browsers; the receiving user's bell shows a new notification **without a reload**. |
 
 ## Explicitly not in this sprint
 

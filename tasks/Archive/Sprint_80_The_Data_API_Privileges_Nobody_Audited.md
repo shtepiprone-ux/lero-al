@@ -1,6 +1,6 @@
 # Sprint 80 — the Data API privileges nobody audited against what the code actually uses
 
-**Opened:** 2026-09-23 · **Status:** 🟠 **OPEN** · **Landed tasks:** 4 (870, 871, 881, 883) · **Kickoffs filed:** 4 (870, 871, 881, 883) · **Reserved:** 0
+**Opened:** 2026-09-23 · **Status:** ✅ **CLOSED 2026-09-25** (owner: *"закривай спринт"*) · **Landed tasks:** 4 (870, 871, 881, 883) · **Kickoffs filed:** 4 (870, 871, 881, 883) · **Reserved:** 0
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -106,3 +106,25 @@ default privileges and functions, and makes it repeatable.
    unchanged.
 4. `docs/rls-rules.md` forbids view DML grants in the rule text and carries the audit as the post-migration check.
 5. **871** has an owner-decided fix route, or has been moved to another sprint by the owner.
+
+## Closure — 2026-09-25
+
+**Closed by the owner, 2026-09-25, verbatim:** *"закривай спринт"*.
+
+**Tasks.** Four landed, all `APPROVED WITH NOTES` and archived: **870**, **871**, **881** and **883**. Their rows are
+in `docs/backlog-archive.md`.
+
+**Exit criteria:**
+
+| # | Criterion | Met by |
+|---|---|---|
+| 1 | AFTER audit A1/A3/A4/A7 = 0 | 870, O80-2 (`docs/sessions/evidence/task870/20-owner-o80-2-o80-3.txt`) |
+| 2 | anon probe AFTER `42501` on the revoke set, BEFORE `200` | 870, O80-2 (same file) |
+| 3 | `test:auth`/`test:admin` pass, build exit 0, O80-3 unchanged | 870, and every later task's gate block; O80-3 owner "Так, все ок." |
+| 4 | `rls-rules.md` forbids view DML grants and carries the audit | 870; 881 added the `notifications` paragraph |
+| 5 | 871 has an owner-decided route | owner route (a), 2026-09-23; implemented and approved 2026-09-25 |
+
+**Owner actions.** All done: O80-1 through O80-3 on 2026-09-23 (870), and O80-4, O80-5 and O80-6 on 2026-09-25 (871,
+881, 883).
+
+**Carried out of the sprint:** nothing. No number remains reserved here.

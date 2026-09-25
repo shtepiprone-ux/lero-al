@@ -417,6 +417,21 @@ non-approved verdict. Never overwrite an existing archive file: stop and resolve
 update the `docs/backlog-archive.md` kickoff link to the new `tasks/Archive/` path, then verify that the destination
 exists and the source path no longer does before composing the owner handoff.
 
+**Physical sprint-plan archive — mandatory (owner rule, 2026-09-25, verbatim: *"запиши у правило, що і план спринтів
+також переміщується, якщо спринт закритий!"*).** When a sprint is closed, move its plan file
+(`tasks/Sprints/Sprint_NN_<Slug>.md`) to `tasks/Archive/<same filename>` in the same change that sets the plan's status
+to `✅ CLOSED` and adds the sprint's `docs/backlog-archive.md` row. The move itself follows the kickoff rule above:
+
+- the file moves unchanged, apart from the closure edits made in the same change;
+- never overwrite an existing archive file;
+- verify that the destination exists and the source is gone before the owner handoff.
+
+Before moving, `git grep` the plan's filename and rewrite every live reference to the new path: the archive-ledger
+`[plan]` link, kickoffs, `docs/backlog.md`, other plans, docs and scripts. The plan's own links to archived kickoffs
+still resolve after the move. Do not rewrite retained command transcripts under `docs/sessions/evidence/`, because
+they record what a command printed. Before the move, check that the plan carries no `data-ledger-claim` marker
+(`check:ledger-claim-projection` scans only `tasks/Sprints/*.md`). If it carries one, stop for an owner decision.
+
 Re-read `docs/backlog.md` and `docs/backlog-archive.md`, verify that the active file has only live work and no more
 than 80 physical lines, then inspect the diff. The approval handoff must stage both changed backlog files with the
 task's other reconciled artifacts. Do not repeat closure evidence in chat: one required receipt is enough.

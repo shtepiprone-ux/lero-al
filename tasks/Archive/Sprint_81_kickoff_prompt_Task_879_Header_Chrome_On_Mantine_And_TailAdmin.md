@@ -1,6 +1,6 @@
 # Task 879 — the header's chrome leaves its CSS modules: Mantine props and theme tokens, traced to TailAdmin
 
-**Sprint:** 81 (`tasks/Sprints/Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`, goal 4) · **Priority:** P2 ·
+**Sprint:** 81 (`tasks/Archive/Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`, goal 4) · **Priority:** P2 ·
 **QA profile:** Q4 (see §13) · **Depends on:** 878 (✅ archived 2026-09-24) · **Owner decision:** D81-7 ·
 **State:** ✅ `APPROVED WITH NOTES` 2026-09-25 — review 2 (Revision 1, §16); owner matrix O81-9 accepted 2026-09-25 ·
 **Written:** 2026-09-25 by the orchestrator (Opus).

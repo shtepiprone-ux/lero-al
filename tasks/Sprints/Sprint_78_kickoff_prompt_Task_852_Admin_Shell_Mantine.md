@@ -3,6 +3,11 @@
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
 **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
 
+> **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
+> carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
+> **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
+> searches tracked files, so no check lost coverage.
+
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Spec v3.3 §17.1: *"Desktop
 від 1280 px: існуюча бічна навігація шириною 240 px, верхня панель висотою 72 px … Не змінювати IA існуючого sidebar
 заради Dashboard. 1024–1279 px: sidebar може collapse до icon rail … 768–1023 px: sidebar лише drawer"*. Clause 16d:
@@ -180,7 +185,7 @@ They tap the burger, pick "Reports", the drawer closes, and `/admin/reports` loa
 ## 12. Acceptance criteria
 
 - **AC1 [R1, R10]** — Given
-  `git --no-optional-locks grep -n -E "className=|components/ui/|#[0-9a-fA-F]{3,8}\b|[0-9]+px|[0-9.]+rem|rgba?\(|width: 240|height: 60" -- src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx src/design-system/mantine/patterns/MantineAppShellFoundation.tsx`,
+  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|#[0-9a-fA-F]{3,8}\b|[0-9]+px|[0-9.]+rem|rgba?\(|width: 240|height: 60" -- src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx src/design-system/mantine/patterns/MantineAppShellFoundation.tsx`,
   when run, then it prints nothing; `check:design-tokens:strict` and `check:enrolled-tailwind` exit 0.
 - **AC2 [R2]** — Given `Patterns/Mantine/AppShellFoundation`, when both its original state and the new slot state are
   rendered, then both show a header, a navbar and main content (the original is unchanged apart from token-sourced
@@ -196,7 +201,7 @@ They tap the burger, pick "Reports", the drawer closes, and `/admin/reports` loa
   has no locale- or width-named export.
 - **AC7 [R3]** — Given `npm.cmd run test:admin-freshness`, when run, then it passes (the freshness hook is still wired).
 - **AC8 [R8]** — Given
-  `git --no-optional-locks grep -n -E "admin-adminsidebar|admin-adminmobileheader|admin-adminlocaleswitcher|system-adminlayout|AdminMobileHeader|AdminLayout\.stories" -- src scripts docs .storybook`,
+  `git --no-optional-locks grep --untracked -n -E "admin-adminsidebar|admin-adminmobileheader|admin-adminlocaleswitcher|system-adminlayout|AdminMobileHeader|AdminLayout\.stories" -- src scripts docs .storybook`,
   when run, then it prints nothing except historical session logs under `docs/sessions/` (excluded by listing them
   explicitly in the report).
 - **AC9 [R9]** — Given `git --no-optional-locks diff -- scripts/surface-census-baseline.json`, when read, then exactly the
@@ -241,8 +246,8 @@ npm.cmd run check:locale-leak:mantine-only
 npm.cmd run build
 npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
-git --no-optional-locks grep -n -E "className=|components/ui/|#[0-9a-fA-F]{3,8}\b|[0-9]+px|[0-9.]+rem|rgba?\(|width: 240|height: 60" -- src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
-git --no-optional-locks grep -n -E "admin-adminsidebar|admin-adminmobileheader|admin-adminlocaleswitcher|system-adminlayout|AdminMobileHeader|AdminLayout\.stories" -- src scripts docs .storybook
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|#[0-9a-fA-F]{3,8}\b|[0-9]+px|[0-9.]+rem|rgba?\(|width: 240|height: 60" -- src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+git --no-optional-locks grep --untracked -n -E "admin-adminsidebar|admin-adminmobileheader|admin-adminlocaleswitcher|system-adminlayout|AdminMobileHeader|AdminLayout\.stories" -- src scripts docs .storybook
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx src/design-system/mantine/patterns/MantineAppShellFoundation.tsx src/components/shared/LocaleSwitcher.tsx src/design-system/mantine/theme.ts scripts/surface-census-baseline.json
 ```

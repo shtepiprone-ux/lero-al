@@ -3,6 +3,11 @@
 Sprint 78 · P2 · QA profile **Q3** · Wave D, last · depends on **849, 854, 855** approved and O78-3 ·
 **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET (gated on O78-3)**
 
+> **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
+> carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
+> **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
+> searches tracked files, so no check lost coverage.
+
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1: chat options absent).
 
 ## 1. Mode and task type
@@ -134,7 +139,7 @@ click lands on AGT-10 sorted by form inquiries for the same 30 days.
 - **AC6 [R4]** — Given the live check of §10.4, when a card is clicked, then the landing URL contains the same period
   params, `sort=<event>_desc`, and `#agt-10`.
 - **AC7 [R5]** — Given
-  `git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/design-system/mantine/patterns/MantineDashboardTopListingCard.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`,
+  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/design-system/mantine/patterns/MantineDashboardTopListingCard.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`,
   when run, then it prints nothing; `check:i18n`, `check:design-tokens:strict` and `check:enrolled-tailwind` exit 0.
 - **AC8** — Given the owner matrix §13.3, when reviewed, then each tuple is accepted or returned with a concrete defect.
 
@@ -177,7 +182,7 @@ npm.cmd run check:locale-leak:mantine-only
 npm.cmd run build
 npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
-git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/design-system/mantine/patterns/MantineDashboardTopListingCard.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/design-system/mantine/patterns/MantineDashboardTopListingCard.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object src/modules/cabinet/statistics/topListings.ts src/design-system/mantine/patterns/MantineDashboardTopListingCard.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
 ```

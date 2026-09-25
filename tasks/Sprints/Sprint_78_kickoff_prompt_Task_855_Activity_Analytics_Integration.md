@@ -3,6 +3,11 @@
 Sprint 78 · P1 · QA profile **Q3** · Wave D · depends on **849, 850, 853, 854** approved **and** owner action
 **O78-3** (aggregate applied, backfilled, first scheduled run confirmed) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET (gated on O78-3)**
 
+> **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
+> carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
+> **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
+> searches tracked files, so no check lost coverage.
+
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1, D78-2, D78-5).
 
 ## 1. Mode and task type
@@ -153,14 +158,14 @@ click the "Needs action" segment and land on their own listings filter.
   mapping test proves a disjoint, complete split (all 7 statuses + active-hidden).
 - **AC5 [R5]** — Given the 25-listing fixture sorted by views, when pages 1 and 2 are read, then the order is
   non-increasing across the page boundary; mobile cards show four labelled activity rows.
-- **AC6 [R6]** — Given `git --no-optional-locks grep -n -E "listing_inquiries" -- src/modules/cabinet/statistics`, when
+- **AC6 [R6]** — Given `git --no-optional-locks grep --untracked -n -E "listing_inquiries" -- src/modules/cabinet/statistics`, when
   run, then it prints nothing.
 - **AC7 [R7]** — Given the agent view at `en` and `uk`, when each tooltip is focused, then its text matches §3.1 in
   that locale, and the WhatsApp tooltip contains the 850 date.
 - **AC8 [R9]** — Given `check:story-coverage` and the census of both view files, when run, then they exit 0 and remain
   `manifest:yes story:yes`.
 - **AC9 [R10]** — Given
-  `git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/modules/admin/dashboard/components/AdminDashboardView.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`,
+  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/modules/admin/dashboard/components/AdminDashboardView.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`,
   when run, then it prints nothing; the i18n and token gates exit 0.
 - **AC10** — Given the owner matrix §13.3, when reviewed, then each tuple is accepted or returned with a concrete defect.
 
@@ -201,8 +206,8 @@ npm.cmd run check:locale-leak:mantine-only
 npm.cmd run build
 npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
-git --no-optional-locks grep -n -E "listing_inquiries" -- src/modules/cabinet/statistics
-git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/modules/admin/dashboard/components/AdminDashboardView.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+git --no-optional-locks grep --untracked -n -E "listing_inquiries" -- src/modules/cabinet/statistics
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/modules/admin/dashboard/components/AdminDashboardView.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object src/app/admin/page.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/modules/cabinet/statistics/data.ts src/modules/cabinet/statistics/portfolio.ts
 ```

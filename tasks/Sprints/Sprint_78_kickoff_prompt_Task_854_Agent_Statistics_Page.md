@@ -3,6 +3,11 @@
 Sprint 78 · P1 · QA profile **Q4** (new authenticated route with owner isolation) + Q3 visual matrix · Wave C ·
 depends on **843, 844, 845, 846, 848** approved · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
 
+> **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
+> carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
+> **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
+> searches tracked files, so no check lost coverage.
+
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 - **D78-3** (owner, 2026-09-18): *"role=agent. Нова стоірнка, кнопка "Statistics" на цю сторінку знаходиться у меню
   користувача, біля кнопки "Профіль""*.
@@ -84,7 +89,7 @@ guest goes to login. Every value is a theme token or pattern prop; every breakpo
   "expiring within 7 days"), the target is `/{locale}/cabinet?tab=listings`, with the gap recorded in the report as a
   follow-up candidate, not solved here.
 - The "Edit" action uses the existing listing edit route. The executor finds it with
-  `git grep -n "listings/.*/edit" -- src/app` at I0 and records it.
+  `git grep --untracked -n "listings/.*/edit" -- src/app` at I0 and records it.
 - No owner decision open.
 
 ## 6. Pre-read rule bundle
@@ -167,7 +172,7 @@ listings; sorting by "Expires" reorders them; page 2 shows the rest.
   §3.1 and the error state appears only in its own block.
 - **AC4 [R3]** — Given the live page, when the period control switches 30d → 7d, then the URL shows `period=7d`,
   AGT-05's label and value change, and AGT-01/02 are unchanged.
-- **AC5 [R4, R8]** — Given `git --no-optional-locks grep -n -i -E "lead|conversion|contact" -- messages/en.json` limited
+- **AC5 [R4, R8]** — Given `git --no-optional-locks grep --untracked -n -i -E "lead|conversion|contact" -- messages/en.json` limited
   to the new `cabinet.statistics` block (quote the block), when read, then no label uses those words; and
   `check:i18n` exits 0.
 - **AC6 [R5]** — Given the UserMenu and MobileNavDrawer Stories' agent states, when opened, then "Statistics" is the item
@@ -179,7 +184,7 @@ listings; sorting by "Expires" reorders them; page 2 shows the rest.
   and `AgentStatisticsView` reads `manifest:yes story:yes`.
 - **AC9 [R9]** — Given the owner matrix §13.3, when reviewed, then each tuple is accepted or returned with a concrete defect.
 - **AC10 [R10]** — Given
-  `git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/[locale]/cabinet/statistics/page.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/components/layout/UserMenu.tsx`,
+  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/[locale]/cabinet/statistics/page.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/components/layout/UserMenu.tsx`,
   when run, then it prints nothing; `check:design-tokens:strict` and `check:enrolled-tailwind` exit 0.
 
 `GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: AC10's empty grep on three named files; AC5 is limited to the new key block.`
@@ -224,7 +229,7 @@ npm.cmd run check:locale-leak:mantine-only
 npm.cmd run build
 npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
-git --no-optional-locks grep -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/components/layout/UserMenu.tsx
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/components/layout/UserMenu.tsx
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/components/layout/UserMenu.tsx src/components/layout/MobileNavDrawer.tsx src/design-system/mantine/patterns/MantineDataTableToCards.tsx
 ```

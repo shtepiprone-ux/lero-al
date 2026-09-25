@@ -3,6 +3,11 @@
 Sprint 78 · P1 · QA profile **Q3** · Wave C · depends on **843, 844, 845, 846, 847, 852** approved ·
 **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
 
+> **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
+> carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
+> **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
+> searches tracked files, so no check lost coverage.
+
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1, D78-5). ADM-10 is
 added by **855**; ADM-03/04/05/07 are out (D78-1 / no source).
 
@@ -197,7 +202,7 @@ recent listings. Clicking a pending listing opens its staff preview.
 - **AC4 [R3, R6]** — Given the live page under the admin locale `en`, when a count ≥ 1000 renders, then it uses the
   English grouping (e.g. `1,240`); under `sq`, the Albanian format. And `check:i18n` exits 0.
 - **AC5 [R4, R5]** — Given
-  `git --no-optional-locks grep -n -E "className=|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx`,
+  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx`,
   when run, then it prints nothing.
 - **AC6 [R4, R7]** — Given `check:story-coverage`, `check:pattern-enrolment` and
   `node.exe scripts\check-surface-census.mjs --surface src\app\admin\page.tsx`, when run, then the gates exit 0. The
@@ -248,7 +253,7 @@ npm.cmd run check:locale-leak:mantine-only
 npm.cmd run build
 npm.cmd run check:file-integrity
 npm.cmd run check:mojibake
-git --no-optional-locks grep -n -E "className=|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx
 git --no-optional-locks diff --stat
 git --no-optional-locks hash-object src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx scripts/surface-census-baseline.json
 ```

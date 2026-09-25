@@ -117,7 +117,7 @@ has to open the `.docx`. Spec block IDs (`ADM-01`…`ADM-11`, `AGT-01`…`AGT-12
 | **860** | `sendEmailChangeEmails` throws before sending: `emailChange.ts:177` uses `timeZone: 'Europe/Tirana'`, which Node rejects (`RangeError: Invalid time zone specified`, measured 2026-09-18, Node 22.22.3); the IANA id is `Europe/Tirane`. Critical-flow row "Email change". | **P1** | Q4 | — | reserved — **hosted here by discovery, not goal fit** (found while designing 846); the owner may move it. Kickoff not yet written. |
 | **861** | **`RangeDatePicker`'s trigger opened on pointer only, so the canonical date-range picker could not be opened by keyboard at all** (WCAG 2.2 SC 2.1.1), on a registered critical flow — and its clause-16d census pulled the notification bell's whole popover into scope. | **P1** | Q4 | — | ✅ **APPROVED WITH NOTES (review 3, 2026-09-20) — ARCHIVED.** Trigger is a semantic `<button>`; ARIA lands only on native-button triggers (review 1 F2) and the bell's `ActionIcon` carries its own; `NotificationCenter` + `NotificationItem` migrated, storied and enrolled **inside 861** (862 folded, never issued); owner accepted all 7 visual tuples including the two §17.1 deltas; F7 retired the orphaned `task319` QA script. Ledger row → `docs/backlog-archive.md` (2026-09-20). **This unblocks 846 and Wave B.** |
 | **863** | `check:listing-visibility` cannot see a listings predicate chained through a query-builder factory | P2 | Q4 | — | reserved 2026-09-20, filed by 847's review — measured two-armed with the gate's own detector: a genuine inline predicate behind `listingCount()` yields **0** violations, while the same predicate written directly on `from('listings')` yields 2. Full text → [`backlog-reserved.md`](../../docs/backlog-reserved.md) |
-| **864** | A `git grep` acceptance criterion is vacuous against the files its own task creates | P2 | Q1 | — | reserved 2026-09-20, filed by 848's review — third recurrence after 843 and 847. **852 · 853 · 854 · 855 · 856 still carry the plain form**; 850 and 851 closed unaffected (their grep targets are tracked+modified, not created). Folds in a `period.ts` forward day-add export. Full text → [`backlog-reserved.md`](../../docs/backlog-reserved.md) |
+| **864** | A `git grep` acceptance criterion is vacuous against the files its own task creates | P2 | Q1 | — | reserved 2026-09-20, filed by 848's review — third recurrence after 843 and 847. ~~852 · 853 · 854 · 855 · 856 still carry the plain form~~ **applied to 852–856 on 2026-09-25 (`--untracked` in every `git grep`); still open: the future-kickoff guard and the `period.ts` export**; 850 and 851 closed unaffected (their grep targets are tracked+modified, not created). Folds in a `period.ts` forward day-add export. Full text → [`backlog-reserved.md`](../../docs/backlog-reserved.md) |
 | **874** | The exchange-provider manager on canonical Mantine: the containers plus `AdminExchangeProvidersView` and `ProviderFormDialogView`, each with its own Story and manifest entry. Then `ui/PasswordInput` and its legacy Story are deleted (D78-7; moved from Sprint 81) | P3 | Q3 | 873 (landed) | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_874…`](Sprint_78_kickoff_prompt_Task_874_Exchange_Providers_Manager_On_Mantine.md) |
 | **877** | The rest of `/admin/currency` on canonical Mantine: `page.tsx`, `AdminCurrencyTabs` (legacy `tabs`), `AdminPageHeader`, `AdminCurrenciesManager` (81 `className`, 10 `ui/*` bindings), plus the decision for the shared `AdminTable`/`AdminCardList` it still renders (five consumers after 874). Full census first (filed 2026-09-24 by 874's design, D78-7). **Scope per D78-8:** the shared `AdminTable` and `AdminPageHeader` become adapters over the extended `MantineDataTableToCards` and `MantineDashboardHeader`; `AdminCardList` and three legacy Stories are deleted | P3 | Q3 | 874 | 📝 `KICKOFF FILED` 2026-09-24 → [`…Task_877…`](Sprint_78_kickoff_prompt_Task_877_Admin_Currency_Page_And_Shared_Admin_Table_On_Mantine.md) |
 | **868** | `/admin/pages` on canonical Mantine, and a refused publish tells the admin why: containers `AdminPagesManager`/`PageEditorDialog` render the new Views `AdminPagesView`/`PageEditorDialogView` (own Stories, manifest); `sq_body_required` shown on the Albanian body field; delete confirm on `MantineModal`; page width token `adminPageNarrowMaxWidth`; rider: `admin.footer.link_url_invalid_internal` reworded (filed 2026-09-21 by 867's design, routed from Sprint 79) | P3 | Q3 | **877** | 📝 `KICKOFF FILED` 2026-09-25 → [`…Task_868…`](Sprint_78_kickoff_prompt_Task_868_Admin_Pages_On_Mantine_With_Publish_Refusal_Reason.md) |
@@ -140,6 +140,28 @@ parallel Sonnet sessions would conflict on them.
 | C — surfaces | **852 → 853** · **854** | A approved; 853 also needs 847 + 852; 854 needs 848 |
 | D — analytics | **855 → 856** | 849 + 850 approved and the aggregate populated in production (O78-3) |
 | E — landings | 857 · 858 · 859 | kickoffs written after each surface census |
+
+**Re-sequenced 2026-09-25** (owner request: *"надай мені короткий список виконання задач у Sprint 78 та 79, бо задачі там
+пов'язані одна з одною"*). The waves above stand. Three cross-task facts change the order inside them:
+
+1. **877 before 857 and 859.** 877 turns the shared `AdminTable` into an adapter over `MantineDataTableToCards`
+   (D78-8). `AdminListingsTable` (857) and `AdminSupportManager` (859) render it, so their censuses must be taken
+   after 877 lands. 858 (`AdminReportsManager`) does not render it.
+2. **874 → 877 → 868 is one chain.** 877 needs 874. 868 needs 877's `visibleFrom`, `AdminPageHeader` adapter and
+   page-width token.
+3. **One UI task at a time.** `messages/*.json`, `theme.ts`, `scripts/mantine-migration-scope.json` and
+   `scripts/surface-census-baseline.json` are shared by every UI task here. Non-UI tasks (860, 863, 865, and Sprint
+   79's 884) can run beside one UI task.
+
+| Order | Track A — admin/agent UI (sequential) | Track B — bugs and security (beside A) |
+|---|---|---|
+| 1 | **852** admin shell | **860** email change throws (P1) — kickoff first |
+| 2 | **853** admin dashboard | **865** `listing_views` anonymous write — kickoff first |
+| 3 | **854** agent statistics (Q4) | **863** `check:listing-visibility` blind spot |
+| 4 | **874** → **877** → **868** | — |
+| 5 | **855** → **856** (after O78-3's first scheduled run) | — |
+| 6 | **858**, then **857** · **859** (after 877; census, then kickoff) | 864's remaining guard |
+
 
 ## Owner actions this sprint needs
 

@@ -1,7 +1,7 @@
 # Task 867 — public CMS read path GRANT/RLS + Footer slug validation + publish guard
 
 Sprint 79 · P1 · Q4. Executor session (Sonnet), 2026-09-23. Kickoff:
-[`Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md`](../../tasks/Sprints/Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md).
+[`Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md`](../../tasks/Archive/Sprint_79_kickoff_prompt_Task_867_Public_CMS_Read_Path_And_Footer_Slug_Validation.md).
 
 `CANONICAL REUSE PREFLIGHT LOADED — docs/golden-rules.md GR-0; docs/agent-contract.md 16b–16c.`
 

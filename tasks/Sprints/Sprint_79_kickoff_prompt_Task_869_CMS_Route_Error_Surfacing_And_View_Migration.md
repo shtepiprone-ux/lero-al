@@ -1,7 +1,7 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: 📝 KICKOFF FILED 2026-09-23 — READY FOR SONNET**
+owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-25 (review 1) — evidence-only re-entry at §16; no code change**
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -385,3 +385,61 @@ is behaviour-identical (theme `md` = 48em = Tailwind `md` = 768px, and the two s
 Task path: `tasks/Sprints/Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md`
 QA profile: `Q3`. Ambiguous or conflicting requirements: none. Owner decision still needed: none blocking — only the
 non-blocking 500-vs-404 note in §5.2.
+
+---
+
+## 16. Revision 1 — review 2026-09-25 (`NEEDS REVISION`)
+
+**The implementation is accepted as it stands.** R1–R8 match the diff:
+- both queries bind `error` and log with the R1/R2 prefixes before an unchanged `notFound()` / `return {}`;
+- `CmsPageView` is a server component with 0 `className`, `maw="var(--width-content)"`, `TypographyStylesProvider`;
+- `--width-content: 48rem` sits beside `--width-page-max`, and the manifest has one added path;
+- the Story exports `Default`, `TitleOnly`, `BodyOnly`, `LongTitleWrap`, `RichBody`;
+- the R5 suite has both arms (4/4).
+
+Recorded gate results: census after = 2 nodes in the AC2 shape; `check:surface-census:changed`, the story, i18n,
+token, integrity and pattern gates, `typecheck`, `lint` and `build` all exit 0. The reviewer measured all six
+blobs equal to `13.2-hash-object.log`. Two required artifacts are missing.
+
+| # | Severity | Finding | Evidence |
+|---|---|---|---|
+| RF1 | P2 | **No session log.** §14 and agent-contract clause 10 require `docs/sessions/2026-09-2?-task869-*.md` with a "Files Changed" table matching the real diff. None exists. | `docs/sessions/` holds no `task869` file; only `docs/sessions/evidence/task869/` |
+| RF2 | P2 | **`check:locale-leak` was not run.** AC6 lists it. No evidence file names it, and the §13.2 transcript set omits it. | `docs/sessions/evidence/task869/` (18 logs, none for `locale-leak`) |
+
+### 16.1 Re-entry (evidence only)
+
+**Mode: `remediation`. No source, Story, test, CSS or manifest file may change.** Their hashes must stay equal to
+`13.2-hash-object.log`. Any change to them is a new finding.
+
+```powershell
+$ev = "docs\sessions\evidence\task869"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r1-platform.log"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r1-build-storybook.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r1-build-storybook.log"
+npm.cmd run check:locale-leak *>&1 | Tee-Object "$ev\r1-check-locale-leak.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r1-check-locale-leak.log"
+git --no-optional-locks hash-object "src/app/[locale]/[slug]/page.tsx" src/modules/cms/components/CmsPageView.tsx src/stories/patterns/mantine/CmsPageView.stories.tsx "src/app/[locale]/[slug]/__tests__/page.errors.test.ts" src/app/globals.css scripts/mantine-migration-scope.json | Tee-Object "$ev\r1-hash-object.log"
+```
+
+Expected:
+- `r1-build-storybook` and `r1-check-locale-leak` end `EXIT_CODE=0`. A locale leak reported for
+  `Patterns/Mantine/CmsPageView` is a real finding: report it, do not patch around it.
+- `r1-hash-object.log` equals `13.2-hash-object.log` line for line.
+
+Normalise the `Tee-Object` files (UTF-16LE on Windows PowerShell 5.1) to UTF-8 without BOM through Node, line for
+line.
+
+**Then write the session log** `docs/sessions/2026-09-25-task869-cms-route-error-surfacing.md` containing:
+- the §14 report: R1–R8 with evidence paths;
+- a "Files Changed" table matching the real diff (the six files, plus `docs/backlog.md` and the evidence);
+- the GR-0/GR-1/GR-2/GR-3/GR-3a receipts;
+- the quoted `--width-content` definition line;
+- the four R5 test names;
+- the O79-5 matrix (§13.3) as owed.
+
+Update the 869 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 1).
+
+### 16.2 Unchanged by this review
+
+- §3.6 and §8 still hold for 869: the executor does not sanitise the body.
+- That work is now **Task 884** (filed 2026-09-25 by owner instruction), which runs after 869 and edits the same
+  `CmsPageView` expression.
+- O79-5 (owner visual matrix, §13.3) can run now against the current Story.

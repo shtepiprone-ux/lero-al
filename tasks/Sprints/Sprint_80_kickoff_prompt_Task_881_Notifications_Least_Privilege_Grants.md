@@ -774,14 +774,44 @@ Expected:
 
 - `r3-13`: exit 0.
 - `r3-15e`, `r3-15f`, `r3-16`: exit 0.
-- `r3-16z`: every line equals `r2-16z` except `check-notifications-grants.mjs`.
+- `r3-16z`: every line equals `r2-16z` except `check-notifications-grants.mjs` and `task-881-notifications-audit.sql` (§18.3).
+- `r3-10-audit-single-statement.txt`: the §13.2 `10` command re-run on the hotfixed audit; expected `semicolons=1 endsWithSemicolon=true writeKeywords=none`.
 - `r3-17`: no path outside §7.
 
 The session log gains a "Revision 3" section. The 881 backlog cell reads
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 3); O80-5 …` with the owner's O80-5 state.
 
+### 18.3 Orchestrator hotfix to the audit (RF9), 2026-09-25, during O80-5
+
+**RF9 (P2).** Owner-run O80-5 step 2, BEFORE audit: `ERROR: 22023: ACL arrays must be one-dimensional`. The N5
+branch called `aclexplode(coalesce(a.attacl, '{}'::aclitem[]))`. The empty array `'{}'` has zero dimensions, and
+`aclexplode` rejects any ACL that is not one-dimensional. Every column's `attacl` is null BEFORE, so the whole statement
+failed. AC1's static check (one statement, no write keyword) cannot see a runtime error. The script is read-only, so
+nothing was applied.
+
+**Fix, applied by the orchestrator** because the owner was mid-procedure and the file is a read-only diagnostic: N5
+now joins `pg_attribute` with `a.attacl is not null and cardinality(a.attacl) > 0` and calls `aclexplode(a.attacl)`.
+No other line changed. Re-checked with the §13.2 `10` command: `semicolons=1 endsWithSemicolon=true
+writeKeywords=none`. The audit's hash therefore differs from `r2-16z`. RV7's evidence records it (`r3-10`, `r3-16z`).
+The session log's "Revision 3" section notes the hotfix as orchestrator-authored.
+
 ### 18.2 O80-5 can run now
 
-RV7 touches no owner-facing file: the audit, selftest, hardening, rollback and probe hashes stay equal to `r2-16z`.
+RV7 touches no owner-facing file. The selftest, hardening, rollback and probe hashes stay equal to `r2-16z`. The audit changed only by the §18.3 hotfix, which the owner uses from step 2 on.
 The owner runs §13.3 now, in parallel with RV7. The final review then takes RV7's `r3-` evidence and the owner's
 O80-5 outputs together.
+
+### 18.4 O80-5 results (owner-run 2026-09-25, recorded by the orchestrator)
+
+| Step | Result | Evidence |
+|---|---|---|
+| 2 BEFORE audit | first attempt: `22023 ACL arrays must be one-dimensional` (RF9, §18.3); after the hotfix: N1 14, N2 20, N3 6, N4 16 (7 privileges + `MAINTAIN` for each of `anon`/`authenticated`, all `granted_by=postgres`), N5 0 | `18-audit-before.tsv` |
+| 3 BEFORE probe | every arm as §11 BEFORE; RT 492 ms; exit 0. Two earlier runs failed at sign-in (placeholder, then stale `.env.local` credentials) before any row was inserted | `20-probe-before.txt`; `*.superseded-signin-failed.txt` |
+| 4 selftest | `P0001 … g2: view(s) public_user_profiles depend on users`, nothing changed | `19b-selftest-and-apply.txt` |
+| 5 hardening | `Success. No rows returned` | `19b-selftest-and-apply.txt` |
+| 6 AFTER audit | N1 1 (`authenticated` SELECT), N2 1 (`authenticated/is_read`), N3 6 unchanged, N4 1 `authenticated SELECT` (`MAINTAIN` gone), N5 1 `is_read/authenticated UPDATE`; `service_role` all true | `19-audit-after.tsv` |
+| 7 AFTER probe | A1–A4 `42501` grant; U1 count 1; **U2 `is_read_after=true` (Assumption 1 holds, no rollback)**; U3/U4/U5 `42501` grant; RT 487 ms; exit 0 | `21-probe-after.txt` |
+| 9 manual bell | owner: "Підтверджую - все ок." | `19c-manual-checks.txt` |
+| 10 signed-out console | **F9 materialised:** after `logout` (204), one `GET notifications?select=…` as anon returns **401** and `useNotifications.ts:28` logs `[notifications] fetch failed`. No functional break (the bell unmounts, `Header.tsx:78`). Out of 881 scope (§8). **Follow-up owed: file a numbered task at the final review** (move `fetchAll()` behind the `userId` guard and clear the list on sign-out) | `19c-manual-checks.txt` |
+
+O80-5 is complete. The remaining open item for approval is RV7 (§18.1). Its `r3-` evidence must also normalise `20-probe-before.txt` and `21-probe-after.txt` to UTF-8 without BOM through Node if `check:file-integrity` flags them: Windows PowerShell 5.1 `Tee-Object` writes UTF-16LE. The content must stay line-for-line identical.

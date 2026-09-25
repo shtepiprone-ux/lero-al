@@ -2,7 +2,8 @@
 
 **Sprint:** 81 (`tasks/Sprints/Sprint_81_Signing_Out_Keeps_You_Where_You_Were.md`, goal 4) · **Priority:** P2 ·
 **QA profile:** Q4 (see §13) · **Depends on:** 878 (✅ archived 2026-09-24) · **Owner decision:** D81-7 ·
-**State:** `READY FOR SONNET` · **Written:** 2026-09-25 by the orchestrator (Opus).
+**State:** `NEEDS REVISION` — **Revision 1** (2026-09-25, orchestrator review): execute **§16 only** (remediation
+re-entry, no `src/` edit) · **Written:** 2026-09-25 by the orchestrator (Opus).
 
 Executor: follow `.claude/skills/execute-task/SKILL.md`. Your strongest allowed status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Never approve, and never run or suggest a mutating git command.
@@ -96,8 +97,14 @@ re-measures them; that is a freshness check, not first verification.**
   Tailwind classes. `LocationCombobox`'s and `MantineAddItemPanel`'s are pass-through props too.
 - **F11 (FACT) — critical flows touched** (`docs/critical-flow-registry.md`): "Login (email/password)" (`AuthSheet`,
   `test:auth`); "Header overlays (locale switch · user menu · mobile drawer)" (`check:hydration`); "Authenticated
-  header hydration — NotificationBell SSR shell" (`check:header-id-parity`); "Listing-detail gallery lightbox
-  stacking", which depends on the header's working `z-index: 30` being below the lightbox's Mantine 200.
+  header hydration — NotificationBell SSR shell" (**authoritative gate `test:header-hydration-id-parity`**, registry
+  line 39; secondary `check:hydration` with a session); "Listing-detail gallery lightbox stacking", which depends on
+  the header's working `z-index: 30` being below the lightbox's Mantine 200.
+  **Revision 1 correction (FACT, 2026-09-25):** the original text named `check:header-id-parity` as this row's gate.
+  That script's own header (`scripts/check-header-id-parity.mjs:1-38`) records that it FAILs on fixed and buggy code
+  alike (Task 601) and is not the regression gate; the registry names `test:header-hydration-id-parity`. And
+  `check:hydration` is dev-only: `scripts/check-hydration-console.mjs:28-35` — "MUST run against `next dev`, NEVER
+  `next start`" (React strips hydration warnings from production builds). AC10 and §13.1 are corrected accordingly.
 - **F12 (FACT) — Stories.** Each changed component has its own canonical Story that imports it directly:
   `Mantine/Primitives/HeaderView` (`Default` guest + authed, `SigningOut`),
   `Mantine/Primitives/MobileNavDrawer` (`Default`, arg `loggedIn`), `Mantine/Primitives/LocaleSwitcher` (`Default`,
@@ -323,9 +330,13 @@ brand 14px links and the uppercase "or" rule; the register-agent logo upload sho
   and `docs/design-system.md` no longer calls `HeaderView.module.css:35` a live site.
 - **AC9 [R14]** Given `AuthSheet.stories.tsx`, when read, then it has exactly one new export,
   `RegisterAgentAddCompanyLogo`, under the existing title, and `check:story-coverage` still passes.
-- **AC10 [R15]** Given the §13.1 block B test set after the change, when compared with `04-tests-before.txt`, then no
-  test fails that passed before; and `check:header-id-parity` and `check:hydration` pass against a production
-  build.
+- **AC10 [R15]** *(Revision 1.)* Given the §13.1 block B test set run **twice on the HEAD snapshot (§16.3) and twice
+  on the working tree** in the same session, when the failing-test lists are compared, then no test is a regression.
+  A test is a regression when it fails in at least one working-tree run, in neither snapshot run, **and** also fails
+  when its file is run alone on the working tree. A test that fails on both trees, or fails only in the combined
+  working-tree runs while passing alone, is recorded as pre-existing / load-order flake, with its runs cited. And `npm run test:header-hydration-id-parity` exits 0, and `check:hydration` run against
+  **`next dev`** with `HYDRATION_GATE_STORAGE_STATE` set reports FAIL 0 with the two authenticated header cells
+  **PASS, not SKIP**. `check:header-id-parity` is not a criterion (F11).
 - **AC11 [all]** Given the final tree, when block E runs, then `typecheck`, `lint`, `check:design-tokens`,
   `check:story-coverage`, `check:rendered-scope`, `check:surface-census:changed`, `check:mojibake` and
   `build-storybook` exit 0, and the final `npm run build` exits 0.
@@ -375,17 +386,19 @@ transcript under `$ev` with its exit code. The final build must be the last comm
 four components are enrolled (F10), so it applies. **check:surface-census:changed** maps the diff to surfaces; it
 cannot see what a `.module.css` rule did, so the probe and the owner matrix close the visual criteria.
 
-Production-server checks (AC10). Run after `npm run build`, with the server started in a second terminal by
-`npm.cmd run start`:
+Hydration checks (AC10, **Revision 1** — replaces the former production-server block; see F11). With `next dev`
+running in a second terminal (`npm.cmd run dev`):
 
 ```powershell
+npm.cmd run test:header-hydration-id-parity
 $env:BASE_URL = "http://localhost:3000"
+$env:HYDRATION_GATE_STORAGE_STATE = "playwright\.auth\admin-storage-state.json"
 npm.cmd run check:hydration
-npm.cmd run check:header-id-parity
 ```
 
-If either cannot run in the executor's environment, return `PARTIALLY IMPLEMENTED` and give these blocks to the owner.
-Expected: both exit 0.
+Expected: the test exits 0 (3/3); `check:hydration` exits 0 with FAIL 0, and both "Homepage authenticated (en/uk) —
+header hydration" cells PASS (a SKIP there means the session is missing or expired). If `next dev` cannot run or the
+authenticated cells SKIP, return `PARTIALLY IMPLEMENTED` and give this block to the owner.
 
 ### 13.2 The probe — `scripts/task879-header-chrome-probe.mjs`
 
@@ -401,7 +414,10 @@ Cells and assertions:
   at 390: AC6 tile.
 
 It runs twice: `--label before` on the unchanged build (§10.1 step 4: geometry/stacking PASS, TailAdmin assertions
-FAIL → exit 1, **the failing arm**), and `--label after` (all PASS → exit 0). Every file read or written goes through
+FAIL → exit 1, **the failing arm**), and `--label after` (all PASS → exit 0). **Revision 1 correction:** the
+`--register-agent-add-company-logo` Story is added by this task (R14), so it does not exist on the unchanged tree and
+the probe records that one cell as `infra` and exits **2**. The before-arm's expected result is therefore stated per
+record in §16.4, not by exit code. Every file read or written goes through
 Node's UTF-8 APIs. Record the `git hash-object` of the probe script in the same pass as the final gate block.
 
 ### 13.3 OWNER VISUAL QA REQUIRED — O81-9
@@ -495,11 +511,170 @@ One route (D81-7). Starting mode: clean isolated, or dirty with manifest (§10.1
 | # | Checkpoint | Producer → artifact | Comparator / failure |
 |---|---|---|---|
 | 0 | platform + status + hashes | I0 → `00-`, `01-` | not `win32` → BLOCKED |
-| 1 | baseline probe (failing arm) | probe `--label before` → `03-` | must exit 1 with only TailAdmin assertions failing; any other outcome → BLOCKED |
+| 1 | baseline probe (failing arm) | probe `--label before` → `03-` | Revision 1: the per-record expectation of §16.4; any other outcome → BLOCKED |
 | 2 | baseline tests | vitest → `04-` | saved list |
 | 3 | edits (R1–R14) | executor | GR receipts precede each write |
 | 4 | gates | §13.1 → transcripts | any non-zero (except census's D81-2 FAIL) → not IMPLEMENTED |
 | 5 | after probe | probe `--label after` → `20-` | exit 0 required |
 | 6 | regression compare | after list vs `04-` | new failure → not IMPLEMENTED |
-| 7 | production checks | hydration + header-id-parity | missing → PARTIALLY IMPLEMENTED + owner block |
+| 7 | hydration checks (Revision 1) | `test:header-hydration-id-parity` + `check:hydration` on `next dev` with a session | missing, SKIP on the authenticated cells, or FAIL → PARTIALLY IMPLEMENTED + owner block |
 | 8 | final build + hashes | `npm run build` last | non-zero → not IMPLEMENTED |
+
+---
+
+## 16. Revision 1 — remediation re-entry (orchestrator review, 2026-09-25)
+
+The review verdict is `NEEDS REVISION`. The implementation (R1–R14) is **not** reopened: the reviewer found no source
+defect and re-ran the census (21 nodes, only the D81-2 containers fail) and block C (no output) natively. What is
+missing is evidence, plus two AC10 gates that the original kickoff named wrongly. **Execute this section only.**
+
+### 16.1 Findings this revision closes
+
+| ID | Severity | Finding | Closed by |
+|---|---|---|---|
+| **RV1** | P1 | Edits began before I0. `00-` … `04-` do not exist. The probe's failing arm never ran, so nothing shows the probe can fail (Q4). AC10's regression comparison has no baseline: run 1 failed 6 tests, run 2 failed 7 (`ResetPasswordClient.smoke`, `filtersRangeDatePicker.smoke`, `filtersPanelShell.smoke`), and "pre-existing flake" is an inference with no A/B. Writing HEAD content back into the working tree was correctly refused. | §16.3–§16.5 |
+| **RV2** | P1 (kickoff defect, orchestrator's) | AC10 named `check:header-id-parity`, which is not the gate (F11 correction), and asked for `check:hydration` against `next start`, where it is blind. `25-check-hydration.txt` is that production run, with both authenticated header cells `SKIP`. | §16.6, corrected AC10, §13.1 |
+| **RV3** | P2 | No transcript records platform, Node version, working directory or exact command; `00-platform.txt` is absent. | every new transcript below |
+| **RV4** | P3 | `scripts/check-homepage-theme-runtime-deps.mjs` Case 5 comment (`:521-534`) still reads "exactly 77 pairs / 142 uses across the eleven manifest files" and "34 pairs / 66 uses"; the constants are now 65/123 and 30/58 over ten files. `docs/design-system.md:1252-1253` says the new theme token is "matching" `PopularLocationsView.module.css:56`'s marked-literal precedent, but that site remains a marked literal: it is a contrast, not a match. | §16.7 |
+
+### 16.2 Re-entry mode and write boundary
+
+- **Mode:** `remediation`. **Start step:** §16.3.
+- **Reused, never regenerated or overwritten:** `06-` … `20-`, `23-`, `24-`, `27-`, and the `design/` folder.
+- **Superseded, kept on disk, marked superseded in the session log:** `21-`, `22-` (replaced by `04-`, `33-`, `34-`,
+  `34b-`), `25-` (replaced by `37b-`), and `26-` (no longer a criterion, F11).
+- **Forbidden:** any edit under `src/`; any write into this working tree from `git show` or `git cat-file`; any
+  mutating git command.
+- **Allowed writes:** the snapshot directory `C:\Claude_Code_Projects\lero-al-task879-head` (outside the repository);
+  new evidence files `00-`, `03-`, `04-`, `30-` … `39-` under `docs/sessions/evidence/task879/`; the session log;
+  the 879 cell of `docs/backlog.md`; and RV4's two files, **comment or prose only**.
+- **Witness:** the first and last step each record `git hash-object` of the eight paths in the §16.3 Step A block.
+  The six `src/` hashes must equal the session log §1 values at both points. Only
+  `scripts/check-homepage-theme-runtime-deps.mjs` and `docs/design-system.md` may change (RV4), and their new hashes
+  are recorded.
+
+### 16.3 Build a HEAD snapshot outside the repository
+
+**Step A — PowerShell, project root.** Save the output to `$ev\00-platform.txt`. Stop with `BLOCKED` if `Test-Path`
+prints `True`. `robocopy` exit codes 0–7 mean success; 8 or higher is a failure.
+
+```powershell
+$ev = "docs\sessions\evidence\task879"
+$snap = "C:\Claude_Code_Projects\lero-al-task879-head"
+node.exe -p process.platform
+node.exe --version
+(Get-Location).Path
+git hash-object src/components/layout/HeaderView.tsx src/components/layout/MobileNavDrawer.tsx src/components/shared/LocaleSwitcher.tsx src/modules/auth/components/AuthSheet.tsx src/design-system/mantine/theme.ts src/stories/patterns/mantine/AuthSheet.stories.tsx scripts/check-homepage-theme-runtime-deps.mjs docs/design-system.md
+Test-Path $snap
+robocopy . $snap /E /XD node_modules .next storybook-static .git /NFL /NDL /NJH /NJS /NP
+```
+
+**Step B — Bash tool (Git Bash).** Git Bash redirection writes the blob byte for byte, and PowerShell redirection
+does not (the 818/819 corollary). These commands read from git and write only into the snapshot. Save the output of
+the last two commands to `30-snapshot-witness.txt`; each blob id from `git hash-object` must equal the `ls-tree` blob
+id for the same path.
+
+```bash
+S=/c/Claude_Code_Projects/lero-al-task879-head
+git show HEAD:src/components/layout/HeaderView.tsx > "$S/src/components/layout/HeaderView.tsx"
+git show HEAD:src/components/layout/HeaderView.module.css > "$S/src/components/layout/HeaderView.module.css"
+git show HEAD:src/components/layout/MobileNavDrawer.tsx > "$S/src/components/layout/MobileNavDrawer.tsx"
+git show HEAD:src/components/layout/MobileNavDrawer.module.css > "$S/src/components/layout/MobileNavDrawer.module.css"
+git show HEAD:src/components/shared/LocaleSwitcher.tsx > "$S/src/components/shared/LocaleSwitcher.tsx"
+git show HEAD:src/components/shared/LocaleSwitcher.module.css > "$S/src/components/shared/LocaleSwitcher.module.css"
+git show HEAD:src/modules/auth/components/AuthSheet.tsx > "$S/src/modules/auth/components/AuthSheet.tsx"
+git show HEAD:src/modules/auth/components/AuthSheet.module.css > "$S/src/modules/auth/components/AuthSheet.module.css"
+git show HEAD:src/design-system/mantine/theme.ts > "$S/src/design-system/mantine/theme.ts"
+git show HEAD:src/stories/patterns/mantine/AuthSheet.stories.tsx > "$S/src/stories/patterns/mantine/AuthSheet.stories.tsx"
+git hash-object "$S/src/components/layout/HeaderView.tsx" "$S/src/components/layout/HeaderView.module.css" "$S/src/components/layout/MobileNavDrawer.tsx" "$S/src/components/layout/MobileNavDrawer.module.css" "$S/src/components/shared/LocaleSwitcher.tsx" "$S/src/components/shared/LocaleSwitcher.module.css" "$S/src/modules/auth/components/AuthSheet.tsx" "$S/src/modules/auth/components/AuthSheet.module.css" "$S/src/design-system/mantine/theme.ts" "$S/src/stories/patterns/mantine/AuthSheet.stories.tsx"
+git ls-tree HEAD -- src/components/layout/HeaderView.tsx src/components/layout/HeaderView.module.css src/components/layout/MobileNavDrawer.tsx src/components/layout/MobileNavDrawer.module.css src/components/shared/LocaleSwitcher.tsx src/components/shared/LocaleSwitcher.module.css src/modules/auth/components/AuthSheet.tsx src/modules/auth/components/AuthSheet.module.css src/design-system/mantine/theme.ts src/stories/patterns/mantine/AuthSheet.stories.tsx
+```
+
+The reviewer verified this route on 2026-09-25: `git show HEAD:src/components/layout/HeaderView.module.css` written
+outside the repository hashed to `2ff3344c9ea4…`, equal to its `ls-tree` blob. These ten paths are the only `src/`
+entries in `git status`, so after Step B the snapshot's `src/` equals `HEAD`.
+
+**Step C — PowerShell.** Install dependencies and build Storybook in the snapshot, then run block B twice there. Save
+the transcripts as `31-snapshot-npm-ci.txt`, `32-snapshot-build-storybook.txt`, `04-tests-before.txt` (run 1) and
+`33-tests-before-run2.txt`.
+
+```powershell
+Set-Location C:\Claude_Code_Projects\lero-al-task879-head
+node.exe -p process.platform
+npm.cmd ci
+npm.cmd run build-storybook
+npx.cmd vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/components/layout src/modules/auth src/components/shared src/design-system/mantine src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx
+npx.cmd vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/components/layout src/modules/auth src/components/shared src/design-system/mantine src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx
+Set-Location C:\Claude_Code_Projects\lero-al
+```
+
+### 16.4 The failing arm: the probe on the snapshot
+
+Run from the project root and save the console output to `35-probe-before-console.txt`:
+
+```powershell
+$ev = "docs\sessions\evidence\task879"
+node.exe scripts\task879-header-chrome-probe.mjs --label before --dir C:\Claude_Code_Projects\lero-al-task879-head\storybook-static --out "$ev\03-probe-before.json"
+```
+
+Expected result, per record in `03-probe-before.json`. Exit code **2** is expected, because of the last row.
+
+| Records | Expected before | Meaning |
+|---|---|---|
+| all 12 `*-ac2-stacking` | PASS | stacking was already sticky/30 |
+| all 12 `*-ac3-height` | PASS | height was already 97/65, so the after-run proves it unchanged |
+| `header-en-1440-ac4-chrome` | FAIL | translucent, blurred background with no separator |
+| all 4 `*-ac4-navlinks` (768, 1024, 1440, 1920) | FAIL | 80% foreground text links, not 44px gray-7 buttons |
+| both `mobilenavdrawer-*-ac5` | FAIL | text links shorter than 44px |
+| both `authsheet-login-*-ac6` | FAIL | 12px muted or underlined links, masked separator |
+| `authsheet-register-agent-add-company-logo-390` | `infra` | Story added by R14, so it is absent on HEAD |
+
+Any other outcome means `BLOCKED`. That covers an AC2/AC3 FAIL on HEAD, an expected FAIL that passes (that assertion
+cannot tell before from after), or a second `infra` record. Report it and do not adjust the probe. In the session
+log, add one table joining each `03-` record to its `20-` record, with the before → after flip.
+
+### 16.5 Regression comparison (AC10, first half)
+
+On the working tree, from the project root, run block B twice: `npx.cmd vitest run …` with the same paths as §16.3
+Step C. Save the transcripts as `34-tests-after-run1.txt` and `34b-tests-after-run2.txt`. Apply AC10's rule to the
+four failing-test lists. For each test that fails in at least one working-tree run and in neither snapshot run, run
+its file alone once on each tree, save the transcripts as `36-isolated-<file>-<tree>.txt`, and classify it in the
+session log.
+
+### 16.6 Hydration (AC10, second half)
+
+Run the corrected §13.1 hydration block with `next dev` running. Save the transcripts as
+`37-test-header-hydration-id-parity.txt` and `37b-check-hydration-dev.txt`. Then stop `next dev`. If
+`playwright\.auth\admin-storage-state.json` has expired (both authenticated cells `SKIP`, or the gate reports the
+session rejected), do not recapture it. Return `PARTIALLY IMPLEMENTED` and put the block in the owner handoff.
+
+### 16.7 RV4 prose fixes, then the closing gate pass
+
+1. In `scripts/check-homepage-theme-runtime-deps.mjs`, rewrite only the Case 5 comment block (`:521-534`) so it states
+   the live invariants: FULL_CENSUS 65/123 across the ten manifest files, MIGRATED_TARGETS 30/58. Add one sentence
+   crediting Task 879 for the drop from 77/142 and 34/66. Do not change code or constants.
+2. In `docs/design-system.md:1252-1253`, replace "matching `PopularLocationsView.module.css:56`'s `z-index: 1`'s own
+   separate marked-literal precedent" with a sentence that contrasts the two: that site remains a
+   `design-tokens-allow`-marked literal.
+3. Then run from the project root, saving the transcripts as `38-gates-closing.txt` and `39-npm-run-build-final.txt`.
+   Stop `next dev` before `npm.cmd run build`.
+
+```powershell
+node.exe -p process.platform
+npm.cmd run check:homepage-theme-runtime-deps
+npm.cmd run check:homepage-theme-runtime-deps:verify-gate
+npm.cmd run check:mojibake
+npm.cmd run build
+git hash-object src/components/layout/HeaderView.tsx src/components/layout/MobileNavDrawer.tsx src/components/shared/LocaleSwitcher.tsx src/modules/auth/components/AuthSheet.tsx src/design-system/mantine/theme.ts src/stories/patterns/mantine/AuthSheet.stories.tsx scripts/check-homepage-theme-runtime-deps.mjs docs/design-system.md
+```
+
+Expected: every command exits 0; verify-gate reports 6/6; the six `src/` hashes equal session log §1.
+
+### 16.8 Completion contract for Revision 1
+
+Add a "Revision 1" section to the existing session log. It must contain: status; RV1–RV4 each mapped to its
+artifacts; the superseded list from §16.2; the `03-` → `20-` flip table; the four test lists and the AC10
+classification; the hydration results; and the start and end hash witnesses. Update the 879 cell in
+`docs/backlog.md` only. The strongest allowed status is `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Return
+`PARTIALLY IMPLEMENTED` if §16.6 needs the owner. Leave the snapshot directory in place; the owner deletes it after the
+review. The owner visual matrix O81-9 (§13.3) stays owner-owned and does not block Revision 1.

@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🔁 NEEDS REVISION 2026-09-26 (review 1) — re-entry in §16; READY FOR SONNET**
+**Status: 🔁 NEEDS REVISION 2026-09-26 (review 3 — owner returned `Patterns/Mantine/AdminShell`: viewport pinned, toolbar cannot set width) — re-entry in §18; READY FOR SONNET**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -377,3 +377,81 @@ teed into the evidence root (`npm.cmd run check:locale-leak:mantine-only -- --fa
 report path) → Files Changed table → the 852 backlog line → status.
 
 `GR-4 AC AUDIT — 17 criteria; each states an observable property; absolutes: AC1/AC15 empty grep on five/four named files (a correct implementation has no match); AC16 grep with a named exclusion list.`
+
+## 17. Review 2 — PARTIALLY VERIFIED (2026-09-26)
+
+F1–F7 are closed on inspected code and retained evidence (`docs/sessions/evidence/task852/`, `probe-shell.log`:
+AC11–AC14 pass on a Storybook built after the last source edit, and `24-build.log` exits 0). No executor action is
+owed.
+
+**Open: AC10, the owner Storybook pass.** On 2026-09-26 the owner chose to review the Stories himself instead of a
+full `check:locale-leak` run. The executor's leak scan covered only the 12 `Patterns/Mantine/Admin*` stories. The
+changed `mantine-primitives-localeswitcher--default` (`fullWidth` state) and
+`patterns-mantine-appshellfoundation--with-slots` were not scanned, so the owner's sq/uk/it look covers them. When
+every Story below is accepted, the next review approves and archives. A returned Story reopens the task with the
+concrete defect.
+
+| Story ID | Locales | Widths | Owner checks |
+|---|---|---|---|
+| `patterns-mantine-adminshell--default` | en, uk | 1440, 1024 | 240px navbar, 72px top bar with the title; logout visible without scrolling; nav scrolls inside |
+| `patterns-mantine-adminshell--drawer-open` | sq, uk | 390 | drawer open; Esc closes it; footer visible |
+| `patterns-mantine-adminsidebar--default` · `--management-active` · `--content-active` · `--system-active` | uk | 320 | active item highlighted; long labels truncate; footer: language, open site, logout |
+| `patterns-mantine-adminheader--default` · `--unknown-path` · `--drawer-open` | sq, it | 390, 1440 | burger + brand below 1024; title right-aligned; fallback "Admin" |
+| `patterns-mantine-adminlocaleswitcher--idle` · `--pending` | en, uk | 1440 | label, full-width trigger, spinner when pending |
+| `mantine-primitives-localeswitcher--default` | sq, uk, it | 390, 1440 | `fullWidth` state; no English text outside the language names |
+| `patterns-mantine-appshellfoundation--default` · `--with-slots` | sq, uk, it | 390, 1440 | both render header + navbar + main; no English text |
+
+Live `/admin` rows 1–5 of §13.3 and `check:hydration -- --with-admin` stay owner-native when a staff session
+exists; they do not block approval on this owner decision.
+
+Non-blocking P3 notes, carried to the archive row at approval:
+
+1. Esc inside the language bottom sheet (opened from the drawer at 390) closes both the sheet and the drawer
+   (reviewer probe).
+2. `AdminLocaleSwitcher.pendingOverride` is a story-only prop (§16.1).
+3. `docs/sessions/evidence/task852/17-ac8-grep.log` is 3.2 MB of raw grep output. The filtered file is the
+   evidence, so the owner may drop the raw one before committing.
+
+## 18. Review 3 — NEEDS REVISION (2026-09-26): the owner returned `Patterns/Mantine/AdminShell`
+
+**Owner return, 2026-09-26, verbatim:** *"я не приймаю якість patterns-mantine-adminshell бо там не задається ширина
+екрану через меню Storybook"*. In the screenshot, the Storybook viewport toolbar is greyed out at "Desktop 1440px"
+on `AdminShell` `Default`.
+
+**Cause, measured.** Three exports pin the viewport with a story-level `globals`, which locks the toolbar:
+- `src/stories/patterns/mantine/AdminShell.stories.tsx:28`, `Default`: `globals: { viewport: { value: 'desktop1440' … } }`;
+- `AdminShell.stories.tsx:40`, `DrawerOpen`: `mobile390`;
+- `src/stories/patterns/mantine/AdminHeader.stories.tsx:35`, `DrawerOpen`: `mobile390`.
+
+This breaks the canonical Mantine Story shape: locale and breakpoints come from the toolbar, never a pin
+(`docs/storybook-governance.md:15`, `:136`, `:211-212`; owner rule 2026-09-17). It also contradicts this kickoff's own
+GR-3a receipt (`viewport=toolbar`). Reviews 1 and 2 missed it; `check:stories` does not detect a `globals.viewport` pin.
+
+**Re-entry mode: `remediation`.** Everything else from §16/§17 stands. Do not touch Task 869's paths.
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R18** | Delete every `globals: { viewport … }` from `AdminShell.stories.tsx` (`Default`, `DrawerOpen`) and `AdminHeader.stories.tsx` (`DrawerOpen`). Width is chosen only with the toolbar. | P1 |
+| **R19** | `AdminShell` `DrawerOpen`'s `play` clicks the burger **only when it is accessible**: use `canvas.queryByRole('button', { name: storyT(l, 'admin.mobile_header.aria_open') })` and do nothing when it is `null`. At ≥ 1024 the burger is `hiddenFrom="lg"` and the navbar is already visible, so the story shows the shell with no interaction error. Below 1024 it opens the drawer, as today. Note in the story comment: "open state below 1024 (toolbar width); at ≥ 1024 the navbar is permanent". | P1 |
+
+- **AC18 [R18]**: `git --no-optional-locks grep --untracked -n -E "globals:|viewport" -- src/stories/patterns/mantine/AdminShell.stories.tsx src/stories/patterns/mantine/AdminHeader.stories.tsx src/stories/patterns/mantine/AdminSidebar.stories.tsx src/stories/patterns/mantine/AdminLocaleSwitcher.stories.tsx`
+  prints only the `globals?.locale` reads (`context?.globals?.locale`, the `play` destructuring). Quote every printed line.
+- **AC19 [R19]**: `probe-shell.mjs` is re-run against a fresh `storybook-static` with the page viewport set by
+  Playwright (never a pin). It gives:
+  - `patterns-mantine-adminshell--drawer-open` at 390×844: navbar `transform: none` in sq/en/uk/it;
+  - at 1440×900: navbar `transform: none`, and the play function throws no error — collect `page.on('pageerror')`
+    and console errors and print the count, which must be 0;
+  - AC11–AC13 still pass.
+
+  Keep the old output as `probe-shell.review2.json` (superseded) and write the new run to `probe-shell.json`.
+- **AC20**: `npm.cmd run check:stories`, `npm.cmd run build-storybook` and `npm.cmd run typecheck` exit 0, teed into the
+  evidence root as `25-…`, `26-…` and `27-…` `.log`. Stories changed, not source, so `npm run build` is not re-run.
+  Its `24-build.log` stays current because no `src/components` or `src/design-system` file changes.
+- **AC21 (owner)**: the owner re-opens `Patterns/Mantine/AdminShell` `Default` and `Drawer Open`, and
+  `Patterns/Mantine/AdminHeader` `Drawer Open`. The toolbar sets the width at 390, 1024 and 1440, and they accept.
+  Then the owner continues the §17 list.
+
+Order: R18 → R19 → `build-storybook` → probe → gates → session log (a "Review 3 re-entry" section plus a Files
+Changed row per edited file with its hash) → the 852 backlog line → `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+`GR-4 AC AUDIT — 4 new criteria; each states an observable property; absolutes: AC18 grep with the permitted-line class named; AC19 zero page errors is the defect's own signal.`

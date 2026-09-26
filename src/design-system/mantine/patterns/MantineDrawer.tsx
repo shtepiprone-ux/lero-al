@@ -4,6 +4,18 @@ import type { ReactNode } from 'react'
 import { Drawer, Stack, Box } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
 
+/**
+ * Task 567 round-2 Fix 4's content/body flex-column split (see the `MantineDrawer` doc comment
+ * below), exported so another consumer of Mantine's core `Drawer` can bound its body for internal
+ * scrolling without re-deriving the rule (Task 852 R32 — `MantineAppShellFoundation`'s
+ * below-breakpoint navigation `Drawer`). `body` carries no `padding`, so a consumer's own
+ * `padding` prop (or style override) still controls inset.
+ */
+export const drawerFlexColumnStyles = {
+  content: { display: 'flex', flexDirection: 'column' as const, overflow: 'hidden' },
+  body: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' as const, overflow: 'hidden' },
+}
+
 export interface MantineDrawerProps {
   /** Controlled open state */
   opened: boolean
@@ -148,8 +160,9 @@ export function MantineDrawer({
         header: title ? { borderBottom: '1px solid var(--mantine-color-gray-3)' } : undefined,
         // Task 567 round-2 Fix 4: content/body become non-scrolling flex columns — the true
         // scroll region + pinned footer (DrawerBodyLayout) take over scrolling one level in.
-        content: { display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-        body: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' },
+        // Task 852 R32: the rule itself now lives in the exported `drawerFlexColumnStyles`.
+        content: drawerFlexColumnStyles.content,
+        body: { ...drawerFlexColumnStyles.body, padding: 0 },
       }}
     >
       <DrawerBodyLayout footer={footer} contentPadding="var(--mantine-spacing-md)">

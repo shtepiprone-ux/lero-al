@@ -1,0 +1,37 @@
+probe-drawer.mjs — Task 852 review-7 remediation (AC35-AC38, D852-1)
+platform: win32
+node: v22.22.3
+command: node docs/sessions/evidence/task852/probe-drawer.mjs
+
+[AC35] 390px -> drawerWidth=390 expected=390 overlayVisible=true mainPaddingLeft=0px
+[AC35] 768px -> drawerWidth=240 expected=240 overlayVisible=true mainPaddingLeft=0px
+[AC35] 960px -> drawerWidth=240 expected=240 overlayVisible=true mainPaddingLeft=0px
+[AC35] 1024px -> navbarWidth=240 drawerContentInDom=false burgerVisible=false
+[AC35] 1440px -> navbarWidth=240 drawerContentInDom=false burgerVisible=false
+[AC36] 390px -> afterOpen(inDrawer)=true stayedTrapped=true closeLabel="Закрити меню" afterEscape.closed=true afterEscape.activeIsBurger=true
+[AC36] 768px -> afterOpen(inDrawer)=true stayedTrapped=true closeLabel="Закрити меню" afterEscape.closed=true afterEscape.activeIsBurger=true
+[AC36] 768px overlay click -> drawer closed=true
+[AC36] 390px nav-link click -> drawer closed=true
+[AC37] 390px closed (patterns-mantine-adminshell--default) -> admin-sidebar count=1
+[AC37] 390px open (patterns-mantine-adminshell--drawer-open) -> admin-sidebar count=1
+[AC37] 768px closed (patterns-mantine-adminshell--default) -> admin-sidebar count=1
+[AC37] 768px open (patterns-mantine-adminshell--drawer-open) -> admin-sidebar count=1
+[AC37] 1440px closed(fixed) (patterns-mantine-adminshell--default) -> admin-sidebar count=1
+[AC38] adminsidebar--default 320px -> sidebarWidth=296 expected=296 scrollWidth=320 innerWidth=320
+[AC38] adminsidebar--default 390px -> sidebarWidth=366 expected=366 scrollWidth=390 innerWidth=390
+[AC38] adminsidebar--default 768px -> sidebarWidth=216 expected=216 scrollWidth=768 innerWidth=768
+[AC38] adminsidebar--default 1024px -> sidebarWidth=216 expected=216 scrollWidth=1024 innerWidth=1024
+[AC38] adminsidebar--default 1440px -> sidebarWidth=216 expected=216 scrollWidth=1440 innerWidth=1440
+[AC38] adminlocaleswitcher--idle 320px -> buttonWidth=296 expected=296 scrollWidth=320 innerWidth=320
+[AC38] adminlocaleswitcher--idle 390px -> buttonWidth=366 expected=366 scrollWidth=390 innerWidth=390
+[AC38] adminlocaleswitcher--idle 768px -> buttonWidth=216 expected=216 scrollWidth=768 innerWidth=768
+[AC38] adminlocaleswitcher--idle 1024px -> buttonWidth=216 expected=216 scrollWidth=1024 innerWidth=1024
+[AC38] adminlocaleswitcher--idle 1440px -> buttonWidth=216 expected=216 scrollWidth=1440 innerWidth=1440
+[AC42] 390x844 -> logoutBottom=820 innerHeight=844 content=844/844 closeTop=18 viewport=566/980
+[AC42] 768x1024 -> logoutBottom=1000 innerHeight=1024 content=1024/1024 closeTop=18 viewport=746/980
+[AC42] 768x600 -> logoutBottom=576 innerHeight=600 content=600/600 closeTop=18 viewport=322/980
+[AC42] 960x540 -> logoutBottom=516 innerHeight=540 content=540/540 closeTop=18 viewport=262/980
+[AC43] drawer--default before={"content":{"display":"flex","flexDirection":"column","overflowY":"hidden"},"body":{"flexGrow":"1","minHeight":"0px","paddingTop":"0px","overflowY":"hidden"},"headerBorderBottomWidth":"1px"} after={"content":{"display":"flex","flexDirection":"column","overflowY":"hidden"},"body":{"flexGrow":"1","minHeight":"0px","paddingTop":"0px","overflowY":"hidden"},"headerBorderBottomWidth":"1px"} identical=true
+[AC43] mobilenavdrawer--default before={"content":{"display":"flex","flexDirection":"column","overflowY":"hidden"},"body":{"flexGrow":"1","minHeight":"0px","paddingTop":"0px","overflowY":"hidden"},"headerBorderBottomWidth":"0px"} after={"content":{"display":"flex","flexDirection":"column","overflowY":"hidden"},"body":{"flexGrow":"1","minHeight":"0px","paddingTop":"0px","overflowY":"hidden"},"headerBorderBottomWidth":"0px"} identical=true
+
+All probe-drawer.mjs assertions passed (AC35/AC36/AC37/AC38/AC42/AC43).

@@ -1,0 +1,161 @@
+{
+  "ac35": [
+    {
+      "width": 390,
+      "expected": 390,
+      "drawerWidth": 390,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 768,
+      "expected": 240,
+      "drawerWidth": 240,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 960,
+      "expected": 240,
+      "drawerWidth": 240,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 1024,
+      "navbarWidth": 240,
+      "drawerContentInDom": false,
+      "burgerVisible": false
+    },
+    {
+      "width": 1440,
+      "navbarWidth": 240,
+      "drawerContentInDom": false,
+      "burgerVisible": false
+    }
+  ],
+  "ac36": {
+    "390": {
+      "afterOpen": true,
+      "stayedTrapped": true,
+      "closeLabel": "Закрити меню",
+      "closed": true,
+      "activeIsBurger": true
+    },
+    "768": {
+      "afterOpen": true,
+      "stayedTrapped": true,
+      "closeLabel": "Закрити меню",
+      "closed": true,
+      "activeIsBurger": true
+    },
+    "overlayClick": true,
+    "navClickCloses": true
+  },
+  "ac37": [
+    {
+      "width": 390,
+      "state": "closed",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    },
+    {
+      "width": 390,
+      "state": "open",
+      "storyId": "patterns-mantine-adminshell--drawer-open",
+      "count": 1
+    },
+    {
+      "width": 768,
+      "state": "closed",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    },
+    {
+      "width": 768,
+      "state": "open",
+      "storyId": "patterns-mantine-adminshell--drawer-open",
+      "count": 1
+    },
+    {
+      "width": 1440,
+      "state": "closed(fixed)",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    }
+  ],
+  "ac38_sidebar": [
+    {
+      "width": 320,
+      "expected": 320,
+      "sidebarWidth": 320,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "expected": 390,
+      "sidebarWidth": 390,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 768,
+      "expected": 240,
+      "sidebarWidth": 240,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    {
+      "width": 1024,
+      "expected": 240,
+      "sidebarWidth": 240,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "expected": 240,
+      "sidebarWidth": 240,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "ac38_localeswitcher": [
+    {
+      "width": 320,
+      "expected": 296,
+      "buttonWidth": 296,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "expected": 366,
+      "buttonWidth": 366,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 768,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    {
+      "width": 1024,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ]
+}

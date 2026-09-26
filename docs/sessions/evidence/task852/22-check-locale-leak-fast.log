@@ -1,0 +1,10 @@
+
+> lero-al@0.1.0 check:locale-leak:mantine-only
+> node scripts/check-locale-leak.mjs --mantine-only --fast
+
+🔍  Locale leak detector — fast mode (mantine-only)
+Mantine selected: 236; non-Mantine excluded: 178
+    Stories: 236 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 1
+    Output: .screenshots/locale-leak/2026-09-26T07-21/
+
+..................................................................EXIT_CODE=127

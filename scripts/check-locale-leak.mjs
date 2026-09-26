@@ -209,6 +209,13 @@ const PER_STORY_TOKENS = {
   // "Zoom" in it — the standard Italian loanword, verified against messages/it.json:565; sq/uk
   // translate it ("Zmadho"/"Масштаб"), so it stays story-scoped, never global.
   'patterns-mantine-avatarcropmodal': ['Zoom'],
+  // AdminShell/AdminSidebar (Task 852): admin.sidebar.item_footer = "Footer" in sq/it (the same
+  // loanword this codebase already uses identically across admin.footer.tab_footer/save_success/
+  // field_site_name_hint, messages/sq.json:698,903,1150 and messages/it.json:698,903,1150 — verified,
+  // not guessed). uk translates the same key ("Футер", matching its own tab_footer), so it is not
+  // listed here.
+  'patterns-mantine-adminshell': ['Footer'],
+  'patterns-mantine-adminsidebar': ['Footer'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

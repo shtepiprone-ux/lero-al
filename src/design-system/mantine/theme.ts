@@ -216,6 +216,12 @@ declare module '@mantine/core' {
     // Task 822 (§3.3) — six more one-off layout geometries added the same way, each cited to its
     // own exact pre-822 literal (`footerGridGap` is NOT reused for any of these — same value class,
     // different rendered role per rule 3):
+    // Task 852 (spec v3.3 §17.1) — the admin shell's three AppShell dimensions, replacing
+    //   `MantineAppShellFoundation.tsx`'s raw `header={{ height: 60 }}` / `navbar={{ width: 240 }}`
+    //   literals and the admin-specific 72px top bar the spec names ("верхня панель висотою 72 px").
+    //   `appShellNavbarWidth`/`appShellHeaderHeight` are the foundation's own defaults (unchanged
+    //   values, now token-sourced); `adminTopBarHeight` is `AdminShell`'s override via
+    //   `MantineAppShellFoundation`'s new `headerHeight` prop.
     //   headingBlockGap (40) — `HowItWorksSteps.tsx:29`'s `mb={40}` and `page.tsx:38`'s `mb={40}`
     //     (identical value, identical "space below a section heading" role — one shared role).
     //   phoneCountryDropdownMinWidth (240) — `PhoneField.tsx:165`'s `dropdownMinWidth={240}`.
@@ -253,6 +259,9 @@ declare module '@mantine/core' {
       notificationPanelWidth: number
       notificationPanelMaxHeight: number
       heroSearchFallbackHeight: { base: number; sm: number; md: number }
+      appShellNavbarWidth: number
+      appShellHeaderHeight: number
+      adminTopBarHeight: number
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -769,6 +778,9 @@ export const theme = createTheme({
       heroSearchFallbackHeight: { base: 279, sm: 175, md: 123 }, // Task 797: HeroSearchFallback.tsx
                                                                   // Skeleton h — measured (see the
                                                                   // component's own docblock)
+      appShellNavbarWidth: 240,   // Task 852: MantineAppShellFoundation default navbar width (spec §17.1)
+      appShellHeaderHeight: 60,   // Task 852: MantineAppShellFoundation default header height
+      adminTopBarHeight: 72,      // Task 852: AdminShell's own top-bar height (spec §17.1, all widths)
     },
     overlay: {
       dragHandle: {

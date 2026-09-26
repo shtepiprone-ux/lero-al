@@ -142,13 +142,20 @@ const ASSERT_STORIES = [
   { id: 'admin-statuschangecontrol--select-with-note', label: 'StatusChangeControl/SelectWithNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangecontrol--workflow-required-note', label: 'StatusChangeControl/WorkflowRequiredNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangehistory--empty',        label: 'StatusChangeHistory/Empty',        anchors: [{ type: 'testid', value: 'status-change-history', label: 'history' }] },
-  { id: 'admin-adminlocaleswitcher--default',      label: 'AdminLocaleSwitcher/Default',      anchors: [{ type: 'testid', value: 'admin-locale-switcher', label: 'locale-sw' }] },
-  { id: 'admin-adminmobileheader--default',        label: 'AdminMobileHeader/Default',        anchors: [{ type: 'testid', value: 'admin-mobile-header', label: 'mob-header' }] },
+  // Task 852 — the three legacy `Admin/*` Tailwind/shadcn admin-shell Stories this replaced
+  // (the locale switcher, the mobile header row, and the sidebar's own mobile-drawer export)
+  // were deleted (duplicates of the new canonical Mantine shell, owner rule 2026-09-17). This
+  // script is retired (`screenshots:assert*`/`governance:screenshots:assert`, owner decision
+  // 2026-09-03) and these ASSERT_STORIES rows are never executed in CI, but they are updated for
+  // reference hygiene (R8/AC8): the single explicitly-named replacement below is the new header
+  // row's `Default` export (testid `admin-header`, was the old mobile-header row's testid); the
+  // other two rows are removed rather than replaced — the locale switcher's new canonical id is
+  // `patterns-mantine-adminlocaleswitcher--idle`, and the sidebar no longer owns a mobile-open
+  // drawer state (that state now belongs to the new `Patterns/Mantine/AdminShell` story's
+  // `DrawerOpen` export).
+  { id: 'patterns-mantine-adminheader--default',   label: 'AdminHeader/Default',              anchors: [{ type: 'testid', value: 'admin-header', label: 'header' }] },
   { id: 'admin-adminuseravatar--view-placeholder', label: 'AdminUserAvatar/ViewPlaceholder',  anchors: [{ type: 'testid', value: 'admin-user-avatar', label: 'avatar' }] },
   { id: 'admin-adminuseravatar--edit-mode',        label: 'AdminUserAvatar/EditMode',         anchors: [{ type: 'testid', value: 'admin-user-avatar', label: 'avatar' }] },
-  // AdminSidebar/Desktop intentionally omitted: renders `hidden lg:flex` → blank at <640.
-  // Mobile coverage provided by AdminSidebar/MobileDrawerOpen below.
-  { id: 'admin-adminsidebar--mobile-drawer-open',  label: 'AdminSidebar/MobileDrawerOpen',    anchors: [{ type: 'slot', value: 'sheet-content', label: 'sidebar-drawer' }] },
   { id: 'admin-adminsettings--default',            label: 'AdminSettings/Default',            anchors: [{ type: 'testid', value: 'admin-settings', label: 'settings' }] },
   { id: 'admin-admincurrenciesmanager--default',   label: 'AdminCurrenciesManager/Default',   anchors: [{ type: 'testid', value: 'admin-currencies-manager', label: 'currencies' }] },
   { id: 'admin-adminexchangeprovidersmanager--default', label: 'AdminExchangeProvidersManager/Default', anchors: [{ type: 'testid', value: 'admin-exchange-providers-manager', label: 'exchange' }] },
@@ -167,7 +174,10 @@ const ASSERT_STORIES = [
   // proved now lives on `patterns-mantine-homepagelistinggrids--default` below (anchored on the
   // same `.listing-card` selector) and on `Mantine/Primitives/SimilarListingsView`/
   // `RecentlyViewedGridView` ──
-  { id: 'system-adminlayout--admin-toolbar',       label: 'AdminLayout/AdminToolbar',         anchors: [{ type: 'testid', value: 'admin-toolbar', label: 'toolbar' }] },
+  // Task 852 — `System/AdminLayout` (a shadcn demo unrelated to the AdminShell migration, §3.4)
+  // was deleted alongside the other three legacy admin Stories (owner rule 2026-09-17); its
+  // `admin-toolbar` testid had no Mantine replacement to point at, so this row is removed, not
+  // replaced (R8/AC8).
   { id: 'system-containers--container-wide',       label: 'Containers/Wide',                  anchors: [{ type: 'testid', value: 'container', label: 'container' }] },
   { id: 'system-emptystate--no-listings',          label: 'EmptyState/NoListings',            anchors: [{ type: 'testid', value: 'empty-state', label: 'empty-state' }] },
   // Task 668 — new canonical Patterns/Mantine/* story enrolling FeaturedListingsView/
@@ -650,9 +660,10 @@ const GEOMETRY_ALLOWLIST = [
 // Outside this range, blank-screenshot / geometry failures are viewport-mismatch
 // (not product defects) and are routed to a separate inventory section.
 const STORY_VIEWPORT_RANGE = {
-  'admin-adminmobileheader--default': { maxWidth: 960 },
-  'admin-adminsidebar--mobile-drawer-open': { maxWidth: 960 },
-  'admin-adminsidebar--collapsed-rail': { minWidth: 1024 },
+  // Task 852 — the three legacy admin mobile-header/sidebar viewport-range rows this replaced
+  // are removed, not renamed: the new canonical header/sidebar components no longer blank out by
+  // breakpoint the way the legacy raw-Tailwind `lg:hidden`/`hidden lg:flex` components did (the
+  // AppShell wrapper owns the responsive collapse now), so no equivalent range restriction applies.
   'planted-visualviolations--narrow-range-guard': { maxWidth: 960 },
   'planted-visualviolations--large-range-guard': { minWidth: 1024 },
 };

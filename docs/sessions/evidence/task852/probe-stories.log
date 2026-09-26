@@ -1,0 +1,45 @@
+probe-stories.mjs — Task 852 review-4 remediation (AC22-AC25, GR-3b)
+platform: win32
+node: v22.22.3
+command: node docs/sessions/evidence/task852/probe-stories.mjs
+
+[AC22] adminsidebar--default 320px -> sidebarWidth=320 scrollWidth=320 innerWidth=320
+[AC22] adminsidebar--default 390px -> sidebarWidth=390 scrollWidth=390 innerWidth=390
+[AC22] adminsidebar--default 1024px -> sidebarWidth=240 scrollWidth=1024 innerWidth=1024
+[AC22] adminsidebar--default 1440px -> sidebarWidth=240 scrollWidth=1440 innerWidth=1440
+[AC23] adminlocaleswitcher--idle 320px -> buttonWidth=296 expected=296 scrollWidth=320 innerWidth=320
+[AC23] adminlocaleswitcher--idle 390px -> buttonWidth=366 expected=366 scrollWidth=390 innerWidth=390
+[AC23] adminlocaleswitcher--idle 1024px -> buttonWidth=216 expected=216 scrollWidth=1024 innerWidth=1024
+[AC23] adminlocaleswitcher--idle 1440px -> buttonWidth=216 expected=216 scrollWidth=1440 innerWidth=1440
+[AC24] mantine-primitives-localeswitcher--default 320px -> buttonWidth=288 stackWidth=288 caption="fullWidth — trigger fills its container"
+[AC24] mantine-primitives-localeswitcher--default 390px -> buttonWidth=358 stackWidth=358 caption="fullWidth — trigger fills its container"
+[AC24] mantine-primitives-localeswitcher--default 1024px -> buttonWidth=926 stackWidth=926 caption="fullWidth — trigger fills its container"
+[AC24] mantine-primitives-localeswitcher--default 1440px -> buttonWidth=1342 stackWidth=1342 caption="fullWidth — trigger fills its container"
+[GR-3b] adminshell--default 320px -> rootWidth=320 headerWidth=320 scrollWidth=320
+[GR-3b] adminshell--default 390px -> rootWidth=390 headerWidth=390 scrollWidth=390
+[GR-3b] adminshell--default 1024px -> rootWidth=1024 headerWidth=1024 scrollWidth=1024
+[GR-3b] adminshell--default 1440px -> rootWidth=1440 headerWidth=1440 scrollWidth=1440
+[GR-3b] adminheader--default 320px -> headerWidth=320 scrollWidth=320
+[GR-3b] adminheader--default 390px -> headerWidth=390 scrollWidth=390
+[GR-3b] adminheader--default 1024px -> headerWidth=1024 scrollWidth=1024
+[GR-3b] adminheader--default 1440px -> headerWidth=1440 scrollWidth=1440
+[AC25] patterns-mantine-appshellfoundation--with-slots 390px -> headerCenterY=30 textCenterY=29.5 delta=0.5
+[AC25] patterns-mantine-appshellfoundation--with-slots 1440px -> headerCenterY=30 textCenterY=29.5 delta=0.5
+[AC25] patterns-mantine-appshellfoundation--default 390px -> headerCenterY=30 textCenterY=29.4921875 delta=0.5078125
+[AC25] patterns-mantine-appshellfoundation--default 1440px -> headerCenterY=30 textCenterY=29.4921875 delta=0.5078125
+[AC30] adminlocaleswitcher--idle 320px -> buttonWidth=296 expected=296 opened(sheet)=true
+[AC30] adminlocaleswitcher--idle 390px -> buttonWidth=366 expected=366 opened(sheet)=true
+[AC30] adminlocaleswitcher--idle 1024px -> buttonWidth=216 expected=216 opened(menu)=true
+[AC30] adminlocaleswitcher--idle 1440px -> buttonWidth=216 expected=216 opened(menu)=true
+[AC30] primitives-localeswitcher fullWidth 320px -> buttonWidth=288 stackWidth=288
+[AC30] primitives-localeswitcher fullWidth 390px -> buttonWidth=358 stackWidth=358
+[AC30] primitives-localeswitcher fullWidth 1024px -> buttonWidth=926 stackWidth=926
+[AC30] primitives-localeswitcher fullWidth 1440px -> buttonWidth=1342 stackWidth=1342
+[AC31] mantine-primitives-dropdownmenu--default @1440 (first trigger text Дії) -> before=51.296875 after=51.296875
+[AC31] mantine-primitives-usermenu--default @1440 (first trigger text "AKAlba Krasniqi") -> before=166.484375 after=166.484375
+[AC31] mantine-primitives-usermenu--signing-out @1440 (first trigger text "AKAlba Krasniqi") -> before=166.484375 after=166.484375
+[AC32] dropdownmenu fullWidthTrigger state 390px -> buttonWidth=358 stackWidth=358
+[AC32] dropdownmenu fullWidthTrigger state 1440px -> buttonWidth=1342 stackWidth=1342
+
+All probe-stories.mjs assertions passed (AC22/AC23/AC24/AC25).
+EXIT_CODE=0

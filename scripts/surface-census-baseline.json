@@ -448,24 +448,6 @@
     "src/app/admin/layout.tsx :: src/app/admin/layout.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/layout.tsx :: src/components/admin/AdminLocaleSwitcher.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/layout.tsx :: src/components/admin/AdminMobileHeader.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/layout.tsx :: src/components/admin/AdminShell.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/layout.tsx :: src/components/admin/AdminSidebar.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/layout.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/layout.tsx :: src/components/ui/sheet.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/admin/legal/page.tsx :: src/app/admin/legal/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },

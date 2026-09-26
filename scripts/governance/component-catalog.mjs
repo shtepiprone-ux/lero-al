@@ -448,7 +448,6 @@ function generateCatalogSummary(entries, storyFiles, stamp) {
   matrixLines.push('| `patterns-mantine-homepagelistinggrids--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-containers--*` | desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-emptystate--*` | mobile-375, desktop-1280 | all 4 locales |');
-  matrixLines.push('| `system-adminlayout--*` | desktop-1280 | all 4 locales |');
   matrixLines.push('');
   matrixLines.push('## Locale Coverage');
   matrixLines.push('');

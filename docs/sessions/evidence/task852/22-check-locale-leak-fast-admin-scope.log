@@ -1,0 +1,10 @@
+🔍  Locale leak detector — fast mode (mantine-only)
+Mantine selected: 12; non-Mantine excluded: 0
+    Stories: 12 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 1
+    Output: .screenshots/locale-leak/2026-09-26T07-26/
+
+....................................
+
+✅  Locale leak detector: ZERO leaks across 12 stories × sq/uk/it.
+    Report: .screenshots/locale-leak/2026-09-26T07-26/report.json
+EXIT_CODE=0

@@ -1,0 +1,30 @@
+{
+  "mantine-primitives-drawer--default": {
+    "content": {
+      "display": "flex",
+      "flexDirection": "column",
+      "overflowY": "hidden"
+    },
+    "body": {
+      "flexGrow": "1",
+      "minHeight": "0px",
+      "paddingTop": "0px",
+      "overflowY": "hidden"
+    },
+    "headerBorderBottomWidth": "1px"
+  },
+  "mantine-primitives-mobilenavdrawer--default": {
+    "content": {
+      "display": "flex",
+      "flexDirection": "column",
+      "overflowY": "hidden"
+    },
+    "body": {
+      "flexGrow": "1",
+      "minHeight": "0px",
+      "paddingTop": "0px",
+      "overflowY": "hidden"
+    },
+    "headerBorderBottomWidth": "0px"
+  }
+}

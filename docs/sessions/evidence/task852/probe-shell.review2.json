@@ -1,0 +1,78 @@
+{
+  "fixed": [
+    {
+      "width": 1440,
+      "height": 900,
+      "navbarWidth": 240,
+      "headerHeight": 72,
+      "navbarTransform": "none",
+      "navbarScrollHeight": 828,
+      "navbarClientHeight": 828,
+      "viewportScrollHeight": 980,
+      "viewportClientHeight": 598,
+      "logoutBottom": 876,
+      "innerHeight": 900,
+      "mainPaddingLeft": "240px",
+      "mainPaddingTop": "72px"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "navbarWidth": 240,
+      "headerHeight": 72,
+      "navbarTransform": "none",
+      "navbarScrollHeight": 648,
+      "navbarClientHeight": 648,
+      "viewportScrollHeight": 980,
+      "viewportClientHeight": 418,
+      "logoutBottom": 696,
+      "innerHeight": 720,
+      "mainPaddingLeft": "240px",
+      "mainPaddingTop": "72px"
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "navbarWidth": 240,
+      "headerHeight": 72,
+      "navbarTransform": "none",
+      "navbarScrollHeight": 696,
+      "navbarClientHeight": 696,
+      "viewportScrollHeight": 980,
+      "viewportClientHeight": 466,
+      "logoutBottom": 744,
+      "innerHeight": 768,
+      "mainPaddingLeft": "240px",
+      "mainPaddingTop": "72px"
+    }
+  ],
+  "mobileOpen": {
+    "navbarWidth": 390,
+    "headerHeight": 72,
+    "navbarTransform": "none",
+    "navbarScrollHeight": 772,
+    "navbarClientHeight": 772,
+    "viewportScrollHeight": 980,
+    "viewportClientHeight": 542,
+    "logoutBottom": 820,
+    "innerHeight": 844,
+    "mainPaddingLeft": "0px",
+    "mainPaddingTop": "72px"
+  },
+  "ac12_390": {
+    "transform": "matrix(1, 0, 0, 1, -390, 0)",
+    "activeIsBurger": true
+  },
+  "ac12_1440": {
+    "navTransform": "none",
+    "leftNavbar": true
+  },
+  "ac13_foundation_padding": "256px",
+  "ac13_390_closed_padding_left": "0px",
+  "ac14": {
+    "sq": "none",
+    "en": "none",
+    "uk": "none",
+    "it": "none"
+  }
+}

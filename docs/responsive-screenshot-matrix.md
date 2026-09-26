@@ -130,9 +130,8 @@ Each cell requires actual rendered inspection (OWNER QA REQUIRED until visually 
 | `system-emptystate--no-listings` | EmptyState/NoListings | — | all | MEDIUM |
 | `system-emptystate--mobile-empty-state` | EmptyState/Mobile | mobile-375 | all | MEDIUM |
 | `system-emptystate--ukrainian-locale` | EmptyState/Ukrainian | — | uk only | HIGH |
-| `system-adminlayout--admin-toolbar` | Admin/Toolbar | desktop-1280 | all | MEDIUM |
 
-**Total targets (fast-check matrix):** ~145 screenshots — stale pending recount (Task 788, 2026-09-05, removed the Layout primitives share of this estimate; no full recomputation performed in this task)
+**Total targets (fast-check matrix):** ~145 screenshots — stale pending recount (Task 788, 2026-09-05, removed the Layout primitives share of this estimate; Task 852, 2026-09-25, removed the `Admin/Toolbar` row for the deleted admin shadcn-demo story, owner rule 2026-09-17 — no full recomputation performed in either task)
 **Total targets (full matrix, all viewports):** ~500 screenshots (inc. 5 new canonical presets × all stories)
 
 ---

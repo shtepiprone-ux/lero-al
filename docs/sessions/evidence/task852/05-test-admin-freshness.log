@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:admin-freshness
+> vitest run src/hooks/__tests__/useAdminPageFreshness.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  09:11:38
+   Duration  2.04s (transform 66ms, setup 87ms, import 1.05s, tests 21ms, environment 680ms)
+
+EXIT_CODE=0

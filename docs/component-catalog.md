@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton`, 2026-09-09 for Task 792's `ListingBackButton`/`ListingStatusBanner`/`SimilarListingsView`/`RecentlyViewedGridView` migration (+4 Storybook stories) — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift, and 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/` into `src/design-system/mantine/patterns/` — removed from "Canonical UI Primitives" below, one row, Total cataloged components 240→239)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion, 2026-09-04 for Task 787's `MobileBottomNav`/`MobileBottomNavView` deletion, 2026-09-05 for Task 788's `FilterBar`/`PageHeader`/`PageShell`/`Section` deletion, 2026-09-06 for Task 793's `ListingContact` migration + new `ListingShareButton`, 2026-09-09 for Task 792's `ListingBackButton`/`ListingStatusBanner`/`SimilarListingsView`/`RecentlyViewedGridView` migration (+4 Storybook stories) — zero production consumers; full regeneration deferred to avoid sweeping in unreviewed drift, and 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/` into `src/design-system/mantine/patterns/` — removed from "Canonical UI Primitives" below, one row, Total cataloged components 240→239), and 2026-09-25 for Task 852's Admin shell Mantine migration — the mobile-only header row is renamed `AdminHeader` (Story ✅ unchanged, testid updated); `AdminShell`/`AdminSidebar`/`AdminLocaleSwitcher` rows updated (Story ✅, `PRIMITIVE_CHECK`/`TAILWIND_ENTROPY` risk flags cleared — no more `@/components/ui/*` imports or raw Tailwind); Total cataloged components unchanged (239, row renamed not added/removed)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -110,9 +110,9 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminInquiriesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminLegalManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
 | `AdminListingsTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminLocaleSwitcher` | APPROVED | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `AdminLocaleSwitcher` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
-| `AdminMobileHeader` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `AdminHeader` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminPageHeader` | APPROVED | — | — | —  |
 | `AdminPageShell` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `AdminPagesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
@@ -122,8 +122,8 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminReportsManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminSearchInput` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `AdminSettings` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
-| `AdminShell` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `AdminSidebar` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminShell` | APPROVED | ✅ | — | —  |
+| `AdminSidebar` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminSupportManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminUserAvatar` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |

@@ -187,13 +187,14 @@ PhoneField wiring).
 Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · Section.
 
 ## PHASE 4 — Admin surfaces (35) — one slice each
-AdminShell · AdminSidebar · AdminMobileHeader · AdminPageShell · AdminPageHeader · AdminEditLayout · AdminTable ·
+AdminShell (✅ Task 852) · AdminSidebar (✅ Task 852) · AdminHeader (✅ Task 852, the former mobile-only header row) ·
+AdminPageShell · AdminPageHeader · AdminEditLayout · AdminTable ·
 AdminCardList · AdminInput · AdminSearchInput · AdminUserAvatar · AdminUsersTable (🟡 Task 485 — close AFTER its
 primitives) · AdminUserProfile · AdminUserCreate · AdminListingsTable · AdminDashboardRecentListings ·
 AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager ·
 AdminEmailTemplatesManager · AdminFooterManager · AdminInquiriesManager · AdminLegalManager · AdminLocationsManager ·
 AdminPopularLocationsManager · AdminPagesManager · AdminPermissionsManager · AdminPropertyTypesManager ·
-AdminReportsManager · AdminSettings · AdminSupportManager · AdminLocaleSwitcher · StatusChangeControl ·
+AdminReportsManager · AdminSettings · AdminSupportManager · AdminLocaleSwitcher (✅ Task 852) · StatusChangeControl ·
 StatusChangeHistory.
 
 ## PHASE 5 — Public / app surfaces (`src/app`, ~45) — listing, auth, profile, search, legal, etc.

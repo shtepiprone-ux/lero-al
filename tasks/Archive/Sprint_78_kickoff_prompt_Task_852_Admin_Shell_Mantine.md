@@ -1,14 +1,14 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🟡 PARTIALLY VERIFIED 2026-09-26 (review 9 — R32/R33 accepted; only the owner Storybook pass AC41 remains) — §24; no executor action owed**
+**Status: ✅ APPROVED WITH NOTES 2026-09-26 (review 10 — owner accepted AC41) — §25; archived**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
 > **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
 > searches tracked files, so no check lost coverage.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Spec v3.3 §17.1: *"Desktop
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Spec v3.3 §17.1: *"Desktop
 від 1280 px: існуюча бічна навігація шириною 240 px, верхня панель висотою 72 px … Не змінювати IA існуючого sidebar
 заради Dashboard. 1024–1279 px: sidebar може collapse до icon rail … 768–1023 px: sidebar лише drawer"*. Clause 16d:
 `/admin` renders inside this shell, so the shell is in the dashboard's census.
@@ -788,3 +788,22 @@ In the open drawer, logout must be visible without scrolling. When every Story i
 and archives. A returned Story reopens the task with the concrete defect.
 
 P3 note 7 (the drawer reopens after a resize across 1024) is carried to the archive row.
+
+## 25. Review 10 — APPROVED WITH NOTES (2026-09-26)
+
+**Owner, AC41, 2026-09-26, verbatim:** *"Приймаю, все ок."* That covers `patterns-mantine-adminsidebar--*` (×4),
+`patterns-mantine-adminlocaleswitcher--idle`/`--pending` and `patterns-mantine-adminshell--default`/`--drawer-open`.
+
+Every earlier owner group was already accepted in §19, §22 and this section, so the owner matrix (AC10, AC21, AC29,
+AC34, AC41) is closed. The locale-leak scan was replaced by the owner's own visual pass (owner decision, §17/§21).
+
+No source file changed after the last build, `52-build-review8.log` (exit 0, 14:12). The final hashes equal
+`55-hash-object-review8.log`.
+
+P3 notes carried to the archive row, and none is filed as a task:
+
+- **1** Esc in the language sheet also closes the drawer.
+- **2** `pendingOverride` is a story-only prop.
+- **3** `17-ac8-grep.log` is 3.2 MB of raw output.
+- **4** `MantineDropdownMenu` repeats the same desktop `Menu` block in two branches.
+- **7** the drawer reopens after a resize across 1024.

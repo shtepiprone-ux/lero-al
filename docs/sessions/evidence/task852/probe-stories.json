@@ -1,0 +1,234 @@
+{
+  "ac22": [
+    {
+      "width": 320,
+      "sidebarWidth": 320,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "sidebarWidth": 390,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 1024,
+      "sidebarWidth": 240,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "sidebarWidth": 240,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "ac23": [
+    {
+      "width": 320,
+      "expected": 296,
+      "buttonWidth": 296,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "expected": 366,
+      "buttonWidth": 366,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 1024,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "ac24": [
+    {
+      "width": 320,
+      "captionText": "fullWidth — trigger fills its container",
+      "buttonWidth": 288,
+      "stackWidth": 288
+    },
+    {
+      "width": 390,
+      "captionText": "fullWidth — trigger fills its container",
+      "buttonWidth": 358,
+      "stackWidth": 358
+    },
+    {
+      "width": 1024,
+      "captionText": "fullWidth — trigger fills its container",
+      "buttonWidth": 926,
+      "stackWidth": 926
+    },
+    {
+      "width": 1440,
+      "captionText": "fullWidth — trigger fills its container",
+      "buttonWidth": 1342,
+      "stackWidth": 1342
+    }
+  ],
+  "ac25": {
+    "patterns-mantine-appshellfoundation--with-slots": {
+      "390": {
+        "headerCenterY": 30,
+        "textCenterY": 29.5,
+        "delta": 0.5
+      },
+      "1440": {
+        "headerCenterY": 30,
+        "textCenterY": 29.5,
+        "delta": 0.5
+      }
+    },
+    "patterns-mantine-appshellfoundation--default": {
+      "390": {
+        "headerCenterY": 30,
+        "textCenterY": 29.4921875,
+        "delta": 0.5078125
+      },
+      "1440": {
+        "headerCenterY": 30,
+        "textCenterY": 29.4921875,
+        "delta": 0.5078125
+      }
+    }
+  },
+  "gr3b_shell": {
+    "adminshell": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "headerWidth": 320,
+        "scrollWidth": 320
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "headerWidth": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "headerWidth": 1024,
+        "scrollWidth": 1024
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "headerWidth": 1440,
+        "scrollWidth": 1440
+      }
+    ],
+    "adminheader": [
+      {
+        "width": 320,
+        "headerWidth": 320,
+        "scrollWidth": 320
+      },
+      {
+        "width": 390,
+        "headerWidth": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 1024,
+        "headerWidth": 1024,
+        "scrollWidth": 1024
+      },
+      {
+        "width": 1440,
+        "headerWidth": 1440,
+        "scrollWidth": 1440
+      }
+    ]
+  },
+  "ac30_adminlocaleswitcher": [
+    {
+      "width": 320,
+      "expected": 296,
+      "buttonWidth": 296,
+      "opened": true
+    },
+    {
+      "width": 390,
+      "expected": 366,
+      "buttonWidth": 366,
+      "opened": true
+    },
+    {
+      "width": 1024,
+      "expected": 216,
+      "buttonWidth": 216,
+      "opened": true
+    },
+    {
+      "width": 1440,
+      "expected": 216,
+      "buttonWidth": 216,
+      "opened": true
+    }
+  ],
+  "ac30_primitives": [
+    {
+      "width": 320,
+      "buttonWidth": 288,
+      "stackWidth": 288
+    },
+    {
+      "width": 390,
+      "buttonWidth": 358,
+      "stackWidth": 358
+    },
+    {
+      "width": 1024,
+      "buttonWidth": 926,
+      "stackWidth": 926
+    },
+    {
+      "width": 1440,
+      "buttonWidth": 1342,
+      "stackWidth": 1342
+    }
+  ],
+  "ac31_after": {
+    "mantine-primitives-dropdownmenu--default": {
+      "before": 51.296875,
+      "after": 51.296875
+    },
+    "mantine-primitives-usermenu--default": {
+      "before": 166.484375,
+      "after": 166.484375
+    },
+    "mantine-primitives-usermenu--signing-out": {
+      "before": 166.484375,
+      "after": 166.484375
+    }
+  },
+  "ac32": [
+    {
+      "width": 390,
+      "buttonWidth": 358,
+      "stackWidth": 358
+    },
+    {
+      "width": 1440,
+      "buttonWidth": 1342,
+      "stackWidth": 1342
+    }
+  ]
+}

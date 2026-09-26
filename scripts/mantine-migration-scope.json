@@ -100,5 +100,9 @@
   "src/design-system/mantine/patterns/PasswordRequirementsHint.tsx",
   "src/modules/auth/components/ResetPasswordView.tsx",
   "src/modules/cabinet/components/CabinetPasswordSectionView.tsx",
-  "src/modules/cms/components/CmsPageView.tsx"
+  "src/modules/cms/components/CmsPageView.tsx",
+  "src/components/admin/AdminShell.tsx",
+  "src/components/admin/AdminSidebar.tsx",
+  "src/components/admin/AdminHeader.tsx",
+  "src/components/admin/AdminLocaleSwitcher.tsx"
 ]

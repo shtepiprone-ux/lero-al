@@ -15,6 +15,11 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * renders the closed trigger — consistent with every other non-overlay-titled Mantine primitive
  * story (`HeaderActions`, `FiltersPanelShell`). The menu-open interaction itself is already
  * covered by `Mantine/Primitives/DropdownMenu`'s own story.
+ *
+ * Task 852 R22/GR-3b — the `fullWidth` demo's wrapper has no fixed width: `fullWidth` means "fills
+ * its container", and `LocaleSwitcher` has no single production parent width to reproduce here (it
+ * is consumed both by the admin sidebar footer and the public header), so the demo container stays
+ * fluid rather than hardcoding one caller's width.
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/LocaleSwitcher',
@@ -50,6 +55,15 @@ export const Default: Story = {
               {t('locale_switcher_pending_caption')}
             </Text>
             <LocaleSwitcher onSwitch={() => {}} isPending />
+          </Stack>
+
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('locale_switcher_fullwidth_caption')}
+            </Text>
+            <Stack>
+              <LocaleSwitcher onSwitch={() => {}} showLabel fullWidth />
+            </Stack>
           </Stack>
         </Stack>
       </MantineStoryShell>

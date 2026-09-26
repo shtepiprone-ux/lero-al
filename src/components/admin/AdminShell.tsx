@@ -1,26 +1,35 @@
 'use client'
 
-import { useState } from 'react'
+import { useMantineTheme } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { useTranslations } from 'next-intl'
 import { usePresence } from '@/hooks/usePresence'
 import { useAdminPageFreshness } from '@/hooks/useAdminPageFreshness'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
-import { AdminMobileHeader } from '@/components/admin/AdminMobileHeader'
+import { AdminHeader } from '@/components/admin/AdminHeader'
+import { MantineAppShellFoundation } from '@/design-system/mantine/patterns/MantineAppShellFoundation'
 
 export function AdminShell({ children, siteName }: { children: React.ReactNode; siteName?: string; locale?: string }) {
   usePresence()
   useAdminPageFreshness()
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const theme = useMantineTheme()
+  const t = useTranslations('admin.sidebar')
+  const [opened, { toggle, close }] = useDisclosure()
 
   return (
-    <div className="admin-shell flex min-h-screen bg-muted/30">
-      <AdminSidebar mobileOpen={mobileOpen} onMobileOpenChange={setMobileOpen} siteName={siteName} />
-
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
-        <AdminMobileHeader onOpen={() => setMobileOpen(true)} siteName={siteName} />
-        <main className="flex-1 overflow-auto">
-          {children}
-        </main>
-      </div>
-    </div>
+    <MantineAppShellFoundation
+      siteName={siteName ?? 'Lero.al'}
+      headerHeight={theme.other.layout.adminTopBarHeight}
+      navbarBreakpoint="lg"
+      opened={opened}
+      onToggle={toggle}
+      headerContent={<AdminHeader opened={opened} onOpen={toggle} siteName={siteName} />}
+      navbarContent={<AdminSidebar onNavigate={close} siteName={siteName} />}
+      mainBg="gray.0"
+      padding={0}
+      drawerCloseLabel={t('aria_close')}
+    >
+      {children}
+    </MantineAppShellFoundation>
   )
 }

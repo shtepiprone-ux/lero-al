@@ -1,5 +1,5 @@
 # Component Risk Register — Lero.al
-Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/`)
+Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/`; 2026-09-25 for Task 852's admin-shell Mantine migration — the mobile-only header row is renamed `AdminHeader`, HIGH classification unchanged)
 
 ## Governance Violations (require fix)
 
@@ -76,7 +76,7 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `AdminListingsTable` | admin-shared | HIGH |
 | `AdminLocaleSwitcher` | admin-shared | HIGH |
 | `AdminLocationsManager` | admin-shared | HIGH |
-| `AdminMobileHeader` | admin-shared | HIGH |
+| `AdminHeader` | admin-shared | HIGH |
 | `AdminPagesManager` | admin-shared | HIGH |
 | `AdminPermissionsManager` | admin-shared | HIGH |
 | `AdminPopularLocationsManager` | admin-shared | HIGH |

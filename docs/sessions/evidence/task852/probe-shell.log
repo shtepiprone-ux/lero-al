@@ -1,0 +1,28 @@
+probe-shell.mjs — Task 852 review-1 remediation (AC3/AC11/AC12/AC13/AC14)
+platform: win32
+node: v22.22.3
+command: node docs/sessions/evidence/task852/probe-shell.mjs
+
+[AC3/AC11] 1440x900 -> navbarWidth=240 headerHeight=72 navbarScrollHeight=828 navbarClientHeight=828 logoutBottom=876 innerHeight=900 viewportScrollHeight=980 viewportClientHeight=598
+[AC3/AC11] 1280x720 -> navbarWidth=240 headerHeight=72 navbarScrollHeight=648 navbarClientHeight=648 logoutBottom=696 innerHeight=720 viewportScrollHeight=980 viewportClientHeight=418
+[AC3/AC11] 1024x768 -> navbarWidth=240 headerHeight=72 navbarScrollHeight=696 navbarClientHeight=696 logoutBottom=744 innerHeight=768 viewportScrollHeight=980 viewportClientHeight=466
+[AC3] 390x844 before burger: navbar transform=matrix(1, 0, 0, 1, -390, 0)
+[AC3/AC11] 390x844 after burger: navbarTransform=none navbarScrollHeight=772 navbarClientHeight=772 logoutBottom=820 innerHeight=844
+[AC3] 390x844 after nav click: navbar transform=matrix(1, 0, 0, 1, -390, 0)
+[AC12] 390x844 after burger open: activeElement inside navbar = true
+[AC12] 390x844 after 25 Tabs: stayed trapped = true
+[AC12] 390x844 after Escape: navbar transform=matrix(1, 0, 0, 1, -390, 0) activeIsBurger=true
+[AC12] 1440x900 after Escape (never opened): navbar transform=none
+[AC12] 1440x900: Tab eventually left the navbar (proxy for "not trapped") = true
+[AC13] Patterns/Mantine/AppShellFoundation Default -> AppShell.Main padding-left=256px
+[AC13] AdminShell 1440x900 -> Main padding-left=240px padding-top=72px
+[AC13] AdminShell 390x844 (open) -> Main padding-left=0px padding-top=72px
+[AC13] AdminShell 390x844 (closed) -> Main padding-left=0px
+[AC14] patterns-mantine-adminshell--drawer-open locale=sq -> navbar transform=none
+[AC14] patterns-mantine-adminshell--drawer-open locale=en -> navbar transform=none
+[AC14] patterns-mantine-adminshell--drawer-open locale=uk -> navbar transform=none
+[AC14] patterns-mantine-adminshell--drawer-open locale=it -> navbar transform=none
+[AC19] patterns-mantine-adminshell--drawer-open 1440x900 (no viewport pin) -> navbar transform=none pageErrors=0 consoleErrors=0
+
+All probe-shell.mjs assertions passed (AC3/AC11/AC12/AC13/AC14/AC19).
+EXIT_CODE=0

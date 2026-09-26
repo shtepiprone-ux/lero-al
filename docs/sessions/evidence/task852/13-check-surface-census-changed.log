@@ -1,0 +1,59 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: aa114511268117d28f4044006fd9e0bcf1080264
+    Changed paths seen: 35
+    Excluded (28):
+      docs/component-catalog.md  [outside-src]
+      docs/component-coverage-matrix.md  [outside-src]
+      docs/component-risk-register.md  [outside-src]
+      docs/mantine-responsive-design-system.md  [outside-src]
+      docs/mantine-tailadmin-migration-tracker.md  [outside-src]
+      docs/responsive-screenshot-matrix.md  [outside-src]
+      docs/responsive-storybook-inventory.md  [outside-src]
+      docs/storybook-governance.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-locale-leak.mjs  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/governance/component-catalog.mjs  [outside-src]
+      scripts/governance/tailwind-entropy.allowlist.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/responsive-screenshots.mjs  [outside-src]
+      scripts/story-realmode-allowlist.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/app/globals.css  [not-ts-tsx]
+      src/components/admin/AdminLocaleSwitcher.stories.tsx  [deleted]
+      src/components/admin/AdminMobileHeader.stories.tsx  [deleted]
+      src/components/admin/AdminMobileHeader.tsx  [deleted]
+      src/components/admin/AdminSidebar.stories.tsx  [deleted]
+      src/stories/AdminLayout.stories.tsx  [deleted]
+      src/stories/mantine/primitives/LocaleSwitcher.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AppShellFoundation.stories.tsx  [story-or-test-file]
+    Included surfaces (7):
+      src/app/[locale]/[slug]/page.tsx
+      src/components/admin/AdminLocaleSwitcher.tsx
+      src/components/admin/AdminShell.tsx
+      src/components/admin/AdminSidebar.tsx
+      src/components/shared/LocaleSwitcher.tsx
+      src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+      src/design-system/mantine/theme.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 7
+    Blocks baselined (recorded debt, does not fail): 1
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 455
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

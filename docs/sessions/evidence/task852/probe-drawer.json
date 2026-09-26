@@ -1,0 +1,237 @@
+{
+  "ac35": [
+    {
+      "width": 390,
+      "expected": 390,
+      "drawerWidth": 390,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 768,
+      "expected": 240,
+      "drawerWidth": 240,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 960,
+      "expected": 240,
+      "drawerWidth": 240,
+      "overlayVisible": true,
+      "mainPaddingLeft": "0px"
+    },
+    {
+      "width": 1024,
+      "navbarWidth": 240,
+      "drawerContentInDom": false,
+      "burgerVisible": false
+    },
+    {
+      "width": 1440,
+      "navbarWidth": 240,
+      "drawerContentInDom": false,
+      "burgerVisible": false
+    }
+  ],
+  "ac36": {
+    "390": {
+      "afterOpen": true,
+      "stayedTrapped": true,
+      "closeLabel": "Закрити меню",
+      "closed": true,
+      "activeIsBurger": true
+    },
+    "768": {
+      "afterOpen": true,
+      "stayedTrapped": true,
+      "closeLabel": "Закрити меню",
+      "closed": true,
+      "activeIsBurger": true
+    },
+    "overlayClick": true,
+    "navClickCloses": true
+  },
+  "ac37": [
+    {
+      "width": 390,
+      "state": "closed",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    },
+    {
+      "width": 390,
+      "state": "open",
+      "storyId": "patterns-mantine-adminshell--drawer-open",
+      "count": 1
+    },
+    {
+      "width": 768,
+      "state": "closed",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    },
+    {
+      "width": 768,
+      "state": "open",
+      "storyId": "patterns-mantine-adminshell--drawer-open",
+      "count": 1
+    },
+    {
+      "width": 1440,
+      "state": "closed(fixed)",
+      "storyId": "patterns-mantine-adminshell--default",
+      "count": 1
+    }
+  ],
+  "ac38_sidebar": [
+    {
+      "width": 320,
+      "expected": 296,
+      "sidebarWidth": 296,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "expected": 366,
+      "sidebarWidth": 366,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 768,
+      "expected": 216,
+      "sidebarWidth": 216,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    {
+      "width": 1024,
+      "expected": 216,
+      "sidebarWidth": 216,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "expected": 216,
+      "sidebarWidth": 216,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "ac38_localeswitcher": [
+    {
+      "width": 320,
+      "expected": 296,
+      "buttonWidth": 296,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    {
+      "width": 390,
+      "expected": 366,
+      "buttonWidth": 366,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 768,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    {
+      "width": 1024,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    {
+      "width": 1440,
+      "expected": 216,
+      "buttonWidth": 216,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "ac42": [
+    {
+      "width": 390,
+      "height": 844,
+      "logoutBottom": 820,
+      "innerHeight": 844,
+      "contentClientHeight": 844,
+      "contentScrollHeight": 844,
+      "closeButtonTop": 18,
+      "viewportClientHeight": 566,
+      "viewportScrollHeight": 980
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "logoutBottom": 1000,
+      "innerHeight": 1024,
+      "contentClientHeight": 1024,
+      "contentScrollHeight": 1024,
+      "closeButtonTop": 18,
+      "viewportClientHeight": 746,
+      "viewportScrollHeight": 980
+    },
+    {
+      "width": 768,
+      "height": 600,
+      "logoutBottom": 576,
+      "innerHeight": 600,
+      "contentClientHeight": 600,
+      "contentScrollHeight": 600,
+      "closeButtonTop": 18,
+      "viewportClientHeight": 322,
+      "viewportScrollHeight": 980
+    },
+    {
+      "width": 960,
+      "height": 540,
+      "logoutBottom": 516,
+      "innerHeight": 540,
+      "contentClientHeight": 540,
+      "contentScrollHeight": 540,
+      "closeButtonTop": 18,
+      "viewportClientHeight": 262,
+      "viewportScrollHeight": 980
+    }
+  ],
+  "ac43_after": {
+    "mantine-primitives-drawer--default": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "column",
+        "overflowY": "hidden"
+      },
+      "body": {
+        "flexGrow": "1",
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "overflowY": "hidden"
+      },
+      "headerBorderBottomWidth": "1px"
+    },
+    "mantine-primitives-mobilenavdrawer--default": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "column",
+        "overflowY": "hidden"
+      },
+      "body": {
+        "flexGrow": "1",
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "overflowY": "hidden"
+      },
+      "headerBorderBottomWidth": "0px"
+    }
+  }
+}

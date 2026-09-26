@@ -5,43 +5,23 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
-  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp, PanelBottom,
+  MapPin, FileText, Settings, LogOut, ExternalLink, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp, PanelBottom,
 } from 'lucide-react'
+import { Stack, Text, NavLink, Badge, Group, Anchor, ScrollArea, useMantineTheme } from '@mantine/core'
 import { signOut } from '@/lib/auth/browser'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
 
-function NavItem({ href, label, icon: Icon, active, onClick }: {
-  href: string
-  label: string
-  icon: React.ElementType
-  active: boolean
-  onClick?: () => void
-}) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className={cn(
-        'group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
-        active
-          ? 'bg-primary text-primary-foreground shadow-sm'
-          : 'text-muted-foreground hover:text-foreground hover:bg-muted/60',
-      )}
-    >
-      <Icon className="h-4 w-4 shrink-0" />
-      <span className="flex-1 truncate">{label}</span>
-      {active && <ChevronRight className="h-3 w-3 opacity-60" />}
-    </Link>
-  )
+interface AdminSidebarProps {
+  /** Called after a nav item is activated (Task 852 — closes the AppShell drawer below `lg`). */
+  onNavigate?: () => void
+  siteName?: string
 }
 
-function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName: string }) {
+export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarProps) {
   const t = useTranslations('admin.sidebar')
   const pathname = usePathname()
   const router = useRouter()
+  const theme = useMantineTheme()
 
   const GROUPS = [
     {
@@ -93,100 +73,71 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
     } catch {
       // Local session is cleared by the Supabase client even on API failure.
     }
+    onNavigate?.()
     router.push('/')
   }
 
+  const [brand, tld] = siteName.split('.').length > 1
+    ? [siteName.split('.')[0], '.' + siteName.split('.').slice(1).join('.')]
+    : [siteName, '']
+
   return (
-    <div className="admin-sidebar-content flex flex-col h-full bg-card">
-      {/* Header */}
-      <div className="flex items-center justify-between px-5 py-5 border-b shrink-0">
-        <Link href="/admin" className="flex items-center gap-2 font-bold text-base" onClick={onClose}>
-          <span className="text-primary">{siteName.split('.')[0]}</span>
-          <span className="text-foreground">.{siteName.split('.').slice(1).join('.')}</span>
-          <span className="bg-primary/10 text-primary text-2xs font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
-            Admin
-          </span>
-        </Link>
-        {onClose && (
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            aria-label={t('aria_close')}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
+    <Stack data-testid="admin-sidebar" h="100%" gap={0}>
+      <ScrollArea flex={1} mih={0} type="auto">
+        <Stack gap="lg">
+          <Group gap="xs" px="xs" wrap="nowrap">
+            <Anchor component={Link} href="/admin" underline="never" fw={700} size="md" c="brand" onClick={onNavigate}>
+              {brand}
+            </Anchor>
+            <Text fw={700} size="md">{tld}</Text>
+            <Badge size="xs" variant="light" color="brand" radius="sm">Admin</Badge>
+          </Group>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 flex flex-col gap-5">
-        {GROUPS.map(group => (
-          <div key={group.label}>
-            <p className="text-2xs font-semibold text-muted-foreground/60 uppercase tracking-widest px-3 mb-1.5">
-              {group.label}
-            </p>
-            <div className="flex flex-col gap-0.5">
-              {group.items.map(item => (
-                <NavItem
-                  key={item.href}
-                  {...item}
-                  active={isActive(item.href)}
-                  onClick={onClose}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
+          <Stack gap="md">
+            {GROUPS.map(group => (
+              <Stack key={group.label} gap="tight">
+                <Text size="xs" fw={600} c="gray.5" tt="uppercase" px="xs">
+                  {group.label}
+                </Text>
+                {group.items.map(item => (
+                  <NavLink
+                    key={item.href}
+                    component={Link}
+                    href={item.href}
+                    active={isActive(item.href)}
+                    color="brand"
+                    label={<Text size="sm" fw={500} truncate="end">{item.label}</Text>}
+                    leftSection={<item.icon size={theme.other.iconSize.standard} />}
+                    onClick={onNavigate}
+                    styles={{ root: { minHeight: theme.other.touchTarget } }}
+                  />
+                ))}
+              </Stack>
+            ))}
+          </Stack>
+        </Stack>
+      </ScrollArea>
 
-      {/* Footer */}
-      <div className="px-3 pb-4 pt-3 border-t shrink-0 flex flex-col gap-3">
+      <Stack gap="sm" py="sm">
         <AdminLocaleSwitcher />
-        <div className="flex flex-col gap-0.5">
-          <Link
-            href="/"
-            target="_blank"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
-          >
-            <ExternalLink className="h-4 w-4 shrink-0" />
-            {t('open_site')}
-          </Link>
-          <Button
-            variant="ghost"
-            onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-colors w-full justify-start h-auto"
-          >
-            <LogOut className="h-4 w-4 shrink-0" />
-            {t('logout')}
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-interface AdminSidebarProps {
-  mobileOpen?: boolean
-  onMobileOpenChange?: (open: boolean) => void
-  siteName?: string
-}
-
-export function AdminSidebar({ mobileOpen = false, onMobileOpenChange, siteName = 'Lero.al' }: AdminSidebarProps) {
-  return (
-    <div data-testid="admin-sidebar">
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:flex w-60 shrink-0 border-r h-screen sticky top-0">
-        <SidebarContent siteName={siteName} />
-      </aside>
-
-      {/* Mobile drawer — state is lifted to AdminShell */}
-      <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
-        <SheetContent side="left" showCloseButton={false} className="w-64 p-0">
-          <SidebarContent siteName={siteName} onClose={() => onMobileOpenChange?.(false)} />
-        </SheetContent>
-      </Sheet>
-    </div>
+        <NavLink
+          component="a"
+          href="/"
+          target="_blank"
+          label={t('open_site')}
+          leftSection={<ExternalLink size={theme.other.iconSize.standard} />}
+          styles={{ root: { minHeight: theme.other.touchTarget } }}
+        />
+        <NavLink
+          component="button"
+          type="button"
+          onClick={handleLogout}
+          label={t('logout')}
+          leftSection={<LogOut size={theme.other.iconSize.standard} />}
+          color="red"
+          styles={{ root: { minHeight: theme.other.touchTarget } }}
+        />
+      </Stack>
+    </Stack>
   )
 }

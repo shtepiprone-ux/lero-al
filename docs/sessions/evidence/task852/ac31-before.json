@@ -1,0 +1,15 @@
+{
+  "measured": "2026-09-26, before R24-R26, against the pre-change storybook-static (built 10:42, after review-4's final Story edit) at 1440x900, locale=uk",
+  "mantine-primitives-dropdownmenu--default": {
+    "selector": "first trigger button, text \"Дії\" (dm_trigger, block 1 \"trigger closed/resting\")",
+    "widthPx": 51.296875
+  },
+  "mantine-primitives-usermenu--default": {
+    "selector": "first trigger button, text \"AKAlba Krasniqi\"",
+    "widthPx": 166.484375
+  },
+  "mantine-primitives-usermenu--signing-out": {
+    "selector": "first (only) trigger button, text \"AKAlba Krasniqi\"",
+    "widthPx": 166.484375
+  }
+}

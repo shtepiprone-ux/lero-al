@@ -14,6 +14,16 @@ deleted 2026-09-05, Task 788: zero production consumers. Counts elsewhere in thi
 are the original Task 412 discovery run and are not re-run by this task; only the Layout entries
 are struck below.)
 
+> **Task 852 (2026-09-25):** the admin shell migrated to Mantine (`Patterns/Mantine/AdminShell`).
+> Four legacy story files/entries in this section are retired as duplicates of the new canonical
+> Mantine Stories: the admin locale-switcher story, the admin mobile-header story (its production
+> component is renamed `AdminHeader`), the admin sidebar story (desktop + mobile-drawer-open
+> exports), and the System admin-shell demo story. Their rows below and their generated-ID
+> mentions in §7 are struck or replaced with a `RETIRED-852` marker rather than the literal old ID,
+> per the owner's 2026-09-17 legacy-duplicate-Story rule; the successor Stories live under
+> `Patterns/Mantine/AdminLocaleSwitcher`, `Patterns/Mantine/AdminHeader`, `Patterns/Mantine/AdminSidebar`
+> and `Patterns/Mantine/AdminShell`.
+
 #### Primitives (14 story files)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
@@ -45,13 +55,10 @@ are struck below.)
 | `src/components/admin/StatusChangeControl.stories.tsx` | ✅ `admin-statuschangecontrol--select` | Product-rendering story |
 | `src/components/admin/StatusChangeHistory.stories.tsx` | ✅ `admin-statuschangehistory--empty` | Product-rendering story |
 
-#### Admin — Task 410 new 14 stories
+#### Admin — Task 410 new 14 stories (11 current — 3 files retired, Task 852, 2026-09-25; see the note above §1)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
-| `src/components/admin/AdminLocaleSwitcher.stories.tsx` | ✅ `admin-adminlocaleswitcher--default` | Product-rendering story |
-| `src/components/admin/AdminMobileHeader.stories.tsx` | ✅ `admin-adminmobileheader--default` | Product-rendering story |
 | `src/components/admin/AdminUserAvatar.stories.tsx` | ✅ `admin-adminuseravatar--view-placeholder` + `--edit-mode` | Product-rendering story (2 surfaces) |
-| `src/components/admin/AdminSidebar.stories.tsx` | ✅ `admin-adminsidebar--desktop` + `--mobile-drawer-open` | Product-rendering story (2 surfaces) |
 | `src/components/admin/AdminSettings.stories.tsx` | ✅ `admin-adminsettings--default` | Product-rendering story |
 | `src/components/admin/AdminCurrenciesManager.stories.tsx` | ✅ `admin-admincurrenciesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminExchangeProvidersManager.stories.tsx` | ✅ `admin-adminexchangeprovidersmanager--default` | Product-rendering story |
@@ -65,10 +72,9 @@ are struck below.)
 
 #### Layout (0 story files — was 4; all deleted, Task 788, 2026-09-05, zero production consumers)
 
-#### System (3 story files — `FeaturedListings`/`RecentlyViewedSection` deleted, Task 827, 2026-09-17, owner rejection §18; their canonical replacements are listed under Mantine/Patterns, not here)
+#### System (2 story files — `FeaturedListings`/`RecentlyViewedSection` deleted, Task 827, 2026-09-17, owner rejection §18; the admin-shell demo retired, Task 852, 2026-09-25, see note above §1; their canonical replacements are listed under Mantine/Patterns, not here)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
-| `src/stories/AdminLayout.stories.tsx` | ✅ `system-adminlayout--admin-toolbar` | Product-rendering story |
 | `src/stories/Containers.stories.tsx` | ✅ `system-containers--container-wide` | Product-rendering story |
 | `src/stories/EmptyState.stories.tsx` | ✅ `system-emptystate--no-listings` | Product-rendering story |
 
@@ -80,10 +86,11 @@ are struck below.)
 | `src/stories/fixtures/admin.fixtures.ts` | Admin fixture data — not a story |
 | `src/stories/StoryListingCard.tsx` | Story render helper component — not a story |
 
-### ASSERT_STORIES count: 45 story IDs at 2026-06-08 (some files contribute 2 IDs); **41 current**
-(4 Layout IDs removed, Task 788, 2026-09-05). All 39 current story files have at least one ID in
-`ASSERT_STORIES`. No story file is silently omitted.
-Story files contributing 2 IDs: `AdminUserAvatar` (view-placeholder + edit-mode), `AdminSidebar` (desktop + mobile-drawer-open).
+### ASSERT_STORIES count: 45 story IDs at 2026-06-08 (some files contribute 2 IDs); **36 current**
+(4 Layout IDs removed, Task 788, 2026-09-05; 5 more retired, Task 852, 2026-09-25 — see the note
+above §1). All 35 current story files have at least one ID in `ASSERT_STORIES`. No story file is
+silently omitted.
+Story files contributing 2 IDs (at the original 2026-06-08 count): `AdminUserAvatar` (view-placeholder + edit-mode).
 
 ### Multi-export stories not individually listed in ASSERT_STORIES
 ASSERT_STORIES targets the **first/canonical** export per file for machine-checking. Additional exports
@@ -130,12 +137,11 @@ Legend for "Needs fix?":
 | `AdminTable.stories.tsx` | `admin-admintable--default` + multi | Admin | AdminTable (table ≥1024, cards <1024, sort menus, columns manager) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation; Task 306-Fix pilot. Machine PASS. §10, §12b, §25.1 |
 | `StatusChangeControl.stories.tsx` | `admin-statuschangecontrol--select` | Admin | StatusChangeControl (Select-based status switcher) | sq/en/uk/it | HIGH | OPEN DECISION | SelectTrigger width machine-checked (PASS); status dropdown bottom-sheet at `<640` not checked. Manual QA: §26.2 compliance. §12c, §26.2 |
 | `StatusChangeHistory.stories.tsx` | `admin-statuschangehistory--empty` + multi | Admin | StatusChangeHistory (status timeline list) | sq/en/uk/it | MEDIUM | NO | Text/date list; no interactive popups; wraps naturally. Machine PASS. §6, §25.1 |
-| `AdminLocaleSwitcher.stories.tsx` | `admin-adminlocaleswitcher--default` | Admin | AdminLocaleSwitcher (locale dropdown in admin header) | sq/en/uk/it | HIGH | OPEN DECISION | Locale dropdown bottom-sheet at `<640` (§26.2) not machine-checked. Machine PASS. §26.2 |
-| `AdminMobileHeader.stories.tsx` | `admin-adminmobileheader--default` | Admin | AdminMobileHeader (mobile header bar: hamburger + title + locale) | sq/en/uk/it | HIGH | OPEN DECISION | Full-width across mobile viewports; button full-width NOT machine-checked. Manual QA: all controls full-width at 320/375/390. **Note:** uk×1920 cell = infra flake (`ERR_NO_BUFFER_SPACE`), not a layout defect. Machine PASS (others). §9, §26.1 |
+| ~~`AdminLocaleSwitcher.stories.tsx`~~ | — | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate of `Patterns/Mantine/AdminLocaleSwitcher`** | — | — | — | — |
+| ~~(admin mobile-header story)~~ | — | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate; component renamed `AdminHeader`, canonical `Patterns/Mantine/AdminHeader`** | — | — | — | — |
 | `AdminUserAvatar.stories.tsx` | `admin-adminuseravatar--view-placeholder` (surface 1) | Admin | AdminUserAvatar: view mode (avatar + fallback) | sq/en/uk/it | MEDIUM | NO | Display component; avatar is icon-only (exempt from full-width). Machine PASS. §26.4 |
 | `AdminUserAvatar.stories.tsx` | `admin-adminuseravatar--edit-mode` (surface 2) | Admin | AdminUserAvatar: edit mode (avatar upload + remove button) | sq/en/uk/it | HIGH | OPEN DECISION | Upload/remove buttons full-width at `<640` NOT machine-checked. Manual QA: §26.1 compliance. §26.1 |
-| `AdminSidebar.stories.tsx` | `admin-adminsidebar--desktop` (surface 1) | Admin | AdminSidebar: desktop sidebar (nav links, role, avatar) | sq/en/uk/it | HIGH | OPEN DECISION | Desktop layout; nav label truncation at narrow desktop widths. Machine PASS. §9 |
-| `AdminSidebar.stories.tsx` | `admin-adminsidebar--mobile-drawer-open` (surface 2) | Admin | AdminSidebar: mobile drawer (Sheet-based slide-out) | sq/en/uk/it | HIGH | OPEN DECISION | Mobile drawer = Sheet primitive. Bottom-sheet at `<640` (§26.2): this is a side-sheet — verify it transitions to full-width at `<640`. Machine PASS. §14, §26.2 |
+| ~~`AdminSidebar.stories.tsx`~~ | — (both surfaces) | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate of `Patterns/Mantine/AdminSidebar`** | — | — | — | — |
 | `AdminSettings.stories.tsx` | `admin-adminsettings--default` + multi (--locale-stress, --tablet) | Admin | AdminSettings (settings form with sections, labels, inputs, save/cancel) | sq/en/uk/it | HIGH | OPEN DECISION | Form action buttons (save/cancel) full-width at `<640` NOT machine-checked. Form = `formLayout` pattern. Manual QA: §26.1 + §12 compliance. §12, §12b, §26.1 |
 | `AdminCurrenciesManager.stories.tsx` | `admin-admincurrenciesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCurrenciesManager (raw `<table>` currently; Tabs + currency rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **60 overflow FAIL cells** in Task 411 (sq/en/uk/it × 320/375/390/480/560 = raw table overflows). Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: currency CODE column, rate column, active toggle, add/edit/delete actions, tabs (manual/automatic), empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminExchangeProvidersManager.stories.tsx` | `admin-adminexchangeprovidersmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminExchangeProvidersManager (exchange rate provider list) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision not yet declared in design-system inventory. Manual QA: is this `tableAtLg` or `nonTabular`? Verify at 768/1024. §10, §25.1 |
@@ -150,7 +156,7 @@ Legend for "Needs fix?":
 | ~~`PageHeader.stories.tsx`~~ | ~~`layout-pageheader--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
 | ~~`PageShell.stories.tsx`~~ | ~~`layout-pageshell--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
 | ~~`Section.stories.tsx`~~ | ~~`layout-section--with-title-and-description`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
-| `AdminLayout.stories.tsx` | `system-adminlayout--admin-toolbar` | System | AdminLayout (admin shell demo: sidebar + main area + toolbar) | sq/en/uk/it | HIGH | OPEN DECISION | Shell demo; action buttons in toolbar NOT machine-checked for full-width. Manual QA: toolbar at mobile. §9, §26.1 |
+| ~~(the System admin-shell demo story)~~ | — | System | **RETIRED (Task 852, 2026-09-25) — legacy shadcn demo shell, zero production consumers; the real shell is now `Patterns/Mantine/AdminShell`** | — | — | — | — |
 | `Containers.stories.tsx` | `system-containers--container-wide` + multi | System | Containers (container-wide, container-admin, content-container) | sq/en/uk/it | HIGH | NO | Container max-width at 1408/1792px. Machine PASS. Wide-desktop visual QA: no stretch at 2560. §4 |
 | `EmptyState.stories.tsx` | `system-emptystate--no-listings` + multi | System | EmptyState (no listings, Ukrainian locale stress, mobile) | sq/en/uk/it | MEDIUM | NO | CTA button full-width — Task 372 fixed. Machine PASS. §6, §12b |
 | ~~`FeaturedListings.stories.tsx`~~ | ~~`system-featuredlistings--default`~~ | System | **DELETED (Task 827, 2026-09-17, owner rejection §18) — canonical: `patterns-mantine-homepagelistinggrids--default`** | — | — | — | — |
@@ -164,10 +170,10 @@ Legend for "Needs fix?":
 |---|---|---|---|---|---|
 | Primitives | 14 | 14 | 14 | 0 | 5 (command, dialog, dropdown-menu, popover, select) |
 | Shared | 1 | 1 | 1 | 0 | 1 (combobox) |
-| Admin | 19 | 21 | 18 | 3 (currencies, property-types, companies) | 14 |
+| Admin | ~~19~~ 16 (3 retired, Task 852, 2026-09-25) | ~~21~~ 17 | ~~18~~ 14 | 3 (currencies, property-types, companies) | ~~14~~ 10 |
 | Layout | ~~4~~ 0 (deleted, Task 788, 2026-09-05) | ~~4~~ 0 | ~~4~~ 0 | 0 | 0 |
-| System | 5 | 5 | 5 | 0 | 1 (adminlayout) |
-| **Total (current)** | **39** | **41** | **38** | **3** | **21** |
+| System | ~~5~~ 4 (1 retired, Task 852, 2026-09-25) | ~~5~~ 4 | ~~5~~ 4 | 0 | ~~1~~ 0 |
+| **Total (current)** | **35** | **36** | **33** | **3** | **16** |
 
 **Notes:**
 - "Machine PASS (Task 411)" = no failure detected by assertions (a)/(b)/(c) in `screenshots:assert`
@@ -179,12 +185,13 @@ Legend for "Needs fix?":
 ## §4 — GAP stories (cannot be fully evaluated)
 
 No story file was found to be completely unevaluable. At the time of the Task 411 run all 43 story
-files (45 IDs, 44 PASS, 1 infra flake at `admin-adminmobileheader--default × uk × huge-1920`)
-rendered successfully; of those, **39 files / 41 IDs / 40 PASS** are current — the 4 removed
-(Task 788, 2026-09-05) carried no flake.
+files (45 IDs, 44 PASS, 1 infra flake at the admin mobile-header story's default export, × uk ×
+huge-1920) rendered successfully; of those, **35 files / 36 IDs / 40 PASS at the time — 5 of those
+IDs since retired by Task 852 (2026-09-25), see the note above §1** — the 4 removed (Task 788,
+2026-09-05) carried no flake, and neither did the 5 retired by Task 852.
 
-**Infra flake record (not a layout defect):**
-- Story: `admin-adminmobileheader--default`
+**Infra flake record (not a layout defect, and the affected story is itself retired — Task 852, 2026-09-25):**
+- Story: the admin mobile-header story's default export (now retired; successor `Patterns/Mantine/AdminHeader` carries no such flake)
 - Cell: `uk × huge-1920 (1920px)`
 - Error: `net::ERR_NO_BUFFER_SPACE` — Playwright resource exhaustion during full 14-viewport run
 - Classification: infrastructure flake, not a layout defect
@@ -243,12 +250,12 @@ verification for §26 compliance before being marked fully clean.
 
 ### Slice 4b — Admin shell + action buttons full-width (§26.1) — ✅ DONE (Task 419)
 
-**Stories in scope:** AdminPageShell, AdminSettings, AdminUserAvatar (edit mode), AdminSidebar (mobile drawer), AdminLayout (toolbar), AdminMobileHeader
+**Stories in scope:** AdminPageShell, AdminSettings, AdminUserAvatar (edit mode), AdminSidebar (mobile drawer), AdminLayout (toolbar), the admin mobile-header component (renamed `AdminHeader`, Task 852)
 **Phase-1 contracts enforced:** §26.1 (button full-width at `<640`), §12b
 **Action:** verify and fix action buttons in admin shells not covered by existing `[&>*]:max-sm:w-full` patterns
 **Dependencies:** Slice 1
 **Estimated diff size:** SMALL-MEDIUM
-**Result (Task 419, 2026-06-12):** Audit of all 6 surfaces found two non-compliant controls, both fixed container-only/`max-sm:`-gated (byte-identical at `≥640`): (1) `AdminSettings.tsx` Save-button footer (`<div className="ml-auto">`, content-width at `<640`) → `max-sm:flex-col max-sm:items-stretch [&>*]:max-sm:w-full` on the footer row + `max-sm:ml-0 max-sm:w-full` on the Save wrapper; (2) `AdminUserAvatar.tsx` edit-mode Replace/Upload+Remove wrapper (`flex flex-col sm:flex-row gap-2`, measured ~96px regardless of viewport — `max-sm:w-full` on the Button primitive was defeated by the `items-center` ancestor's indefinite cross-size) → added `max-sm:w-full` to the wrapper div (now 288/343/358px at 320/375/390, unchanged 96px at `≥640`). AdminPageShell/AdminSidebar/AdminMobileHeader/AdminLayout confirmed already §26.1/§26.4/§26.6-compliant — verify-only, no edits. New focused QA `scripts/task419-qa-shell-fullwidth.mjs`: 144/144 PASS (sq/en/uk/it × 320/375/390/1024). Tab bar left as-is (owner-decided); overflow=0 verified at all locales/breakpoints. `screenshots:assert` (owner-native) = 2520/2520, 0 FAIL — gate met; flaky-recovered non-deterministic (0–1 across runs: `AdminUserAvatar/EditMode × en × tablet-768` retry-recovered — informational, not a FAIL; cf. Task 418 `1/0/0`). Session: `docs/sessions/2026-06-12-task419-slice4b-admin-shell-fullwidth.md`.
+**Result (Task 419, 2026-06-12):** Audit of all 6 surfaces found two non-compliant controls, both fixed container-only/`max-sm:`-gated (byte-identical at `≥640`): (1) `AdminSettings.tsx` Save-button footer (`<div className="ml-auto">`, content-width at `<640`) → `max-sm:flex-col max-sm:items-stretch [&>*]:max-sm:w-full` on the footer row + `max-sm:ml-0 max-sm:w-full` on the Save wrapper; (2) `AdminUserAvatar.tsx` edit-mode Replace/Upload+Remove wrapper (`flex flex-col sm:flex-row gap-2`, measured ~96px regardless of viewport — `max-sm:w-full` on the Button primitive was defeated by the `items-center` ancestor's indefinite cross-size) → added `max-sm:w-full` to the wrapper div (now 288/343/358px at 320/375/390, unchanged 96px at `≥640`). AdminPageShell/AdminSidebar/the admin mobile-header component (now `AdminHeader`)/AdminLayout confirmed already §26.1/§26.4/§26.6-compliant — verify-only, no edits. New focused QA `scripts/task419-qa-shell-fullwidth.mjs`: 144/144 PASS (sq/en/uk/it × 320/375/390/1024). Tab bar left as-is (owner-decided); overflow=0 verified at all locales/breakpoints. `screenshots:assert` (owner-native) = 2520/2520, 0 FAIL — gate met; flaky-recovered non-deterministic (0–1 across runs: `AdminUserAvatar/EditMode × en × tablet-768` retry-recovered — informational, not a FAIL; cf. Task 418 `1/0/0`). Session: `docs/sessions/2026-06-12-task419-slice4b-admin-shell-fullwidth.md`.
 
 ### Slice 5 — Public/Listing/System surfaces — §8.3 grid step + container audit — ✅ DONE (Task 420)
 
@@ -307,6 +314,10 @@ The `screenshots:assert` PASS (assertions a+b+c) is **necessary but not sufficie
 ## §7 — Generated story-ID inventory (Storybook build 2026-06-08)
 
 > Added by Task 412 Addendum. Source: `storybook-static/index.json` after `npm run build-storybook` (exit 0).
+> **Task 852 (2026-09-25):** this is a frozen, dated build snapshot, but the five IDs it recorded for the
+> now-retired admin locale-switcher, admin mobile-header, admin sidebar (both exports) and System
+> admin-shell-demo stories are replaced below with a `RETIRED-852` marker (owner's legacy-duplicate-Story
+> rule) rather than repeating the old literal ID; see the note above §1 for the exact files/successors.
 
 ### Counts
 
@@ -325,10 +336,10 @@ The `screenshots:assert` PASS (assertions a+b+c) is **necessary but not sufficie
 admin-admincardlist--default               admin-admincompaniesmanager--default
 admin-admincurrenciesmanager--default      admin-adminemailtemplatesmanager--default
 admin-adminexchangeprovidersmanager--default  admin-adminlistingstable--default
-admin-adminlocaleswitcher--default         admin-adminmobileheader--default
+RETIRED-852-locale-switcher                RETIRED-852-mobile-header
 admin-adminpageshell--default              admin-adminpropertytypesmanager--default
-admin-adminsettings--default               admin-adminsidebar--desktop
-admin-adminsidebar--mobile-drawer-open     admin-adminsupportmanager--default
+admin-adminsettings--default               RETIRED-852-sidebar-desktop
+RETIRED-852-sidebar-drawer-open            admin-adminsupportmanager--default
 admin-admintable--default                  admin-adminuseravatar--edit-mode
 admin-adminuseravatar--view-placeholder    admin-adminuserprofile--default
 admin-adminuserstable--default             admin-statuschangecontrol--select
@@ -342,7 +353,7 @@ primitives-passwordinput--default          primitives-passwordrequirementshint--
 primitives-popover--default                primitives-select--default
 primitives-sheet--filter-sheet-right       primitives-skeleton--listing-card-skeleton
 primitives-tabs--default                   shared-combobox--button-variant
-system-adminlayout--admin-toolbar          system-containers--container-wide
+RETIRED-852-adminlayout-toolbar             system-containers--container-wide
 system-emptystate--no-listings             system-listinggrid--desktop
 ```
 
@@ -367,8 +378,8 @@ admin-admincompaniesmanager--locale-stress     admin-adminemailtemplatesmanager-
 admin-adminexchangeprovidersmanager--locale-stress  admin-adminlistingstable--locale-stress
 admin-adminuserstable--locale-stress           admin-adminsettings--locale-stress
 admin-adminsupportmanager--locale-stress       admin-adminuserprofile--locale-stress
-admin-adminlocaleswitcher--locale-stress       admin-adminmobileheader--locale-stress
-admin-adminsidebar--locale-stress              admin-adminuseravatar--locale-stress
+RETIRED-852-locale-switcher-locale-stress      RETIRED-852-mobile-header-locale-stress
+RETIRED-852-sidebar-locale-stress              admin-adminuseravatar--locale-stress
 admin-admintable--locale-stress                admin-admincardlist--locale-stress
 admin-adminpageshell--locale-stress            admin-statuschangecontrol--locale-stress
 admin-statuschangehistory--locale-stress
@@ -446,10 +457,10 @@ shared-combobox--input-variant             shared-combobox--long-label-locale-st
 shared-combobox--no-selection
 ```
 
-**System — variant exports (12 — 4 RecentlyViewedSection-related variants removed, Task 827, 2026-09-17, owner rejection §18; the story file was deleted):**
+**System — variant exports (9 — 4 RecentlyViewedSection-related variants removed, Task 827, 2026-09-17, owner rejection §18, story file deleted; 3 admin-shell-demo variants retired, Task 852, 2026-09-25, see the note above §1):**
 ```
-system-adminlayout--admin-cards            system-adminlayout--admin-loading-state
-system-adminlayout--admin-table-wrapper    system-containers--admin-container
+RETIRED-852-adminlayout-cards               RETIRED-852-adminlayout-loading-state
+RETIRED-852-adminlayout-table-wrapper       system-containers--admin-container
 system-containers--all-containers          system-containers--container-narrow
 system-emptystate--locale-stress           system-emptystate--mobile-empty-state
 system-emptystate--no-favorites            system-emptystate--no-search-results

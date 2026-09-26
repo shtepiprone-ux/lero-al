@@ -2,15 +2,15 @@
 
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Menu } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Burger, Group, Text, Badge } from '@mantine/core'
 
 interface Props {
+  opened: boolean
   onOpen: () => void
   siteName?: string
 }
 
-export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
+export function AdminHeader({ opened, onOpen, siteName = 'Lero.al' }: Props) {
   const t = useTranslations('admin.sidebar')
   const tm = useTranslations('admin.mobile_header')
   const pathname = usePathname()
@@ -38,27 +38,24 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
     : [siteName, '']
 
   return (
-    <header data-testid="admin-mobile-header" className="admin-mobile-header lg:hidden sticky top-0 z-30 min-h-14 bg-card border-b flex items-center gap-3 px-4 shrink-0">
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        onClick={onOpen}
-        className="rounded-xl text-muted-foreground hover:text-foreground"
-        aria-label={tm('aria_open')}
-      >
-        <Menu className="size-5" />
-      </Button>
-
-      <div className="flex items-center gap-1.5 font-bold text-sm">
-        <span className="text-primary">{brand}</span>
-        <span className="text-foreground">{tld}</span>
-        <span className="bg-primary/10 text-primary text-2xs font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
-          Admin
-        </span>
-      </div>
-
-      <span className="ml-auto text-sm font-medium text-muted-foreground text-right break-words min-w-0">{title}</span>
-    </header>
+    <Group data-testid="admin-header" h="100%" px="md" justify="space-between" wrap="nowrap">
+      <Group gap="sm" wrap="nowrap">
+        <Burger
+          opened={opened}
+          onClick={onOpen}
+          hiddenFrom="lg"
+          size="sm"
+          aria-label={tm('aria_open')}
+        />
+        <Group gap="tight" hiddenFrom="lg" wrap="nowrap">
+          <Text fw={700} size="sm" c="brand">{brand}</Text>
+          <Text fw={700} size="sm">{tld}</Text>
+          <Badge size="xs" variant="light" color="brand" radius="sm">Admin</Badge>
+        </Group>
+      </Group>
+      <Text size="sm" fw={500} c="gray.5" truncate="end" title={title} ta="right">
+        {title}
+      </Text>
+    </Group>
   )
 }

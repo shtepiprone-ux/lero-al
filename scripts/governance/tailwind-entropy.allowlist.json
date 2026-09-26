@@ -35,16 +35,6 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/components/admin/AdminMobileHeader.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Admin badge label ('Admin' chip). Canonical micro-label size.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Single static word badge, not a translated sentence."
-    },
-    {
-      "rule": "arbitrary-font-size",
       "file": "src/components/shared/PerfDevOverlay.tsx",
       "pattern": "text-[10px]",
       "reason": "Dev-only performance overlay. Only rendered in development mode, never ships to production.",

@@ -103,6 +103,23 @@ export const Default: Story = {
             />
           </Stack>
 
+          {/* 5 — Task 852 R26/GR-3b: fullWidthTrigger — the text trigger fills its fluid parent
+              Stack at every width, not only <640 (the mobile bottom-sheet path already stretched
+              it). No fixed-width wrapper: the Stack below is fluid, per GR-3b. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('dm_fullwidth_trigger_caption')}
+            </Text>
+            <Stack>
+              <MantineDropdownMenu
+                trigger={<Button variant="default" fullWidth>{t('dm_trigger')}</Button>}
+                title={t('dm_title')}
+                items={items}
+                fullWidthTrigger
+              />
+            </Stack>
+          </Stack>
+
         </Stack>
       </MantineStoryShell>
     )

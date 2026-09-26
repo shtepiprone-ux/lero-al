@@ -1,0 +1,41 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+ docs/component-catalog.md                          |  10 +-
+ docs/component-coverage-matrix.md                  |   1 -
+ docs/component-risk-register.md                    |   4 +-
+ docs/mantine-responsive-design-system.md           |  10 +-
+ docs/mantine-tailadmin-migration-tracker.md        |   5 +-
+ docs/responsive-screenshot-matrix.md               |   3 +-
+ docs/responsive-storybook-inventory.md             |  79 ++++----
+ docs/storybook-governance.md                       |   3 +-
+ messages/en.json                                   |   1 +
+ messages/it.json                                   |   1 +
+ messages/sq.json                                   |   1 +
+ messages/uk.json                                   |   3 +-
+ scripts/check-locale-leak.mjs                      |   7 +
+ scripts/check-stories-rendered.mjs                 |  29 ++-
+ scripts/governance/component-catalog.mjs           |   1 -
+ scripts/governance/tailwind-entropy.allowlist.json |  10 -
+ scripts/mantine-migration-scope.json               |   7 +-
+ scripts/responsive-screenshots.mjs                 |   5 +-
+ scripts/story-realmode-allowlist.json              |   2 -
+ scripts/surface-census-baseline.json               |  18 --
+ src/app/[locale]/[slug]/page.tsx                   |  26 ++-
+ src/app/globals.css                                |   4 +
+ .../admin/AdminLocaleSwitcher.stories.tsx          |  40 ----
+ src/components/admin/AdminLocaleSwitcher.tsx       |  34 ++--
+ src/components/admin/AdminMobileHeader.stories.tsx |  19 --
+ src/components/admin/AdminMobileHeader.tsx         |  64 -------
+ src/components/admin/AdminShell.tsx                |  32 ++--
+ src/components/admin/AdminSidebar.stories.tsx      |  29 ---
+ src/components/admin/AdminSidebar.tsx              | 183 +++++++-----------
+ src/components/shared/LocaleSwitcher.tsx           |   4 +
+ .../mantine/patterns/MantineAppShellFoundation.tsx | 170 +++++++++++------
+ src/design-system/mantine/theme.ts                 |  12 ++
+ src/stories/AdminLayout.stories.tsx                | 211 ---------------------
+ .../mantine/primitives/LocaleSwitcher.stories.tsx  |  12 +-
+ .../mantine/AppShellFoundation.stories.tsx         |  16 ++
+ 35 files changed, 381 insertions(+), 675 deletions(-)
+EXIT_CODE=0

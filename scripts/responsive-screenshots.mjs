@@ -110,7 +110,10 @@ const STORY_TARGETS = [
   { id: 'system-emptystate--no-listings',      label: 'EmptyState/NoListings' },
   { id: 'system-emptystate--mobile-empty-state', label: 'EmptyState/Mobile',  viewports: ['mobile-375'] },
   { id: 'system-emptystate--ukrainian-locale', label: 'EmptyState/Ukrainian', locales: ['uk'] },
-  { id: 'system-adminlayout--admin-toolbar',   label: 'Admin/Toolbar',        viewports: ['desktop-1280'] },
+  // Task 852 — the admin shadcn-demo story this row captured was deleted (owner rule
+  // 2026-09-17, §3.4): it was unrelated to production (no `AdminShell` import) and has no
+  // Mantine successor to retarget at, unlike the `FeaturedListings`/`RecentlyViewedSection` rows
+  // above. Removed, not replaced.
   // Recently-viewed section — Task 165 responsive evidence (7 required breakpoints). Task 827
   // (2026-09-17, owner rejection §18) deleted the RecentlyViewedSection story — retargeted at its
   // canonical replacement, `Mantine/Primitives/RecentlyViewedGridView` (§18.3).

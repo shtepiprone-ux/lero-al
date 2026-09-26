@@ -31,6 +31,15 @@ export interface MantineDropdownMenuProps {
    * to keep them compact at <640. Default false = text trigger = full-width at <640.
    */
   iconOnlyTrigger?: boolean
+  /**
+   * Task 852 R24 — when true, the desktop (>= 640px) trigger fills its container instead of
+   * rendering at natural content width (the default). Forward the trigger's own `fullWidth`
+   * (or equivalent) prop alongside this — this only removes the wrapper's own
+   * `alignSelf: 'flex-start'` constraint; it does not itself make a non-full-width trigger
+   * element stretch. The mobile (<640px) path already stretches the trigger and is unaffected.
+   * Default `false` — every existing consumer renders byte-identically.
+   */
+  fullWidthTrigger?: boolean
 }
 
 /**
@@ -66,6 +75,7 @@ export function MantineDropdownMenu({
   disabled = false,
   title,
   iconOnlyTrigger = false,
+  fullWidthTrigger = false,
 }: MantineDropdownMenuProps) {
   const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
@@ -86,6 +96,29 @@ export function MantineDropdownMenu({
           onClick={() => { if (!disabled) openDrawer() }}
         >
           {trigger}
+        </Box>
+      ) : fullWidthTrigger ? (
+        /* Desktop, Task 852 R24 — no `alignSelf: 'flex-start'`: the trigger fills its container
+           (e.g. a Stack align="stretch" parent), matching the mobile path's behaviour. */
+        <Box w="100%">
+          <Menu disabled={disabled}>
+            <Menu.Target>{trigger}</Menu.Target>
+            <Menu.Dropdown>
+              {items.map((item, i) => (
+                <Fragment key={i}>
+                  {item.separator && <Menu.Divider />}
+                  <Menu.Item
+                    leftSection={item.icon}
+                    color={item.color}
+                    disabled={item.disabled}
+                    onClick={item.onClick}
+                  >
+                    {item.label}
+                  </Menu.Item>
+                </Fragment>
+              ))}
+            </Menu.Dropdown>
+          </Menu>
         </Box>
       ) : (
         /* Desktop: alignSelf:flex-start prevents a Stack align="stretch" parent from

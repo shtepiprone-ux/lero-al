@@ -19,6 +19,8 @@ interface LocaleSwitcherProps {
   isPending?: boolean
   showLabel?: boolean
   className?: string
+  /** Forwarded to the trigger `Button` (Task 852 — admin sidebar footer). */
+  fullWidth?: boolean
 }
 
 export function LocaleSwitcher({
@@ -26,6 +28,7 @@ export function LocaleSwitcher({
   isPending = false,
   showLabel = false,
   className,
+  fullWidth,
 }: LocaleSwitcherProps) {
   const currentLocale = useLocale()
   const t = useTranslations('nav')
@@ -52,6 +55,7 @@ export function LocaleSwitcher({
         <Button
           variant="default"
           className={className}
+          fullWidth={fullWidth}
           disabled={isPending}
           rightSection={isPending ? <Loader size={theme.other.iconSize.badge} color="currentColor" /> : <ChevronDown size={theme.other.iconSize.badge} />}
         >
@@ -60,6 +64,7 @@ export function LocaleSwitcher({
         </Button>
       }
       items={items}
+      fullWidthTrigger={fullWidth}
     />
   )
 }

@@ -1,0 +1,7 @@
+ docs/backlog.md                                    |  4 ++--
+ scripts/mantine-migration-scope.json               |  3 ++-
+ src/app/[locale]/[slug]/page.tsx                   | 26 +++++++++-------------
+ src/app/globals.css                                |  4 ++++
+ .../Sprint_79_The_CMS_Pages_Nobody_Can_Read.md     |  5 ++++-
+ 5 files changed, 23 insertions(+), 19 deletions(-)
+EXIT_CODE=0

@@ -1,0 +1,13 @@
+default width=320 title=20px h2=18px p=16px li=16px
+default width=390 title=20px h2=18px p=16px li=16px
+default width=768 title=30px h2=24px p=16px li=16px
+default width=1440 title=30px h2=24px p=16px li=16px
+rich-body width=320 title=20px h2=18px p=16px li=16px
+rich-body width=390 title=20px h2=18px p=16px li=16px
+rich-body width=768 title=30px h2=24px p=16px li=16px
+rich-body width=1440 title=30px h2=24px p=16px li=16px
+title-only width=320 title=20px h2=null p=null li=null
+title-only width=390 title=20px h2=null p=null li=null
+title-only width=768 title=30px h2=null p=null li=null
+title-only width=1440 title=30px h2=null p=null li=null
+long-title-wrap width=320 title=20px h2=null p=null li=null

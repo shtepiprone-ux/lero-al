@@ -1,0 +1,39 @@
+Task 869 — I0 pre-write measurement (§13.1), captured natively before any file was created or edited.
+
+$ node.exe -p process.platform
+win32
+EXIT_CODE=0
+
+$ node.exe scripts\check-surface-census.mjs --surface "src/app/[locale]/[slug]/page.tsx"
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/app/[locale]/[slug]/page.tsx
+    Nodes visited: 1
+    ...
+NODES (1):
+    src/app/[locale]/[slug]/page.tsx  tier:tier1  manifest:no  story:no  className:3  ui-imports:0  parent:(root surface)
+
+FAIL  src/app/[locale]/[slug]/page.tsx  [tier1-unenrolled-or-unstoried]
+GR-1 CENSUS BLOCKED — src/app/[locale]/[slug]/page.tsx
+EXIT_CODE=1
+
+$ Select-String -Path src\app\globals.css -Pattern '^@plugin'  (run as: grep -n "^@plugin" src/app/globals.css)
+(no match)
+EXIT_CODE=1
+
+$ Select-String -Path package.json -Pattern 'typography'  (run as: grep -n "typography" package.json)
+(no match)
+EXIT_CODE=1
+
+$ node.exe -e "const m=require('./scripts/mantine-migration-scope.json');console.log('src/app entries:',m.filter(p=>p.startsWith('src/app')).length)"
+src/app entries: 0
+EXIT_CODE=0
+
+Result: matches the kickoff's §13.1 expectation exactly (win32; GR-1 CENSUS BLOCKED with 1 node
+className:3; no @plugin match; no typography dependency match; src/app entries: 0). No
+TASK SPECIFICATION CONTRADICTION. Proceeded to implementation.
+
+GR-0/GR-3a re-verification (also run before any write):
+$ grep -rn "TypographyStylesProvider" src        -> no match (EXIT_CODE=1)
+$ grep -rln "dangerouslySetInnerHTML" src        -> src/app/[locale]/[slug]/page.tsx, src/modules/listings/components/SimilarListings.tsx
+$ grep -rliE "cms|legal|privacy|terms" src/stories -> src/stories/mantine/primitives/FooterView.stories.tsx, src/stories/patterns/mantine/ListingDetailView.stories.tsx
+Matches the kickoff's §3.4 evidence exactly; no candidate imports/renders CMS rich text.

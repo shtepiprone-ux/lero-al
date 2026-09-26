@@ -13,6 +13,7 @@ import '@/design-system/mantine/scrollarea-chrome.css'
 import '@/design-system/mantine/slider-chrome.css'
 import '@/design-system/mantine/notification-chrome.css'
 import '@/design-system/mantine/range-date-picker-chrome.css'
+import '@/design-system/mantine/typography-chrome.css'
 import './globals.css'
 import { MantineRootProvider } from '@/design-system/mantine/MantineRootProvider'
 

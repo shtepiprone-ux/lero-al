@@ -1,0 +1,86 @@
+Task 869 — review-1 remediation, concurrent-session interference note.
+Captured 2026-09-25, after the second `check:locale-leak` re-run exited 127 with no report.json.
+
+WHAT HAPPENED
+-------------
+The kickoff's §16.1 re-entry procedure required a second `check:locale-leak` run (full mode, ~381-386
+stories x 3 locales x 3 viewports). While it was running in the background, `git status --porcelain`
+showed roughly 35 modified/added/deleted paths that this session did not touch, including:
+
+ M docs/component-catalog.md
+ M docs/component-coverage-matrix.md
+ M docs/component-risk-register.md
+ M docs/mantine-responsive-design-system.md
+ M docs/mantine-tailadmin-migration-tracker.md
+ M docs/responsive-screenshot-matrix.md
+ M docs/storybook-governance.md
+ M messages/en.json / it.json / sq.json / uk.json
+ M scripts/check-stories-rendered.mjs
+ M scripts/governance/component-catalog.mjs
+ M scripts/governance/tailwind-entropy.allowlist.json
+ M scripts/mantine-migration-scope.json   <- shared file task 869 also edits (see below)
+ M scripts/responsive-screenshots.mjs
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M src/components/admin/AdminLocaleSwitcher.tsx
+ D src/components/admin/AdminMobileHeader.stories.tsx
+ D src/components/admin/AdminMobileHeader.tsx
+ M src/components/admin/AdminShell.tsx
+ D src/components/admin/AdminSidebar.stories.tsx
+ M src/components/admin/AdminSidebar.tsx
+ M src/components/shared/LocaleSwitcher.tsx
+ M src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+ M src/design-system/mantine/theme.ts
+ D src/stories/AdminLayout.stories.tsx
+ M src/stories/mantine/primitives/LocaleSwitcher.stories.tsx
+ M src/stories/patterns/mantine/AppShellFoundation.stories.tsx
+ ?? src/components/admin/AdminHeader.tsx
+ ?? src/stories/patterns/mantine/AdminHeader.stories.tsx
+ ?? src/stories/patterns/mantine/AdminLocaleSwitcher.stories.tsx
+ ?? src/stories/patterns/mantine/AdminShell.stories.tsx
+ ?? src/stories/patterns/mantine/AdminSidebar.stories.tsx
+
+This is a different session's in-progress admin sidebar/header migration (consistent with
+docs/backlog.md's "878 - 879 ... owner's header audit, D81-7" line) landing live in the same working
+tree while the locale-leak scan read the Storybook story list. Deleting `AdminSidebar.stories.tsx`,
+`AdminMobileHeader.stories.tsx` and `AdminLayout.stories.tsx` mid-scan is the most likely cause of the
+scan's exit 127 (a story the scan had already enumerated disappeared before it could render it).
+
+Immediately after, a plain `tasklist` process-list command (no build, no browser) took long enough to be
+moved to background by the 120s timeout and produced an implausible ~1.6 million lines of output,
+confirming the machine was under severe, abnormal load at that moment from something other than this
+session's own work.
+
+IMPACT ON TASK 869
+-------------------
+None of task 869's own six owned files were affected. Verified by hash-object immediately after
+(r1-final-hash-object.log), compared against r1-hash-object.log (captured right after this session's
+own build-storybook fix, before the concurrent activity began):
+
+  page.tsx                    2ee5e364af8500a41699f0cc3b9b6feba0673514   unchanged
+  CmsPageView.tsx              502a624b5e97220c43b5c5d49049a48866ef0148   unchanged
+  CmsPageView.stories.tsx      7ab947043db8c23a16681dc654a4f9e3eccbe939   unchanged (this session's own fix)
+  page.errors.test.ts          bc11d062bb2b72df172d50aa222b6166c8cfcd1b   unchanged
+  globals.css                  ca6c3182bafa647a9ef631ac57db8787525e4776   unchanged
+  mantine-migration-scope.json changed (see below) - CmsPageView.tsx entry confirmed still present
+
+`scripts/mantine-migration-scope.json` is a shared array both this task and the concurrent session
+append to. Its hash changed because the OTHER session added its own entries; this session's own line
+was verified still present and unmodified:
+
+  $ grep -n "CmsPageView" scripts/mantine-migration-scope.json
+  103:  "src/modules/cms/components/CmsPageView.tsx",
+
+check:surface-census and check:story-coverage were re-run after this discovery (r1-final-census.log,
+r1-final-story-coverage.log) and both still report the exact task-869 shape: the route node
+`manifest:no story:no className:0` (unchanged baselined block) and `CmsPageView`
+`manifest:yes story:yes`; story-coverage still reports every manifest entry (now 106, up from 102,
+because of the concurrent session's additions) covered by its own canonical Story.
+
+CONCLUSION
+----------
+Not retried a third time under these conditions. The authoritative check:locale-leak evidence for
+task 869 remains the completed run captured before this concurrent activity began:
+docs/sessions/evidence/task869/13.2-check-locale-leak.log (leakCount 400, 0 attributable to
+CmsPageView or any task-869 file). This note and r1-check-locale-leak.log's own appended note record
+the interrupted second attempt and why it does not change that conclusion.

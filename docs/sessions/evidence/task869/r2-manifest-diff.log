@@ -1,0 +1,12 @@
+diff --git a/scripts/mantine-migration-scope.json b/scripts/mantine-migration-scope.json
+index efe8a1ecc..66660dabf 100644
+--- a/scripts/mantine-migration-scope.json
++++ b/scripts/mantine-migration-scope.json
+@@ -102 +102,6 @@
+-  "src/modules/cabinet/components/CabinetPasswordSectionView.tsx"
++  "src/modules/cabinet/components/CabinetPasswordSectionView.tsx",
++  "src/modules/cms/components/CmsPageView.tsx",
++  "src/components/admin/AdminShell.tsx",
++  "src/components/admin/AdminSidebar.tsx",
++  "src/components/admin/AdminHeader.tsx",
++  "src/components/admin/AdminLocaleSwitcher.tsx"

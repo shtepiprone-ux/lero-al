@@ -1,0 +1,70 @@
+Locale leak detector — full mode
+storiesScanned: 381 localesChecked: ["sq","uk","it"]
+leakCount: 400
+CmsPageView-related leaks: 0
+distinct pre-existing stories with leaks: 61
+Task 869 files in leak list: NONE (grep confirms no Patterns/Mantine/CmsPageView entry below)
+Admin/AdminCompaniesManager/Default
+Admin/AdminCurrenciesManager/Default
+Admin/AdminExchangeProvidersManager/Default
+Admin/AdminExchangeProvidersManager/Form Dialog Mobile Bottom Sheet
+Admin/AdminPermissionsManager/Default
+Admin/AdminPropertyTypesManager/Default
+Admin/AdminReportsManager/Default
+Admin/AdminReportsManager/Delete Confirm
+Admin/AdminReportsManager/Dialog Owner Row
+Admin/AdminReportsManager/Full Management
+Admin/AdminReportsManager/Terminal Reopen
+Admin/AdminSettings/Default
+Admin/AdminSidebar/Collapsed Rail
+Admin/AdminSidebar/Mobile Drawer Open
+Admin/AdminSupportManager/Default
+Admin/AdminSupportManager/User Card Status Badges
+Admin/AdminUserProfile/Create Mode
+Admin/AdminUserProfile/Default
+Admin/AdminUsersTable/Default
+Listings/ListingFormShellView/Owner
+Listings/ListingFormShellView/Staff
+Listings/ListingFormShellView/Staff Status Control Open
+Mantine/Primitives/CollectionsSection/Create Dialog Open
+Mantine/Primitives/CollectionsSection/Populated
+Mantine/Primitives/CountButton/Default
+Mantine/Primitives/FavoriteButton/Default
+Mantine/Primitives/FilterControls/Default
+Mantine/Primitives/ListingFeatureIcon/Default
+Patterns/Mantine/AuthSheet/Login
+Patterns/Mantine/AuthSheet/Login Validation Error
+Patterns/Mantine/DashboardWorkList/Default
+Patterns/Mantine/ListingCardTrack/Grid
+Patterns/Mantine/ListingCardTrack/Grid Mixed Title Lengths
+Patterns/Mantine/ListingCardTrack/Grid Single Item
+Patterns/Mantine/ListingCardTrack/Rail
+Patterns/Mantine/ListingCardTrack/Rail Mixed Title Lengths
+Patterns/Mantine/ListingCardTrack/Rail No Overflow
+Patterns/Mantine/ListingCardTrack/Rail Single Item
+Patterns/Mantine/ListingDetailView/Archived Listing
+Patterns/Mantine/ListingDetailView/Public Listing
+Patterns/Mantine/ListingDetailView/Staff Preview Published
+Patterns/Mantine/ListingDetailView/Staff Preview Unpublished
+Patterns/Mantine/ListingsPageFrame/Default
+Patterns/Mantine/SaveSearchButton/Pending
+Planted/VisualViolations/Ambiguous Overlap
+Planted/VisualViolations/Clipped Button Text
+Planted/VisualViolations/Container Clipped
+Planted/VisualViolations/Container Escape
+Planted/VisualViolations/Intentional Ellipsis
+Planted/VisualViolations/Known Good Control
+Planted/VisualViolations/Large Range Guard
+Planted/VisualViolations/Narrow Range Guard
+Planted/VisualViolations/Off Viewport Control
+Planted/VisualViolations/Overlapping Actions
+Planted/VisualViolations/Overlay Backdrop Covered
+Planted/VisualViolations/Overlay No Backdrop
+Planted/VisualViolations/Scroll Clipped Overlap
+Planted/VisualViolations/Scroll Visible Overlap
+Planted/VisualViolations/Sr Only Icon Button
+Planted/VisualViolations/Unstyled Frame
+Primitives/NavigationMenu/Mobile Open
+REAL_EXIT_CODE=1 (script calls process.exit(1) at scripts/check-locale-leak.mjs:519 whenever leakCount>0; my first capture piped through 'tail' and mis-reported the pipeline's exit code (0) instead of node's — corrected here per the execute-task skill's Task-709 warning)
+Pre-existing, tracked: docs/backlog.md Task 836 ('check:locale-leak:mantine-only is non-deterministic run to run'); Tasks 837 and 845 were both APPROVED with this exact gate red and zero leaks attributable to their own diff.
+Report artifact: .screenshots/locale-leak/2026-09-25T18-04/report.json (retained, not committed - .screenshots/ is gitignored build output)

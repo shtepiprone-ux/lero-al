@@ -1,0 +1,16 @@
+
+> lero-al@0.1.0 check:i18n-hardcode
+> node scripts/check-hardcoded-i18n.mjs
+
+🔍  check:i18n-hardcode — scanning 456 src/**/*.tsx files
+    (excludes *.stories.tsx, *.test.tsx, src/stories/, src/__tests__/)
+
+  src/modules/notifications/lib/emails/PasswordChangedEmail.tsx  (1)
+    :66  [text-child]  "Ekipi i Lero.al"
+
+  Total: 1 hardcoded user-facing string(s) across 1 file(s)
+
+✅  check:i18n-hardcode PASSED — 1 known finding(s) in baseline, 0 NEW.
+    Existing debt is tracked in scripts/i18n-hardcode-baseline.json.
+    Task 397 will remediate the backlog.
+check:i18n-hardcode EXIT_CODE=0

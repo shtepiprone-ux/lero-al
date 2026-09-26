@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/app/[locale]/[slug]/__tests__/page.errors.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  10:41:07
+   Duration  1.57s (transform 57ms, setup 91ms, import 637ms, tests 6ms, environment 710ms)
+
+EXIT_CODE=0

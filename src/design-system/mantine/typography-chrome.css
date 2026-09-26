@@ -1,0 +1,71 @@
+/* Task 869 revision 3 (§19.1, GR-3c) — canonical responsive type scale for CMS rich-text bodies
+   rendered inside Mantine's TypographyStylesProvider (`.mantine-Typography-root`, confirmed by I0
+   runtime probe — TypographyStylesProvider is a direct alias of the Typography component, so it
+   emits the same static class as every other *-chrome.css target in this directory).
+
+   Owner verdict, 2026-09-26: "не приймаю. Шрифти не адаптивні, на мобільних екранах вони просто
+   величезні." Mantine's own Typography.css sets every heading rung (`h1`...`h6`) to one fixed
+   `var(--mantine-hN-font-size)` with no breakpoint, so a rich-text `h2` (36px) rendered larger than
+   the page title (30px) at every width, including 320px.
+
+   Every value below is an EXISTING theme rung reference (`var(--mantine-h4-font-size)` etc.), never
+   a new px/rem literal — GR-3c requires the smallest rich-text heading to sit one rung below the
+   page title's own responsive step (CmsPageView.tsx: h5→h4→h3 at base/sm/md). Descendant selectors
+   are used, not a redefinition of `--mantine-hN-*` themselves: remapping a custom property on the
+   element that already reads it would resolve against itself. Same media-query breakpoints and form
+   as notification-chrome.css (`min-width: 40em` / `48em`, matching theme.ts's own sm/md rungs). */
+
+/* Task 869 revision 4 (§20, RF9) — a long unbroken token (e.g. a raw URL with no spaces) in a CMS
+   body ran past its <p> and scrolled the whole page horizontally at every width (kickoff §11's
+   negative flow, AC4). Neither Mantine's own Typography.css nor the heading rules above set
+   `overflow-wrap`/`word-break`. `anywhere` (not `break-word`) also lowers the element's min-content
+   width, so the body cannot force a flex/grid parent wider than the viewport. §8's ban on a
+   replacement typography CSS is amended for this one declaration (§20.1) — everything else in §8
+   still holds; this file gains no `@tailwindcss/typography` plugin or `@plugin` directive. */
+.mantine-Typography-root {
+  overflow-wrap: anywhere;
+}
+
+.mantine-Typography-root :where(h1, h2) {
+  font-size: var(--mantine-h6-font-size);
+  line-height: var(--mantine-h6-line-height);
+}
+
+.mantine-Typography-root :where(h3) {
+  font-size: var(--mantine-font-size-md);
+  line-height: var(--mantine-line-height-md);
+}
+
+.mantine-Typography-root :where(h4, h5, h6) {
+  font-size: var(--mantine-font-size-md);
+  line-height: var(--mantine-line-height-md);
+}
+
+@media (min-width: 40em) {
+  .mantine-Typography-root :where(h1, h2) {
+    font-size: var(--mantine-h5-font-size);
+    line-height: var(--mantine-h5-line-height);
+  }
+
+  .mantine-Typography-root :where(h3) {
+    font-size: var(--mantine-h6-font-size);
+    line-height: var(--mantine-h6-line-height);
+  }
+}
+
+@media (min-width: 48em) {
+  .mantine-Typography-root :where(h1, h2) {
+    font-size: var(--mantine-h4-font-size);
+    line-height: var(--mantine-h4-line-height);
+  }
+
+  .mantine-Typography-root :where(h3) {
+    font-size: var(--mantine-h5-font-size);
+    line-height: var(--mantine-h5-line-height);
+  }
+
+  .mantine-Typography-root :where(h4, h5, h6) {
+    font-size: var(--mantine-h6-font-size);
+    line-height: var(--mantine-h6-line-height);
+  }
+}

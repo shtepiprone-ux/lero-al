@@ -99,5 +99,6 @@
   "src/components/shared/PhoneField.tsx",
   "src/design-system/mantine/patterns/PasswordRequirementsHint.tsx",
   "src/modules/auth/components/ResetPasswordView.tsx",
-  "src/modules/cabinet/components/CabinetPasswordSectionView.tsx"
+  "src/modules/cabinet/components/CabinetPasswordSectionView.tsx",
+  "src/modules/cms/components/CmsPageView.tsx"
 ]

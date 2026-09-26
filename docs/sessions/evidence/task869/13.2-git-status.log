@@ -1,0 +1,11 @@
+ M docs/backlog.md
+ M scripts/mantine-migration-scope.json
+ M src/app/[locale]/[slug]/page.tsx
+ M src/app/globals.css
+ M tasks/Sprints/Sprint_79_The_CMS_Pages_Nobody_Can_Read.md
+?? docs/sessions/evidence/task869/
+?? src/app/[locale]/[slug]/__tests__/
+?? src/modules/cms/
+?? src/stories/patterns/mantine/CmsPageView.stories.tsx
+?? tasks/Sprints/Sprint_79_kickoff_prompt_Task_884_CMS_Body_HTML_Sanitized_Before_Render.md
+EXIT_CODE=0

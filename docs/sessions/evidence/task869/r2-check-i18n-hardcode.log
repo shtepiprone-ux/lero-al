@@ -1,0 +1,31 @@
+
+> lero-al@0.1.0 check:i18n-hardcode
+> node scripts/check-hardcoded-i18n.mjs
+
+🔍  check:i18n-hardcode — scanning 456 src/**/*.tsx files
+    (excludes *.stories.tsx, *.test.tsx, src/stories/, src/__tests__/)
+
+  src/components/admin/AdminHeader.tsx  (1)
+    :53  [text-child]  "Admin"
+  src/components/admin/AdminSidebar.tsx  (1)
+    :92  [text-child]  "Admin"
+  src/modules/notifications/lib/emails/PasswordChangedEmail.tsx  (1)
+    :66  [text-child]  "Ekipi i Lero.al"
+
+  Total: 3 hardcoded user-facing string(s) across 3 file(s)
+
+npm.cmd : ❌  check:i18n-hardcode FAILED — 2 NEW hardcode(s) not in baseline:
+At line:2 char:1
++ npm.cmd run check:i18n-hardcode *>&1 | Tee-Object "$ev\r2-check-i18n- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:i18n-h...ot in baseline::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  src/components/admin/AdminHeader.tsx:53  [text-child]  "Admin"
+  src/components/admin/AdminSidebar.tsx:92  [text-child]  "Admin"
+
+  Fix: wrap the string in t() / useTranslations() from next-intl,
+  or update the baseline if the finding is provably non-translatable.
+  Docs: docs/i18n-governance.md
+EXIT_CODE=1

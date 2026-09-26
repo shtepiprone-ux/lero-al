@@ -1,0 +1,25 @@
+
+> lero-al@0.1.0 check:locale-leak
+> node scripts/check-locale-leak.mjs
+
+🔍  Locale leak detector — full mode
+    Stories: 386 scanned (28 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-25T19-58/
+
+.....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................EXIT_CODE=127
+
+--- Investigation note, appended after the run above exited 127 with no report.json ---
+This re-run coincided with a large, unrelated, concurrent uncommitted change set actively mutating
+the repository mid-scan (git status showed ~35 modified/added/deleted files touching
+src/components/admin/AdminSidebar*, AdminHeader.tsx, AdminMobileHeader*, theme.ts,
+scripts/mantine-migration-scope.json, scripts/surface-census-baseline.json, and more — a different
+session's in-progress admin sidebar/header migration, not task 869's). Storybook stories the scan
+depends on (e.g. AdminSidebar.stories.tsx) were deleted while the scan was reading the story list,
+which is the most likely cause of the exit 127. Verified task 869's own six files are byte-identical
+to r1-hash-object.log except CmsPageView.stories.tsx (already-disclosed fix); the manifest's
+CmsPageView.tsx entry survived the concurrent edit (grep-confirmed at scripts/mantine-migration-scope.json:103).
+A `tasklist` process-list command timed out at 120s immediately after, confirming severe system load,
+not a task-869 defect. Not retried a third time under these conditions.
+Authoritative check:locale-leak evidence for this task remains the completed run captured before this
+concurrent activity began: docs/sessions/evidence/task869/13.2-check-locale-leak.log (leakCount 400,
+0 attributable to CmsPageView or any task-869 file, verified against .screenshots/locale-leak/2026-09-25T18-04/report.json).

@@ -1,9 +1,9 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: `PARTIALLY VERIFIED` 2026-09-26 (review 6) — all executor work accepted; approval waits only on the owner's O79-5, §21** (review 5: §20; review 4: §19; review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
+owner action **O79-5** · **Status: ✅ `APPROVED` 2026-09-26 (review 7) — owner accepted O79-5; archived, §22** (review 5: §20; review 4: §19; review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
 
-Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
+Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](../Sprints/Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
 Filed by owner instruction, 2026-09-23, verbatim: *"Так треба одразу завести під цю прогалину задачу!"* — issued
 after the orchestrator reported that Task 867 leaves `src/app/[locale]/[slug]/page.tsx:39`'s swallowed error in
@@ -382,7 +382,7 @@ is behaviour-identical (theme `md` = 48em = Tailwind `md` = 768px, and the two s
 **UNKNOWNS:** whether the live table yet holds a page with a non-empty body for the owner's O79-5 pass (867's O79-0).
 **CONFLICTS:** None.
 
-Task path: `tasks/Sprints/Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md`
+Task path (archived 2026-09-26): `tasks/Archive/Sprint_79_kickoff_prompt_Task_869_CMS_Route_Error_Surfacing_And_View_Migration.md`
 QA profile: `Q3`. Ambiguous or conflicting requirements: none. Owner decision still needed: none blocking — only the
 non-blocking 500-vs-404 note in §5.2.
 
@@ -818,3 +818,13 @@ The reviewer's own probe, on `rich-body` in `en` and `sq` at 320 / 640 / 1440, m
 | 1440 | 30px | 24px | 16px |
 
 **Approval condition.** The owner records O79-5 as accepted for the §13.3 matrix plus §18 cell 6. Opus then approves and archives with no further executor pass. The §18 P3 session-log items were fixed in revision 3.
+
+---
+
+## 22. Review 7 — 2026-09-26 (✅ `APPROVED`)
+
+**Owner verdict on O79-5, 2026-09-26, verbatim:** *"Приймаю."* It covers the §13.3 matrix and §18 cell 6, so AC4 and
+AC6-r2 are closed. Every other requirement and acceptance criterion was already verified in §16–§21. Kickoff archived
+to `tasks/Archive/`. Follow-ups that stay open:
+- **884**: sanitising the CMS body, in the same `CmsPageView` expression;
+- **886**, Sprint 83: it switches this title to `TITLE_FZ.h3` and is now unblocked.

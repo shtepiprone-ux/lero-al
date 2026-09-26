@@ -1,0 +1,49 @@
+ M .storybook/preview.tsx
+ M docs/component-catalog.md
+ M docs/component-coverage-matrix.md
+ M docs/component-risk-register.md
+ M docs/mantine-tailadmin-migration-tracker.md
+ M docs/responsive-screenshot-matrix.md
+ M docs/responsive-storybook-inventory.md
+ M docs/storybook-governance.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-locale-leak.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/governance/component-catalog.mjs
+ M scripts/governance/tailwind-entropy.allowlist.json
+ M scripts/mantine-migration-scope.json
+ M scripts/responsive-screenshots.mjs
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M src/app/[locale]/[slug]/page.tsx
+ M src/app/globals.css
+ M src/app/layout.tsx
+ D src/components/admin/AdminLocaleSwitcher.stories.tsx
+ M src/components/admin/AdminLocaleSwitcher.tsx
+ D src/components/admin/AdminMobileHeader.stories.tsx
+ D src/components/admin/AdminMobileHeader.tsx
+ M src/components/admin/AdminShell.tsx
+ D src/components/admin/AdminSidebar.stories.tsx
+ M src/components/admin/AdminSidebar.tsx
+ M src/components/shared/LocaleSwitcher.tsx
+ M src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+ M src/design-system/mantine/theme.ts
+ D src/stories/AdminLayout.stories.tsx
+ M src/stories/mantine/primitives/LocaleSwitcher.stories.tsx
+ M src/stories/patterns/mantine/AppShellFoundation.stories.tsx
+?? docs/sessions/2026-09-25-task852-admin-shell-mantine.md
+?? docs/sessions/2026-09-25-task869-cms-route-error-surfacing.md
+?? docs/sessions/evidence/task852/
+?? docs/sessions/evidence/task869/
+?? src/app/[locale]/[slug]/__tests__/
+?? src/components/admin/AdminHeader.tsx
+?? src/design-system/mantine/typography-chrome.css
+?? src/modules/cms/
+?? src/stories/patterns/mantine/AdminHeader.stories.tsx
+?? src/stories/patterns/mantine/AdminLocaleSwitcher.stories.tsx
+?? src/stories/patterns/mantine/AdminShell.stories.tsx
+?? src/stories/patterns/mantine/AdminSidebar.stories.tsx
+?? src/stories/patterns/mantine/CmsPageView.stories.tsx

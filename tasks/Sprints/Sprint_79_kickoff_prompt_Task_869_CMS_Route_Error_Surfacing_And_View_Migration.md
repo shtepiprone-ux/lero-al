@@ -1,7 +1,7 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 5) — type scale accepted; a long unbroken token scrolls the page horizontally at every width; re-entry at §20** (review 4: §19; review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
+owner action **O79-5** · **Status: `PARTIALLY VERIFIED` 2026-09-26 (review 6) — all executor work accepted; approval waits only on the owner's O79-5, §21** (review 5: §20; review 4: §19; review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -798,3 +798,23 @@ Then extend the throwaway `.artifacts/` probe to write `r4-measure.log`, one lin
 
 **Then O79-5 runs**: the §13.3 matrix plus §18 cell 6.
 
+---
+
+## 21. Review 6 — 2026-09-26 (`PARTIALLY VERIFIED`)
+
+**No executor action remains.** RF9 and RF10 are closed:
+- `typography-chrome.css` (hash `b29d2ad4…`) adds only `.mantine-Typography-root { overflow-wrap: anywhere; }`;
+- the seven other hashes equal the table in §20.1;
+- `r4-*`: `check:design-tokens`, `check:file-integrity`, `check:mojibake`, `build-storybook` and `build` all exit 0;
+- `r4-measure.log` has 60 tuples, with `scrollWidth == innerWidth` in every one, and every size equals §19.1;
+- the session log carries measured GR-3b/GR-3c receipts.
+
+The reviewer's own probe, on `rich-body` in `en` and `sq` at 320 / 640 / 1440, measured no overflow. Font sizes:
+
+| Width | Title | Body `h2` | `p` |
+|---|---|---|---|
+| 320 | 20px | 18px | 16px |
+| 640 | 24px | 20px | 16px |
+| 1440 | 30px | 24px | 16px |
+
+**Approval condition.** The owner records O79-5 as accepted for the §13.3 matrix plus §18 cell 6. Opus then approves and archives with no further executor pass. The §18 P3 session-log items were fixed in revision 3.

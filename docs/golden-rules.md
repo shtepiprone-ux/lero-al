@@ -141,6 +141,86 @@ No receipt, a receipt with an uninspected candidate, or `CREATE` with any canoni
 The executor must emit `BLOCKED — GR-3a PREFLIGHT MISSING` and make no Story-related write; the reviewer returns
 `NEEDS REVISION`.
 
+## GR-3b — A Story reproduces the production width contract; it never fixes one
+
+**Owner rule, 2026-09-26.** Task 852: the owner returned four Stories in one pass. Their words: *"хардкод, немає
+адаптивності на мобільних екранах"*, then *"Sonnet не перевіряє адаптивність, просто хардкодить. Це прогалина у
+правилах!"*. The four returns:
+- `AdminSidebar` and `AdminLocaleSwitcher` were wrapped in a `maw={appShellNavbarWidth}` box, which is 240px at
+  every width, while production gives them the full-width drawer below 1024;
+- `LocaleSwitcher` `fullWidth` sat in a fixed `w={240}` column;
+- an `AppShellFoundation` header slot was a bare `<div style={{ padding }}>` that did not centre vertically.
+
+Earlier in the same task, three exports pinned `globals.viewport`, which locks the toolbar. No gate, and neither
+review, caught any of them.
+
+**Forbidden in any Story file, `decorators` entry or `render`:**
+- a fixed-width or max-width container (`w`/`maw`/`miw` set to a number, a theme token, or px/rem);
+- a `style`/`styles` object;
+- a raw px/rem value;
+- a `globals: { viewport … }` pin.
+
+Slot or fixture content a Story supplies follows the same visual rules as production content. For example, a header
+slot fills the header height and centres its content vertically.
+
+**Required:** where the production parent sizes the component, the Story reproduces that contract with the same
+breakpoint-keyed Mantine responsive prop, and cites the parent's source line in a comment. Example: an `AppShell`
+navbar child with a `navbarBreakpoint="lg"` parent gets `w={{ base: '100%', lg: theme.other.layout.appShellNavbarWidth }}`.
+Otherwise the container is fluid.
+
+**Check, before handoff and at review:** open every changed Story with the toolbar at **320, 390, 1024 and 1440**.
+For each width, measure the component's rendered width against the viewport and against the production parent's
+width at that viewport. Confirm there is no horizontal overflow. Where a Story supplies a header or row slot, measure
+its vertical centring.
+
+**Receipt — execution and review alike, one per changed Story:**
+
+`GR-3b STORY RESPONSIVE CHECK — <story id>: 320 <component w>/<parent w> · 390 … · 1024 … · 1440 …; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE.`
+
+With no receipt, or with a fixed container, style object or pin in a changed Story, the executor returns `BLOCKED —
+GR-3b` and the reviewer returns `NEEDS REVISION`. A green `check:stories` is not evidence (GR-2): it does not inspect
+decorators or widths.
+
+## GR-3c — Text size is responsive by construction; a fixed heading scale never reaches a phone
+
+**Owner rule, 2026-09-26.** Task 869: the owner returned `CmsPageView` at O79-5. Their words: *"Шрифти не адаптивні,
+на мобільних екранах вони просто величезні. Це тупо хардкод! Я вже казав не раз про адаптивність. Це величезна
+прогалина у правилах кікофів та виконавця!"*
+
+The cause was structural. The theme's `headings.sizes` are one fixed value at every width: h1 48px, h2 36px, h3 30px,
+h4 24px (`src/design-system/mantine/theme.ts:581-584`). So `<Title order={1} size="h3">` rendered 30px at 320px.
+`TypographyStylesProvider` reads the same fixed variables, so a CMS body `<h2>` rendered 36px at 320px. That is
+larger than the page's own title at every width. Legacy UI already had this rule (`docs/ui-rules.md` → "Responsive
+Typography Rules": *"No static `text-2xl` or larger on elements that appear on mobile without a responsive step"*).
+The Mantine migration never carried it over, and no kickoff, executor or review asked the question.
+
+**Forbidden in new or migrated UI:**
+- text that renders at **24px or larger** at any width without a breakpoint-keyed `fz`, for example
+  `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`. Only theme keys may be used (`h1`–`h6`, `xs`–`xl`), never px/rem;
+- `Title order={1–4}` with no responsive `fz`, because its theme size is fixed. The same applies to a static `size="hN"`;
+- below `sm` (640px):
+  - a page or section heading above **20px** (`h5` / `xl`), which matches legacy `text-xl`;
+  - a hero title above **30px** (`h3`), which matches legacy `text-3xl`, and only in a role the kickoff names as a hero;
+- rich text (`Typography` / `TypographyStylesProvider`) whose headings use the fixed theme scale. It must use the
+  canonical responsive rich-text scale owned by `src/design-system/mantine/typography-chrome.css`;
+- a body or child heading larger than the surface's own page title at any width.
+
+**Required in every kickoff that changes visible text:** a **type-scale table** with one row per text element. Each
+row gives the role, the size at `base` / `sm` / `md` / `lg`, the theme key for each size, and the provenance.
+Missing the table is a task-design defect (`create-task` gate).
+
+**Check, before handoff and at review:** open every changed Story at **320, 390, 768 and 1440**. Measure the
+`getComputedStyle(el).fontSize` of every heading and of the body text. Compare each value with the kickoff's
+type-scale table.
+
+**Receipt — task design (the table), execution and review alike, one per changed Story:**
+
+`GR-3c TYPE RESPONSIVE CHECK — <story id>: <element> 320 <px> · 390 <px> · 768 <px> · 1440 <px>; <next element> …; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+
+With no receipt, or with any listed violation, the executor returns `BLOCKED — GR-3c` and the reviewer returns
+`NEEDS REVISION`. No automated gate reads computed font sizes. `check:design-tokens` only sees raw literals, so a
+theme key used statically (`size="h3"`) passes it (GR-2).
+
 ## GR-4 — An acceptance criterion asserts an observable property, never an absolute
 
 **Forbidden:** "byte-unchanged", "within N px", "zero hits" and similar, when a correct implementation can violate
@@ -193,6 +273,8 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-2 | reviewer inspection + receipt | active |
 | GR-3 | `check:story-coverage` for enrolled components; `check-rendered-scope` blocking in CI for the enrolled-subgraph frontier (Task 818); `check-surface-census.mjs`/`check:surface-census:changed` blocking in CI for the pre-enrolment case (Task 819) — both check, per node, whether a canonical Mantine story imports it directly or through a single-hop `index.ts(x)` barrel re-export, never merely its parent, via the `story:<yes\|no>` column/field | **enforced for both halves** (Task 818, Task 819) — a rendered, unstoried component reachable from an enrolled root, or from any surface the current PR's diff actually touches, now blocks the PR. |
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
+| GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
+| GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks an Opus response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

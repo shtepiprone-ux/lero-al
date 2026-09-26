@@ -1,7 +1,7 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 2) — Story fix + full final gate block, re-entry at §17** (review 1, 2026-09-25: §16)
+owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 4) — owner returned O79-5: the fonts are not responsive; re-entry at §19** (review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -568,3 +568,142 @@ git --no-optional-locks status --short | Tee-Object "$ev\r2-git-status.log"
 - §3.6 and §8 still hold. Sanitisation is Task 884.
 - **Note for the approval handoff (Opus).** `scripts/mantine-migration-scope.json` and `docs/backlog.md` are shared with
   Task 852's uncommitted work. The approval handoff must reconcile them hunk by hunk, or run after 852 is committed.
+
+---
+
+## 18. Review 3 — 2026-09-26 (`PARTIALLY VERIFIED`)
+
+**No executor action remains.** RF3 and RF5 are closed:
+- `CmsPageView.stories.tsx` (hash `8c5f731a28647e69f0e46e5c63857b48deaa26cd`) keys `richBody` per locale in `FIXTURES`,
+  and `RichBody` renders `fixture.richBody`;
+- the Story has no decorator, `style` object, fixed-width container or `globals.viewport` pin (GR-3b);
+- the §17.1 S2 block is present as `r2-*.log`: `typecheck`, `lint`, `test` 4/4, `build-storybook` and `build` all exit 0;
+- `r2-index-cms.log` lists 5 CmsPageView stories;
+- `r2-hash-object.log` lines 1, 2, 4 and 5 equal the §17 table;
+- `r2-manifest-diff.log` has exactly one 869 line (the other four `+` lines are 852's).
+
+`check:i18n-hardcode` exit 1 is not 869's. Both new findings are 852's `AdminHeader.tsx:53` and `AdminSidebar.tsx:92`.
+
+**AC6-r2 — owner decision, 2026-09-26, verbatim:** *"зупини check:locale-leak:mantine-only , я сам візуально
+перевірю все."*
+
+The official scan never produced a report: six executor attempts, and one reviewer run stopped by the owner. By this
+decision, the owner's O79-5 visual pass replaces that scan as the evidence for AC6-r2. So O79-5 (§13.3) now also covers
+this cell:
+
+6. `RichBody` × `sq` / `uk` / `it` × 320. Record **accepted** if no English fixture text is shown, or **returned**
+   with the exact English string seen.
+
+**Approval condition.** The owner records O79-5 as accepted for every §13.3 tuple and for cell 6 above. Opus then
+approves without a further executor pass.
+
+**P3 for the approval closure.** The session log still carries the revision-1 GR-2 receipt ("0 matches") without a
+superseded mark. It also records the status as `PARTIALLY IMPLEMENTED`, while the executor's report said
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Opus corrects both in the approval closure.
+
+*(Superseded by §19. O79-5 was returned, so the approval condition above no longer applies.)*
+
+---
+
+## 19. Revision 3 — review 4, 2026-09-26 (`NEEDS REVISION`, owner returned O79-5)
+
+**Owner verdict, 2026-09-26, verbatim:** *"не приймаю. Шрифти не адаптивні, на мобільних екранах вони просто
+величезні. Це тупо хардкод!"*
+
+The route, test, CSS token and manifest line stay accepted, and so does the Story. **Only the view's typography is
+wrong.**
+
+| # | Severity | Finding | Evidence |
+|---|---|---|---|
+| RF6 | P1 | **The page title has one fixed size at every width.** `<Title order={1} size="h3">` resolves to `var(--mantine-h3-font-size)`, which is 30px at 320px. | `CmsPageView.tsx:23`; `theme.ts:583` (`h3: 1.875rem`), a single value with no breakpoint |
+| RF7 | P1 | **The rich-text headings use the fixed theme scale, and a body heading is larger than the page title at every width.** Mantine's Typography CSS sets `h2 { font-size: var(--mantine-h2-font-size) }`. That is 36px at 320px and at 1440px, while the page title is 30px. | `node_modules/@mantine/core/styles/Typography.css` (`.m_d08caa0 :where(h2)`); `theme.ts:582` (`h2: 2.25rem`) |
+| RF8 | P1 (orchestrator) | **The kickoff never specified a type scale.** §3.4's token path and §10.5's "zero raw visual values" covered spacing and width only, so the executor followed the kickoff exactly. This rule gap is now closed by **GR-3c** (`docs/golden-rules.md`), and its gate is in `create-task`, `execute-task` and `review-task`. | §3.4, §10.5 of this file |
+
+### 19.1 Type-scale table (GR-3c) — binding
+
+Every size here is an **existing theme key**, and no new value is introduced. Pixel sizes: `md` 16, `h6` 18, `h5` 20,
+`h4` 24, `h3` 30 (`theme.ts:581-586`, `:634-640`). Breakpoints: `sm` 40em = 640px, `md` 48em = 768px
+(`theme.ts:566-567`).
+
+| Element | Role | base (<640) | sm (640–767) | md+ (≥768) | Provenance |
+|---|---|---|---|---|---|
+| Page title (`Title order={1}`) | page title | `h5` 20 | `h4` 24 | `h3` 30 | legacy `docs/ui-rules.md` "Responsive Typography Rules" (`text-xl sm:text-2xl`, 20→24); the ≥768 size keeps the current desktop 30px; same 20/24/30 steps as the owner-accepted `SECTION_HEADING_FZ` (Task 699) |
+| Rich-text `h1`, `h2` | rich-text heading | `h6` 18 | `h5` 20 | `h4` 24 | GR-3c: always one rung below the page title |
+| Rich-text `h3` | rich-text heading | `md` 16 | `h6` 18 | `h5` 20 | one rung below `h2` |
+| Rich-text `h4`, `h5`, `h6` | rich-text heading | `md` 16 | `md` 16 | `h6` 18 | one rung below `h3`, floored at body size |
+| Rich-text `p`, `li`, `a` | body | `md` 16 | `md` 16 | `md` 16 | Typography default; unchanged |
+
+Each font-size is paired with the **same rung's** line-height: `var(--mantine-hN-line-height)` for an `hN` rung, and
+`var(--mantine-line-height-md)` for `md`. Font weights are unchanged.
+
+*These rich-text rungs are the orchestrator's choice from existing theme keys, under GR-3c's limits. The owner
+confirms them at O79-5.*
+
+### 19.2 Re-entry (mode: `remediation`)
+
+**Write scope is exactly these files:**
+
+1. `src/modules/cms/components/CmsPageView.tsx`: the title becomes `<Title order={1} fz={{ base: 'h5', sm: 'h4', md: 'h3' }} mb="xl">`. `size="h3"` is removed. Nothing else changes.
+2. `src/design-system/mantine/typography-chrome.css` *(new)*: the canonical responsive rich-text scale of §19.1.
+   - Selectors: `.mantine-Typography-root :where(h1, h2)`, `:where(h3)` and `:where(h4, h5, h6)`, with the base rung
+     first and then `@media (min-width: 40em)` and `@media (min-width: 48em)`. That is the same media-query form as
+     `notification-chrome.css:31`.
+   - Values are `var(--mantine-…)` references only, never px/rem.
+   - Header comment: cite GR-3c and this §19.1.
+   - Do **not** redefine the `--mantine-hN-*` custom properties themselves. A remap on the same element would resolve
+     against itself, so set `font-size`/`line-height` on the descendant selectors instead.
+3. `src/app/layout.tsx`: one `import '@/design-system/mantine/typography-chrome.css'` line, after the existing chrome
+   imports (`:9-15`) and after `@mantine/core/styles.css`.
+4. `.storybook/preview.tsx`: the same import beside the other chrome imports (`:13-18`).
+5. Evidence and state: the session log, `docs/sessions/evidence/task869/r3-*`, and the 869 cell of `docs/backlog.md`.
+
+**Must stay unchanged** (hashes as in §17 and §18): `page.tsx` `2ee5e364…`, `page.errors.test.ts` `bc11d062…`,
+`globals.css` `ca6c3182…`, and `CmsPageView.stories.tsx` `8c5f731a…`.
+
+**Stop conditions:**
+- **I0: verify the static class.** Open `Patterns/Mantine/CmsPageView--rich-body` and confirm that the body wrapper
+  element carries `mantine-Typography-root`. If it does not, report `TASK SPECIFICATION CONTRADICTION` with the class
+  it does carry, and stop.
+- **Allowlists.** If `check:design-tokens` flags the new file, stop with `BLOCKED` and quote the finding. Do not add
+  an allowlist entry.
+- **Other consumers.** If any other `TypographyStylesProvider` / `Typography` consumer exists (`grep -rn "Typography" src --include=*.tsx`),
+  list it. Do not change it. The scale applies to it too, which is intended.
+
+### 19.3 Final gate block (one pass, after 19.2)
+
+Run it as in §17.1 S2 (Windows PowerShell, `Tee-Object`, `EXIT_CODE` appended, then normalised to UTF-8 without BOM
+through Node), with these changes:
+- use the `r3-` log prefix;
+- add `src/design-system/mantine/typography-chrome.css`, `src/app/layout.tsx` and `.storybook/preview.tsx` to the
+  `hash-object` line;
+- drop the two locale-leak commands. Owner decision, 2026-09-26: *"я сам візуально перевірю все"*, recorded in §18.
+
+After `build-storybook`, measure computed font sizes. Use a throwaway Playwright probe under the gitignored
+`.artifacts/` folder, against `storybook-static`, and never commit it. For the `en` locale, cover:
+- `default`, `rich-body` and `title-only` at 320, 390, 768 and 1440;
+- `long-title-wrap` at 320.
+
+At each tuple, record `getComputedStyle(el).fontSize` for the title `h1` and for the body `h2`, `p` and `li`. Write
+it to `r3-type-measure.log`, one line per tuple.
+
+### 19.4 Acceptance for this revision
+
+- **AC9 [RF6, RF7] — the measured values match the §19.1 table exactly.**
+  - `r3-type-measure.log` shows a title of 20px at 320 and 390, and 30px at 768 and 1440.
+  - It shows a body `h2` of 18px at 320 and 390, and 24px at 768 and 1440.
+  - `p` and `li` are 16px everywhere.
+  - At every tuple, the body `h2` is smaller than the title.
+- **AC10 [RF6].** `CmsPageView.tsx` has no static `size=`/`fz=` on the title. `typography-chrome.css` contains no
+  px/rem literal outside comments.
+- **AC8-r3.** `r3-build.log` and `r3-build-storybook.log` end with `EXIT_CODE=0`, in the same pass as
+  `r3-hash-object.log`.
+- Every other `r3-` gate exits 0, with one exception. `check:i18n-hardcode` may exit 1 only for findings outside 869's
+  files; name each of those findings.
+- **Receipts.** Emit `GR-3c TYPE RESPONSIVE CHECK` for `default`, `rich-body`, `title-only` and `long-title-wrap`.
+  Emit `GR-3b STORY RESPONSIVE CHECK` for the Story. Emit `GR-0` for the new CSS file, with decision `EXTEND`: the
+  canonical owner is the design-system chrome-CSS family.
+- **Session log.** Record revision 3, and fix the two §18 P3 items: mark the old GR-2 receipt as superseded, and make
+  the status line match the handoff. Set the 869 cell of `docs/backlog.md` to
+  `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 3).
+
+**Then O79-5 runs again**, with the full §13.3 matrix plus §18 cell 6.

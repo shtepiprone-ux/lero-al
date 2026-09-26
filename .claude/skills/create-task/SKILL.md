@@ -143,6 +143,20 @@ composition. This is a project-wide rule, not a Storybook preference.
 5. Parent components may compose behavior and layout, but may not independently recreate or tune a child's visual
    chrome. The task must name the component → composition → route hierarchy and the evidence for each layer.
 
+6. **Responsive width and type contracts are written into the kickoff, never left to the executor (GR-3b, GR-3c;
+   owner rules 2026-09-26).**
+   - **Width.** For every changed Story, name the production parent's breakpoint-keyed width contract that the Story
+     must reproduce, with its source line, or state that the container is fluid.
+   - **Type.** For every changed visible text element, add a **type-scale table** with these columns: element, role
+     (page title / section heading / hero / body / rich-text heading / label), size at `base` / `sm` / `md` / `lg`,
+     the theme key for each size, and the provenance.
+   - The theme's `headings.sizes` are fixed at every width (h1 48 / h2 36 / h3 30 / h4 24 px). So any row of 24px or
+     more needs a breakpoint step, and below 640px headings stay at 20px or less (a named hero may reach 30px).
+   - Rich text uses the canonical responsive scale in `src/design-system/mantine/typography-chrome.css`.
+   - A child heading never exceeds the page title.
+   - A UI kickoff without the table, or with a static size of 24px or more, is not publishable. Task 869's kickoff
+     omitted it and the owner returned the result at 320px.
+
 This gate does not require a new story for a non-visible data-only or layout-only change. The task must state that
 classification and its evidence explicitly; a claimed "layout-only" change that alters visible chrome is still
 subject to this gate.

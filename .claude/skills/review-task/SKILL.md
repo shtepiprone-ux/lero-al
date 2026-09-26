@@ -201,6 +201,24 @@ evidence that a child component has a canonical visual contract.
    no-op callback must not be mistaken for application behavior or copied into production.
 5. Treat feature-local raw values, utility classes, CSS modules, inline style props, or unapproved default primitive
    chrome as a finding when they recreate or tune a changed child visual contract outside its canonical source.
+6. **GR-3b (owner rule 2026-09-26).** Before handing any Story to the owner matrix, open every changed Story file,
+   including its `decorators` and `render`. Each of these is a `NEEDS REVISION` finding:
+   - a fixed-width or max-width container;
+   - a `style` object;
+   - a `globals.viewport` pin;
+   - a slot that is not vertically aligned.
+
+   Then check the executor's `GR-3b STORY RESPONSIVE CHECK` receipts against your own measurement at 390 and 1440.
+   Task 852 reached the owner twice with these defects, which is how this rule was born.
+7. **GR-3c (owner rule 2026-09-26).** Before handing any Story to the owner matrix, find every text element that can
+   render at 24px or more. That includes:
+   - every `Title` and every `size`/`fz`;
+   - every `Typography` / `TypographyStylesProvider` body.
+
+   Each one without a breakpoint-keyed theme-key `fz` or the canonical rich-text scale is a `NEEDS REVISION` finding.
+   So is a heading above 20px below 640 (non-hero), and a child heading larger than the page title. Check the
+   executor's `GR-3c TYPE RESPONSIVE CHECK` receipts against your own `getComputedStyle` measurement at 320 and 1440.
+   Task 869 reached the owner with a 30px title and a 36px body heading at 320px, which is how this rule was born.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
 composition consumes the proven source, return a non-approved decision. The correction is never a request for a

@@ -150,6 +150,25 @@ For every changed user-visible UI component, work from the lowest visible unit u
 4. A deterministic number, label, callback, or state in a Storybook fixture is permitted only as labelled fixture
    data. Trace and preserve the production data flow separately; never copy fixture values or no-op behavior into the
    application.
+5. **GR-3b, blocking (owner rule 2026-09-26).** A Story never fixes a width. That rules out `w`/`maw` set to a number
+   or token in a decorator, `style` objects and `globals.viewport` pins. Where the production parent sizes the
+   component, reproduce that parent's breakpoint-keyed contract; otherwise leave the container fluid. Open every
+   changed Story with the toolbar at 320/390/1024/1440, measure it, and emit one `GR-3b STORY RESPONSIVE CHECK`
+   receipt per Story (`docs/golden-rules.md`). A Story that looks right at one width is not checked.
+6. **GR-3c, blocking (owner rule 2026-09-26).** Text size is responsive by construction. The theme's heading scale is
+   fixed at every width (h1 48 / h2 36 / h3 30 / h4 24 px). So these are forbidden:
+   - any `Title order={1–4}` or static `size`/`fz` with a size of 24px or more;
+   - any rich text on the fixed theme scale.
+
+   Instead:
+   - give such text a breakpoint-keyed `fz` built only from theme keys, following the kickoff's type-scale table;
+   - route rich text through `src/design-system/mantine/typography-chrome.css`;
+   - below 640px, keep headings at 20px or less (a named hero may reach 30px);
+   - never let a child heading exceed the page title.
+
+   If the kickoff has no type-scale table for text you change, stop with `BLOCKED — GR-3c`; do not pick sizes.
+   Measure `getComputedStyle(el).fontSize` for every heading and the body text of every changed Story at
+   320/390/768/1440. Emit one `GR-3c TYPE RESPONSIVE CHECK` receipt per Story.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
 native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local

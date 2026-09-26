@@ -245,6 +245,7 @@ story exports.
 | P0 popup gate | All popups (Dialog, Drawer, Select, Menu, Combobox) must render as full-width bottom sheet below `sm`: `position="bottom"`, top-only radius, ≤90dvh, internal scroll, drag handle, closes on backdrop + Esc |
 | 🔴 P0 table gate (owner P0, 2026-06-25, restated) | **Every data table MUST collapse to stacked cards below `sm` (40em/640px) — one card per row, via `MantineDataTableToCards`.** Horizontal scrolling of table *content* on mobile is **FORBIDDEN** — neither page-level nor an internal `ScrollArea`/`overflow-x`. The mobile reader never side-scrolls a table; they read cards. At ≥`sm` the desktop §6b card-wrapped table is kept (a desktop-only `ScrollArea` inside the card is acceptable there). **Table-specific** — does NOT override the §7.1 filter-control rule, where `SegmentedControl`/`Tabs` MAY use horizontal swipe-scroll (those are controls, not data tables). A data table left scrolling horizontally on mobile is a TASK FAILURE. |
 | Responsive API | Use `{ base: X, sm: Y }` responsive objects on Mantine props (e.g. `w={{ base: '100%', sm: 'auto' }}`) |
+| 🔴 P0 responsive type gate (owner rule, 2026-09-26 — `docs/golden-rules.md` **GR-3c**) | `theme.headings.sizes` is fixed at every width: h1 48, h2 36, h3 30, h4 24 px. Text of **24px or more** therefore needs a breakpoint-keyed `fz` made of theme keys only, e.g. `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`. Below `sm`, headings are at most 20px (`h5`/`xl`), and a named hero at most 30px (`h3`). Rich text uses the canonical responsive scale in `src/design-system/mantine/typography-chrome.css`, never the fixed theme scale. A child heading never exceeds its page title. Verified by computed `fontSize` at 320/390/768/1440. |
 | Touch targets | Every mobile-reachable text button: `size="lg"` (50px) or `styles.root.minHeight: '2.75rem'` |
 | No Tailwind responsive | New Mantine components must NOT use Tailwind `sm:` / `md:` responsive class prefixes |
 | No `.container-wide` | New Mantine pattern components must NOT depend on `.container-wide` for responsive layout |
@@ -453,14 +454,14 @@ UI governance docs.
 |---|---|---|---|---|---|---|---|---|
 | `src/components/layout/Header.tsx` | Public site header | Tailwind + shadcn | P0 risk: mobile nav behavior | No story | MIGRATE TO MANTINE | MantineAppShellFoundation | Phase 3 | Complex: auth state + locale switching |
 | `src/components/layout/Footer.tsx` | Public site footer | Tailwind Grid | Low risk | No story | MIGRATE TO MANTINE | Mantine Grid/Stack | Phase 4 | — |
-| `src/components/layout/AdminShell.tsx` | Admin app shell | Tailwind sidebar | P0 risk: mobile sidebar | No story | MIGRATE TO MANTINE | MantineAppShellFoundation | Phase 3 | — |
+| `src/components/admin/AdminShell.tsx` | Admin app shell | Mantine AppShell | Migrated (Task 852, 2026-09-25) | Story exists | MIGRATED | MantineAppShellFoundation | Phase 3 | — |
 
 ### Admin components — `src/components/admin/`
 
 | Source | UI role | Current impl type | Responsive risk | Storybook status | Migration class | Mantine target | Phase | Blocker |
 |---|---|---|---|---|---|---|---|---|
-| `src/components/admin/AdminSidebar.tsx` | Admin sidebar nav | Tailwind + shadcn Sheet | P0 risk: mobile drawer | Story exists | MIGRATE TO MANTINE | MantineAppShellFoundation Navbar | Phase 3 | — |
-| `src/components/admin/AdminLocaleSwitcher.tsx` | Locale switcher dropdown | shadcn DropdownMenu | P0 risk: dropdown not bottom-sheet | Story exists | MIGRATE TO MANTINE | Mantine Menu + mobile Drawer | Phase 2 | — |
+| `src/components/admin/AdminSidebar.tsx` | Admin sidebar nav | Mantine NavLink list | Migrated (Task 852, 2026-09-25) | Story exists | MIGRATED | MantineAppShellFoundation Navbar | Phase 3 | — |
+| `src/components/admin/AdminLocaleSwitcher.tsx` | Locale switcher dropdown | Mantine Menu (via `LocaleSwitcher`) | Migrated (Task 852, 2026-09-25) | Story exists | MIGRATED | Mantine Menu + mobile Drawer | Phase 2 | — |
 | `src/components/admin/AdminListingsTable.tsx` | Admin listings data table | Custom Tailwind table | P0 risk: horizontal scroll on mobile | Story exists | MIGRATE TO MANTINE | MantineDataTableToCards + MantineAdminSurfacePattern | Phase 3 | Complex — canonical AdminTable |
 | `src/components/admin/AdminCurrenciesManager.tsx` | Currency CRUD | shadcn Dialog form | P0 risk: dialog not bottom-sheet | Story exists | MIGRATE TO MANTINE | MantineDialogDrawerPattern + MantineAdminSurfacePattern | Phase 3 | — |
 | `src/components/admin/AdminExchangeProvidersManager.tsx` | Provider CRUD | shadcn Dialog form | P0 risk: dialog not bottom-sheet | Story exists | MIGRATE TO MANTINE | MantineDialogDrawerPattern + MantineAdminSurfacePattern | Phase 3 | — |
@@ -507,7 +508,7 @@ UI governance docs.
 | Source | UI role | Current impl type | Storybook status | Migration class | Mantine target | Phase | Blocker |
 |---|---|---|---|---|---|---|---|
 | `src/stories/Containers.stories.tsx` | Container governance story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Delete after Phase 6 | Phase 6 | — |
-| `src/stories/AdminLayout.stories.tsx` | Admin layout story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Migrate to Mantine AppShell story | Phase 5 | — |
+| `src/stories/AdminLayout.stories.tsx` | Removed — Task 852 (2026-09-25, owner rule 2026-09-17: shadcn demo unrelated to `AdminShell`); canonical: `Patterns/Mantine/AdminShell` | — | Removed | — | — | — | — |
 | `src/stories/EmptyState.stories.tsx` | Empty state story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineEmptyLoadingErrorState | Phase 5 | — |
 | `src/stories/FeaturedListings.stories.tsx` | Removed — Task 827 (2026-09-17); canonical: `Patterns/Mantine/HomepageListingGrids` | — | Removed | — | — | — | — |
 | `src/stories/RecentlyViewedSection.stories.tsx` | Removed — Task 827 (2026-09-17); canonical: `Mantine/Primitives/RecentlyViewedGridView` | — | Removed | — | — | — | — |
@@ -594,7 +595,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Breadcrumbs | Custom Tailwind breadcrumbs | `<Breadcrumbs>` | Replace | Listing detail, admin pages | Phase 3 | Low |
 | Header | `src/components/layout/Header.tsx` | MantineAppShellFoundation | Major rewrite | All public pages | Phase 3 | High — auth + locale integration |
 | Footer | `src/components/layout/Footer.tsx` | Mantine Grid/Stack | Rewrite | All public pages | Phase 4 | Low |
-| App shell | `src/components/layout/AdminShell.tsx` | MantineAppShellFoundation | Replace | All admin pages | Phase 3 | High — admin auth gate |
+| App shell | `src/components/admin/AdminShell.tsx` | MantineAppShellFoundation | Migrated (Task 852) | All admin pages | Phase 3 | High — admin auth gate |
 | Page heading | Various page-level headings | MantinePageHeaderWithActions | Replace | All pages | Phase 3 | Medium |
 | Form shell | Various form wrappers | MantineFormSectionStack + MantineTwoColumnForm | Replace | All forms | Phase 3 | Medium |
 | Action footer | Inline form submit rows | MantineResponsiveActionFooter | Replace | All forms with actions | Phase 3 | Medium |

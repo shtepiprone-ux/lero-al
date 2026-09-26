@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🔁 NEEDS REVISION 2026-09-26 (review 3 — owner returned `Patterns/Mantine/AdminShell`: viewport pinned, toolbar cannot set width) — re-entry in §18; READY FOR SONNET**
+**Status: 🔁 NEEDS REVISION 2026-09-26 (review 5 — §19 Story fixes accepted; desktop locale trigger does not fill: extend `MantineDropdownMenu` with `fullWidthTrigger`) — re-entry in §20; READY FOR SONNET**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -455,3 +455,122 @@ Order: R18 → R19 → `build-storybook` → probe → gates → session log (a 
 Changed row per edited file with its hash) → the 852 backlog line → `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 `GR-4 AC AUDIT — 4 new criteria; each states an observable property; absolutes: AC18 grep with the permitted-line class named; AC19 zero page errors is the defect's own signal.`
+
+## 19. Review 4 — NEEDS REVISION (2026-09-26): owner matrix, four Stories returned
+
+R18/R19 are accepted: the viewport pins are gone and `play` no longer throws.
+
+**Owner matrix, 2026-09-26, verbatim.**
+
+*Accepted:* `patterns-mantine-adminshell--default`, `--drawer-open`; `patterns-mantine-adminheader--default`,
+`--unknown-path`, `--drawer-open`.
+
+*Returned:*
+- adminsidebar ×4 — *"хардкод, немає адаптивності на мобільних екранах! Не приймаю!"*
+- adminlocaleswitcher idle/pending — *"не адаптивна кнопка на мобільних екранах. Хардкод. Не приймаю!"*
+- primitives-localeswitcher fullWidth — *"хардкодна, не адаптивна кнопка. Не приймаю!"*
+- appshellfoundation default/with-slots — *"чому в header заголовок "Admin" не відцентрований по вертикалі? Не приймаю!"*
+
+**This task binds the new golden rule GR-3b** (`docs/golden-rules.md`, owner rule 2026-09-26, written from these
+returns): a Story reproduces the production width contract and never fixes one.
+
+| # | Returned Story | Cause (source) | Production contract |
+|---|---|---|---|
+| O1 | `Patterns/Mantine/AdminSidebar` (4) | Decorator `Box maw={theme.other.layout.appShellNavbarWidth} h="100vh" style={{ borderRight: … }}`: capped at 240px at every width, plus an inline style object. | `AdminShell` puts the sidebar in `AppShell.Navbar` with `navbarBreakpoint="lg"`, so it is **full viewport width below 1024** (measured 390 at 390×844, review 1) and 240px at ≥ 1024. |
+| O2 | `Patterns/Mantine/AdminLocaleSwitcher` (2) | Decorator `Box maw={theme.other.layout.appShellNavbarWidth} p="sm"`: the full-width trigger can never exceed 240 − padding. | Same parent: the sidebar footer, full width below 1024. |
+| O3 | `Mantine/Primitives/LocaleSwitcher` (`fullWidth` block) | `<Stack w={theme.other.layout.appShellNavbarWidth}>`: a fixed 240px column. The caption also carries a task reference ("(Task 852, admin sidebar footer)") in UI copy. | `fullWidth` means "fills its container". The demo container must be fluid. |
+| O4 | `Patterns/Mantine/AppShellFoundation` (`Default`, `WithSlots`) | `WithSlots` header slot = `<div style={{ padding: '0 1rem' }}>` is not a full-height, centred row, so "Admin" sits at the top of the header. The navbar slot is `<div style={{ padding: '0.5rem' }}>`, and the shared `makeArgs.children` is `<div style={{ padding: '2rem' }}>`, both inline styles. | A header slot fills the header height and centres vertically, like `AdminHeader`'s `Group h="100%"`. |
+
+**Re-entry mode: `remediation`.** Change only the four Story files, the four `locale_switcher_fullwidth_caption`
+values, and the `headerContent` JSDoc line in `MantineAppShellFoundation.tsx`. Production components are unchanged.
+Do not touch Task 869's paths.
+
+| ID | Closes | Observable requirement | P |
+|---|---|---|---|
+| **R20** | O1 | `AdminSidebar.stories.tsx` decorator: `Box w={{ base: '100%', lg: theme.other.layout.appShellNavbarWidth }} h="100dvh"`, with a comment citing `AdminShell.tsx`'s `navbarBreakpoint="lg"`. There is no `maw`, no `style` and no border. | P1 |
+| **R21** | O2 | `AdminLocaleSwitcher.stories.tsx` decorator: the same responsive `w` object plus `p="sm"`, with the same citation. There is no `maw`. | P1 |
+| **R22** | O3 | `LocaleSwitcher.stories.tsx`: the `fullWidth` demo's wrapper has no width at all (fluid). `locale_switcher_fullwidth_caption` in sq/en/uk/it drops the parenthesised task reference, e.g. en `"fullWidth — trigger fills its container"`. | P1 |
+| **R23** | O4 | `AppShellFoundation.stories.tsx`: the header slot is `<Group h="100%" px="md"><Text fw={600}>…</Text></Group>`, the navbar slot is `<Box p="xs"><Text>…</Text></Box>`, and `makeArgs.children` is `<Box p="xl">…</Box>`. There is no `style=` anywhere in the file. `MantineAppShellFoundation`'s `headerContent` JSDoc adds: "must fill the header height and centre vertically (e.g. `Group h="100%"`)". | P1 |
+
+Acceptance criteria. Probe: extend `probe-shell.mjs` into `probe-stories.mjs` in the evidence root. It runs against a
+fresh `storybook-static`, with the Playwright page viewport set per width, and saves its output as
+`probe-stories.json`.
+
+- **AC22 [R20]**: `patterns-mantine-adminsidebar--default`. At 320/390 the `[data-testid="admin-sidebar"]` width is the
+  viewport width (± scrollbar), and at 1024/1440 it is 240. `document.documentElement.scrollWidth ≤ innerWidth` at all four.
+- **AC23 [R21]**: `patterns-mantine-adminlocaleswitcher--idle`. At 320/390 the trigger `button` width is viewport width
+  − 2 × `sm` spacing (± 1). At 1024/1440 it is 240 − 2 × `sm`. No overflow.
+- **AC24 [R22]**: `mantine-primitives-localeswitcher--default`. At 320/390/1024/1440 the `fullWidth` trigger width
+  equals its parent `Stack`'s content width (± 1), which grows with the viewport. The caption contains no "Task".
+- **AC25 [R23]**: `patterns-mantine-appshellfoundation--with-slots` and `--default`. At 390 and 1440,
+  `|slot text centreY − AppShell.Header centreY| ≤ 1px`. In `Default` the siteName `Text` is centred the same way.
+- **AC26 [GR-3b]**: one `GR-3b STORY RESPONSIVE CHECK` receipt per Story file changed in this task:
+  AdminShell, AdminSidebar, AdminHeader, AdminLocaleSwitcher, AppShellFoundation, and Primitives/LocaleSwitcher.
+  The six receipts go in the session log, with the numbers from `probe-stories.json`.
+- **AC27**: `git --no-optional-locks grep --untracked -n -E "style=|maw=|globals: \{ ?viewport" -- src/stories/patterns/mantine/AdminShell.stories.tsx src/stories/patterns/mantine/AdminSidebar.stories.tsx src/stories/patterns/mantine/AdminHeader.stories.tsx src/stories/patterns/mantine/AdminLocaleSwitcher.stories.tsx src/stories/patterns/mantine/AppShellFoundation.stories.tsx`
+  prints nothing. In `src/stories/mantine/primitives/LocaleSwitcher.stories.tsx`, the `fullWidth` block has no
+  `w=`; quote the block.
+- **AC28**: `check:i18n`, `check:stories`, `typecheck` and `build-storybook` exit 0, teed as `28-…`–`31-…` `.log`.
+- **AC29 (owner)**: the owner re-opens the four returned groups through the toolbar at 320/390/1024/1440 and accepts.
+  The §17 row for `check:locale-leak` is covered by this look.
+
+Order: R20 → R21 → R22 → R23 → `build-storybook` → probe → gates → session log (a "Review 4 re-entry" section,
+GR-3b receipts, a Files Changed row with a hash per edited file) → the 852 backlog line → status.
+
+`GR-4 AC AUDIT — 8 new criteria; each states an observable property; absolutes: AC27 empty grep on five named files (a correct story has none of the three forms).`
+
+## 20. Review 5 — NEEDS REVISION (2026-09-26): the executor's AC23/AC24 contradiction, resolved
+
+**Accepted:** R20, R22's Story change, and R23. The reviewer re-measured on `storybook-static` built at 10:28, after
+the last Story edit at 10:26 (uk):
+- `adminsidebar--default`: 390 at 390, 240 at 1440, no overflow;
+- `appshellfoundation--with-slots`: header centre Δ 0.5px at both widths.
+
+**The contradiction is real, and it is a kickoff defect, not an executor defect.** R6 only told the executor to
+forward `fullWidth` to the trigger `Button`. But on the ≥ 640 path, `MantineDropdownMenu.tsx:90-93` wraps the trigger
+in `Box style={{ alignSelf: 'flex-start' }}`, so `fullWidth` has no effect at 640 and above. That holds in
+production too, not only in the Story. Reviewer measurement, `adminlocaleswitcher--idle`, uk:
+- at 390, box 366 and trigger 366;
+- at 1440, box 216 and trigger **148**.
+
+**Decision (orchestrator; derivable, so not an owner call).** Option (a), accepting a content-width trigger, is
+rejected, for three reasons:
+- the pre-migration `AdminLocaleSwitcher` trigger was `className="w-full justify-start …"` at **every** width
+  (`HEAD:src/components/admin/AdminLocaleSwitcher.tsx:33`), and R6 plus agent-contract clause 5 preserve it;
+- the owner returned exactly this: *"не адаптивна кнопка"*;
+- GR-3b forbids fixing it in the Story.
+
+The fix belongs in the canonical owner of the wrapper: **EXTEND `MantineDropdownMenu`**. This is in scope now
+because `LocaleSwitcher` → `MantineDropdownMenu` is in this surface's census (§3.2, tier 1). No follow-up task.
+
+**Re-entry mode: `remediation`.** Change only the files named below. `UserMenu` and every other `MantineDropdownMenu`
+consumer must render byte-identically in behaviour: the default is unchanged. Do not touch Task 869's paths,
+`src/design-system/mantine/typography-chrome.css` included.
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R24** | `MantineDropdownMenu` gains `fullWidthTrigger?: boolean` (default `false`), with JSDoc. When it is `true`: the desktop (≥ 640) wrapper is a `Box w="100%"` with **no** `alignSelf: 'flex-start'`, so the trigger fills its container; the mobile path is unchanged (it already stretches). When it is `false` the output is identical to today. No new `style` object: the existing `alignSelf` style stays only on the default branch, and the new branch uses the Mantine style prop `w`. | P1 |
+| **R25** | `LocaleSwitcher` passes `fullWidthTrigger={fullWidth}` to `MantineDropdownMenu`, next to the existing `Button fullWidth={fullWidth}`. The public header's `LocaleSwitcher` (no `fullWidth`) is unchanged. | P1 |
+| **R26** | `src/stories/mantine/primitives/DropdownMenu.stories.tsx` (canonical Story of `MantineDropdownMenu`, EXTEND, GR-3a) gains one state block: a text trigger `Button fullWidth` with `fullWidthTrigger` inside a fluid `Stack`, with a locale-backed caption in sq/en/uk/it (`storybook.mantine.dm_fullwidth_trigger_caption`, the Story's existing `dm_` key prefix). No new export and no fixed-width wrapper (GR-3b). | P1 |
+
+Acceptance criteria (probe `probe-stories.mjs` extended; fresh `storybook-static`; uk):
+
+- **AC30 [R24, R25]**: `adminlocaleswitcher--idle`: trigger width = box width − 2 × `sm` (± 1) at 320, 390, 1024 and
+  1440. `mantine-primitives-localeswitcher--default` `fullWidth` block: trigger width = parent `Stack` width (± 1) at
+  all four. The ≥ 640 cells open the anchored `Menu` on click, and the < 640 cells open the bottom sheet.
+- **AC31 [R24]**: the default-branch trigger (`mantine-primitives-dropdownmenu--default`'s first trigger and
+  `mantine-primitives-usermenu--*`) has the same `getBoundingClientRect().width` at 1440 as on the pre-change build.
+  Record the before value from the current `storybook-static` **before** editing, and the after value from the new
+  build.
+- **AC32 [R26]**: the new DropdownMenu state's trigger fills its fluid parent at 390 and 1440, with a
+  `GR-3b STORY RESPONSIVE CHECK` receipt. `check:i18n`, `check:stories`, `check:story-coverage`, `typecheck`,
+  `lint`, `build-storybook` and `npm run build` exit 0 (production code changed), teed as `32-…` onward.
+- **AC33**: the GR-3b receipts for `adminlocaleswitcher--idle` and `mantine-primitives-localeswitcher--default` are
+  re-issued with the new numbers. No `CONTRADICTED` cell remains.
+- **AC34 (owner)**: the owner re-opens the four §19 groups plus `Mantine/Primitives/DropdownMenu` at 320/390/1024/1440
+  and accepts.
+
+Order: AC31 "before" measurement → R24 → R25 → R26 → `build-storybook` → probe → gates → session log ("Review 5
+re-entry", Files Changed rows with hashes for the three files) → the 852 backlog line → status.
+
+`GR-4 AC AUDIT — 5 new criteria; each states an observable property; absolutes: AC31 width identity on the default branch is the no-regression property itself.`

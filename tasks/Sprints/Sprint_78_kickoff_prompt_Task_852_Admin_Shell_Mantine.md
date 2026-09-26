@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+**Status: 🔁 NEEDS REVISION 2026-09-26 (review 1) — re-entry in §16; READY FOR SONNET**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -178,7 +178,7 @@ They tap the burger, pick "Reports", the drawer closes, and `/admin/reports` loa
 | Locale switch pending | Yes | Switcher disabled / pending indicator; second click ignored (as today). |
 | Logout API failure | Yes | Local session cleared, redirect `/` (as today). |
 | Long `uk` labels | Yes | Nav labels truncate inside 240px; top-bar title truncates with a `title` attribute. |
-| Keyboard | Yes | Burger, nav links, switcher, logout reachable; drawer traps focus while open and Esc closes it (Mantine AppShell/Drawer behaviour). |
+| Keyboard | Yes | Burger, nav links, switcher, logout reachable; drawer traps focus while open and Esc closes it. **Corrected 2026-09-26 (review 1):** Mantine `AppShell.Navbar` provides neither — measured, Esc left the open navbar at `transform: none`. This behaviour must be built; see §16 R12. |
 | 1024–1279 | Yes | Full navbar (§5). |
 | Authorization | No (preserved) | Layout gate unchanged. |
 
@@ -302,3 +302,78 @@ no mutating git. Update the 852 line of `docs/backlog.md`; session log with File
 | GR-1 / 16d | §3.2 receipt; tier-3 `LocaleSwitcher` listed and extended, not skipped. |
 | GR-2 | Coverage gate + census rows (AC5) + baseline diff (AC9). |
 | Commands in blocks | §13.2 (two blocks: executor, owner-native). |
+
+## 16. Review 1 — NEEDS REVISION (2026-09-26): re-entry
+
+**Re-entry mode: `remediation`.** Code for R1–R3, R5–R7, R9 and R10 is accepted as written apart from the changes
+below. Do **not** re-run the R9 baseline writer: the six-row removal in `scripts/surface-census-baseline.json` is
+accepted (re-run only the read-only `--base HEAD` check). Do not touch Task 869's paths (`src/modules/cms/**`,
+`src/app/[locale]/[slug]/**`, `src/app/globals.css`, `CmsPageView.stories.tsx`, `docs/sessions/*task869*`). Evidence
+root: `docs/sessions/evidence/task852/` (create it — it does not exist).
+
+### 16.1 Findings the revision must close
+
+Reviewer measurements, taken on win32 / Node v22.22.3 with Playwright against `storybook-static` (story
+`patterns-mantine-adminshell--default` / `--drawer-open`):
+
+| # | Sev | Finding | Measured evidence |
+|---|---|---|---|
+| F1 | **P0** | The sidebar footer (language switcher, "open site", logout) is **unreachable** at every measured viewport. `AppShell.Navbar` is `position: fixed` with `height: calc(100dvh - header)` and no overflow rule, and `AdminSidebar` dropped the old `nav … overflow-y-auto`. Violates agent-contract clause 3 and R4. | 1440×900: navbar `clientHeight` 828, `scrollHeight` 1198, `overflow-y: visible`; logout `top` **1214** > `innerHeight` 900. 1280×720: navbar 648, logout top 1214. 390×844 (drawer open): navbar 772, logout top 1214. |
+| F2 | **P1** | The §11 keyboard row (applicable) is not implemented and was not reported: Esc does not close the drawer and focus is not trapped. The shadcn `Sheet` did both. | 390×844: burger click → `transform: none`; `Escape` → still `none`. The session log has no keyboard evidence. |
+| F3 | **P2** | Every admin page body gains 16px padding. `MantineAppShellFoundation` hard-sets `padding="md"`; the old `main` had none, and admin pages bring their own `p-6 lg:p-8`. Contradicts R3 ("`children` render … unchanged"). | `AppShell.Main` `padding-left` = **256px** at 1440 (240 + 16) and **16px** at 390. |
+| F4 | **P2** | `AdminShell` `DrawerOpen` never opens outside `en`. Its `play` looks for `/open menu/i`, but the burger label is localised. The story's state is unproven in 3 of 4 locales. | `--drawer-open` at uk: burger label "Відкрити меню", navbar `transform: matrix(1,0,0,1,-390,0)`. |
+| F5 | **P2** | GR-0: new inline style object `style={{ textDecoration: 'none' }}` on the `AdminSidebar` wordmark link. The old wordmark link also closed the drawer (`onClick={onClose}`); the new one does not. | `src/components/admin/AdminSidebar.tsx`, wordmark `Text component={Link}`. |
+| F6 | **P2** | R8 is not implemented for `docs/responsive-storybook-inventory.md`, which §3.4 names. The file's own status line is "CANONICAL INVENTORY — update when stories are added/removed", and Task 788 already struck deleted Layout stories in it. The session log reclassified it as "frozen historical". | AC8 grep: 21 hits remain in that file. |
+| F7 | **P1** | Required evidence is missing or stale. There is no `docs/sessions/evidence/task852/` and no retained §13.2 transcript (build included), only prose summaries. The session log has no **Files Changed** table (clause 10, §14). `storybook-static` was built at 2026-09-25 23:05:17, but `MantineAppShellFoundation.tsx` was last written at 23:09:04, so the AC2/AC3 rendered evidence predates the final source. | `docs/sessions/evidence/` has no `task852`; file mtimes. |
+
+Non-blocking, no action required: `AdminLocaleSwitcher.pendingOverride` is a story-only prop on a production
+component. It stays for this task. A container/View split is the canonical long-term shape, and 877 or a later task
+may take it.
+
+### 16.2 Added requirements
+
+| ID | Closes | Observable requirement | P |
+|---|---|---|---|
+| **R11** | F1 | The `AdminSidebar` wordmark and nav groups sit inside a Mantine `ScrollArea` that takes the remaining height (style props `flex={1}` `mih={0}`, no `style` object). The footer `Stack` (switcher, open site, logout) is **outside** the `ScrollArea`, so it stays visible. The navbar itself no longer overflows. | P0 |
+| **R12** | F2 | `MantineAppShellFoundation` (the canonical owner, so every consumer gets it) behaves as follows below `navbarBreakpoint` while `opened`. `Escape` closes the navbar: `useHotkeys` from `@mantine/hooks`, calling the same toggle/close path as the burger. Focus moves into the navbar and stays trapped there: Mantine `FocusTrap` with `active` = opened **and** below the breakpoint. On close, focus returns to the burger (`useFocusReturn`). At or above the breakpoint, nothing is trapped and Esc does nothing. `Patterns/Mantine/AppShellFoundation` keeps working. | P1 |
+| **R13** | F3 | `MantineAppShellFoundation` gains `padding?: AppShellProps['padding']` (default `'md'`, so its Story is unchanged). `AdminShell` passes `padding={0}`. | P2 |
+| **R14** | F4 | `AdminShell` `DrawerOpen`'s `play` finds the burger by its localised name, `storyT(<locale from globals>, 'admin.mobile_header.aria_open')`, not an English regex. | P2 |
+| **R15** | F5 | The wordmark is a Mantine `Anchor component={Link} href="/admin" underline="never"` with the same `c`/`fw`/`size`, and `onClick={onNavigate}`. There is no `style=` in any of the four admin files. | P2 |
+| **R16** | F6 | `docs/responsive-storybook-inventory.md`: every row or anchor naming a deleted story (`admin-adminsidebar`, `admin-adminmobileheader`, `admin-adminlocaleswitcher`, `system-adminlayout`, `AdminMobileHeader`, `AdminLayout.stories`) is struck or annotated "deleted — Task 852 (2026-09-25), successor `Patterns/Mantine/<X>`". Follow the file's own Task 788 precedent: strike, keep history, one note line. The AC8 exception list in the session log is reduced to dated snapshots and one-off scripts: `docs/governance-reports/**`, `docs/reviews/artifacts/**`, `docs/backlog-archive.md`, `docs/backlog-reserved.md`, `docs/critical-flow-registry.md`, `scripts/task419-qa-shell-fullwidth.mjs`, and the `mantine-responsive-design-system.md:510` deletion record. | P2 |
+| **R17** | F7 | All evidence is retained under `docs/sessions/evidence/task852/`. That means every §13.2 command's full output with its exit code (tee each one to its own `.log`), `build-storybook` and `build` run **after** the last source edit, and the R11–R14 probe output. The session log gains a **Files Changed** table covering every path in `git status` that this task touched: created, edited or deleted, with a final `git hash-object` for each. Include the paths edited outside §7 (the doc and script reference-hygiene edits, `messages/uk.json` `item_footer`, `scripts/check-locale-leak.mjs`). Mark `scripts/mantine-migration-scope.json` as **shared with Task 869**: its `CmsPageView.tsx` line is 869's. | P1 |
+
+### 16.3 Added acceptance criteria
+
+Measure with a Playwright probe against a **fresh** `storybook-static` (built after the last source edit). Save the
+probe as `docs/sessions/evidence/task852/probe-shell.mjs`, never under `scripts/`, and its output as `probe-shell.json`.
+
+- **AC11 [R11]**: at 1440×900, 1280×720 and 1024×768 (`--default`), and at 390×844 with the burger opened, the last
+  `button`/`a` inside `[data-testid="admin-sidebar"]` (logout) has `getBoundingClientRect().bottom ≤ innerHeight`.
+  The `.mantine-AppShell-navbar` has `scrollHeight ≤ clientHeight + 1`. The nav `ScrollArea` viewport scrolls
+  (`scrollHeight > clientHeight`) at 1280×720. Quote the numbers.
+- **AC12 [R12]**: at 390×844, after the burger is clicked, `document.activeElement` is inside the navbar. Tabbing
+  25 times keeps it there. `Escape` returns the navbar to `transform: matrix(1, 0, 0, 1, -390, 0)` and moves focus
+  back to the burger. At 1440×900, `Escape` leaves the navbar at `transform: none`, and focus is not trapped (Tab
+  reaches `AppShell.Main` content). Quote each value.
+- **AC13 [R13]**: `AppShell.Main` computed `padding-left` = `240px` at 1440 and `0px` at 390, and `padding-top` =
+  `72px` at both. `Patterns/Mantine/AppShellFoundation` `Default` still has a non-zero padding (`md`).
+- **AC14 [R14]**: `patterns-mantine-adminshell--drawer-open` with `globals=locale:<l>` for each of sq/en/uk/it
+  gives navbar `transform: none` after the play function. That is 4 values.
+- **AC15 [R15]**: `git --no-optional-locks grep --untracked -n "style=" -- src/components/admin/AdminShell.tsx src/components/admin/AdminSidebar.tsx src/components/admin/AdminHeader.tsx src/components/admin/AdminLocaleSwitcher.tsx`
+  prints nothing, and AC1's grep still prints nothing.
+- **AC16 [R16]**: AC8's grep, with its output filtered to exclude the paths listed in R16, prints nothing.
+- **AC17 [R17]**: `docs/sessions/evidence/task852/` contains one `.log` per §13.2 command and the probe files. The
+  `build.log` and `build-storybook.log` mtimes are later than every changed source file's mtime (quote both). The
+  session log's Files Changed table matches `git status --short` for this task's paths, one row each.
+
+AC1–AC10 stay binding. Re-quote AC3 from the fresh build; the old measurement is superseded.
+
+### 16.4 Order
+
+R13 + R12 (foundation, and its Story if a state is needed to show the trap: no new export unless required) → R11 +
+R15 (`AdminSidebar`) → R14 (story) → R16 (doc) → `build-storybook` → probe (AC3, AC11–AC14) → the full §13.2 block,
+teed into the evidence root (`npm.cmd run check:locale-leak:mantine-only -- --fast` may replace the full run; it scans
+`mobile-320`, where the Footer leak appeared. It must still report zero `patterns-mantine-admin*` leaks; quote the
+report path) → Files Changed table → the 852 backlog line → status.
+
+`GR-4 AC AUDIT — 17 criteria; each states an observable property; absolutes: AC1/AC15 empty grep on five/four named files (a correct implementation has no match); AC16 grep with a named exclusion list.`

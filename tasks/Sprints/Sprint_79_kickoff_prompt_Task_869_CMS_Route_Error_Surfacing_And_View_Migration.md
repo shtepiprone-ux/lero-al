@@ -1,7 +1,7 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-25 (review 1) — evidence-only re-entry at §16; no code change**
+owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 2) — Story fix + full final gate block, re-entry at §17** (review 1, 2026-09-25: §16)
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -442,4 +442,129 @@ Update the 869 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR
 - §3.6 and §8 still hold for 869: the executor does not sanitise the body.
 - That work is now **Task 884** (filed 2026-09-25 by owner instruction), which runs after 869 and edits the same
   `CmsPageView` expression.
-- O79-5 (owner visual matrix, §13.3) can run now against the current Story.
+- O79-5 (owner visual matrix, §13.3) can run now against the current Story. *(Superseded by §17.2: run it after
+  revision 2.)*
+
+---
+
+## 17. Revision 2 — review 2026-09-26 (`NEEDS REVISION`)
+
+§16 is closed for RF1: the session log exists. RF2 is **not** closed, and review 2 found the reason. The route, the
+view, the test, the CSS token and the manifest line are still accepted. Their hashes equal `13.2-hash-object.log`:
+
+| File | Hash |
+|---|---|
+| `page.tsx` | `2ee5e364af8500a41699f0cc3b9b6feba0673514` |
+| `CmsPageView.tsx` | `502a624b5e97220c43b5c5d49049a48866ef0148` |
+| `page.errors.test.ts` | `bc11d062bb2b72df172d50aa222b6166c8cfcd1b` |
+| `globals.css` | `ca6c3182bafa647a9ef631ac57db8787525e4776` |
+
+**Only the Story is wrong.**
+
+| # | Severity | Finding | Evidence |
+|---|---|---|---|
+| RF3 | P1 | **`RichBody` shows English text in every locale.** Its body is the English-only `RICH_BODY` constant, whatever the toolbar locale is. This breaks R8. §16.1 also said a leak in this Story "is a real finding". | Two independent scans each report **15** leaks in `Patterns/Mantine/CmsPageView/Rich Body`: 5 text nodes (`Section heading`, `A paragraph with`, `First item`, `Second item`, `A long unbroken token: …`) × `sq`/`uk`/`it` at `mobile-320`. The reports are `.screenshots/locale-leak/2026-09-25T21-05/report.json` (mantine-only, full, 236 scanned) and `…/2026-09-25T22-12/report.json` (mantine-only, fast). The source is `CmsPageView.stories.tsx:82-87` (the constant) and `:133-138` (`RichBody` renders it for every locale). |
+| RF4 | P1 | **The "zero leaks from `CmsPageView`" claim is false. The run it cites never scanned the Story.** The session log's GR-2 receipt and `13.2-check-locale-leak.log` both make the claim. The later scans report CmsPageView leaks that do not depend on the run, but the cited run has no CmsPageView entry at all. | The cited run (`2026-09-25T18-04/report.json`) scanned 381 stories. It has **no** `CmsPageView` entry. The current `storybook-static/index.json` has 414 stories, including all 5 `patterns-mantine-cmspageview--*` ids. The scan reads its story list from `storybook-static/index.json` (`scripts/check-locale-leak.mjs:341-382`), and `storybook-static` was only rebuilt with the Story at 21:58 by `r1-build-storybook`. `13.2-check-locale-leak.log` is a hand-written summary with mtime 21:52. Review 1 was committed at 21:18, so the file was written after it, yet it is named as a first-pass §13.2 artifact. |
+| RF5 | P2 | **No gate block covers the final diff.** The Story changed after the §13.2 block (`bcf08047…` → `7ab94704…`). The session log says `lint` and `typecheck` were re-run in `r1-*.log`, but no `r1-lint.log`, `r1-typecheck.log` or `r1-build.log` exists. `tsconfig.json` includes `**/*.tsx`, so `next build` type-checks the Story, which makes `13.2-build.log` stale. That breaks AC6 and AC8. | `docs/sessions/evidence/task869/` listing; `tsconfig.json` `include` |
+
+**NOTE, not a finding.** §16.1 said the Story must not change, but the r1 rewrite changed it anyway. This revision
+now puts that rewrite in scope. The tag helpers (`h2`/`p`/`ul`/`li`/`link`) stop `check-stories.mjs`'s per-line
+`jsx-text-literal` scan from seeing any fixture text in this file. That hid RF3's true positives along with the
+false ones. **For this Story, the rendered `check:locale-leak` scan is therefore the binding check, not
+`check:stories`.** The helpers may stay.
+
+### 17.1 Re-entry (mode: `remediation`)
+
+**Write scope is exactly two things:**
+
+1. `src/stories/patterns/mantine/CmsPageView.stories.tsx`
+2. Evidence and state: `docs/sessions/2026-09-25-task869-cms-route-error-surfacing.md`,
+   `docs/sessions/evidence/task869/**`, and the 869 cell of `docs/backlog.md`.
+
+No other file may change. `page.tsx`, `CmsPageView.tsx`, `page.errors.test.ts` and `globals.css` must keep the hashes
+in the table above.
+
+**Shared-file warning.** `scripts/mantine-migration-scope.json` and `docs/backlog.md` also hold uncommitted Task 852
+hunks from a concurrent session. Do not touch 852's lines. Prove 869's manifest line by content, not by the file hash
+(see the `r2-manifest-diff.log` expectation in S2).
+
+**S1 — Story fix (RF3).**
+
+- Every Story whose visible text depends on the locale must take that text from the toolbar locale's `FIXTURES` entry.
+- Move the rich-body content into each locale entry, e.g. a `richBody` field built with the same helpers. It must keep
+  the §11 elements: `h2`, `p`, `ul`, `a`, and one long unbroken token.
+- `RichBody` renders `fixture.richBody`.
+- The long token may stay a URL. Its label text is localised like every other string.
+- `LongTitleWrap` stays the fixed `uk` title (§13.3 cell 4).
+- Do not add an entry to `check-locale-leak.mjs`'s `PER_STORY_TOKENS`, or to any other allowlist. Do not change any
+  detector. If a leak remains that only an allowlist would silence, stop and report `BLOCKED` with the token.
+
+**S2 — final gate block, one pass, after S1.** Run from the project root in Windows PowerShell. Each command writes
+to its own `r2-*.log` and appends its own `EXIT_CODE`. Normalise the `Tee-Object` files to UTF-8 without BOM through
+Node, as in §16.1.
+
+```powershell
+$ev = "docs\sessions\evidence\task869"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r2-platform.log"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r2-typecheck.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-typecheck.log"
+npm.cmd run lint *>&1 | Tee-Object "$ev\r2-lint.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-lint.log"
+npm.cmd run test -- "src/app/[locale]/[slug]/__tests__/page.errors.test.ts" *>&1 | Tee-Object "$ev\r2-test.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-test.log"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\r2-check-design-tokens.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-design-tokens.log"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\r2-check-story-coverage.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-story-coverage.log"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\r2-check-rendered-scope.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-rendered-scope.log"
+npm.cmd run check:pattern-enrolment *>&1 | Tee-Object "$ev\r2-check-pattern-enrolment.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-pattern-enrolment.log"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\r2-check-i18n.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-i18n.log"
+npm.cmd run check:i18n-hardcode *>&1 | Tee-Object "$ev\r2-check-i18n-hardcode.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-i18n-hardcode.log"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r2-check-file-integrity.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-file-integrity.log"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r2-check-mojibake.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-mojibake.log"
+node.exe scripts\check-surface-census.mjs --surface "src/app/[locale]/[slug]/page.tsx" *>&1 | Tee-Object "$ev\r2-census.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-census.log"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r2-build-storybook.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-build-storybook.log"
+node.exe -e "const r=require('./storybook-static/index.json');const ids=Object.keys(r.entries).filter(k=>k.startsWith('patterns-mantine-cmspageview--')&&r.entries[k].type==='story');console.log('cms stories in index:',ids.length);ids.forEach(i=>console.log(i))" *>&1 | Tee-Object "$ev\r2-index-cms.log"
+npm.cmd run check:locale-leak:mantine-only *>&1 | Tee-Object "$ev\r2-check-locale-leak.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-check-locale-leak.log"
+node.exe -e "const fs=require('fs'),p='.screenshots/locale-leak';const d=fs.readdirSync(p).sort().pop();const r=JSON.parse(fs.readFileSync(p+'/'+d+'/report.json','utf8'));const c=r.leaks.filter(l=>l.storyLabel.startsWith('Patterns/Mantine/CmsPageView/'));console.log('report',d,'mode',r.mode,'mantineOnly',r.mantineOnly,'scanned',r.storiesScanned,'leakCount',r.leakCount,'cmsLeaks',c.length);c.forEach(l=>console.log(l.storyLabel,l.locale,l.viewport,l.token))" *>&1 | Tee-Object "$ev\r2-locale-leak-cms.log"
+npm.cmd run build *>&1 | Tee-Object "$ev\r2-build.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\r2-build.log"
+git --no-optional-locks hash-object "src/app/[locale]/[slug]/page.tsx" src/modules/cms/components/CmsPageView.tsx src/stories/patterns/mantine/CmsPageView.stories.tsx "src/app/[locale]/[slug]/__tests__/page.errors.test.ts" src/app/globals.css | Tee-Object "$ev\r2-hash-object.log"
+git --no-optional-locks diff -U0 -- scripts/mantine-migration-scope.json | Tee-Object "$ev\r2-manifest-diff.log"
+git --no-optional-locks status --short | Tee-Object "$ev\r2-git-status.log"
+```
+
+**Expected output (the ACs in S3 bind on these):**
+
+- **Commands that must exit 0.** `typecheck`, `lint`, `test` (4/4), every `check:*` except `locale-leak`,
+  `build-storybook` and `build` each end `EXIT_CODE=0`.
+- **Census.** `r2-census.log` shows the AC2 shape: 2 nodes, and exit 1 is expected for the baselined route block.
+- **Index.** `r2-index-cms.log` prints `cms stories in index: 5`.
+- **Locale-leak report.**
+  - The `report` directory named in `r2-locale-leak-cms.log` must equal the `Output:` directory printed in
+    `r2-check-locale-leak.log`. If a concurrent session wrote a newer report in between, the directories will not
+    match: re-run the last two commands.
+  - Its `cmsLeaks` must be **0**.
+  - The aggregate `EXIT_CODE` of `check:locale-leak:mantine-only` is recorded, not required to be 0. The repo-wide red
+    is pre-existing (Task 836). This is the scoped reading of AC6's `check:locale-leak` clause.
+- **Hashes.** `r2-hash-object.log`'s lines 1, 2, 4 and 5 equal the table in §17. Line 3 is the new Story hash.
+- **Manifest diff.** `r2-manifest-diff.log` contains exactly one `+  "src/modules/cms/components/CmsPageView.tsx",`
+  line. Any other `+` lines there are 852's; name them as such.
+
+**S3 — acceptance for this revision.**
+
+- **AC6-r2.** `r2-locale-leak-cms.log` shows `cmsLeaks 0`, from a report whose directory matches the run's `Output:`
+  line, taken after `r2-index-cms.log` showed 5 CmsPageView stories.
+- **AC8-r2.** `r2-build.log` ends `EXIT_CODE=0` in the same pass as `r2-hash-object.log`.
+
+**S4 — session log and state.**
+
+1. Correct the session log. Mark `13.2-check-locale-leak.log`, `r1-check-locale-leak.log` and every `r1-*` gate log
+   as **superseded by `r2-*`**.
+2. Delete the "0 attributable" claim and the GR-2 receipt built on it.
+3. Write a new `GR-2 SCOPE STATED` receipt. It must name the index check as the evidence that the scan saw the Story.
+4. Update the "Files Changed" table.
+5. Record the Story hash change and RF3's fix.
+6. Set the 869 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 2).
+
+### 17.2 Unchanged by this review
+
+- R1–R7 and AC1–AC3, AC5 and AC7 stay accepted on the hashes above.
+- AC4 is still the owner's O79-5 matrix (§13.3). **Run O79-5 after revision 2**, because the `RichBody` content changes.
+- §3.6 and §8 still hold. Sanitisation is Task 884.
+- **Note for the approval handoff (Opus).** `scripts/mantine-migration-scope.json` and `docs/backlog.md` are shared with
+  Task 852's uncommitted work. The approval handoff must reconcile them hunk by hunk, or run after 852 is committed.

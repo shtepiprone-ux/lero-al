@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🔁 NEEDS REVISION 2026-09-26 (review 8 — R27–R31 accepted; the new `Drawer` does not bound the sidebar, so the footer/logout falls below the fold again (AC11 regression), and GR-0 missed the canonical `MantineDrawer`) — re-entry in §23; READY FOR SONNET**
+**Status: 🟡 PARTIALLY VERIFIED 2026-09-26 (review 9 — R32/R33 accepted; only the owner Storybook pass AC41 remains) — §24; no executor action owed**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -739,3 +739,52 @@ P3 notes, carried to the archive row:
    `true` while the `Drawer` is unmounted.
 
 `GR-4 AC AUDIT — 4 new criteria; each states an observable property; absolutes: AC43 value identity on the default drawer is the no-regression property itself.`
+
+## 24. Review 9 — PARTIALLY VERIFIED (2026-09-26): pending the owner pass (AC41)
+
+**R32 and R33 are accepted.** Evidence:
+
+- `MantineDrawer.tsx` exports `drawerFlexColumnStyles`. `MantineDrawer` consumes it and keeps its own `padding: 0`.
+  `MantineAppShellFoundation`'s `Drawer` passes it as `styles`.
+- Sources were last edited at 14:00–14:04. `46-build-storybook-review8.log` (14:08) and `52-build-review8.log` (14:12)
+  both ran later and both exit 0. The hashes in `55-hash-object-review8.log` equal the working tree.
+- The AC43 "before" values were captured from the 13:40 build, which predates the edit, and they are identical after.
+
+Reviewer re-measurement, uk, win32 / Node v22.22.3, drawer open:
+
+| Viewport | Drawer content client/scroll | Logout bottom | Nav `ScrollArea` client/scroll |
+|---|---|---|---|
+| 390×844 | 844/844 | 820 | 566/980 |
+| 768×1024 | 1024/1024 | 1000 | 746/980 |
+| 768×600 | 600/600 | 576 | 322/980 |
+
+Also measured:
+
+- Esc closes the drawer, and focus returns to the burger.
+- A keyboard `Enter` on the burger moves focus inside the drawer.
+- The body keeps its `sm` (12px) padding.
+
+**P3 note 6 is resolved.** The `DrawerOpen` `play` now leaves focus inside the drawer at 390×844 and 768×600.
+
+**Formalised: the owner-reported `AdminSidebar` story padding.** The decorator gains `p="sm"`. This reproduces
+production: `AppShell.Navbar p="sm"` and the `Drawer`'s `padding="sm"` inset the sidebar at every width. Reviewer
+measurement in production composition gives an `admin-sidebar` width of 366 at 390 and 216 at 768, the same as the
+story. This **supersedes** the sidebar-element width of 240 in AC22 (§19) and AC38 (§22). The container (navbar or
+drawer) stays 240. The padded `admin-sidebar` is 296/366 at 320/390 and 216 from 640 up.
+
+**Open, owner only: AC41.** Open these through the toolbar at 320/390/768/1024/1440, in sq/uk/it:
+
+- `patterns-mantine-adminsidebar--default`, `--management-active`, `--content-active`, `--system-active`;
+- `patterns-mantine-adminlocaleswitcher--idle`, `--pending`;
+- `patterns-mantine-adminshell--default`, `--drawer-open`.
+
+Check three things:
+
+- below 640, the drawer is full width;
+- from 640 to 1023, it is a 240px overlay;
+- from 1024 up, the sidebar is fixed.
+
+In the open drawer, logout must be visible without scrolling. When every Story is accepted, the next review approves
+and archives. A returned Story reopens the task with the concrete defect.
+
+P3 note 7 (the drawer reopens after a resize across 1024) is carried to the archive row.

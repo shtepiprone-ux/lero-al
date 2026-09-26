@@ -1,7 +1,7 @@
 # Task 869 — the CMS route stops swallowing its read error, and its view leaves dead Tailwind
 
 Sprint 79 · P1 · QA profile **Q3** (migrated page view + new canonical Mantine Story) · sequenced after **867** ·
-owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 4) — owner returned O79-5: the fonts are not responsive; re-entry at §19** (review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
+owner action **O79-5** · **Status: `NEEDS REVISION` 2026-09-26 (review 5) — type scale accepted; a long unbroken token scrolls the page horizontally at every width; re-entry at §20** (review 4: §19; review 3: §18; review 2: §17; review 1, 2026-09-25: §16)
 
 Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
@@ -706,4 +706,95 @@ it to `r3-type-measure.log`, one line per tuple.
   the status line match the handoff. Set the 869 cell of `docs/backlog.md` to
   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 3).
 
-**Then O79-5 runs again**, with the full §13.3 matrix plus §18 cell 6.
+**Then O79-5 runs again**, with the full §13.3 matrix plus §18 cell 6. *(Superseded by §20: run it after revision 4.)*
+
+---
+
+## 20. Revision 4 — review 5, 2026-09-26 (`NEEDS REVISION`)
+
+**Revision 3 is accepted.** These match §19:
+- `CmsPageView.tsx:23` has `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`;
+- `typography-chrome.css` implements §19.1 using `var(--mantine-…)` references only;
+- `layout.tsx` and `preview.tsx` each gain exactly one import line, loaded after `@mantine/core/styles.css`;
+- the hashes of `page.tsx`, the test, `globals.css` and the Story are unchanged.
+
+The reviewer's own `getComputedStyle` measurement matches §19.1 in every band, including 640px, which
+`r3-type-measure.log` did not cover:
+
+| Width | Title | Rich-text `h2` | `p` |
+|---|---|---|---|
+| 320 | 20px | 18px | 16px |
+| 640 | 24px | 20px | 16px |
+| 1440 | 30px | 24px | 16px |
+
+The same values hold for `rich-body` in `en` and `uk`, and for `default` in `sq`.
+
+| # | Severity | Finding | Evidence |
+|---|---|---|---|
+| RF9 | P1 | **A long unbroken token in the CMS body scrolls the whole page horizontally, at every width.** In `RichBody`, the 120-character URL does not wrap and runs out of its `<p>`. This breaks the §11 negative flow (*"Wraps inside the measure; no horizontal page scroll at 320px"*) and AC4. Real CMS content with a long URL does the same on the public route. | Reviewer probe against `storybook-static`, `rich-body`, `en`/`uk`: `document.documentElement.scrollWidth` is **1260** at a 320 viewport and **1580** at 1440. No element box exceeds the viewport, so the overflow is inline text. `default`/`sq`: no overflow. Neither Mantine's `Typography.css` nor `typography-chrome.css` sets `overflow-wrap`/`word-break`. |
+| RF10 | P2 | **The GR-3b receipt omits the overflow measurement GR-3b requires.** It checks the Story source (no decorator, style or pin) but records no `overflow` result per width. The session log lists the unwrapped token as a known limitation *"left for O79-5 to judge"*. GR-3b requires the executor to measure and report `overflow: none`, not defer it to the owner. | session log, the `GR-3b STORY RESPONSIVE CHECK` line and the "Assumptions, deviations, and limitations" bullet on `LongTitleWrap`/`RichBody`; `docs/golden-rules.md` GR-3b |
+| RF11 | P2 (orchestrator) | **The kickoff made the fix impossible.** §8 forbade *"any replacement typography CSS"*, while §11 required the token to wrap. That was a scope contradiction in the kickoff. Since §19, 869 owns `typography-chrome.css`, the canonical rich-text chrome, so the wrapping rule belongs there. | §8, §11 of this file |
+
+### 20.1 Re-entry (mode: `remediation`)
+
+**§8 is amended for one declaration.** The canonical rich-text chrome may carry the body's wrapping rule. §8's ban on
+`@tailwindcss/typography`, `@plugin` and any other replacement typography CSS still holds.
+
+**Write scope is exactly this:**
+1. `src/design-system/mantine/typography-chrome.css`: add one rule before the heading rules, with a comment that cites
+   §11 and this §20:
+
+   ```css
+   .mantine-Typography-root {
+     overflow-wrap: anywhere;
+   }
+   ```
+
+   Use `anywhere`, not `break-word`. `anywhere` also lowers the min-content width, so the body cannot force its
+   container wider in a flex or grid parent. No other declaration changes.
+2. Evidence and state: the session log, `docs/sessions/evidence/task869/r4-*`, and the 869 cell of `docs/backlog.md`.
+
+**Must stay unchanged:**
+
+| File | Hash |
+|---|---|
+| `page.tsx` | `2ee5e364…` |
+| `CmsPageView.tsx` | `6863f474…` |
+| `CmsPageView.stories.tsx` | `8c5f731a…` |
+| `page.errors.test.ts` | `bc11d062…` |
+| `globals.css` | `ca6c3182…` |
+| `layout.tsx` | `48cc96e7…` |
+| `.storybook/preview.tsx` | `f066f692…` |
+
+### 20.2 Final gate block (one pass, after 20.1)
+
+Run it as in §17.1 S2 (Windows PowerShell, `Tee-Object`, `EXIT_CODE` appended, normalised to UTF-8 without BOM
+through Node), using the `r4-` log prefix and only these commands:
+- `check:design-tokens`, `check:file-integrity`, `check:mojibake`, `build-storybook` and `build`;
+- `git hash-object` of the eight files in 20.1;
+- `git --no-optional-locks status --short`.
+
+Then extend the throwaway `.artifacts/` probe to write `r4-measure.log`, one line per tuple:
+- **Stories:** all 5 `patterns-mantine-cmspageview--*`.
+- **Locales:** `en` and `uk`.
+- **Widths:** 320, 390, 640, 768, 1024 and 1440.
+- **Record, per tuple:**
+  - `document.documentElement.scrollWidth` and `innerWidth`;
+  - the title's computed `fontSize`;
+  - the body `h2`, `p` and `li` computed `fontSize`.
+
+### 20.3 Acceptance for this revision
+
+- **AC11 [RF9].** `r4-measure.log` shows `scrollWidth <= innerWidth` at every tuple, including `rich-body` at 320.
+- **AC12 [§19.1].** In the same log, every font size equals §19.1. The 640 tuples show title 24px and body `h2` 20px.
+- **AC8-r4.** `r4-build.log` and `r4-build-storybook.log` end with `EXIT_CODE=0`, in the same pass as
+  `r4-hash-object.log`. The other hashes equal the table in 20.1.
+- **Receipts.**
+  - `GR-3b STORY RESPONSIVE CHECK` for each of the 5 Stories, with the **measured** `overflow` at 320/390/1024/1440
+    (RF10).
+  - `GR-3c TYPE RESPONSIVE CHECK` for each of the 5 Stories.
+- **Session log.** Record revision 4. Delete the "left for O79-5" limitation bullet and replace it with the measured
+  result. Set the 869 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 4).
+
+**Then O79-5 runs**: the §13.3 matrix plus §18 cell 6.
+

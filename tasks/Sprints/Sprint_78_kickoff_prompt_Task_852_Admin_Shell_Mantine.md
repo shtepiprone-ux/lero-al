@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🔁 NEEDS REVISION 2026-09-26 (review 5 — §19 Story fixes accepted; desktop locale trigger does not fill: extend `MantineDropdownMenu` with `fullWidthTrigger`) — re-entry in §20; READY FOR SONNET**
+**Status: 🟡 PARTIALLY VERIFIED 2026-09-26 (review 6 — code and evidence accepted; pending the owner Storybook pass, §21)**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -574,3 +574,30 @@ Order: AC31 "before" measurement → R24 → R25 → R26 → `build-storybook` �
 re-entry", Files Changed rows with hashes for the three files) → the 852 backlog line → status.
 
 `GR-4 AC AUDIT — 5 new criteria; each states an observable property; absolutes: AC31 width identity on the default branch is the no-regression property itself.`
+
+## 21. Review 6 — PARTIALLY VERIFIED (2026-09-26): pending the owner pass (AC34)
+
+R24–R26 are accepted. Evidence:
+- `33-build-storybook-review5.log` (10:52) and `37-build-review5.log` (10:57), both after the last source edit
+  (10:50), both exit 0.
+- `typecheck` re-run by the reviewer: exit 0.
+- Reviewer measurement, uk: `adminlocaleswitcher--idle` trigger/box 366/366 at 390 (bottom sheet opens) and
+  216/216 at 1440 (anchored `Menu` opens); the new `dropdownmenu--default` block 358/358 and 1342/1342; no overflow.
+- AC31 before/after: the default-branch triggers are unchanged (51.30 / 166.48 / 166.48).
+
+**Open, owner only (AC34 plus the §17 remainder).** Re-open these at 320/390/1024/1440 through the toolbar, in sq/uk/it:
+- `patterns-mantine-adminsidebar--default`, `--management-active`, `--content-active`, `--system-active`;
+- `patterns-mantine-adminlocaleswitcher--idle`, `--pending`;
+- `mantine-primitives-localeswitcher--default`;
+- `patterns-mantine-appshellfoundation--default`, `--with-slots`;
+- `mantine-primitives-dropdownmenu--default` (the last block).
+
+This look also stands in for `check:locale-leak`, which the owner declined. When every Story is accepted, the next
+review approves and archives.
+
+P3 notes, carried to the archive row:
+
+4. `MantineDropdownMenu`'s two desktop branches repeat the identical `Menu` block; only the wrapper differs. A later
+   touch may collapse them into one branch with conditional wrapper props.
+5. `typecheck` for review 5 was not retained as a log. The reviewer re-ran it (exit 0), and `next build`'s type check
+   also passed.

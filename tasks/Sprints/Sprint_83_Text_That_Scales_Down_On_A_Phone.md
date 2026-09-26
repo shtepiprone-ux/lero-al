@@ -53,6 +53,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 1. **886 runs after 869 is approved.** 886 switches `CmsPageView`'s title to the shared constant, and 869 owns that
    file until its review closes.
+1a. **886 runs after 853 is approved** (added 2026-09-26 by 853's review 1). 853 R12 makes the dashboard header and KPI value responsive itself, and removes legacy site L1 (886 §3.1a).
 2. If **884** is in flight at the same time, 886 edits only the `Title` line of `CmsPageView.tsx`. 884 owns the body
    expression.
 

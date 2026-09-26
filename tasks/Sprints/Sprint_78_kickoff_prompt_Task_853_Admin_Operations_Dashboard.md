@@ -1,7 +1,8 @@
 # Task 853 — `/admin` becomes the spec's operations dashboard (P0 blocks), composed only from the Sprint 78 patterns
 
 Sprint 78 · P1 · QA profile **Q3** · Wave C · depends on **843, 844, 845, 846, 847, 852** approved ·
-**Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+**Status: 🔁 NEEDS REVISION (review 2, 2026-09-27) — revision 2 route in §17; start at §17.4** (review 1's §16 is
+closed: R10–R15 accepted, do not redo)
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -145,6 +146,10 @@ kickoffs 843–847, 852.
 - **Edited:** `src/app/admin/page.tsx` · `src/components/admin/AdminDashboardRecentListings.tsx` ·
   `scripts/mantine-migration-scope.json` (2) · `scripts/surface-census-baseline.json` (writer only) ·
   `messages/{sq,en,uk,it}.json` · `docs/backlog.md` (853 line).
+- **Added by review 1 (§16):** `src/design-system/mantine/patterns/MantineDashboardHeader.tsx` (title `fz` only) ·
+  `src/design-system/mantine/patterns/MantineDashboardStatCard.tsx` (value `fz` only) — R12. Accepted as already
+  done, no further edit: `scripts/check-listing-visibility.mjs` (stale `src/app/admin/page.tsx` row removed —
+  agent-contract 9) · `scripts/check-locale-leak.mjs` (`/^(Spam)$/` loanword entry — §16.3).
 
 ## 8. Out of scope
 
@@ -166,7 +171,8 @@ has its own error, zero and loading states.
 3. Rebuild `AdminDashboardRecentListings` (R4), then its Story.
 4. Replace `page.tsx` (R2/R3). Keep `getAdminLocale()`.
 5. Stories (GR-3a, §12), enrolment, i18n (R6), baseline writer (R8).
-6. **Live proof** (dev server, staff session; if unavailable, record that and give the tuples to the owner):
+6. **Live proof** (dev server, staff session from O853-1 — §16.5 step 1; without it the status is
+   `PARTIALLY IMPLEMENTED — O853-1`):
    - `/admin` at 1440, 1024, 768, 390 and 320;
    - temporarily force one block's error by making 847's ADM-02 query name a non-existent column, **only in the
      running dev server**; record the rendered error + Retry; revert with a `git hash-object` equal to before;
@@ -202,12 +208,15 @@ recent listings. Clicking a pending listing opens its staff preview.
 - **AC4 [R3, R6]** — Given the live page under the admin locale `en`, when a count ≥ 1000 renders, then it uses the
   English grouping (e.g. `1,240`); under `sq`, the Albanian format. And `check:i18n` exits 0.
 - **AC5 [R4, R5]** — Given
-  `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx`,
-  when run, then it prints nothing.
-- **AC6 [R4, R7]** — Given `check:story-coverage`, `check:pattern-enrolment` and
-  `node.exe scripts\check-surface-census.mjs --surface src\app\admin\page.tsx`, when run, then the gates exit 0. The
-  census shows `AdminDashboardView` and `AdminDashboardRecentListings` `manifest:yes story:yes`, no tier-2 node, and
-  the page root row with `className:0`.
+  `git --no-optional-locks grep --untracked -n -E "className=|style=\{|components/ui/|buttonVariants|\bcn\(|AdminPageHeader|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/app/admin/page.tsx src/components/admin/AdminDashboardRecentListings.tsx src/modules/admin/dashboard/components/AdminDashboardView.tsx src/stories/patterns/mantine/AdminDashboardRecentListings.stories.tsx src/stories/patterns/mantine/AdminDashboardView.stories.tsx`,
+  when run, then it prints nothing. *(Review 1: `style=\{` and the two Story files added.)*
+- **AC6 [R4, R7]** — Given `check:story-coverage` and `check:pattern-enrolment`, when run, then both exit 0. Given
+  `node.exe scripts\check-surface-census.mjs --surface src\app\admin\page.tsx`, when run, then its node list shows
+  `AdminDashboardView` and `AdminDashboardRecentListings` `manifest:yes story:yes className:0`, no tier-2 node, and
+  its **only** `FAIL` line is the route root `src/app/admin/page.tsx [tier1-unenrolled-or-unstoried]` with
+  `className:0` — the baselined route row §3 keeps (route files carry no Story). That single root FAIL makes the
+  command exit 1; any other FAIL line fails this AC. *(Review 1: the original "exit 0" was unsatisfiable — the
+  standalone command has no baseline; the baseline-aware gate is AC7's `--base HEAD`, which must exit 0.)*
 - **AC7 [R8]** — Given `git --no-optional-locks diff -- scripts/surface-census-baseline.json`, when read, then only the
   named `src/app/admin/page.tsx :: …` rows are removed and none added; `check-surface-census-changed.mjs --base HEAD`
   exits 0.
@@ -259,16 +268,21 @@ git --no-optional-locks hash-object src/app/admin/page.tsx src/components/admin/
 ```
 
 Expected: all exit 0 except `check:locale-leak:mantine-only` (known red, Task 836) — zero leak lines for
-`patterns-mantine-admindashboard*`; quote the grep. The `git grep` prints nothing.
+`patterns-mantine-admindashboard*`; quote the grep. The `git grep` prints nothing. **Review 1 amendments to this
+block's expectations — they replace the sentence above where they differ:**
+- `check:listing-visibility` exits **1** with exactly one finding, `src/modules/listings/actions/contactEvents.ts:50`
+  (red on `main` since Task 850; owned by **887**). Record it as `exit 1 — expected, 887`, never as `PASS`. Any other
+  finding fails the task.
+- `check-surface-census.mjs --surface …` exits **1** only on the route root row (AC6).
+- `check:locale-leak:mantine-only` runs as `npm.cmd run check:locale-leak:mantine-only -- --fast` (orchestrator
+  decision, review 1: the full run did not complete in this environment for 869 or 853). Emit the GR-2 receipt
+  naming the one viewport `--fast` renders and the viewports it does not.
+- `npm.cmd run build`, `build-storybook` and the `git hash-object` line run **after the last source edit**, in the
+  same pass (Corollary 818).
 
-Owner-native, staff session, dev server on port 3000:
-
-```powershell
-$env:BASE_URL = "http://localhost:3000"
-npm.cmd run check:hydration -- --with-admin
-```
-
-Expected exit 0.
+~~Owner-native `check:hydration -- --with-admin`, expected exit 0.~~ **Withdrawn by review 2 (F10, §17.1):** that
+gate never navigates `/admin` and its two admin routes are `404`, so it cannot prove anything for this task. The
+`/admin` hydration evidence is §17.3's live console capture instead; the gate's defect is **888**.
 
 ### 13.3 Owner visual review — `OWNER VISUAL QA REQUIRED`
 
@@ -307,3 +321,187 @@ Update the 853 line of `docs/backlog.md`; session log with Files Changed.
 | 791 lesson | R2 + AC3 read the full server log. |
 | Hardcode | AC5 grep; everything from patterns/theme. |
 | Commands in blocks | §13.2 (executor + owner-native). |
+
+## 16. Review 1 — `NEEDS REVISION` (2026-09-26)
+
+Reviewed against the uncommitted worktree. Implementation hashes: `page.tsx` `74b26361`,
+`AdminDashboardRecentListings.tsx` `f246ab45`, `AdminDashboardView.tsx` `e10ad898`, `surface-census-baseline.json`
+`a2f9a915`. Session log: `docs/sessions/2026-09-26-task853-admin-dashboard.md`. Everything not named below is
+accepted and must not be redone.
+
+### 16.1 Confirmed defects
+
+| # | Sev | Where | Measured by the reviewer (win32 v22.22.3, local `storybook-static`) | Fixed by |
+|---|---|---|---|---|
+| F1 | P1 | `AdminDashboardRecentListings.tsx:61-98` | Every row is one `nowrap` horizontal split at every width. At 320 the title renders **17 / 0 / 100 px** wide in a 288 px row (`en`) and **0 / 0 / 51 px** (`uk`). At 390 `uk` it renders **38 / 20 / 121 px** of 358. The title is the control that opens the preview (Epic K §11). The badge and "about 2 hours ago" (136–168 px) take the rest of the row. R9 ("every list row full width") and agent-contract 11 fail. The executor's GR-3b receipt measured only document overflow, so it could not see this. `MantineDashboardWorkList` fixed the same defect on 2026-09-18 (owner correction, `MantineDashboardWorkList.tsx:135-160`). | R10, AC9 |
+| F2 | P2 | `AdminDashboardRecentListings.tsx:62`, `:66` | `style={{ minWidth: 0, flex: 1 }}` and `style={{ minWidth: 0 }}` are `style` objects in migrated UI (GR-0). The canonical idiom is the style props `flex={1} miw={0}` (`MantineDashboardWorkList.tsx:165`). AC5's grep had no `style=` term, so it passed. | R11, AC5 |
+| F3 | P2 | `MantineDashboardHeader.tsx:56`, `MantineDashboardStatCard.tsx:139` (both rendered by this surface) | GR-3c, measured on `patterns-mantine-admindashboardview--default` (`uk`): the H1 "Dashboard" is **24 px** and every StatCard value is **30 px** at 320 / 390 / 768 / 1440. Both are static. The H1 is a page heading above 20 px below 640; the value is ≥ 24 px text with no responsive step. Task 886 lists the header (S2) but **misses the StatCard value**. Its scanner reads `<Title>` tags and literal keys, and this site is `<Text fz={theme.headings.sizes.h3.fontSize}>`. The only production consumer of either file is `AdminDashboardView`, so both are fixed here (R12); 886 §3.5 records the handover. | R12, AC10 |
+| F4 | P2 | `AdminDashboardRecentListings.stories.tsx:53`, `:64`, `:83` | Each Story wraps the component in `Box maw={theme.other.boxSize.dashboardContentMaxWidth} px py`, a max-width container on a theme token (GR-3b). It also skips the real parent: in production the list sits inside `MantineDashboardCard` (`AdminDashboardView.tsx:377-392`), so the Story does not reproduce the production width. | R13, AC11 |
+| F5 | P2 | `AdminDashboardRecentListings.tsx:50-103`; the `Empty` Story | R1: when `recentListings.ok` returns 0 rows, the card body is blank, with no empty text. The `Empty` Story renders nothing. | R14, AC12 |
+| F6 | P3 | `AdminDashboardView.tsx:169`, `:317`, `:383` | A location-request row reads "Review →" and the pattern also appends a `ChevronRight`, giving a double arrow (measured: `"Flutura LleshiElbasanReview →"`). The other rows use `worklist_cta_review` ("Review"). The footer "View all →" and the header "All listings →" carry text arrows that no other dashboard link has. | R15, AC13 |
+| F7 | P2 | session log, "Final gate block" | Three evidence defects. (a) `check:listing-visibility` is recorded as **PASS**, but it exits **1**. The reviewer's re-run printed `❌ 1 issue(s) — gate FAILED` for `contactEvents.ts:50`. The finding is real and pre-existing (Task 850, 2026-09-20) but was untracked; it is now **887**. (b) `.next/BUILD_ID` is stamped 15:32:45, before the last edit to `AdminDashboardRecentListings.tsx` (15:33:45), so the build transcript is stale. (c) `check:locale-leak:mantine-only` ran as `--fast` without a GR-2 scope statement. | §13.2 amendments, §16.5 |
+
+The orchestrator's own defects in this kickoff are corrected in place:
+- AC6 demanded exit 0 from a command that has no baseline; it is reworded.
+- AC5's grep lacked `style=\{` and the Story files; both are added.
+- There was no GR-3c type-scale table; it is now §16.4.
+
+### 16.2 New requirements and acceptance criteria
+
+| ID | Requirement | P |
+|---|---|---|
+| **R10** | Below `sm`, each recent-listing row stacks. The whole row stays **one** `UnstyledButton`: one tab stop that opens the preview. Line 1 is the `Avatar` plus a column holding the title (`lineClamp={2}`, full column width, premium star beside it) and the owner name. Line 2 is the status `Badge` plus `RelativeTime` (`wrap="wrap"`). The price stays hidden below `sm`. From `sm` up, the current horizontal layout is unchanged. Use the `hiddenFrom="sm"` / `visibleFrom="sm"` split exactly as `MantineDashboardWorkList.tsx:135-160` does, and cite those lines in a comment. | P1 |
+| **R11** | `AdminDashboardRecentListings.tsx` has no `style` prop. `style={{ minWidth: 0, flex: 1 }}` becomes `flex={1} miw={0}`; `style={{ minWidth: 0 }}` becomes `miw={0}`. | P2 |
+| **R12** | Two one-prop edits, nothing else in either file. In `MantineDashboardHeader.tsx:56`, the title becomes `<Title order={1} size="h4" fz={{ base: 'h5', sm: 'h4' }}>`. In `MantineDashboardStatCard.tsx:139`, `fz={theme.headings.sizes.h3.fontSize}` becomes `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}` (886 §4.1 row `h3`), with `lh` unchanged. The skeleton height at `:92` stays. §16.4 explains why the header does not take 886's `h4` row. | P2 |
+| **R13** | All three `AdminDashboardRecentListings` Stories render the component inside its real production parents: `MantineDashboardGrid` > `MantineDashboardGridFull` > `MantineDashboardCard`. The card's `title` is `storyT(locale, 'admin.dashboard.recent_listings_title')` and its `state` is `"ready"`. Cite `AdminDashboardView.tsx:377-392` in a comment. No `Box`, no `w` / `maw` / `miw` / `px` / `py`, no `style`, no `theme` import. | P2 |
+| **R14** | `AdminDashboardRecentListings` takes a required `emptyText: string`. With 0 rows it renders `<MantineEmptyLoadingErrorState state="empty" description={emptyText} />` and no row button. `AdminDashboardView` passes `t('recent_listings_empty')`. The new key `admin.dashboard.recent_listings_empty` has, in each locale, the same value as that locale's `admin.dashboard.adm11_empty`: sq "Ende nuk ka njoftime", en "No listings yet", uk "Оголошень ще немає", it "Ancora nessun annuncio". | P2 |
+| **R15** | Location-request rows use `ctaLabel: t('worklist_cta_review')`. `admin.dashboard.location_requests_review` is removed from all four locales once a `--untracked` grep of `src` for it prints nothing. `location_requests_view_all` and `recent_listings_all` lose their trailing ` →` in all four locales; their only consumers are `AdminDashboardView.tsx:317` and `:383`. | P3 |
+
+- **AC9 [R10]** — Given `patterns-mantine-admindashboardrecentlistings--default` at 320 and 390 in `en` and `uk`, when
+  measured, then:
+  - every row's title element is as wide as the column that holds it (±1 px);
+  - that column is at least the row width minus the avatar and one `sm` gap;
+  - `document.documentElement.scrollWidth` equals `clientWidth`.
+
+  At 768 and 1440, the row keeps its horizontal layout with the price visible. Quote the per-row numbers.
+- **AC10 [R12]** — Given these Stories at 320 / 390 / 768 / 1440:
+  - `patterns-mantine-admindashboardview--default` (`uk`);
+  - every `patterns-mantine-dashboardheader--*`;
+  - every `patterns-mantine-dashboardstatcard--*`;
+  - every `patterns-mantine-dashboardgrid--*`.
+
+  When `getComputedStyle(el).fontSize` is read for every heading and every StatCard value, then each matches §16.4 at
+  each width. The 1440 values are unchanged: H1 24 px, value 30 px. Emit one GR-3c receipt per Story, with every
+  violation field reading `NONE`.
+- **AC11 [R13]** — Given the three recent-listings Stories, when their source is read, then AC5's grep prints nothing
+  for the file, and no `Box`, `maw`, `w=`, `px=`, `py=` or `globals` pin appears. At 320 / 390 / 1024 / 1440, the
+  list's width equals the width that `MantineDashboardCard`'s body gives it inside the grid, which matches the
+  production parent. Emit one GR-3b receipt per Story.
+- **AC12 [R14]** — Given the `Empty` Story in `en` and `uk`, when rendered, then the locale's `recent_listings_empty`
+  text is visible inside the card and no row button exists.
+- **AC13 [R15]** — Given `patterns-mantine-admindashboardview--default` at 1440 `en`, when the text of every `a` and
+  `button` is read, then none contains `→`.
+
+`GR-4 AC AUDIT — 5 new criteria (AC9–AC13) plus AC5/AC6 reworded; each states an observable property; absolutes: AC5's empty grep over named files, AC13's "none contains →" over one named Story state.`
+
+### 16.3 Accepted as delivered — do not redo
+
+- **The `/^(Spam)$/` entry in `scripts/check-locale-leak.mjs`.** `listing.report_reason_spam` is "Spam" in `en`, `sq`
+  and `it`, and "Спам" in `uk`, which matches the Task 624 loanword precedent. The edit was outside §7. Review 1
+  accepts it, and §7 now lists it.
+- **The stale-row removal in `scripts/check-listing-visibility.mjs`.** The `src/app/admin/page.tsx` row went because
+  agent-contract 9 requires a deletion to update its live consumers.
+- **ADM-08/ADM-09 without a top-level `href`.** Adding one would nest links. ADM-08's rule text sits in
+  `secondaryLine`.
+- **The surface-census baseline write (AC7).** **Do not re-run the writer.** R10–R15 add no rendered component, so
+  `check-surface-census-changed.mjs --base HEAD` must still exit 0.
+
+### 16.4 GR-3c type-scale table for this surface
+
+Pixel values come from `theme.ts:581-586`.
+
+| Role | Element | base <640 | sm 640–767 | md 768–1023 | lg ≥1024 | Provenance |
+|---|---|---|---|---|---|---|
+| Page title | `MantineDashboardHeader` H1 | `h5` 20 | `h4` 24 | `h4` 24 | `h4` 24 | R12 |
+| KPI value | `MantineDashboardStatCard` value | `h5` 20 | `h4` 24 | `h3` 30 | `h3` 30 | R12; 886 §4.1 row `h3` |
+| Card title | `MantineDashboardCard` H2 | 20 | 20 | 20 | 20 | static `h5`, ≤ 20 — complies |
+| Section title | "State of supply" `Title order={2} size="h5"` | 20 | 20 | 20 | 20 | static `h5`, ≤ 20 — complies |
+| Body / meta | `Text size="sm"` / `"xs"` | 14 / 12 | 14 / 12 | 14 / 12 | 14 / 12 | theme |
+
+**Why the page title does not take 886's `h4` row (18 / 20 / 24 / 24).** Card titles on this page are a static 20 px.
+An 18 px page title below 640 would make every card title larger than the page title, which GR-3c forbids. At 20 px it
+equals the card titles, stays at GR-3c's 20 px ceiling for a heading below 640, and keeps 24 px from `sm` up.
+
+### 16.5 Re-entry — `remediation`
+
+1. **Precondition, owner action O853-1: a live staff session.** The owner starts the dev server and runs
+   `npm.cmd run capture:admin-session`, with the credentials `HYDRATION_ADMIN_EMAIL` and `HYDRATION_ADMIN_PASSWORD`
+   in `.env.local`. That refreshes `playwright/.auth/admin-storage-state.json`. Without a working session, finish
+   R10–R15 and return `PARTIALLY IMPLEMENTED — O853-1`, never `IMPLEMENTED`.
+2. **I0.** Record the platform line, the short status porcelain, and the `hash-object` of every path in the session
+   log's Files Changed table. The hashes must match review 1's above; explain each one that differs.
+3. **Implement R10–R15.** Do not re-run:
+   - the baseline writer;
+   - the i18n removals already made;
+   - the `check-listing-visibility` / `check-locale-leak` edits.
+4. **Measure AC9–AC13** on a **fresh** `build-storybook`, with the GR-3b and GR-3c receipts.
+5. **Run the §10.6 live proof** with the captured session. It covers the live halves of AC1–AC4; read the server log
+   in full for AC3.
+6. **Run the full §13.2 block** after the last source edit, with the review 1 amendments.
+7. **Update the records:** add a "Revision 1" section to the session log, add a Files Changed row for each new path,
+   and update the 853 backlog line.
+
+### 16.6 Owner matrix additions (§13.3)
+
+| # | Story / route | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 9 | `Patterns/Mantine/AdminDashboardRecentListings` | Default | 320 / 390 | uk | rows stacked; full-width titles; badge and time on line 2 |
+| 10 | same | Empty | 1440 / 390 | en | empty text inside the card |
+| 11 | `Patterns/Mantine/AdminDashboardView` | Default | 320 | uk | title 20 px; KPI values 20 px; no double arrows |
+
+## 17. Review 2 — `NEEDS REVISION` (2026-09-27)
+
+Reviewed against the uncommitted worktree (win32 v22.22.3). Hashes read by the reviewer, equal to the session log's
+Revision 1 table: `page.tsx` `74b26361` · `AdminDashboardRecentListings.tsx` `79a11ffb` · `AdminDashboardView.tsx`
+`624c6894` · `MantineDashboardHeader.tsx` `7812fedd` · `MantineDashboardStatCard.tsx` `ea35f594` ·
+`AdminDashboardRecentListings.stories.tsx` `cdeb1680` · `AdminDashboardView.stories.tsx` `15452766` ·
+`queries.ts` `d263d56b` · `surface-census-baseline.json` `a2f9a915`. **R10–R15 are accepted** (source read; AC5 grep
+re-run and empty; R14/R15 keys read in all four locales; census re-run: its only `FAIL` is the route root, AC6).
+Everything not named below stays as it is.
+
+### 17.1 Confirmed defects
+
+| # | Sev | Where | Measured by the reviewer | Fixed by |
+|---|---|---|---|---|
+| F8 | P2 | `AdminDashboardRecentListings.tsx:107-111`, `:147-151`, `:214` | `RelativeTime` renders `Text component="time" inherit` (`RelativeTime.tsx`), and here it has no sizing parent, so it inherits the body: in `patterns-mantine-admindashboardrecentlistings--default` the row's `time` computes **16px `rgb(0, 0, 0)`** at 320 `uk` and 1440 `en`, while the title is 14px `gray.8` and the owner name 12px `rgb(102, 112, 133)` (`gray.5`). The relative time is the largest text in the row and the only one off the theme palette; visible in `evidence/task853/live-1440.png` and `live-320.png` ("6 days ago"). Legacy rendered it `text-xs text-muted-foreground` (`HEAD:…AdminDashboardRecentListings.tsx:85`). The canonical idiom wraps a `RelativeTime` meta item in `<Text size="xs" c="gray.5">` (`MantineDashboardWorkList.tsx:151`, `:172`). The modal's "Created" value (`:214`) has the same defect against its sibling values (`Text size="sm" fw={500}`, `:190`, `:206`). Review 1 missed this. | R16, AC14 |
+| F9 | P2 | session log, Revision 1 | Evidence is asserted, not retained. (a) No `npm run build` transcript exists anywhere in `docs/sessions/evidence/task853/`; the log says `PASS` and the only witness is `.next/BUILD_ID` (18:33:38). (b) AC3's server logs are `/tmp/dev-server-r1.log` and `/tmp/dev-server-3000.log`, outside the repo. (c) Every live-proof and gate output is quoted in prose only; the folder holds the scripts and five screenshots. (d) The log says the live session ran on port 3000, but `live-proof-widths/plant/modal/links.mjs` target **3001**; only `links2`/`remaining` target 3000. | §17.4 steps 4–6 |
+| F10 | P2 (orchestrator) | this kickoff §13.2 (now withdrawn) | The owner-native `check:hydration -- --with-admin` was expected to exit 0. Its admin routes are `/en/admin/users` and `/en/admin/users/<id>` (`scripts/check-hydration-console.mjs`, `planRoutes`); both return `404` (`/tmp/dev-server-3000.log`), because the admin tree is `src/app/admin/` with no locale segment. It **never navigates `/admin`**, so the executor's run (PASS 6 / FAIL 2) says nothing about this task. The 404s come from the script, not from 853's diff (853 touches neither routing nor that script — INFERENCE). The script fix is **888**. `/admin`'s hydration evidence becomes §17.3. | §13.2 amended, §17.3, 888 |
+
+### 17.2 New requirement and acceptance criterion
+
+| ID | Requirement | P |
+|---|---|---|
+| **R16** | In `AdminDashboardRecentListings.tsx`, wrap each of the two row `RelativeTime`s in `<Text component="span" size="xs" c="gray.5">…</Text>`, and the modal's "Created" `RelativeTime` in `<Text component="span" size="sm" fw={500}>…</Text>`, matching the sibling value `Text`s at `:190` / `:206`. Cite `MantineDashboardWorkList.tsx:151` in a one-line comment. Keep `absoluteLabel`, and keep `focusable={false}` on both row instances. Do not edit `RelativeTime.tsx` and do not pass it `className`; its `className` prop is for legacy consumers only. No other change in the file. | P2 |
+
+- **AC14 [R16]** — Given `patterns-mantine-admindashboardrecentlistings--default` at 320 `uk` and 1440 `en`, when
+  `getComputedStyle` is read on every visible row `time` element, then each is `12px`, its colour equals the owner
+  name's colour in the same row, and it is not larger than that row's title. Given `…--modal-open` at 1440 `en`, the
+  modal's `time` is `14px` with `font-weight: 500`, which equals the owner value `Text` beside it. The same two row
+  facts hold on the live `/admin` at 1440 and 320 (§17.3). Quote every value.
+
+`GR-4 AC AUDIT — 1 new criterion (AC14); it states an observable property; absolutes: none.`
+
+### 17.3 Live `/admin` check — replaces the withdrawn `check:hydration` run
+
+With the captured staff session, on one dev server whose port the script and the session log both name, load
+`/admin` at 1440 and 320 (`waitUntil: 'networkidle'`, then 1 s). Record every `console` message of type `error` or
+`warning` and every `pageerror`, verbatim, to `docs/sessions/evidence/task853/r2/live-console.txt`. At each width,
+also record AC14's row `time` / title / owner values. Pass: no message matches
+`/hydrat|did not match|server rendered|Text content does not match/i`. Any other error is quoted and classified
+against `docs/maintenance-playbook.md` §14, never silently dropped. Copy the dev-server log for that run to
+`docs/sessions/evidence/task853/r2/dev-server.log` and read it in full for AC3's `Functions cannot be passed` line.
+
+### 17.4 Re-entry — `remediation`
+
+1. **I0.** Record the platform line and the short status porcelain. Record the `hash-object` of every path in
+   §17's hash list; each must match. Explain any path that differs.
+2. **Implement R16** in `AdminDashboardRecentListings.tsx` only. Do not re-run the baseline writer. Make no i18n,
+   Story, pattern or `AdminDashboardView.tsx` edit.
+3. **Build a fresh `build-storybook`.** Measure AC14, and re-run AC9 for the Default story, because the row's second
+   line changes. Emit one GR-3b and one GR-3c receipt per recent-listings Story.
+4. **Run §17.3.**
+5. **Run the full §13.2 block** after the last source edit, with review 1's amendments. Write each command's full
+   output and exit code to `docs/sessions/evidence/task853/r2/NN-<command>.txt` (`2>&1 | Tee-Object`, then
+   `"exit: $LASTEXITCODE"`). The `npm run build` transcript is mandatory. Its `hash-object` line runs in the same
+   pass.
+6. **Retain what is quoted.** Every number the session log quotes for AC9, AC14 and §17.3 must come from a file in
+   `evidence/task853/r2/`. Cite that file next to the number.
+7. **Update the records.** Add a "Revision 2" section to the session log, with a Files Changed row for the new hash
+   and one for the `r2/` folder. Update the 853 line in `docs/backlog.md`.
+
+### 17.5 Owner matrix additions (§13.3)
+
+| # | Story / route | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 12 | `Patterns/Mantine/AdminDashboardRecentListings` | Default · ModalOpen | 320 / 1440 | uk / en | relative time is small grey meta text, smaller than the title; the modal's "Created" matches the other values |
+| 1 (add) | `/admin` (live) | real data | 1440 | en | the donut legend's wrapped label ("Rented (marked by owner)") reads centred in `live-1440.png`. That is `MantineDashboardChartLegend` (845), not this task's code. **NEEDS VERIFICATION**: accept it, or return it and the reviewer files it against 845's pattern |

@@ -1,7 +1,8 @@
 # Task 886 — every Mantine heading steps down on a phone, through one scale, and a gate keeps it that way
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
-approved** · owner actions **O83-1**, **O83-2** · **Status: `KICKOFF FILED` 2026-09-26**
+approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2** ·
+**Status: `KICKOFF FILED` 2026-09-26**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -106,7 +107,25 @@ The 7 responsive sites comply and are unchanged:
 `RecentlyViewedSkeleton` has exactly one consumer, `ListingDetailView.tsx:529`
 (`<Suspense fallback={<RecentlyViewedSkeleton />}>`), which it imports at `:26`.
 
-### 3.2 The legacy Tailwind census — 8 static `text-2xl` (24px) sites
+### 3.1a Addendum — Task 853 review 1 (2026-09-26): S2 moves to 853, S17 found, L1 removed
+
+- **Census miss, S17.** `src/design-system/mantine/patterns/MantineDashboardStatCard.tsx:139` renders the KPI value
+  as `<Text fz={theme.headings.sizes.h3.fontSize} …>`, a static **30 px** at every width (measured on
+  `patterns-mantine-admindashboardview--default`, 320–1440). §3.1's "no non-`Title` element has a static size of
+  `h1`–`h4`" is false for this site: the scanner reads literal keys, and this is a theme expression. §10's gate must
+  handle it too. `fz` bound to a `theme.headings.sizes.*` expression is a static large size, and the gate must fail
+  it. Add that as a `--verify-gate` arm.
+- **853 edits S2 and S17 before this task** (853 §16, R12), because `AdminDashboardView` is their only production
+  consumer:
+  - S2 (`MantineDashboardHeader.tsx:56`) becomes `fz={{ base: 'h5', sm: 'h4' }}`, which is 20 / 24 / 24 / 24. This
+    is deliberately **not** `TITLE_FZ.h4`: that row's 18 px base would put the page title under the 20 px card titles
+    on the same page (853 §16.4). Leave it as an inline responsive object; the gate accepts one (arm 4).
+  - S17 becomes `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`. This task converts it to `fz={TITLE_FZ.h3}`, which has
+    the same values.
+- **L1 is gone.** 853 replaced `src/app/admin/page.tsx` with a thin server component. The `text-2xl` at `:113` no
+  longer exists, so it must not enter the legacy baseline; a stale entry would fail the gate.
+- **I0 re-check.** If 853 has not been committed when this task starts, stop. Those paths are 853's uncommitted
+  work, and this task must neither edit nor stage them.
 
 | # | Site | Owning migration task |
 |---|---|---|

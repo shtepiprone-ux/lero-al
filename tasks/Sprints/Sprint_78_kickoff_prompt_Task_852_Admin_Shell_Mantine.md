@@ -1,7 +1,7 @@
 # Task 852 — the admin shell leaves Tailwind and shadcn: `AdminShell`, `AdminSidebar`, `AdminHeader` (was `AdminMobileHeader`), `AdminLocaleSwitcher` on an extended `MantineAppShellFoundation`
 
 Sprint 78 · P1 · QA profile **Q3** (page shell + navigation) · Wave C, before 853 · independent of Wave A/B ·
-**Status: 🟡 PARTIALLY VERIFIED 2026-09-26 (review 6 — code and evidence accepted; pending the owner Storybook pass, §21)**
+**Status: 🔁 NEEDS REVISION 2026-09-26 (review 8 — R27–R31 accepted; the new `Drawer` does not bound the sidebar, so the footer/logout falls below the fold again (AC11 regression), and GR-0 missed the canonical `MantineDrawer`) — re-entry in §23; READY FOR SONNET**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -601,3 +601,141 @@ P3 notes, carried to the archive row:
    touch may collapse them into one branch with conditional wrapper props.
 5. `typecheck` for review 5 was not retained as a log. The reviewer re-ran it (exit 0), and `next build`'s type check
    also passed.
+
+## 22. Review 7 — NEEDS REVISION (2026-09-26): 640–1023 must not be the mobile layout
+
+**Owner matrix, 2026-09-26, verbatim.**
+
+*Accepted:* `mantine-primitives-localeswitcher--default` (fullWidth) — *"приймаю"*;
+`patterns-mantine-appshellfoundation--default`/`--with-slots` — *"приймаю"*; `mantine-primitives-dropdownmenu--default`
+(fullWidthTrigger) — *"ghbqvf./"*. That last answer is "приймаю." typed on the English keyboard layout, and is recorded
+as accepted.
+
+*Returned:* `patterns-mantine-adminsidebar--*` (×4) and `patterns-mantine-adminlocaleswitcher--idle`/`--pending` —
+*"Чому сайдбар перебудовується на мобільну версію вже після 1024px? Що це за нове правило? Це пряме порушення!"*
+
+**Cause, measured and read at the source.** No project rule asks for a full-width sidebar at 640–1023; the project's
+mobile boundary is `sm` = 640 (`docs/mantine-responsive-design-system.md:244`). The full width comes from Mantine
+itself: below `navbar.breakpoint`, an open `AppShell.Navbar` is forced to `--app-shell-navbar-width: 100%`
+(`node_modules/@mantine/core/esm/components/AppShell/AppShellMediaStyles/assign-navbar-variables/assign-navbar-variables.mjs`, the `!navbar?.collapsed?.mobile` branch; Mantine 8.3.18).
+R3/R20 adopted that without checking it against the 640 boundary. The pre-migration drawer was a 256px shadcn
+`Sheet` (`w-64`), not full width. This is an orchestrator defect.
+
+**Owner decision D852-1, 2026-09-26** (AskUserQuestion; option chosen verbatim: *"Drawer 240px (Recommended)"*):
+
+```
+<640      burger → drawer 100% (мобільна)
+640–1023  burger → drawer 240px поверх контенту
+≥1024     постійний сайдбар 240px
+```
+
+**Re-entry mode: `remediation`.** Do not touch Task 869's paths or `typography-chrome.css`.
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R27** | `MantineAppShellFoundation`, below `navbarBreakpoint`. The navigation renders in a Mantine core `Drawer` (`position="left"`, `opened`, `onClose` = the burger's toggle/close path, `padding="sm"`), **not** in `AppShell.Navbar`. The `AppShell.Navbar` is always collapsed there (`collapsed: { mobile: true }`). Drawer `size` = `useMatches({ base: '100%', sm: rem(theme.other.layout.appShellNavbarWidth) })`: 100% below 640 and 240px at 640 to the breakpoint. `withCloseButton` is on, with `closeButtonProps={{ 'aria-label': drawerCloseLabel }}`. `drawerCloseLabel` is a new optional prop; `AdminShell` passes `t('admin.sidebar.aria_close')`, a key that already exists in 4 locales. At ≥ the breakpoint, the fixed `AppShell.Navbar` is unchanged. | P0 |
+| **R28** | Navigation content is mounted **once**. `navbarContent` (or the default `navItems` list) renders inside `AppShell.Navbar` only at ≥ the breakpoint, and inside the `Drawer` only below it, using the existing `useMediaQuery`. `[data-testid="admin-sidebar"]` count is exactly 1 in every open/closed state at every width. | P0 |
+| **R29** | R12's hand-built trap is removed: `FocusTrap`, `useHotkeys('Escape')` and `useFocusReturn` in the foundation. Mantine `Drawer` provides focus trap, Esc, overlay click-to-close and focus return natively. AC12's observable behaviour must still hold. | P1 |
+| **R30** | Story decorators follow D852-1 (GR-3b). `AdminSidebar.stories.tsx` and `AdminLocaleSwitcher.stories.tsx` use `w={{ base: '100%', sm: theme.other.layout.appShellNavbarWidth }}`, with the comment citing D852-1 and R27. There is no `lg` key any more: the sidebar is 240px wide from 640 up, as a drawer or a fixed navbar. | P1 |
+| **R31** | `AdminSidebar`'s `onNavigate` still closes the drawer. `AdminShell` `DrawerOpen`'s `play` still opens it below 1024 (it clicks only when the burger is accessible). `AppShellFoundation` `Default`/`WithSlots` (default `navbarBreakpoint="sm"`) keep their accepted look. They now get the `Drawer` below 640, 100% wide. | P1 |
+
+Acceptance criteria. Extend the probe as `probe-drawer.mjs` in the evidence root. Run it against a fresh
+`storybook-static` on `patterns-mantine-adminshell--drawer-open` / `--default`, in uk, and save its output as
+`probe-drawer.json`.
+
+- **AC35 [R27]**: open the drawer at 390, 768 and 960. The `.mantine-Drawer-content` width is 390 at 390, and
+  **240 ± 1** at 768 and 960. `.mantine-Drawer-overlay` is present. `AppShell.Main` `padding-left` = 0 (the content
+  is not pushed). At 1024 and 1440 there is no burger, no `.mantine-Drawer-content`, and the navbar is 240 wide.
+- **AC36 [R27, R29]**: at 390 and 768, with the drawer open: focus is inside the drawer, and 25 Tabs keep it there.
+  `Escape` closes it (no `.mantine-Drawer-content`) and focus returns to the burger. At 768, a click on the overlay
+  outside the 240px panel closes it. A nav-link click closes it. The close button has the localised `aria_close`
+  label, quoted for uk.
+- **AC37 [R28]**: `document.querySelectorAll('[data-testid="admin-sidebar"]').length === 1` at 390 and 768 (closed and
+  open) and at 1440.
+- **AC38 [R30]**: `adminsidebar--default` width is 320/390 at 320/390, and **240** at 768, 1024 and 1440.
+  `adminlocaleswitcher--idle` trigger width = box − 2 × `sm` at the same widths. No overflow. Re-issue the GR-3b
+  receipts for both Stories and for AdminShell.
+- **AC39 [R29]**: `git --no-optional-locks grep --untracked -n -E "FocusTrap|useHotkeys|useFocusReturn" -- src/design-system/mantine/patterns/MantineAppShellFoundation.tsx`
+  prints nothing. AC1's hardcode grep still prints nothing.
+- **AC40**: `typecheck`, `lint`, `check:i18n`, `check:stories`, `check:story-coverage`, `test:admin-freshness`,
+  `build-storybook` and `npm run build` exit 0, teed as `38-…` onward.
+- **AC41 (owner)**: the owner re-opens `patterns-mantine-adminsidebar--*` and `patterns-mantine-adminlocaleswitcher--*`,
+  plus `patterns-mantine-adminshell--default` and `--drawer-open`, which changed behaviour, at 320/390/768/1024/1440,
+  and accepts.
+
+Order: R27 + R28 + R29 (foundation) → `AdminShell` passes `drawerCloseLabel` → R30 → R31 check → `build-storybook` →
+probe → gates → session log ("Review 7 re-entry", Files Changed with hashes) → the 852 backlog line → status.
+
+`GR-4 AC AUDIT — 7 new criteria; each states an observable property; absolutes: AC37 count = 1 is the no-duplicate property itself; AC39 empty grep on one named file.`
+
+## 23. Review 8 — NEEDS REVISION (2026-09-26): the drawer does not bound the sidebar
+
+**Accepted:** R27–R31. The reviewer re-measured on `storybook-static` built at 13:40, after the last source edit at
+13:38 (win32 / Node v22.22.3, uk). The drawer is 390 wide at 390 and 240 wide at 768 and 960. Esc closes it and focus
+returns to the burger. A real click or a keyboard `Enter` on the burger moves focus into the drawer at 390 and 768.
+There is exactly one `admin-sidebar` at every width. The fixed navbar still keeps logout in view: logout bottom is
+876/900 at 1440, 696/720 at 1280 and 744/768 at 1024. `build` (13:50) and `build-storybook` (13:40) both ran after
+the last source edit. GR-1 census: 8 nodes, all tier 1, manifest:yes story:yes.
+
+**Findings.**
+
+| # | Sev | Finding | Measured evidence |
+|---|---|---|---|
+| G1 | **P1** | AC11 has regressed in the new drawer. R11 still binds: the footer (switcher, open site, logout) stays in view and the nav scrolls inside its `ScrollArea`. Mantine's `Drawer` body has no bounded height, so `AdminSidebar`'s `h="100%"` resolves to auto, and the `ScrollArea` grows to its full content. So the whole drawer scrolls instead, and logout sits below the fold. `probe-drawer.mjs` never re-measured AC11. | `patterns-mantine-adminshell--drawer-open`, uk, drawer opened by a real click. At 390×844: `.mantine-Drawer-content` clientHeight 844, scrollHeight **1258**, `overflow-y: auto`; sidebar 1186 tall; logout bottom **1234 > 844**. At 768×1024 the same, 1234 > 1024. At 768×600, 1234 > 600. |
+| G2 | **P2** | GR-0 missed a candidate. The session log calls core `Drawer` a `REUSE`, but it never inspected the canonical drawer pattern `src/design-system/mantine/patterns/MantineDrawer.tsx` (enrolled; Story `Mantine/Primitives/Drawer`; consumed by the public `MobileNavDrawer`). That pattern already solved G1 in Task 567 Fix 4: `content` and `body` become flex columns (`MantineDrawer.tsx:144-153`). R27 named core `Drawer` itself, so this is partly an orchestrator defect. The fix still goes through the canonical owner, not a second copy of its rule. | `MantineDrawer.tsx:151-152`; this task's session log, "GR-0: `Drawer` is consumed directly … `REUSE`". |
+
+**Why `MantineDrawer` is not reused whole (orchestrator decision, derivable).** Below 640 it becomes the
+`ResponsiveBottomSheet`. D852-1 requires a left drawer at 100% width there. Its body also wraps `children` in its
+own scroll region, which would nest a second scroll around `AdminSidebar`'s `ScrollArea`. The disposition is
+therefore **EXTEND**: share its flex-column Styles-API rule, and do not copy it.
+
+**Re-entry mode: `remediation`.** Change only the files named here. Do not touch Task 869's paths or
+`typography-chrome.css`.
+
+| ID | Closes | Observable requirement | P |
+|---|---|---|---|
+| **R32** | G1, G2 | `MantineDrawer.tsx` exports its Task 567 Fix 4 flex-column rule as a named constant: `content` = flex column with `overflow: hidden`; `body` = `flex: 1`, `minHeight: 0`, flex column, `overflow: hidden`. `MantineDrawer` consumes that constant and keeps its own `padding: 0` body override and its title-only header border, so its rendered output is unchanged. `MantineAppShellFoundation`'s below-breakpoint `Drawer` passes the same constant as `styles`. Its `padding="sm"` stays, so the body keeps its Mantine padding. Result: `navbarContent` with `h="100%"` is bounded by the drawer body. `AdminSidebar`'s `ScrollArea` scrolls the nav, and its footer stays pinned in view. `AdminSidebar.tsx` is unchanged. | P1 |
+| **R33** | G2 | The session log's "Review 8 re-entry" section carries a corrected receipt. It lists `MantineDrawer.tsx` (Story `Mantine/Primitives/Drawer`), `MobileNavDrawer.tsx` and `MantineDialogDrawerPattern.tsx` as inspected candidates, each with a disposition and a reason: `GR-0 CANONICAL REUSE PREFLIGHT — request: below-breakpoint navigation drawer; … decision: EXTEND; selected canonical owner: src/design-system/mantine/patterns/MantineDrawer.tsx (shared flex-column rule); …`. | P2 |
+
+Acceptance criteria. Extend `probe-drawer.mjs` in the evidence root. Run it against a fresh `storybook-static`, in uk,
+and open the drawer with a **real** `page.click()` on the burger. Keep the review-7 output as
+`probe-drawer.review7.json` (superseded) and write the new run to `probe-drawer.json`.
+
+- **AC42 [R32]**: `patterns-mantine-adminshell--default`, drawer open, at 390×844, 768×1024, 768×600 and 960×540. The
+  checks at each size:
+  - the last `button`/`a` inside `.mantine-Drawer-content [data-testid="admin-sidebar"]` (logout) has
+    `getBoundingClientRect().bottom ≤ innerHeight`;
+  - `.mantine-Drawer-content` has `scrollHeight ≤ clientHeight + 1`;
+  - the drawer's close button has `top ≥ 0`.
+
+  At 390×844 and 768×600, the sidebar's `ScrollArea` viewport scrolls (`scrollHeight > clientHeight`). Quote every
+  number.
+- **AC43 [R32, no regression]**: `mantine-primitives-drawer--default` and `mantine-primitives-mobilenavdrawer--default`
+  at 1440×900, opened through their own trigger. Record these computed values **before** editing, from the current
+  `storybook-static`, and again after the rebuild:
+  - on `.mantine-Drawer-content`: `display`, `flex-direction`, `overflow-y`;
+  - on `.mantine-Drawer-body`: `flex-grow`, `min-height`, `padding-top`, `overflow-y`;
+  - the header's `border-bottom-width`.
+
+  Every value is identical. Save the before values as `ac43-before.json`.
+- **AC44**: AC35–AC38 re-run inside the same probe and all pass. The `GR-3b STORY RESPONSIVE CHECK` receipt for
+  `patterns-mantine-adminshell--default/--drawer-open` is re-issued with the AC42 logout-bottom numbers added.
+- **AC45**: `typecheck`, `lint`, `check:stories`, `check:story-coverage`, `check:pattern-enrolment`,
+  `test:admin-freshness`, `build-storybook` and `npm run build` exit 0. Tee them into the evidence root as `45-…`
+  onward. The same block ends with a read-only `hash-object` of `MantineDrawer.tsx` and
+  `MantineAppShellFoundation.tsx`.
+- **AC41 (owner)** stays open unchanged. The owner also checks that logout is visible without scrolling in the open
+  drawer at 390 and 768.
+
+Order: AC43 "before" measurement → R32 → `build-storybook` → probe → gates → session log ("Review 8 re-entry", the R33
+receipt, Files Changed rows with hashes) → the 852 backlog line → status.
+
+P3 notes, carried to the archive row:
+
+6. The `DrawerOpen` story's `play` uses testing-library's synthetic click. After it, focus stays on the burger at
+   390×844 and at 768×600, not only at 390 as reported. At 768×1024 focus moves in. Esc still closes the drawer and
+   Tab enters it. A real click or a keyboard `Enter` moves focus in at every width measured.
+7. Open the drawer at 390, widen past 1024, then narrow again: the drawer reopens by itself, because `opened` stays
+   `true` while the `Drawer` is unmounted.
+
+`GR-4 AC AUDIT — 4 new criteria; each states an observable property; absolutes: AC43 value identity on the default drawer is the no-regression property itself.`

@@ -1,7 +1,8 @@
 # Task 854 — `/{locale}/cabinet/statistics`: the agent dashboard (P0 blocks), reached from a "Statistics" item next to "Profile"
 
 Sprint 78 · P1 · QA profile **Q4** (new authenticated route with owner isolation) + Q3 visual matrix · Wave C ·
-depends on **843, 844, 845, 846, 848** approved · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
+depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 1, 2026-09-27. The next
+executor action is §16 (remediation re-entry). Do not re-run §10.1–§10.6 from scratch.**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -104,7 +105,10 @@ guest goes to login. Every value is a theme token or pattern prop; every breakpo
 
 - **Created:** `src/app/[locale]/cabinet/statistics/page.tsx` ·
   `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx` ·
-  `src/stories/patterns/mantine/AgentStatisticsView.stories.tsx` · a fixtures module under `src/stories/fixtures/`.
+  `src/stories/patterns/mantine/AgentStatisticsView.stories.tsx` · a fixtures module under `src/stories/fixtures/` ·
+  `src/modules/cabinet/statistics/tableParams.ts` (added during execution to fix a server/client boundary error;
+  accepted into scope by review 1, §16.2).
+- **Edited in revision 1 (§16):** `src/lib/formatters.ts` (N3 only) and its existing test file.
 - **Edited:** `src/design-system/mantine/theme.ts` (`boxSize.dashboardListingThumb` + union) · `src/components/layout/UserMenu.tsx` · `src/components/layout/MobileNavDrawer.tsx` ·
   `src/stories/mantine/primitives/UserMenu.stories.tsx` · `src/stories/mantine/primitives/MobileNavDrawer.stories.tsx`
   · `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` · `src/stories/mantine/primitives/Table.stories.tsx`
@@ -276,3 +280,163 @@ Update the 854 line of `docs/backlog.md`; session log with Files Changed.
 | Existing hardcode touched is removed? | `UserMenu.tsx:26` inline style (R5/AC10). |
 | 791 lesson | R1/AC1. |
 | Commands in blocks | §13.2. |
+
+## 16. Review 1 — `NEEDS REVISION` (2026-09-27)
+
+What was reviewed:
+- the working-tree diff: 13 tracked paths and 5 untracked paths, with hashes identical to the session's Files Changed
+  table;
+- `docs/sessions/2026-09-27-task854-agent-statistics-page.md`;
+- every artifact under `docs/sessions/evidence/task854/`, including the four server logs read in full;
+- the reviewer's own `check-surface-census.mjs` runs on `AgentStatisticsView.tsx`, `UserMenu.tsx` and
+  `MobileNavDrawer.tsx` (win32 v22.22.3). They found 18, 3 and 3 nodes, all tier 1, and exited 0.
+
+### 16.1 Accepted as delivered (do not redo)
+
+- **Requirements:** R1, R2, R4, R5, R6, R8, R10, and R7's six Story states.
+- **R2 evidence:** every query in `data.ts` filters on the session-derived `ownerId`, and the live two-agent proof
+  confirms it.
+- **AC6 / AC7:** the readings in the session log.
+- **§10.6 live checks:** guest 307; admin and moderator 307 → `/en/cabinet`; two agents; URL tampering; the period
+  switch.
+- **Plain-`user` redirect row:** accepted from source. `access.ts` has one `data?.role !== 'agent'` branch, which
+  admin and moderator already exercised live.
+- **Server/client boundary fix:** accepted. `live-agent-session-server.log` shows the 500 before the fix and a 200
+  after it.
+
+### 16.2 The executor's open questions — orchestrator decisions
+
+- **AGT-10 sort URL contract — CONFIRMED.** One `sort=` token carries both field and direction (`created_desc`,
+  `created_asc`, `expires_asc`, `expires_desc`, `inquiries_desc`, `inquiries_asc`). The default is `created_desc`.
+  There is no `direction` param, and §10.3's param list is unchanged.
+- **`src/modules/cabinet/statistics/tableParams.ts` — ACCEPTED into scope (§7).** A Server Component cannot call a
+  plain function exported from a `'use client'` module. A shared plain module is the correct fix.
+- **AC9 (owner matrix §13.3)** stays owner-only. It is still `OWNER VISUAL QA REQUIRED` and is not an executor action.
+
+### 16.3 Findings
+
+**F1 — P2 MEDIUM [R3, R9; negative flow "No listings"] — a filter that matches nothing strands the agent.**
+- **Observed:** `AgentStatisticsView.tsx:233` sets `showAgt10Empty = data.agt10.ok && agt10Total === 0`.
+  `agt10Total` is 848's `Agt10.total`, which is the count **after filtering**: in `data.ts:264-287` the query applies
+  `status` and `listing_type`, `matching` then applies `visibility`, and `total = sorted.length`.
+- **Effect:** suppose an agent with listings picks status "Sold" and has no sold listings. Lines 284-294 replace the
+  whole card body, including the four filter `Select`s, with "You have no listings yet" and "Add listing". That
+  message is false, and the filters are gone. The only way back is to edit the URL or re-enter the page from the
+  menu.
+
+**F2 — P1 HIGH [§13.2; review-task step 5; `orchestrator-procedures.md` Corollary 818] — the retained final gate
+block is stale.**
+- `evidence/task854/build.txt` (mtime 11:32:07) reports `/[locale]/cabinet/statistics 5.75 kB`. It predates
+  `tableParams.ts` (12:11:13), `AgentStatisticsView.tsx` (12:11:40) and `page.tsx` (12:11:50).
+- The session log reports a post-fix build at `5.52 kB`, and post-fix typecheck, lint and file-integrity runs. None of
+  these has a retained artifact.
+- `build-storybook.txt` (11:32) predates the `UserMenu.stories.tsx` fixture rename (12:29).
+- `check:locale-leak:mantine-only` was not re-run after that rename.
+- No transcript carries a `git hash-object` from the same pass.
+
+**F3 — P2 MEDIUM [GR-3b, GR-3c] — Story receipts are missing, and the one GR-3c receipt omits the largest text.**
+- Only `patterns-mantine-agentstatisticsview--default` carries GR-3b and GR-3c receipts.
+- These changed Stories have none: `mantine-primitives-usermenu--default`,
+  `mantine-primitives-mobilenavdrawer--agent`, `mantine-primitives-table--cards-below-md`.
+- The GR-3c receipt lists the page title and the card titles. It leaves out `MantineDashboardStatCard`'s value
+  (`fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`, `MantineDashboardStatCard.tsx:142`), which is the only text on the page
+  at 24px or larger.
+
+**P3 notes — fix them in this revision; each is a small, local edit.**
+- **N1:** the JSDoc at `MobileNavDrawer.tsx:14-15` says "the existing two production callers (neither passes it
+  today)". This is false. The only production caller is `HeaderView.tsx:194-197`, and its `user` type carries a
+  required `role` (`HeaderView.tsx:52`).
+- **N2:** `tableParams.ts` → `parseAgt10Table` and `AgentStatisticsView.tsx:322` look up `AGT10_SORT_TOKENS[value]`
+  with a URL value. `?sort=constructor` or `?sort=__proto__` resolves to an inherited member, which puts `undefined`
+  into `Agt10Table.sort` and `Agt10Table.direction` and breaks the type.
+- **N3:** for a custom period, AGT-05's label reads "Form inquiries · last N days" (`agt05_period_days`), even when the
+  range ended weeks before yesterday.
+
+### 16.4 Revision requirements
+
+| ID | Finding | Required change | P |
+|---|---|---|---|
+| **R11** | F1 | In `AgentStatisticsView.tsx`, add `const filtersActive = Boolean(table.status \|\| table.visibility \|\| table.listingType)`. The "no listings yet" + "Add listing" empty state renders only when `data.agt10.ok && agt10Total === 0 && !filtersActive`. When filters are active and nothing matches, keep the filter row and render `MantineDataTableToCards` with `rows={[]}` and `emptyLabel={t('agt10_filtered_empty')}`. That uses the pattern's own existing empty path, so there is no new markup. Hide pagination in that case (`totalPages` is 1). Add the key `cabinet.statistics.agt10_filtered_empty` in sq/en/uk/it. en: "No listings match these filters". The text must not use "lead", "contact" or "conversion" (R4). | P2 |
+| **R12** | F1 | Extend the existing Story `Patterns/Mantine/AgentStatisticsView` with one export, `Agt10FilteredEmpty`: AGT-10 `blockOk({ rows: [], total: 0, page: 1, pageSize: 10 })` with `table = { status: 'sold', sort: 'created_at', direction: 'desc', page: 1 }`. Add a fixture builder next to the existing ones in `agentStatistics.fixtures.ts`. This is GR-3a `EXTEND`, not a new Story file. | P2 |
+| **R13** | N1–N3 | **N1:** rewrite the `MobileNavDrawer.tsx` `role` JSDoc so it states that the single production caller, `HeaderView`, passes `role`. **N2:** in both lookups, resolve a sort token only when `Object.hasOwn(AGT10_SORT_TOKENS, token)`; otherwise use `DEFAULT_AGT10_SORT_TOKEN`. **N3:** when `period.kind === 'custom'`, the AGT-05 label is `t('agt05_card_title', { period: t('agt05_period_range', { from, to }) })`. Add the key `agt05_period_range` = `"{from} – {to}"` in all four locales. Format `from` and `to` with a new exported `formatDateOnly(date: string, locale: string)` in `src/lib/formatters.ts`. It splits `YYYY-MM-DD` and calls the existing `composeDateParts`, and it must never pass through `new Date('YYYY-MM-DD')`, which shifts the day in negative-offset zones. Cover it with cases in `src/lib/__tests__/formatters.test.ts`: `'2026-08-01'` in each locale, and one malformed input that returns `'—'`. 7d and 30d keep `agt05_period_days`. | P3 |
+| **R14** | F2, F3 | Run §16.6 as **one pass** after R11–R13, and retain every transcript under `docs/sessions/evidence/task854/r1/`. Emit GR-3b and GR-3c receipts for every changed Story export: `patterns-mantine-agentstatisticsview--default`, `--agt-10-empty`, `--agt-10-filtered-empty` (the ID Storybook derives from export `Agt10FilteredEmpty`; confirm it in `storybook-static/index.json`), `--many-listings`, `mantine-primitives-usermenu--default`, `mantine-primitives-mobilenavdrawer--agent`, `mantine-primitives-table--cards-below-md`. Measure 320/390/1024/1440 for GR-3b and 320/390/768/1440 for GR-3c. Every GR-3c receipt names the StatCard value where the Story renders it. In `--many-listings`, also record the rendered width of the pagination control against the card's content width at 320 and 390; the owner judges R9 from that reading (§13.3 #5). | P1 |
+
+### 16.5 Acceptance criteria (revision 1)
+
+- **AC11 [R11]:** in `Agt10FilteredEmpty`, the DOM contains the four filter `Select`s (quote their `aria-label`s) and
+  the text "No listings match these filters". It contains neither "You have no listings yet" nor an "Add listing"
+  link. In `Agt10Empty`, the reverse holds, which is the existing behaviour.
+- **AC12 [R11, live]:** signed in as `HYDRATION_AGENT1`, `GET /en/cabinet/statistics?status=sold` returns 200, and the
+  page shows the filter row and the filtered-empty text. Choosing "All statuses" in the status `Select` writes a URL
+  without `status=`, and the agent's one listing row returns. Quote both URLs and the row title. Retain the full
+  server log as `r1/live-filtered-empty-server.log`, and confirm it contains no `Functions cannot be passed` or
+  `Attempted to call` line.
+- **AC13 [R13]:** `parseAgt10Table(new URLSearchParams('sort=constructor'))` and `…('sort=__proto__')` both return
+  `sort: 'created_at'` and `direction: 'desc'`. Add the two cases to `src/modules/cabinet/statistics/__tests__/`, in a
+  new `tableParams.test.ts`. `formatDateOnly` passes its new cases. The en AGT-05 label for a custom range
+  `2026-08-01`..`2026-08-12` reads with the two formatted dates, not "last 12 days"; quote it from a live request or a
+  Story render.
+- **AC14 [R14]:** every §16.6 command exits as the expectations under §16.6 state, and the block carries its
+  `git hash-object` line. There are 7 GR-3b and 7 GR-3c receipts, with no listed violation.
+
+`GR-4 AC AUDIT — 4 criteria (AC11–AC14); each states an observable property; absolutes: AC11's two absent strings in one named Story; AC12's absent error signatures in one named log.`
+
+### 16.6 Final gate block (revision 1)
+
+Run it from the project root. Tee each command to `docs/sessions/evidence/task854/r1/<name>.txt` and record every
+exit code.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npm.cmd run test -- src/modules/cabinet/statistics/__tests__
+npm.cmd run test -- src/lib/__tests__/formatters.test.ts
+npm.cmd run test -- src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+npx.cmd vitest run src/modules/listings/lib/__tests__/visibility.test.ts
+npm.cmd run check:listing-visibility
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:pattern-enrolment
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census-changed.mjs --base HEAD
+node.exe scripts\check-surface-census.mjs --surface src\modules\cabinet\statistics\components\AgentStatisticsView.tsx
+node.exe scripts\check-surface-census.mjs --surface src\components\layout\UserMenu.tsx
+node.exe scripts\check-surface-census.mjs --surface src\components\layout\MobileNavDrawer.tsx
+npm.cmd run build-storybook
+npm.cmd run check:locale-leak:mantine-only
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/modules/cabinet/statistics/tableParams.ts src/components/layout/UserMenu.tsx
+git --no-optional-locks diff --stat
+git --no-optional-locks hash-object "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/modules/cabinet/statistics/tableParams.ts src/components/layout/UserMenu.tsx src/components/layout/MobileNavDrawer.tsx src/design-system/mantine/patterns/MantineDataTableToCards.tsx src/design-system/mantine/theme.ts src/lib/formatters.ts src/stories/patterns/mantine/AgentStatisticsView.stories.tsx src/stories/fixtures/agentStatistics.fixtures.ts src/stories/mantine/primitives/UserMenu.stories.tsx src/stories/mantine/primitives/MobileNavDrawer.stories.tsx src/stories/mantine/primitives/Table.stories.tsx messages/en.json messages/sq.json messages/uk.json messages/it.json
+```
+
+Expected results:
+- Every command exits 0, with two exceptions:
+  - `check:listing-visibility` exits 1 on the pre-existing `contactEvents.ts:50` finding (Task 887). Quote it, and
+    confirm that no 854 file is named.
+  - `check:locale-leak:mantine-only` exits 1 (known red, Task 836). Quote zero findings for
+    `patterns-mantine-agentstatisticsview`, `mantine-primitives-usermenu`, `mantine-primitives-mobilenavdrawer` and
+    `mantine-primitives-table`.
+- The `git grep` prints nothing.
+- `build.txt` shows `/[locale]/cabinet/statistics`.
+- The `hash-object` line matches the session log's updated Files Changed table.
+
+### 16.7 Re-entry and completion
+
+- **Mode:** `remediation`.
+- **Start step:** R11. Keep every original `evidence/task854/*` artifact. They are superseded by `r1/`, not deleted,
+  so mark them superseded in the session log's Validation table. Do not overwrite them.
+- **Order:** R11 → R12 → R13 → AC12 live check → §16.6 → R14 receipts.
+- **Files in play:** the §7 list plus `src/lib/formatters.ts`, `src/lib/__tests__/formatters.test.ts` and the new
+  `src/modules/cabinet/statistics/__tests__/tableParams.test.ts`.
+- **Session log:** append a "Revision 1" section to the same session log with R11–R14 and AC11–AC14 evidence, and
+  update its Files Changed table.
+- **Backlog:** update the 854 line of `docs/backlog.md`.
+- **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval and no mutating git.

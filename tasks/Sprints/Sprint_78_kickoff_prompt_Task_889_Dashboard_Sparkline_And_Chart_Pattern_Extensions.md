@@ -1,7 +1,7 @@
 # Task 889 — canonical dashboard patterns for the reference-driven dashboards: a sparkline, a StatCard chart slot and accent variant, and horizontal/grouped bars
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **845** (archived) · blocks **890** and **891** ·
-**Status: 📝 KICKOFF FILED 2026-09-27 — READY FOR SONNET**
+**Status: 🔁 NEEDS REVISION (review 1, 2026-09-27) — execute §16 (revision 1)**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27): charts on both dashboards, composition from the owner's references, colours from the theme (D78-5 stands).
@@ -74,7 +74,7 @@ owner's references:
 |---|---|---|---|---|---|
 | **R1** | D78-9 Q2/Q3, Lahomes KPI row | **Create** `src/design-system/mantine/patterns/MantineDashboardSparkline.tsx`. Props: `data: { date: string; value: number }[]`, `color: string` (theme colour key), `valueLabel: (n) => string`, `dateLabel: (date) => string`, `ariaLabel: string`. Behaviour: an ApexCharts `bar` chart with `chart.sparkline.enabled: true`, `toolbar` off, the native tooltip showing `dateLabel(date)` and `valueLabel(value)`, and `plotOptions.bar.columnWidth = theme.other.dashboardChart.barColumnWidth` and `borderRadius = theme.other.dashboardChart.barRadius`. The box is `w={theme.other.dashboardChart.sparklineWidth}` and `h={theme.other.dashboardChart.sparklineHeight}`. It renders `null` for `data.length === 0`. Zero values render zero-height bars, never a fake baseline. The wrapper carries `role="img"` and `aria-label`. Use the same `ReactApexChart` import path and the same `resolveThemeColor` helper that `MantineDashboardBarChart.tsx` uses. | P0 | AC1, AC2 | Confirmed |
 | **R2** | R1 | Add two roles to `theme.other.dashboardChart`: `sparklineWidth: 154` and `sparklineHeight: 95`. Put them in the type block `:293-321` and the value block `:813-848`, each with the comment *"Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)"*. | P0 | AC2 | Confirmed |
-| **R3** | D78-9, Lahomes KPI row | `MantineDashboardStatCard` gains `chart?: ReactNode`. When it is set, the ready body places the existing text stack and the chart side by side: `Flex direction={{ base: 'column', xs2: 'row' }} justify="space-between" align={{ base: 'flex-start', xs2: 'flex-end' }} gap="md"`, with the text stack first and the chart second. When it is absent, the markup is unchanged. `loading` and `error` ignore `chart`. | P0 | AC3 | Confirmed |
+| **R3** | D78-9, Lahomes KPI row | `MantineDashboardStatCard` gains `chart?: ReactNode`. When it is set, the ready body places the existing text stack and the chart side by side: `Flex direction={{ base: 'column', xs2: 'row' }} wrap="wrap" justify="space-between" align={{ base: 'flex-start', xs2: 'flex-end' }} gap="md"`, with the text stack first and the chart second. `wrap="wrap"` (review 1, F1) drops the chart under the text whenever the card is too narrow for text + gap + chart, so the chart never overflows the card at any width. When it is absent, the markup is unchanged. `loading` and `error` ignore `chart`. | P0 | AC3 | Confirmed |
 | **R4** | D78-9 Q4 (accent hero), Omah / Lahomes | `MantineDashboardStatCard` gains `variant?: 'default' \| 'accent'` (default `'default'`, unchanged). `'accent'` applies to the ready and zero states only. The `Card` gets `bg="brand.8"`, the border is removed (`withBorder={false}`), and the label, value and caption render `c="white"`. The icon badge becomes `ThemeIcon … color="white" variant="light"`. Text contrast must be ≥ 4.5:1 (see §3; `brand.7` fails). Loading and error keep the default chrome. | P1 | AC4 | Confirmed |
 | **R5** | D78-9 Q2/Q3 | `MantineDashboardBarChart` gains `stacked?: boolean`, defaulting to `series.length > 1` (today's behaviour). With `stacked={false}`, two or more series render as grouped columns. | P0 | AC5 | Confirmed |
 | **R6** | D78-9 Q2/Q3 | `MantineDashboardBarChart` gains `horizontal?: boolean` (default `false`). With it set: `plotOptions.bar.horizontal: true`, `barHeight = theme.other.dashboardChart.barColumnWidth`; categories stay in `xaxis.categories`; the value formatter moves to `xaxis.labels.formatter` (`valueLabel(Number(v))`) and the category formatter to `yaxis.labels.formatter` (`categoryLabel(String(v))`); grid lines switch to vertical (`xaxis.lines.show: true`, `yaxis.lines.show: false`). Leave the y-axis label width at the ApexCharts default: no new value. | P0 | AC5 | Confirmed |
@@ -87,8 +87,9 @@ owner's references:
 
 - **INFERENCE:** a sparkline has no axes or legend. The native tooltip is the textual alternative, following the 845
   tooltip decision (D845-4).
-- **INFERENCE:** the xs2 (480px) switch in R3 keeps the chart beside the value from 480 up. The measured 154px chart
-  plus a 20px value fits a 480px single-column card (480 − 2×16 gutter − 2×20 padding ≈ 408px).
+- ~~**INFERENCE:** the xs2 (480px) switch in R3 keeps the chart beside the value from 480 up.~~ **Falsified at
+  review 1 (F1):** the inference checked only the one-column 480px card. At 1024 the four-column grid gives a 236px
+  card with a 186px content box, and the 154px chart overflowed it by 60px. R3 now carries `wrap="wrap"`.
 - No owner decision is open.
 
 ## 6. Pre-read rule bundle
@@ -157,6 +158,9 @@ on the left and seven bars on the right. Hovering a bar shows its date and value
 - **AC3 [R3]** — Given `DashboardStatCard` → `WithChart`:
   - at 1440 and 480, the chart's left edge is to the right of the value's right edge;
   - at 390 and 320, the chart's top edge is below the value's bottom edge;
+  - (review 1, F1) at 320, 390, 480, 768, 1024, 1280 and 1440, the chart's right edge is ≤ the card's content-box
+    right edge (card right minus its computed `padding-right`), and the card's `scrollWidth` ≤ its `clientWidth`.
+    At 1024 the chart may sit beside or below the value;
   - `Default` renders the same DOM before and after the change (compare `outerHTML` from the pre-change and
     post-change builds, retained under `evidence/task889/`).
 - **AC4 [R4]** — Given `DashboardStatCard` → `Accent` at 1440, when inspected:
@@ -285,3 +289,78 @@ and no mutating git. Update the 889 line of `docs/backlog.md`, and write the ses
 `GR-1 CENSUS COMPLETE — pattern task, no route surface: tier1 1 created (MantineDashboardSparkline) + 2 extended enrolled+storied (MantineDashboardStatCard, MantineDashboardBarChart); tier2 0; tier3 0 listed and filed as none.`
 
 `GR-3 STORY PROVEN — MantineDashboardSparkline ← src/stories/patterns/mantine/DashboardSparkline.stories.tsx; MantineDashboardStatCard ← src/stories/patterns/mantine/DashboardStatCard.stories.tsx; MantineDashboardBarChart ← src/stories/patterns/mantine/DashboardBarChart.stories.tsx` (after execution).
+
+## 16. Review 1 — 🔁 NEEDS REVISION (2026-09-27): revision 1
+
+Review 1 measured the built `storybook-static`, whose hashes match the session log's final hashes, with Playwright on
+win32 v22.22.3. Everything else stands: R1, R2, R4–R6, R8–R10, AC1, AC2, AC4, AC6–AC8, and the gates in the session
+log. Only the items below are open.
+
+### 16.1 Findings
+
+| ID | Severity | Requirement | Observed (review 1) | Required |
+|---|---|---|---|---|
+| **F1** | P1 | R3 / AC3, GR-3b | At 1024, `DashboardStatCard` → `WithChart` gives a 236px card with a content box of 40→228. The sparkline spans 134→288, so it overflows the card by 60px. The card's `scrollWidth` is 271 against a `clientWidth` of 234. The session log's GR-3b receipt says `overflow: none` for 1024, but its own `gr3b-gr3c-measurements.json` shows `overflowElements` rising from 2 to 5 at 1024 only. The cause is task design: §5's inference checked only the one-column card, and R3's `Flex` had no wrap. | R3 as amended: add `wrap="wrap"` to the chart-branch `Flex` in `MantineDashboardStatCard.tsx` and change nothing else in that component. AC3 as amended: no overflow at 7 widths. |
+| **F2** | P1 | R7 / AC5 | `DashboardBarChart` → `Horizontal` still renders Storybook's error boundary intermittently: `AssertionError: expected 1 to be greater than 1`, at `play`. It failed 1 of 12 runs with a 7s settle (en, run 2) and 3 of 20 runs with a 1.5–6s settle (en and sq). The `waitFor` covers only the bar **count**. The widths and heights are read immediately afterwards, while ApexCharts' grow animation is still running and every bar still has the same width. The "96/96 clean" stress test did not exercise this assertion under this timing. | In `DashboardBarChart.stories.tsx`, move the geometry assertions inside `waitFor(…, { timeout: 5000 })`: `Horizontal` (widths vary, heights equal) and `Grouped` (first-bar lefts differ). The count `waitFor` stays. Do not disable the component's animation, because that is production behaviour. |
+| **F3** | P2 | §13.3, GR-3b | `measure.mjs` still reads `getAttribute('x'/'width'/'height')` on the `<path>` bars, which is the session's own defect #1. So every `barRects` entry in `gr3b-gr3c-measurements.json` is a fabricated `0`. It also counts overflow over the whole root instead of per card. | Replace the attribute reads with `getBoundingClientRect()`. For each `.mantine-Card-root`, record `scrollWidth`/`clientWidth` and the chart's right edge against the card's content-box right edge. Save the output as a new file, `gr3b-gr3c-measurements-rev1.json`. |
+| **F4** | P1 | §13.2 | `check:locale-leak:mantine-only` has not been run against the final content. The session log says so itself. | Run it after F1–F3, per §16.3. |
+
+### 16.2 Re-entry
+
+Mode **`remediation`**. Start at F1. Reuse without re-running:
+- the I0 snapshot and hashes;
+- `ac7-before/*.before*.html`. Never overwrite or rebuild the before-state.
+
+Write every new artifact with a `-rev1` suffix. The superseded artifacts stay, and the session log marks them
+superseded.
+
+Order:
+1. F1 (`MantineDashboardStatCard.tsx`, one prop).
+2. F2 (`DashboardBarChart.stories.tsx`).
+3. `npm.cmd run build-storybook`.
+4. F3 measurement.
+5. AC7 "after" re-capture.
+6. The §16.3 stress run.
+7. `check:locale-leak:mantine-only`.
+8. The full §13.2 gate block.
+
+No other file changes. `DashboardStatCard.stories.tsx` needs no edit.
+
+### 16.3 Verification (revision 1)
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run build-storybook
+npm.cmd run check:locale-leak:mantine-only
+```
+
+Then re-run the whole §13.2 block, `npm.cmd run build` and the hash-object line included. Tee each command to
+`docs/sessions/evidence/task889/<name>-rev1.txt` with its exit code.
+
+Rendered evidence against the rebuilt `storybook-static`:
+1. **AC3 (F1).** For `WithChart` at 320/390/480/768/1024/1280/1440, record per width: the card rect, its computed
+   `padding-right`, `scrollWidth`/`clientWidth`, the chart rect and the value rect. Quote the 1024 row.
+2. **AC5 (F2).** Load `Horizontal` and `Grouped` 10 times each in each of the four locales (80 loads). Use
+   `waitUntil: 'networkidle'` followed by a **300 ms** settle, which is `check-locale-leak.mjs`'s own shape. Count the
+   loads that show Storybook's error boundary. Expected: 0 of 80. Keep the script and its output under `-rev1`.
+3. **AC7.** Re-capture only the "after" `outerHTML` for `AdminDashboardView`/`AgentStatisticsView` into
+   `ac7-before/*.after-rev1*.html`. Compare it, ids normalised, against the retained `*.before.norm2.html`.
+   Expected: `IDENTICAL` ×2.
+4. **Locale leak.** In the `check:locale-leak:mantine-only` transcript, quote zero findings **and** zero
+   `failed to render` / `AssertionError` lines for `patterns-mantine-dashboardsparkline`, `…-dashboardstatcard` and
+   `…-dashboardbarchart`. Its overall exit stays 1 (Task 836).
+
+Receipts:
+- New `GR-3b STORY RESPONSIVE CHECK` receipts for `--with-chart` and both bar-chart exports, built from the rev1
+  measurement.
+- The final hash of every changed file.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 16.4 Reviewer note — no executor action
+
+`theme.ts`, `scripts/mantine-migration-scope.json` and `messages/{sq,en,uk,it}.json` carry hunks from both 889 and
+854 (`dashboardListingThumb`, the `AgentStatisticsView` manifest entry and 854's keys). 854 is uncommitted and not
+approved. The approval review must resolve that staging entanglement before it emits the handoff. Do not revert or
+move 854's hunks.

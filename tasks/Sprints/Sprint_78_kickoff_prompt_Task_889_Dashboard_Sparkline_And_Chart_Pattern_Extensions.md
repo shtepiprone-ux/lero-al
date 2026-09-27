@@ -1,8 +1,7 @@
 # Task 889 — canonical dashboard patterns for the reference-driven dashboards: a sparkline, a StatCard chart slot and accent variant, and horizontal/grouped bars
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **845** (archived) · blocks **890** and **891** ·
-**Status: 🟡 PARTIALLY VERIFIED (review 2, 2026-09-27) — no executor action; approval waits on owner O889-1 and
-O889-2 (§17)**
+**Status: 🔁 NEEDS REVISION (review 3, 2026-09-27, owner returned O889-1 rows 1 and 3) — execute §18 (revision 2)**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27): charts on both dashboards, composition from the owner's references, colours from the theme (D78-5 stands).
@@ -76,13 +75,14 @@ owner's references:
 | **R1** | D78-9 Q2/Q3, Lahomes KPI row | **Create** `src/design-system/mantine/patterns/MantineDashboardSparkline.tsx`. Props: `data: { date: string; value: number }[]`, `color: string` (theme colour key), `valueLabel: (n) => string`, `dateLabel: (date) => string`, `ariaLabel: string`. Behaviour: an ApexCharts `bar` chart with `chart.sparkline.enabled: true`, `toolbar` off, the native tooltip showing `dateLabel(date)` and `valueLabel(value)`, and `plotOptions.bar.columnWidth = theme.other.dashboardChart.barColumnWidth` and `borderRadius = theme.other.dashboardChart.barRadius`. The box is `w={theme.other.dashboardChart.sparklineWidth}` and `h={theme.other.dashboardChart.sparklineHeight}`. It renders `null` for `data.length === 0`. Zero values render zero-height bars, never a fake baseline. The wrapper carries `role="img"` and `aria-label`. Use the same `ReactApexChart` import path and the same `resolveThemeColor` helper that `MantineDashboardBarChart.tsx` uses. | P0 | AC1, AC2 | Confirmed |
 | **R2** | R1 | Add two roles to `theme.other.dashboardChart`: `sparklineWidth: 154` and `sparklineHeight: 95`. Put them in the type block `:293-321` and the value block `:813-848`, each with the comment *"Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)"*. | P0 | AC2 | Confirmed |
 | **R3** | D78-9, Lahomes KPI row | `MantineDashboardStatCard` gains `chart?: ReactNode`. When it is set, the ready body places the existing text stack and the chart side by side: `Flex direction={{ base: 'column', xs2: 'row' }} wrap="wrap" justify="space-between" align={{ base: 'flex-start', xs2: 'flex-end' }} gap="md"`, with the text stack first and the chart second. `wrap="wrap"` (review 1, F1) drops the chart under the text whenever the card is too narrow for text + gap + chart, so the chart never overflows the card at any width. When it is absent, the markup is unchanged. `loading` and `error` ignore `chart`. | P0 | AC3 | Confirmed |
-| **R4** | D78-9 Q4 (accent hero), Omah / Lahomes | `MantineDashboardStatCard` gains `variant?: 'default' \| 'accent'` (default `'default'`, unchanged). `'accent'` applies to the ready and zero states only. The `Card` gets `bg="brand.8"`, the border is removed (`withBorder={false}`), and the label, value and caption render `c="white"`. The icon badge becomes `ThemeIcon … color="white" variant="light"`. Text contrast must be ≥ 4.5:1 (see §3; `brand.7` fails). Loading and error keep the default chrome. | P1 | AC4 | Confirmed |
+| **R4** | D78-9 Q4 (accent hero), Omah / Lahomes | `MantineDashboardStatCard` gains `variant?: 'default' \| 'accent'` (default `'default'`, unchanged). `'accent'` applies to the ready and zero states only. **Revision 2 (O889-1 row 3, owner decision D889-2 below):** the `Card` background is the brand coral gradient from the theme role `theme.other.accentHeroGradient` (§18.3), not `brand.8`. The border is removed (`withBorder={false}`), and the label, value and caption render `c="white"`. The icon badge becomes `ThemeIcon … color="white" variant="light"`. The measured contrast of white text against the rendered gradient behind it must be ≥ 4.5:1 for the label and caption, and ≥ 3:1 for the value (bold, ≥ 24px from `md`; below `md` it is 20px, so it also needs 4.5:1). Loading and error keep the default chrome. | P1 | AC4 | Confirmed |
 | **R5** | D78-9 Q2/Q3 | `MantineDashboardBarChart` gains `stacked?: boolean`, defaulting to `series.length > 1` (today's behaviour). With `stacked={false}`, two or more series render as grouped columns. | P0 | AC5 | Confirmed |
 | **R6** | D78-9 Q2/Q3 | `MantineDashboardBarChart` gains `horizontal?: boolean` (default `false`). With it set: `plotOptions.bar.horizontal: true`, `barHeight = theme.other.dashboardChart.barColumnWidth`; categories stay in `xaxis.categories`; the value formatter moves to `xaxis.labels.formatter` (`valueLabel(Number(v))`) and the category formatter to `yaxis.labels.formatter` (`categoryLabel(String(v))`); grid lines switch to vertical (`xaxis.lines.show: true`, `yaxis.lines.show: false`). Leave the y-axis label width at the ApexCharts default: no new value. | P0 | AC5 | Confirmed |
 | **R7** | 16c, GR-3 | Stories. **Create** `src/stories/patterns/mantine/DashboardSparkline.stories.tsx` (`Patterns/Mantine/DashboardSparkline`: `Default` with 7 days of mixed values, `AllZero`, `ThirtyDays`). **Extend** `Patterns/Mantine/DashboardStatCard` with `WithChart` (a sparkline in `chart`) and `Accent` (variant accent, no chart). **Extend** `Patterns/Mantine/DashboardBarChart` with `Grouped` (2 series, `stacked={false}`) and `Horizontal` (1 series, 5 long category labels from existing storybook fixture strings). Fixtures carry no wall-clock values (check 16). All visible strings come from `storyT` keys, adding keys under `storybook.mantine.*` in all four locales only where no existing key fits. | P0 | AC6 | Confirmed |
 | **R8** | enrolment | Enrol `MantineDashboardSparkline.tsx` in `scripts/mantine-migration-scope.json`, same shape as its sibling dashboard patterns. `check:pattern-enrolment` and `check:story-coverage` exit 0. | P0 | AC6 | Confirmed |
 | **R9** | preserve | The existing exports of both Stories are unchanged. With no new props, `AdminDashboardView` and `AgentStatisticsView` render exactly as before. | P0 | AC7 | Confirmed |
 | **R10** | hardcode | No `className`, Tailwind, `@/components/ui/*`, `style=` or raw px/rem/hex in the new or changed files; every value is a theme key or role. | P0 | AC8 | Confirmed |
+| **R11** | O889-1 row 1 (owner, 2026-09-27), D845-4 | Revision 2. The sparkline tooltip stays ApexCharts' **native** tooltip, turned into its built-in compact form: `tooltip.compact: true` (ApexCharts 7.4.0, `types/apexcharts.d.ts`: *"Meant for panels a normal card would cover (small multiples, sparklines, dashboard tiles)"*). When the tooltip is shown it never overlaps the hovered bar, never covers the cursor point, and is never cut off by the viewport or by any clipping ancestor. No custom tooltip component, no CSS on `.apexcharts-tooltip`, no `custom` renderer, no change to the `Card`'s `overflow`. `useApexTooltipMirror` stays as it is. | P0 | AC9 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -164,10 +164,10 @@ on the left and seven bars on the right. Hovering a bar shows its date and value
     At 1024 the chart may sit beside or below the value;
   - `Default` renders the same DOM before and after the change (compare `outerHTML` from the pre-change and
     post-change builds, retained under `evidence/task889/`).
-- **AC4 [R4]** — Given `DashboardStatCard` → `Accent` at 1440, when inspected:
-  - the card's computed background is `rgb(189, 67, 57)`;
+- **AC4 [R4]** — Given `DashboardStatCard` → `Accent` (revision 2: superseded by §18.4 AC4-R2; the `rgb(189, 67, 57)` clause is void):
   - the label, value and caption compute `rgb(255, 255, 255)`;
-  - the computed contrast ratio is ≥ 4.5 (quote it).
+  - the card's computed `background-image` is a `linear-gradient` whose two stops are `rgb(236, 84, 71)` (`brand.7`) and `rgb(142, 50, 43)` (`brand.9`);
+  - the pixel-sampled contrast from §18.4 meets R4's thresholds (quote the minimum per element).
 - **AC5 [R5, R6]** — Given `DashboardBarChart`:
   - `Grouped` renders its two series side by side (bar x-positions differ within one category);
   - `Horizontal` renders bars whose width varies with value and whose height is equal;
@@ -181,7 +181,9 @@ on the left and seven bars on the right. Hovering a bar shows its date and value
   `git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/design-system/mantine/patterns/MantineDashboardSparkline.tsx src/stories/patterns/mantine/DashboardSparkline.stories.tsx`,
   when run, then it prints nothing, and `check:design-tokens:strict` exits 0.
 
-`GR-4 AC AUDIT — 8 criteria; each states an observable property; absolutes: AC2's exact 154×95 (the role's own value), AC7's equal outerHTML with ids normalised (the no-new-props path must not change), AC8's empty grep on two created files.`
+- **AC9 [R11]** — Given the §18.4 tooltip probe, when every required tuple is hovered, then its violation count is 0.
+
+`GR-4 AC AUDIT — 8 criteria (9 from revision 2: AC9 counts observed tooltip/bar/cursor/clip-box relations); each states an observable property; absolutes: AC2's exact 154×95 (the role's own value), AC7's equal outerHTML with ids normalised (the no-new-props path must not change), AC8's empty grep on two created files.`
 
 ### Type-scale table (GR-3c)
 
@@ -366,7 +368,7 @@ Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 approved. The approval review must resolve that staging entanglement before it emits the handoff. Do not revert or
 move 854's hunks.
 
-## 17. Review 2 — 🟡 PARTIALLY VERIFIED (2026-09-27): only the owner items remain
+## 17. Review 2 — 🟡 PARTIALLY VERIFIED (2026-09-27): only the owner items remain — superseded by §18 for O889-1; O889-2 still open
 
 Revision 1 is accepted. The reviewer re-measured the rebuilt `storybook-static` on win32 v22.22.3. That build is newer
 than both changed files, and all 8 `hash-object` values match `final-hashes-rev1.txt`.
@@ -425,3 +427,137 @@ If these files are staged whole, a clean checkout gets a manifest entry for a fi
   the uncommitted tree.
 
 The approval review emits the handoff for the option the owner picks.
+
+## 18. Review 3 — 🔁 NEEDS REVISION (2026-09-27): owner returned O889-1 rows 1 and 3 — revision 2
+
+### 18.1 Owner result, verbatim (O889-1)
+
+| Row | Result | Owner's words |
+|---|---|---|
+| 1 Sparkline | ❌ returned | *"не приймаю. Tooltip з'являється в одному і тому ж місці, перекриваючи стовпчик, поведінка тултіпа має бути наступною: він не має перекривати стовпчик, він має з'являтися вище/нижче/правіше/лівіше від точки курсору! Tooltip не має обрізатись краями графіку. … У https://apexcharts.com/ дуже гарна поведінка tooltip, чому ти її не використовуєш? … ми використовуємо чарти і всі графіки з https://apexcharts.com/, ми їх лише стилізуємо під той вид, референси якого я тобі надав."* (screenshot: the uk tooltip "Пн · Графік тренду: 22" sits over the first bars) |
+| 2 StatCard WithChart | ✅ accepted | *"приймаю!"* — at 1440 / 1024 / 390, en / uk. Do not change its layout. |
+| 3 StatCard Accent | ❌ returned | *"колір бекграунду це повний жах! Не приймаю. … Необхідно підібрати трендовий колір 2026 року"* |
+| 4 BarChart Grouped / Horizontal | ✅ accepted | *"приймаю."* Do not change either export. |
+
+**D889-2 (owner, 2026-09-27, AskUserQuestion, verbatim option):** *"Coral gradient (our brand)"* — *"Project brand coral
+#EC5447 fading to #8E322B. Warm and on-brand, but white text on the light end is only 3.5:1, so small text fails AA and
+the label/caption would need the dark end."* Rejected alternatives: deep ink + coral, the TailAdmin indigo gradient,
+and the Lahomes violet.
+
+### 18.2 Row 1 — why it failed and the native fix (reviewer probe, FACT)
+
+- **Cause.** The tooltip is ApexCharts' full card form, 156 × 69 px, on a 154 × 95 chart. ApexCharts places it beside the
+  point only inside the chart's own grid width (`src/modules/tooltip/Position.js` `computeTooltipPosition`,
+  `x > gridWidth/2` → left), so no placement beside the bar exists. `useApexTooltipMirror` then slides it back inside
+  the viewport, and that puts it on the bars.
+- **Probe.** Real `apexcharts` 7.4.0 `dist`, the sparkline's own options, 7 bars hovered at mid and top (14 hovers per
+  layout). Script: `C:\Users\Nox\AppData\Local\Temp\…\scratchpad\tt889.cjs`; it is not retained, and the executor
+  writes its own probe.
+
+  | Config | Layout | Tooltip size | Over the bar | Over the cursor | Clipped |
+  |---|---|---|---|---|---|
+  | current | bare, with the mirror | 156×69 | 6 | 6 | 0 |
+  | current | bare, no mirror | 156×69 | 0 | 0 | 6 |
+  | `compact: true` | bare, with and without the mirror | 58×24 | 0 | 0 | 0 |
+  | `compact: true` | 340px card, chart on the right | 58×24 | 0 | 0 | 0 |
+
+  The 236px-card layout of the probe rendered a 175px canvas, which is a harness artifact. So the 1024 card is
+  **UNVERIFIED** and is AC9's hardest tuple.
+- **Live reference, Lahomes KPI sparkline, 1920px.** Its tooltip leaves the 156px canvas: it sits left of the cursor,
+  155px wide, inside the 371px card. The compact form gets the same effect, beside the cursor, without needing the
+  space.
+
+### 18.3 Row 3 — the coral gradient (D889-2)
+
+- **Theme role.** Add `accentHeroGradient: MantineGradient` to `theme.other`. Put the type in the
+  `MantineThemeOther` augmentation and the value next to the other roles. The value is
+  `{ from: 'brand.7', to: 'brand.9', deg: 225 }` — theme keys, no hex. The comment reads *"Task 889 rev 2, D889-2:
+  brand coral hero-card gradient, light top-right → dark bottom-left so the text sits on the dark end"*.
+- **Card.** When `variant="accent"`, both `Card` wrappers get their background from
+  `getGradient(theme.other.accentHeroGradient, theme)` (`@mantine/core` 8.3.18). This replaces `bg="brand.8"`.
+  Verify that the computed `background-image` is the gradient. If Mantine's `bg` style prop does not accept it, use
+  the Mantine-native equivalent and state which one in the session log. Never use a `style` object or a CSS file.
+- **Why 225deg.** The text stack is at the left and lower half, which is the dark end. White contrast along the sRGB
+  line brand.7 → brand.9, computed: t 0.0 → 3.54, 0.3 → 4.44, 0.4 → 4.84, 0.5 → 5.22, 0.8 → 6.68, 1.0 → 7.95. So a
+  label that lands at t < 0.33 would fail. That is why AC4-R2 measures pixels and does not accept a declared value.
+- `brand.8` is no longer used by the accent. `withBorder={false}`, the white text and the white `light` icon stay.
+
+### 18.4 Acceptance for revision 2
+
+- **AC4-R2 (R4)** — `DashboardStatCard` → `Accent`, sq and en at 320 / 390 / 768 / 1024 / 1440:
+  1. Take a Playwright element screenshot of each of the label, value and caption. Take it once with the text shown and
+     once with `color: transparent` set by the probe only (restore it afterwards), so that only the background is
+     sampled.
+  2. Compute the minimum WCAG contrast of `#FFFFFF` against every background pixel under the text box.
+  3. Required: label and caption ≥ 4.5; value ≥ 4.5 where its computed font size is < 24px, and ≥ 3.0 where it is
+     ≥ 24px.
+  4. Quote the minimum per element per width.
+
+  Plus AC4's computed-style clauses. The `Accent` story's `play` assertion `rgb(189, 67, 57)` must change to assert the
+  gradient's two stops.
+- **AC9 (R11)** — the tooltip probe, against the rebuilt `storybook-static`, `networkidle` then 2500ms settle.
+  - **Tuples:**
+    - `DashboardSparkline` `Default` and `ThirtyDays` at 1440, en and uk;
+    - `AllZero` at 1440, en;
+    - `DashboardStatCard` `WithChart` at 320 / 390 / 1024 / 1440, en and uk.
+  - **Hover points:** every bar at its vertical middle and at its top + 2px. For `ThirtyDays`, use bars 0, 4, 9, 14,
+    19, 24 and 29. For `AllZero`, hover each slot's centre 2px above the chart bottom.
+  - **Before every read:** wait 450ms, and require `.apexcharts-tooltip.apexcharts-active`. A read without it is a
+    probe failure, never a pass.
+  - **A violation is any of:**
+    - (a) the tooltip rect ∩ the hovered bar rect has an area > 0 (not checked for `AllZero`);
+    - (b) the cursor point lies inside the tooltip rect;
+    - (c) the tooltip rect is not fully inside the viewport ∩ every ancestor whose computed `overflow` is not
+      `visible`.
+  - **Required:** 0 violations. Record a table per tuple: hovers, active, (a), (b), (c).
+- **Route.**
+  1. Try `compact: true` alone.
+  2. If any tuple violates, the only permitted second arm is adding ApexCharts' native `followCursor: true`. Measure
+     again and keep both tables.
+  3. If a violation remains, return `BLOCKED` with the tables and change nothing else. A custom tooltip, a tooltip
+     CSS rule, a `custom` renderer, an `overflow` change or a new hook is forbidden (D845-4, and the owner's own
+     words).
+- **GR-3c:** the compact tooltip's font is the library's own; record its computed size. No token is added.
+- **AC7 again.** Re-capture only the "after" `outerHTML` of `AdminDashboardView` / `AgentStatisticsView` as
+  `*.after-rev2*`, and compare it to the retained `*.before.norm2.html`. Expected: `IDENTICAL` ×2. Neither consumer
+  renders a sparkline or the accent variant.
+
+### 18.5 Re-entry and scope
+
+- **Mode `remediation`.** Reuse, and never overwrite: the I0 snapshot, `ac7-before/*.before*` and every `-rev1`
+  artifact. Write new artifacts with the `-rev2` suffix.
+- **Files:**
+  - `MantineDashboardSparkline.tsx` (R11);
+  - `MantineDashboardStatCard.tsx` (the accent background only);
+  - `theme.ts` (the `accentHeroGradient` type line and value line);
+  - `DashboardStatCard.stories.tsx` (the `Accent` `play` assertion only);
+  - the session log and the 889 line of `docs/backlog.md`.
+
+  Nothing else changes. `WithChart` (row 2) and both bar-chart exports (row 4) were accepted and must stay
+  byte-identical.
+- **Order:**
+  1. theme role;
+  2. accent;
+  3. tooltip;
+  4. `npm.cmd run build-storybook`;
+  5. AC4-R2 probe;
+  6. AC9 probe;
+  7. AC7 re-capture;
+  8. `npm.cmd run check:locale-leak:mantine-only` (quote zero lines for the three task stories);
+  9. the full §13.2 block tee'd to `*-rev2.txt`, including `npm.cmd run build` and the hash-object line.
+- **Receipts:**
+  - GR-0 for the gradient role (EXTEND `theme.other`; no new hex);
+  - GR-3b and GR-3c for `Accent`;
+  - the final hashes.
+
+### 18.6 Owner re-check after revision 2 (O889-1, rows 1 and 3 only)
+
+| # | Story | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 1 | `Patterns/Mantine/DashboardSparkline` | Default / AllZero / ThirtyDays | 1440 | en / uk | the tooltip appears beside the cursor, never over the bar, never cut off |
+| 1b | `Patterns/Mantine/DashboardStatCard` | WithChart | 1024 / 390 | uk | the same tooltip rule inside the card |
+| 3 | `Patterns/Mantine/DashboardStatCard` | Accent | 1440 / 390 | en / sq | the coral gradient card, legible white text |
+
+**O889-2** (staging the files shared with 854, §17.1) is unchanged and still owed at approval.
+
+Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

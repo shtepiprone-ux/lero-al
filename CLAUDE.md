@@ -227,7 +227,7 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 - `.claude/skills/review-task/SKILL.md` - evidence-based review quality gate.
 - `.claude/skills/execute-task/SKILL.md` - Sonnet implementation and self-validation protocol.
 - `.claude/hooks/orchestrator-router.ps1` - automatic task/review skill router for normal Opus sessions.
-- `.claude/hooks/orchestrator-response-gate.ps1` - **`Stop` hook. Blocks the response on a missing owner-run git handoff (GR-6) or a backlog close without an archive row (GR-5).** Fail-open, loop-safe.
+- `.claude/hooks/orchestrator-response-gate.ps1` - **`Stop` hook. Blocks the response on a missing owner-run git handoff (GR-6), a backlog close without an archive row (GR-5), or — on every Opus response — a backlog that is not active-state only (`npm run check:backlog-active`, GR-5, 2026-09-27).** Fail-open on script errors, loop-safe.
 - `.claude/hooks/sonnet-executor-bootstrap.ps1` - automatic executor skill loader for normal Sonnet sessions.
 
 ## Documentation update rule

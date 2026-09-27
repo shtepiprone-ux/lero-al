@@ -293,6 +293,8 @@ Get-Content -Raw -Encoding utf8 scripts\task-884-cms-html-census.sql | Set-Clipb
 
 1. **O79-7 — now, before any code lands.** As admin, open `/admin/permissions` and check whether moderators hold
    `legal.manage`. If a moderator does not need it, switch it off until 884 is deployed. Report the state.
+   **✅ Answered 2026-09-27** — owner, verbatim: *"Ця опція вимкнена для модераторів"* (moderators do not hold `legal.manage`). The §3 / §5
+   "which keys" UNKNOWN is resolved for `legal.manage`; the sanitiser is still required (admins author pages).
 2. **O79-6 — after the executor reports, before approval.** In the Supabase SQL Editor, clear the editor, paste the
    copied census, and Run. Return the grid. `(count)` = 0 means no live page relies on stripped markup. A **published**
    row with a non-empty `stripped_tags`, or with `style_attr`/`class_attr`/`id_attr`, goes to the owner decision in

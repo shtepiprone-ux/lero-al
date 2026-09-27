@@ -300,6 +300,10 @@ Before returning `APPROVED` or `APPROVED WITH NOTES`, Opus must complete this cl
    do not keep the approved task row active merely to hold that follow-up.
 5. Re-read both backlog files, verify the active backlog contains only live work and is at most 80 physical lines,
    then inspect the diff. Emit the approval handoff only after this check.
+6. **Every review, whatever its verdict (owner rule, 2026-09-27):** run `npm run check:backlog-active`. It checks the
+   whole file, not your diff. Fix every item it names in this same response: archive any closed sprint, task or owner
+   action, and move the narrative to its plan. Then emit `GR-5 BACKLOG ACTIVE — check:backlog-active exit 0.`. The Opus
+   `Stop` hook blocks the response while the check fails.
 
 The required receipt is one terse line under `Problems and verdict`:
 `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.`

@@ -228,6 +228,9 @@ for an edit made under owner authorisation. Naming checks in a sentence instead 
 Do not publish the first draft. Check all of the following and revise the task if any answer is no:
 
 - A fresh Sonnet session can execute it without hidden chat context.
+- **`npm run check:backlog-active` exits 0 (owner rule, 2026-09-27).** It checks the whole `docs/backlog.md`, not only
+  the lines this design changed. Archive and remove every closed sprint, task or owner action it names, in this response.
+  Emit `GR-5 BACKLOG ACTIVE — check:backlog-active exit 0.`. The Opus `Stop` hook blocks every response while it fails.
 - **The response ends with the owner-run commit handoff.** A kickoff is not delivered until the owner has a paste-ready `powershell` block staging **every** artifact this task design created or changed — the kickoff file, the sprint file, `docs/backlog.md`, `docs/backlog-reserved.md`, and anything else the same edit touched — with the commit message. Reconcile it against read-only `git status --short` first. Handing over a kickoff and leaving the owner to assemble the staging list is an incomplete delivery, not a stylistic choice.
 - Every command the owner or executor must run appears inside a paste-ready fenced `powershell` block, with substitutable values as assignments — never named in prose, never carrying a `<placeholder>`.
 - Every primary requirement has at least one binary acceptance criterion and one verification method.

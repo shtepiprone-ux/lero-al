@@ -49,24 +49,47 @@ try {
     if (-not $root) { $root = (Get-Location).Path }
     Set-Location $root
 
+    # GR-5 (owner rule 2026-09-27) - the WHOLE backlog is checked on EVERY Opus response, even one
+    # that wrote no file. The diff-only check below could not see a closed sprint that was already
+    # sitting in docs/backlog.md; the owner found Sprints 68 and 80-82 there on 2026-09-27.
+    # Only exit code 1 (violations) blocks; a script/runtime failure (2, missing node) fails open.
+    $backlogProblem = $null
+    if (Test-Path -LiteralPath 'scripts/check-backlog-active.mjs') {
+        # PowerShell 5.1 turns redirected native stderr into a terminating error under 'Stop', which
+        # the outer catch would swallow (fail open). Run this one call under 'Continue'.
+        $prevEap = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $backlogOut = & node scripts/check-backlog-active.mjs 2>&1 | Out-String
+        $backlogExit = $LASTEXITCODE
+        $ErrorActionPreference = $prevEap
+        if ($backlogExit -eq 1) {
+            $backlogProblem = "GR-5 VIOLATED - docs/backlog.md is not active-state only (npm run check:backlog-active):`n" + $backlogOut.Trim()
+        }
+    }
+
     $status = & git --no-optional-locks status --porcelain 2>$null
-    if (-not $status) { exit 0 }
+    if (-not $status -and -not $backlogProblem) { exit 0 }
+    if (-not $status) {
+        [Console]::Error.WriteLine("BLOCKED by .claude/hooks/orchestrator-response-gate.ps1 (docs/golden-rules.md):`n`n$backlogProblem`n`nFix it in this turn: archive row per closed item, delete it from the backlog, then emit the owner-run commit block. Do not explain the block to the owner as a tooling problem - it is the rule working.")
+        exit 2
+    }
 
     $paths = @($status | ForEach-Object { ($_ -replace '^..\s+','').Trim() })
 
     # Artifacts whose authorship is task design / governance - GR-6 demands a commit block.
     $designRe = '^(tasks/|CLAUDE\.md|\.claude/skills/|docs/(backlog\.md|backlog-archive\.md|golden-rules\.md|agent-contract\.md|orchestrator-role\.md|orchestrator-procedures\.md|rule-index\.md|component-catalog\.md|qa-profiles\.md))'
     $design = @($paths | Where-Object { $_ -match $designRe })
-    if ($design.Count -eq 0) { exit 0 }
+    if ($design.Count -eq 0 -and -not $backlogProblem) { exit 0 }
 
     # Last assistant message from the already-read transcript.
     $last = if ($assistantTexts.Count -gt 0) { $assistantTexts[$assistantTexts.Count - 1] } else { '' }
     if (-not $last) { exit 0 }   # cannot read the response - do not guess
 
     $problems = @()
+    if ($backlogProblem) { $problems += $backlogProblem }
 
     # GR-6 - uncommitted task/doc artifacts require the owner-run git block in this same response.
-    if ($last -notmatch '(?m)^\s*git add\s') {
+    if ($design.Count -gt 0 -and $last -notmatch '(?m)^\s*git add\s') {
         $problems += "GR-6 VIOLATED. These task/doc artifacts are written and uncommitted, and this response emitted no 'git add' block:`n    " + (($design | Select-Object -First 20) -join "`n    ")
     }
 

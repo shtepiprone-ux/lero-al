@@ -239,8 +239,25 @@ the active backlog and adding concise newest-first archive rows before the hando
 active owner action or numbered task; it never keeps an approved task active. This has recurred four times (661,
 703/704/705, 702 twice).
 
+**The whole backlog, on every Opus response — not only the lines this response changed (owner rule, 2026-09-27).**
+The owner found closed Sprints 68 (2026-09-18) and 80–82 (2026-09-25) still listed in `docs/backlog.md`, with
+approvals from earlier sessions piled into "Last Session". His words: *"якщо ці спринти 80,81 і 82 закриті, чому
+backlog.md не актуалізований? Мені тобі кожного разу нагадувати, що ти слідкуєш за беклогом? Чому ти ігноруєш свої
+правила? Виправ правила, щоб більше не ігнорував!"*. The old check read only the lines a response *added*, so stale
+state that was already in the file, or any response that wrote no file, passed unseen. Now
+`npm run check:backlog-active` (`scripts/check-backlog-active.mjs`) checks the whole file. It fails on:
+- any closed-state marker outside "Last Session" (`✅`, `CLOSED`, `APPROVED`, `ARCHIVED`, `FOLDED`, "archived
+  <date>", "was archived", "folded into");
+- a "Last Session" longer than 4 lines or 1200 characters;
+- a named sprint plan that is closed or missing;
+- a registry number the archive ledger already closed.
+
+The Opus `Stop` hook runs it on **every** Opus response and blocks while it fails. Cleaning the backlog is therefore
+the first step of the next response, whatever the owner asked.
+
 **Receipts:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.` For an approved verdict also emit
-`GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.`
+`GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.` Every task-design or review response also emits
+`GR-5 BACKLOG ACTIVE — check:backlog-active exit 0.`
 
 **Role boundary:** this rule's approval/archive obligations belong to Opus. Sonnet records only the task's concise
 current state and its implementation evidence; it must not approve, archive, or emit Git commands.
@@ -276,7 +293,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
 | GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
 | GR-4 | reviewer inspection + receipt | active |
-| GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — blocks an Opus response when `docs/backlog.md` records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
+| GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |
 
 **A receipt is a self-report, and on 2026-09-10 the orchestrator skipped one under pressure in the same session that

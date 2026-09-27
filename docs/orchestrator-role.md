@@ -358,6 +358,11 @@ For every task-design, implementation-review, QA-validation, or release-readines
 2. Treat the hard limit as `80` physical lines, including headings and Markdown table rows.
 3. Before the final task or review response, inspect the current line count and ensure the backlog still describes
    only active work, owner decisions, current blockers, next task number, and a two-to-four-line last-session note.
+   **Run `npm run check:backlog-active` and make it exit 0 (owner rule, 2026-09-27).** It checks the whole file,
+   not only this response's lines. The Opus `Stop` hook runs it on every response, including answers that write no
+   file, and blocks while it fails. A closed sprint, task or owner action found in the backlog is archived and removed
+   in that same response, whatever the owner asked for. Carry any narrative that must survive into the sprint plan or
+   `docs/backlog-reserved.md`; never delete it silently.
 4. If task state changed, update the active-state record concisely. On `APPROVED` or `APPROVED WITH NOTES`, Opus must
    remove the closed task and every confirmed stale closed/superseded row from the active backlog, then add concise
    newest-first ledger rows in `docs/backlog-archive.md`. Put detailed evidence in `docs/sessions/`; never append a

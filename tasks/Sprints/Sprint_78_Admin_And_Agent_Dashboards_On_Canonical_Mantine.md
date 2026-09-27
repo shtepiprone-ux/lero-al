@@ -165,8 +165,8 @@ parallel Sonnet sessions would conflict on them.
 | 1 | ~~**852** admin shell~~ ✅ 2026-09-26 | **860** email change throws (P1) → **885** 24-hour clock site-wide |
 | 2 | ~~**853** admin dashboard~~ ✅ 2026-09-27 | **865** `listing_views` anonymous write — kickoff filed 2026-09-27 (O78-8) |
 | 3 | **854** agent statistics (Q4) — held for the joint close with 891 | **863** `check:listing-visibility` blind spot — kickoff filed 2026-09-27 |
-| 4 | **874** → **877** → **868** | — |
-| 5 | **889** → **890** · **891** (D78-9; 891 closes 854 jointly) | — |
+| 4 | **889** → **891** → **890** (D78-9, P1; re-sequenced 2026-09-27 ahead of the P3 chain below). **891 before 890**: it closes 854, whose work sits uncommitted in the tree | Sprint 79's **884** (P1 security) first in Track B |
+| 5 | **874** → **877** → **868** (P3; 868 is Sprint 79's goal) | **887** after 863 (`check:listing-visibility` green again) · **888** |
 | 6 | **858**, then **857** · **859** (after 877; census, then kickoff) | 864's remaining guard |
 
 

@@ -1,0 +1,38 @@
+ M docs/critical-flow-registry.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package.json
+ M scripts/mantine-migration-scope.json
+ M scripts/story-realmode-allowlist.json
+ M src/components/layout/MobileNavDrawer.tsx
+ M src/components/layout/UserMenu.tsx
+ M src/design-system/mantine/patterns/MantineDashboardBarChart.tsx
+ M src/design-system/mantine/patterns/MantineDashboardStatCard.tsx
+ M src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/lib/__tests__/formatters.test.ts
+ M src/lib/formatters.ts
+ M src/modules/notifications/lib/emails/emailChange.ts
+ M src/stories/mantine/primitives/MobileNavDrawer.stories.tsx
+ M src/stories/mantine/primitives/Table.stories.tsx
+ M src/stories/mantine/primitives/UserMenu.stories.tsx
+ M src/stories/patterns/mantine/DashboardBarChart.stories.tsx
+ M src/stories/patterns/mantine/DashboardStatCard.stories.tsx
+?? docs/sessions/2026-09-27-task854-agent-statistics-page.md
+?? docs/sessions/2026-09-27-task889-dashboard-sparkline-and-chart-pattern-extensions.md
+?? docs/sessions/evidence/task854/
+?? docs/sessions/evidence/task860/
+?? docs/sessions/evidence/task889/
+?? src/app/[locale]/cabinet/statistics/
+?? src/design-system/mantine/patterns/MantineDashboardSparkline.tsx
+?? src/lib/__tests__/timezone-literals.test.ts
+?? src/modules/cabinet/statistics/__tests__/tableParams.test.ts
+?? src/modules/cabinet/statistics/components/
+?? src/modules/cabinet/statistics/tableParams.ts
+?? src/modules/notifications/lib/emails/__tests__/
+?? src/stories/fixtures/agentStatistics.fixtures.ts
+?? src/stories/patterns/mantine/AgentStatisticsView.stories.tsx
+?? src/stories/patterns/mantine/DashboardSparkline.stories.tsx

@@ -14,6 +14,8 @@
  * required outcome is routing through the shared send helper, which is done.
  */
 import { BRAND_PRIMARY } from '@/design-system/brand'
+import { TIRANE_TZ } from '@/lib/dashboard/period'
+import { formatDateTimeInZone } from '@/lib/formatters'
 import { sendEmail } from './send'
 
 // ── Locale strings ────────────────────────────────────────────────────────────
@@ -174,7 +176,7 @@ export async function sendEmailChangeEmails(opts: {
 }): Promise<void> {
   // Albanian-only policy (Task 251, 2026-05-25): always send in sq regardless of opts.locale.
   const s = getStrings('sq')
-  const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Tirana' })
+  const timestamp = formatDateTimeInZone(new Date().toISOString(), 'sq', TIRANE_TZ)
 
   let deviceHint = ''
   if (opts.ip) deviceHint += opts.ip

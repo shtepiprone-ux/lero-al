@@ -1,0 +1,46 @@
+
+> lero-al@0.1.0 test:auth
+> vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/postSignOut.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts src/modules/auth/__tests__/AuthContext.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx src/modules/notifications/lib/emails/__tests__/emailChange.test.ts src/lib/__tests__/timezone-literals.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts (25 tests | 1 failed) 19ms
+     × SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages 11ms
+npm.cmd : 
+At line:2 char:11
++ $output = & npm.cmd run test:auth 2>&1 | Out-String
++           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — drift test against real guest guards > 
+SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages
+AssertionError: SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [], extra: [/cabinet/statistics]: expected false to 
+be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:99:7
+     97|       missing.length === 0 && extra.length === 0,
+     98|       `SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [${missing.joi…
+     99|     ).toBe(true)
+       |       ^
+    100|   })
+    101| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 10 passed (11)
+      Tests  1 failed | 73 passed (74)
+   Start at  23:12:34
+   Duration  5.39s (transform 2.43s, setup 1.43s, import 5.47s, tests 3.62s, environment 15.25s)
+
+EXIT_CODE=1

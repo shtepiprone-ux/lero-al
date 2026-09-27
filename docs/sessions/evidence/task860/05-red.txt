@@ -1,0 +1,77 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts (2 tests | 2 failed) 27ms
+     × T1: resolves and sends both emails with the Tirana wall-clock timestamp (sq layout) 24ms
+     × T2: includes the mobile device hint in the security email and leaves other content unchanged 1ms
+ ❯ src/lib/__tests__/timezone-literals.test.ts (1 test | 1 failed) 85ms
+     × every quoted IANA-shaped time-zone literal in non-test src is a valid Intl time zone 83ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/modules/notifications/lib/emails/__tests__/ema ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/__tests__/timezone-literals.test.ts > time-zone literal guard (Task 860, R3) > every quoted IANA-shaped 
+time-zone literal in non-test src is a valid Intl time zone
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "modules\\notifications\\lib\\emails\\emailChange.ts: invalid time zone 'Europe/Tirana'",
++ ]
+
+ ❯ src/lib/__tests__/timezone-literals.test.ts:62:22
+     60|
+     61|     expect(foundCount).toBeGreaterThan(0)
+     62|     expect(failures).toEqual([])
+       |                      ^
+     63|   })
+     64| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T1: 
+resolves and sends both emails with the Tirana wall-clock timestamp (sq layout)
+AssertionError: promise rejected "RangeError: Invalid time zone specified: …" instead of resolving
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:40:5
+     38|         locale: 'en',
+     39|       }),
+     40|     ).resolves.toBeUndefined()
+       |     ^
+     41|
+     42|     expect(mockSendEmail).toHaveBeenCalledTimes(2)
+
+Caused by: RangeError: Invalid time zone specified: Europe/Tirana
+ ❯ Module.sendEmailChangeEmails src/modules/notifications/lib/emails/emailChange.ts:177:32
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:33:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T2: 
+includes the mobile device hint in the security email and leaves other content unchanged
+RangeError: Invalid time zone specified: Europe/Tirana
+ ❯ Module.sendEmailChangeEmails src/modules/notifications/lib/emails/emailChange.ts:177:32
+    175|   // Albanian-only policy (Task 251, 2026-05-25): always send in sq re…
+    176|   const s = getStrings('sq')
+    177|   const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Eu…
+       |                                ^
+    178|
+    179|   let deviceHint = ''
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:51:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed (3)
+   Start at  20:55:21
+   Duration  1.34s (transform 108ms, setup 221ms, import 83ms, tests 112ms, environment 1.69s)
+
+EXIT_CODE=1

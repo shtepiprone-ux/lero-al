@@ -1,0 +1,170 @@
+fed32edfbd115ccb3aac6fffc0380d600a783c09
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/__tests__/timezone-literals.test.ts (1 test | 1 failed) 66ms
+     × every quoted IANA-shaped time-zone literal in non-test src is a valid Intl time zone 65ms
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts (2 tests | 2 failed) 32ms
+     × T1: resolves and sends both emails with the Tirana wall-clock timestamp (sq layout) 25ms
+     × T2: includes the mobile device hint in the security email and leaves other content unchanged 5ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/modules/notifications/lib/emails/__tests__/ema ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/__tests__/timezone-literals.test.ts > time-zone literal guard (Task 860, R3) > every quoted IANA-shaped 
+time-zone literal in non-test src is a valid Intl time zone
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "modules\\notifications\\lib\\emails\\emailChange.ts: invalid time zone 'Europe/Tirana'",
++ ]
+
+ ❯ src/lib/__tests__/timezone-literals.test.ts:62:22
+     60|
+     61|     expect(foundCount).toBeGreaterThan(0)
+     62|     expect(failures).toEqual([])
+       |                      ^
+     63|   })
+     64| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T1: 
+resolves and sends both emails with the Tirana wall-clock timestamp (sq layout)
+AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n<h…' to contain '29.03.2026, 01:30 p.d.'
+
+- Expected
++ Received
+
+- 29.03.2026, 01:30 p.d.
++ <!DOCTYPE html>
++ <html lang="en">
++ <head>
++   <meta charset="UTF-8" />
++   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++   <title>Lero.al</title>
++ </head>
++ <body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe 
+UI',sans-serif;">
++   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
++     <tr><td align="center">
++       <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:40px 32px;border:1px 
+solid #e4e4e7;">
++         <tr><td>
++           <div style="font-size:22px;font-weight:700;color:#EC5447;margin-bottom:24px;">Lero.al</div>
++           
++     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">Përshëndetje,</p>
++     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">Dikush ka kërkuar ndryshimin e adresës 
+së emailit të lidhur me llogarinë tuaj.</p>
++     <table 
+style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Email aktual:</td><td 
+style="font-size:13px;color:#18181b;font-weight:500;">old@example.com</td></tr>
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Email i ri:</td><td 
+style="font-size:13px;color:#18181b;font-weight:500;">new@example.com</td></tr>
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Koha:</td><td 
+style="font-size:13px;color:#18181b;">—</td></tr>
++       
++     </table>
++     <p style="font-size:14px;color:#ef4444;font-weight:500;margin:0;">Nëse nuk e keni bërë ju këtë ndryshim, ju 
+rekomandojmë të ndryshoni fjalëkalimin tuaj menjëherë.</p>
++   
++           <div style="margin-top:32px;padding-top:24px;border-top:1px solid #e4e4e7;font-size:12px;color:#71717a;">
++             © 2026 Lero.al — lero.al
++           </div>
++         </td></tr>
++       </table>
++     </td></tr>
++   </table>
++ </body>
++ </html>
+
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:47:28
+     45|     expect(toNew).toBeDefined()
+     46|     expect(toOld).toBeDefined()
+     47|     expect(toOld![0].html).toContain('29.03.2026, 01:30 p.d.')
+       |                            ^
+     48|   })
+     49|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T2: 
+includes the mobile device hint in the security email and leaves other content unchanged
+AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n<h…' to contain '29.03.2026, 01:30 p.d.'
+
+- Expected
++ Received
+
+- 29.03.2026, 01:30 p.d.
++ <!DOCTYPE html>
++ <html lang="en">
++ <head>
++   <meta charset="UTF-8" />
++   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++   <title>Lero.al</title>
++ </head>
++ <body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe 
+UI',sans-serif;">
++   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
++     <tr><td align="center">
++       <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:40px 32px;border:1px 
+solid #e4e4e7;">
++         <tr><td>
++           <div style="font-size:22px;font-weight:700;color:#EC5447;margin-bottom:24px;">Lero.al</div>
++           
++     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">Përshëndetje,</p>
++     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">Dikush ka kërkuar ndryshimin e adresës 
+së emailit të lidhur me llogarinë tuaj.</p>
++     <table 
+style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Email aktual:</td><td 
+style="font-size:13px;color:#18181b;font-weight:500;">old@example.com</td></tr>
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Email i ri:</td><td 
+style="font-size:13px;color:#18181b;font-weight:500;">new@example.com</td></tr>
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Koha:</td><td 
+style="font-size:13px;color:#18181b;">—</td></tr>
++       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Pajisja:</td><td 
+style="font-size:13px;color:#18181b;">203.0.113.5 · Mobile</td></tr>
++     </table>
++     <p style="font-size:14px;color:#ef4444;font-weight:500;margin:0;">Nëse nuk e keni bërë ju këtë ndryshim, ju 
+rekomandojmë të ndryshoni fjalëkalimin tuaj menjëherë.</p>
++   
++           <div style="margin-top:32px;padding-top:24px;border-top:1px solid #e4e4e7;font-size:12px;color:#71717a;">
++             © 2026 Lero.al — lero.al
++           </div>
++         </td></tr>
++       </table>
++     </td></tr>
++   </table>
++ </body>
++ </html>
+
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:65:28
+     63|     expect(toOld![0].html).toContain('Mobile')
+     64|     expect(toOld![0].html).toContain('203.0.113.5')
+     65|     expect(toOld![0].html).toContain('29.03.2026, 01:30 p.d.')
+       |                            ^
+     66|   })
+     67| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed (3)
+   Start at  20:56:00
+   Duration  1.19s (transform 150ms, setup 188ms, import 145ms, tests 98ms, environment 1.56s)
+
+EXIT_CODE=1
+fed32edfbd115ccb3aac6fffc0380d600a783c09
+ M src/modules/notifications/lib/emails/emailChange.ts

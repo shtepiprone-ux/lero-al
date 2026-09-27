@@ -1,0 +1,532 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-860 — email change sends again: sendEmailChangeEmails formats its timestamp with TIRANE_TZ + formatDateTimeInZone('sq') instead of the invalid 'Europe/Tirana'; real-sender test and repo-wide zone-id guard added to test:auth (R1-R4)",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "01e870ec84bf858889b2823eeda5c6146afaba8a",
+  "reviewedRevision": "uncommitted worktree on top of 01e870ec84bf858889b2823eeda5c6146afaba8a (main). Blobs: emailChange.ts fed32edf, emailChange.test.ts 4511f475, timezone-literals.test.ts 93d8f615, package.json 4d3d597e, critical-flow-registry.md 1f436a2c.",
+  "reviewedPaths": [
+   "src/modules/notifications/lib/emails/emailChange.ts",
+   "src/modules/notifications/lib/emails/__tests__/emailChange.test.ts",
+   "src/lib/__tests__/timezone-literals.test.ts",
+   "package.json",
+   "docs/critical-flow-registry.md",
+   "docs/sessions/2026-09-27-task860-email-change-timezone-rangeerror.md",
+   "docs/sessions/evidence/task860"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 6,
+   "verified": 6,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-27-task860-email-change-timezone.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/notifications/lib/emails/emailChange.ts",
+    "symbol": "sendEmailChangeEmails timestamp (line 179) + two imports",
+    "diffHunks": [
+     "src/modules/notifications/lib/emails/emailChange.ts (blob fed32edf)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "diff limited to two imports and the timestamp line",
+     "no 'Europe/Tirana' literal remains"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "src/modules/notifications/lib/emails/emailChange.ts",
+     "command": "git diff src/modules/notifications/lib/emails/emailChange.ts (reviewer)",
+     "observable": "+import TIRANE_TZ from @/lib/dashboard/period; +import formatDateTimeInZone from @/lib/formatters; toLocaleString('en-GB', { timeZone: 'Europe/Tirana' }) -> formatDateTimeInZone(new Date().toISOString(), 'sq', TIRANE_TZ); no other hunk",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "diff limited to two imports and the timestamp line",
+       "no 'Europe/Tirana' literal remains"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The call could depend on an uncommitted change to formatters.ts (854/889 have hunks there).",
+     "kind": "EXECUTED",
+     "path": "src/lib/formatters.ts",
+     "result": "REFUTED: git show HEAD:src/lib/formatters.ts already exports formatDateTimeInZone (line 172) and HEAD:period.ts exports TIRANE_TZ; the worktree hunk only adds formatDateOnly. 860 commits cleanly without 854/889."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R2",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/notifications/lib/emails/__tests__/emailChange.test.ts",
+    "symbol": "T1, T2",
+    "diffHunks": [
+     "src/modules/notifications/lib/emails/__tests__/emailChange.test.ts (blob 4511f475, new)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "resolves and sends both emails",
+     "security html has '29.03.2026, 01:30 p.d.'",
+     "device hint present"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task860/10-new-tests.txt",
+     "command": "npx.cmd vitest run emailChange.test.ts timezone-literals.test.ts",
+     "observable": "Tests 3 passed (3), EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "resolves and sends both emails",
+       "security html has '29.03.2026, 01:30 p.d.'",
+       "device hint present"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The test could mock the module under test and pass vacuously.",
+     "kind": "EXECUTED",
+     "path": "src/modules/notifications/lib/emails/__tests__/emailChange.test.ts",
+     "result": "REFUTED: only '../send' is mocked; '../emailChange' is imported for real, and 05-red.txt shows T1/T2 rejecting with the real RangeError at emailChange.ts:177."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R3",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/lib/__tests__/timezone-literals.test.ts",
+    "symbol": "time-zone literal guard",
+    "diffHunks": [
+     "src/lib/__tests__/timezone-literals.test.ts (blob 93d8f615, new)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "finds at least one id",
+     "every id valid on the final tree",
+     "fails naming file and id under P1 and P2"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task860/10-new-tests.txt",
+     "command": "npx.cmd vitest run (both new files)",
+     "observable": "guard passes on the final tree, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "finds at least one id",
+       "every id valid on the final tree"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/06-plant-p1.txt",
+     "command": "plant P1: TIRANE_TZ -> 'Europe/Tirana'",
+     "observable": "fails: modules\\notifications\\lib\\emails\\emailChange.ts: invalid time zone 'Europe/Tirana'",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "fails naming file and id under P1 and P2"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/07-plant-p2.txt",
+     "command": "plant P2: PasswordChangedEmail.tsx 'Europe/Tirane' -> 'Europe/Kyev'",
+     "observable": "fails: PasswordChangedEmail.tsx: invalid time zone 'Europe/Kyev' (x2); hash 899107bb before = after",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "fails naming file and id under P1 and P2"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "An empty scan (wrong root) would pass.",
+     "kind": "EXECUTED",
+     "path": "src/lib/__tests__/timezone-literals.test.ts",
+     "result": "REFUTED: expect(foundCount).toBeGreaterThan(0) precedes the failures assertion; SRC_ROOT resolves to src/ and the P1/P2 transcripts name files under it."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R2 R3",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/notifications/lib/emails/emailChange.ts",
+    "symbol": "sendEmailChangeEmails timestamp (line 179) + two imports",
+    "diffHunks": [
+     "src/modules/notifications/lib/emails/emailChange.ts (blob fed32edf)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "red on the unchanged source",
+     "each plant fails its named test",
+     "restores equal pre-plant hashes"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task860/05-red.txt",
+     "command": "new tests on the unchanged source",
+     "observable": "T1, T2 reject with RangeError at emailChange.ts:177; guard names emailChange.ts / 'Europe/Tirana'; EXIT_CODE=1",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "red on the unchanged source"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/08-plant-p3.txt",
+     "command": "plant P3: original en-GB/Europe/Tirana line restored",
+     "observable": "T1 rejects with RangeError; EXIT_CODE=1; hash fed32edf before = after",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "each plant fails its named test",
+       "restores equal pre-plant hashes"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/06-plant-p1.txt",
+     "command": "plant P1",
+     "observable": "T1 fails: html has '—' instead of the timestamp; guard fails; hash fed32edf before = after",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "each plant fails its named test",
+       "restores equal pre-plant hashes"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A restore could differ from the shipped file.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task860/18-hash-object.txt",
+     "result": "REFUTED: plant witnesses fed32edf equal the 18-hash-object value and the reviewer-measured current blob."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F1"
+   ],
+   "finalSubject": {
+    "path": "package.json",
+    "symbol": "scripts.test:auth; critical-flow-registry \"Email change\" row",
+    "diffHunks": [
+     "package.json (blob 4d3d597e)",
+     "docs/critical-flow-registry.md (blob 1f436a2c)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "test:auth lists both files",
+     "both files pass inside test:auth",
+     "registry: only the Email change row changed"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task860/11-test-auth.txt",
+     "command": "npm.cmd run test:auth",
+     "observable": "11 files, 74 tests: 73 passed, 1 failed (postSignOut drift test, extra: [/cabinet/statistics]); both 860 files pass; EXIT_CODE=1",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "test:auth lists both files",
+       "both files pass inside test:auth"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/critical-flow-registry.md",
+     "command": "git diff docs/critical-flow-registry.md (reviewer)",
+     "observable": "one row changed: command cell gains both files; coverage cell gains the Task 860 note",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "registry: only the Email change row changed"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The test:auth failure could be caused by Task 860.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task860/04-test-auth-before.txt",
+     "result": "REFUTED: the identical failure is in the I0 baseline before any 860 edit. The drift test reads only SESSION_REQUIRED_ROUTE_PATTERNS and the guarded [locale] page.tsx set; 860 touches neither. The one extra pattern is /cabinet/statistics, whose page.tsx is untracked 854 work (git ls-files: 0). On HEAD + 860 the extra set is empty and missing is already empty, so test:auth exits 0 on the committed tree. Remediation carried as 891 §16 (F1)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / all",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/notifications/lib/emails/emailChange.ts",
+    "symbol": "sendEmailChangeEmails timestamp (line 179) + two imports",
+    "diffHunks": [
+     "src/modules/notifications/lib/emails/emailChange.ts (blob fed32edf)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "build exits 0",
+     "typecheck, lint, file-integrity, mojibake exit 0",
+     "no path outside §7"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Server-side email sender, two vitest files, a package script and a registry row; no UI artifact or story.",
+     "locales": "No locale key added or changed; the email is Albanian-only by Task 251 policy.",
+     "viewports": "Nothing rendered in the app by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task860/17-build.txt",
+     "command": "npm.cmd run build",
+     "observable": "route table printed, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "build exits 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/13-typecheck.txt",
+     "command": "typecheck (13), lint (14, 0 errors), file-integrity (15), mojibake (16); reviewer reran typecheck",
+     "observable": "all EXIT_CODE=0; reviewer tsc --noEmit EXIT=0",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "typecheck, lint, file-integrity, mojibake exit 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task860/19-status-after.txt",
+     "command": "git status --porcelain vs 01-status-before.txt",
+     "observable": "new paths are exactly the §7 set plus pre-existing 854/889 work",
+     "freshness": "final worktree 2026-09-27 on base 01e870ec8; reviewer git hash-object of all five shipped files equals 18-hash-object.txt (fed32edf, 4511f475, 93d8f615, 4d3d597e, 1f436a2c); reviewer reran both new test files: 3/3 pass, EXIT=0",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no path outside §7"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The build could predate the final sender.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task860/08-plant-p3.txt",
+     "result": "REFUTED: the sender blob fed32edf was fixed before the plants (20:56) and is unchanged at 18 (23:11); the build ran at 21:02 on that blob. Test files are not part of the Next build; the reviewer reran tsc and both tests on the final blobs."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "TypeScript call-site change and tests; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC5 / R4",
+   "requirementIds": [
+    "AC5 / R4"
+   ],
+   "evidence": "test:auth exits 1 in the shared worktree on postSignOut's drift test (extra: [/cabinet/statistics]) from 854's uncommitted route; pre-existing at I0 and independent of 860. Carried into 891 kickoff §16 (R16/AC13)."
+  },
+  {
+   "id": "F2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC2 / R2",
+   "requirementIds": [
+    "AC2 / R2"
+   ],
+   "evidence": "O78-9 (kickoff §13.3): one real email change on a test account after the deploy, plus the optional log count; T1 proves the sender with sendEmail mocked, not delivery."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC5 / R4",
+  "reviewer": "Opus"
+ }
+}

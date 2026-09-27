@@ -1,9 +1,9 @@
 # Task 860 — changing your email works again: the email-change sender stops throwing on an invalid time zone
 
 Sprint 78 (hosted by discovery, not goal fit; the owner may move it) · **P1** · QA profile **Q4** (critical flow
-"Email change", account lifecycle) · no dependencies · **Status: `KICKOFF FILED` 2026-09-25**
+"Email change", account lifecycle) · no dependencies · **Status: ✅ `APPROVED WITH NOTES` 2026-09-27 (review 1)** · session log [`2026-09-27-task860-email-change-timezone-rangeerror.md`](../../docs/sessions/2026-09-27-task860-email-change-timezone-rangeerror.md) · review ledger [`2026-09-27-task860-email-change-timezone.review-ledger.json`](../../docs/reviews/2026-09-27-task860-email-change-timezone.review-ledger.json)
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Reserved 2026-09-18 while designing Task 846; the reserved row's text moves into §3.
 
 ## 1. Mode and task type

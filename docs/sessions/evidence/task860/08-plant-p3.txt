@@ -1,0 +1,55 @@
+fed32edfbd115ccb3aac6fffc0380d600a783c09
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts (2 tests | 2 failed) 23ms
+     × T1: resolves and sends both emails with the Tirana wall-clock timestamp (sq layout) 21ms
+     × T2: includes the mobile device hint in the security email and leaves other content unchanged 1ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/modules/notifications/lib/emails/__tests__/ema ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T1: 
+resolves and sends both emails with the Tirana wall-clock timestamp (sq layout)
+AssertionError: promise rejected "RangeError: Invalid time zone specified: …" instead of resolving
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:40:5
+     38|         locale: 'en',
+     39|       }),
+     40|     ).resolves.toBeUndefined()
+       |     ^
+     41|
+     42|     expect(mockSendEmail).toHaveBeenCalledTimes(2)
+
+Caused by: RangeError: Invalid time zone specified: Europe/Tirana
+ ❯ Module.sendEmailChangeEmails src/modules/notifications/lib/emails/emailChange.ts:179:32
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:33:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/notifications/lib/emails/__tests__/emailChange.test.ts > sendEmailChangeEmails (Task 860) > T2: 
+includes the mobile device hint in the security email and leaves other content unchanged
+RangeError: Invalid time zone specified: Europe/Tirana
+ ❯ Module.sendEmailChangeEmails src/modules/notifications/lib/emails/emailChange.ts:179:32
+    177|   // Albanian-only policy (Task 251, 2026-05-25): always send in sq re…
+    178|   const s = getStrings('sq')
+    179|   const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Eu…
+       |                                ^
+    180|
+    181|   let deviceHint = ''
+ ❯ src/modules/notifications/lib/emails/__tests__/emailChange.test.ts:51:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  20:57:06
+   Duration  1.16s (transform 59ms, setup 105ms, import 49ms, tests 23ms, environment 828ms)
+
+EXIT_CODE=1
+fed32edfbd115ccb3aac6fffc0380d600a783c09

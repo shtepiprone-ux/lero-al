@@ -349,3 +349,40 @@ End with status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly)
 `GR-1 CENSUS COMPLETE — AgentStatisticsView surface: 18 nodes today (reviewer run 2026-09-27), tier1 18 migrated+enrolled+story; after this task + MantineDashboardLineChart, MantineDashboardBarChart, MantineDashboardDonut (845, enrolled+storied) + MantineDashboardSparkline (889); tier2 0; tier3 0 listed and filed as none.`
 
 `GR-3 STORY PROVEN — AgentStatisticsView ← src/stories/patterns/mantine/AgentStatisticsView.stories.tsx; MantineDataTableToCards ← src/stories/mantine/primitives/Table.stories.tsx; every composed chart ← its own Patterns/Mantine/Dashboard* story.`
+
+## 16. Amendment — sign-out from `/cabinet/statistics` (added by Task 860 review 1, 2026-09-27)
+
+**Why.** 854 added `src/app/[locale]/cabinet/statistics/page.tsx`, which sends guests to
+`/${locale}/auth/login?next=…&session=lost` (`page.tsx:32`). It did not add the route to
+`SESSION_REQUIRED_ROUTE_PATTERNS` (`src/lib/auth/postSignOut.ts:3-8`). `matchesPattern` compares whole segments, so
+`'/cabinet'` does not cover `/cabinet/statistics`. Measured 2026-09-27 in Task 860's evidence
+(`docs/sessions/evidence/task860/04-test-auth-before.txt` and `11-test-auth.txt`):
+
+- `npm.cmd run test:auth` exits 1 on the tree that holds 854's work. The one failure is `postSignOut.test.ts` →
+  "SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages", with
+  `missing: [], extra: [/cabinet/statistics]`.
+- In the product, signing out on `/{locale}/cabinet/statistics` returns `null` (stay), so the page's own guard then
+  sends the user to the login page with `session=lost`. Signing out on `/{locale}/cabinet` goes home.
+
+**R16 [P1].** `SESSION_REQUIRED_ROUTE_PATTERNS` gains `'/cabinet/statistics'` directly after `'/cabinet'`. No other
+line of `postSignOut.ts` changes. The per-locale table in `postSignOut.test.ts` gains one case,
+`${locale}: /cabinet/statistics -> /${locale}`.
+
+**Scope addition to §7:** `src/lib/auth/postSignOut.ts` (R16 only) · `src/lib/auth/__tests__/postSignOut.test.ts`
+(the one case).
+
+**AC13 [R16].**
+- Given `npm.cmd run test:auth` on the final tree, when run, then it exits 0, and the drift test and the four new
+  `/cabinet/statistics` cases pass.
+- Given a plant that removes `'/cabinet/statistics'` from the array, when the same command runs, then the drift test
+  fails naming `extra: [/cabinet/statistics]` and the four new cases fail. After the restore, the file's
+  `git hash-object` equals its pre-plant value.
+
+**Gate addition to §13.2.** Insert this line before `npm.cmd run build`, teed to `evidence/task891/test-auth.txt`:
+
+```powershell
+npm.cmd run test:auth
+```
+
+Expected: exit 0. The plant transcript goes to `evidence/task891/plant-postsignout.txt` with both hashes. Report R16
+and AC13 alongside R1–R15 and AC1–AC12 (§14).

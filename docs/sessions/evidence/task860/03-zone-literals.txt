@@ -1,0 +1,18 @@
+src/app/api/cron/listing-activity/route.ts:5: * YESTERDAY and TODAY in Europe/Tirane, absorbing late writes. Task 849 (Sprint 78, D78-4).
+src/components/shared/RelativeTime.tsx:23:  /** Caller-formatted absolute date-time (server-formatted, Europe/Tirane, by 846's `period.ts`
+src/design-system/mantine/patterns/MantineDashboardPeriodControl.tsx:52: * - The picker's `maxDate` is yesterday in `Europe/Tirane`, so today (an incomplete day) cannot be
+src/lib/dashboard/period.ts:4: * - Store UTC; cut days in `Europe/Tirane` (IANA's canonical id — `Europe/Tirana` is REJECTED by
+src/lib/dashboard/period.ts:20:export const TIRANE_TZ = 'Europe/Tirane'
+src/lib/dashboard/period.ts:78:  timeZone: TIRANE_TZ,
+src/lib/formatters.ts:181: * (`DATE_FORMAT` → `composeDateParts`/`composeTimeParts`), but for the wall clock of `timeZone`
+src/lib/formatters.ts:182: * (an IANA id, e.g. `Europe/Tirane`) instead of UTC. Only the numeric wall-clock parts come from
+src/lib/formatters.ts:196:  timeZone: string,
+src/lib/formatters.ts:203:      timeZone,
+src/modules/analytics/activity/read.ts:18: * `0` is only ever the answer of a read that succeeded. Days are Europe/Tirane local dates.
+src/modules/analytics/activity/types.ts:4: * Plain data only: no UI, no Supabase types leak out. Days are `'YYYY-MM-DD'` Europe/Tirane local
+src/modules/notifications/lib/emails/PasswordChangedEmail.tsx:22:    timeZone: 'Europe/Tirane',
+src/modules/notifications/lib/emails/PasswordChangedEmail.tsx:29:    timeZone: 'Europe/Tirane',
+src/modules/notifications/lib/emails/emailChange.ts:177:  const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Tirana' })
+src/stories/fixtures/dashboardPeriod.fixture.ts:6: * Europe/Tirane is always 2026-09-17 in every render. All text resolves through `storyT`, so the
+src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx:17:    docs: { description: { component: 'Canonical dashboard period selector (spec v3.3 §4, §16.3, §17.3): 7 days · 30 days · Custom. Custom reveals the existing `RangeDatePicker` with `maxDate` = yesterday in Europe/Tirane; a range longer than 90 days shows a localized `role="alert"` error and never calls `onChange`. Task 846. The story\'s `now` is frozen, so yesterday is 2026-09-17. Viewport and locale switched via Storybook toolbar (Task 799 caveat).' } },
+src/types/database.ts:311:  metric_date: string // Europe/Tirane local date, 'YYYY-MM-DD'

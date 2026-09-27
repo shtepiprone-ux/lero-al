@@ -1,0 +1,19 @@
+platform: win32 v22.22.3 (PowerShell, node.exe -p process.platform)
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm.cmd run build-storybook ; npx.cmd http-server storybook-static -p 6102 -s ; node.exe docs\sessions\evidence\task853\r2\ac14-measure.mjs
+source hash AdminDashboardRecentListings.tsx: 8bbe4bb026c1ac2d3102b0f43bbb78aabfece35c
+build-storybook: exit 0 (tail: Storybook build completed successfully)
+ac14-measure: exit 0
+
+=== rows @ 320px uk ===
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"близько 2 годин тому"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"близько 6 годин тому"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"1 день тому"}
+
+=== rows @ 1440px en ===
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"about 2 hours ago"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"about 6 hours ago"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"1 day ago"}
+
+=== modal Created ===
+{"timeFontSize":"14px","timeFontWeight":"500","timeText":"about 2 hours ago","priceValueCs":{"fontSize":"14px","fontWeight":"500"}}

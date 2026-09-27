@@ -1,8 +1,8 @@
 # Task 853 — `/admin` becomes the spec's operations dashboard (P0 blocks), composed only from the Sprint 78 patterns
 
 Sprint 78 · P1 · QA profile **Q3** · Wave C · depends on **843, 844, 845, 846, 847, 852** approved ·
-**Status: 🔁 NEEDS REVISION (review 2, 2026-09-27) — revision 2 route in §17; start at §17.4** (review 1's §16 is
-closed: R10–R15 accepted, do not redo)
+**Status: 🟡 PARTIALLY VERIFIED (review 3, 2026-09-27) — R16 and every executor criterion accepted; only the owner
+matrix §13.3 rows 1–12 (AC8, `O853-2`) remains — see §18.** No executor action is open.
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -505,3 +505,48 @@ against `docs/maintenance-playbook.md` §14, never silently dropped. Copy the de
 |---|---|---|---|---|---|
 | 12 | `Patterns/Mantine/AdminDashboardRecentListings` | Default · ModalOpen | 320 / 1440 | uk / en | relative time is small grey meta text, smaller than the title; the modal's "Created" matches the other values |
 | 1 (add) | `/admin` (live) | real data | 1440 | en | the donut legend's wrapped label ("Rented (marked by owner)") reads centred in `live-1440.png`. That is `MantineDashboardChartLegend` (845), not this task's code. **NEEDS VERIFICATION**: accept it, or return it and the reviewer files it against 845's pattern |
+
+## 18. Review 3 — `PARTIALLY VERIFIED` (2026-09-27)
+
+Reviewed against the uncommitted worktree (win32 v22.22.3). The only hash that changed since review 2 is
+`AdminDashboardRecentListings.tsx` `79a11ffb` → `8bbe4bb0`. The other eight in §17's list are still equal. **R16 and
+AC14 are accepted.** Revision 2's route is closed, so no executor action remains. The task cannot be approved until
+the owner records the matrix, because AC8 is `NOT VERIFIABLE` without it.
+
+### 18.1 What closed
+
+- **R16 / AC14.** The source is at `:107-116`, `:152-158` and `:221-223`. It carries both row wraps
+  (`Text component="span" size="xs" c="gray.5"`) and the modal wrap (`size="sm" fw={500}`). `focusable={false}` and
+  `absoluteLabel` are kept, and `RelativeTime.tsx` is untouched. The executor's `r2/15-ac14-measure.txt` ran on a
+  `storybook-static` built at 01:27. The source was last written at 01:38, a comment reword. So the reviewer rebuilt
+  Storybook on the final hash and re-ran the same script: `review3/ac14-remeasure-final-source.txt`. It measured every
+  row `time` at 12px `rgb(102, 112, 133)`, equal to the owner name, under a 14px title, at 320 `uk` and at 1440 `en`.
+  The modal `time` measured 14px/500, equal to the price value. The live halves are in `r2/live-console-dev.txt` and
+  `r2/live-console-prod.txt` (1440 and 320, same values).
+- **§17.3.** The final artifacts pass:
+  - `r2/live-console-dev.txt` comes from a fresh `next dev`; its full log is `r2/dev-server-redo.log`.
+  - `r2/live-console-prod.txt` comes from a clean `next build` + `next start`.
+  - Neither matches the hydration pattern.
+  - AC3: the reviewer read both `r2/dev-server.log` and `r2/dev-server-redo.log` in full, and neither contains
+    `Functions cannot be passed`.
+- **§13.2 / F9.** Every command's transcript is retained under `r2/00…28`. `26-build-final.txt` exits 0 and is dated
+  after the last source write. `27-hash-object-final.txt` equals the reviewer's hashes. `05` records `exit 1` on
+  exactly `contactEvents.ts:50` (887). `13` has only the route-root `FAIL` (AC6). `12` exits 0 with the writer not
+  re-run.
+
+### 18.2 Notes (P3 — no action owed for 853)
+
+- **N1.** `r2/live-console-dev-first-capture.txt` is not a verbatim capture. It is a prose reconstruction written at
+  02:02, and it replaces the hydration diff with a summary. `check-404.mjs`'s output, which names the two
+  `/_vercel/*/script.js` 404s, was never written to a file. Both fall under the final artifacts above, so they carry no
+  weight. The underlying `useId` drift at 320 on a long-lived dev server did not reproduce in either clean run, and it
+  matches `maintenance-playbook.md` §14.1 (Task 582). One likely contributor is that `next build` wrote `.next` while
+  that dev server was still running (`19-build.txt` at 01:34, dev server stopped at 01:35). This is an INFERENCE.
+- **N2.** The session log says each wrap cites `MantineDashboardWorkList.tsx:151` in a one-line comment. The source
+  has a single three-line comment, at `:107-109`. There is no functional impact.
+
+### 18.3 Owner action `O853-2` — matrix §13.3 rows 1–12
+
+This is the only open item. Record each row as accepted, or return it with a concrete defect. Rows 1–8 are in §13.3,
+rows 9–11 in §16.6, and row 12 and the row-1 addition (the 845 legend label) in §17.5. When every row is accepted, the
+next review archives 853. A returned row reopens it with a revision route written here.

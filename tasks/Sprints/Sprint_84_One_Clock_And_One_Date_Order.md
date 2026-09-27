@@ -18,6 +18,7 @@
 | **D84-1** | 2026-09-27 | Asked: the 24-hour change reaches unmigrated legacy screens, and clause 16d requires migrating every component on a changed surface unless the owner grants an exception. Chosen option: **"Migrate first"**. | No exception. 885 ships only after every surface whose text it changes has passed its census. |
 | **D84-2** | 2026-09-27 | Asked: should `en` also switch from month-first (`09/18/2026`) to day-first? Chosen option: **"Day-first too"**. | `en` numeric dates become `DD/MM/YYYY`. |
 | **D84-3** | 2026-09-27 | Asked: day-first `en` adds four more unmigrated components. Split it into its own task, or keep it all in 885? Chosen option: **"Everything in 885"**. | 885 carries the clock and the `en` order together, and waits for all the migrations below. |
+| **D84-4** | 2026-09-28 | *"англійською мовою дати нехай залишаються з першим місяцем у рядку, так звичніше читати дати. Але якщо дата виглядає ось так "09/12/2026" то першим має бути день."* | `en` dates with a month name stay month-first (`Jun 15, 2026`); `en` numeric dates are day-first. |
 
 ## The defect
 
@@ -89,6 +90,6 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
 ## Explicitly not in this sprint
 
 - Month-name dates (`formatListingDate`, `formatShortDate`, the `DatePicker`/`RangeDatePicker` summaries). They follow
-  `calendar_summary_order` in `messages/*.json` (`en` = `month_day`, e.g. `Jun 15, 2026`). D84-2 was asked about the
-  numeric form only (`09/18/2026`). Changing them is a new owner decision and a new number.
+  `calendar_summary_order` in `messages/*.json` (`en` = `month_day`, e.g. `Jun 15, 2026`) and **stay month-first by
+  owner decision D84-4** (2026-09-28).
 - The emails' own copy and the React-Email migration.

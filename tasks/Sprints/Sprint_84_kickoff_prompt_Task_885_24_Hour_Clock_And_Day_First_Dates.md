@@ -36,6 +36,7 @@ or changed. GR-3b/GR-3c: no element's width, role or size changes (§12, type-sc
 - **D84-1** (2026-09-27): chosen option **"Migrate first"**. There is no 16d exception; the migrations come first.
 - **D84-2** (2026-09-27): chosen option **"Day-first too"**. `en` numeric dates become day-first.
 - **D84-3** (2026-09-27): chosen option **"Everything in 885"**. The clock and the `en` order ship together.
+- **D84-4** (2026-09-28, verbatim): *"англійською мовою дати нехай залишаються з першим місяцем у рядку, так звичніше читати дати. Але якщо дата виглядає ось так "09/12/2026" то першим має бути день."* Meaning: `en` dates written with a month name stay month-first (`Jun 15, 2026`); `en` numeric dates are day-first (`12/09/2026` is 12 September).
 
 ### 3.2 The canonical layout (FACT, `git show HEAD:src/lib/formatters.ts`)
 
@@ -121,9 +122,9 @@ each one red-first (§10.2).
 
 ## 5. Assumptions and open questions
 
-1. **Month-name dates are not changed.** `formatListingDate` and its siblings follow `calendar_summary_order` (`en`
-   `month_day`, e.g. `Jun 15, 2026`). D84-2 was asked with the numeric example `09/18/2026`. Changing month-name
-   order is a new owner decision and a new number (Sprint 84 plan → "Explicitly not in this sprint").
+1. **Month-name dates are not changed — owner decision D84-4 (§3.1).** `formatListingDate` and its siblings follow
+   `calendar_summary_order` (`en` `month_day`, e.g. `Jun 15, 2026`), and so does the audit log's `dateStyle: 'medium'`
+   (`Mar 29, 2026, 15:30`). They stay month-first. Only numeric `en` dates turn day-first.
 2. **`en` and `it` numeric layouts become identical** (`DD/MM/YYYY`, `/`). That is the effect of D84-2, not a defect.
 3. **Text gets shorter, never longer.** `03:30 PM` → `15:30` and `03:30 m.d.` → `15:30`, and the day-first `en` date is
    the same length. No layout risk is expected. Any layout effect is caught by the owner check (§13.3).
@@ -252,7 +253,9 @@ A signed-in user opens `/cabinet` in `en`. Every time reads `HH:MM` in 24 hours,
 - **AC2 [R3]** Given the audit-log file's diff, when read, then the only change is `hourCycle: 'h23'` in that
   `format.dateTime` options object.
 - **AC3 [R4]** Given the §3.5 files on the final tree, when run, then every "After" value passes. Given `06-red.txt`,
-  then each of those assertions failed on the unchanged source with its old value.
+  then each of those assertions failed on the unchanged source with its old value. Given
+  `date-format-icu-independence.smoke.test.ts:68` and `date-format-ssr-parity.smoke.test.ts:70` (`en: 'Jun 15, 2026'`),
+  when diffed and run, then both are unchanged and pass (D84-4).
 - **AC4 [R5]** Given `clock-24h.test.ts` on the final tree, when run, then G1, G2 and G3 pass, and G3 reports at least
   one match. Given `06-red.txt` and `07`–`10`, then each plant fails the test the §10.3 table names. The restore then
   passes, and the two hashes are equal.

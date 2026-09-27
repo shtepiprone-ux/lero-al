@@ -1,8 +1,8 @@
 # Task 853 — `/admin` becomes the spec's operations dashboard (P0 blocks), composed only from the Sprint 78 patterns
 
 Sprint 78 · P1 · QA profile **Q3** · Wave C · depends on **843, 844, 845, 846, 847, 852** approved ·
-**Status: 🟡 PARTIALLY VERIFIED (review 3, 2026-09-27) — R16 and every executor criterion accepted; only the owner
-matrix §13.3 rows 1–12 (AC8, `O853-2`) remains — see §18.** No executor action is open.
+**Status: ✅ APPROVED WITH NOTES (review 4, 2026-09-27) — ARCHIVED.** The owner accepted the §13.3 matrix, rows 1–12
+(`O853-2`, §19). The notes are §18.2 N1/N2 (P3).
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -550,3 +550,15 @@ the owner records the matrix, because AC8 is `NOT VERIFIABLE` without it.
 This is the only open item. Record each row as accepted, or return it with a concrete defect. Rows 1–8 are in §13.3,
 rows 9–11 in §16.6, and row 12 and the row-1 addition (the 845 legend label) in §17.5. When every row is accepted, the
 next review archives 853. A returned row reopens it with a revision route written here.
+
+## 19. Review 4 — `APPROVED WITH NOTES` (2026-09-27)
+
+**Owner decision `O853-2`, 2026-09-27, verbatim:** *"Все приймаю. З текстами у donut компоненті я окремо пізніше
+дороблю завдання по візуальному вигляду."* This closes AC8 for rows 1–12, including the row-1 addition from §17.5. The
+donut legend's text is `MantineDashboardChartLegend` (845), not this task's code. The owner will file that visual work
+himself later; it is unnumbered here and carries no 853 dependency.
+
+The implementation is unchanged since review 3: `AdminDashboardRecentListings.tsx` is still `8bbe4bb0`, and the other
+eight hashes are still equal. All criteria AC1–AC14 are closed. The notes are §18.2 N1 (non-verbatim first
+hydration capture, and the 404 listener output not retained) and N2 (the comment count in the session log). Both are
+P3.

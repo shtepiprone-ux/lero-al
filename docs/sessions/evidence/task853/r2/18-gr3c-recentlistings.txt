@@ -1,0 +1,18 @@
+
+=== patterns-mantine-admindashboardrecentlistings--default ===
+  320px: largestText=22px (H1:)
+  390px: largestText=22px (H1:)
+  768px: largestText=22px (H1:)
+  1440px: largestText=22px (H1:)
+
+=== patterns-mantine-admindashboardrecentlistings--modal-open ===
+  320px: largestText=22px (H1:)
+  390px: largestText=22px (H1:)
+  768px: largestText=22px (H1:)
+  1440px: largestText=22px (H1:)
+
+=== patterns-mantine-admindashboardrecentlistings--empty ===
+  320px: largestText=22px (H1:)
+  390px: largestText=22px (H1:)
+  768px: largestText=22px (H1:)
+  1440px: largestText=22px (H1:)

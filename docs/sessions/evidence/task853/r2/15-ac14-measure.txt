@@ -1,0 +1,13 @@
+
+=== rows @ 320px uk ===
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"близько 2 годин тому"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"близько 6 годин тому"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"1 день тому"}
+
+=== rows @ 1440px en ===
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"about 2 hours ago"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"about 6 hours ago"}
+{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)","timeText":"1 day ago"}
+
+=== modal Created ===
+{"timeFontSize":"14px","timeFontWeight":"500","timeText":"about 2 hours ago","priceValueCs":{"fontSize":"14px","fontWeight":"500"}}

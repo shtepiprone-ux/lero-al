@@ -1,0 +1,7 @@
+[nav] --- navigating to /admin at 1440px ---
+
+[ac14-live-1440] [{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"}]
+
+[nav] --- navigating to /admin at 320px ---
+
+[ac14-live-320] [{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"}]

@@ -1,0 +1,17 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+ messages/en.json                                   |  61 +++-
+ messages/it.json                                   |  61 +++-
+ messages/sq.json                                   |  61 +++-
+ messages/uk.json                                   |  61 +++-
+ scripts/check-listing-visibility.mjs               |   2 -
+ scripts/check-locale-leak.mjs                      |   4 +
+ scripts/mantine-migration-scope.json               |   4 +-
+ scripts/surface-census-baseline.json               |  15 -
+ src/app/admin/page.tsx                             | 312 +--------------------
+ .../admin/AdminDashboardRecentListings.tsx         | 303 +++++++++++++-------
+ .../mantine/patterns/MantineDashboardHeader.tsx    |   6 +-
+ .../mantine/patterns/MantineDashboardStatCard.tsx  |   5 +-
+ 12 files changed, 400 insertions(+), 495 deletions(-)

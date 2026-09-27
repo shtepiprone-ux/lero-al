@@ -104,5 +104,7 @@
   "src/components/admin/AdminShell.tsx",
   "src/components/admin/AdminSidebar.tsx",
   "src/components/admin/AdminHeader.tsx",
-  "src/components/admin/AdminLocaleSwitcher.tsx"
+  "src/components/admin/AdminLocaleSwitcher.tsx",
+  "src/modules/admin/dashboard/components/AdminDashboardView.tsx",
+  "src/components/admin/AdminDashboardRecentListings.tsx"
 ]

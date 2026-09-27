@@ -1,0 +1,26 @@
+
+=== en @ 320px ===
+scrollWidth=320 clientWidth=320 overflow=false
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=174.0 colWidth=196.0 text="Modern Apartment in Tirana Cen"
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=196.0 colWidth=196.0 text="Cozy Studio in Sauk District"
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=196.0 colWidth=196.0 text="Modern Apartment in Tirana Cen"
+
+=== en @ 390px ===
+scrollWidth=390 clientWidth=390 overflow=false
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=244.0 colWidth=266.0 text="Modern Apartment in Tirana Cen"
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=266.0 colWidth=266.0 text="Cozy Studio in Sauk District"
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=266.0 colWidth=266.0 text="Modern Apartment in Tirana Cen"
+
+=== uk @ 320px ===
+scrollWidth=320 clientWidth=320 overflow=false
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=174.0 colWidth=196.0 text="Сучасна Квартира в Центрі Тира"
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=196.0 colWidth=196.0 text="Затишна Студія в Районі Саук і"
+  row: rowWidth=246.0 avatarWidth=38.0 titleWidth=196.0 colWidth=196.0 text="Апартаменти в центрі Тирани з "
+
+=== uk @ 390px ===
+scrollWidth=390 clientWidth=390 overflow=false
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=244.0 colWidth=266.0 text="Сучасна Квартира в Центрі Тира"
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=266.0 colWidth=266.0 text="Затишна Студія в Районі Саук і"
+  row: rowWidth=316.0 avatarWidth=38.0 titleWidth=266.0 colWidth=266.0 text="Апартаменти в центрі Тирани з "
+768px: scrollWidth=768 clientWidth=768 visiblePrices=3 ["85,000 EUR","45,000 EUR","210,000 EUR"]
+1440px: scrollWidth=1440 clientWidth=1440 visiblePrices=3 ["85,000 EUR","45,000 EUR","210,000 EUR"]

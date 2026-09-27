@@ -577,21 +577,6 @@
     "src/app/admin/page.tsx :: src/app/admin/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/page.tsx :: src/components/admin/AdminDashboardRecentListings.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/page.tsx :: src/components/shared/RelativeTime.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
     "src/app/admin/pages/page.tsx :: src/app/admin/pages/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },

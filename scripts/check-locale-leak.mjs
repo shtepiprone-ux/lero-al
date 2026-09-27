@@ -113,6 +113,10 @@ const LEAK_ALLOWLIST = [
   /^(Min)$/,
   // ── Task 624 — brand names, identical across all locales by design. ────────────────────────
   /^(Lero|Lero\.al|Facebook|Instagram)$/,
+  // ── Task 853 — universal loanword, verified against messages/*.json listing.report_reason_spam:
+  //    sq/it keep "Spam" identical to en (genuine international loanword in both locales); uk
+  //    correctly transliterates to "Спам", so this entry cannot mask a real uk mistranslation. ──
+  /^(Spam)$/,
   // ── Status codes — all-caps enum values, never translatable prose ─────────────
   /^(ACTIVE|INACTIVE|PENDING|CLOSED|OPEN|SOLD|RENTED|ARCHIVED)$/i,
   // ── Storybook chrome ──────────────────────────────────────────────────────────

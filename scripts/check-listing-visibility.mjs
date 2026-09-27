@@ -47,8 +47,6 @@ function isExcluded(relPath) {
 // No whole-file entries. Stale entries FAIL the gate.
 
 const ALLOWLIST = [
-  // Admin dashboard stats: count-only queries, not public reads
-  { path: 'src/app/admin/page.tsx', fingerprint: ".eq('status', 'active')", reason: 'admin dashboard active-count stat (head:true count, not a public list read)' },
   // Cron lifecycle: expiry sweep finds active+lapsed to transition via engine
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".eq('status', 'active')", reason: 'lifecycle expiry sweep — engine-driven status transition, not a public read' },
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".lt('expires_at', now)", reason: 'lifecycle expiry sweep — finds lapsed listings to expire' },

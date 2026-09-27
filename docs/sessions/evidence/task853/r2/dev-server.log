@@ -1,0 +1,51 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.20.252:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ○ Compiling instrumentation Node.js ...
+ ✓ Compiled instrumentation Node.js in 551ms
+ ✓ Compiled instrumentation Edge in 192ms
+ ✓ Compiled middleware in 175ms
+ ✓ Ready in 3.2s
+ ○ Compiling /admin/listings ...
+ ✓ Compiled /admin/listings in 18.9s
+ GET /admin 200 in 22993ms
+ GET /admin/listings 200 in 23036ms
+ GET /en 200 in 11694ms
+ GET /uk 200 in 23025ms
+ GET /admin 200 in 366ms
+ ○ Compiling /api/exchange-rate ...
+ ✓ Compiled /api/exchange-rate in 704ms
+ GET /admin 200 in 753ms
+ GET /api/property-types?locale=uk 200 in 978ms
+ GET /api/property-types?locale=en 200 in 602ms
+ GET /api/auth/me 200 in 1229ms
+ GET /en 200 in 380ms
+ GET /api/auth/me 200 in 684ms
+ GET /api/exchange-rate 200 in 1864ms
+ GET /api/exchange-rate 200 in 1819ms
+ GET /admin 200 in 913ms
+ GET /admin 200 in 1993ms
+ ○ Compiling /api/presence ...
+ ✓ Compiled /api/presence in 585ms
+ POST /api/presence 200 in 1433ms
+ GET /admin 200 in 1638ms
+ POST /api/presence 200 in 996ms
+ GET /admin 200 in 3753ms
+ GET /admin 200 in 3799ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 672ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 1112ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 1130ms
+ POST /api/presence 200 in 1048ms
+ POST /api/presence 200 in 1246ms
+ GET /admin 200 in 821ms
+[?25h

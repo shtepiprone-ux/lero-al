@@ -136,7 +136,10 @@ export function MantineDashboardStatCard({
         <Text size="sm" c="gray.5" lineClamp={2}>
           {label}
         </Text>
-        <Text fz={theme.headings.sizes.h3.fontSize} lh={theme.headings.sizes.h3.lineHeight} fw={700} c="gray.8">
+        {/* GR-3c (Task 853 review 1, R12): static h3 (30px) at every width had no responsive step
+            (docs/golden-rules.md GR-3c). Steps to h5 (20px) below `sm`, h4 (24px) at `sm`, and back
+            to h3 (30px) from `md` up — Task 886 §4.1's own `h3` row; `lh` stays the h3 value. */}
+        <Text fz={{ base: 'h5', sm: 'h4', md: 'h3' }} lh={theme.headings.sizes.h3.lineHeight} fw={700} c="gray.8">
           {value}
         </Text>
         {state === 'zero' && zeroText ? (

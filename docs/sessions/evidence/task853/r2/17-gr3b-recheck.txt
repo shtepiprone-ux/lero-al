@@ -1,0 +1,18 @@
+
+=== patterns-mantine-admindashboardrecentlistings--default ===
+  320px: scrollWidth=320 clientWidth=320 overflow=false cardWidth=288
+  390px: scrollWidth=390 clientWidth=390 overflow=false cardWidth=358
+  1024px: scrollWidth=1024 clientWidth=1024 overflow=false cardWidth=976
+  1440px: scrollWidth=1440 clientWidth=1440 overflow=false cardWidth=1392
+
+=== patterns-mantine-admindashboardrecentlistings--modal-open ===
+  320px: scrollWidth=320 clientWidth=320 overflow=false cardWidth=288
+  390px: scrollWidth=390 clientWidth=390 overflow=false cardWidth=358
+  1024px: scrollWidth=1024 clientWidth=1024 overflow=false cardWidth=976
+  1440px: scrollWidth=1440 clientWidth=1440 overflow=false cardWidth=1392
+
+=== patterns-mantine-admindashboardrecentlistings--empty ===
+  320px: scrollWidth=320 clientWidth=320 overflow=false cardWidth=288
+  390px: scrollWidth=390 clientWidth=390 overflow=false cardWidth=358
+  1024px: scrollWidth=1024 clientWidth=1024 overflow=false cardWidth=976
+  1440px: scrollWidth=1440 clientWidth=1440 overflow=false cardWidth=1392

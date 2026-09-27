@@ -1,0 +1,40 @@
+[nav] --- navigating to /admin at 1440px ---
+
+[ac14-live-1440] [{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"}]
+
+[nav] --- navigating to /admin at 320px ---
+
+[console.error] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch
+
+Every +/- diff line in the full component-tree dump (AppShell root, header Button, AdminDashboardView,
+every Flex/Box/SimpleGrid/Card/Grid/GridCol down to the Title and each StatCard value) is EXCLUSIVELY
+a `mantine-_R_…` `id` attribute or a `__m__-_R_…` inline-style-injection class/selector hash differing
+between server and client render — e.g.:
+
+    id="mantine-_R_35rlmlb_"   (client, +)
+    id="mantine-_R_d5rlmlb_"   (server, -)
+
+    className="__m__-_R_2atrrb5rlmlb_"   (client, +)
+    className="__m__-_R_9bnfdd5rlmlb_"   (server, -)
+
+No visible text, count, colour, href, or DOM structure differs anywhere in the diff — every rendered
+value (e.g. the ADM-01/ADM-02/ADM-06 card values "0"/"0"/"13", the "Dashboard" H1 text, the
+`href="/admin/listings?status=pending"` attribute) is byte-identical on both sides; only Mantine's own
+`useId()`-derived numbering differs. Classified in the session log as `docs/maintenance-playbook.md`
+§14.1's documented "stale Turbopack HMR cache can emit a one-off `useId` hydration error that does not
+survive a clean `next build` (Task 582)" — verified directly for this instance against a clean
+`next build` + `next start` in `live-console-prod.txt` (0 matches) and again against a second fresh
+`next dev` in `live-console-dev.txt` (0 matches; the artifact is intermittent/HMR-state-dependent by
+its own documented nature, not deterministic).
+
+[ac14-live-320] [{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"},{"timeFontSize":"12px","timeColor":"rgb(102, 112, 133)","titleFontSize":"14px","ownerColor":"rgb(102, 112, 133)"}]

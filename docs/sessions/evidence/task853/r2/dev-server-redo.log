@@ -1,0 +1,32 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.20.252:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ✓ Compiled instrumentation Node.js in 492ms
+ ✓ Compiled instrumentation Edge in 190ms
+ ✓ Compiled middleware in 171ms
+ ✓ Ready in 2.8s
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 4.4s
+ GET /en 200 in 7027ms
+ ✓ Compiled /api/exchange-rate in 419ms
+ GET /api/property-types?locale=en 200 in 634ms
+ GET /api/exchange-rate 200 in 797ms
+ ✓ Compiled /api/auth/me in 175ms
+ GET /en 200 in 419ms
+ GET /api/auth/me 200 in 617ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1004ms
+ GET /admin 200 in 1931ms
+ ✓ Compiled /api/presence in 132ms
+ POST /api/presence 200 in 652ms
+ GET /admin 200 in 725ms
+ POST /api/presence 200 in 495ms

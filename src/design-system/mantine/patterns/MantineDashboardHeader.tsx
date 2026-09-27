@@ -53,7 +53,11 @@ export function MantineDashboardHeader({
       gap="md"
     >
       <Stack gap="tight">
-        <Title order={1} size="h4">
+        {/* GR-3c (Task 853 review 1, R12): static h4 was 24px at every width, exceeding the 20px
+            ceiling for a heading below 640 (docs/golden-rules.md GR-3c). `fz` steps it to `h5`
+            (20px) below `sm`, matching this page's own card-title scale, and keeps `h4` (24px)
+            from `sm` up — see kickoff §16.4's type-scale table. */}
+        <Title order={1} size="h4" fz={{ base: 'h5', sm: 'h4' }}>
           {title}
         </Title>
         {subtitle && (

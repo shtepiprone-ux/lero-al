@@ -1,8 +1,9 @@
 # Task 854 — `/{locale}/cabinet/statistics`: the agent dashboard (P0 blocks), reached from a "Statistics" item next to "Profile"
 
 Sprint 78 · P1 · QA profile **Q4** (new authenticated route with owner isolation) + Q3 visual matrix · Wave C ·
-depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 1, 2026-09-27. The next
-executor action is §16 (remediation re-entry). Do not re-run §10.1–§10.6 from scratch.**
+depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 2, 2026-09-27. §16 is
+done and accepted. The next action is the owner's decision D854-1 (§17.3); the executor then re-enters at §17.
+Do not re-run §10 or §16.**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -108,7 +109,10 @@ guest goes to login. Every value is a theme token or pattern prop; every breakpo
   `src/stories/patterns/mantine/AgentStatisticsView.stories.tsx` · a fixtures module under `src/stories/fixtures/` ·
   `src/modules/cabinet/statistics/tableParams.ts` (added during execution to fix a server/client boundary error;
   accepted into scope by review 1, §16.2).
-- **Edited in revision 1 (§16):** `src/lib/formatters.ts` (N3 only) and its existing test file.
+- **Edited in revision 1 (§16):** `src/lib/formatters.ts` (N3 only) and its existing test file. Accepted into scope
+  by review 2: `src/modules/cabinet/statistics/__tests__/tableParams.test.ts` (created, AC13) and
+  `scripts/story-realmode-allowlist.json` (one check-13 entry for the kickoff-named export `Agt10FilteredEmpty`,
+  same shape as the existing `FilteredPending` entry).
 - **Edited:** `src/design-system/mantine/theme.ts` (`boxSize.dashboardListingThumb` + union) · `src/components/layout/UserMenu.tsx` · `src/components/layout/MobileNavDrawer.tsx` ·
   `src/stories/mantine/primitives/UserMenu.stories.tsx` · `src/stories/mantine/primitives/MobileNavDrawer.stories.tsx`
   · `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` · `src/stories/mantine/primitives/Table.stories.tsx`
@@ -438,5 +442,143 @@ Expected results:
   `src/modules/cabinet/statistics/__tests__/tableParams.test.ts`.
 - **Session log:** append a "Revision 1" section to the same session log with R11–R14 and AC11–AC14 evidence, and
   update its Files Changed table.
+- **Backlog:** update the 854 line of `docs/backlog.md`.
+- **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval and no mutating git.
+
+## 17. Review 2 — `NEEDS REVISION` (2026-09-27)
+
+What was reviewed:
+- the working-tree diff and the session log's "Revision 1" section;
+- every artifact under `docs/sessions/evidence/task854/r1/`. The 17 hashes in `25-hash-object.txt` equal the current
+  files;
+- the reviewer's own runs (win32 v22.22.3):
+  - `check-surface-census.mjs` on `AgentStatisticsView.tsx`, `MobileNavDrawer.tsx` and `UserMenu.tsx`: 18, 3 and 3
+    nodes, all tier 1, exit 0;
+  - Playwright against `storybook-static` (built 14:41, after the last source edit), over the whole document with
+    portals included, at 320/390/768/1024/1440 for all 7 changed exports.
+
+### 17.1 Accepted as delivered (do not redo)
+
+- **R11, R12, R13 and AC11, AC12, AC13.** The reviewer re-measured AC11: `--agt-10-filtered-empty` has the four
+  `Select`s and "No listings match these filters", and has neither "You have no listings yet" nor the CTA.
+  `--agt-10-empty` is the reverse.
+- **R14 / AC14 gate block.** It is one pass and its hash line matches the tree. `check:listing-visibility` names only
+  `contactEvents.ts:50`, and `check:locale-leak:mantine-only` names none of this task's four story families.
+- **The GR-3c receipts.** They were confirmed:
+  - no text reaches 24px below 640;
+  - the StatCard value measures 20px at 320/390 and 30px at 768+;
+  - the drawer and the open menu (portal content, which the executor's `#storybook-root` scope missed) have no text
+    at 24px or above;
+  - the drawer lists Statistics right after Profile.
+- **The GR-3b receipts** are accepted for `UserMenu`, `MobileNavDrawer` and `Table`, and rejected for the
+  `AgentStatisticsView` exports (F4).
+- **The `scripts/story-realmode-allowlist.json` entry and `tableParams.test.ts`.** Both are now in §7.
+
+### 17.2 Finding
+
+**F4 — P2 MEDIUM [R9, GR-3b] — at every width from 768 up, AGT-10's table is twice as wide as its card, and the Edit
+action sits off-card.**
+- **Observed.** The reviewer measured `patterns-mantine-agentstatisticsview--default` (en), reading the table width
+  against its own `ScrollArea` viewport:
+
+  | Viewport | Table | ScrollArea viewport |
+  |---|---|---|
+  | 768 | 1296px | 676px |
+  | 1024 | 1296px | 599px |
+  | 1280 | 1296px | 769px |
+  | 1440 | 1296px | 876px |
+
+  - The column widths are 683 / 84 / 95 / 200 / 131 / 104. At 1440, the Actions header ends at x=1342 while the
+    viewport ends at 922. So Form inquiries and Edit are reachable only by scrolling sideways inside the card.
+- **Cause.** The Listing column is 683px because a long title renders on one line. `MantineDataTableToCards.tsx:437`
+  sets `td: { whiteSpace: 'nowrap' }`, which cancels the view's `lineClamp={2}` (`AgentStatisticsView.tsx:174`). So
+  that clamp never applies in the table. Real titles are this long; AC12's live row is "Shitet hyrje ap. Lagj.12
+  Kat.3, Korce, Vile trekatëshe".
+- **Why the receipts missed it.** The GR-3b receipts measured `#storybook-root`, which equals the viewport by
+  construction. They cannot see an overflow inside the card.
+- **Why this needs the owner.** `nowrap` is the pattern's TailAdmin §6b cell rule (`MantineDataTableToCards.tsx:258`),
+  and `docs/mantine-responsive-design-system.md:246` allows a desktop-only `ScrollArea` inside the card at `sm` and
+  up. Removing the overflow therefore changes a canonical table style. Keeping it means accepting the measurement
+  above.
+
+### 17.3 `STOP — OWNER DECISION REQUIRED` — D854-1
+
+What should AGT-10's table do with long titles at 768px and wider?
+
+- **A (recommended): wrap the title and the expiry.**
+  - `TableColumn` gains `wrap?: boolean`. The default is `false`, so every existing consumer keeps `nowrap`.
+  - When `wrap` is `true`, that column's `Table.Th` and `Table.Td` add `whiteSpace: 'normal'` to the pattern's
+    existing per-cell `style` object. This adds no new visual value.
+  - `AgentStatisticsView` sets `wrap: true` on `title`, which lets `lineClamp={2}` take effect. It sets the same on
+    `expires`, so "(in N days)" drops under the date.
+  - `Mantine/Primitives/Table` → `CardsBelowMd` sets `wrap: true` on one existing fixture column (GR-3a `EXTEND`: no
+    new export and no new string).
+  - This unlocks §17.4.
+- **C: accept the scroll inside the card as delivered.**
+  - There is no executor work. Review 3 is the owner matrix §13.3 alone, and #1–#4 are judged with the §17.2
+    readings in hand.
+
+Record the choice verbatim with its date in this section before the executor starts.
+
+### 17.4 Revision 2 requirements — only if D854-1 = A
+
+| ID | Required change | P |
+|---|---|---|
+| **R15** | Implement option A exactly as written in §17.3. Files: `MantineDataTableToCards.tsx`, `AgentStatisticsView.tsx` and `Table.stories.tsx`. Add a JSDoc line for `wrap` on `TableColumn`. Do not change the `cardsBelow` logic, the card layout or any other column. | P2 |
+| **R16** | Re-emit the GR-3b receipts for the four `patterns-mantine-agentstatisticsview--*` exports. Each receipt adds the AGT-10 `ScrollArea` viewport's `scrollWidth/clientWidth` at 768, 1024, 1280 and 1440, measured on `.mantine-ScrollArea-viewport` (the element that contains the table), not on `#storybook-root`. | P2 |
+
+**AC15 [R15]**
+- `patterns-mantine-agentstatisticsview--default` at 1440 in `en`, measured on AGT-10's `ScrollArea` viewport:
+  `scrollWidth <= clientWidth`.
+- Every title link in that table is at most two computed line-heights tall.
+- Also record, for the owner and not as pass/fail, the same two readings at 768, 1024 and 1280 in `en`, and at 1440
+  in `uk`.
+- In `mantine-primitives-table--cards-below-md` at 800, the wrapped column's `td` computes `white-space: normal`, and
+  the other columns compute `nowrap`.
+- `AdminUsersTable.smoke.test.tsx` passes.
+
+**AC16 [R16]:** four updated GR-3b receipts that carry the R16 readings.
+
+`GR-4 AC AUDIT — 2 criteria (AC15–AC16); each states an observable property; absolutes: AC15's scrollWidth ≤ clientWidth at one named width/locale/story.`
+
+### 17.5 Final gate block (revision 2)
+
+Tee each command to `docs/sessions/evidence/task854/r2/<name>.txt` and record every exit code.
+`check:locale-leak:mantine-only` is not re-run, because no string changes.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npm.cmd run test -- src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census-changed.mjs --base HEAD
+node.exe scripts\check-surface-census.mjs --surface src\modules\cabinet\statistics\components\AgentStatisticsView.tsx
+npm.cmd run build-storybook
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+git --no-optional-locks hash-object src/design-system/mantine/patterns/MantineDataTableToCards.tsx src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/stories/mantine/primitives/Table.stories.tsx
+```
+
+Expected results:
+- every command exits 0;
+- the `git grep` prints nothing;
+- `build.txt` shows `/[locale]/cabinet/statistics`.
+
+### 17.6 Re-entry and completion
+
+- **Mode:** `remediation`.
+- **Start:** R15, and only after D854-1 = A is recorded in §17.3. If D854-1 = C, there is no executor action.
+- **Order:** R15 → `build-storybook` → the AC15 measurements → R16 receipts → §17.5.
+- **Evidence:** keep `evidence/task854/` and `r1/` untouched. Revision 2 writes only to `r2/`.
+- **Session log:** append a "Revision 2" section with R15, R16, AC15 and AC16 and the updated Files Changed rows.
 - **Backlog:** update the 854 line of `docs/backlog.md`.
 - **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval and no mutating git.

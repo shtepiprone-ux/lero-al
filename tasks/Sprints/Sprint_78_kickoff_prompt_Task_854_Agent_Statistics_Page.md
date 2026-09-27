@@ -1,9 +1,9 @@
 # Task 854 — `/{locale}/cabinet/statistics`: the agent dashboard (P0 blocks), reached from a "Statistics" item next to "Profile"
 
 Sprint 78 · P1 · QA profile **Q4** (new authenticated route with owner isolation) + Q3 visual matrix · Wave C ·
-depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 2, 2026-09-27. §16 is
-done and accepted. The next action is the owner's decision D854-1 (§17.3); the executor then re-enters at §17.
-Do not re-run §10 or §16.**
+depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 2, 2026-09-27; D854-1 = A (owner, 2026-09-27). 854 is
+not executed on its own any more: it closes jointly with Task 891 (D78-9), which applies §17.4 as its R12. Do not
+re-run §10, §16 or §17.4 here.**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
@@ -518,7 +518,10 @@ What should AGT-10's table do with long titles at 768px and wider?
   - There is no executor work. Review 3 is the owner matrix §13.3 alone, and #1–#4 are judged with the §17.2
     readings in hand.
 
-Record the choice verbatim with its date in this section before the executor starts.
+**Owner decision, 2026-09-27 (AskUserQuestion), verbatim:** *"A: перенос у 2 рядки (Рекомендовано)"*. The same
+session also produced **D78-9**: the owner rejected both dashboards' visuals, and 855/856 were folded into **890**
+(admin) and **891** (agent). §17.4 is therefore executed as **891 R12**, not as a standalone revision, and 854
+closes in 891's joint review. §17.5–§17.6 are superseded by 891 §13.
 
 ### 17.4 Revision 2 requirements — only if D854-1 = A
 

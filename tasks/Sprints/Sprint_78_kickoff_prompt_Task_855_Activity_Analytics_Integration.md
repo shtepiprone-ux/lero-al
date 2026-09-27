@@ -1,7 +1,7 @@
 # Task 855 — activity analytics on both dashboards: ADM-10, the agent single-event chart, AGT-03, the portfolio donut, and AGT-10's activity columns
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D · depends on **849, 850, 853, 854** approved **and** owner action
-**O78-3** (aggregate applied, backfilled, first scheduled run confirmed) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET (gated on O78-3)**
+**O78-3** (aggregate applied, backfilled, first scheduled run confirmed) · **Status: ➰ FOLDED 2026-09-27 into 890 (admin half) and 891 (agent half) — owner decision D78-9. Not executable; kept as history. Never reuse 855.**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task

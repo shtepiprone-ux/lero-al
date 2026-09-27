@@ -1,7 +1,7 @@
 # Task 856 — AGT-11 "Top listings by …": three static photo cards ranked by one selected event
 
 Sprint 78 · P2 · QA profile **Q3** · Wave D, last · depends on **849, 854, 855** approved and O78-3 ·
-**Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET (gated on O78-3)**
+**Status: ➰ FOLDED 2026-09-27 into 891 (top listings as horizontal bars; the photo-card pattern is not built) — owner decision D78-9. Not executable; kept as history. Never reuse 856.**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task

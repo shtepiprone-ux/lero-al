@@ -1,7 +1,7 @@
 # Sprint 84 — one clock and one date order, on screens that have left Tailwind
 
-**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (885) · **Reserved:** 5
-(892 · 893 · 894 · 895 · 896)
+**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (885 · 893) · **Reserved:** 4
+(892 · 894 · 895 · 896)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -55,9 +55,9 @@ The Tasks table is the **single state source**. The execution-order note below i
 |---|---|---|
 | **885** | 24-hour clock in every locale and day-first `en` numeric dates: `DATE_FORMAT` loses its 12-hour branch, the audit-log timestamp gets `hourCycle: 'h23'`, all pinned literals move, and a repo-wide guard test rejects any 12-hour output or option. | `KICKOFF FILED` 2026-09-27, **blocked** on 892–896, 859 and 877 (§I0 census gate) → [`…Task_885…`](Sprint_84_kickoff_prompt_Task_885_24_Hour_Clock_And_Day_First_Dates.md) |
 | **892** | `/admin/permissions` on canonical Mantine: `AdminPermissionsManager` (44 `className`; `ui/badge`, `ui/switch`) | reserved — kickoff after its own census |
-| **893** | `/admin/users/[id]` and `/admin/users/new` on canonical Mantine: `AdminUserProfile` (167 `className`), `AdminEditLayout`, `AdminInput`, `AdminUserAvatar`, shared `Combobox`, shared `DatePicker` (critical flow "Admin user detail loads") | reserved — kickoff after its own census |
-| **894** | `/admin/inquiries/{sales,support}` on canonical Mantine: `AdminInquiriesManager` (42), `StatusChangeControl` (12), `StatusChangeHistory` (15). `StatusChangeControl` is also rendered by `ListingFormShellView` | reserved — after 893 (shared `Combobox`) |
-| **895** | `/{locale}/cabinet` on canonical Mantine: `CabinetShell` (17), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection`, `RecentlyViewedGrid`, `ClearRecentlyViewedButton` (enrolment) | reserved — after 893 (shared `Combobox`, `AdminUserAvatar`) |
+| **893** | `/admin/users/[id]` and `/admin/users/new` on canonical Mantine: `AdminUserProfile` → container + `AdminUserProfileView` + `AdminUserProfileDialogsView`; new `AdminUserAvatarField` (+ View) over a hook shared with the legacy avatar; `MantineFormSection` extracted; `RangeDatePicker` single-date mode; legacy `DatePicker` deleted. Shared `Combobox`, `AdminInput`, `AdminEditLayout` and the legacy `AdminUserAvatar` stay for their other consumers (Q4, five critical flows) | `KICKOFF FILED` 2026-09-28, **after 877** → [`…Task_893…`](Sprint_84_kickoff_prompt_Task_893_Admin_User_Profile_On_Mantine.md) |
+| **894** | `/admin/inquiries/{sales,support}` on canonical Mantine: `AdminInquiriesManager` (42), `StatusChangeControl` (12), `StatusChangeHistory` (15). `StatusChangeControl` is also rendered by `ListingFormShellView` | reserved — after 877 |
+| **895** | `/{locale}/cabinet` on canonical Mantine: `CabinetShell` (17), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection`, `RecentlyViewedGrid`, `ClearRecentlyViewedButton` (enrolment) | reserved — after 893 (`ProfileTab` switches to 893's `AdminUserAvatarField`; 895 then deletes the legacy `AdminUserAvatar` and its Story) |
 | **896** | `/admin/users` list: `page.tsx` (8 `className`) and `AdminUsersTable` enrolled in the manifest (it already has a Story) | reserved |
 
 External dependencies (Sprint 78, not moved): **877** makes `AdminTable` and `AdminPageHeader` adapters over
@@ -66,10 +66,11 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
 
 ## Execution order and gating
 
-1. **893 first** among the new numbers: it migrates the shared `Combobox`, `AdminUserAvatar` and `DatePicker` that
-   894 and 895 consume.
+1. **893 runs after 877** (the admin page wrapper and width token). It does not migrate the shared legacy files in
+   place: each migrated screen stops importing `Combobox`/`AdminInput`/`AdminEditLayout` itself (tier-2 treatment), and
+   the last consumer deletes them. 893 does establish `AdminUserAvatarField`, which 895 consumes.
 2. 892, 896 have no dependency on each other and may run in any order.
-3. 894 and 895 run after 893. 894 also waits for 877 (`AdminPageHeader`).
+3. 894 waits for 877 (`AdminPageHeader`). 895 waits for 893 (`AdminUserAvatarField`).
 4. **885 runs last.** Its I0 re-runs the census on every surface it changes; any `FAIL` line other than the surface's
    own root `page.tsx` stops it with `BLOCKED — D84-1`. It also needs `src/lib/formatters.ts` and
    `src/lib/__tests__/formatters.test.ts` committed (854's hunks land with 891).
@@ -79,6 +80,7 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
 
 | # | Action | Blocks |
 |---|---|---|
+| **O84-2** | Task 893's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.4, 72 tuples), then one live check after the deploy: block a user with an end date, and create one test user. | 893 approval |
 | **O84-1** | After 885 deploys: in `en` and `sq`, open `/admin/permissions` (audit log), `/admin/users/<id>` (change log) and `/cabinet` (`Member since`), and read one email-change security notice. Every time reads `HH:MM` in 24 hours, and every `en` numeric date is day-first. | 885 closure |
 
 ## Exit criteria

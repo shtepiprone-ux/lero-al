@@ -1,0 +1,88 @@
+// O79-6 — owner-run scripts/task-884-cms-html-census.sql (blob 0b7f6cea) in the Supabase SQL Editor, production, returned in chat 2026-09-27.
+// Transcribed verbatim by Opus review 1. 11 published body rows, no flag, no stripped tag; (count) = 0 -> no kickoff 5.1 owner decision is needed.
+[
+  {
+    "slug": "about",
+    "locale": "en",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "about",
+    "locale": "it",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "about",
+    "locale": "sq",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "about",
+    "locale": "uk",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "privacy-policy",
+    "locale": "en",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "privacy-policy",
+    "locale": "it",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "privacy-policy",
+    "locale": "sq",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "terms-of-service",
+    "locale": "en",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "terms-of-service",
+    "locale": "it",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "terms-of-service",
+    "locale": "sq",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "terms-of-service",
+    "locale": "uk",
+    "is_published": "true",
+    "flags": "",
+    "stripped_tags": ""
+  },
+  {
+    "slug": "(count)",
+    "locale": null,
+    "is_published": null,
+    "flags": null,
+    "stripped_tags": "0"
+  }
+]

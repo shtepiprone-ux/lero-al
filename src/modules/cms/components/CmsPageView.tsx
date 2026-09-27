@@ -1,4 +1,5 @@
 import { Box, Title, TypographyStylesProvider } from '@mantine/core'
+import { sanitizeCmsHtml } from '@/modules/cms/lib/sanitizeCmsHtml'
 
 export interface CmsPageViewProps {
   title: string | null | undefined
@@ -26,7 +27,7 @@ export function CmsPageView({ title, body }: CmsPageViewProps) {
       )}
       {body && (
         <TypographyStylesProvider>
-          <div dangerouslySetInnerHTML={{ __html: body }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(body) }} />
         </TypographyStylesProvider>
       )}
     </Box>

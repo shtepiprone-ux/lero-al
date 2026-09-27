@@ -1,0 +1,33 @@
+REVIEWER TIMELINE + HASH WITNESS (Opus review 1, 2026-09-27)
+platform: win32 v22.22.3
+
+Current git hash-object vs 18-hash-object.txt:
+src/modules/cms/lib/sanitizeCmsHtml.ts ba17e8ac198a27d23d700e62020db1e153d6866c EQUAL
+src/modules/cms/components/CmsPageView.tsx a4df62e2fc0fe081bd7dd3a8698a775799c93bc3 EQUAL
+src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts c08a0c63e559092c5a089f171bf1386cae714d6d EQUAL
+src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx 86669e422ea3ad2cd399205d398b9e1449f34a8a EQUAL
+scripts/task-884-cms-html-census.sql 0b7f6cea4c06e51c695c2527b886fc6dbac62814 EQUAL
+package.json 983e5265563aa0734d9e4a52bf5cd16baeeb2a24 EQUAL
+package-lock.json 432fda5a121dfe421bdb4a492945c80c4c6d3e95 EQUAL
+docs/dependencies.md c636b3a3728e14c5a31890ea0cb45f9c02a98d79 EQUAL
+docs/critical-flow-registry.md 47d7631df76b52185f963a77d5811cf89178e301 EQUAL
+
+File mtimes (local):
+2026-09-27T17:39:15.273Z src/modules/cms/lib/sanitizeCmsHtml.ts
+2026-09-27T17:32:56.185Z src/modules/cms/components/CmsPageView.tsx
+2026-09-27T17:24:10.600Z src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts
+2026-09-27T17:26:22.894Z src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx
+2026-09-27T17:36:39.890Z scripts/task-884-cms-html-census.sql
+
+Evidence mtimes (local):
+2026-09-27T17:32:50.599Z 05-plant-p1.txt
+2026-09-27T17:34:23.559Z 06-plant-p2.txt
+2026-09-27T17:35:17.877Z 07-plant-p3.txt
+2026-09-27T17:38:27.735Z 10-tests.txt
+2026-09-27T17:39:51.590Z 12-typecheck.txt
+2026-09-27T17:40:48.459Z 13-lint.txt
+2026-09-27T17:49:45.230Z 16-storybook-build.txt
+2026-09-27T17:51:42.027Z 17-build.txt
+2026-09-27T17:51:49.755Z 18-hash-object.txt
+
+FINDING F1 (P3): sanitizeCmsHtml.ts was last written after 05-07 (plants) and after 10-tests.txt, before 12-typecheck/17-build. The session log records its plant hash as bdebfaba6..., the final blob is ba17e8ac198a27d23d700e62020db1e153d6866c. The post-plant edit is undocumented, and 05-07 carry no hash pair or restored-green run (kickoff 10.3). Superseding evidence: r1-reviewer-tests.txt (final-tree re-run) and r1-reviewer-probes.txt (plant equivalents on the final file text).

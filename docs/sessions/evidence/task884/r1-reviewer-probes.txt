@@ -1,0 +1,67 @@
+REVIEWER PROBES (Opus review 1, 2026-09-27). The final src/modules/cms/lib/sanitizeCmsHtml.ts is bundled read-only with esbuild into memory (no repository write).
+Part A: 28 adversarial payloads (DANGER = forbidden markup in output; idem = idempotent). Part A end: plant equivalents P2 (script allowed + removed from content-discard set) and P3 (allowedSchemes + allowProtocolRelative dropped) applied to the FINAL file text in memory.
+Part B: backslash / whitespace protocol-relative href variants and their browser resolution.
+platform: win32 v22.22.3 C:\Claude_Code_Projects\lero-al
+
+=== Part A (node.exe probe884.cjs)
+platform win32 v22.22.3
+frozen true
+"<svg><p>svgtext</p><script>alert(1)</script></svg>" => "<p>svgtext</p>" ok idem
+"<math><mi>x</mi><a href=\"javascript:alert(1)\">m</a></math>" => "x<a>m</a>" ok idem
+"<noscript><p title=\"</noscript><img src=x onerror=alert(1)>\">n</p></noscript>" => "<p>n</p>" ok idem
+"<textarea><script>alert(1)</script></textarea>" => "" ok idem
+"<object data=\"javascript:alert(1)\">o</object><embed src=\"https://x\">" => "o" ok idem
+"<a href=\" javascript:alert(1)\">sp</a>" => "<a>sp</a>" ok idem
+"<a href=\"java&#x09;script:alert(1)\">tab</a>" => "<a>tab</a>" ok idem
+"<a href=\"&#x6A;avascript:alert(1)\">hex</a>" => "<a>hex</a>" ok idem
+"<a href=\"javascript&colon;alert(1)\">colon</a>" => "<a>colon</a>" ok idem
+"<a href=\"vbscript:msgbox(1)\">vb</a>" => "<a>vb</a>" ok idem
+"<a href=\"\\evil.example\">bs</a>" => "<a href=\"\\evil.example\">bs</a>" ok idem
+"<a href=\"/evil.example\">slash-bs</a>" => "<a href=\"/evil.example\">slash-bs</a>" ok idem
+"<a href=\"https://x\" target=\"_blank\" rel=\"opener\">o</a>" => "<a href=\"https://x\" target=\"_blank\" rel=\"noopener noreferrer\">o</a>" ok idem
+"<a href=\"https://x\" target=\"_self\" rel=\"nofollow\">s</a>" => "<a href=\"https://x\">s</a>" ok idem
+"<a href=\"tel:+355\">t</a>" => "<a href=\"tel:+355\">t</a>" ok idem
+"<p>a<scr<script>ipt>alert(1)</script>b</p>" => "<p>aipt&gt;alert(1)b</p>" ok idem
+"<div><p>kept</p></div><span>sp</span><img src=x>" => "<p>kept</p>sp" ok idem
+"<table><thead><tr><th rowspan=\"2\" style=\"x\">h</th></tr></thead><tbody><tr><td>c</td></tr></tbody></table>" => "<table><thead><tr><th rowspan=\"2\">h</th></tr></thead><tbody><tr><td>c</td></tr></tbody></table>" ok idem
+"<h2 id=\"privacy\" class=\"c\">anchor</h2>" => "<h2>anchor</h2>" ok idem
+"<p>1 &lt; 2 &amp; \"q\"</p>" => "<p>1 &lt; 2 &amp; \"q\"</p>" ok idem
+"<!-- <script>alert(1)</script> --><p>c</p>" => "<p>c</p>" ok idem
+"<![CDATA[<script>alert(1)</script>]]><p>d</p>" => "<p>d</p>" ok idem
+"<a href=\"https://x\" onmouseover=\"alert(1)\">h</a>" => "<a href=\"https://x\">h</a>" ok idem
+"<iframe srcdoc=\"<script>alert(1)</script>\"></iframe>" => "" ok idem
+"<form action=\"https://x\"><button formaction=\"javascript:alert(1)\">b</button></form>" => "b" ok idem
+"<details open ontoggle=alert(1)>d</details>" => "d" ok idem
+"<base href=\"https://evil\">" => "" ok idem
+"<meta http-equiv=\"refresh\" content=\"0;url=javascript:alert(1)\">" => "" ok idem
+probe-failures 0
+node.exe : 
+At line:7 char:8
++ $p1 = (node.exe "C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Cod ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+⚠️ Your `allowedTags` option includes, `script`, which is inherently
+vulnerable to XSS attacks. Please remove it from `allowedTags`.
+Or, to disable this warning, add the `allowVulnerableTags` option
+and ensure you are accounting for this risk.
+
+
+P2 (script allowed) output "<p>hello</p><script>alert(1)</script>" T1-script-row-fails: true
+P3 protocol-relative "<a href=\"//evil.example\">click</a>" row-fails: true | data "<a>click</a>" row-fails: false
+P2 applied true P3 applied true
+
+EXIT_CODE=0
+
+=== Part B (node.exe probe884b.cjs)
+"<a href=\"\\\\evil.example\">x</a>" => "<a>x</a>" | browser-resolves: (href removed)
+"<a href=\"/\\evil.example\">x</a>" => "<a>x</a>" | browser-resolves: (href removed)
+"<a href=\"\\/evil.example\">x</a>" => "<a>x</a>" | browser-resolves: (href removed)
+"<a href=\" //evil.example\">x</a>" => "<a>x</a>" | browser-resolves: (href removed)
+"<a href=\"/%2Fevil.example\">x</a>" => "<a href=\"/%2Fevil.example\">x</a>" | browser-resolves: https://lero.al/%2Fevil.example
+"<a href=\"https:evil.example\">x</a>" => "<a href=\"https:evil.example\">x</a>" | browser-resolves: https://lero.al/en/evil.example
+"<a href=\"\t//evil.example\">x</a>" => "<a>x</a>" | browser-resolves: (href removed)
+
+EXIT_CODE=0

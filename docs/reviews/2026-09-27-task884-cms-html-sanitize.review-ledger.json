@@ -1,0 +1,819 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-884 — a CMS page body is sanitised before it reaches the browser: sanitize-html allowlist at the single injection site CmsPageView, payload tests, plants, owner content census (R1-R6)",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "531cba737d91204a72be7e0b4ab869c6c626d203",
+  "reviewedRevision": "uncommitted worktree on top of 531cba737d91204a72be7e0b4ab869c6c626d203 (main). Blobs: sanitizeCmsHtml.ts ba17e8ac, CmsPageView.tsx a4df62e2, T1 c08a0c63, T2 86669e42, census sql 0b7f6cea, package.json 983e5265, package-lock.json 432fda5a.",
+  "reviewedPaths": [
+   "package.json",
+   "package-lock.json",
+   "docs/dependencies.md",
+   "src/modules/cms/lib/sanitizeCmsHtml.ts",
+   "src/modules/cms/components/CmsPageView.tsx",
+   "src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts",
+   "src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx",
+   "scripts/task-884-cms-html-census.sql",
+   "docs/critical-flow-registry.md",
+   "docs/sessions/2026-09-27-task884-cms-html-sanitize.md",
+   "docs/sessions/evidence/task884"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 9,
+   "verified": 9,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-27-task884-cms-html-sanitize.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "package.json",
+    "symbol": "dependencies.sanitize-html, devDependencies.@types/sanitize-html",
+    "diffHunks": [
+     "package.json:157",
+     "package.json:177",
+     "docs/dependencies.md:17"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "sanitize-html dependency",
+     "@types/sanitize-html devDependency",
+     "lockfile updated",
+     "dependencies.md row"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/11-npm-ls.txt",
+     "command": "npm.cmd ls sanitize-html",
+     "observable": "lero-al -- sanitize-html@2.17.7, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "sanitize-html dependency",
+       "@types/sanitize-html devDependency",
+       "lockfile updated",
+       "dependencies.md row"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/dependencies.md",
+     "command": "git diff docs/dependencies.md package.json package-lock.json",
+     "observable": "One Approved-additions row (sanitize-html ^2.17.7, rationale, server-only, @types devDependency, Task 884); package.json +2 lines; lockfile adds only the sanitize-html tree.",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "sanitize-html dependency",
+       "@types/sanitize-html devDependency",
+       "lockfile updated",
+       "dependencies.md row"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The lockfile could carry packages unrelated to R1.",
+     "kind": "EXECUTED",
+     "path": "package-lock.json",
+     "result": "REFUTED: git diff lists only @types/sanitize-html, sanitize-html and their tree (htmlparser2, domhandler, domutils, dom-serializer, domelementtype, entities, is-plain-object, parse-srcset, launder -> dayjs); launder is the apostrophecms package that sanitize-html 2.17.7 declares."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R2",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/cms/lib/sanitizeCmsHtml.ts",
+    "symbol": "CMS_HTML_ALLOWLIST, sanitizeCmsHtml",
+    "diffHunks": [
+     "src/modules/cms/lib/sanitizeCmsHtml.ts (new, blob ba17e8ac)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "28 allowlisted tags",
+     "a/th/td attributes only",
+     "http/https/mailto/tel on href, protocol-relative refused",
+     "content-discard set of ten tags",
+     "target limited to _blank with rel",
+     "null/undefined/empty -> empty",
+     "frozen options"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "src/modules/cms/lib/sanitizeCmsHtml.ts",
+     "command": "reviewer read of CMS_HTML_ALLOWLIST field by field",
+     "observable": "allowedTags, allowedAttributes, allowedSchemes, allowedSchemesAppliedToAttributes, allowProtocolRelative:false, exclusiveFilter over the ten R2 tags and transformTags.a match R2 exactly.",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "28 allowlisted tags",
+       "a/th/td attributes only",
+       "http/https/mailto/tel on href, protocol-relative refused",
+       "content-discard set of ten tags",
+       "target limited to _blank with rel",
+       "null/undefined/empty -> empty",
+       "frozen options"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-reviewer-probes.txt",
+     "command": "node.exe probe884.cjs (esbuild in-memory bundle of the final file)",
+     "observable": "frozen true; 28 adversarial payloads (svg/math/noscript mXSS, entity/tab/colon-encoded javascript:, vbscript:, srcdoc, formaction, base, meta refresh, on* handlers) -> probe-failures 0, every output idempotent.",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "28 allowlisted tags",
+       "a/th/td attributes only",
+       "http/https/mailto/tel on href, protocol-relative refused",
+       "content-discard set of ten tags",
+       "target limited to _blank with rel",
+       "null/undefined/empty -> empty",
+       "frozen options"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Backslash or whitespace variants of a protocol-relative href could escape allowProtocolRelative:false and resolve to another host.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/r1-reviewer-probes.txt",
+     "result": "REFUTED: \\\\host, /\\host, \\/host, leading space and tab variants all lose href; /%2Fhost and https:host resolve same-origin (https://lero.al/...)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R2 R4",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts",
+    "symbol": "T1 removed/kept tables, T1b fixture round-trip, idempotency",
+    "diffHunks": [
+     "src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts (new, blob c08a0c63)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "every removed payload absent",
+     "every kept fragment present",
+     "eight Story fixture bodies byte-identical",
+     "target=_blank gains rel",
+     "idempotent",
+     "null -> empty"
+    ],
+    "phases": [
+     "red",
+     "green"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/t1-red.txt",
+     "command": "npx.cmd vitest run T1 before R2",
+     "observable": "import resolution failure, EXIT_CODE=1 (module absent)",
+     "freshness": "executor red-first run before R2 existed",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every removed payload absent",
+       "every kept fragment present",
+       "eight Story fixture bodies byte-identical",
+       "target=_blank gains rel",
+       "idempotent",
+       "null -> empty"
+      ],
+      "phases": [
+       "red"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-reviewer-tests.txt",
+     "command": "npx.cmd vitest run src/modules/cms \"src/app/[locale]/[slug]\"",
+     "observable": "3 files / 37 tests passed on the final tree (T1 31, T2 2, 869 route 4), EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "every removed payload absent",
+       "every kept fragment present",
+       "eight Story fixture bodies byte-identical",
+       "target=_blank gains rel",
+       "idempotent",
+       "null -> empty"
+      ],
+      "phases": [
+       "green"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "T1b fixtures might not be the real Story bodies.",
+     "kind": "EXECUTED",
+     "path": "src/stories/patterns/mantine/CmsPageView.stories.tsx",
+     "result": "REFUTED: the eight pageBody/richBody values at lines 46-101 and the h2/p/ul/li/link helpers at 27-41 are copied verbatim into the test."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R3",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/cms/components/CmsPageView.tsx",
+    "symbol": "dangerouslySetInnerHTML __html",
+    "diffHunks": [
+     "src/modules/cms/components/CmsPageView.tsx:2",
+     "src/modules/cms/components/CmsPageView.tsx:30"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "only the import and the __html expression change",
+     "one CMS/app injection site"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/04-sites-after.txt",
+     "command": "git grep -n dangerouslySetInnerHTML -- src (after)",
+     "observable": "CmsPageView.tsx:30 sanitizeCmsHtml(body); SimilarListings.tsx:221 only",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "one CMS/app injection site"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "src/modules/cms/components/CmsPageView.tsx",
+     "command": "git diff src/modules/cms/components/CmsPageView.tsx",
+     "observable": "+1 import line, 1 changed __html expression; body && guard, props and layout unchanged",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "only the import and the __html expression change"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The site could already have been sanitised before the change, making R3 vacuous.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/02-sites-before.txt",
+     "result": "REFUTED: before the change CmsPageView.tsx:29 injected the raw body."
+    },
+    {
+     "claim": "Another route could still render CMS body HTML raw.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/04-sites-after.txt",
+     "result": "REFUTED: the only other site is SimilarListings speculation-rules JSON built server-side, out of scope by kickoff 3.2."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5 / R4",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx",
+    "symbol": "T2 renderToStaticMarkup",
+    "diffHunks": [
+     "src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx (new, blob 86669e42)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "rendered markup has no <script",
+     "rendered markup has no onerror",
+     "surrounding text kept"
+    ],
+    "phases": [
+     "red",
+     "green"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/t2-red.txt",
+     "command": "npx.cmd vitest run T2 against the raw view",
+     "observable": "2 failed; raw script/onerror present in markup, EXIT_CODE=1",
+     "freshness": "executor red-first run before R3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rendered markup has no <script",
+       "rendered markup has no onerror",
+       "surrounding text kept"
+      ],
+      "phases": [
+       "red"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-reviewer-tests.txt",
+     "command": "npx.cmd vitest run src/modules/cms \"src/app/[locale]/[slug]\"",
+     "observable": "T2 2/2 passed on the final tree, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rendered markup has no <script",
+       "rendered markup has no onerror",
+       "surrounding text kept"
+      ],
+      "phases": [
+       "green"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "T2 could pass because Mantine output simply never contains the payload.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/05-plant-p1.txt",
+     "result": "REFUTED: with CmsPageView reverted to the raw body both T2 tests fail on <script / onerror; the restored CmsPageView blob a4df62e2 equals the final hash."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / R3 R4",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "src/modules/cms/lib/sanitizeCmsHtml.ts",
+    "symbol": "plants P1-P3",
+    "diffHunks": [
+     "src/modules/cms/lib/sanitizeCmsHtml.ts (blob ba17e8ac)",
+     "src/modules/cms/components/CmsPageView.tsx (blob a4df62e2)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "P1 raw body fails T2",
+     "P2 script allowed fails T1 script row",
+     "P3 default schemes fails T1 protocol-relative row",
+     "restored tree passes",
+     "869 route tests unchanged"
+    ],
+    "phases": [
+     "final"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/05-plant-p1.txt",
+     "command": "executor plant P1",
+     "observable": "T2 2 failed, EXIT_CODE=1",
+     "freshness": "executor plant against the final CmsPageView blob a4df62e2",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "P1 raw body fails T2"
+      ],
+      "phases": [
+       "final"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-reviewer-probes.txt",
+     "command": "node.exe probe884.cjs, plant equivalents applied to the FINAL file text in memory",
+     "observable": "P2: script and alert(1) survive -> T1 script row fails; P3: //evil.example survives -> protocol-relative row fails, data: row still blocked by the library default",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "P2 script allowed fails T1 script row",
+       "P3 default schemes fails T1 protocol-relative row"
+      ],
+      "phases": [
+       "final"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-reviewer-tests.txt",
+     "command": "npx.cmd vitest run src/modules/cms \"src/app/[locale]/[slug]\"",
+     "observable": "37/37 incl. page.errors.test.ts 4/4 on the final tree",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "restored tree passes",
+       "869 route tests unchanged"
+      ],
+      "phases": [
+       "final"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The executor plant evidence proves the shipped sanitizer.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/r1-reviewer-timeline.txt",
+     "result": "CONTRADICTION recorded as F1: sanitizeCmsHtml.ts was written at 17:39Z, after 05-07 and 10-tests; the session-log plant hash bdebfaba6 differs from the final ba17e8ac. Superseded by the reviewer plant equivalents and re-run on the final file."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC7 / R5",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-884-cms-html-census.sql",
+    "symbol": "single statement census",
+    "diffHunks": [
+     "scripts/task-884-cms-html-census.sql (new, blob 0b7f6cea)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "one statement, no write keyword",
+     "selects slug, locale, is_published, flags, stripped_tags only",
+     "runs live and answers O79-6"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/08-census-single-statement.txt",
+     "command": "node.exe single-statement check (kickoff 13.2)",
+     "observable": "semicolons=1 endsWithSemicolon=true writeKeywords=none",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "one statement, no write keyword",
+       "selects slug, locale, is_published, flags, stripped_tags only"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/r1-o79-6-census-grid.txt",
+     "command": "owner-run census in the Supabase SQL Editor (O79-6)",
+     "observable": "11 published body rows, flags and stripped_tags empty on every row, (count) = 0",
+     "freshness": "live production database 2026-09-27, owner-run against blob 0b7f6cea",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "runs live and answers O79-6"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "A census that reads the wrong JSON key would print an empty but misleading grid.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/r1-o79-6-census-grid.txt",
+     "result": "REFUTED: locale_bodies keeps only non-empty content->locale->>body, and the grid returned 11 rows, so bodies were read; empty flags therefore mean no pattern matched."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC8 / R6",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "docs/critical-flow-registry.md",
+    "symbol": "P1 - CMS content rendering (Task 884)",
+    "diffHunks": [
+     "docs/critical-flow-registry.md:96-100"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "one registry row",
+     "census nodes and statuses unchanged",
+     "build-storybook exit 0"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/critical-flow-registry.md",
+     "command": "git diff docs/critical-flow-registry.md",
+     "observable": "one new section and row naming CmsPageView -> sanitizeCmsHtml, the T1/T2 command and Task 884",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "one registry row"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/09-census-after.txt",
+     "command": "node.exe scripts\\check-surface-census.mjs --surface \"src/app/[locale]/[slug]/page.tsx\" (after)",
+     "observable": "same 2 nodes and statuses as 03; only edge/skip counts +1 for the new util import; exit 1 = the pre-existing baseline",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "census nodes and statuses unchanged"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/16-storybook-build.txt",
+     "command": "npm.cmd run build-storybook",
+     "observable": "built, EXIT_CODE=0",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "build-storybook exit 0"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The census diff could hide a new node.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/09-census-after.txt",
+     "result": "REFUTED: 03-census-before.txt (I0) prints the same 2 nodes and statuses; diff of 03 vs 09 without the skipped line differs only in \"Local import edges resolved\" 5 -> 6."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC9 / all",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "package.json",
+    "symbol": "final gate block",
+    "diffHunks": [
+     "all nine shipped blobs in 18-hash-object.txt"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "npm run build exit 0 on the final tree",
+     "typecheck, lint, file-integrity, mojibake exit 0"
+    ],
+    "phases": [
+     "after"
+    ],
+    "notApplicable": {
+     "stories": "Server-side sanitiser and one expression in CmsPageView; no Story, className or chrome changed (kickoff 3.5). Patterns/Mantine/CmsPageView unchanged; build-storybook exit 0.",
+     "locales": "No user-facing string added or changed; T1b covers all four locale fixture bodies as data.",
+     "viewports": "No layout or chrome change; the only rendered difference is removed disallowed markup.",
+     "states": "Payload classes and edge inputs are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task884/17-build.txt",
+     "command": "npm.cmd run build",
+     "observable": "Generating static pages (40/40), EXIT_CODE=0; written 17:51Z, after the last source write at 17:39Z",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "npm run build exit 0 on the final tree"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task884/12-typecheck.txt",
+     "command": "npm.cmd run typecheck; lint; check:file-integrity; check:mojibake (12-15)",
+     "observable": "all EXIT_CODE=0; lint 0 errors; 180 files clean; 0 mojibake artifacts",
+     "freshness": "final worktree 2026-09-27 on base 531cba737; reviewer git hash-object equals 18-hash-object.txt for all nine shipped files (r1-reviewer-timeline.txt)",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "typecheck, lint, file-integrity, mojibake exit 0"
+      ],
+      "phases": [
+       "after"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The build might predate the final sanitizer edit.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task884/r1-reviewer-timeline.txt",
+     "result": "REFUTED: 12-typecheck (17:39:51Z), 13-lint, 16-storybook and 17-build all postdate the last source write (17:39:15Z), and 18-hash-object equals the current blobs."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "Server-side HTML sanitiser, a SQL census and docs rows; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC6 / R3 R4",
+   "requirementIds": [
+    "AC6 / R3 R4"
+   ],
+   "evidence": "sanitizeCmsHtml.ts was written after the plants (05-07) and after 10-tests.txt; the session log gives its plant hash as bdebfaba6 while the final blob is ba17e8ac, and the edit is not recorded. 05-07 hold neither a hash pair nor the restored green run that kickoff 10.3 requires. Closed for approval by the reviewer final-tree re-run and plant equivalents (r1-reviewer-tests.txt, r1-reviewer-probes.txt)."
+  },
+  {
+   "id": "F2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC9 / all",
+   "requirementIds": [
+    "AC9 / all"
+   ],
+   "evidence": "Kickoff 13.2 says to stop any running Next server before either build; the owner chose to leave :3000 and :6006 running. Both builds exited 0. Owner-authorised deviation, not a defect."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC6 / R3 R4",
+  "reviewer": "Opus"
+ }
+}

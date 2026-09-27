@@ -93,6 +93,12 @@
 > swapped its client" regression class. DB-level RLS (a *policy* change breaking an insert while action
 > code is unchanged) is deferred to Slice 5b — see `docs/rls-write-path-manifest.md`.
 
+## P1 — CMS content rendering (Task 884)
+
+| Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |
+|---|---|---|---|---|---|---|---|
+| CMS page body sanitised before render | `CmsPageView.tsx` (`/[locale]/[slug]`) → `sanitizeCmsHtml` (`src/modules/cms/lib/sanitizeCmsHtml.ts`) | **884** | a `legal.manage` author's rich text (headings, paragraphs, lists, links, tables) renders unchanged to every visitor | `<script>`, `on*` handlers, `javascript:`/`data:`/protocol-relative `href`, `<iframe>`/`<object>`/`<embed>`/`<svg>`/`<form>`/`<style>` are removed before the body reaches `dangerouslySetInnerHTML` | T1 payload-table smoke (removed/kept classes + Story-fixture byte-identical round-trip) + T2 render-path smoke (`renderToStaticMarkup` proves the real component strips a script/`onerror` payload) | `npx vitest run src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx` | ✅ (Task 884: 31 T1 vitest tests — removed/kept payload classes, `target="_blank"` → `rel="noopener noreferrer"`, null/undefined/empty → `''`, idempotency, and T1b byte-identical round-trip of every locale's Story fixture body; 2 T2 vitest tests rendering the real `CmsPageView` via `renderToStaticMarkup` inside a real `MantineProvider`; planted-violation P1 (revert `CmsPageView` to the raw `{ __html: body }}`) → both T2 tests FAIL on the raw `onerror`/script payload, restored → 2/2 PASS, hash-equal; P2 (allow `script` through the allowlist) → T1's script row FAILS 1/31, restored → 31/31 PASS, hash-equal; P3 (drop the `allowedSchemes`/`allowProtocolRelative` configuration) → the library default's `allowProtocolRelative: true` lets T1's protocol-relative row through (FAILS), the `data:` row stays blocked by the library's own default scheme list, restored → 31/31 PASS, hash-equal. Live-content census is owner-native, O79-6.) |
+
 ## P1 — Admin data freshness / moderation visibility (Epic KK / Task 452)
 
 | Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |

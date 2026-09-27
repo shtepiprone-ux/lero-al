@@ -2,9 +2,9 @@
 
 Sprint 79 · **P1** · QA profile **Q4** (stored-XSS defence on a public route; a new production dependency) ·
 **depends on 869** (both edit `CmsPageView`; 869 creates it) · owner actions **O79-6**, **O79-7** ·
-**Status: `KICKOFF FILED` 2026-09-25 (revised the same day after a current-state review, §3.6)**
+**Status: ✅ `APPROVED WITH NOTES` 2026-09-27 (review 1) — O79-6 census clean; archived, §16** (filed 2026-09-25, revised the same day, §3.6)
 
-Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
+Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](../Sprints/Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
 **Owner instruction that created it (2026-09-25, verbatim):** *"заведи окрему задачу"*. It answers the orchestrator's
 report of the automated security finding on `CmsPageView.tsx` (`dangerouslySetInnerHTML={{ __html: body }}`). This
@@ -377,3 +377,12 @@ The owner asked for a check against the current functionality before the kickoff
 - the concrete Mantine test harness and the 869 test file name (R4).
 
 The route, the allowlist core, the plants and the gates are unchanged.
+
+## 16. Review 1 — ✅ APPROVED WITH NOTES (Opus, 2026-09-27)
+
+Ledger: [`docs/reviews/2026-09-27-task884-cms-html-sanitize.review-ledger.json`](../../docs/reviews/2026-09-27-task884-cms-html-sanitize.review-ledger.json) (`check:review-ledger` exit 0). AC1–AC9 verified.
+
+- **O79-6 census: closed.** The owner-run census (`docs/sessions/evidence/task884/r1-o79-6-census-grid.txt`) returned 11 published body rows. None has a flag or a stripped tag; `(count)` = 0. §5.1 and §5.3 need no owner decision.
+- **F1 (P3).** `sanitizeCmsHtml.ts` was written after the plants and after `10-tests.txt`. The session-log plant hash (`bdebfaba6`) is not the final blob (`ba17e8ac`), and `05`–`07` hold no hash pair or restored run. Superseded by the reviewer's final-tree re-run (`r1-reviewer-tests.txt`, 37/37) and plant equivalents on the final file (`r1-reviewer-probes.txt`). The same probes also refuted 28 adversarial payloads.
+- **F2 (NOTE).** Both builds ran with the owner's dev servers live, by owner choice. Both exited 0.
+- **Still owed by the owner (O79-6, second half):** after deploy, open two published CMS pages in a private window and confirm the formatting is unchanged (§13.3 step 3).

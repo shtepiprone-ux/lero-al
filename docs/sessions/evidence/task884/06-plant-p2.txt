@@ -1,0 +1,41 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stderr | src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips a <script> tag and its text content
+
+
+⚠️ Your `allowedTags` option includes, `script`, which is inherently
+vulnerable to XSS attacks. Please remove it from `allowedTags`.
+Or, to disable this warning, add the `allowVulnerableTags` option
+and ensure you are accounting for this risk.
+
+
+
+ ❯ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts (31 tests | 1 failed) 28ms
+     × strips a <script> tag and its text content 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips a <script> tag and its text content
+AssertionError: expected '<p>hello</p><script>alert(1)</script>' not to contain '<script'
+
+Expected: "<script"
+Received: "<p>hello</p><script>alert(1)</script>"
+
+ ❯ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts:17:21
+     15|   it('strips a <script> tag and its text content', () => {
+     16|     const out = sanitizeCmsHtml('<p>hello</p><script>alert(1)</script>…
+     17|     expect(out).not.toContain('<script')
+       |                     ^
+     18|     expect(out).not.toContain('alert(1)')
+     19|     expect(out).toContain('hello')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 30 passed (31)
+   Start at  19:34:22
+   Duration  1.25s (transform 59ms, setup 107ms, import 83ms, tests 28ms, environment 852ms)
+
+EXIT_CODE=1

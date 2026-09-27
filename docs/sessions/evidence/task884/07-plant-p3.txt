@@ -1,0 +1,31 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts (31 tests | 1 failed) 23ms
+     × removes a protocol-relative href 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes a protocol-relative href
+AssertionError: expected '<a href="//evil.example">click</a>' not to contain '//evil.example'
+
+Expected: "//evil.example"
+Received: "<a href="//evil.example">click</a>"
+
+ ❯ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts:69:21
+     67|   it('removes a protocol-relative href', () => {
+     68|     const out = sanitizeCmsHtml('<a href="//evil.example">click</a>')
+     69|     expect(out).not.toContain('//evil.example')
+       |                     ^
+     70|     expect(out).toContain('click')
+     71|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 30 passed (31)
+   Start at  19:35:16
+   Duration  1.19s (transform 54ms, setup 100ms, import 74ms, tests 23ms, environment 833ms)
+
+EXIT_CODE=1

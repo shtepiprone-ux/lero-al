@@ -1,7 +1,8 @@
 # Task 889 — canonical dashboard patterns for the reference-driven dashboards: a sparkline, a StatCard chart slot and accent variant, and horizontal/grouped bars
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **845** (archived) · blocks **890** and **891** ·
-**Status: 🔁 NEEDS REVISION (review 1, 2026-09-27) — execute §16 (revision 1)**
+**Status: 🟡 PARTIALLY VERIFIED (review 2, 2026-09-27) — no executor action; approval waits on owner O889-1 and
+O889-2 (§17)**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27): charts on both dashboards, composition from the owner's references, colours from the theme (D78-5 stands).
@@ -364,3 +365,63 @@ Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 854 (`dashboardListingThumb`, the `AgentStatisticsView` manifest entry and 854's keys). 854 is uncommitted and not
 approved. The approval review must resolve that staging entanglement before it emits the handoff. Do not revert or
 move 854's hunks.
+
+## 17. Review 2 — 🟡 PARTIALLY VERIFIED (2026-09-27): only the owner items remain
+
+Revision 1 is accepted. The reviewer re-measured the rebuilt `storybook-static` on win32 v22.22.3. That build is newer
+than both changed files, and all 8 `hash-object` values match `final-hashes-rev1.txt`.
+
+- **F1: closed.** `WithChart` was measured in en and uk at 320/390/1024/1280/1440. At every width the chart's right
+  edge is ≤ the card's content-box right edge, `scrollWidth` = `clientWidth`, and the document shows no overflow. At
+  1024 the chart is below the value (213 ≥ 171); at 1440 it is beside it (177 ≥ 141). The value renders 20px at
+  320/390 and 30px at ≥ 1024.
+- **F2: closed.** In 36 reviewer loads, `Horizontal` and `Grouped` × sq/it/en × 6, using `networkidle` plus 300ms,
+  the error boundary appeared 0 times. At 390 and 1440 (uk), the horizontal bar heights are all 25 and the widths
+  vary.
+- **F3: closed.** `measure-rev1.mjs` uses `getBoundingClientRect()` and measures per card.
+- **F4: closed.** `check-locale-leak-rev1.txt` has zero lines for the three task stories. Before the fix, a render
+  failure printed as leak lines; rev1 prints none. GR-2: the detector cannot show that a story was scanned, only
+  that nothing leaked (Task 836).
+- **Carried forward.**
+  - AC7: re-checked with `cmp`, and both `*.after-rev1.norm2.html` files are identical to the retained
+    `*.before.norm2.html`.
+  - `build-rev1.txt` exits 0.
+  - The rest of the §13.2 block, rev1, also exits 0.
+
+**NOTE (no action).** Under the amended R3, a 4-column grid drops the chart under the text whenever the card is
+narrower than about 290px of content. In the Story that happens at 1024 and 1280. The card then grows from 209px to
+317px in height. 890 and 891 add a navbar, so production will show this layout at most desktop widths. O889-1 row 2
+now includes 1024 so that the owner sees it. 890 and 891 choose their grid columns.
+
+### 17.1 Owner items (approval waits on both)
+
+**O889-1 — `OWNER VISUAL QA REQUIRED`.** This is §13.4 with row 2 widened:
+
+| # | Story | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 1 | `Patterns/Mantine/DashboardSparkline` | Default / AllZero / ThirtyDays | 1440 | en | reads as the Lahomes KPI mini-bars |
+| 2 | `Patterns/Mantine/DashboardStatCard` | WithChart | 1440 / 1024 / 390 | en / uk | beside the value at 1440; under it at 1024 and 390, still acceptable |
+| 3 | `Patterns/Mantine/DashboardStatCard` | Accent | 1440 / 390 | en / sq | a filled hero card, legible white text |
+| 4 | `Patterns/Mantine/DashboardBarChart` | Grouped / Horizontal | 1440 / 390 | en / uk | grouped (not stacked) columns; horizontal bars readable |
+
+- **Accepted** → the approval review follows.
+- **Returned** → a revision is written from the owner's words.
+
+**O889-2 — `STOP - OWNER DECISION REQUIRED`: staging the shared files (§16.4).** 854 is uncommitted and not approved,
+and its hunks sit in three shared file groups:
+- `src/design-system/mantine/theme.ts`: `dashboardListingThumb`;
+- `scripts/mantine-migration-scope.json`: the `AgentStatisticsView.tsx` entry, which points at an untracked file;
+- `messages/{sq,en,uk,it}.json`: `cabinet.statistics.*`, the `statistics` menu key and `user_menu_agent_caption`.
+
+If these files are staged whole, a clean checkout gets a manifest entry for a file that does not exist.
+
+- **A (recommended).** The owner stages only 889's hunks with an interactive patch-mode add (`-p`) on those six files:
+  - `sparklineWidth` / `sparklineHeight`;
+  - the `MantineDashboardSparkline.tsx` manifest line;
+  - `storybook.mantine.dashboard_sparkline_aria_label`.
+
+  The owner then checks the staged diff. Every other 889 path is staged by explicit path.
+- **B.** Commit 889 together with the joint 854 + 891 close. 889 then stays uncommitted, and 890 must build on top of
+  the uncommitted tree.
+
+The approval review emits the handoff for the option the owner picks.

@@ -1,0 +1,5 @@
+DERIVED statusCount <- listingCount() at line 157
+NEW src/modules/admin/dashboard/queries.ts:241  countOf(() => listingCount().eq('status', 'active')),
+NEW src/modules/cabinet/statistics/data.ts:354  applyPublicVisibility(ownListings()).gte('expires_at', window.startUtc).lt('expires_at', window.endUtc),
+DERIVED q <- baseQuery() at line 65
+probe done

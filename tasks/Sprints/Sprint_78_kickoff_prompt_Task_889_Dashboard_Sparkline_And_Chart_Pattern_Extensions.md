@@ -470,14 +470,15 @@ and the Lahomes violet.
 ### 18.3 Row 3 — the coral gradient (D889-2)
 
 - **Theme role.** Add `accentHeroGradient: MantineGradient` to `theme.other`. Put the type in the
-  `MantineThemeOther` augmentation and the value next to the other roles. The value is
-  `{ from: 'brand.7', to: 'brand.9', deg: 225 }` — theme keys, no hex. The comment reads *"Task 889 rev 2, D889-2:
-  brand coral hero-card gradient, light top-right → dark bottom-left so the text sits on the dark end"*.
+  `MantineThemeOther` augmentation and the value next to the other roles. The value was
+  `{ from: 'brand.7', to: 'brand.9', deg: 225 }`, using theme keys and no hex. Revision 2 shipped it. **§19.1 replaces
+  the angle and the comment.**
 - **Card.** When `variant="accent"`, both `Card` wrappers get their background from
   `getGradient(theme.other.accentHeroGradient, theme)` (`@mantine/core` 8.3.18). This replaces `bg="brand.8"`.
   Verify that the computed `background-image` is the gradient. If Mantine's `bg` style prop does not accept it, use
   the Mantine-native equivalent and state which one in the session log. Never use a `style` object or a CSS file.
-- **Why 225deg.** The text stack is at the left and lower half, which is the dark end. White contrast along the sRGB
+- **~~Why 225deg.~~ Superseded by §19.1: the angle is `180`.** 225deg failed AC4-R2 in revision 2, because every
+  `Text` box spans the full content width, so its right end sits near the light corner. White contrast along the sRGB
   line brand.7 → brand.9, computed: t 0.0 → 3.54, 0.3 → 4.44, 0.4 → 4.84, 0.5 → 5.22, 0.8 → 6.68, 1.0 → 7.95. So a
   label that lands at t < 0.33 would fail. That is why AC4-R2 measures pixels and does not accept a declared value.
 - `brand.8` is no longer used by the accent. `withBorder={false}`, the white text and the white `light` icon stay.
@@ -498,7 +499,7 @@ and the Lahomes violet.
 - **AC9 (R11)** — the tooltip probe, against the rebuilt `storybook-static`, `networkidle` then 2500ms settle.
   - **Tuples:**
     - `DashboardSparkline` `Default` and `ThirtyDays` at 1440, en and uk;
-    - `AllZero` at 1440, en;
+    - `AllZero` at 1440, en (**superseded by §19.2:** it asserts that no tooltip activates);
     - `DashboardStatCard` `WithChart` at 320 / 390 / 1024 / 1440, en and uk.
   - **Hover points:** every bar at its vertical middle and at its top + 2px. For `ThirtyDays`, use bars 0, 4, 9, 14,
     19, 24 and 29. For `AllZero`, hover each slot's centre 2px above the chart bottom.
@@ -559,5 +560,122 @@ and the Lahomes violet.
 | 3 | `Patterns/Mantine/DashboardStatCard` | Accent | 1440 / 390 | en / sq | the coral gradient card, legible white text |
 
 **O889-2** (staging the files shared with 854, §17.1) is unchanged and still owed at approval.
+
+Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+## 19. Review 4 — 🔁 NEEDS REVISION (2026-09-28): both revision-2 blocks were design defects in §18 — revision 3
+
+The executor returned `BLOCKED` correctly and changed nothing it was not allowed to change. Both blocks come from
+§18's own specification, not from the implementation. The reviewer confirmed the shipped files match
+`final-hashes-rev2.txt`, and that `storybook-static` (00:26:19) is newer than every changed source file.
+
+### 19.1 AC4-R2 — the angle becomes 180deg; D889-2's colours stay
+
+- **FACT (reviewer probe, win32 v22.22.3, rev2 `storybook-static`, all 4 locales × 5 widths).** The shipped 225deg
+  reproduces the executor's numbers exactly. For example, at 390 the label is 4.08, the value 4.25 and the caption
+  4.46.
+- **Cause.** Every `Text` box spans the full content width, reaching 0.90–0.94 of the card's width. So its right end
+  sits near 225deg's light top-right corner, whatever the text length.
+- **What the vertical fix measures.** The text stack sits in the lower half of the card: the label starts at 0.43–0.46
+  of its height, and the icon takes the top (`justify="space-between"`). A vertical gradient therefore puts all text on
+  the dark end. The reviewer overrode `background-image` in the page only, with D889-2's same stops:
+
+  | Gradient | label min | value min | caption min | Result, 40 tuples |
+  |---|---|---|---|---|
+  | brand.7 → brand.9, 225deg (shipped) | 4.08 | 4.25 | 4.46 | fails |
+  | brand.7 → brand.9, 200deg / 160deg | 4.38 | 4.69 | 5.15 | label fails |
+  | **brand.7 → brand.9, 180deg** | **4.90** | **5.49** | **6.63** | **passes all 40** |
+  | brand.7 → brand.9, 180deg, label wrapped to 2 lines (probe text, uk × 5 widths) | 4.78 | 5.67 | 6.72 | passes |
+
+  The light end now sits behind the white `light` icon only, and the icon is not text.
+- **Why this needs no owner decision.** D889-2 chose the colours: *"#EC5447 fading to #8E322B … the label/caption
+  would need the dark end"*. The angle was the orchestrator's own choice in §18.3, and 180deg gives the owner's
+  stated condition. brand.8 → brand.9 also passes (label ≥ 5.60), but it changes the owner's light stop, so it is
+  **not** the route.
+- **R4-R3 (the change).**
+  - `theme.ts`: set `accentHeroGradient` to `{ from: 'brand.7', to: 'brand.9', deg: 180 }`. Both comments (the type
+    line and the value line) read: *"Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom;
+    the text stack sits in the lower half, on the dark end"*.
+  - `MantineDashboardStatCard.tsx`: in the JSDoc only, change `225deg — light top-right, dark bottom-left under the
+    text` to `180deg — light top, dark bottom under the text`. No code line changes.
+  - `DashboardStatCard.stories.tsx`, `Accent` only:
+    - add `expect(backgroundImage).toContain('180deg');` to `play`, next to the two stop assertions;
+    - change the comment's `225deg` to `180deg`.
+- **AC4-R3.** Run §18.4's AC4-R2 method against the rebuilt `storybook-static`, with these tuples:
+  - sq / en / uk / it at 320 / 390 / 768 / 1024 / 1440;
+  - plus a **wrapped-label arm**: uk × the same 5 widths. The probe sets the label's `textContent` to itself repeated
+    4 times, so it wraps to 2 lines. This is a probe-only mutation, never Story markup.
+
+  Thresholds are unchanged from §18.4. Required: 0 failing element-measurements. Quote the minimum per element per
+  width, and add a line recording the computed `background-image`, which must contain `180deg` and both stops.
+
+### 19.2 AC9 — `AllZero` asserts the library's real behaviour
+
+- **FACT (reviewer raw repro).**
+  - Setup: `apexcharts` 7.4.0 `dist` with no React or Mantine, the sparkline's options, a 154 × 95 box, and 7 slots
+    hovered at 50% and 97% height.
+  - Non-zero series: the tooltip activates on 10/14 hovers, with or without `compact`.
+  - All-zero series: it activates on 0/14 hovers, with or without `compact`.
+
+  So an all-zero sparkline never shows a tooltip in ApexCharts 7.4.0, and neither `compact` nor `followCursor` changes
+  that. §18.4 required activation there, which a correct implementation cannot give (GR-4). That was a design defect.
+- **FACT (the executor's `ac9-tooltip-results.json`, arm 1, the shipped code).** Every other tuple is clean: 168 of
+  168 hovers active, with 0 (a), 0 (b) and 0 (c) violations.
+- **AC9-R3.**
+  - **Unchanged tuples** (§18.4): `Default`, `ThirtyDays` and `WithChart`. Their rule stays the same: 0 violations,
+    and `.apexcharts-tooltip.apexcharts-active` required before every read.
+  - **`AllZero` @ 1440 en, 7 hovers:** required 0 hovers with `.apexcharts-tooltip.apexcharts-active` and 0 page
+    errors. This is ApexCharts' native behaviour and needs no workaround. A custom tooltip, CSS, a `custom` renderer, a
+    hook or a fake non-zero value is still forbidden (D845-4).
+  - **Retained raw repro, two-armed.** Save a self-contained HTML page and a Node script under
+    `docs/sessions/evidence/task889/`, both suffixed `-rev3`:
+    - the HTML loads `node_modules/apexcharts/dist/apexcharts.js` through a relative path, or a copy saved next to it;
+    - it covers {non-zero, all-zero} × {`compact` off, on};
+    - retain the script's output.
+
+    Expected: non-zero > 0 active, and all-zero 0 active, in both `compact` arms. The rev2 script loaded a scratchpad
+    HTML that was not retained, so it is not evidence.
+- **No code change for AC9.** `compact: true` alone stays. Re-run the AC9 probe once, against the final rebuilt
+  `storybook-static`, as `ac9-tooltip-results-rev3.json`, so that the final artifact describes the shipped build.
+
+### 19.3 Re-entry, scope and order
+
+- **Mode `remediation`.** Reuse, and never overwrite, every I0, `-rev1`, `-rev2` and `ac7-before` artifact. Give every
+  new artifact the `-rev3` suffix.
+- **Files:**
+  - `theme.ts` (the value and its two comments);
+  - `MantineDashboardStatCard.tsx` (the JSDoc angle only);
+  - `DashboardStatCard.stories.tsx` (the `Accent` `play` and its comment only);
+  - the session log (a new "Revision 3" section);
+  - the 889 line of `docs/backlog.md`.
+
+  `MantineDashboardSparkline.tsx`, `MantineDashboardBarChart.tsx`, their two Stories and the manifest must keep their
+  `final-hashes-rev2.txt` values.
+- **Order:**
+  1. the three edits;
+  2. `npm.cmd run build-storybook`;
+  3. AC4-R3;
+  4. AC9-R3, then the raw repro;
+  5. AC7: re-capture `*.after-rev3*` and compare it to the retained `*.before.norm2.html`, expecting `IDENTICAL` ×2;
+  6. `npm.cmd run check:locale-leak:mantine-only`, quoting zero lines for the three task stories;
+  7. the full §13.2 block tee'd to `*-rev3.txt`, including `npm.cmd run build` and `final-hashes-rev3.txt`.
+- **Receipts:**
+  - GR-0 for the angle change (EXTEND the existing role; no new hex);
+  - GR-3b and GR-3c for `Accent`, re-measured at 320 / 390 / 768 / 1024 / 1440 in this pass, not carried over from
+    rev1;
+  - the final hashes.
+
+### 19.4 Owner re-check after revision 3 (O889-1, rows 1 and 3)
+
+This replaces §18.6.
+
+| # | Story | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 1 | `Patterns/Mantine/DashboardSparkline` | Default / ThirtyDays | 1440 | en / uk | the tooltip appears beside the cursor, never over the bar, never cut off |
+| 1a | `Patterns/Mantine/DashboardSparkline` | AllZero | 1440 | en | shows **no tooltip**, because ApexCharts shows none for an all-zero series (§19.2). If the owner returns this, the next step is an owner decision on the empty-state treatment |
+| 1b | `Patterns/Mantine/DashboardStatCard` | WithChart | 1024 / 390 | uk | the same tooltip rule inside the card |
+| 3 | `Patterns/Mantine/DashboardStatCard` | Accent | 1440 / 390 | en / sq | the coral gradient card (light top → dark bottom), legible white text |
+
+**O889-2** (§17.1) is still owed at approval.
 
 Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

@@ -872,3 +872,62 @@ Status: `PARTIALLY VERIFIED`. The approval review follows once the owner has ret
 **O889-2** (§17.1) is still owed at approval.
 
 Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+## 22. Review 7 — 🟡 PARTIALLY VERIFIED (2026-09-28): revision 4 is accepted; only the owner items remain
+
+§22 supersedes §21.6's status line. The reviewer's evidence was produced on win32 v22.22.3 against the final
+`storybook-static`. Its `index.json` is dated 13:52:04, which is newer than every changed source file.
+
+- **Hashes.** The 8 current `hash-object` values equal `final-hashes-rev4.txt`. `MantineDashboardBarChart.tsx`,
+  `DashboardBarChart.stories.tsx`, `DashboardStatCard.stories.tsx` and the manifest equal `final-hashes-rev3a.txt`.
+- **R12 / AC10: verified by the reviewer's own probe**, not by the executor's. The executor ran AC10 at 12:23 and
+  AC9-R4 at 12:28. Both runs predate the last edits to `MantineDashboardSparkline.tsx` (12:29:53) and
+  `DashboardSparkline.stories.tsx` (12:30:02). The reviewer re-ran both against the final build, so the reviewer runs
+  below supersede those two executor artifacts.
+  - `DashboardSparkline` `Default`, `AllZero` and `ThirtyDays` were measured in en and uk at 320, 390, 479, 480, 640,
+    768, 1024, 1280 and 1440.
+    - At every tuple, the `[role="img"]` width equals both the `svg.apexcharts-svg` width and the grid track.
+    - The height is 95. There is no document overflow, no error display and 0 page errors.
+    - `Default`'s `play` passes at every tuple.
+  - `DashboardStatCard` `WithChart` was measured in sq, en, uk and it at the same 9 widths.
+    - **Placement.** The chart sits under the text at 320, 390, 479, 1024 and 1280, and also at 640 in en, uk and it.
+      It sits beside the text at 480, 768 and 1440, and also at 640 in sq.
+    - **Under.** The chart is 2px narrower than the padding box. That is the card's 1px border on each side.
+    - **Beside.** The chart's right edge is 1px inside the content edge. Its left edge is at least the text's right
+      edge plus 16px.
+    - **Minimum.** The chart is at least 154px wide everywhere. The narrowest case is sq at 640, where it is 156px.
+    - **Clipping.** The card's `scrollWidth` equals its `clientWidth` at every tuple, so nothing is clipped.
+  - **Resize arms** (no reload). All three match the static loads:
+    - 1440 → 390: 174 → 316;
+    - 390 → 1440: 316 → 174;
+    - 1440 → 1024: 174 → 186, under the text.
+- **AC9-R4: verified.** The reviewer re-ran the executor's `ac9-tooltip-probe-rev4.mjs`, unchanged, against the final
+  build. Result: 19 tuples, 0 violations and 0 page errors. `AllZero` is active 0/7 times.
+- **AC11: verified.** The `--untracked` grep for `sparklineWidth` in `src` prints nothing.
+- **AC7-R4: verified.** `compare-ac7-rev4.out.txt` reads `IDENTICAL` ×2, exit 0.
+- **§13.2 block, rev4.** Every gate exits 0 except `check:locale-leak:mantine-only`. That gate exits 1 on the
+  pre-existing Task 836 findings and has no findings for the three task stories. `build-rev4.txt` exits 0.
+- **The flagged deviation is accepted.** The executor added
+  `miw={{ base: 0, xs2: theme.other.dashboardChart.sparklineMinWidth }}` to the §21.3.3 chart wrapper.
+  - **Cause: an orchestrator defect in §21.3.3.** §21.2's probe put the 154px minimum on the flex item itself.
+    §21.3.3 moved the flex props onto a new wrapper `Box` and left that minimum off. The wrapper therefore kept the
+    default `min-width: auto`, and the line-wrap decision lost the floor it needs.
+  - **GR-0.** The added prop is a Mantine style prop that reads an existing theme token, so it adds no new visual
+    value.
+  - **Computed values.** From `xs2` up: `min-width: 154px` and `flex: 1 1 0px`. Below `xs2`: `min-width: 0px` and
+    `flex: 0 0 auto`.
+- **GR-3b.** `DashboardSparkline.stories.tsx` uses only `SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} p="md"`. It has no
+  fixed-width container, no `style` object and no viewport pin. `DashboardStatCard.stories.tsx` is unchanged.
+- **GR-3c.** No text changed.
+
+### 22.1 Owner items (approval waits on both)
+
+- **O889-1**: the §21.6 matrix, rows 1, 1a, 1b and 3. Rows 2 and 4 were accepted earlier.
+- **O889-2**: §17.1, option A or B. Under option A, the 889 hunks in `theme.ts` are now:
+  - the `MantineGradient` type import;
+  - `sparklineMinWidth` / `sparklineHeight` (type and value lines);
+  - `accentHeroGradient` (type and value lines).
+
+  `sparklineMinWidth` replaces the `sparklineWidth` name that §17.1 uses.
+
+Status: `PARTIALLY VERIFIED`. The approval review follows once the owner has returned both items.

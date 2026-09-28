@@ -679,3 +679,55 @@ This replaces §18.6.
 **O889-2** (§17.1) is still owed at approval.
 
 Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+## 20. Review 5 — 🟡 PARTIALLY VERIFIED (2026-09-28): revision 3 is accepted; only the owner items remain
+
+Revision 3 is accepted on the reviewer's own evidence (win32 v22.22.3). The 8 current `hash-object` values equal
+`final-hashes-rev3.txt`. `MantineDashboardSparkline.tsx`, `MantineDashboardBarChart.tsx`, their two Stories and the
+manifest equal `final-hashes-rev2.txt`. `storybook-static` (10:02:10) is newer than all three changed files
+(≤ 10:00:49), and `build-rev3.txt` exits 0.
+
+- **R4-R3 / AC4-R3: verified.**
+  - `theme.ts` carries `{ from: 'brand.7', to: 'brand.9', deg: 180 }` and both §19.1 comments. The StatCard change
+    is JSDoc-only.
+  - `ac4-r3-contrast-probe.out.txt`: 0 failing measurements over 25 tuples. Minima: label 4.90 (4.78 in the wrapped
+    arm), value 5.49, caption 6.63.
+  - Reviewer probe on the Accent story at en 390, sq 1440 and uk 320:
+    - the top edge samples ≈ brand.7 (234, 83, 70) and the bottom edge ≈ brand.9 (144, 50, 43);
+    - the inline style is `linear-gradient(180deg, var(--mantine-color-brand-7) 0%, var(--mantine-color-brand-9) 100%)`;
+    - the border is 0px, with no page errors and no error display.
+- **§19.1's wording "the computed `background-image` contains `180deg`" was an orchestrator defect.** Chromium does
+  not serialize the default direction. The reviewer confirmed that the computed value is
+  `linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)`. The executor's deviation is accepted: `play` asserts
+  both stops on the computed value, and `180deg` on the inline `style` attribute.
+- **AC9-R3: verified.**
+  - `ac9-tooltip-results-rev3.json`: each of the 12 non-zero tuples has 14/14 active, with 0 (a), 0 (b), 0 (c) and
+    0 page errors. `AllZero`: 0/7 active.
+  - The raw repro (`ac9-raw-repro-rev3.*`, ApexCharts 7.4.0 from `node_modules`) gives non-zero 14/14 and all-zero
+    0/7, in both `compact` arms.
+- **AC7: verified.** The reviewer re-ran `compare-ac7-rev3.mjs`: `IDENTICAL` ×2, exit 0.
+- **The rev3 §13.2 block.**
+  - Every gate exits 0 except `check:locale-leak:mantine-only`, which exits 1 on pre-existing findings (Task 836).
+    It has none for the three task stories. GR-2: the detector cannot prove that a story was scanned.
+  - Lint went from 99 to 108 warnings, all in the `docs/sessions/evidence/task889/*.mjs` probes, with 0 errors.
+
+### 20.1 P3 — stale prop JSDoc (Sonnet, comment only)
+
+`MantineDashboardStatCard.tsx:39-40`, the `variant` prop JSDoc, still says *"`'accent'` fills the card with
+`brand.8`"*. The component JSDoc at line 80 says the opposite: `brand.8` is no longer used.
+
+- **Change:** make it read *"`'accent'` fills the card with `theme.other.accentHeroGradient` (`brand.7` → `brand.9`,
+  180deg) and renders its text in white"*. Keep the rest of the sentence. Change no code line.
+- **Verify:**
+  - `npm.cmd run typecheck`, `npm.cmd run check:file-integrity` and `npm.cmd run check:mojibake` all exit 0.
+  - Write `final-hashes-rev3a.txt`. Only the StatCard line may differ from `final-hashes-rev3.txt`.
+  - Add one line to the session log.
+  - No Storybook rebuild or probe re-run is needed: a comment changes no rendered output.
+- This does not block approval. If it is not done by the approval review, it carries as an approval note.
+
+### 20.2 Owner items (approval waits on both)
+
+- **O889-1**: the §19.4 matrix, rows 1, 1a, 1b and 3. Rows 2 and 4 were already accepted.
+- **O889-2**: §17.1, option A or B.
+
+Status: `PARTIALLY VERIFIED`. The approval review follows once the owner has returned both.

@@ -885,3 +885,310 @@ Record every reading.
   every receipt and a labelled hash list. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
 - After review 5 accepts revision 3, the owner re-runs §13.4 in full as **O891-1**. Row 3 now reads "3 KPI cards,
   2 + 1 below `lg`; splits stacked".
+  **Superseded by §21.5:** the owner matrix follows review 6.
+
+## 21. Review 5 — NEEDS REVISION (Opus, 2026-09-28) · revision 4
+
+### 21.1 Accepted from revision 3
+
+No action is owed on these:
+- R18–R22 with AC24, AC25, AC26, AC27 and AC28, as measured in `rev3/measure.out.json`.
+- GR-1: the reviewer re-ran the census on `AgentStatisticsView.tsx` and got 24 nodes, all tier 1, manifest yes, story
+  yes.
+- `check:locale-leak:mantine-only`. `rev3/check-locale-leak.txt` **did finish** (`EXIT_CODE=1`, last write 23:41).
+  - It is known red (Task 836).
+  - It has zero lines for `AgentStatisticsView`, `DashboardStatCard`, `DashboardCard`, `DashboardDonut`, `Table`,
+    `RelativeTime`, `UserMenu` and `MobileNavDrawer`.
+  - The session log's "did not finish" record is stale. Correct it (§21.4); do not re-run the gate.
+
+### 21.2 Orchestrator defect — AC23's 1024 "beside" clause cannot be met, and is superseded
+
+Review 4 wrote AC23 without checking whether it was feasible. At 1024 (`lg`), row 1 has 3 columns. Each card's content
+box is narrower than the sum of three parts:
+- the label's max-content width (the `en` label "Recorded views · last 30 days");
+- the `md` gap;
+- the 154px sparkline floor. Task 889 set this floor (`MantineDashboardStatCard.tsx:241-254`, owner-accepted at
+  O889-1).
+
+D891-1 keeps every size, so the chart wraps under the text. `rev3/row1-1024-wrap.png` shows it.
+
+**AC23 as amended:**
+- At 1024, the chart-under-text layout is **recorded, not required**. Record each card's height.
+- Every other AC23 clause still binds at **both** 1440 and 1024.
+- AC30 below adds value alignment.
+
+The owner judges the 1024 row in O891-1.
+
+### 21.3 Findings and required corrections
+
+**F11 · P2 · R17, AC23 — row 1 is still crooked. The AGT-05 value sits higher than its siblings.**
+- Evidence, from `rev3/measure.out.json` → `ac23`:
+  - at 1440, `valueBottom` is 288 / 288 / **259**;
+  - at 1024, `sparklineTop` is 275 / 275 / **305**, which fails AC23's own 1px clause;
+  - `rev3/row1-1440-ok.png` shows "3" raised above "103" and "9", with the info icon on its own line underneath.
+- Cause:
+  - R17 kept the icon in `secondaryLine`, which `MantineDashboardStatCard.tsx:205` renders as an extra line under the
+    value inside the text stack;
+  - from `xs2` up, the chart row aligns `flex-end` (`:239`);
+  - so the taller stack lifts the value and label.
+- Correction, in `AgentStatisticsView.tsx` only, with no pattern change:
+  - remove `secondaryLine` from the AGT-05 card;
+  - pass the unchanged `MantineTooltip` + `ActionIcon` (same `agt05_tooltip` label, same `agt05_tooltip_aria`) through
+    the card's `comparison` slot, which is its top-right corner;
+  - compose it as `<Group gap="xs" wrap="nowrap">{comparisonNode(formsSum, formsPrevSum)}{infoIcon}</Group>` when
+    `kpiState === 'ready'`, and pass the icon alone otherwise;
+  - leave the other two cards untouched.
+
+**F12 · P2 · GR-3b, AC29 — two new Story exports fix a width, and one has no receipt.**
+- `DashboardCard.stories.tsx` `Fill` (`:84-116`) renders `<SimpleGrid cols={2} p="md">`. That is two columns at every
+  width, so at 320 each card is about 136px.
+  - The production parent is `MantineDashboardGridSplit`: `span={{ base: 12, lg: 8 }}` + `{{ base: 12, lg: 4 }}`
+    (`MantineDashboardGrid.tsx:80-81`).
+  - Review 4's R20 prescribed "a 2-column `SimpleGrid`". That was an orchestrator defect, and this finding corrects it.
+  - **Correction:** render the two cards as
+    `<MantineDashboardGrid><MantineDashboardGridSplit main={…} side={…} /></MantineDashboardGrid>`. Both are the real
+    production parents, so remove the `SimpleGrid`. Give the longer card to `main`, the shorter to `side`, and keep
+    `fill` on both.
+- `DashboardDonut.stories.tsx` `WithCounts` (`:165`) wraps the card in `Box p="md" maw={theme.other.boxSize.content}`.
+  That is a max-width container in a new export, which GR-3b forbids.
+  - **Correction:** `Box p="md"` with no `maw`.
+  - The pre-existing sibling exports are not changed by this task and stay as they are.
+- `WithCounts` has no GR-3b or GR-3c receipt, because AC29's list left it out. That omission was the orchestrator's.
+- AC29's receipts give `rootWidth === viewportWidth`. That value cannot see a fixed inner grid.
+  - **Correction:** every GR-3b receipt gives `<component w>/<parent w>` per width, as `docs/golden-rules.md` GR-3b
+    specifies. The component is the card; the parent is its grid column or the fluid container.
+
+**F14 · P1 · R18, R20, clause 3 — the hero is clipped. Three of its four sub-stat links are cut off.**
+- Reviewer's probe: live Storybook `patterns-mantine-agentstatisticsview--default`, `en`, 1440, with the Custom segment
+  selected. Screenshot: `evidence/task891/review5/custom-closed-1440.png`.
+  - The hero `Card` is 186px tall, `scrollHeight` is 254 and `overflow: hidden`. The sub-stat links end at 598 and
+    644, while the card ends at 576.
+  - Only the first row's labels ("Pending", "Inactive") show, cut through. "Sold …" and "Rented …" are invisible.
+- AC24 counted the `<a>` elements in the DOM, which cannot see clipping.
+- Cause:
+  - the side `Stack` (`AgentStatisticsView.tsx:516`) is `h="100%"`;
+  - AGT-01's `fill` gives its `Card` `h="100%"` of that same `Stack`;
+  - both children keep the default `flex-shrink: 1`, so the hero shrinks below its content.
+- **Correction, in `AgentStatisticsView.tsx` only:**
+  - wrap AGT-01 in a `Box flex={1}` and keep its `fill`, so AGT-01 fills the Box and not the Stack;
+  - the hero is rendered unwrapped and keeps its content height.
+  - Do not change `MantineDashboardCard` or `MantineDashboardStatCard`.
+
+**F13 · P1 · owner-reported, GR-0, clause 7 — the "Custom" date picker is hand-rolled and hardcoded.**
+- **Owner, 2026-09-28, verbatim:** *"я вже бачу, що на сторінці статистики у агента combobox з датами захардкоджений,
+  бо він виглядає криво."*
+- **D891-2 (owner, 2026-09-28, AskUserQuestion), verbatim option chosen:** *"Fold into 891 revision 4"*.
+  - The `RangeDatePicker` rebuild is part of this revision, not a separate task.
+  - Because `RangeDatePicker` feeds the registered critical flow **"Listings date-range filter"**
+    (`docs/critical-flow-registry.md`), **this part of revision 4 is Q4**.
+- Reviewer's probe: same Story, 1440, `en`. Screenshots: `review5/custom-closed-1440.png` and
+  `review5/custom-open-1440.png`.
+  1. **The trigger text sits low.** The "Select dates" text centre is 115.5; the trigger centre and the calendar icon
+     centre are both 110. The trigger is `TextInput` rendered as `component: 'button'` (Task 861). Its computed
+     `padding: 10px 16px 10px 34px` plus `line-height: 34px` push the text box 5.5px down.
+  2. **Raw values everywhere.** `RangeDatePicker.tsx` carries:
+     - `style={{…}}` objects at `:253`, `:257-262`, `:275-300`, `:330`, `:334-340`, `:348`, `:416`, `:498`, `:636`,
+       `:666`, `:670`, `:697-700`, `:850` and `:865`;
+     - `DAY_CELL_PX = 39`, `marginBottom: 8`, `height: 24`, `paddingTop: 12`, `'45dvh'`, `'90vw'` and `'9999px'`
+       radii;
+     - `fz="var(--mantine-font-size-xs)"`, `mih="2.75rem"` and `mb={8}`;
+     - `triggerWidth={150|100}` and `dropdownMinWidth={190|140}`;
+     - the placeholder's inline `color`.
+
+     None of these reaches the theme.
+  3. **The header does not line up with the grids.** The left arrow, the month/year selectors, the right-month
+     label and the right arrow sit in one `justify="space-between"` row (`:448-509`). So:
+     - the selectors are not centred over the left grid;
+     - "August 2026" is not centred over the right grid.
+  4. **The panel opens on the wrong months.** With no value, the anchor is `new Date()` (`:737`), not `maxDate`. The
+     dashboard's period ends yesterday, yet the pair shown is July/August, and the right-hand month can be entirely
+     disabled.
+  5. **The summary field opens with a focus border.** On open, focus lands in the read-only summary `TextInput`
+     (`:419-425`), which draws the brand focus border. It reads as an error.
+  6. **The wrong label.** The clear link reads "Clear filters" (`common.clear_filters`) on a dashboard that has no
+     filters.
+  7. **An English accessible name in every locale (clause 7).** The day cell `aria-label` is
+     `format(day, 'd MMMM yyyy')` (`:270`), which is English in `sq`, `uk` and `it`.
+  8. **The Story fixes a width (GR-3b).** `RangeDatePicker.stories.tsx:64` and `:153` wrap the picker in
+     `<div style={{ maxWidth: 480 }}>`.
+
+- **Correction (R24), in `RangeDatePicker.tsx`, its Story and the canonical chrome files only.** Keep Task 561's
+  owner-locked behaviour:
+  - D1: Apply/Confirm is enabled once `from` is staged, and a single day commits `{from, to: from}`;
+  - D2: the mobile fixed header;
+  - D3: title → weekday row → grid;
+  - D4: the fixed mobile Confirm bar;
+  - day-tap only stages, and `onChange` fires only on Apply/Confirm.
+
+  Keep every size (D891-1).
+
+  1. **Tokens, no literals.**
+     - Remove every `style` object and raw value listed in item 2.
+     - Use Mantine style props and existing tokens where they fit: `theme.radius.pill` (`theme.ts:625`),
+       `theme.other.boxSize.touchTarget` (`:674`), `fz="xs"` and theme spacing.
+     - For a value with no token, add one named role group, `theme.other.rangeDatePicker`: `dayCell` (39),
+       `weekdayRowHeight` (24), `monthTriggerWidth` (150), `yearTriggerWidth` (100), `monthDropdownMinWidth` (190),
+       `yearDropdownMinWidth` (140) and `mobileListHeight` (45dvh). Give each a provenance comment citing today's
+       literal and its source (Task 561 §6t; Task 774).
+     - Move the day cell's state colours (boundary, in-range band, today, out-of-month, disabled, hover) into
+       `range-date-picker-chrome.css`, keyed on `data-*` attributes and consuming only `var(--mantine-*)` values.
+     - Remove the unused `className` prop. No consumer passes it (reviewer grep).
+  2. **Trigger centring.** Fix it at the canonical input chrome. `input-chrome.css` is keyed on
+     `.mantine-TextInput-input`, so a rule for the button-rendered trigger goes there, consuming theme values only.
+     The trigger stays a semantic `<button type="button">` (Task 861).
+  3. **Header alignment (desktop).**
+     - Lay the header out as two columns, each exactly as wide as its month grid (`7 × dayCell`), with the grids'
+       `xl` gap between them.
+     - The left column centres the month/year selectors, with the prev arrow at its outer edge.
+     - The right column centres the right-month label, with the next arrow at its outer edge.
+  4. **Opening anchor.**
+     - With no `value.from` and a `maxDate`, the **right-hand** month of the desktop pair is `maxDate`'s month, and
+       the mobile list opens scrolled to `maxDate`'s month.
+     - With a `value.from`, the behaviour is unchanged.
+     - With neither, the behaviour is unchanged (today).
+  5. **Initial focus.** Opening the panel does not focus the read-only summary field. Mark the month selector trigger
+     as the popover's initial focus target, using Mantine's native `data-autofocus`, and never an effect.
+  6. **Label.** The clear link uses the existing `common.aria_clear` ("Clear"). Add no new string.
+  7. **Localized accessible name.** Each day's `aria-label` is built from the same `common.calendar_*` data as the
+     visible labels, in `calendar_summary_order`, plus the year. For example, `sq`: `"9 korrik 2026"`.
+  8. **Story (GR-3b).** Replace both `<div style={{ maxWidth: 480 }}>` with
+     `<Box w={{ base: '100%', sm: theme.other.boxSize.compactTrigger }}>`, which is the production parent's contract
+     (`MantineDashboardPeriodControl.tsx:128`, cited in a comment).
+     - Add one export, `OpenBoundedNoValue`. It is forced open with no value and `maxDate` fixed to `2026-09-17`.
+     - It proves items 3–5 (GR-3a EXTEND of `Mantine/Primitives/RangeDatePicker`).
+
+### 21.4 Acceptance criteria added by revision 4
+
+Measure with `rev4/measure.mjs`, extended from `rev3/measure.mjs`, on a fresh `build-storybook`, in `en`. Record every
+reading.
+
+- **AC30 [F11]** — `AgentStatisticsView` `Default` at 1440 and 1024:
+  - the three row-1 cards' value elements end at the same `bottom` within 1px;
+  - their sparklines' `top` values are equal within 1px;
+  - the AGT-05 info trigger's `top` is above its card's value `top`;
+  - its `aria-label` is `agt05_tooltip_aria`'s `en` string;
+  - focusing it opens a tooltip whose text is `agt05_tooltip`'s `en` string;
+  - AC23's other clauses hold, as amended by §21.2.
+- **AC31 [F12]**:
+  - `DashboardCard` `Fill`:
+    - at 320, 390 and 768, the two cards stack, and each card's width equals the container's content width within
+      1px;
+    - at 1024 and 1440, they sit side by side, 8 + 4, and end at the same `bottom` within 1px.
+  - `DashboardDonut` `WithCounts`: the card's width equals the container's content width within 1px at
+    320/390/768/1024/1440, with no horizontal overflow.
+- **AC32 [F12, GR-3b/3c]** — One GR-3b receipt in `<component w>/<parent w>` form and one GR-3c receipt, at
+  320/390/768/1024/1440, for each of:
+  - `Fill`, `WithCounts` and `AccentWithSubstats`;
+  - `AgentStatisticsView` `Default`, whose component is each row-1 card and the row-2 hero.
+- **AC33 [record]** — The revision 3 section of the session log states that `check:locale-leak:mantine-only`
+  completed with `EXIT_CODE=1`. Quote its zero-line result for the eight stories named in §21.1.
+- **AC34 [F14]** — `AgentStatisticsView` `Default` at 1024 and 1440, once with the 30-day segment and once with
+  Custom selected:
+  - the hero's `scrollHeight` is at most its `clientHeight` + 1;
+  - each of its 4 sub-stat links lies fully inside the hero's box;
+  - AC25's equal bottoms still hold.
+- **AC35 [F13 items 1, 6, 7, 8]**:
+  - `RangeDatePicker.tsx` and `RangeDatePicker.stories.tsx` contain no `style=` and no raw px/rem/vw/dvh or
+    `9999px` literal. The grep in §21.5 prints nothing.
+  - `check:design-tokens:strict` exits 0.
+  - At 1440, a day cell measures 39 × 39, and the month and year triggers are 150 and 100 wide (D891-1: sizes
+    unchanged).
+  - The clear link reads `common.aria_clear` in the active locale.
+  - With `locale=sq`, a day's `aria-label` contains the Albanian month name.
+  - The Story's picker width equals its parent's width at 320 and 390, and equals `compactTrigger` at 1024 and 1440.
+- **AC36 [F13 items 2–5]**, on `Mantine/Primitives/RangeDatePicker` → `OpenBoundedNoValue`, `en`:
+  - At 1440:
+    - the trigger's text centre and its trigger centre differ by at most 1px, closed and with a value;
+    - the selector group's centre and the left grid's centre differ by at most 2px;
+    - the right-month label's centre and the right grid's centre differ by at most 2px;
+    - the right grid's month is September 2026;
+    - after opening, `document.activeElement` is not the summary input.
+  - At 390, the bottom sheet opens scrolled to the September 2026 section.
+  - The same trigger-centring check holds on `AgentStatisticsView` `Default` with Custom selected.
+- **AC37 [F13, Q4 critical flow]** — The registry's regression set passes, plus one new test for each behaviour
+  change:
+  - four files: `RangeDatePicker.smoke`, `MantinePopover.smoke`, `filtersRangeDatePicker.smoke` and
+    `RangeDatePickerLocalization`;
+  - opening with no value and a `maxDate` shows `maxDate`'s month as the right-hand month;
+  - a `sq` day `aria-label` is Albanian;
+  - opening does not focus the summary field.
+
+  Each new test needs a planted-violation proof: revert its fix, the test fails; restore it, the test passes, with
+  `git hash-object` before and after (Node I/O only).
+
+  Update `docs/critical-flow-registry.md`'s "Listings date-range filter" row with the new tests and the
+  anchor/label change.
+
+`GR-4 AC AUDIT — 8 criteria added (AC30–AC37); each states an observable property; absolutes: AC30's and AC31's 1px alignments, AC34's +1px scroll height, AC35's zero-literal grep and the unchanged 39/150/100 sizes, AC36's 1–2px centring, each at named widths on named stories.`
+
+`GR-3a STORY PREFLIGHT — RangeDatePicker × opened-with-no-value-and-maxDate; canonical candidates: mantine-primitives-rangedatepicker--default; direct-import evidence: src/stories/mantine/primitives/RangeDatePicker.stories.tsx:7; toolbar coverage: locale=globals.locale, viewport=toolbar; decision: EXTEND; target: Mantine/Primitives/RangeDatePicker; rationale: the existing forced-open instance carries a value, so it cannot show the no-value anchor; one export is added to the same file (its own comment forbids two simultaneous open instances in one export).`
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: AGT-05 info icon placement; Fill/WithCounts Story width contracts; semantic queries: MantineDashboardStatCard slots (comparison, secondaryLine, caption), MantineDashboardGrid Split, DashboardCard/DashboardDonut story wrappers; inspected candidates: MantineDashboardStatCard.tsx:176-262 (comparison slot = top-right Group, :234-237), MantineDashboardGrid.tsx:47-84, DashboardCard.stories.tsx:84-116, DashboardDonut.stories.tsx:161-188; decision: COMPOSE (existing comparison slot; existing grid parents); selected canonical owner: MantineDashboardStatCard, MantineDashboardGrid; Mantine/TailAdmin token path: existing theme spacing (xs gap); new hardcoded visual values: NONE; rationale: both defects are composition errors, not missing slots.`
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: RangeDatePicker on tokens (F13); semantic queries: date range picker, calendar, @mantine/dates, range-day-cell, compactTrigger, radius pill, touchTarget; inspected candidates: RangeDatePicker.tsx (sole range picker, Task 558/561; consumers MantineDashboardPeriodControl, FiltersPanel, ListingsFilters), @mantine/dates (not a dependency — package.json has no match; adopting it would replace Task 561's owner-locked D1–D4 UI, so it is rejected), src/components/shared/DatePicker.tsx (legacy single date), theme.ts radius.pill:625 and boxSize.touchTarget:674, range-date-picker-chrome.css, input-chrome.css; decision: EXTEND (theme.other.rangeDatePicker roles; existing chrome files) + REUSE (pill, touchTarget, common.aria_clear, common.calendar_*); selected canonical owner: RangeDatePicker.tsx + theme.ts; Mantine/TailAdmin token path: theme radius/spacing/fontSizes, §6t day-cell values carried into named roles; new hardcoded visual values: NONE; rationale: every value already exists as a literal with recorded provenance, so it gets a named owner, and nothing new is invented.`
+
+### 21.5 Re-entry, gate block, report
+
+- Re-entry is `remediation`. Put new artifacts in `evidence/task891/rev4/`.
+  - Keep `rev3/` and `review5/` untouched, except for the session log correction in AC33.
+  - Do not re-run R15, because `page.tsx` and `data.ts` do not change.
+- Scope added to §7 by this revision:
+  - `RangeDatePicker.tsx` and `RangeDatePicker.stories.tsx`;
+  - `range-date-picker-chrome.css` and `input-chrome.css`, trigger rule only;
+  - `theme.ts`, the `theme.other.rangeDatePicker` roles only. `theme.ts` already carries uncommitted 889/854 hunks,
+    so add only this group and record its hunk;
+  - the RangeDatePicker test files named in AC37;
+  - `docs/critical-flow-registry.md`, that one row only.
+- QA: Q4 for F13 (critical flow) and Q3 for everything else.
+- Before the first write, run the GR-1 census for the two other `RangeDatePicker` consumers,
+  `src/components/shared/FiltersPanel.tsx` and `src/modules/listings/components/ListingsFilters.tsx`, and quote both
+  receipts. Their surfaces change visibly, because of the clear label and the anchor.
+- Tee every command to `evidence/task891/rev4/<name>.txt` with its exit code.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npm.cmd run test -- src/modules/cabinet/statistics/__tests__
+npm.cmd run test -- src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/components/shared/__tests__/heroSearch.smoke.test.tsx
+node.exe scripts\check-surface-census.mjs --surface src\components\shared\FiltersPanel.tsx
+node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsFilters.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:pattern-enrolment
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census-changed.mjs --base HEAD
+node.exe scripts\check-surface-census.mjs --surface src\modules\cabinet\statistics\components\AgentStatisticsView.tsx
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task891\rev4\measure.mjs
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/modules/cabinet/statistics/tableParams.ts src/modules/cabinet/statistics/topListings.ts src/modules/cabinet/statistics/portfolio.ts src/modules/cabinet/statistics/activityState.ts
+git --no-optional-locks grep -n -E "maw=|SimpleGrid cols=\{2\}" -- src/stories/patterns/mantine/DashboardCard.stories.tsx
+git --no-optional-locks grep -n -E "style=\{|[0-9]+px|[0-9.]+rem|[0-9]+dvh|[0-9]+vw|9999" -- src/design-system/mantine/patterns/RangeDatePicker.tsx src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+npm.cmd run check:locale-leak:mantine-only
+```
+
+- Expected results:
+  - exit 0 for every command up to and including `check:mojibake`;
+  - the first `git grep` prints nothing and exits 1;
+  - the `DashboardCard` `git grep` prints **only** the two pre-existing `maw=` lines, in the `Loading` and `Error`
+    exports (`:70` and `:122` at review 5), and no line inside `Fill`. Quote its output;
+  - the `RangeDatePicker` `git grep` prints nothing and exits 1. A comment that must keep a historical number
+    (Task 774's measurement note) is rephrased without the unit, so the grep stays falsifiable;
+  - `check:locale-leak:mantine-only` is known red (836). Quote zero findings for
+    `mantine-primitives-rangedatepicker`, `patterns-mantine-dashboardperiodcontrol` and the §21.1 stories. If it has
+    not finished in 60 minutes, record the elapsed time and the `Get-Process node` count, as §17.4 requires.
+- Report:
+  - append a "Revision 4" section to the session log, with AC30–AC37 quoted from `rev4/measure.out.json` and the test
+    transcripts, every receipt, the three AC37 plant/restore witnesses and a labelled hash list that includes
+    `rev4/measure.mjs`;
+  - end with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
+- After review 6 accepts revision 4, the owner re-runs §13.4 in full as **O891-1**.
+  - Row 3 reads "3 KPI cards, 2 + 1 below `lg`; splits stacked; at 1024 the charts sit under the values (§21.2)".
+  - One row is added: `Mantine/Primitives/RangeDatePicker` → `OpenBoundedNoValue` and `AgentStatisticsView` with
+    Custom open, at 390 and 1440, in `sq` and `en`.

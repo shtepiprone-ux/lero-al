@@ -1,0 +1,21 @@
+PASS — AC1 Default: role=img wrapper present
+PASS — AC1 Default: aria-label = "Trend chart"
+PASS — AC1 Default: 7 bars
+PASS — AC1 AllZero: 7 bars
+PASS — AC1 AllZero: every bar height 0
+PASS — AC3 @1440: chart is right of value (side-by-side)
+PASS — AC3 @480: chart is right of value (side-by-side)
+PASS — AC3 @390: chart is below value (stacked)
+PASS — AC3 @320: chart is below value (stacked)
+PASS — AC4: card bg is rgb(189, 67, 57)
+PASS — AC4: every text node is white
+PASS — AC4: contrast ratio >= 4.5 (actual 5.22)
+PASS — AC5 Grouped: 2 series groups
+PASS — AC5 Grouped: first-bar x differs between series (not stacked)
+PASS — AC5 Horizontal: 5 bars
+PASS — AC5 Horizontal: widths vary
+PASS — AC5 Horizontal: heights all equal
+PASS — AC5 Default: still stacked (same x across series)
+
+18/18 passed
+EXIT_CODE=0

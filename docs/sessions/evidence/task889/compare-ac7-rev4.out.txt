@@ -1,0 +1,4 @@
+AdminDashboardView: IDENTICAL (before vs after-rev4, 165507 chars)
+AgentStatisticsView: IDENTICAL (before vs after-rev4, 201619 chars)
+ALL_IDENTICAL
+EXIT_CODE=0

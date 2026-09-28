@@ -1,0 +1,191 @@
+{
+  "320": {
+    "cardRect": {
+      "left": 16,
+      "right": 304,
+      "width": 288,
+      "height": 296
+    },
+    "paddingRight": 20,
+    "contentBoxRight": 284,
+    "scrollWidth": 286,
+    "clientWidth": 286,
+    "chartRect": {
+      "left": 37,
+      "right": 191,
+      "top": 196.40625,
+      "bottom": 291.40625,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 37,
+      "right": 136.96875,
+      "top": 129.015625,
+      "bottom": 154.40625
+    },
+    "valueText": "12"
+  },
+  "390": {
+    "cardRect": {
+      "left": 16,
+      "right": 374,
+      "width": 358,
+      "height": 296
+    },
+    "paddingRight": 20,
+    "contentBoxRight": 354,
+    "scrollWidth": 356,
+    "clientWidth": 356,
+    "chartRect": {
+      "left": 37,
+      "right": 191,
+      "top": 196.40625,
+      "bottom": 291.40625,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 37,
+      "right": 136.96875,
+      "top": 129.015625,
+      "bottom": 154.40625
+    },
+    "valueText": "12"
+  },
+  "480": {
+    "cardRect": {
+      "left": 16,
+      "right": 464,
+      "width": 448,
+      "height": 201
+    },
+    "paddingRight": 20,
+    "contentBoxRight": 444,
+    "scrollWidth": 446,
+    "clientWidth": 446,
+    "chartRect": {
+      "left": 289,
+      "right": 443,
+      "top": 101,
+      "bottom": 196,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 37,
+      "right": 136.96875,
+      "top": 144.609375,
+      "bottom": 170
+    },
+    "valueText": "12"
+  },
+  "768": {
+    "cardRect": {
+      "left": 16,
+      "right": 376,
+      "width": 360,
+      "height": 209
+    },
+    "paddingRight": 24,
+    "contentBoxRight": 352,
+    "scrollWidth": 358,
+    "clientWidth": 358,
+    "chartRect": {
+      "left": 197,
+      "right": 351,
+      "top": 105,
+      "bottom": 200,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 41,
+      "right": 140.96875,
+      "top": 135.90625,
+      "bottom": 174
+    },
+    "valueText": "12"
+  },
+  "1024": {
+    "cardRect": {
+      "left": 16,
+      "right": 252,
+      "width": 236,
+      "height": 317
+    },
+    "paddingRight": 24,
+    "contentBoxRight": 228,
+    "scrollWidth": 234,
+    "clientWidth": 234,
+    "chartRect": {
+      "left": 41,
+      "right": 195,
+      "top": 213.109375,
+      "bottom": 308.109375,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 41,
+      "right": 140.96875,
+      "top": 133.015625,
+      "bottom": 171.109375
+    },
+    "valueText": "12"
+  },
+  "1280": {
+    "cardRect": {
+      "left": 16,
+      "right": 316,
+      "width": 300,
+      "height": 317
+    },
+    "paddingRight": 24,
+    "contentBoxRight": 292,
+    "scrollWidth": 298,
+    "clientWidth": 298,
+    "chartRect": {
+      "left": 41,
+      "right": 195,
+      "top": 213.109375,
+      "bottom": 308.109375,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 41,
+      "right": 140.96875,
+      "top": 133.015625,
+      "bottom": 171.109375
+    },
+    "valueText": "12"
+  },
+  "1440": {
+    "cardRect": {
+      "left": 16,
+      "right": 356,
+      "width": 340,
+      "height": 209
+    },
+    "paddingRight": 24,
+    "contentBoxRight": 332,
+    "scrollWidth": 338,
+    "clientWidth": 338,
+    "chartRect": {
+      "left": 177,
+      "right": 331,
+      "top": 105,
+      "bottom": 200,
+      "width": 154,
+      "height": 95
+    },
+    "valueRect": {
+      "left": 41,
+      "right": 140.96875,
+      "top": 135.90625,
+      "bottom": 174
+    },
+    "valueText": "12"
+  }
+}

@@ -1,0 +1,8 @@
+cd1c220c099b2304281a14f8780ba47059f50bd0  MantineDashboardSparkline.tsx        (rev4: w=100% miw=sparklineMinWidth, JSDoc)
+9fe2885063fb059fc27d9c291dd4c5ea97e821ec  MantineDashboardStatCard.tsx         (rev4: chart Box w/flex/miw wrapper + JSDoc, deviation-documented miw fix)
+46b5f08e1b17618d1fa1db0e56a21cf65022129c  MantineDashboardBarChart.tsx         (unchanged from rev2/rev3)
+30445c8016718edd4860be7bac4f7be039d5629c  theme.ts                             (rev4: sparklineWidth -> sparklineMinWidth rename + comments)
+716ff56988f89711d9d76f1986ee026ff876ba02  DashboardSparkline.stories.tsx       (rev4: Box -> SimpleGrid ×3, Default play width assertion)
+25218406bfc07f3563657916775880728bf5d09c  DashboardStatCard.stories.tsx        (unchanged from rev3 — not in rev4 file list)
+4fc2decf61acdce16fc780db1009ac52aa0feb99  DashboardBarChart.stories.tsx        (unchanged from rev2/rev3)
+0664e833bd9fe8e9a2555576fbf955d2d65aae74  mantine-migration-scope.json         (unchanged from rev2/rev3)

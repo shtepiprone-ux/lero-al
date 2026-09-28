@@ -1,0 +1,94 @@
+diff --git a/messages/en.json b/messages/en.json
+index b3f237ebb..8d1cf7e78 100644
+--- a/messages/en.json
++++ b/messages/en.json
+@@ -2541,6 +2541,7 @@
+       "dashboard_bar_aria_label": "Listings chart",
+       "dashboard_bar_series_new": "New listings",
+       "dashboard_bar_series_renewed": "Renewed listings",
++      "dashboard_sparkline_aria_label": "Trend chart",
+       "dashboard_semi_donut_card_title": "Traffic source",
+       "dashboard_semi_donut_aria_label": "Traffic source chart",
+       "dashboard_semi_donut_email": "Email",
+diff --git a/messages/it.json b/messages/it.json
+index 44c6031b8..c13387c94 100644
+--- a/messages/it.json
++++ b/messages/it.json
+@@ -2541,6 +2541,7 @@
+       "dashboard_bar_aria_label": "Grafico degli annunci",
+       "dashboard_bar_series_new": "Nuovi annunci",
+       "dashboard_bar_series_renewed": "Annunci rinnovati",
++      "dashboard_sparkline_aria_label": "Grafico della tendenza",
+       "dashboard_semi_donut_card_title": "Fonte di traffico",
+       "dashboard_semi_donut_aria_label": "Grafico della fonte di traffico",
+       "dashboard_semi_donut_email": "Email",
+diff --git a/messages/sq.json b/messages/sq.json
+index c490e09db..2177c6abc 100644
+--- a/messages/sq.json
++++ b/messages/sq.json
+@@ -2541,6 +2541,7 @@
+       "dashboard_bar_aria_label": "Grafiku i njoftimeve",
+       "dashboard_bar_series_new": "Njoftime të reja",
+       "dashboard_bar_series_renewed": "Njoftime të rinovuara",
++      "dashboard_sparkline_aria_label": "Grafiku i trendit",
+       "dashboard_semi_donut_card_title": "Burimi i trafikut",
+       "dashboard_semi_donut_aria_label": "Grafiku i burimit të trafikut",
+       "dashboard_semi_donut_email": "Email",
+diff --git a/messages/uk.json b/messages/uk.json
+index 073d72a8f..ae9d706c5 100644
+--- a/messages/uk.json
++++ b/messages/uk.json
+@@ -2541,6 +2541,7 @@
+       "dashboard_bar_aria_label": "Графік оголошень",
+       "dashboard_bar_series_new": "Нові оголошення",
+       "dashboard_bar_series_renewed": "Поновлені оголошення",
++      "dashboard_sparkline_aria_label": "Графік тренду",
+       "dashboard_semi_donut_card_title": "Джерело трафіку",
+       "dashboard_semi_donut_aria_label": "Графік джерела трафіку",
+       "dashboard_semi_donut_email": "Email",
+diff --git a/scripts/mantine-migration-scope.json b/scripts/mantine-migration-scope.json
+index 835789ae2..0664e833b 100644
+--- a/scripts/mantine-migration-scope.json
++++ b/scripts/mantine-migration-scope.json
+@@ -83,6 +83,7 @@
+   "src/design-system/mantine/patterns/MantineDashboardLineChart.tsx",
+   "src/design-system/mantine/patterns/MantineDashboardDonut.tsx",
+   "src/design-system/mantine/patterns/MantineDashboardBarChart.tsx",
++  "src/design-system/mantine/patterns/MantineDashboardSparkline.tsx",
+   "src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx",
+   "src/design-system/mantine/patterns/MantineDashboardRadar.tsx",
+   "src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx",
+diff --git a/src/design-system/mantine/theme.ts b/src/design-system/mantine/theme.ts
+index ea8f48b74..30445c801 100644
+--- a/src/design-system/mantine/theme.ts
++++ b/src/design-system/mantine/theme.ts
+@@ -1,4 +1,4 @@
+-import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
++import { createTheme, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
+ import { brand } from '@/design-system/brand'
+ 
+ // Task 775 (D775-C = C1) — native Mantine typing for the two additive spacing keys below.
+@@ -317,7 +317,11 @@ declare module '@mantine/core' {
+       radialHollowSize: string // '56%' — MantineDashboardRadialProgress `plotOptions.radialBar.hollow.size`; TailAdmin's measured ring thickness (demo.tailadmin.com/radial-chart)
+       barColumnWidth: string // '40%' — MantineDashboardBarChart `plotOptions.bar.columnWidth`; TailAdmin Bar Chart 1/2 column-to-slot ratio (demo.tailadmin.com/bar-chart)
+       lineGradientStops: number[] // [0, 90, 100] — MantineDashboardLineChart area-fill `gradient.stops` (percent offsets), TailAdmin Line Chart 1
++      sparklineMinWidth: number // Task 889 rev 4 (O889-1 row 1): minimum sparkline width (Lahomes KPI canvas, D78-9); the chart fills its container above it
++      sparklineHeight: number // Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)
+     }
++    // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
++    accentHeroGradient: MantineGradient
+   }
+ }
+ 
+@@ -842,7 +846,11 @@ export const theme = createTheme({
+       radialHollowSize: '56%',
+       barColumnWidth: '40%',
+       lineGradientStops: [0, 90, 100],
++      sparklineMinWidth: 154, // Task 889 rev 4 (O889-1 row 1): minimum sparkline width (Lahomes KPI canvas, D78-9); the chart fills its container above it
++      sparklineHeight: 95, // Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)
+     },
++    // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
++    accentHeroGradient: { from: 'brand.7', to: 'brand.9', deg: 180 },
+   },
+ 
+   // Component-level defaults aligned to TailAdmin density (§1.4 / §1b).

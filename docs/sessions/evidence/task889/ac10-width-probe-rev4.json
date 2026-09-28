@@ -1,0 +1,536 @@
+{
+  "sparkline": {
+    "DashboardSparkline/Default": {
+      "en": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      },
+      "uk": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      }
+    },
+    "DashboardSparkline/AllZero": {
+      "en": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      },
+      "uk": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      }
+    },
+    "DashboardSparkline/ThirtyDays": {
+      "en": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      },
+      "uk": {
+        "320": {
+          "cellWidth": 288,
+          "wrapperWidth": 288,
+          "wrapperHeight": 95,
+          "svgWidth": 288,
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cellWidth": 358,
+          "wrapperWidth": 358,
+          "wrapperHeight": 95,
+          "svgWidth": 358,
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cellWidth": 360,
+          "wrapperWidth": 360,
+          "wrapperHeight": 95,
+          "svgWidth": 360,
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cellWidth": 236,
+          "wrapperWidth": 236,
+          "wrapperHeight": 95,
+          "svgWidth": 236,
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cellWidth": 340,
+          "wrapperWidth": 340,
+          "wrapperHeight": 95,
+          "svgWidth": 340,
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      }
+    }
+  },
+  "statcard": {
+    "WithChart": {
+      "en": {
+        "320": {
+          "cardWidth": 288,
+          "contentBoxWidth": 248,
+          "contentBoxRight": 284,
+          "textRect": {
+            "left": 37,
+            "right": 137,
+            "top": 101,
+            "bottom": 180
+          },
+          "chartRect": {
+            "left": 37,
+            "right": 283,
+            "top": 196,
+            "bottom": 291,
+            "width": 246
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cardWidth": 358,
+          "contentBoxWidth": 318,
+          "contentBoxRight": 354,
+          "textRect": {
+            "left": 37,
+            "right": 137,
+            "top": 101,
+            "bottom": 180
+          },
+          "chartRect": {
+            "left": 37,
+            "right": 353,
+            "top": 196,
+            "bottom": 291,
+            "width": 316
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cardWidth": 360,
+          "contentBoxWidth": 312,
+          "contentBoxRight": 352,
+          "textRect": {
+            "left": 41,
+            "right": 141,
+            "top": 108,
+            "bottom": 200
+          },
+          "chartRect": {
+            "left": 157,
+            "right": 351,
+            "top": 105,
+            "bottom": 200,
+            "width": 194
+          },
+          "gap": 16,
+          "placement": "beside",
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cardWidth": 236,
+          "contentBoxWidth": 188,
+          "contentBoxRight": 228,
+          "textRect": {
+            "left": 41,
+            "right": 141,
+            "top": 105,
+            "bottom": 197
+          },
+          "chartRect": {
+            "left": 41,
+            "right": 227,
+            "top": 213,
+            "bottom": 308,
+            "width": 186
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cardWidth": 340,
+          "contentBoxWidth": 292,
+          "contentBoxRight": 332,
+          "textRect": {
+            "left": 41,
+            "right": 141,
+            "top": 108,
+            "bottom": 200
+          },
+          "chartRect": {
+            "left": 157,
+            "right": 331,
+            "top": 105,
+            "bottom": 200,
+            "width": 174
+          },
+          "gap": 16,
+          "placement": "beside",
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      },
+      "uk": {
+        "320": {
+          "cardWidth": 288,
+          "contentBoxWidth": 248,
+          "contentBoxRight": 284,
+          "textRect": {
+            "left": 37,
+            "right": 126,
+            "top": 101,
+            "bottom": 180
+          },
+          "chartRect": {
+            "left": 37,
+            "right": 283,
+            "top": 196,
+            "bottom": 291,
+            "width": 246
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 320,
+          "docClientWidth": 320
+        },
+        "390": {
+          "cardWidth": 358,
+          "contentBoxWidth": 318,
+          "contentBoxRight": 354,
+          "textRect": {
+            "left": 37,
+            "right": 126,
+            "top": 101,
+            "bottom": 180
+          },
+          "chartRect": {
+            "left": 37,
+            "right": 353,
+            "top": 196,
+            "bottom": 291,
+            "width": 316
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 390,
+          "docClientWidth": 390
+        },
+        "768": {
+          "cardWidth": 360,
+          "contentBoxWidth": 312,
+          "contentBoxRight": 352,
+          "textRect": {
+            "left": 41,
+            "right": 130,
+            "top": 108,
+            "bottom": 200
+          },
+          "chartRect": {
+            "left": 146,
+            "right": 351,
+            "top": 105,
+            "bottom": 200,
+            "width": 205
+          },
+          "gap": 16,
+          "placement": "beside",
+          "docScrollWidth": 768,
+          "docClientWidth": 768
+        },
+        "1024": {
+          "cardWidth": 236,
+          "contentBoxWidth": 188,
+          "contentBoxRight": 228,
+          "textRect": {
+            "left": 41,
+            "right": 130,
+            "top": 105,
+            "bottom": 197
+          },
+          "chartRect": {
+            "left": 41,
+            "right": 227,
+            "top": 213,
+            "bottom": 308,
+            "width": 186
+          },
+          "gap": 16,
+          "placement": "under",
+          "docScrollWidth": 1024,
+          "docClientWidth": 1024
+        },
+        "1440": {
+          "cardWidth": 340,
+          "contentBoxWidth": 292,
+          "contentBoxRight": 332,
+          "textRect": {
+            "left": 41,
+            "right": 130,
+            "top": 108,
+            "bottom": 200
+          },
+          "chartRect": {
+            "left": 146,
+            "right": 331,
+            "top": 105,
+            "bottom": 200,
+            "width": 185
+          },
+          "gap": 16,
+          "placement": "beside",
+          "docScrollWidth": 1440,
+          "docClientWidth": 1440
+        }
+      }
+    }
+  },
+  "resizeArm": {
+    "before1440": {
+      "cardWidth": 340,
+      "contentBoxWidth": 292,
+      "contentBoxRight": 332,
+      "textRect": {
+        "left": 41,
+        "right": 141,
+        "top": 108,
+        "bottom": 200
+      },
+      "chartRect": {
+        "left": 157,
+        "right": 331,
+        "top": 105,
+        "bottom": 200,
+        "width": 174
+      },
+      "gap": 16,
+      "placement": "beside",
+      "docScrollWidth": 1440,
+      "docClientWidth": 1440
+    },
+    "afterResizeTo390NoReload": {
+      "cardWidth": 358,
+      "contentBoxWidth": 318,
+      "contentBoxRight": 354,
+      "textRect": {
+        "left": 37,
+        "right": 137,
+        "top": 101,
+        "bottom": 180
+      },
+      "chartRect": {
+        "left": 37,
+        "right": 353,
+        "top": 196,
+        "bottom": 291,
+        "width": 316
+      },
+      "gap": 16,
+      "placement": "under",
+      "docScrollWidth": 390,
+      "docClientWidth": 390
+    }
+  }
+}

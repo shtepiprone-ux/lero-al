@@ -1,0 +1,7803 @@
+[
+  {
+    "label": "DashboardSparkline/Default@390/en",
+    "storyId": "patterns-mantine-dashboardsparkline--default",
+    "width": 390,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 40,
+          "y": 97
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 57.203125,
+          "y": 83.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 29.524444580078125,
+          "y": 82.5009994506836,
+          "width": 20.684444427490234,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 40,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 57.203125,
+          "y": 83.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 29.524444580078125,
+          "y": 82.5009994506836,
+          "width": 20.684444427490234,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 92,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 108.90625,
+          "y": 76.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.23555755615234,
+          "y": 68.2509994506836,
+          "width": 20.68444061279297,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 92,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 108.90625,
+          "y": 76.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.23555755615234,
+          "y": 68.2509994506836,
+          "width": 20.68444061279297,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 143,
+          "y": 100
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.625,
+          "y": 86.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 132.94667053222656,
+          "y": 89.6259994506836,
+          "width": 20.684432983398438,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 143,
+          "y": 92
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.625,
+          "y": 86.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 132.94667053222656,
+          "y": 89.6259994506836,
+          "width": 20.684432983398438,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 195,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.328125,
+          "y": 71.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 184.65777587890625,
+          "y": 58.750999450683594,
+          "width": 20.6844482421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 195,
+          "y": 61
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.328125,
+          "y": 71.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 184.65777587890625,
+          "y": 58.750999450683594,
+          "width": 20.6844482421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 247,
+          "y": 93
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 164.9375,
+          "y": 80.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 236.368896484375,
+          "y": 75.3759994506836,
+          "width": 20.6844482421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 247,
+          "y": 77
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 164.9375,
+          "y": 80.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 236.368896484375,
+          "y": 75.3759994506836,
+          "width": 20.6844482421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 298,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.25,
+          "y": 65.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 288.0799865722656,
+          "y": 46.875999450683594,
+          "width": 20.6844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 298,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.25,
+          "y": 65.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 288.0799865722656,
+          "y": 46.875999450683594,
+          "width": 20.6844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 350,
+          "y": 88
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 267.65625,
+          "y": 75.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 339.7911071777344,
+          "y": 65.8759994506836,
+          "width": 20.6844482421875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 350,
+          "y": 68
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 267.65625,
+          "y": 75.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 339.7911071777344,
+          "y": 65.8759994506836,
+          "width": 20.6844482421875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/ThirtyDays@390/en",
+    "storyId": "patterns-mantine-dashboardsparkline--thirty-days",
+    "width": 390,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 21,
+          "y": 104
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 30.328125,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.53707504272461,
+          "y": 96.7509994506836,
+          "width": 4.8017120361328125,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 21,
+          "y": 99
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 30.328125,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.53707504272461,
+          "y": 96.7509994506836,
+          "width": 4.8017120361328125,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 69,
+          "y": 102
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 78.34375,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 66.55419921875,
+          "y": 92.0009994506836,
+          "width": 4.8017120361328125,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 69,
+          "y": 94
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 78.34375,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 66.55419921875,
+          "y": 92.0009994506836,
+          "width": 4.8017120361328125,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "mid",
+        "point": {
+          "x": 129,
+          "y": 91
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.375,
+          "y": 77.71875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 126.57560729980469,
+          "y": 70.6259994506836,
+          "width": 4.8017120361328125,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "top+2",
+        "point": {
+          "x": 129,
+          "y": 73
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.375,
+          "y": 77.71875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 126.57560729980469,
+          "y": 70.6259994506836,
+          "width": 4.8017120361328125,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "mid",
+        "point": {
+          "x": 189,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.390625,
+          "y": 76.53125,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 186.5970001220703,
+          "y": 68.2509994506836,
+          "width": 4.8017120361328125,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "top+2",
+        "point": {
+          "x": 189,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.390625,
+          "y": 76.53125,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 186.5970001220703,
+          "y": 68.2509994506836,
+          "width": 4.8017120361328125,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "mid",
+        "point": {
+          "x": 249,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 164.734375,
+          "y": 65.84375,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 246.618408203125,
+          "y": 46.875999450683594,
+          "width": 4.8017120361328125,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "top+2",
+        "point": {
+          "x": 249,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 164.734375,
+          "y": 65.84375,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 246.618408203125,
+          "y": 46.875999450683594,
+          "width": 4.8017120361328125,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "mid",
+        "point": {
+          "x": 309,
+          "y": 78
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 224.75,
+          "y": 64.65625,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 306.6398010253906,
+          "y": 44.500999450683594,
+          "width": 4.801727294921875,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "top+2",
+        "point": {
+          "x": 309,
+          "y": 47
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 224.75,
+          "y": 64.65625,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 306.6398010253906,
+          "y": 44.500999450683594,
+          "width": 4.801727294921875,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "mid",
+        "point": {
+          "x": 369,
+          "y": 67
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 284.78125,
+          "y": 53.96875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 366.66119384765625,
+          "y": 23.125999450683594,
+          "width": 4.801727294921875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "top+2",
+        "point": {
+          "x": 369,
+          "y": 25
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 284.78125,
+          "y": 53.96875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 366.66119384765625,
+          "y": 23.125999450683594,
+          "width": 4.801727294921875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/Default@1440/en",
+    "storyId": "patterns-mantine-dashboardsparkline--default",
+    "width": 1440,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 39,
+          "y": 97
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 55.484375,
+          "y": 83.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 28.844444274902344,
+          "y": 82.5009994506836,
+          "width": 19.64444351196289,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 39,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 55.484375,
+          "y": 83.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 28.844444274902344,
+          "y": 82.5009994506836,
+          "width": 19.64444351196289,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 88,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 104.59375,
+          "y": 76.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 77.95555114746094,
+          "y": 68.2509994506836,
+          "width": 19.644447326660156,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 88,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 104.59375,
+          "y": 76.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 77.95555114746094,
+          "y": 68.2509994506836,
+          "width": 19.644447326660156,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 137,
+          "y": 100
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.703125,
+          "y": 86.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 127.06666564941406,
+          "y": 89.6259994506836,
+          "width": 19.644439697265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 137,
+          "y": 92
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.703125,
+          "y": 86.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 127.06666564941406,
+          "y": 89.6259994506836,
+          "width": 19.644439697265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 186,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 100.0625,
+          "y": 71.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 176.1777801513672,
+          "y": 58.750999450683594,
+          "width": 19.644439697265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 186,
+          "y": 61
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 100.0625,
+          "y": 71.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 176.1777801513672,
+          "y": 58.750999450683594,
+          "width": 19.644439697265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 235,
+          "y": 93
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.859375,
+          "y": 80.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 225.2888946533203,
+          "y": 75.3759994506836,
+          "width": 19.644439697265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 235,
+          "y": 77
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.859375,
+          "y": 80.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 225.2888946533203,
+          "y": 75.3759994506836,
+          "width": 19.644439697265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 284,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.5625,
+          "y": 65.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 274.3999938964844,
+          "y": 46.875999450683594,
+          "width": 19.644439697265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 284,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.5625,
+          "y": 65.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 274.3999938964844,
+          "y": 46.875999450683594,
+          "width": 19.644439697265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 333,
+          "y": 88
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 251.375,
+          "y": 75.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 323.5111083984375,
+          "y": 65.8759994506836,
+          "width": 19.644439697265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 333,
+          "y": 68
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 251.375,
+          "y": 75.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 323.5111083984375,
+          "y": 65.8759994506836,
+          "width": 19.644439697265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/ThirtyDays@1440/en",
+    "storyId": "patterns-mantine-dashboardsparkline--thirty-days",
+    "width": 1440,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 21,
+          "y": 104
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 29.96875,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.40951156616211,
+          "y": 96.7509994506836,
+          "width": 4.5602874755859375,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 21,
+          "y": 99
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 29.96875,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.40951156616211,
+          "y": 96.7509994506836,
+          "width": 4.5602874755859375,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 66,
+          "y": 102
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 75.5625,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 64.01236724853516,
+          "y": 92.0009994506836,
+          "width": 4.560279846191406,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 66,
+          "y": 94
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 75.5625,
+          "y": 86.8125,
+          "width": 61.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 64.01236724853516,
+          "y": 92.0009994506836,
+          "width": 4.560279846191406,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "mid",
+        "point": {
+          "x": 123,
+          "y": 91
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 132.5625,
+          "y": 77.71875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 121.01593017578125,
+          "y": 70.6259994506836,
+          "width": 4.5602874755859375,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "top+2",
+        "point": {
+          "x": 123,
+          "y": 73
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 132.5625,
+          "y": 77.71875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 121.01593017578125,
+          "y": 70.6259994506836,
+          "width": 4.5602874755859375,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "mid",
+        "point": {
+          "x": 180,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 189.578125,
+          "y": 76.53125,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 178.01950073242188,
+          "y": 68.2509994506836,
+          "width": 4.5602874755859375,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "top+2",
+        "point": {
+          "x": 180,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 189.578125,
+          "y": 76.53125,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 178.01950073242188,
+          "y": 68.2509994506836,
+          "width": 4.5602874755859375,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "mid",
+        "point": {
+          "x": 237,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.140625,
+          "y": 65.84375,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 235.0230712890625,
+          "y": 46.875999450683594,
+          "width": 4.560272216796875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "top+2",
+        "point": {
+          "x": 237,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.140625,
+          "y": 65.84375,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 235.0230712890625,
+          "y": 46.875999450683594,
+          "width": 4.560272216796875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "mid",
+        "point": {
+          "x": 294,
+          "y": 78
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 210.140625,
+          "y": 64.65625,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 292.0266418457031,
+          "y": 44.500999450683594,
+          "width": 4.560302734375,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "top+2",
+        "point": {
+          "x": 294,
+          "y": 47
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 210.140625,
+          "y": 64.65625,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 292.0266418457031,
+          "y": 44.500999450683594,
+          "width": 4.560302734375,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "mid",
+        "point": {
+          "x": 351,
+          "y": 67
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 267.140625,
+          "y": 53.96875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 349.03021240234375,
+          "y": 23.125999450683594,
+          "width": 4.560272216796875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "top+2",
+        "point": {
+          "x": 351,
+          "y": 25
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 267.140625,
+          "y": 53.96875,
+          "width": 74.875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 349.03021240234375,
+          "y": 23.125999450683594,
+          "width": 4.560272216796875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/Default@390/uk",
+    "storyId": "patterns-mantine-dashboardsparkline--default",
+    "width": 390,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 40,
+          "y": 97
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 57.203125,
+          "y": 83.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 29.524444580078125,
+          "y": 82.5009994506836,
+          "width": 20.684444427490234,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 40,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 57.203125,
+          "y": 83.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 29.524444580078125,
+          "y": 82.5009994506836,
+          "width": 20.684444427490234,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 92,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 108.90625,
+          "y": 76.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.23555755615234,
+          "y": 68.2509994506836,
+          "width": 20.68444061279297,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 92,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 108.90625,
+          "y": 76.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.23555755615234,
+          "y": 68.2509994506836,
+          "width": 20.68444061279297,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 143,
+          "y": 100
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.625,
+          "y": 86.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 132.94667053222656,
+          "y": 89.6259994506836,
+          "width": 20.684432983398438,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 143,
+          "y": 92
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.625,
+          "y": 86.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 132.94667053222656,
+          "y": 89.6259994506836,
+          "width": 20.684432983398438,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 195,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.328125,
+          "y": 71.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 184.65777587890625,
+          "y": 58.750999450683594,
+          "width": 20.6844482421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 195,
+          "y": 61
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.328125,
+          "y": 71.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 184.65777587890625,
+          "y": 58.750999450683594,
+          "width": 20.6844482421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 247,
+          "y": 93
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 172.328125,
+          "y": 80.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 236.368896484375,
+          "y": 75.3759994506836,
+          "width": 20.6844482421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 247,
+          "y": 77
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 172.328125,
+          "y": 80.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 236.368896484375,
+          "y": 75.3759994506836,
+          "width": 20.6844482421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 298,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 223.015625,
+          "y": 65.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 288.0799865722656,
+          "y": 46.875999450683594,
+          "width": 20.6844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 298,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 223.015625,
+          "y": 65.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 288.0799865722656,
+          "y": 46.875999450683594,
+          "width": 20.6844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 350,
+          "y": 88
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 275.125,
+          "y": 75.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 339.7911071777344,
+          "y": 65.8759994506836,
+          "width": 20.6844482421875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 350,
+          "y": 68
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 275.125,
+          "y": 75.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 339.7911071777344,
+          "y": 65.8759994506836,
+          "width": 20.6844482421875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/ThirtyDays@390/uk",
+    "storyId": "patterns-mantine-dashboardsparkline--thirty-days",
+    "width": 390,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 21,
+          "y": 104
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 30.328125,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.53707504272461,
+          "y": 96.7509994506836,
+          "width": 4.8017120361328125,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 21,
+          "y": 99
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 30.328125,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.53707504272461,
+          "y": 96.7509994506836,
+          "width": 4.8017120361328125,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 69,
+          "y": 102
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 78.34375,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 66.55419921875,
+          "y": 92.0009994506836,
+          "width": 4.8017120361328125,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 69,
+          "y": 94
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 78.34375,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 66.55419921875,
+          "y": 92.0009994506836,
+          "width": 4.8017120361328125,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "mid",
+        "point": {
+          "x": 129,
+          "y": 91
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.375,
+          "y": 77.71875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 126.57560729980469,
+          "y": 70.6259994506836,
+          "width": 4.8017120361328125,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "top+2",
+        "point": {
+          "x": 129,
+          "y": 73
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.375,
+          "y": 77.71875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 126.57560729980469,
+          "y": 70.6259994506836,
+          "width": 4.8017120361328125,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "mid",
+        "point": {
+          "x": 189,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.390625,
+          "y": 76.53125,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 186.5970001220703,
+          "y": 68.2509994506836,
+          "width": 4.8017120361328125,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "top+2",
+        "point": {
+          "x": 189,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.390625,
+          "y": 76.53125,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 186.5970001220703,
+          "y": 68.2509994506836,
+          "width": 4.8017120361328125,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "mid",
+        "point": {
+          "x": 249,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 152.8125,
+          "y": 65.84375,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 246.618408203125,
+          "y": 46.875999450683594,
+          "width": 4.8017120361328125,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "top+2",
+        "point": {
+          "x": 249,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 152.8125,
+          "y": 65.84375,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 246.618408203125,
+          "y": 46.875999450683594,
+          "width": 4.8017120361328125,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "mid",
+        "point": {
+          "x": 309,
+          "y": 78
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.828125,
+          "y": 64.65625,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 306.6398010253906,
+          "y": 44.500999450683594,
+          "width": 4.801727294921875,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "top+2",
+        "point": {
+          "x": 309,
+          "y": 47
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.828125,
+          "y": 64.65625,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 306.6398010253906,
+          "y": 44.500999450683594,
+          "width": 4.801727294921875,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "mid",
+        "point": {
+          "x": 369,
+          "y": 67
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 272.859375,
+          "y": 53.96875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 366.66119384765625,
+          "y": 23.125999450683594,
+          "width": 4.801727294921875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "top+2",
+        "point": {
+          "x": 369,
+          "y": 25
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 272.859375,
+          "y": 53.96875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 366.66119384765625,
+          "y": 23.125999450683594,
+          "width": 4.801727294921875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/Default@1440/uk",
+    "storyId": "patterns-mantine-dashboardsparkline--default",
+    "width": 1440,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 39,
+          "y": 97
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 55.484375,
+          "y": 83.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 28.844444274902344,
+          "y": 82.5009994506836,
+          "width": 19.64444351196289,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 39,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 55.484375,
+          "y": 83.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 28.844444274902344,
+          "y": 82.5009994506836,
+          "width": 19.64444351196289,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 88,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 104.59375,
+          "y": 76.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 77.95555114746094,
+          "y": 68.2509994506836,
+          "width": 19.644447326660156,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 88,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 104.59375,
+          "y": 76.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 77.95555114746094,
+          "y": 68.2509994506836,
+          "width": 19.644447326660156,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 137,
+          "y": 100
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.703125,
+          "y": 86.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 127.06666564941406,
+          "y": 89.6259994506836,
+          "width": 19.644439697265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 137,
+          "y": 92
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 153.703125,
+          "y": 86.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 127.06666564941406,
+          "y": 89.6259994506836,
+          "width": 19.644439697265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 186,
+          "y": 85
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 109.578125,
+          "y": 71.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 176.1777801513672,
+          "y": 58.750999450683594,
+          "width": 19.644439697265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 186,
+          "y": 61
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 109.578125,
+          "y": 71.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 176.1777801513672,
+          "y": 58.750999450683594,
+          "width": 19.644439697265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 235,
+          "y": 93
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 161.25,
+          "y": 80.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 225.2888946533203,
+          "y": 75.3759994506836,
+          "width": 19.644439697265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 235,
+          "y": 77
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 161.25,
+          "y": 80.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 225.2888946533203,
+          "y": 75.3759994506836,
+          "width": 19.644439697265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 284,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 209.328125,
+          "y": 65.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 274.3999938964844,
+          "y": 46.875999450683594,
+          "width": 19.644439697265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 284,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 209.328125,
+          "y": 65.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 274.3999938964844,
+          "y": 46.875999450683594,
+          "width": 19.644439697265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 333,
+          "y": 88
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 258.84375,
+          "y": 75.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 323.5111083984375,
+          "y": 65.8759994506836,
+          "width": 19.644439697265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 333,
+          "y": 68
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 258.84375,
+          "y": 75.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 323.5111083984375,
+          "y": 65.8759994506836,
+          "width": 19.644439697265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/ThirtyDays@1440/uk",
+    "storyId": "patterns-mantine-dashboardsparkline--thirty-days",
+    "width": 1440,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 21,
+          "y": 104
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 29.96875,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.40951156616211,
+          "y": 96.7509994506836,
+          "width": 4.5602874755859375,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 21,
+          "y": 99
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 29.96875,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 18.40951156616211,
+          "y": 96.7509994506836,
+          "width": 4.5602874755859375,
+          "height": 14.25
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 66,
+          "y": 102
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 75.5625,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 64.01236724853516,
+          "y": 92.0009994506836,
+          "width": 4.560279846191406,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 66,
+          "y": 94
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 75.5625,
+          "y": 86.8125,
+          "width": 72.953125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 64.01236724853516,
+          "y": 92.0009994506836,
+          "width": 4.560279846191406,
+          "height": 19
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "mid",
+        "point": {
+          "x": 123,
+          "y": 91
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 132.5625,
+          "y": 77.71875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 121.01593017578125,
+          "y": 70.6259994506836,
+          "width": 4.5602874755859375,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 9,
+        "hover": "top+2",
+        "point": {
+          "x": 123,
+          "y": 73
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 132.5625,
+          "y": 77.71875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 121.01593017578125,
+          "y": 70.6259994506836,
+          "width": 4.5602874755859375,
+          "height": 40.375
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "mid",
+        "point": {
+          "x": 180,
+          "y": 90
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 189.578125,
+          "y": 76.53125,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 178.01950073242188,
+          "y": 68.2509994506836,
+          "width": 4.5602874755859375,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 14,
+        "hover": "top+2",
+        "point": {
+          "x": 180,
+          "y": 70
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 189.578125,
+          "y": 76.53125,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 178.01950073242188,
+          "y": 68.2509994506836,
+          "width": 4.5602874755859375,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "mid",
+        "point": {
+          "x": 237,
+          "y": 79
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 141.21875,
+          "y": 65.84375,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 235.0230712890625,
+          "y": 46.875999450683594,
+          "width": 4.560272216796875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 19,
+        "hover": "top+2",
+        "point": {
+          "x": 237,
+          "y": 49
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 141.21875,
+          "y": 65.84375,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 235.0230712890625,
+          "y": 46.875999450683594,
+          "width": 4.560272216796875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "mid",
+        "point": {
+          "x": 294,
+          "y": 78
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.21875,
+          "y": 64.65625,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 292.0266418457031,
+          "y": 44.500999450683594,
+          "width": 4.560302734375,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 24,
+        "hover": "top+2",
+        "point": {
+          "x": 294,
+          "y": 47
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 198.21875,
+          "y": 64.65625,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 292.0266418457031,
+          "y": 44.500999450683594,
+          "width": 4.560302734375,
+          "height": 66.5
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "mid",
+        "point": {
+          "x": 351,
+          "y": 67
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 255.21875,
+          "y": 53.96875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 349.03021240234375,
+          "y": 23.125999450683594,
+          "width": 4.560272216796875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 29,
+        "hover": "top+2",
+        "point": {
+          "x": 351,
+          "y": 25
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 255.21875,
+          "y": 53.96875,
+          "width": 86.796875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 349.03021240234375,
+          "y": 23.125999450683594,
+          "width": 4.560272216796875,
+          "height": 87.875
+        },
+        "clip": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardSparkline/AllZero@1440/en",
+    "storyId": "patterns-mantine-dashboardsparkline--all-zero",
+    "width": 1440,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 39,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 1,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 88,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 2,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 137,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 3,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 186,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 4,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 235,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 5,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 284,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      },
+      {
+        "barIndex": 6,
+        "hover": "zero-slot-above-bottom",
+        "point": {
+          "x": 333,
+          "y": 109
+        },
+        "active": false,
+        "violation": null
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@320/en",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 320,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 53,
+          "y": 277
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 67.5,
+          "y": 264.0625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 46.2933349609375,
+          "y": 262.9072570800781,
+          "width": 14.213333129882812,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 53,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 67.5,
+          "y": 264.0625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 46.2933349609375,
+          "y": 262.9072570800781,
+          "width": 14.213333129882812,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 89,
+          "y": 270
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 103.03125,
+          "y": 256.9375,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.82666778564453,
+          "y": 248.65725708007812,
+          "width": 14.213333129882812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 89,
+          "y": 251
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 103.03125,
+          "y": 256.9375,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.82666778564453,
+          "y": 248.65725708007812,
+          "width": 14.213333129882812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 124,
+          "y": 281
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.5625,
+          "y": 267.21875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 117.36000061035156,
+          "y": 270.0322570800781,
+          "width": 14.213333129882812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 124,
+          "y": 272
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.5625,
+          "y": 267.21875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 117.36000061035156,
+          "y": 270.0322570800781,
+          "width": 14.213333129882812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 160,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 174.09375,
+          "y": 252.1875,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.89334106445312,
+          "y": 239.15725708007812,
+          "width": 14.21331787109375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 160,
+          "y": 241
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 174.09375,
+          "y": 252.1875,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.89334106445312,
+          "y": 239.15725708007812,
+          "width": 14.21331787109375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 196,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 117,
+          "y": 260.5,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.42666625976562,
+          "y": 255.78225708007812,
+          "width": 14.213333129882812,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 196,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 117,
+          "y": 260.5,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.42666625976562,
+          "y": 255.78225708007812,
+          "width": 14.213333129882812,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 231,
+          "y": 259
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 148.125,
+          "y": 246.25,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 223.95999145507812,
+          "y": 227.28225708007812,
+          "width": 14.213333129882812,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 231,
+          "y": 229
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 148.125,
+          "y": 246.25,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 223.95999145507812,
+          "y": 227.28225708007812,
+          "width": 14.213333129882812,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 267,
+          "y": 269
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 187.359375,
+          "y": 255.75,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.49334716796875,
+          "y": 246.28225708007812,
+          "width": 14.21331787109375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 267,
+          "y": 248
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 187.359375,
+          "y": 255.75,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.49334716796875,
+          "y": 246.28225708007812,
+          "width": 14.21331787109375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@390/en",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 390,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 58,
+          "y": 277
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 74.1875,
+          "y": 264.0625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.93777847290039,
+          "y": 262.9072570800781,
+          "width": 18.25777816772461,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 58,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 74.1875,
+          "y": 264.0625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.93777847290039,
+          "y": 262.9072570800781,
+          "width": 18.25777816772461,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 104,
+          "y": 270
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.828125,
+          "y": 256.9375,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 94.58222198486328,
+          "y": 248.65725708007812,
+          "width": 18.257781982421875,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 104,
+          "y": 251
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.828125,
+          "y": 256.9375,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 94.58222198486328,
+          "y": 248.65725708007812,
+          "width": 18.257781982421875,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 149,
+          "y": 281
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 165.484375,
+          "y": 267.21875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 140.22666931152344,
+          "y": 270.0322570800781,
+          "width": 18.257766723632812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 149,
+          "y": 272
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 165.484375,
+          "y": 267.21875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 140.22666931152344,
+          "y": 270.0322570800781,
+          "width": 18.257766723632812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 195,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 109.75,
+          "y": 252.1875,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 185.87110900878906,
+          "y": 239.15725708007812,
+          "width": 18.257781982421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 195,
+          "y": 241
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 109.75,
+          "y": 252.1875,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 185.87110900878906,
+          "y": 239.15725708007812,
+          "width": 18.257781982421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 241,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.078125,
+          "y": 260.5,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 231.5155487060547,
+          "y": 255.78225708007812,
+          "width": 18.257781982421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 241,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 160.078125,
+          "y": 260.5,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 231.5155487060547,
+          "y": 255.78225708007812,
+          "width": 18.257781982421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 286,
+          "y": 259
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 201.328125,
+          "y": 246.25,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 277.1600036621094,
+          "y": 227.28225708007812,
+          "width": 18.257781982421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 286,
+          "y": 229
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 201.328125,
+          "y": 246.25,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 277.1600036621094,
+          "y": 227.28225708007812,
+          "width": 18.257781982421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 332,
+          "y": 269
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 250.671875,
+          "y": 255.75,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 322.8044738769531,
+          "y": 246.28225708007812,
+          "width": 18.25775146484375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 332,
+          "y": 248
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 250.671875,
+          "y": 255.75,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 322.8044738769531,
+          "y": 246.28225708007812,
+          "width": 18.25775146484375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@768/en",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 768,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 170,
+          "y": 186
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 182.5,
+          "y": 172.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 164.29763793945312,
+          "y": 171.50100708007812,
+          "width": 11.208892822265625,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 170,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 182.5,
+          "y": 172.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 164.29763793945312,
+          "y": 171.50100708007812,
+          "width": 11.208892822265625,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 198,
+          "y": 179
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 210.515625,
+          "y": 165.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 192.31985473632812,
+          "y": 157.25100708007812,
+          "width": 11.208892822265625,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 198,
+          "y": 159
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 210.515625,
+          "y": 165.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 192.31985473632812,
+          "y": 157.25100708007812,
+          "width": 11.208892822265625,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 226,
+          "y": 189
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 238.546875,
+          "y": 175.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 220.3420867919922,
+          "y": 178.62600708007812,
+          "width": 11.208877563476562,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 226,
+          "y": 181
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 238.546875,
+          "y": 175.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 220.3420867919922,
+          "y": 178.62600708007812,
+          "width": 11.208877563476562,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 254,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 266.5625,
+          "y": 160.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 248.3643035888672,
+          "y": 147.75100708007812,
+          "width": 11.208877563476562,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 254,
+          "y": 150
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 266.5625,
+          "y": 160.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 248.3643035888672,
+          "y": 147.75100708007812,
+          "width": 11.208877563476562,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 282,
+          "y": 182
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 204.953125,
+          "y": 169.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 276.38653564453125,
+          "y": 164.37600708007812,
+          "width": 11.2088623046875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 282,
+          "y": 166
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 204.953125,
+          "y": 169.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 276.38653564453125,
+          "y": 164.37600708007812,
+          "width": 11.2088623046875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 310,
+          "y": 168
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 228.578125,
+          "y": 154.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 304.40875244140625,
+          "y": 135.87600708007812,
+          "width": 11.208892822265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 310,
+          "y": 138
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 228.578125,
+          "y": 154.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 304.40875244140625,
+          "y": 135.87600708007812,
+          "width": 11.208892822265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 338,
+          "y": 177
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 260.296875,
+          "y": 164.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 332.43096923828125,
+          "y": 154.87600708007812,
+          "width": 11.208892822265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 338,
+          "y": 157
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 260.296875,
+          "y": 164.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 332.43096923828125,
+          "y": 154.87600708007812,
+          "width": 11.208892822265625,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@1024/en",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 1024,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 53,
+          "y": 294
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 65.765625,
+          "y": 280.765625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.02666473388672,
+          "y": 279.6103820800781,
+          "width": 10.746665954589844,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 53,
+          "y": 282
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 65.765625,
+          "y": 280.765625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.02666473388672,
+          "y": 279.6103820800781,
+          "width": 10.746665954589844,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 80,
+          "y": 287
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 92.625,
+          "y": 273.640625,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 74.8933334350586,
+          "y": 265.3603820800781,
+          "width": 10.746665954589844,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 80,
+          "y": 267
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 92.625,
+          "y": 273.640625,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 74.8933334350586,
+          "y": 265.3603820800781,
+          "width": 10.746665954589844,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 107,
+          "y": 297
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.5,
+          "y": 283.921875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 101.76000213623047,
+          "y": 286.7353820800781,
+          "width": 10.746665954589844,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 107,
+          "y": 289
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.5,
+          "y": 283.921875,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 101.76000213623047,
+          "y": 286.7353820800781,
+          "width": 10.746665954589844,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 134,
+          "y": 282
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 52.515625,
+          "y": 268.890625,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 128.62667846679688,
+          "y": 255.86038208007812,
+          "width": 10.746658325195312,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 134,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 52.515625,
+          "y": 268.890625,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 128.62667846679688,
+          "y": 255.86038208007812,
+          "width": 10.746658325195312,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 161,
+          "y": 290
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 84.0625,
+          "y": 277.203125,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 155.4933319091797,
+          "y": 272.4853820800781,
+          "width": 10.746658325195312,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 161,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 84.0625,
+          "y": 277.203125,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 155.4933319091797,
+          "y": 272.4853820800781,
+          "width": 10.746658325195312,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 188,
+          "y": 276
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 106.53125,
+          "y": 262.953125,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.36000061035156,
+          "y": 243.98538208007812,
+          "width": 10.746658325195312,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 188,
+          "y": 246
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 106.53125,
+          "y": 262.953125,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.36000061035156,
+          "y": 243.98538208007812,
+          "width": 10.746658325195312,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 215,
+          "y": 286
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 137.09375,
+          "y": 272.453125,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 209.22665405273438,
+          "y": 262.9853820800781,
+          "width": 10.746673583984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 215,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 137.09375,
+          "y": 272.453125,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 209.22665405273438,
+          "y": 262.9853820800781,
+          "width": 10.746673583984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@1440/en",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 1440,
+    "locale": "en",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 169,
+          "y": 186
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 180.59375,
+          "y": 172.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 163.54208374023438,
+          "y": 171.50100708007812,
+          "width": 10.053329467773438,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 169,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 180.59375,
+          "y": 172.65625,
+          "width": 58.015625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 163.54208374023438,
+          "y": 171.50100708007812,
+          "width": 10.053329467773438,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 194,
+          "y": 179
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 205.71875,
+          "y": 165.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.6754150390625,
+          "y": 157.25100708007812,
+          "width": 10.0533447265625,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 194,
+          "y": 159
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 205.71875,
+          "y": 165.53125,
+          "width": 61.40625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.6754150390625,
+          "y": 157.25100708007812,
+          "width": 10.0533447265625,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 219,
+          "y": 189
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 230.859375,
+          "y": 175.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 213.80874633789062,
+          "y": 178.62600708007812,
+          "width": 10.0533447265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 219,
+          "y": 181
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 230.859375,
+          "y": 175.8125,
+          "width": 58.09375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 213.80874633789062,
+          "y": 178.62600708007812,
+          "width": 10.0533447265625,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 244,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 255.984375,
+          "y": 160.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 238.94207763671875,
+          "y": 147.75100708007812,
+          "width": 10.0533447265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 244,
+          "y": 150
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 255.984375,
+          "y": 160.78125,
+          "width": 69.109375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 238.94207763671875,
+          "y": 147.75100708007812,
+          "width": 10.0533447265625,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 269,
+          "y": 182
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 192.640625,
+          "y": 169.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 264.0754089355469,
+          "y": 164.37600708007812,
+          "width": 10.0533447265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 269,
+          "y": 166
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 192.640625,
+          "y": 169.09375,
+          "width": 64.421875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 264.0754089355469,
+          "y": 164.37600708007812,
+          "width": 10.0533447265625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 294,
+          "y": 168
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 213.375,
+          "y": 154.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 289.208740234375,
+          "y": 135.87600708007812,
+          "width": 10.0533447265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 294,
+          "y": 138
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 213.375,
+          "y": 154.84375,
+          "width": 68.828125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 289.208740234375,
+          "y": 135.87600708007812,
+          "width": 10.0533447265625,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 319,
+          "y": 177
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 242.203125,
+          "y": 164.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 314.34210205078125,
+          "y": 154.87600708007812,
+          "width": 10.053314208984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 319,
+          "y": 157
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 242.203125,
+          "y": 164.34375,
+          "width": 65.125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 314.34210205078125,
+          "y": 154.87600708007812,
+          "width": 10.053314208984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@320/uk",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 320,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 53,
+          "y": 277
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 67.5,
+          "y": 264.0625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 46.2933349609375,
+          "y": 262.9072570800781,
+          "width": 14.213333129882812,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 53,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 67.5,
+          "y": 264.0625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 46.2933349609375,
+          "y": 262.9072570800781,
+          "width": 14.213333129882812,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 89,
+          "y": 270
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 103.03125,
+          "y": 256.9375,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.82666778564453,
+          "y": 248.65725708007812,
+          "width": 14.213333129882812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 89,
+          "y": 251
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 103.03125,
+          "y": 256.9375,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 81.82666778564453,
+          "y": 248.65725708007812,
+          "width": 14.213333129882812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 124,
+          "y": 281
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.5625,
+          "y": 267.21875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 117.36000061035156,
+          "y": 270.0322570800781,
+          "width": 14.213333129882812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 124,
+          "y": 272
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 138.5625,
+          "y": 267.21875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 117.36000061035156,
+          "y": 270.0322570800781,
+          "width": 14.213333129882812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 160,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 174.09375,
+          "y": 252.1875,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.89334106445312,
+          "y": 239.15725708007812,
+          "width": 14.21331787109375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 160,
+          "y": 241
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 174.09375,
+          "y": 252.1875,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.89334106445312,
+          "y": 239.15725708007812,
+          "width": 14.21331787109375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 196,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 124.390625,
+          "y": 260.5,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.42666625976562,
+          "y": 255.78225708007812,
+          "width": 14.213333129882812,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 196,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 124.390625,
+          "y": 260.5,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 188.42666625976562,
+          "y": 255.78225708007812,
+          "width": 14.213333129882812,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 231,
+          "y": 259
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 158.890625,
+          "y": 246.25,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 223.95999145507812,
+          "y": 227.28225708007812,
+          "width": 14.213333129882812,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 231,
+          "y": 229
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 158.890625,
+          "y": 246.25,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 223.95999145507812,
+          "y": 227.28225708007812,
+          "width": 14.213333129882812,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 267,
+          "y": 269
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 194.828125,
+          "y": 255.75,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.49334716796875,
+          "y": 246.28225708007812,
+          "width": 14.21331787109375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 267,
+          "y": 248
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 194.828125,
+          "y": 255.75,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.49334716796875,
+          "y": 246.28225708007812,
+          "width": 14.21331787109375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@390/uk",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 390,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 58,
+          "y": 277
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 74.1875,
+          "y": 264.0625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.93777847290039,
+          "y": 262.9072570800781,
+          "width": 18.25777816772461,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 58,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 74.1875,
+          "y": 264.0625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.93777847290039,
+          "y": 262.9072570800781,
+          "width": 18.25777816772461,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 104,
+          "y": 270
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.828125,
+          "y": 256.9375,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 94.58222198486328,
+          "y": 248.65725708007812,
+          "width": 18.257781982421875,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 104,
+          "y": 251
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.828125,
+          "y": 256.9375,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 94.58222198486328,
+          "y": 248.65725708007812,
+          "width": 18.257781982421875,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 149,
+          "y": 281
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 165.484375,
+          "y": 267.21875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 140.22666931152344,
+          "y": 270.0322570800781,
+          "width": 18.257766723632812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 149,
+          "y": 272
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 165.484375,
+          "y": 267.21875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 140.22666931152344,
+          "y": 270.0322570800781,
+          "width": 18.257766723632812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 195,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.265625,
+          "y": 252.1875,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 185.87110900878906,
+          "y": 239.15725708007812,
+          "width": 18.257781982421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 195,
+          "y": 241
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.265625,
+          "y": 252.1875,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 185.87110900878906,
+          "y": 239.15725708007812,
+          "width": 18.257781982421875,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 241,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 167.46875,
+          "y": 260.5,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 231.5155487060547,
+          "y": 255.78225708007812,
+          "width": 18.257781982421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 241,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 167.46875,
+          "y": 260.5,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 231.5155487060547,
+          "y": 255.78225708007812,
+          "width": 18.257781982421875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 286,
+          "y": 259
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.09375,
+          "y": 246.25,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 277.1600036621094,
+          "y": 227.28225708007812,
+          "width": 18.257781982421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 286,
+          "y": 229
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 212.09375,
+          "y": 246.25,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 277.1600036621094,
+          "y": 227.28225708007812,
+          "width": 18.257781982421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 332,
+          "y": 269
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 258.140625,
+          "y": 255.75,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 322.8044738769531,
+          "y": 246.28225708007812,
+          "width": 18.25775146484375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 332,
+          "y": 248
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 258.140625,
+          "y": 255.75,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 322.8044738769531,
+          "y": 246.28225708007812,
+          "width": 18.25775146484375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 358,
+          "height": 296.40625
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@768/uk",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 768,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 159,
+          "y": 186
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 172.09375,
+          "y": 172.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 153.26007080078125,
+          "y": 171.50100708007812,
+          "width": 11.844451904296875,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 159,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 172.09375,
+          "y": 172.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 153.26007080078125,
+          "y": 171.50100708007812,
+          "width": 11.844451904296875,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 189,
+          "y": 179
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 201.703125,
+          "y": 165.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.87118530273438,
+          "y": 157.25100708007812,
+          "width": 11.844436645507812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 189,
+          "y": 159
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 201.703125,
+          "y": 165.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.87118530273438,
+          "y": 157.25100708007812,
+          "width": 11.844436645507812,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 218,
+          "y": 189
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 231.3125,
+          "y": 175.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 212.4822998046875,
+          "y": 178.62600708007812,
+          "width": 11.844436645507812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 218,
+          "y": 181
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 231.3125,
+          "y": 175.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 212.4822998046875,
+          "y": 178.62600708007812,
+          "width": 11.844436645507812,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 248,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 260.9375,
+          "y": 160.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 242.09339904785156,
+          "y": 147.75100708007812,
+          "width": 11.844436645507812,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 248,
+          "y": 150
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 260.9375,
+          "y": 160.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 242.09339904785156,
+          "y": 147.75100708007812,
+          "width": 11.844436645507812,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 278,
+          "y": 182
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 207.671875,
+          "y": 169.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 271.70452880859375,
+          "y": 164.37600708007812,
+          "width": 11.84442138671875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 278,
+          "y": 166
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 207.671875,
+          "y": 169.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 271.70452880859375,
+          "y": 164.37600708007812,
+          "width": 11.84442138671875,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 307,
+          "y": 168
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 236.25,
+          "y": 154.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 301.31561279296875,
+          "y": 135.87600708007812,
+          "width": 11.844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 307,
+          "y": 138
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 236.25,
+          "y": 154.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 301.31561279296875,
+          "y": 135.87600708007812,
+          "width": 11.844482421875,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 337,
+          "y": 177
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 266.265625,
+          "y": 164.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 330.9267578125,
+          "y": 154.87600708007812,
+          "width": 11.84442138671875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 337,
+          "y": 157
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 266.265625,
+          "y": 164.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 330.9267578125,
+          "y": 154.87600708007812,
+          "width": 11.84442138671875,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 360,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@1024/uk",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 1024,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 53,
+          "y": 294
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 65.765625,
+          "y": 280.765625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.02666473388672,
+          "y": 279.6103820800781,
+          "width": 10.746665954589844,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 53,
+          "y": 282
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 65.765625,
+          "y": 280.765625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 48.02666473388672,
+          "y": 279.6103820800781,
+          "width": 10.746665954589844,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 80,
+          "y": 287
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 92.625,
+          "y": 273.640625,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 74.8933334350586,
+          "y": 265.3603820800781,
+          "width": 10.746665954589844,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 80,
+          "y": 267
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 92.625,
+          "y": 273.640625,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 74.8933334350586,
+          "y": 265.3603820800781,
+          "width": 10.746665954589844,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 107,
+          "y": 297
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.5,
+          "y": 283.921875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 101.76000213623047,
+          "y": 286.7353820800781,
+          "width": 10.746665954589844,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 107,
+          "y": 289
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 119.5,
+          "y": 283.921875,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 101.76000213623047,
+          "y": 286.7353820800781,
+          "width": 10.746665954589844,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 134,
+          "y": 282
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 62.03125,
+          "y": 268.890625,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 128.62667846679688,
+          "y": 255.86038208007812,
+          "width": 10.746658325195312,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 134,
+          "y": 258
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 62.03125,
+          "y": 268.890625,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 128.62667846679688,
+          "y": 255.86038208007812,
+          "width": 10.746658325195312,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 161,
+          "y": 290
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 91.453125,
+          "y": 277.203125,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 155.4933319091797,
+          "y": 272.4853820800781,
+          "width": 10.746658325195312,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 161,
+          "y": 274
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 91.453125,
+          "y": 277.203125,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 155.4933319091797,
+          "y": 272.4853820800781,
+          "width": 10.746658325195312,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 188,
+          "y": 276
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 117.296875,
+          "y": 262.953125,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.36000061035156,
+          "y": 243.98538208007812,
+          "width": 10.746658325195312,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 188,
+          "y": 246
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 117.296875,
+          "y": 262.953125,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 182.36000061035156,
+          "y": 243.98538208007812,
+          "width": 10.746658325195312,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 215,
+          "y": 286
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 144.5625,
+          "y": 272.453125,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 209.22665405273438,
+          "y": 262.9853820800781,
+          "width": 10.746673583984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 215,
+          "y": 265
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 144.5625,
+          "y": 272.453125,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 209.22665405273438,
+          "y": 262.9853820800781,
+          "width": 10.746673583984375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 236,
+          "height": 317.109375
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  },
+  {
+    "label": "DashboardStatCard/WithChart@1440/uk",
+    "storyId": "patterns-mantine-dashboardstatcard--with-chart",
+    "width": 1440,
+    "locale": "uk",
+    "rows": [
+      {
+        "barIndex": 0,
+        "hover": "mid",
+        "point": {
+          "x": 158,
+          "y": 186
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 170.1875,
+          "y": 172.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.5045166015625,
+          "y": 171.50100708007812,
+          "width": 10.688888549804688,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 0,
+        "hover": "top+2",
+        "point": {
+          "x": 158,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 170.1875,
+          "y": 172.65625,
+          "width": 57.96875,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 152.5045166015625,
+          "y": 171.50100708007812,
+          "width": 10.688888549804688,
+          "height": 28.5
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "mid",
+        "point": {
+          "x": 185,
+          "y": 179
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 196.90625,
+          "y": 165.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 179.2267303466797,
+          "y": 157.25100708007812,
+          "width": 10.688888549804688,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 1,
+        "hover": "top+2",
+        "point": {
+          "x": 185,
+          "y": 159
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 196.90625,
+          "y": 165.53125,
+          "width": 57.890625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 179.2267303466797,
+          "y": 157.25100708007812,
+          "width": 10.688888549804688,
+          "height": 42.75
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "mid",
+        "point": {
+          "x": 211,
+          "y": 189
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 223.625,
+          "y": 175.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 205.94895935058594,
+          "y": 178.62600708007812,
+          "width": 10.688888549804688,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 2,
+        "hover": "top+2",
+        "point": {
+          "x": 211,
+          "y": 181
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 223.625,
+          "y": 175.8125,
+          "width": 52.578125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 205.94895935058594,
+          "y": 178.62600708007812,
+          "width": 10.688888549804688,
+          "height": 21.375
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "mid",
+        "point": {
+          "x": 238,
+          "y": 174
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 166.0625,
+          "y": 160.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 232.67117309570312,
+          "y": 147.75100708007812,
+          "width": 10.68890380859375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 3,
+        "hover": "top+2",
+        "point": {
+          "x": 238,
+          "y": 150
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 166.0625,
+          "y": 160.78125,
+          "width": 59.59375,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 232.67117309570312,
+          "y": 147.75100708007812,
+          "width": 10.68890380859375,
+          "height": 52.25
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "mid",
+        "point": {
+          "x": 265,
+          "y": 182
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 195.359375,
+          "y": 169.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.3934020996094,
+          "y": 164.37600708007812,
+          "width": 10.688873291015625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 4,
+        "hover": "top+2",
+        "point": {
+          "x": 265,
+          "y": 166
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 195.359375,
+          "y": 169.09375,
+          "width": 57.03125,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 259.3934020996094,
+          "y": 164.37600708007812,
+          "width": 10.688873291015625,
+          "height": 35.625
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "mid",
+        "point": {
+          "x": 291,
+          "y": 168
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 221.046875,
+          "y": 154.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 286.1156005859375,
+          "y": 135.87600708007812,
+          "width": 10.68890380859375,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 5,
+        "hover": "top+2",
+        "point": {
+          "x": 291,
+          "y": 138
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 221.046875,
+          "y": 154.84375,
+          "width": 58.0625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 286.1156005859375,
+          "y": 135.87600708007812,
+          "width": 10.68890380859375,
+          "height": 64.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "mid",
+        "point": {
+          "x": 318,
+          "y": 177
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 248.171875,
+          "y": 164.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 312.83782958984375,
+          "y": 154.87600708007812,
+          "width": 10.68890380859375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      },
+      {
+        "barIndex": 6,
+        "hover": "top+2",
+        "point": {
+          "x": 318,
+          "y": 157
+        },
+        "active": true,
+        "tooltipRect": {
+          "x": 248.171875,
+          "y": 164.34375,
+          "width": 57.65625,
+          "height": 24.1875
+        },
+        "barRect": {
+          "x": 312.83782958984375,
+          "y": 154.87600708007812,
+          "width": 10.68890380859375,
+          "height": 45.125
+        },
+        "clip": {
+          "x": 16,
+          "y": 16,
+          "width": 340,
+          "height": 209
+        },
+        "violA": false,
+        "violB": false,
+        "violC": false
+      }
+    ],
+    "pageErrors": []
+  }
+]

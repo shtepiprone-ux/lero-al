@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { userEvent, expect } from 'storybook/test';
+import { userEvent, expect, waitFor } from 'storybook/test';
 import { Box } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 import {
@@ -284,5 +284,108 @@ export const Error: Story = {
         </MantineDashboardCard>
       </Box>
     );
+  },
+};
+
+// Task 889 (R5) — grouped (not stacked) columns, same month fixture as `Default`.
+export const Grouped: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <Box p="md">
+        <MantineDashboardCard title={storyT(l, 'storybook.mantine.dashboard_bar_card_title')} scopeLabel={makeScopeLabel(l, 'month')} state="ready">
+          <MantineDashboardBarChart
+            data={buildData('month')}
+            series={buildSeries(l)}
+            categoryLabel={makeCategoryLabel(l, 'month')}
+            tooltipCategoryLabel={makeTooltipCategoryLabel(l, 'month')}
+            valueLabel={makeValueLabel(l)}
+            state="ready"
+            stacked={false}
+            allHiddenHint={storyT(l, 'storybook.mantine.dashboard_chart_all_hidden_hint')}
+            ariaLabel={storyT(l, 'storybook.mantine.dashboard_bar_aria_label')}
+          />
+        </MantineDashboardCard>
+      </Box>
+    );
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  // AC5 — grouped renders its two series side by side: the first bar of each series sits at a
+  // different x within the same category (a stacked pair would share the same x). ApexCharts draws
+  // each `.apexcharts-bar-area` as an SVG `<path>` (no `x`/`width`/`height` attributes), so geometry
+  // is read from the rendered `getBoundingClientRect()`, not an attribute. `ReactApexChart` is a
+  // client-only dynamic import (`ssr:false`) that draws asynchronously after mount, so the bar count
+  // is awaited first — the same `waitFor` pattern `DashboardPeriodControl.stories.tsx` already uses.
+  // Review 1 (F2): the *geometry* is awaited separately too — ApexCharts' own grow-in animation keeps
+  // running after the bar count is already correct, and every bar shares the same x/width/height
+  // while it is still animating, which raced the immediate check that followed the first `waitFor`.
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelectorAll('.apexcharts-bar-area').length).toBeGreaterThan(0), { timeout: 5000 });
+    const seriesGroups = canvasElement.querySelectorAll('.apexcharts-series');
+    expect(seriesGroups.length).toBe(2);
+    await waitFor(() => {
+      const firstBarLefts = Array.from(seriesGroups).map((g) => g.querySelector('.apexcharts-bar-area')?.getBoundingClientRect().left);
+      expect(firstBarLefts[0]).not.toBe(firstBarLefts[1]);
+    }, { timeout: 5000 });
+  },
+};
+
+// Task 889 (R6) — horizontal top-N list, 5 long category labels from the existing
+// `storybook.listing.grid_*` fixture strings (docs/storybook-governance.md §14.2 — no new raw
+// fixture literal).
+const HORIZONTAL_VALUES = [42, 35, 28, 24, 19];
+function buildHorizontalCategories(l: string): string[] {
+  return [
+    storyT(l, 'storybook.listing.grid_1'),
+    storyT(l, 'storybook.listing.grid_3'),
+    storyT(l, 'storybook.listing.grid_4'),
+    storyT(l, 'storybook.listing.grid_5'),
+    storyT(l, 'storybook.listing.grid_6'),
+  ];
+}
+function buildHorizontalData(l: string): DashboardBarChartDatum[] {
+  return buildHorizontalCategories(l).map((category, i) => ({ category, count: HORIZONTAL_VALUES[i] }));
+}
+function buildHorizontalSeries(l: string): DashboardBarChartSeries[] {
+  return [{ key: 'count', label: storyT(l, 'storybook.mantine.dashboard_bar_series_new'), color: theme.other!.chartSeries!.recordedViews! }];
+}
+
+export const Horizontal: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <Box p="md">
+        <MantineDashboardCard title={storyT(l, 'storybook.mantine.dashboard_bar_card_title')} state="ready">
+          <MantineDashboardBarChart
+            data={buildHorizontalData(l)}
+            series={buildHorizontalSeries(l)}
+            categoryLabel={(category) => category}
+            valueLabel={(n) => formatCount(n, l)}
+            state="ready"
+            horizontal
+            allHiddenHint={storyT(l, 'storybook.mantine.dashboard_chart_all_hidden_hint')}
+            ariaLabel={storyT(l, 'storybook.mantine.dashboard_bar_aria_label')}
+          />
+        </MantineDashboardCard>
+      </Box>
+    );
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  // AC5 — horizontal bars' width varies with value while every bar's height is equal. Geometry read
+  // from `getBoundingClientRect()` — ApexCharts draws each bar as an SVG `<path>`, not a `<rect>`
+  // with `x`/`width`/`height` attributes. Bar count is awaited for the same async-chart-draw reason
+  // as `Grouped`. Review 1 (F2): the geometry is awaited separately too, since ApexCharts' own
+  // grow-in animation keeps every bar at the same starting width/height for a few frames after the
+  // count is already correct — reading geometry immediately after the count `waitFor` raced it.
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelectorAll('.apexcharts-bar-area').length).toBe(HORIZONTAL_VALUES.length), { timeout: 5000 });
+    await waitFor(() => {
+      const bars = canvasElement.querySelectorAll('.apexcharts-bar-area');
+      const rects = Array.from(bars).map((b) => b.getBoundingClientRect());
+      const widths = rects.map((r) => Math.round(r.width));
+      const heights = rects.map((r) => Math.round(r.height));
+      expect(new Set(widths).size).toBeGreaterThan(1);
+      expect(new Set(heights).size).toBe(1);
+    }, { timeout: 5000 });
   },
 };

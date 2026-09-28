@@ -922,8 +922,9 @@ Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 ### 22.1 Owner items (approval waits on both)
 
-- **O889-1**: the §21.6 matrix, rows 1, 1a, 1b and 3. Rows 2 and 4 were accepted earlier.
-- **O889-2**: §17.1, option A or B. Under option A, the 889 hunks in `theme.ts` are now:
+- **O889-1 — ✅ accepted by the owner, 2026-09-28**, rows 1, 1a, 1b and 3 of §21.6. Verbatim: *"тепер є
+  адаптивність. Приймаю."* Rows 2 and 4 were accepted earlier, so O889-1 is closed.
+- **O889-2 (still open)**: §17.1, option A or B. Under option A, the 889 hunks in `theme.ts` are now:
   - the `MantineGradient` type import;
   - `sparklineMinWidth` / `sparklineHeight` (type and value lines);
   - `accentHeroGradient` (type and value lines).
@@ -931,3 +932,24 @@ Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
   `sparklineMinWidth` replaces the `sparklineWidth` name that §17.1 uses.
 
 Status: `PARTIALLY VERIFIED`. The approval review follows once the owner has returned both items.
+
+## 23. Review 8 — ✅ APPROVED WITH NOTES (2026-09-28)
+
+- **O889-2 — answered by the owner, 2026-09-28: option A.** Verbatim: *"ну так задача 889 вже завершена і нічого в ній
+  перевіряти вже. То ж її необхідно закомітити"*. 889 is committed now, and 854's hunks stay uncommitted.
+- **Staging mechanism.** Interactive `git add -p` is not used, because a pasted block would feed its later lines to
+  the prompt. The reviewer instead built `docs/sessions/evidence/task889/task889-shared-hunks.patch` from the six
+  shared files, and the owner stages it with `git apply --cached`. It carries:
+  - `theme.ts`: hunks 1, 3 and 5 of 5;
+  - the manifest: hunk 1 of 2;
+  - each `messages/*.json` file: hunk 4 of 4.
+
+  Reviewer proof: `patch -p1` against the HEAD blobs exits 0, and all five JSON files parse. The working tree minus
+  the patched result is exactly 854's lines: `dashboardListingThumb`, the `AgentStatisticsView.tsx` manifest line,
+  `statistics` and `user_menu_agent_caption`.
+- **Self-containment of the committed subset.** Every module imported by the 889 files is tracked at HEAD. Every
+  formatter they import exists at HEAD. Of the 22 story i18n keys, 21 exist at HEAD, and the 22nd
+  (`dashboard_sparkline_aria_label`) is in the patch.
+- **Notes (P3, no action):**
+  - The executor's rev4 AC10 and AC9-R4 runs predate its last two edits. The reviewer's runs (§22) supersede them.
+  - Lint shows 109 warnings, all in `docs/sessions/evidence/task889/*.mjs` probe scripts, with 0 errors.

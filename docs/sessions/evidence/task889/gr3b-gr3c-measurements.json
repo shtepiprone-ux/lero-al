@@ -1,0 +1,1526 @@
+{
+  "DashboardSparkline/Default": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    }
+  },
+  "DashboardSparkline/AllZero": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    }
+  },
+  "DashboardSparkline/ThirtyDays": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    }
+  },
+  "DashboardStatCard/WithChart": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [
+        {
+          "w": 288,
+          "h": 296
+        }
+      ],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [
+        {
+          "w": 358,
+          "h": 296
+        }
+      ],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [
+        {
+          "w": 360,
+          "h": 209
+        }
+      ],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [
+        {
+          "w": 236,
+          "h": 244
+        }
+      ],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 5
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [
+        {
+          "w": 340,
+          "h": 209
+        }
+      ],
+      "sparklineRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElements": 2
+    }
+  },
+  "DashboardStatCard/Accent": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [
+        {
+          "w": 288,
+          "h": 183
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElements": 0
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [
+        {
+          "w": 358,
+          "h": 183
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElements": 0
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [
+        {
+          "w": 360,
+          "h": 204
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElements": 0
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [
+        {
+          "w": 236,
+          "h": 204
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElements": 0
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [
+        {
+          "w": 340,
+          "h": 204
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElements": 0
+    }
+  },
+  "DashboardBarChart/Grouped": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [
+        {
+          "w": 288,
+          "h": 602
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 1
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [
+        {
+          "w": 358,
+          "h": 550
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 1
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [
+        {
+          "w": 736,
+          "h": 550
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 1
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [
+        {
+          "w": 992,
+          "h": 550
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 1
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [
+        {
+          "w": 1408,
+          "h": 550
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 1
+    }
+  },
+  "DashboardBarChart/Horizontal": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardRects": [
+        {
+          "w": 288,
+          "h": 470
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 8
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardRects": [
+        {
+          "w": 358,
+          "h": 470
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 8
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardRects": [
+        {
+          "w": 736,
+          "h": 470
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 8
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardRects": [
+        {
+          "w": 992,
+          "h": 470
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 8
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardRects": [
+        {
+          "w": 1408,
+          "h": 470
+        }
+      ],
+      "sparklineRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "x": 0,
+          "w": 0,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElements": 8
+    }
+  }
+}

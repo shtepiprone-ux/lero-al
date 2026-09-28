@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
+import { createTheme, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
 import { brand } from '@/design-system/brand'
 
 // Task 775 (D775-C = C1) — native Mantine typing for the two additive spacing keys below.
@@ -317,7 +317,11 @@ declare module '@mantine/core' {
       radialHollowSize: string // '56%' — MantineDashboardRadialProgress `plotOptions.radialBar.hollow.size`; TailAdmin's measured ring thickness (demo.tailadmin.com/radial-chart)
       barColumnWidth: string // '40%' — MantineDashboardBarChart `plotOptions.bar.columnWidth`; TailAdmin Bar Chart 1/2 column-to-slot ratio (demo.tailadmin.com/bar-chart)
       lineGradientStops: number[] // [0, 90, 100] — MantineDashboardLineChart area-fill `gradient.stops` (percent offsets), TailAdmin Line Chart 1
+      sparklineMinWidth: number // Task 889 rev 4 (O889-1 row 1): minimum sparkline width (Lahomes KPI canvas, D78-9); the chart fills its container above it
+      sparklineHeight: number // Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)
     }
+    // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
+    accentHeroGradient: MantineGradient
   }
 }
 
@@ -842,7 +846,11 @@ export const theme = createTheme({
       radialHollowSize: '56%',
       barColumnWidth: '40%',
       lineGradientStops: [0, 90, 100],
+      sparklineMinWidth: 154, // Task 889 rev 4 (O889-1 row 1): minimum sparkline width (Lahomes KPI canvas, D78-9); the chart fills its container above it
+      sparklineHeight: 95, // Task 889: Lahomes KPI sparkline canvas, measured live 2026-09-27 (owner reference, D78-9)
     },
+    // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
+    accentHeroGradient: { from: 'brand.7', to: 'brand.9', deg: 180 },
   },
 
   // Component-level defaults aligned to TailAdmin density (§1.4 / §1b).

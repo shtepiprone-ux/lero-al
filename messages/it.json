@@ -2541,6 +2541,7 @@
       "dashboard_bar_aria_label": "Grafico degli annunci",
       "dashboard_bar_series_new": "Nuovi annunci",
       "dashboard_bar_series_renewed": "Annunci rinnovati",
+      "dashboard_sparkline_aria_label": "Grafico della tendenza",
       "dashboard_semi_donut_card_title": "Fonte di traffico",
       "dashboard_semi_donut_aria_label": "Grafico della fonte di traffico",
       "dashboard_semi_donut_email": "Email",

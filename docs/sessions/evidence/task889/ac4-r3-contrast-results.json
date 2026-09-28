@@ -1,0 +1,827 @@
+[
+  {
+    "locale": "sq",
+    "width": 320,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 5208,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 6448,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 4712,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 390,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 358,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6678,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 8268,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 6042,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 768,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 360,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6552,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 12168,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5928,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 1024,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 236,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 3948,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 7332,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 3572,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "sq",
+    "width": 1440,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 340,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6132,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 11388,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5548,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 320,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 5208,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 6448,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 4712,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 358,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6678,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 8268,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 6042,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 768,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 360,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6552,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 12168,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5928,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 1024,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 236,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 3948,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 7332,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 3572,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 340,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6132,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 11388,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5548,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 320,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 5208,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 6448,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 4712,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 390,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 358,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6678,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 8268,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 6042,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 768,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 360,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6552,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 12168,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5928,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 1024,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 236,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 3948,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 7332,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 3572,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 1440,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 340,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6132,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 11388,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5548,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 320,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 5208,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 6448,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 4712,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 390,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 358,
+      "height": 184
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6678,
+        "minContrast": 5.02
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 8268,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 6042,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 768,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 360,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6552,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 12168,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5928,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 1024,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 236,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 3948,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 7332,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 3572,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "it",
+    "width": 1440,
+    "wrapLabel": false,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 340,
+      "height": 205
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 6132,
+        "minContrast": 4.9
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 11388,
+        "minContrast": 5.49
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5548,
+        "minContrast": 6.63
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 320,
+    "wrapLabel": true,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 288,
+      "height": 204
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 10168,
+        "minContrast": 4.87
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 6448,
+        "minContrast": 5.89
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 4712,
+        "minContrast": 6.73
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 390,
+    "wrapLabel": true,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 358,
+      "height": 204
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 13038,
+        "minContrast": 4.87
+      },
+      {
+        "role": "value",
+        "fontSize": 20,
+        "sampledPixels": 8268,
+        "minContrast": 5.89
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 6042,
+        "minContrast": 6.73
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 768,
+    "wrapLabel": true,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 360,
+      "height": 225
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 12792,
+        "minContrast": 4.78
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 12168,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5928,
+        "minContrast": 6.72
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 1024,
+    "wrapLabel": true,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 236,
+      "height": 225
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 7708,
+        "minContrast": 4.78
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 7332,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 3572,
+        "minContrast": 6.72
+      }
+    ]
+  },
+  {
+    "locale": "uk",
+    "width": 1440,
+    "wrapLabel": true,
+    "backgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "hiddenNodeCount": 3,
+    "cardBox": {
+      "x": 16,
+      "y": 16,
+      "width": 340,
+      "height": 225
+    },
+    "elements": [
+      {
+        "role": "label",
+        "fontSize": 14,
+        "sampledPixels": 11972,
+        "minContrast": 4.78
+      },
+      {
+        "role": "value",
+        "fontSize": 30,
+        "sampledPixels": 11388,
+        "minContrast": 5.67
+      },
+      {
+        "role": "caption",
+        "fontSize": 12,
+        "sampledPixels": 5548,
+        "minContrast": 6.72
+      }
+    ]
+  }
+]

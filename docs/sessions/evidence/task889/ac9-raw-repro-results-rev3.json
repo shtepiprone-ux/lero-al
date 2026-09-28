@@ -1,0 +1,239 @@
+{
+  "results": {
+    "nonzero-compact-off": {
+      "totalHovers": 14,
+      "activeCount": 14,
+      "hovers": [
+        {
+          "barIndex": 0,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 0,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 1,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 1,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 2,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 2,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 3,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 3,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 4,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 4,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 5,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 5,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 6,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 6,
+          "hover": "top+2",
+          "active": true
+        }
+      ]
+    },
+    "nonzero-compact-on": {
+      "totalHovers": 14,
+      "activeCount": 14,
+      "hovers": [
+        {
+          "barIndex": 0,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 0,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 1,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 1,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 2,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 2,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 3,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 3,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 4,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 4,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 5,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 5,
+          "hover": "top+2",
+          "active": true
+        },
+        {
+          "barIndex": 6,
+          "hover": "mid",
+          "active": true
+        },
+        {
+          "barIndex": 6,
+          "hover": "top+2",
+          "active": true
+        }
+      ]
+    },
+    "allzero-compact-off": {
+      "totalHovers": 7,
+      "activeCount": 0,
+      "hovers": [
+        {
+          "barIndex": 0,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 1,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 2,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 3,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 4,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 5,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 6,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        }
+      ]
+    },
+    "allzero-compact-on": {
+      "totalHovers": 7,
+      "activeCount": 0,
+      "hovers": [
+        {
+          "barIndex": 0,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 1,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 2,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 3,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 4,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 5,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        },
+        {
+          "barIndex": 6,
+          "hover": "zero-slot-above-bottom",
+          "active": false
+        }
+      ]
+    }
+  },
+  "pageErrors": []
+}

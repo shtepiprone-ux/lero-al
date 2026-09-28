@@ -1,0 +1,3 @@
+AdminDashboardView: 165622 chars written (after-rev4)
+AgentStatisticsView: 201818 chars written (after-rev4)
+EXIT_CODE=0

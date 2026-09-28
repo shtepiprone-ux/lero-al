@@ -1,0 +1,35 @@
+PASS  patterns-mantine-dashboardsparkline--default [en] run 1/8
+PASS  patterns-mantine-dashboardsparkline--default [sq] run 2/8
+PASS  patterns-mantine-dashboardsparkline--default [uk] run 3/8
+PASS  patterns-mantine-dashboardsparkline--default [it] run 4/8
+PASS  patterns-mantine-dashboardsparkline--default [en] run 5/8
+PASS  patterns-mantine-dashboardsparkline--default [sq] run 6/8
+PASS  patterns-mantine-dashboardsparkline--default [uk] run 7/8
+PASS  patterns-mantine-dashboardsparkline--default [it] run 8/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [en] run 1/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [sq] run 2/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [uk] run 3/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [it] run 4/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [en] run 5/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [sq] run 6/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [uk] run 7/8
+PASS  patterns-mantine-dashboardsparkline--all-zero [it] run 8/8
+PASS  patterns-mantine-dashboardbarchart--grouped [en] run 1/8
+PASS  patterns-mantine-dashboardbarchart--grouped [sq] run 2/8
+PASS  patterns-mantine-dashboardbarchart--grouped [uk] run 3/8
+PASS  patterns-mantine-dashboardbarchart--grouped [it] run 4/8
+PASS  patterns-mantine-dashboardbarchart--grouped [en] run 5/8
+PASS  patterns-mantine-dashboardbarchart--grouped [sq] run 6/8
+PASS  patterns-mantine-dashboardbarchart--grouped [uk] run 7/8
+PASS  patterns-mantine-dashboardbarchart--grouped [it] run 8/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [en] run 1/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [sq] run 2/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [uk] run 3/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [it] run 4/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [en] run 5/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [sq] run 6/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [uk] run 7/8
+PASS  patterns-mantine-dashboardbarchart--horizontal [it] run 8/8
+
+32/32 clean (no error boundary)
+EXIT_CODE=0

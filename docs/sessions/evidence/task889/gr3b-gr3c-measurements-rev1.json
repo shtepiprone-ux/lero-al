@@ -1,0 +1,1746 @@
+{
+  "DashboardSparkline/Default": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 22,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 44,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 66,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 89,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 111,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 133,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 22,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 44,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 66,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 89,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 111,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 133,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    }
+  },
+  "DashboardSparkline/AllZero": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 22,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 44,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 66,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 89,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 111,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 133,
+          "w": 9,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 22,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 44,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 66,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 89,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 111,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 133,
+          "w": 9,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 30,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 52,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 74,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 97,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 119,
+          "w": 9,
+          "h": 0
+        },
+        {
+          "left": 141,
+          "w": 9,
+          "h": 0
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    }
+  },
+  "DashboardSparkline/ThirtyDays": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "left": 17,
+          "w": 2,
+          "h": 14
+        },
+        {
+          "left": 22,
+          "w": 2,
+          "h": 21
+        },
+        {
+          "left": 27,
+          "w": 2,
+          "h": 17
+        },
+        {
+          "left": 33,
+          "w": 2,
+          "h": 26
+        },
+        {
+          "left": 38,
+          "w": 2,
+          "h": 19
+        },
+        {
+          "left": 43,
+          "w": 2,
+          "h": 31
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "left": 17,
+          "w": 2,
+          "h": 14
+        },
+        {
+          "left": 22,
+          "w": 2,
+          "h": 21
+        },
+        {
+          "left": 27,
+          "w": 2,
+          "h": 17
+        },
+        {
+          "left": 33,
+          "w": 2,
+          "h": 26
+        },
+        {
+          "left": 38,
+          "w": 2,
+          "h": 19
+        },
+        {
+          "left": 43,
+          "w": 2,
+          "h": 31
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "left": 25,
+          "w": 2,
+          "h": 14
+        },
+        {
+          "left": 30,
+          "w": 2,
+          "h": 21
+        },
+        {
+          "left": 35,
+          "w": 2,
+          "h": 17
+        },
+        {
+          "left": 41,
+          "w": 2,
+          "h": 26
+        },
+        {
+          "left": 46,
+          "w": 2,
+          "h": 19
+        },
+        {
+          "left": 51,
+          "w": 2,
+          "h": 31
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "left": 25,
+          "w": 2,
+          "h": 14
+        },
+        {
+          "left": 30,
+          "w": 2,
+          "h": 21
+        },
+        {
+          "left": 35,
+          "w": 2,
+          "h": 17
+        },
+        {
+          "left": 41,
+          "w": 2,
+          "h": 26
+        },
+        {
+          "left": 46,
+          "w": 2,
+          "h": 19
+        },
+        {
+          "left": 51,
+          "w": 2,
+          "h": 31
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 30,
+      "barRects": [
+        {
+          "left": 25,
+          "w": 2,
+          "h": 14
+        },
+        {
+          "left": 30,
+          "w": 2,
+          "h": 21
+        },
+        {
+          "left": 35,
+          "w": 2,
+          "h": 17
+        },
+        {
+          "left": 41,
+          "w": 2,
+          "h": 26
+        },
+        {
+          "left": 46,
+          "w": 2,
+          "h": 19
+        },
+        {
+          "left": 51,
+          "w": 2,
+          "h": 31
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    }
+  },
+  "DashboardStatCard/WithChart": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 304,
+            "width": 288,
+            "height": 296
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 284,
+          "scrollWidth": 286,
+          "clientWidth": 286,
+          "overflowsOwnBox": false,
+          "chartRight": 191,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 43,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 65,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 87,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 110,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 132,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 154,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 296
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 354,
+          "scrollWidth": 356,
+          "clientWidth": 356,
+          "overflowsOwnBox": false,
+          "chartRight": 191,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 43,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 65,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 87,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 110,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 132,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 154,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 376,
+            "width": 360,
+            "height": 209
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 352,
+          "scrollWidth": 358,
+          "clientWidth": 358,
+          "overflowsOwnBox": false,
+          "chartRight": 351,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 225,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 247,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 270,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 292,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 314,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 252,
+            "width": 236,
+            "height": 317
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 228,
+          "scrollWidth": 234,
+          "clientWidth": 234,
+          "overflowsOwnBox": false,
+          "chartRight": 195,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 47,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 69,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 91,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 114,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 136,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 158,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 356,
+            "width": 340,
+            "height": 209
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 332,
+          "scrollWidth": 338,
+          "clientWidth": 338,
+          "overflowsOwnBox": false,
+          "chartRight": 331,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [
+        {
+          "w": 154,
+          "h": 95
+        }
+      ],
+      "barCount": 7,
+      "barRects": [
+        {
+          "left": 183,
+          "w": 9,
+          "h": 29
+        },
+        {
+          "left": 205,
+          "w": 9,
+          "h": 43
+        },
+        {
+          "left": 227,
+          "w": 9,
+          "h": 21
+        },
+        {
+          "left": 250,
+          "w": 9,
+          "h": 52
+        },
+        {
+          "left": 272,
+          "w": 9,
+          "h": 36
+        },
+        {
+          "left": 294,
+          "w": 9,
+          "h": 64
+        }
+      ],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 2
+    }
+  },
+  "DashboardStatCard/Accent": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 304,
+            "width": 288,
+            "height": 183
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 284,
+          "scrollWidth": 288,
+          "clientWidth": 288,
+          "overflowsOwnBox": false,
+          "chartRight": null,
+          "chartExceedsContentBox": null
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 0
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 183
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 354,
+          "scrollWidth": 358,
+          "clientWidth": 358,
+          "overflowsOwnBox": false,
+          "chartRight": null,
+          "chartExceedsContentBox": null
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 0
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 376,
+            "width": 360,
+            "height": 204
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 352,
+          "scrollWidth": 360,
+          "clientWidth": 360,
+          "overflowsOwnBox": false,
+          "chartRight": null,
+          "chartExceedsContentBox": null
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 0
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 252,
+            "width": 236,
+            "height": 204
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 228,
+          "scrollWidth": 236,
+          "clientWidth": 236,
+          "overflowsOwnBox": false,
+          "chartRight": null,
+          "chartExceedsContentBox": null
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 0
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 356,
+            "width": 340,
+            "height": 204
+          },
+          "paddingRight": 24,
+          "contentBoxRight": 332,
+          "scrollWidth": 340,
+          "clientWidth": 340,
+          "overflowsOwnBox": false,
+          "chartRight": null,
+          "chartExceedsContentBox": null
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 0,
+      "barRects": [],
+      "headingFontSizes": [],
+      "overflowElementsWholeDoc": 0
+    }
+  },
+  "DashboardBarChart/Grouped": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 304,
+            "width": 288,
+            "height": 602
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 284,
+          "scrollWidth": 286,
+          "clientWidth": 286,
+          "overflowsOwnBox": false,
+          "chartRight": 283,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "left": 87,
+          "w": 6,
+          "h": 187
+        },
+        {
+          "left": 117,
+          "w": 6,
+          "h": 241
+        },
+        {
+          "left": 147,
+          "w": 6,
+          "h": 218
+        },
+        {
+          "left": 177,
+          "w": 6,
+          "h": 273
+        },
+        {
+          "left": 208,
+          "w": 6,
+          "h": 234
+        },
+        {
+          "left": 238,
+          "w": 6,
+          "h": 296
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 1
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 550
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 354,
+          "scrollWidth": 356,
+          "clientWidth": 356,
+          "overflowsOwnBox": false,
+          "chartRight": 353,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "left": 90,
+          "w": 8,
+          "h": 187
+        },
+        {
+          "left": 132,
+          "w": 8,
+          "h": 241
+        },
+        {
+          "left": 174,
+          "w": 8,
+          "h": 218
+        },
+        {
+          "left": 216,
+          "w": 8,
+          "h": 273
+        },
+        {
+          "left": 258,
+          "w": 8,
+          "h": 234
+        },
+        {
+          "left": 300,
+          "w": 8,
+          "h": 296
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 1
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 752,
+            "width": 736,
+            "height": 550
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 732,
+          "scrollWidth": 734,
+          "clientWidth": 734,
+          "overflowsOwnBox": false,
+          "chartRight": 731,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "left": 109,
+          "w": 21,
+          "h": 187
+        },
+        {
+          "left": 214,
+          "w": 21,
+          "h": 241
+        },
+        {
+          "left": 319,
+          "w": 21,
+          "h": 218
+        },
+        {
+          "left": 424,
+          "w": 21,
+          "h": 273
+        },
+        {
+          "left": 529,
+          "w": 21,
+          "h": 234
+        },
+        {
+          "left": 634,
+          "w": 21,
+          "h": 296
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 1
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 1008,
+            "width": 992,
+            "height": 550
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 988,
+          "scrollWidth": 990,
+          "clientWidth": 990,
+          "overflowsOwnBox": false,
+          "chartRight": 987,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "left": 122,
+          "w": 30,
+          "h": 187
+        },
+        {
+          "left": 269,
+          "w": 30,
+          "h": 241
+        },
+        {
+          "left": 417,
+          "w": 30,
+          "h": 218
+        },
+        {
+          "left": 565,
+          "w": 30,
+          "h": 273
+        },
+        {
+          "left": 712,
+          "w": 30,
+          "h": 234
+        },
+        {
+          "left": 860,
+          "w": 30,
+          "h": 296
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 1
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 1424,
+            "width": 1408,
+            "height": 550
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 1404,
+          "scrollWidth": 1406,
+          "clientWidth": 1406,
+          "overflowsOwnBox": false,
+          "chartRight": 1403,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 12,
+      "barRects": [
+        {
+          "left": 143,
+          "w": 43,
+          "h": 187
+        },
+        {
+          "left": 360,
+          "w": 43,
+          "h": 241
+        },
+        {
+          "left": 577,
+          "w": 43,
+          "h": 218
+        },
+        {
+          "left": 793,
+          "w": 43,
+          "h": 273
+        },
+        {
+          "left": 1010,
+          "w": 43,
+          "h": 234
+        },
+        {
+          "left": 1227,
+          "w": 43,
+          "h": 296
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 1
+    }
+  },
+  "DashboardBarChart/Horizontal": {
+    "320": {
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "docScrollWidth": 320,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 304,
+            "width": 288,
+            "height": 470
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 284,
+          "scrollWidth": 286,
+          "clientWidth": 286,
+          "overflowsOwnBox": false,
+          "chartRight": 283,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 49,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 41,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 33,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 28,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 22,
+          "h": 25
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 8
+    },
+    "390": {
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "docScrollWidth": 390,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 470
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 354,
+          "scrollWidth": 356,
+          "clientWidth": 356,
+          "overflowsOwnBox": false,
+          "chartRight": 353,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 118,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 98,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 78,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 67,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 53,
+          "h": 25
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 8
+    },
+    "768": {
+      "rootWidth": 768,
+      "viewportWidth": 768,
+      "docScrollWidth": 768,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 752,
+            "width": 736,
+            "height": 470
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 732,
+          "scrollWidth": 734,
+          "clientWidth": 734,
+          "overflowsOwnBox": false,
+          "chartRight": 731,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 435,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 363,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 290,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 249,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 197,
+          "h": 25
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 8
+    },
+    "1024": {
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "docScrollWidth": 1024,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 1008,
+            "width": 992,
+            "height": 470
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 988,
+          "scrollWidth": 990,
+          "clientWidth": 990,
+          "overflowsOwnBox": false,
+          "chartRight": 987,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 650,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 542,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 433,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 371,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 294,
+          "h": 25
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 8
+    },
+    "1440": {
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "docScrollWidth": 1440,
+      "cardMeasurements": [
+        {
+          "cardRect": {
+            "left": 16,
+            "right": 1424,
+            "width": 1408,
+            "height": 470
+          },
+          "paddingRight": 20,
+          "contentBoxRight": 1404,
+          "scrollWidth": 1406,
+          "clientWidth": 1406,
+          "overflowsOwnBox": false,
+          "chartRight": 1403,
+          "chartExceedsContentBox": false
+        }
+      ],
+      "chartWrapperRects": [],
+      "barCount": 5,
+      "barRects": [
+        {
+          "left": 203,
+          "w": 1111,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 925,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 740,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 635,
+          "h": 25
+        },
+        {
+          "left": 203,
+          "w": 502,
+          "h": 25
+        }
+      ],
+      "headingFontSizes": [
+        "20px"
+      ],
+      "overflowElementsWholeDoc": 8
+    }
+  }
+}

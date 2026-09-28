@@ -1,0 +1,102 @@
+{
+  "320": {
+    "cardWidth": 288,
+    "viewportWidth": 320,
+    "docScrollWidth": 320,
+    "docClientWidth": 320,
+    "fontSizes": [
+      {
+        "role": "label",
+        "fontSize": 14
+      },
+      {
+        "role": "value",
+        "fontSize": 20
+      },
+      {
+        "role": "caption",
+        "fontSize": 12
+      }
+    ]
+  },
+  "390": {
+    "cardWidth": 358,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "docClientWidth": 390,
+    "fontSizes": [
+      {
+        "role": "label",
+        "fontSize": 14
+      },
+      {
+        "role": "value",
+        "fontSize": 20
+      },
+      {
+        "role": "caption",
+        "fontSize": 12
+      }
+    ]
+  },
+  "768": {
+    "cardWidth": 360,
+    "viewportWidth": 768,
+    "docScrollWidth": 768,
+    "docClientWidth": 768,
+    "fontSizes": [
+      {
+        "role": "label",
+        "fontSize": 14
+      },
+      {
+        "role": "value",
+        "fontSize": 30
+      },
+      {
+        "role": "caption",
+        "fontSize": 12
+      }
+    ]
+  },
+  "1024": {
+    "cardWidth": 236,
+    "viewportWidth": 1024,
+    "docScrollWidth": 1024,
+    "docClientWidth": 1024,
+    "fontSizes": [
+      {
+        "role": "label",
+        "fontSize": 14
+      },
+      {
+        "role": "value",
+        "fontSize": 30
+      },
+      {
+        "role": "caption",
+        "fontSize": 12
+      }
+    ]
+  },
+  "1440": {
+    "cardWidth": 340,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "docClientWidth": 1440,
+    "fontSizes": [
+      {
+        "role": "label",
+        "fontSize": 14
+      },
+      {
+        "role": "value",
+        "fontSize": 30
+      },
+      {
+        "role": "caption",
+        "fontSize": 12
+      }
+    ]
+  }
+}

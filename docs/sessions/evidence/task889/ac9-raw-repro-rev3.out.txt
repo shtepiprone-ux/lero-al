@@ -1,0 +1,6 @@
+nonzero-compact-off: 14 hovers, 14 active
+nonzero-compact-on: 14 hovers, 14 active
+allzero-compact-off: 7 hovers, 0 active
+allzero-compact-on: 7 hovers, 0 active
+PAGE_ERRORS=0
+EXIT_CODE=0

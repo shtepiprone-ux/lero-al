@@ -2541,6 +2541,7 @@
       "dashboard_bar_aria_label": "Графік оголошень",
       "dashboard_bar_series_new": "Нові оголошення",
       "dashboard_bar_series_renewed": "Поновлені оголошення",
+      "dashboard_sparkline_aria_label": "Графік тренду",
       "dashboard_semi_donut_card_title": "Джерело трафіку",
       "dashboard_semi_donut_aria_label": "Графік джерела трафіку",
       "dashboard_semi_donut_email": "Email",

@@ -1,0 +1,15 @@
+DashboardSparkline/Default@1440/en: 14 hovers, 0 violations
+DashboardSparkline/ThirtyDays@1440/en: 14 hovers, 0 violations
+DashboardSparkline/Default@1440/uk: 14 hovers, 0 violations
+DashboardSparkline/ThirtyDays@1440/uk: 14 hovers, 0 violations
+DashboardSparkline/AllZero@1440/en: 7 hovers, 7 violations
+DashboardStatCard/WithChart@320/en: 14 hovers, 0 violations
+DashboardStatCard/WithChart@390/en: 14 hovers, 0 violations
+DashboardStatCard/WithChart@1024/en: 14 hovers, 0 violations
+DashboardStatCard/WithChart@1440/en: 14 hovers, 0 violations
+DashboardStatCard/WithChart@320/uk: 14 hovers, 0 violations
+DashboardStatCard/WithChart@390/uk: 14 hovers, 0 violations
+DashboardStatCard/WithChart@1024/uk: 14 hovers, 0 violations
+DashboardStatCard/WithChart@1440/uk: 14 hovers, 0 violations
+TOTAL_VIOLATIONS=7
+EXIT_CODE=0

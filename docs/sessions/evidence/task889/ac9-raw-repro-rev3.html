@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  Task 889 revision 3 (§19.2 AC9-R3) — self-contained raw ApexCharts 7.4.0 reproduction, no React or
+  Mantine. Four sparkline-shaped bar charts, 154x95 px, mirroring MantineDashboardSparkline.tsx's own
+  options (plotOptions.bar.columnWidth '40%', borderRadius 4, dataLabels off, tooltip.theme 'light'),
+  covering {non-zero, all-zero} x {tooltip.compact off, on}. Loads apexcharts.js/css from
+  node_modules/apexcharts/dist/ through a relative path (this file's own kickoff-offered option,
+  §19.2: "through a relative path, or a copy saved next to it") — a copy was tried first and
+  discarded because ESLint's project-wide lint gate picked up the vendored minified file's own
+  `no-this-alias`/`ban-ts-comment` violations as new errors; the relative-path route avoids adding any
+  file under version control at all.
+-->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../../../../node_modules/apexcharts/dist/apexcharts.css" />
+  <script src="../../../../node_modules/apexcharts/dist/apexcharts.js"></script>
+  <style>
+    body { margin: 0; padding: 20px; font-family: sans-serif; }
+    .chart-box { width: 154px; height: 95px; margin-bottom: 24px; border: 1px solid #ccc; }
+    .chart-label { font-size: 12px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="chart-label">nonzero-compact-off</div>
+  <div id="nonzero-compact-off" class="chart-box"></div>
+  <div class="chart-label">nonzero-compact-on</div>
+  <div id="nonzero-compact-on" class="chart-box"></div>
+  <div class="chart-label">allzero-compact-off</div>
+  <div id="allzero-compact-off" class="chart-box"></div>
+  <div class="chart-label">allzero-compact-on</div>
+  <div id="allzero-compact-on" class="chart-box"></div>
+
+  <script>
+    var NONZERO = [12, 18, 9, 22, 15, 27, 19];
+    var ALLZERO = [0, 0, 0, 0, 0, 0, 0];
+
+    function makeOptions(data, compact) {
+      return {
+        chart: {
+          type: 'bar',
+          sparkline: { enabled: true },
+          toolbar: { show: false },
+          zoom: { enabled: false },
+          animations: { enabled: true, speed: 400 },
+        },
+        colors: ['#EC5447'],
+        plotOptions: {
+          bar: { columnWidth: '40%', borderRadius: 4 },
+        },
+        dataLabels: { enabled: false },
+        tooltip: {
+          theme: 'light',
+          compact: compact,
+          x: { formatter: function (v, opts) { return 'day ' + (opts && opts.dataPointIndex); } },
+          y: { formatter: function (v) { return String(v); } },
+        },
+        series: [{ name: 'value', data: data }],
+      };
+    }
+
+    window.__charts = {};
+    var configs = [
+      ['nonzero-compact-off', NONZERO, false],
+      ['nonzero-compact-on', NONZERO, true],
+      ['allzero-compact-off', ALLZERO, false],
+      ['allzero-compact-on', ALLZERO, true],
+    ];
+    configs.forEach(function (cfg) {
+      var id = cfg[0], data = cfg[1], compact = cfg[2];
+      var chart = new ApexCharts(document.querySelector('#' + id), makeOptions(data, compact));
+      chart.render();
+      window.__charts[id] = chart;
+    });
+    window.__chartsReady = true;
+  </script>
+</body>
+</html>

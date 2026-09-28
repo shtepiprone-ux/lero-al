@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { Card, Group, Stack, Text, ThemeIcon, Skeleton, Button, useMantineTheme } from '@mantine/core'
+import { Box, Card, Flex, Group, Stack, Text, ThemeIcon, Skeleton, Button, useMantineTheme, getGradient } from '@mantine/core'
 import { Check } from 'lucide-react'
 import { VARIANT_COLORS } from '@/design-system/mantine/notificationVariants'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
@@ -30,6 +30,19 @@ export interface MantineDashboardStatCardProps {
   retryLabel?: string
   onRetry?: () => void
   loadingAriaLabel?: string
+  /** Task 889 (D78-9, Lahomes KPI row): a sparkline (or other small chart) placed beside the
+   * label/value text. Absent by default — markup is unchanged when omitted. Ignored by `loading`
+   * and `error`. Review 1 (F1): the `Flex` wraps (`wrap="wrap"`), so a narrow card (measured: 1024's
+   * 4-column grid gives a 236px card, 186px content box) drops the chart under the text instead of
+   * overflowing the card. Rev 4 (O889-1 row 1): the chart slot itself is fluid — it grows into the
+   * space beside the text (`flex: 1 1 0`) when the row layout holds, and takes the full content width
+   * (with the sparkline's own 154px minimum) when it wraps or the layout is column. */
+  chart?: ReactNode
+  /** Task 889 (D78-9, Omah "Total Properties" / Lahomes "My Balance" hero cards): `'accent'` fills
+   * the card with `theme.other.accentHeroGradient` (`brand.7` → `brand.9`, 180deg) and renders its
+   * text in white. Applies to `ready`/`zero` only —
+   * `loading`/`error` always keep the default chrome. Defaults to `'default'` (unchanged). */
+  variant?: 'default' | 'accent'
 }
 
 /**
@@ -57,6 +70,22 @@ export interface MantineDashboardStatCardProps {
  * caption, shown with a success icon, never colour alone), `error` (label kept, message, Retry
  * outside any link).
  *
+ * `chart` (Task 889, D78-9): when set, the ready/zero body places the existing label/value/caption
+ * text stack beside it — `Flex direction={{ base: 'column', xs2: 'row' }} wrap="wrap"`, text first,
+ * chart second — matching the Lahomes KPI row. `wrap="wrap"` (review 1, F1) drops the chart under the
+ * text at any width too narrow for text + gap + the chart's own minimum width, instead of overflowing
+ * the card. Rev 4 (O889-1 row 1): the chart's own slot is a `Box` with `flex: 1 1 0` on the row layout
+ * (grows to fill the remaining width beside the text) and `w: 100%`/`flex: 0 0 auto` on the column
+ * layout or once wrapped (fills the full content width). Omitted, the markup is byte-identical to
+ * before Task 889.
+ *
+ * `variant="accent"` (Task 889, D78-9; rev 2, D889-2): one filled "hero" card (Omah "Total
+ * Properties" / Lahomes "My Balance"), `ready`/`zero` only. The background is the brand coral
+ * gradient `theme.other.accentHeroGradient` (`brand.7` → `brand.9`, 180deg — light top, dark bottom
+ * under the text), read through `getGradient()` so the `Card`'s `bg` prop carries the
+ * resolved `linear-gradient(...)` CSS value; `brand.8` is no longer used here. `loading`/`error` are
+ * unaffected.
+ *
  * Production consumers: 853, 854 (not wired in this task).
  */
 export function MantineDashboardStatCard({
@@ -73,13 +102,25 @@ export function MantineDashboardStatCard({
   retryLabel,
   onRetry,
   loadingAriaLabel,
+  chart,
+  variant = 'default',
 }: MantineDashboardStatCardProps) {
   const theme = useMantineTheme()
+  const isAccent = variant === 'accent'
+  const accentBackground = getGradient(theme.other.accentHeroGradient, theme)
 
   const iconBadge = (
     <ThemeIcon size="hero" radius="xl" color="gray" variant="light">
       {icon}
     </ThemeIcon>
+  )
+
+  const bodyIconBadge = isAccent ? (
+    <ThemeIcon size="hero" radius="xl" color="white" variant="light">
+      {icon}
+    </ThemeIcon>
+  ) : (
+    iconBadge
   )
 
   if (state === 'loading') {
@@ -126,42 +167,69 @@ export function MantineDashboardStatCard({
     )
   }
 
+  const textStack = (
+    <Stack gap={theme.spacing.xs}>
+      <Text size="sm" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+        {label}
+      </Text>
+      {/* GR-3c (Task 853 review 1, R12): static h3 (30px) at every width had no responsive step
+          (docs/golden-rules.md GR-3c). Steps to h5 (20px) below `sm`, h4 (24px) at `sm`, and back
+          to h3 (30px) from `md` up — Task 886 §4.1's own `h3` row; `lh` stays the h3 value. */}
+      <Text fz={{ base: 'h5', sm: 'h4', md: 'h3' }} lh={theme.headings.sizes.h3.lineHeight} fw={700} c={isAccent ? 'white' : 'gray.8'}>
+        {value}
+      </Text>
+      {state === 'zero' && zeroText ? (
+        <Group gap="xs" wrap="nowrap">
+          {/* success color reused from the shared notification-variant map
+              (VARIANT_COLORS.success = 'green'), not a fresh invented color. */}
+          <ThemeIcon size="sm" color={VARIANT_COLORS.success} variant="light" radius="xl">
+            <Check size={theme.other.iconSize.compact} aria-hidden="true" />
+          </ThemeIcon>
+          <Text size="xs" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+            {zeroText}
+          </Text>
+        </Group>
+      ) : (
+        caption && (
+          <Text size="xs" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+            {caption}
+          </Text>
+        )
+      )}
+      {secondaryLine}
+    </Stack>
+  )
+
   const body = (
     <Stack gap="md" justify="space-between" mih={theme.other.boxSize.dashboardStatCardMinHeight}>
       <Group justify="space-between" align="flex-start" wrap="nowrap">
-        {iconBadge}
+        {bodyIconBadge}
         {comparison}
       </Group>
-      <Stack gap={theme.spacing.xs}>
-        <Text size="sm" c="gray.5" lineClamp={2}>
-          {label}
-        </Text>
-        {/* GR-3c (Task 853 review 1, R12): static h3 (30px) at every width had no responsive step
-            (docs/golden-rules.md GR-3c). Steps to h5 (20px) below `sm`, h4 (24px) at `sm`, and back
-            to h3 (30px) from `md` up — Task 886 §4.1's own `h3` row; `lh` stays the h3 value. */}
-        <Text fz={{ base: 'h5', sm: 'h4', md: 'h3' }} lh={theme.headings.sizes.h3.lineHeight} fw={700} c="gray.8">
-          {value}
-        </Text>
-        {state === 'zero' && zeroText ? (
-          <Group gap="xs" wrap="nowrap">
-            {/* success color reused from the shared notification-variant map
-                (VARIANT_COLORS.success = 'green'), not a fresh invented color. */}
-            <ThemeIcon size="sm" color={VARIANT_COLORS.success} variant="light" radius="xl">
-              <Check size={theme.other.iconSize.compact} aria-hidden="true" />
-            </ThemeIcon>
-            <Text size="xs" c="gray.5" lineClamp={2}>
-              {zeroText}
-            </Text>
-          </Group>
-        ) : (
-          caption && (
-            <Text size="xs" c="gray.5" lineClamp={2}>
-              {caption}
-            </Text>
-          )
-        )}
-        {secondaryLine}
-      </Stack>
+      {chart ? (
+        <Flex direction={{ base: 'column', xs2: 'row' }} wrap="wrap" justify="space-between" align={{ base: 'flex-start', xs2: 'flex-end' }} gap="md">
+          {textStack}
+          {/* `miw` is required for `flex-basis:0` to size correctly (Task 889 rev 4 deviation,
+              verified live): the default `min-width:auto` lets the ApexCharts SVG's JS-measured
+              pixel width feed back into this box's content-based auto-minimum, so it never shrinks
+              below whatever size the chart happened to render at first — overflowing the card at
+              1024/1440. `miw={0}` alone breaks that feedback loop but also zeroes the flex-wrap
+              *line-fitting* hypothetical size, so the row never wraps even when the chart's own
+              154px floor cannot actually fit beside the text (still overflows at 1024). Pinning `miw`
+              to the same `sparklineMinWidth` role the inner chart already floors at gives the wrap
+              decision the chart's true minimum, so it wraps under at 1024 (as it must — 154 + gap +
+              text exceeds that width's content box) and grows cleanly beside the text at 768/1440. */}
+          <Box
+            w={{ base: '100%', xs2: 'auto' }}
+            flex={{ base: '0 0 auto', xs2: '1 1 0' }}
+            miw={{ base: 0, xs2: theme.other.dashboardChart.sparklineMinWidth }}
+          >
+            {chart}
+          </Box>
+        </Flex>
+      ) : (
+        textStack
+      )}
     </Stack>
   )
 
@@ -170,7 +238,8 @@ export function MantineDashboardStatCard({
       <Card
         component={Link}
         href={href}
-        withBorder
+        withBorder={!isAccent}
+        bg={isAccent ? accentBackground : undefined}
         p={{ base: 'lg', md: 'xl' }}
         mih={theme.other.boxSize.dashboardStatCardMinHeight}
         display="block"
@@ -181,7 +250,7 @@ export function MantineDashboardStatCard({
   }
 
   return (
-    <Card withBorder p={{ base: 'lg', md: 'xl' }} mih={theme.other.boxSize.dashboardStatCardMinHeight}>
+    <Card withBorder={!isAccent} bg={isAccent ? accentBackground : undefined} p={{ base: 'lg', md: 'xl' }} mih={theme.other.boxSize.dashboardStatCardMinHeight}>
       {body}
     </Card>
   )

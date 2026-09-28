@@ -2541,6 +2541,7 @@
       "dashboard_bar_aria_label": "Listings chart",
       "dashboard_bar_series_new": "New listings",
       "dashboard_bar_series_renewed": "Renewed listings",
+      "dashboard_sparkline_aria_label": "Trend chart",
       "dashboard_semi_donut_card_title": "Traffic source",
       "dashboard_semi_donut_aria_label": "Traffic source chart",
       "dashboard_semi_donut_email": "Email",

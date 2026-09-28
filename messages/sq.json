@@ -2541,6 +2541,7 @@
       "dashboard_bar_aria_label": "Grafiku i njoftimeve",
       "dashboard_bar_series_new": "Njoftime të reja",
       "dashboard_bar_series_renewed": "Njoftime të rinovuara",
+      "dashboard_sparkline_aria_label": "Grafiku i trendit",
       "dashboard_semi_donut_card_title": "Burimi i trafikut",
       "dashboard_semi_donut_aria_label": "Grafiku i burimit të trafikut",
       "dashboard_semi_donut_email": "Email",

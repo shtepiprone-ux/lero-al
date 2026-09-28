@@ -1,0 +1,16 @@
+DashboardSparkline/Default@1440/en: 14 hovers, 0 violations, pageErrors=0
+DashboardSparkline/ThirtyDays@1440/en: 14 hovers, 0 violations, pageErrors=0
+DashboardSparkline/Default@1440/uk: 14 hovers, 0 violations, pageErrors=0
+DashboardSparkline/ThirtyDays@1440/uk: 14 hovers, 0 violations, pageErrors=0
+DashboardSparkline/AllZero@1440/en: 7 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@320/en: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@390/en: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@1024/en: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@1440/en: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@320/uk: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@390/uk: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@1024/uk: 14 hovers, 0 violations, pageErrors=0
+DashboardStatCard/WithChart@1440/uk: 14 hovers, 0 violations, pageErrors=0
+TOTAL_VIOLATIONS=0
+TOTAL_PAGE_ERRORS=0
+EXIT_CODE=0

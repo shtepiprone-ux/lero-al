@@ -83,6 +83,7 @@
   "src/design-system/mantine/patterns/MantineDashboardLineChart.tsx",
   "src/design-system/mantine/patterns/MantineDashboardDonut.tsx",
   "src/design-system/mantine/patterns/MantineDashboardBarChart.tsx",
+  "src/design-system/mantine/patterns/MantineDashboardSparkline.tsx",
   "src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx",
   "src/design-system/mantine/patterns/MantineDashboardRadar.tsx",
   "src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx",

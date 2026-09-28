@@ -201,7 +201,9 @@ Nothing ≥ 24px lacks a step, and no heading exceeds 20px below 640.
 
 - **StatCard stories:** fluid, as in production (`MantineDashboardGridTopRow`'s `SimpleGrid` cell,
   `MantineDashboardGrid.tsx:63-72`).
-- **Sparkline story:** the component's own role width; no container.
+- **Sparkline story:** ~~the component's own role width; no container~~ — **superseded by §21.3 (rev 4, owner
+  O889-1 row 1):** the chart fills its container (154px floor); the Story renders it in the StatCard stories'
+  `SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} p="md"` cell.
 - **Bar chart stories:** fluid.
 - No `maw`/`w` containers, `style` objects or viewport pins in any Story.
 
@@ -731,3 +733,142 @@ manifest equal `final-hashes-rev2.txt`. `storybook-static` (10:02:10) is newer t
 - **O889-2**: §17.1, option A or B.
 
 Status: `PARTIALLY VERIFIED`. The approval review follows once the owner has returned both.
+
+## 21. Review 6 — 🔁 NEEDS REVISION (2026-09-28): owner returned O889-1 row 1, the fixed sparkline size — revision 4
+
+§21 supersedes §20.2. §20.1 is folded into §21.3 and becomes mandatory.
+
+### 21.1 Owner result, verbatim (O889-1, 2026-09-28)
+
+| Row | Result | Owner's words |
+|---|---|---|
+| 1 Sparkline, and 1b WithChart, which renders the same component | ❌ returned | *"я не приймаю, DashboardSparkline - це тупо захардкоджений розмір графіку, який не адаптується під мобільні екрани!"* |
+| 1a AllZero · 3 Accent | not answered | Shown again in §21.6 |
+
+### 21.2 Cause and native fix (reviewer probe, FACT)
+
+- **Cause.** This was an orchestrator design defect. §12's width contract said *"Sparkline story: the component's own
+  role width"*, and §18.2 kept the 154×95 canvas. `MantineDashboardSparkline.tsx:85-86` sets
+  `w={theme.other.dashboardChart.sparklineWidth}` (154) and `h={…sparklineHeight}` (95) at every width.
+  - Measured on the rev3 `storybook-static`: the chart is 154px wide at 320, 390, 768, 1024 and 1440.
+  - Its container's content box meanwhile is 288 / 358 / 720 / 976 / 1392px in the standalone `Default` story.
+  - In `WithChart` it is 246 / 316 / 310 / 186 / 290px.
+  - In `WithChart` at 390 the chart sits under the text and covers 154 of 316px. The bars are 8.9px at every width.
+- **Canonical convention it broke.** `MantineDashboardBarChart.tsx:208` and `MantineDashboardLineChart.tsx:203`
+  give only a height token (`h={theme.other.boxSize.dashboardChartMinHeight}`) and let ApexCharts fill the width
+  (`width="100%"`). ApexCharts 7.4.0 ships `chart.redrawOnParentResize: true` by default, so no resize code is needed.
+- **Probe of the fix.** Same build, done in the page only: the chart root set to `width: 100%` with a 154px minimum,
+  and to `flex: 1 1 0` in the card's row layout.
+  - Standalone `Default`: the chart width equals the container's content width at all 5 widths.
+  - `WithChart`, en and uk: under the text at 320, 390 and 1024, where it takes the full content width (246 / 316 /
+    186). Beside the text at 768 and 1440, where it fills the rest (en 194 / 174, uk 205 / 185).
+  - The placement at each width is the same as rev3, which is row 2 as the owner accepted it. The document never
+    overflows, the height stays 95, and the bars are 14–18px on a phone.
+- **Height stays a token (95).** This follows the bar and line chart convention: a fixed height token, a fluid width.
+  The owner's complaint is about width adaptation. Height is not changed.
+
+### 21.3 R12 — the sparkline fills its container (the change)
+
+1. **`theme.ts`.** Rename `sparklineWidth` to `sparklineMinWidth` in both the type line and the value line. The value
+   stays `154`. Both comments read: *"Task 889 rev 4 (O889-1 row 1): minimum sparkline width (Lahomes KPI canvas,
+   D78-9); the chart fills its container above it"*. `sparklineHeight` is unchanged.
+2. **`MantineDashboardSparkline.tsx`.**
+   - The root `Box` becomes `w="100%" miw={theme.other.dashboardChart.sparklineMinWidth}
+     h={theme.other.dashboardChart.sparklineHeight}`. Keep `ReactApexChart`'s `width="100%" height="100%"`.
+   - Add no resize listener, `ResizeObserver` or `redrawOn*` option: the library default does this.
+   - The JSDoc says the chart fills its container's width, with a floor of 154px, at a fixed 95px height, like the
+     bar and line charts. The rev2 tooltip comment drops "inside the 154×95 sparkline canvas".
+3. **`MantineDashboardStatCard.tsx`**, chart branch only.
+   - Wrap `{chart}` in `<Box w={{ base: '100%', xs2: 'auto' }} flex={{ base: '0 0 auto', xs2: '1 1 0' }}>`. In the
+     row layout the slot then grows into the space beside the text; when it wraps, or in the base column layout, it
+     takes the full content width. The `Flex` props themselves stay unchanged.
+   - Mantine style props only: no `style` object and no CSS file. If Mantine does not accept a responsive `flex`
+     style prop, stop and return `BLOCKED` with the evidence. Do not substitute anything else.
+   - JSDoc:
+     - lines 33–37 and 70–75: replace "the sparkline's fixed 154px" with the new contract (a 154px minimum; the slot
+       grows);
+     - lines 39–40 (§20.1): *"`'accent'` fills the card with `theme.other.accentHeroGradient` (`brand.7` →
+       `brand.9`, 180deg) and renders its text in white"*.
+4. **`DashboardSparkline.stories.tsx`.**
+   - All three exports replace `<Box px={{ base: 'md', sm: 'xl' }} py="md">` with
+     `<SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} p="md">`. This is the same KPI-cell grid as
+     `DashboardStatCard.stories.tsx` and cites it in a comment. It is breakpoint-keyed and has no fixed width, which
+     meets GR-3b.
+   - Drop the now-unused `Box` import.
+   - `Default`'s `play` adds this assertion, inside the existing `waitFor`: the rounded width of `[role="img"]`
+     equals the rounded `clientWidth` of its grid cell, and the rounded width of `svg.apexcharts-svg` equals that
+     same value.
+5. `WithChart`, `Accent`, `MantineDashboardBarChart.tsx`, `DashboardBarChart.stories.tsx` and the manifest stay
+   byte-identical to `final-hashes-rev3.txt`.
+
+### 21.4 Acceptance for revision 4
+
+- **AC10 (R12), width contract.** A Playwright probe against the rebuilt `storybook-static`, en and uk, at 320 / 390 /
+  768 / 1024 / 1440, `networkidle` plus 1000ms.
+  - `DashboardSparkline` `Default`, `AllZero` and `ThirtyDays`: the chart root width and the `svg.apexcharts-svg`
+    width each equal the grid cell's content width, rounded. Height 95. The document does not overflow.
+  - `DashboardStatCard` `WithChart`: the placement at each width equals §21.2: under at 320, 390 and 1024, beside at
+    768 and 1440.
+    - When under: the chart width equals the card's content width, rounded.
+    - When beside: the chart's right edge equals the content box's right edge, rounded, and its left edge is at
+      least the text stack's right edge plus the `md` gap.
+    - At every width the chart is at least 154px wide and the document does not overflow.
+  - **Resize arm.** Load `WithChart` en at 1440, resize the viewport to 390 without reloading, and wait 1000ms. The
+    chart width now equals the new card content width. This proves the library's own redraw.
+  - Record a table per tuple.
+- **AC9-R4, tooltip.** The chart geometry changed, so this is re-run. The rules, violation definition, hover points
+  and `.apexcharts-active` requirement are those of §18.4. Tuples:
+  - `Default` and `ThirtyDays` at 390 and 1440, en and uk;
+  - `AllZero` at 1440, en: 0 active, 0 page errors (§19.2);
+  - `WithChart` at 320 / 390 / 768 / 1024 / 1440, en and uk.
+
+  Required: 0 violations. Output: `ac9-tooltip-results-rev4.json`.
+- **AC11, rename complete.** `git grep -n --untracked sparklineWidth -- src` prints nothing. `--untracked` is
+  required because `MantineDashboardSparkline.tsx` is untracked (the Task 864 lesson).
+- **AC7-R4.** Re-capture `*.after-rev4*`, compare it with `compare-ac7-rev3.mjs`'s normaliser, and expect
+  `IDENTICAL` ×2. Neither consumer renders a sparkline or a `chart` slot.
+- **GR-4 AC AUDIT** — 4 criteria. Each states an observable property. Absolutes: the AC11 zero-hit grep, which is a
+  property of a correct rename.
+
+### 21.5 Re-entry, scope and order
+
+- **Mode `remediation`.** Reuse, and never overwrite, every I0, `-rev1`, `-rev2`, `-rev3` and `ac7-before` artifact.
+  New artifacts take the `-rev4` suffix.
+- **Files:**
+  - `theme.ts` (the token rename and its two comments);
+  - `MantineDashboardSparkline.tsx`;
+  - `MantineDashboardStatCard.tsx` (the chart wrapper and the three JSDoc passages);
+  - `DashboardSparkline.stories.tsx`;
+  - the session log (a new "Revision 4" section);
+  - the 889 line of `docs/backlog.md`.
+- **Order:**
+  1. the edits;
+  2. `npm.cmd run typecheck`;
+  3. `npm.cmd run build-storybook`;
+  4. AC10;
+  5. AC9-R4;
+  6. AC11;
+  7. AC7-R4;
+  8. `npm.cmd run check:locale-leak:mantine-only`, quoting zero lines for the three task stories;
+  9. the full §13.2 block tee'd to `*-rev4.txt`, including `npm.cmd run build` and `final-hashes-rev4.txt`.
+- **Receipts:**
+  - GR-0 for the token rename: EXTEND `theme.other.dashboardChart`, following the bar and line chart convention; no
+    new value.
+  - GR-3b for all three sparkline stories and `WithChart`, at 320 / 390 / 1024 / 1440, with the chart width against
+    its container.
+  - GR-3c: `n/a`, no text changed. Record the compact tooltip's computed font size.
+  - GR-1: `check:surface-census` for `MantineDashboardSparkline.tsx` and `MantineDashboardStatCard.tsx`.
+  - The final hashes.
+
+### 21.6 Owner re-check after revision 4 (O889-1). Replaces §19.4.
+
+| # | Story | State | Width | Locale | Owner checks |
+|---|---|---|---|---|---|
+| 1 | `Patterns/Mantine/DashboardSparkline` | Default / ThirtyDays | 390 / 1440 | en / uk | the chart fills its cell at every width; the tooltip sits beside the cursor, never over the bar, never cut off |
+| 1a | `Patterns/Mantine/DashboardSparkline` | AllZero | 1440 | en | no tooltip (§19.2) |
+| 1b | `Patterns/Mantine/DashboardStatCard` | WithChart | 390 / 1024 / 1440 | uk | under the text and full-width at 390 and 1024; beside the text and filling the rest at 1440 |
+| 3 | `Patterns/Mantine/DashboardStatCard` | Accent | 1440 / 390 | en / sq | the coral gradient card (light top → dark bottom), legible white text |
+
+**O889-2** (§17.1) is still owed at approval.
+
+Status to return: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

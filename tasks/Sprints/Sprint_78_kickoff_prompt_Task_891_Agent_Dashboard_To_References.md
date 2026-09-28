@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** (+ 854's Q4 isolation evidence carried forward) · Wave D (D78-9) · depends on
 **889** approved · builds on **854's working tree** and closes **854 jointly** · folds **855**'s agent half and **856** ·
-**Status: 🔁 NEEDS REVISION (review 2, 2026-09-28) — revision 1 (§17) partly accepted; execute §18 (revision 2) on top of the current working tree**
+**Status: 🔁 NEEDS REVISION (review 4, 2026-09-28) — the owner returned §13.4 rows 1–5; execute §20 (revision 3, composition) on top of the current working tree**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для … агента"*. Their chart
@@ -715,3 +715,173 @@ git --no-optional-locks grep --untracked -n "chartState === 'stale'" -- src/modu
   the labelled Files Changed table.
 - End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
 - The owner matrix in §13.4 runs only after review 3 accepts revision 2. This supersedes §17.5's last sentence.
+
+## 19. Review 3 — PARTIALLY VERIFIED (Opus, 2026-09-28)
+
+Revision 2 is accepted in full; no executor action is open.
+
+- **F7 / AC19.** `rev2/measure.out.json` compares every value directly:
+  - top-listings bars equal the AGT-10 rows, 5/5 in `Default`, `ActivityStale` and `SortedByViews`;
+  - the KPIs are 103/9/3 in `Default` and `ActivityStale`, and 1,550/55/9 in `SortedByViews`, which equal the
+    by-listing totals;
+  - `activitySeriesFrom.test.ts` passes 2/2.
+- **F8 / AC20.** All 10 stories are measured at the 5 widths:
+  - KPI values are 20/20/30/30/30;
+  - no ScrollArea overflows at 320 or 390, and body overflow is false everywhere;
+  - the select dropdown lies inside the viewport at both 320 (bottom sheet) and 1440.
+- **F9 / AC21.** `activityState.ts` returns `cardState` and `chartState` separately; the all-zero-and-stale case gives
+  `stale` + `empty`, and the grep prints nothing.
+- **F10 / AC22.** The reviewer recomputed `rev2/hash-list.txt`: 24/24 lines match.
+- Every changed source predates the gate run (last edit 20:37; `build-storybook` 20:52, `build` 20:55). Both exit 0.
+
+**Lowest-evidence row: the visual criterion, `NOT VERIFIABLE` until the owner runs §13.4 (rows 1–9).** It is owner
+action **O891-1**. For rows 2–3 the owner decides one recorded-only reading (AC10): from 768 to 1279, AGT-10 scrolls
+horizontally inside its own card. At 768 the table is 1087 wide in a 676 viewport; at 1024 it is 1087 in 932. The body
+does not overflow. Accepting all rows → review 4 approves 854 + 891 jointly and archives both. A returned row → a
+numbered revision in §20.
+
+## 20. Review 4 — NEEDS REVISION: the owner returned §13.4 rows 1–5 (2026-09-28) · revision 3
+
+### 20.1 The owner's return and decisions
+
+**Owner, O891-1, rows 1–5, verbatim:** *"UI взагалі не схожий на той, який я показав у референсах! … все криве,
+величезне, не збалансоване. Поглянь на референс і на його офігезний UI https://techzaa.in/lahomes/admin/index.html#!"*
+
+**D891-1 (owner, 2026-09-28, AskUserQuestion), verbatim answers:**
+- Sizes: *"Лишити TailAdmin"*.
+  - Fonts, paddings and gaps are unchanged, so D78-5 stands and the §12 type-scale table is unchanged.
+  - The fix is composition only.
+- Card chrome: *"Як на сайті (Рекомендовано)"*. The radius stays 16px and the 1px border stays. There is no shadow
+  restyle.
+
+**Reviewer measurement, 1440, `en`.** Evidence is in `evidence/task891/review4/`:
+- `ref-lahomes-index-1440.png` is the reference;
+- `ours-default-1440.png` is the Story (rows 1–5 used the same composition).
+
+| Block | Lahomes | Ours | Defect |
+|---|---|---|---|
+| KPI row | 4 cards, 173px tall. Label and value sit left, a 96×95 sparkline sits **beside** them. | 4 cards, **335px** tall. The sparkline is 279×95 and sits **under** the value. The AGT-05 card also prints its tooltip text inline (`AgentStatisticsView.tsx:444-450`) next to its info icon, so its sparkline starts 44px lower than the others. | "huge", "crooked" |
+| Hero | "My Balance" is **in the side column of row 2**. It holds its value plus two sub-stats. | A 335px coral tile in row 1 that holds only "12". | "unbalanced" |
+| Row 2 | The chart card (544) and the side stack (227 + 20 + 291 = 538) end together. | The activity card is 600 (the chart plus three description lines) and AGT-01 is 254: **a 346px hole**. | "unbalanced" |
+| Row 3 | Cards stretch to the row height. The donut is centred. | Top listings is 470 and portfolio is 698: **a 228px hole**. The donut is left-aligned. The legend is vertical, with 38px rows and no counts. | "unbalanced" |
+| Fixture series | — | `activitySeriesFrom`'s even `floor` spread draws a periodic saw-tooth (only 3/4 and 0/1). | reads as broken |
+
+### 20.2 Required composition (replaces §2.1 rows 1–3; row 4, AGT-10, is unchanged)
+
+| Row | Grid | Content |
+|---|---|---|
+| 1 | `MantineDashboardGridTopRow` with **3** cards | AGT-03 views, WhatsApp and AGT-05 forms, unchanged except for R17. The pattern's `lg` 3-column track gives each card room for the chart **beside** the text (889's `wrap` layout). |
+| 2 | `MantineDashboardGridSplit` 8 + 4 | **main:** the activity card (R19). **side:** a `Stack`. First the **AGT-02 hero** (`variant="accent"`, "Visible now" 12) carrying the four inventory numbers as sub-stats (R18). Below it **AGT-01**, which fills the rest of the column (R20). |
+| 3 | `MantineDashboardGridSplit` 8 + 4 | **main:** top listings. **side:** "My portfolio", which holds only the donut and a legend with each segment's count. Both cards fill the row height (R20). |
+
+### 20.3 Requirements
+
+- **R17 [P0] — AGT-05 without the duplicate.**
+  - Remove the inline `t('agt05_tooltip')` text from the AGT-05 card's `secondaryLine`.
+  - Keep the info `ActionIcon` + `MantineTooltip` with the same key and `aria-label`.
+  - No other card change.
+- **R18 [P0] — the hero carries the inventory. GR-0 EXTEND of `MantineDashboardStatCard`.**
+  - Add an optional `substats?: { key: string; label: string; value: ReactNode; href?: string }[]`, rendered only for
+    `variant="accent"` as a 2-column `SimpleGrid` under the value.
+  - Each sub-stat: label `xs`, value `sm` `fw={600}`, both white. With an `href`, the whole sub-stat is a Next link
+    whose text is the label and value.
+  - With no `substats`, the output is byte-identical, so 853 and 889 consumers do not change.
+  - Add one export to `Patterns/Mantine/DashboardStatCard`: `AccentWithSubstats` (GR-3a EXTEND).
+  - AGT-02 passes `agt02Rows`'s four entries (pending, inactive, sold "marked by me", rented "marked by me") with
+    854's hrefs. The `MantineDashboardStatRows` under the donut is **removed**.
+  - Clause 3 is kept: each of the four hrefs stays reachable, now from the hero.
+- **R19 [P0] — a compact activity card.**
+  - The three series descriptions leave the card body.
+  - They move into one info `ActionIcon` + `MantineTooltip` in the card's `headerAction`. The tooltip holds the
+    three existing keys `activity_desc_views`, `activity_desc_whatsapp` and `activity_desc_form`, one per line, and
+    the `aria-label` reuses `agt05_tooltip_aria`.
+  - The chart height, the legend and the stale, empty and error states are unchanged.
+  - R3's descriptions stay on the page, reachable by hover and focus. This amends R3's placement only.
+- **R20 [P0] — equal row heights. GR-0 EXTEND of `MantineDashboardCard`.**
+  - Add an optional `fill?: boolean`. With `true`, the root `Card` gets `h="100%"` and the body grows (`flex={1}`),
+    so the card fills its grid column. The default is off, so the output is byte-identical for 853.
+  - Add one export to `Patterns/Mantine/DashboardCard`: `Fill`, two cards of different content height in a
+    2-column `SimpleGrid` (GR-3a EXTEND).
+  - In the view:
+    - the row-2 side `Stack` gets `h="100%"`, and AGT-01 sets `fill`;
+    - the row-2 activity card sets `fill`;
+    - both row-3 cards set `fill`.
+  - Where a `MantineDashboardStatCard` (the hero) sits in that `Stack`, it keeps its content height.
+- **R21 [P1] — the donut is centred, and its legend carries counts.**
+  - The portfolio card centres `MantineDashboardDonut` horizontally with a Mantine `Center` or
+    `Group justify="center"`.
+  - Each legend entry reads `<label> · <count>`, from the same `portfolio` segments that feed the donut.
+  - If the donut pattern cannot render counts, EXTEND it with `showCounts?: boolean` (default off) plus one Story
+    export. Record the choice in the GR-0 receipt.
+- **R22 [P1] — the fixture series looks like traffic, not a saw-tooth.**
+  - `activitySeriesFrom` spreads each total with a fixed 7-day weight profile `[3, 4, 5, 4, 6, 8, 7]`, starting
+    from the first date's weekday offset `i % 7`, using largest-remainder rounding.
+  - The daily sums stay **exactly** equal to the totals: AC19 and `activitySeriesFrom.test.ts` stay green.
+  - Add one test that asserts the 30 view values are not all within 1 of each other.
+  - **The hero and the donut disagree today.**
+    - `agentStatisticsAllOk` sets `agt02.visible: 12` with `statusCounts.active: 12` and `agt01.hidden: 2`.
+    - `portfolioSegments` therefore draws visible = **10** while the hero reads 12.
+    - Set `statusCounts.active: 14`. The hero then stays 12 and the donut reads 12 / 4 / 6, total 22.
+    - Add a fixture test for every exported `agentStatistics*` data fixture: `agt02.visible` equals
+      `portfolioSegments(...).visible`.
+- **Unchanged:** R1, R5–R16, the data, `page.tsx`, AGT-10, the §12 type scale (D891-1) and the card chrome (D891-1).
+
+### 20.4 Acceptance criteria added by revision 3
+
+Measure with `rev3/measure.mjs`, extended from `rev2/measure.mjs`, on a fresh `build-storybook`, `Default`, `en`.
+Record every reading.
+
+- **AC23 [R17, row 1]** — At 1440 and 1024:
+  - row 1 holds 3 StatCards;
+  - in each card, the sparkline's `top` is above the value element's `bottom` (it sits beside the value, not under
+    it);
+  - the three sparklines' `top` values are equal within 1px;
+  - the AGT-05 card body contains no visible `agt05_tooltip` text while its tooltip is closed.
+  - Record each card's height.
+- **AC24 [R18]** — At 1440:
+  - the hero is the first child of the row-2 side column and shows 4 sub-stat links;
+  - their `href`s equal 854's four inventory hrefs;
+  - the portfolio card contains no `MantineDashboardStatRows`.
+  - `AccentWithSubstats` renders at 320 and 1440 with no overflow.
+- **AC25 [R19, R20]** — At 1440 and 1024:
+  - the activity card and AGT-01 end at the same `bottom` within 1px;
+  - so do the two row-3 cards.
+  - The activity card body holds no description paragraph, and the header info tooltip, once opened, shows all three
+    `activity_desc_*` strings.
+  - Below `lg`, every card stacks in one column with body overflow `false`.
+- **AC26 [R21]** — At 1440, the donut's left and right gaps inside the portfolio card's content box differ by at most
+  2px, and each of the 3 legend entries shows its count (12 / 4 / 6 in `Default`, after R22's fixture fix). The
+  hero reads the same visible count as the donut.
+- **AC27 [R22]** — `activitySeriesFrom.test.ts` passes, including the new spread assertion, and AC19 is re-measured
+  unchanged (bars = rows; KPIs 103 / 9 / 3 and 1,550 / 55 / 9).
+- **AC28 [853 unaffected]** — `Patterns/Mantine/AdminDashboardView` `Default` at 1440, measured before and after the
+  two pattern extensions, gives identical heights for every card. `DashboardStatCard` and `DashboardCard`'s
+  pre-existing exports render unchanged.
+- **AC29 [GR-3b/3c]** — One GR-3b receipt and one GR-3c receipt per changed export:
+  - all 8 `AgentStatisticsView` exports, `AccentWithSubstats` and `Fill`;
+  - widths 320/390/768/1024/1440.
+  - The GR-3c values equal §12 (D891-1).
+
+`GR-4 AC AUDIT — 7 criteria added (AC23–AC29); each states an observable property; absolutes: AC23's 3 cards and 1px top alignment, AC25's 1px bottom alignment, AC26's 2px centring and AC28's identical heights, each at named widths on named stories.`
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: balanced agent-dashboard composition (hero with sub-stats, equal-height cards, centred donut with counts); semantic queries: MantineDashboardStatCard accent/caption/secondaryLine/chart, MantineDashboardCard props, MantineDashboardGrid TopRow/Split, MantineDashboardDonut legend, MantineDashboardStatRows; inspected candidates: MantineDashboardStatCard.tsx (no sub-stat slot), MantineDashboardCard.tsx (no height/fill prop — Card at :83), MantineDashboardGrid.tsx (TopRow cols lg=min(count,4); Split 8+4), MantineDashboardDonut, Patterns/Mantine/DashboardStatCard, …/DashboardCard; decision: EXTEND (StatCard.substats, DashboardCard.fill, Donut.showCounts only if absent) + COMPOSE; selected canonical owner: those three patterns; Mantine/TailAdmin token path: existing theme spacing/fontSizes/headings (D78-5, D891-1), accent gradient (889); new hardcoded visual values: NONE; rationale: every gap is a missing slot on an existing canonical pattern, not a new component.`
+
+### 20.5 Re-entry, gate block, report
+
+- Re-entry: `remediation`. New artifacts go to `evidence/task891/rev3/`. R15 is not re-run (`page.tsx` and `data.ts`
+  do not change).
+- Gate: run §18.3's block with `rev3/` in every path, plus these lines. Expected exit codes are the same as §18.3's.
+
+  ```powershell
+  npm.cmd run check:pattern-enrolment
+  npm.cmd run test -- src/components/admin/__tests__
+  npm.cmd run check:locale-leak:mantine-only
+  ```
+- Scope added to §7:
+  - `MantineDashboardStatCard.tsx`, `MantineDashboardCard.tsx` and, only if needed, `MantineDashboardDonut.tsx`;
+  - their Stories;
+  - no `messages/*` change (every string already exists).
+- Report: append a "Revision 3" section to the session log, with AC23–AC29 quoted from `rev3/measure.out.json`,
+  every receipt and a labelled hash list. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
+- After review 5 accepts revision 3, the owner re-runs §13.4 in full as **O891-1**. Row 3 now reads "3 KPI cards,
+  2 + 1 below `lg`; splits stacked".

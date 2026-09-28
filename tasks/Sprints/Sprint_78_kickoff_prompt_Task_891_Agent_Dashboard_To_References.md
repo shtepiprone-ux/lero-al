@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** (+ 854's Q4 isolation evidence carried forward) · Wave D (D78-9) · depends on
 **889** approved · builds on **854's working tree** and closes **854 jointly** · folds **855**'s agent half and **856** ·
-**Status: 📝 KICKOFF FILED 2026-09-27 — BLOCKED ON 889**
+**Status: 🔁 NEEDS REVISION (review 1, 2026-09-28) — execute §17 (revision 1) on top of the current working tree**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для … агента"*. Their chart
@@ -386,3 +386,168 @@ npm.cmd run test:auth
 
 Expected: exit 0. The plant transcript goes to `evidence/task891/plant-postsignout.txt` with both hashes. Report R16
 and AC13 alongside R1–R15 and AC1–AC12 (§14).
+
+## 17. Review 1 — NEEDS REVISION (Opus, 2026-09-28) · revision 1
+
+Reviewed the joint 854 + 891 working tree against the session log
+`docs/sessions/2026-09-28-task891-agent-dashboard-to-references.md` and `docs/sessions/evidence/task891/`. The census
+was re-run by the reviewer (win32 v22.22.3): 24 nodes, all tier 1. Everything not named below is accepted and must
+be preserved: R1's shared `activityByListing` promise (the executor's open question 1 — accepted), R5–R7's data and
+pure modules, the R7 deletions, R11's keys, R13's grep, R15's live isolation and R16 with its plant. The executor's
+open question 4 (AC6) is answered by F6 and question 2 by F1.
+
+### 17.1 Re-entry
+
+`remediation`. Keep every file in `evidence/task891/`. New artifacts go to `evidence/task891/rev1/`. Do not re-run
+R15's live two-agent check unless `page.tsx`, `data.ts` or `access.ts` changes; F1–F6 do not require it.
+
+### 17.2 Findings and required corrections
+
+**F1 · P1 · R12 / AC10 — the `wrap` extension removes `nowrap` from every column of every table consumer.**
+- Where: `MantineDataTableToCards.tsx:452` and `:467`, which pass `whiteSpace: col.wrap ? 'normal' : undefined`.
+- Cause (FACT). Mantine 8.3.18 `get-style.mjs` builds each cell's style as `{ ...styles[td], ...options.style }`, so
+  the cell's own `style` is spread last. An own key whose value is `undefined` therefore replaces the Table's
+  `styles.td/th.whiteSpace: 'nowrap'` (`:442-443`), and React drops it. The reviewer reproduced the spread with
+  `node.exe`: `{...{whiteSpace:'nowrap'},...{textAlign:'left',whiteSpace:undefined}}` → `{"textAlign":"left"}`.
+- Evidence. The executor's own `gr3b-gr3c-out.json` → `tableWrapCheck` shows all four columns computing `normal`.
+- The session log's notes 1–2 call this a pre-existing defect. That is a **CONTRADICTION**: before this diff the
+  cell style was `{ textAlign }` with no `whiteSpace` key, so `nowrap` applied. This is also consistent with 854
+  §17.2's 1296px measurement.
+- Impact:
+  - `AdminUsersTable` and every other consumer lose `nowrap`, which breaks R12's "every existing consumer keeps
+    `nowrap`";
+  - AC10's third bullet fails;
+  - AC10's 1440 pass was measured on the regressed tree, so it is not evidence.
+- **Correction:**
+  - Add the key only when wrapping, on both `Table.Th` and `Table.Td`:
+    `style={{ …, ...(col.wrap ? { whiteSpace: 'normal' } : {}) }}`.
+  - Change nothing else in the pattern.
+  - Rewrite session-log notes 1–2 to state the real cause.
+  - Re-measure AC10 in full (1440 en pass/fail; 768, 1024, 1280 en and 1440 uk recorded).
+  - If AC10's 1440/en `scrollWidth <= clientWidth` now fails, add `wrap: true` to AGT-10's `activity` column. It has
+    the same date + "(relative)" shape as `expires`, so D854-1 = A covers it. Re-measure after that change. If it
+    still fails, stop with `BLOCKED — AC10` and quote the per-column widths. Do not tune widths or add styles.
+
+**F2 · P2 · R3, R9, §11 — the activity chart has no empty state.**
+- Where: `AgentStatisticsView.tsx:499` hard-codes `state="ready"`.
+- Evidence: `noactivity-en-1440.png` shows three flat zero lines on a 0–2 axis. R3 requires empty/error/loading.
+  §11 and R9 require an "empty chart" for a period with no activity.
+- **Correction:**
+  - When the current series read succeeded and all three period sums are 0, pass `state="empty"` and
+    `emptyDescription={t('activity_empty')}`.
+  - Add the new key `cabinet.statistics.activity_empty` in all four locales. `en`: "No recorded activity in this
+    period". No "lead", "conversion" or "contact".
+  - Error and stale are unchanged (the card already carries them).
+
+**F3 · P2 · R2 — a failed previous-period read is shown as "No base for comparison".**
+- Where: `AgentStatisticsView.tsx:149-154`. A failed `activitySeriesPrevious` becomes `[]`, its sum reads 0, and
+  `compareToPrevious` prints "no base". That asserts the previous period had nothing when it was never read.
+- R2's text: "A failed series read puts those three cards into their error state (Retry), never 0". The previous
+  period is one of the series reads R1 fetches.
+- **Correction:**
+  - Move the state decision into a new pure module `src/modules/cabinet/statistics/activityState.ts`, exporting
+    `activityStates(freshness, current, previous)` → `{ kpiState: 'ready' | 'error', chartState: 'ready' | 'stale' | 'empty' | 'error' }`.
+  - `kpiState` is `error` when freshness, current **or previous** fails.
+  - `chartState` depends on freshness and current only: error on failure, else `empty` (F2), else `stale`, else
+    `ready`.
+  - The view consumes it. Unit tests in `__tests__/activityState.test.ts` cover each of the three failures, stale,
+    all-zero and ready.
+  - Add `activityState.ts` to the AC11 grep's file list.
+
+**F4 · P2 · R9, §13.4 row 6 — the Story states are not honest, so the owner cannot judge them.**
+- (a) **Past dates render as future.** Every "Last activity" cell reads "(in about 1–2 months)" for a date before
+  the fixture's `now`. The same happens to "Expires" ("in 2 months" for `now` + 20 days).
+  - Cause (FACT): `RelativeTime` calls `formatDistanceToNow`, which reads the frozen Storybook clock
+    `2026-07-30T00:00:00Z` (`.storybook/preview-head.html:15`). The fixtures anchor to
+    `DASHBOARD_PERIOD_NOW = 2026-09-18T08:00:00Z`.
+  - In production the same call reads the server clock during SSR and the browser clock on the client. The view's
+    own contract (`AgentStatisticsView.tsx:61-62`, "this view never reads the clock") is therefore false.
+- (b) **The fixtures contradict each other.**
+  - In `Default`, the top-listings bar for "Modern Apartment in Tirana Center" reads 42, but its AGT-10 row reads
+    Views 0.
+  - Rows with 0/0/0 carry a last-activity date, while rows with 21 views read "—".
+  - In `NoActivity`, the KPIs are 0 and top-listings is empty, yet AGT-10 shows views 7–35 and last-activity dates.
+- **Correction (a).** Apply GR-0 **EXTEND** to the canonical owner `src/components/shared/RelativeTime.tsx`:
+  - add an optional `baseDate?: string` (ISO). When it is set, render `formatDistance(date, baseDate, { addSuffix: true, locale })`;
+    otherwise keep today's `formatDistanceToNow` byte-for-byte, so the other consumers do not change;
+  - `AgentStatisticsView` passes `baseDate={now}` to both of its `RelativeTime`s;
+  - add one export to `src/stories/mantine/primitives/RelativeTime.stories.tsx` for the `baseDate` state (GR-3a
+    EXTEND, with a receipt).
+- **Correction (b).** Derive every AGT-10 row's `recordedViews`, `whatsappClicks`, `formInquiries` and
+  `lastActivityDate` in `agentStatistics.fixtures.ts` from the same `byListing` fixture that feeds `rankTopListings`:
+  - a row with no activity entry gets 0/0/0 and `null`;
+  - `NoActivity` uses an empty `byListing`;
+  - `SortedByViews` stays ordered by the derived views.
+  - Use no wall-clock values.
+
+**F5 · P2 · GR-3b, GR-3c, §13.3, AC2 — the required receipts and measurements are missing.**
+- Receipts exist for `Default` only:
+  - GR-3b at 320/390/1024/1440;
+  - GR-3c at 320/390/768/1440.
+- Missing:
+  - `ActivityStale`, `ActivityError`, `NoActivity` and `SortedByViews`;
+  - `mantine-primitives-table--cards-below-md`;
+  - the new RelativeTime export;
+  - §13.3's 768 width and portal content;
+  - AC2's computed `background-color` and bar count, which were checked by eye only;
+  - AC9's quoted keys.
+- **Correction:**
+  - Extend `gr3b-gr3c-measure.mjs` into `rev1/measure.mjs`, run against a fresh `build-storybook`. For every changed
+    export at 320/390/768/1024/1440, record the root width against the viewport, every
+    `.mantine-ScrollArea-viewport` `scrollWidth`/`clientWidth`, body overflow, and the computed `fontSize` of every
+    heading, KPI value and table cell. Include open `MantineSelect` portal content.
+  - In `Default` at 1440, record card 1's computed `background-color` and `background-image`, and the rect count in
+    each of the three sparklines (expected 30).
+  - Emit one GR-3b and one GR-3c receipt per export.
+  - Quote every new `cabinet.statistics` key and its `en` value.
+
+**F6 · P2 · R7, AC6 — the whole-set sort test cannot fail.**
+- In `data.test.ts:411`, the three ranked ids (`l-02`, `l-05`, `l-09`) are all on page 1 in natural order, so a
+  sort-the-page-then-slice bug passes it too. The reviewer read `readAgt10` and it does sort before slicing, but no
+  test proves it.
+- **Correction:**
+  - Add a case with 12 listings where only `l-12` (page 2 in natural order) has the most views. Assert that page 1's
+    first row is `l-12`.
+  - Request `page: 2` and assert that its first `recordedViews` is ≤ page 1's last.
+  - Plant proof: temporarily sort after slicing and show the new case fails. Record the file's hash (hash-object)
+    before the plant and after the restore in `rev1/plant-sort.txt`.
+
+### 17.3 Acceptance criteria added by revision 1
+
+- **AC14 [F1]** — Given `mantine-primitives-table--cards-below-md` at 800 (`en`), when measured, then the `date`
+  column's `th`/`td` compute `white-space: normal` and the other three compute `nowrap`. Given
+  `AdminUsersTable.smoke.test.tsx`, when run, then it passes. AC10 is re-measured on the corrected tree.
+- **AC15 [F2, F3]** — Given `activityState.test.ts`, when run, then every branch in F3 passes. Given `NoActivity`,
+  when rendered, then the activity card shows the "No recorded activity in this period" empty state and no axis.
+- **AC16 [F4]** — Given `Default` and `NoActivity` at 1440 (`en`), when read, then every "Last activity" relative
+  label is in the past ("… ago") and every "Expires" label matches `now` + its fixture offset. The top-listings bar
+  values equal the matching AGT-10 rows' views. In `NoActivity`, every AGT-10 activity cell is 0 or "—".
+- **AC17 [F5]** — Given `rev1/measure.out.json`, when read, then it holds every export × width in F5, and the
+  receipts quote it.
+- **AC18 [F6]** — Given the new sort case, when run, then it passes on the final tree and fails under the plant.
+
+### 17.4 Revision gate block
+
+Tee every command to `evidence/task891/rev1/<name>.txt` with its exit code. Run the full §13.2 block plus the lines
+below. Add `activityState.ts` to the AC11 grep and to the hash list. Add `src/components/shared/RelativeTime.tsx` and
+`src/stories/mantine/primitives/RelativeTime.stories.tsx` to the hash list.
+
+```powershell
+npm.cmd run test -- src/modules/cabinet/statistics/__tests__/activityState.test.ts
+npm.cmd run test -- src/modules/cabinet/statistics/__tests__/data.test.ts
+npm.cmd run test:auth
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task891\rev1\measure.mjs
+npm.cmd run check:locale-leak:mantine-only
+```
+
+- Expected: exit 0 everywhere except the §13.2 exceptions.
+- If `check:locale-leak:mantine-only` still cannot finish, record the start time, the elapsed time and the
+  `Get-Process node` count, and hand it to the owner. Do not mark it passed.
+
+### 17.5 Report
+
+- Append a "Revision 1" section to the existing session log. Do not create a new log.
+- Give F1–F6 and AC14–AC18 with quotes, the corrected Files Changed table with final hashes, and the new receipts.
+- End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly). The owner matrix in §13.4 runs only after
+  review 2 accepts revision 1.

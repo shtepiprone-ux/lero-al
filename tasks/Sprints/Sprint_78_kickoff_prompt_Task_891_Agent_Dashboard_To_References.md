@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** (+ 854's Q4 isolation evidence carried forward) · Wave D (D78-9) · depends on
 **889** approved · builds on **854's working tree** and closes **854 jointly** · folds **855**'s agent half and **856** ·
-**Status: 🔁 NEEDS REVISION (review 1, 2026-09-28) — execute §17 (revision 1) on top of the current working tree**
+**Status: 🔁 NEEDS REVISION (review 2, 2026-09-28) — revision 1 (§17) partly accepted; execute §18 (revision 2) on top of the current working tree**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для … агента"*. Their chart
@@ -551,3 +551,167 @@ npm.cmd run check:locale-leak:mantine-only
 - Give F1–F6 and AC14–AC18 with quotes, the corrected Files Changed table with final hashes, and the new receipts.
 - End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly). The owner matrix in §13.4 runs only after
   review 2 accepts revision 1.
+
+## 18. Review 2 — NEEDS REVISION (Opus, 2026-09-28) · revision 2
+
+Reviewed revision 1 against the working tree, the session log's "Revision 1" section and
+`docs/sessions/evidence/task891/rev1/`. **Accepted, and preserved as they are:**
+- F1: the conditional spread at `MantineDataTableToCards.tsx:452`/`:467`; AC14 (`ac14TableWrap`: `nowrap` ×3, `normal` on
+  `date`); AC10 re-measured.
+- F2, F3: `activityState.ts` and its 7 tests. §18 F9 changes only its stale branch.
+- F4a: `RelativeTime` `baseDate`, the `WithBaseDate` export, and AGT-10 passing `baseDate={now}`.
+- F6: the page-boundary case and its plant (both hashes `e43f72c3…`).
+- `scripts/surface-census-baseline.json`: the gate-mandated removal of 7 stale `RelativeTime` rows (21 deletions, no
+  other change).
+
+Re-entry: `remediation`. Keep `evidence/task891/` and `rev1/` untouched. New artifacts go to
+`evidence/task891/rev2/`. Do not re-run R15, because `page.tsx`, `data.ts` and `access.ts` do not change. Do not
+re-run `check:locale-leak:mantine-only`, because revision 2 adds and changes no string.
+
+### 18.1 Findings and required corrections
+
+**F7 · P2 · R9, AC16, §17 F4(b) — the Story numbers still contradict each other.**
+- **(a) Bar vs row, in `SortedByViews`.**
+  - Its AGT-10 rows merge from `SORTED_BY_LISTING`: row `l0` reads 200 views.
+  - Its `topListings` is `topListingsAllOk(locale)` (`AgentStatisticsView.stories.tsx:229`), which ranks
+    `CANONICAL_BY_LISTING`: the bar for the same listing reads 42.
+  - This is the exact F4(b) defect. It is a **CONTRADICTION** of the session log's claim that the bar and the row
+    "can never disagree again".
+- **(b) KPI totals vs per-listing totals, in every export fed by `activitySeriesCurrentAllOk()`.**
+  - Those exports are `Default`, `Agt01AllZero`, `Agt10FilteredEmpty`, `ActivityStale` and `SortedByViews`.
+  - The series sums to 410 recorded views, 103 WhatsApp clicks and 6 form inquiries. Each day is
+    `8 + (i % 7) * 2`, `2 + (i % 4)` and `i % 5 === 0 ? 1 : 0`, over 30 days.
+  - `CANONICAL_BY_LISTING` sums to 42+30+18+9+4 = 103 views, 9 WhatsApp clicks and 3 form inquiries.
+  - In production both come from the one 849 aggregate, so the KPI for a period equals the sum over the owner's
+    listings.
+- **Correction:**
+  - In `agentStatistics.fixtures.ts`, add `activitySeriesFrom(byListing, days = PERIOD_DAYS)`. It spreads each metric's
+    by-listing total over the period's days deterministically, and the daily values of each metric sum **exactly** to
+    that total. One valid spread is `floor(T*(i+1)/D) - floor(T*i/D)`. It reads no wall-clock value.
+  - `activitySeriesCurrentAllOk()` returns `activitySeriesFrom(CANONICAL_BY_LISTING)`.
+  - Add `activitySeriesSortedByViews()` = `activitySeriesFrom(SORTED_BY_LISTING)` and
+    `topListingsSortedByViews(locale)` = `rankTopListings(SORTED_BY_LISTING, ownListingTitles(locale, 10))`.
+    `SortedByViews` consumes both.
+  - The previous period stays independent and lower than the current one, so the comparisons stay positive.
+  - Every three-sparkline export still renders 30 bars (AC2).
+  - Change no production file.
+
+**F8 · P2 · §17 F5, AC17, GR-3b, GR-3c — the revision-1 measurement set is incomplete.**
+- `rev1/measure.out.json` → `perStory` holds only the 8 `AgentStatisticsView` exports.
+- Missing, although §17 F5 named each one:
+  - `mantine-primitives-table--cards-below-md` at 320/390/768/1024/1440. Its receipt reads "unmeasured for width".
+  - `mantine-primitives-relativetime--with-base-date` at those widths. It has no GR-3b or GR-3c receipt.
+  - The computed `fontSize` of the KPI values. These are the only text on the page at 24px or more: 30px from `md`
+    (§12 type-scale table).
+  - Open `MantineSelect` portal content. The log says no select was opened.
+- The AC16 measurement `topListingsBarCount: 95` counts elements. It never compares a bar value with an AGT-10 row.
+- **Correction:**
+  - Copy `rev1/measure.mjs` to `rev2/measure.mjs` and run it against a fresh `build-storybook`.
+  - For all 8 `AgentStatisticsView` exports, `mantine-primitives-table--cards-below-md` and
+    `mantine-primitives-relativetime--with-base-date`, at 320/390/768/1024/1440 in `en`, record:
+    - the root width against the viewport;
+    - every `.mantine-ScrollArea-viewport`'s `scrollWidth` against its `clientWidth`;
+    - body overflow;
+    - the computed `fontSize` of the page title, the card titles, **each of the four KPI values** (hero and three) and
+      a table cell (the `<time>` text for `RelativeTime`).
+  - In `Default` at 320 and at 1440, open the AGT-10 status filter's `MantineSelect`. Record the dropdown's
+    `getBoundingClientRect()` against the viewport and body overflow, then close it.
+  - For `Default`, `ActivityStale` and `SortedByViews` at 1440 `en`, record:
+    - every top-listings bar's label and value next to that listing's AGT-10 Views cell;
+    - each of the three KPI values next to the fixture's by-listing total.
+  - Emit one GR-3b and one GR-3c receipt per export, quoting `rev2/measure.out.json`.
+
+**F9 · P3 · R10, §11 "Aggregate stale" — a stale all-zero period loses the card's stale caption.**
+- Where: `activityState.ts` returns `chartState: 'empty'` before it checks `stale`. The view maps that to card state
+  `ready` (`AgentStatisticsView.tsx:154`).
+- The header badge still shows. The card itself, however, presents "No recorded activity in this period" as current,
+  although the aggregate is stale. That is the case R10 forbids.
+- **Correction:**
+  - `ActivityStates` becomes
+    `{ kpiState: 'ready' | 'error'; cardState: 'ready' | 'stale' | 'error'; chartState: 'ready' | 'empty' | 'error' }`.
+  - `cardState` is `error` when freshness or current fails, else `stale` when `freshness.data.stale`, else `ready`.
+  - `chartState` is `error` on the same failures, else `empty` when all-zero, else `ready`.
+  - `kpiState` is unchanged.
+  - The view passes `cardState` to the activity `MantineDashboardCard` and `chartState` to
+    `MantineDashboardLineChart`. Delete the two mapping expressions at `:154` and `:498`.
+  - `activityState.test.ts`: the all-zero-and-stale case expects `cardState 'stale'` and `chartState 'empty'`. Every
+    other case asserts both fields.
+
+**F10 · P3 · clause 10, §17.5 — the session log's revision-1 record is wrong.**
+- (a) Nine hash cells in "Corrected Files Changed" belong to a different row. Measured with `git hash-object`:
+  - `RelativeTime.tsx` = `334232eb…` (logged `c4f4760d…`);
+  - `RelativeTime.stories.tsx` = `82352c49…` (logged `1cd71eff…`);
+  - `agentStatistics.fixtures.ts` = `1cd71eff…` (logged `334232eb…`);
+  - `AgentStatisticsView.stories.tsx` = `c4f4760d…` (logged `82352c49…`);
+  - `data.test.ts` = `237b81df…` (logged `947f53cb…`);
+  - `en` = `947f53cb…`, `sq` = `c25072af…`, `uk` = `634a7849…`, `it` = `b460a183…` (each logged one locale off).
+  - `rev1/hash-list.txt` carries no paths, so it cannot settle the attribution.
+- (b) The census note says extending `RelativeTime.stories.tsx` "paid off" the 7 rows. In fact `RelativeTime` has been
+  enrolled (`scripts/mantine-migration-scope.json:81`) and storied since Task 853 (`7aaad37cb`). The rows were already
+  stale; the gate re-censused their parents only because `RelativeTime.tsx` changed.
+- **Correction:**
+  - Write `rev2/hash-list.txt` as `<hash> <path>` lines, from a `for` loop over the §17.4 hash list plus
+    `activityState.test.ts` and `data.test.ts`.
+  - Put the revision-2 Files Changed table in the new section, built from that file.
+  - Correct sentence (b) in the Revision 1 section with a one-line `Corrected by review 2:` note. Leave the rest of that
+    section unchanged.
+
+### 18.2 Acceptance criteria added by revision 2
+
+- **AC19 [F7]** — Given `rev2/measure.out.json`, for `Default`, `ActivityStale` and `SortedByViews` at 1440 `en`, when
+  read, then:
+  - every top-listings bar value equals that listing's AGT-10 Views cell;
+  - each KPI value equals the sum of that export's by-listing metric. For `Default` that is 103 / 9 / 3.
+  - A fixture unit test asserts both equalities for `activitySeriesFrom` over `CANONICAL_BY_LISTING` and
+    `SORTED_BY_LISTING`: each metric's daily sum equals its by-listing total, and there are 30 points.
+- **AC20 [F8]** — Given `rev2/measure.out.json`, when read, then it holds every export × width in F8. At each width
+  it holds:
+  - the KPI value font sizes match §12's type-scale row (20 / 24 / 30 / 30);
+  - no `.mantine-ScrollArea-viewport` overflows at 320 or 390;
+  - body overflow is `false`;
+  - the open select dropdown lies inside the viewport.
+  One GR-3b and one GR-3c receipt per export quote it. The 768/1024 AGT-10 table overflow stays recorded-only (AC10).
+- **AC21 [F9]** — Given `activityState.test.ts`, when run, then the all-zero-and-stale case yields `cardState 'stale'`
+  and `chartState 'empty'`, and every case asserts both fields. `AgentStatisticsView.tsx` has no
+  `chartState === 'stale'` expression.
+- **AC22 [F10]** — Given `rev2/hash-list.txt`, when compared with a fresh `git hash-object` of each listed path, then
+  every line matches. The revision-2 Files Changed table repeats those pairs.
+
+`GR-4 AC AUDIT — 4 criteria added (AC19–AC22); each states an observable property; absolutes: AC20's no-overflow at 320/390 and dropdown-in-viewport at named widths, AC21's absent expression in one named file.`
+
+### 18.3 Revision gate block
+
+Tee every command to `evidence/task891/rev2/<name>.txt` with its exit code.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p "process.platform + ' ' + process.version"
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:i18n
+npm.cmd run test -- src/modules/cabinet/statistics/__tests__
+npm.cmd run test -- src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:rendered-scope
+node.exe scripts\check-surface-census-changed.mjs --base HEAD
+node.exe scripts\check-surface-census.mjs --surface src\modules\cabinet\statistics\components\AgentStatisticsView.tsx
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task891\rev2\measure.mjs
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep --untracked -n -E "className=|components/ui/|style=\{|#[0-9a-fA-F]{3,8}\b|[0-9]+px|rgba?\(" -- "src/app/[locale]/cabinet/statistics/page.tsx" src/modules/cabinet/statistics/components/AgentStatisticsView.tsx src/modules/cabinet/statistics/tableParams.ts src/modules/cabinet/statistics/topListings.ts src/modules/cabinet/statistics/portfolio.ts src/modules/cabinet/statistics/activityState.ts
+git --no-optional-locks grep --untracked -n "chartState === 'stale'" -- src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+```
+
+- Expected: exit 0 for every command except the two `git grep` commands, which print nothing and exit 1.
+- Put the fixture unit test for AC19 under `src/modules/cabinet/statistics/__tests__/`, so the fourth line runs it.
+
+### 18.4 Report
+
+- Append a "Revision 2" section to the existing session log. Give F7–F10 and AC19–AC22 with quotes, the receipts and
+  the labelled Files Changed table.
+- End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
+- The owner matrix in §13.4 runs only after review 3 accepts revision 2. This supersedes §17.5's last sentence.

@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🔁 NEEDS REVISION — review 4 (2026-09-29): the Story gutter profile does not match GR-3d; the executor re-enters at §19.2**
+owner action **O78-6** · **Status: 🟡 PARTIALLY VERIFIED — review 5 (2026-09-29): the implementation is verified (§20); approval waits only on the owner's O78-6b (§18.4)**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -857,3 +857,20 @@ The mode is remediation. Keep all code and evidence. Put the new evidence in `do
 
 O78-6b (§18.4) runs after this re-entry. Its gutter row now includes `DashboardHeader`, and the gutter it checks is
 16px on a phone, 24px from 640px and 32px from 1024px.
+
+## 20. Review 5 — PARTIALLY VERIFIED (2026-09-29)
+
+§19.2 is done. The reviewer checked it against the files and the rebuilt `storybook-static`, not against the report:
+- **Profile.** `src/stories/_StoryPageGutter.tsx` takes only `children` and renders
+  `px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl"`. No call site passes `surface`. All four `DashboardHeader`
+  exports use the harness.
+- **Gutters.** The reviewer measured all 15 exports of `AdminTable`, `AdminPageHeader`, `AdminCurrenciesView`,
+  `AdminCurrencyTabs` and `DashboardHeader`: the padding is 16/16/32/32 px at 320/390/1024/1440, and nothing
+  overflows.
+- **Truncation.** 0 truncated elements at 768/1024/1440 (`uk`) on: both tabs of `AdminCurrencyTabs`,
+  `AdminExchangeProvidersView` `Default`, and `Mantine/Primitives/Table` `Default`.
+- **Detail dialog.** Six fields in two 196px columns. The height is 414 px (`Default`) and 358 px (the other two).
+- **Gates.** `r4/` exits 0 for every command, including `14-lint` (0 errors). The implementation hashes equal
+  `r4/28-hash-object.txt`.
+
+No executor action remains. **Approval waits only on the owner's O78-6b (§18.4).**

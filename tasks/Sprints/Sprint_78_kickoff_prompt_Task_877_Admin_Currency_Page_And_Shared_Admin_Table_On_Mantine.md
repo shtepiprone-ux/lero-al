@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET after 874 is approved**
+owner action **O78-6** · **Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET — 874 approved 2026-09-29, dependency met**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -186,7 +186,7 @@ Bundles:
 - `docs/storybook-governance.md`: canonical titles, toolbar locale/viewport, no duplicate pages.
 - `docs/critical-flow-registry.md:85`.
 - `docs/qa-profiles.md`: the Q3 row.
-- The 874 kickoff: its View/container precedent (`Sprint_78_kickoff_prompt_Task_874_…`).
+- The 874 kickoff: its View/container precedent (`tasks/Archive/Sprint_78_kickoff_prompt_Task_874_…`, approved 2026-09-29).
 
 ## 7. Scope
 

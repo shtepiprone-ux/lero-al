@@ -34,7 +34,6 @@ are struck below.)
 | `src/components/ui/dialog.stories.tsx` | ✅ `primitives-dialog--default` | Product-rendering story |
 | `src/components/ui/dropdown-menu.stories.tsx` | ✅ `primitives-dropdownmenu--default` | Product-rendering story |
 | `src/components/ui/input.stories.tsx` | ✅ `primitives-input--default` | Product-rendering story |
-| `src/components/ui/PasswordInput.stories.tsx` | ✅ `primitives-passwordinput--default` | Product-rendering story |
 | `src/components/ui/popover.stories.tsx` | ✅ `primitives-popover--default` | Product-rendering story |
 | `src/components/ui/select.stories.tsx` | ✅ `primitives-select--default` | Product-rendering story |
 | `src/components/ui/sheet.stories.tsx` | ✅ `primitives-sheet--filter-sheet-right` | Product-rendering story |
@@ -61,7 +60,8 @@ are struck below.)
 | `src/components/admin/AdminUserAvatar.stories.tsx` | ✅ `admin-adminuseravatar--view-placeholder` + `--edit-mode` | Product-rendering story (2 surfaces) |
 | `src/components/admin/AdminSettings.stories.tsx` | ✅ `admin-adminsettings--default` | Product-rendering story |
 | `src/components/admin/AdminCurrenciesManager.stories.tsx` | ✅ `admin-admincurrenciesmanager--default` | Product-rendering story |
-| `src/components/admin/AdminExchangeProvidersManager.stories.tsx` | ✅ `admin-adminexchangeprovidersmanager--default` | Product-rendering story |
+| `src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` | ✅ `patterns-mantine-adminexchangeprovidersview--default` | Product-rendering story (Task 874) |
+| `src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx` | ✅ `patterns-mantine-providerformdialogview--new` | Product-rendering story (Task 874) |
 | `src/components/admin/AdminPropertyTypesManager.stories.tsx` | ✅ `admin-adminpropertytypesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminCompaniesManager.stories.tsx` | ✅ `admin-admincompaniesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminSupportManager.stories.tsx` | ✅ `admin-adminsupportmanager--default` | Product-rendering story |
@@ -124,7 +124,6 @@ Legend for "Needs fix?":
 | `dialog.stories.tsx` | `primitives-dialog--default` + multi | Primitives | Dialog (default, mobile, destructive, scrollable) | sq/en/uk/it | HIGH | OPEN DECISION | Dialog bottom-sheet compliance at `<640` (§26.2) not machine-checked. Visual QA required: opens as bottom-sheet? Footer actions reachable? Machine PASS on overflow. §14, §26.2 |
 | `dropdown-menu.stories.tsx` | `primitives-dropdownmenu--default` | Primitives | DropdownMenu (trigger + item list) | sq/en/uk/it | HIGH | OPEN DECISION | DropdownMenu bottom-sheet at `<640` (§26.2) not machine-checked. Visual QA required. Machine PASS. §26.2 |
 | `input.stories.tsx` | `primitives-input--default` | Primitives | Input (default, sizes, states) | sq/en/uk/it | MEDIUM | NO | `h-11` default since Task 375; fills parent. Machine PASS. §12a, §26.1 |
-| `PasswordInput.stories.tsx` | `primitives-passwordinput--default` | Primitives | PasswordInput (with visibility toggle) | sq/en/uk/it | MEDIUM | NO | Same as Input + icon-only toggle (exempt from full-width). Machine PASS. §12a, §26.4 |
 | `PasswordRequirementsHint.stories.tsx` | `primitives-passwordrequirementshint--idle` | Primitives | PasswordRequirementsHint (text list) | sq/en/uk/it | LOW | NO | Non-interactive text list; wraps naturally. Machine PASS. §6 |
 | `popover.stories.tsx` | `primitives-popover--default` | Primitives | Popover (trigger + content panel) | sq/en/uk/it | HIGH | OPEN DECISION | Popover bottom-sheet at `<640` (§26.2) not machine-checked. Visual QA required. Machine PASS. §26.2 |
 | `select.stories.tsx` | `primitives-select--default` | Primitives | Select (trigger + dropdown list) | sq/en/uk/it | HIGH | OPEN DECISION | SelectTrigger width machine-checked (PASS); dropdown bottom-sheet at `<640` not checked. Visual QA required for §26.2. §12c, §26.1, §26.2 |
@@ -144,7 +143,6 @@ Legend for "Needs fix?":
 | ~~`AdminSidebar.stories.tsx`~~ | — (both surfaces) | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate of `Patterns/Mantine/AdminSidebar`** | — | — | — | — |
 | `AdminSettings.stories.tsx` | `admin-adminsettings--default` + multi (--locale-stress, --tablet) | Admin | AdminSettings (settings form with sections, labels, inputs, save/cancel) | sq/en/uk/it | HIGH | OPEN DECISION | Form action buttons (save/cancel) full-width at `<640` NOT machine-checked. Form = `formLayout` pattern. Manual QA: §26.1 + §12 compliance. §12, §12b, §26.1 |
 | `AdminCurrenciesManager.stories.tsx` | `admin-admincurrenciesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCurrenciesManager (raw `<table>` currently; Tabs + currency rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **60 overflow FAIL cells** in Task 411 (sq/en/uk/it × 320/375/390/480/560 = raw table overflows). Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: currency CODE column, rate column, active toggle, add/edit/delete actions, tabs (manual/automatic), empty/loading/error states. §10 (tableAtLg), §25.1 |
-| `AdminExchangeProvidersManager.stories.tsx` | `admin-adminexchangeprovidersmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminExchangeProvidersManager (exchange rate provider list) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision not yet declared in design-system inventory. Manual QA: is this `tableAtLg` or `nonTabular`? Verify at 768/1024. §10, §25.1 |
 | `AdminPropertyTypesManager.stories.tsx` | `admin-adminpropertytypesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminPropertyTypesManager (raw `<table>` currently; property type rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: name column, icon, order, edit/delete actions, empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminCompaniesManager.stories.tsx` | `admin-admincompaniesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCompaniesManager (raw `<table>` currently; company rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: name, city, type, listings count, edit/delete/view actions, search, filter, empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminSupportManager.stories.tsx` | `admin-adminsupportmanager--default` + multi (--empty-state, --locale-stress, --tablet) | Admin | AdminSupportManager (support ticket list/table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision needed. Likely `tableAtLg`. Verify column set + row actions at 768–1023. §10, §25.1 |
@@ -335,7 +333,7 @@ The `screenshots:assert` PASS (assertions a+b+c) is **necessary but not sufficie
 ```
 admin-admincardlist--default               admin-admincompaniesmanager--default
 admin-admincurrenciesmanager--default      admin-adminemailtemplatesmanager--default
-admin-adminexchangeprovidersmanager--default  admin-adminlistingstable--default
+admin-adminlistingstable--default
 RETIRED-852-locale-switcher                RETIRED-852-mobile-header
 admin-adminpageshell--default              admin-adminpropertytypesmanager--default
 admin-adminsettings--default               RETIRED-852-sidebar-desktop
@@ -349,7 +347,7 @@ layout-section--with-title-and-description   primitives-badge--default
 primitives-button--default                 primitives-checkbox--default
 primitives-command--inline                 primitives-dialog--default
 primitives-dropdownmenu--default           primitives-input--default
-primitives-passwordinput--default          primitives-passwordrequirementshint--idle
+primitives-passwordrequirementshint--idle
 primitives-popover--default                primitives-select--default
 primitives-sheet--filter-sheet-right       primitives-skeleton--listing-card-skeleton
 primitives-tabs--default                   shared-combobox--button-variant
@@ -364,7 +362,7 @@ All 160 are supplementary variant exports. None introduce a new responsive surfa
 **Admin — `--tablet` exports (10, tableAtLg verification):**
 ```
 admin-admincurrenciesmanager--tablet       admin-adminpropertytypesmanager--tablet
-admin-admincompaniesmanager--tablet        admin-adminexchangeprovidersmanager--tablet
+admin-admincompaniesmanager--tablet
 admin-adminlistingstable--tablet           admin-adminuserstable--tablet
 admin-adminsettings--tablet                admin-adminsupportmanager--tablet
 admin-adminemailtemplatesmanager--tablet   admin-adminuserprofile--tablet
@@ -375,7 +373,7 @@ Use: open at 768/810/960px to verify `tableAtLg` breakpoint (cards `<1024`, tabl
 ```
 admin-admincurrenciesmanager--locale-stress    admin-adminpropertytypesmanager--locale-stress
 admin-admincompaniesmanager--locale-stress     admin-adminemailtemplatesmanager--locale-stress
-admin-adminexchangeprovidersmanager--locale-stress  admin-adminlistingstable--locale-stress
+admin-adminlistingstable--locale-stress
 admin-adminuserstable--locale-stress           admin-adminsettings--locale-stress
 admin-adminsupportmanager--locale-stress       admin-adminuserprofile--locale-stress
 RETIRED-852-locale-switcher-locale-stress      RETIRED-852-mobile-header-locale-stress
@@ -436,10 +434,8 @@ primitives-dialog--mobile-dialog           primitives-dialog--mobile-full-width
 primitives-dropdownmenu--mobile-bottom-sheet  primitives-input--disabled
 primitives-input--locale-placeholders      primitives-input--mobile-form
 primitives-input--phone-numeric-validation primitives-input--search-input
-primitives-input--with-label               primitives-passwordinput--disabled
-primitives-passwordinput--error-state      primitives-passwordinput--locale-stress
-primitives-passwordinput--success-state    primitives-passwordinput--with-hint-all-rules-met
-primitives-passwordinput--with-hint-idle   primitives-passwordrequirementshint--all-met
+primitives-input--with-label
+primitives-passwordrequirementshint--all-met
 primitives-passwordrequirementshint--locale-stress  primitives-passwordrequirementshint--partially-met
 primitives-popover--mobile-bottom-sheet    primitives-select--disabled
 primitives-select--long-label-locale-stress   primitives-select--mobile-bottom-sheet

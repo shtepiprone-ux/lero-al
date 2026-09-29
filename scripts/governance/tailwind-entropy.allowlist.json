@@ -115,16 +115,6 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/components/admin/AdminExchangeProvidersManager.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Admin exchange providers table micro-label or badge. Canonical size.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Admin table micro-label. Canonical allowed value."
-    },
-    {
-      "rule": "arbitrary-font-size",
       "file": "src/components/admin/AdminLocaleSwitcher.tsx",
       "pattern": "text-[10px]",
       "reason": "Admin locale switcher compact label. Canonical badge/micro-label size.",

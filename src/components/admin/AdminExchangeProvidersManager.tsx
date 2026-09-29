@@ -2,15 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2, ChevronRight } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { PasswordInput } from '@/components/ui/PasswordInput'
-import { Badge } from '@/components/ui/badge'
-import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+import { AdminExchangeProvidersView } from '@/components/admin/AdminExchangeProvidersView'
+import { ProviderFormDialogView, type ProviderFormValues } from '@/components/admin/ProviderFormDialogView'
 import {
   createExchangeProvider,
   updateExchangeProvider,
@@ -41,6 +35,7 @@ export function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProp
   const [priority, setPriority]   = useState(initial?.priority ?? 10)
   const [mode, setMode]           = useState<'auto' | 'manual' | 'hybrid'>(initial?.mode ?? 'auto')
   const [notes, setNotes]         = useState(initial?.notes ?? '')
+  const [apiKeyVisible, setApiKeyVisible] = useState(false)
 
   function handleSubmit() {
     if (!name.trim()) { toast.error(t('error_name_required')); return }
@@ -83,72 +78,32 @@ export function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProp
     })
   }
 
+  const values: ProviderFormValues = { name, endpoint, apiKey, interval, priority, mode, notes }
+
+  function handleFieldChange<K extends keyof ProviderFormValues>(field: K, value: ProviderFormValues[K]) {
+    switch (field) {
+      case 'name': setName(value as string); break
+      case 'endpoint': setEndpoint(value as string); break
+      case 'apiKey': setApiKey(value as string); break
+      case 'interval': setInterval(value as number); break
+      case 'priority': setPriority(value as number); break
+      case 'mode': setMode(value as ProviderFormValues['mode']); break
+      case 'notes': setNotes(value as string); break
+    }
+  }
+
   return (
-    <Dialog open onOpenChange={open => { if (!open) onClose() }}>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{initial ? t('edit') : t('new')}</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('name')}</Label>
-            <Input value={name} onChange={e => setName(e.target.value)} className="h-9 rounded-xl" />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('endpoint')}</Label>
-            <Input value={endpoint} onChange={e => setEndpoint(e.target.value)} placeholder="https://" className="h-9 rounded-xl font-mono text-sm" />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('api_key')}</Label>
-            <PasswordInput value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="(optional)" className="h-9 rounded-xl" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs">{t('refresh_interval')}</Label>
-              <Input type="number" min={1} value={interval} onChange={e => setInterval(Number(e.target.value))} className="h-9 rounded-xl" />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs">{t('priority')}</Label>
-              <Input type="number" min={1} value={priority} onChange={e => setPriority(Number(e.target.value))} className="h-9 rounded-xl" />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('mode')}</Label>
-            <div className="flex rounded-xl border overflow-hidden">
-              {(['auto', 'manual', 'hybrid'] as const).map(m => (
-                <Button
-                  key={m}
-                  type="button"
-                  onClick={() => setMode(m)}
-                  size="lg"
-                  variant={mode === m ? 'default' : 'ghost'}
-                  className="flex-1 rounded-none text-xs"
-                >
-                  {t(`mode_${m}`)}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('notes')}</Label>
-            <Input value={notes} onChange={e => setNotes(e.target.value)} className="h-9 rounded-xl" />
-          </div>
-
-          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-3 pt-2">
-            <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
-            <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
-              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <ProviderFormDialogView
+      opened
+      isEdit={!!initial}
+      values={values}
+      onFieldChange={handleFieldChange}
+      apiKeyVisible={apiKeyVisible}
+      onApiKeyVisibilityChange={setApiKeyVisible}
+      submitting={isPending}
+      onSubmit={handleSubmit}
+      onClose={onClose}
+    />
   )
 }
 
@@ -162,7 +117,6 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
   const t = useTranslations('admin.currency.providers')
   const [providers, setProviders] = useState<DBExchangeProvider[]>(initialProviders)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const tc = useTranslations('common')
   const [editing, setEditing] = useState<DBExchangeProvider | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<DBExchangeProvider | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -199,186 +153,24 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
     })
   }
 
-  const columns: AdminTableColumn<DBExchangeProvider>[] = [
-    {
-      key: 'name',
-      header: t('name'),
-      cell: p => (
-        <button
-          type="button"
-          onClick={e => { e.stopPropagation(); openEdit(p) }}
-          className="font-medium text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-        >
-          {p.name}
-        </button>
-      ),
-    },
-    {
-      key: 'endpoint',
-      header: t('endpoint'),
-      visibility: 'md',
-      cell: p => <span className="text-xs text-muted-foreground max-w-50 truncate font-mono block">{p.endpoint_url}</span>,
-    },
-    {
-      key: 'priority',
-      header: t('priority'),
-      cell: p => <span className="text-sm">{p.priority}</span>,
-    },
-    {
-      key: 'mode',
-      header: t('mode'),
-      cell: p => <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>,
-    },
-    {
-      key: 'is_enabled',
-      header: t('is_enabled'),
-      cell: p => (
-        <Badge variant={p.is_enabled ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
-          {p.is_enabled ? t('is_enabled') : t('disable')}
-        </Badge>
-      ),
-    },
-    {
-      key: 'notes',
-      header: t('notes'),
-      visibility: 'lg',
-      cell: p => <span className="text-xs text-muted-foreground max-w-40 truncate block">{p.notes ?? '—'}</span>,
-    },
-    {
-      key: 'actions',
-      header: '',
-      align: 'right',
-      cell: p => (
-        <div className="flex items-center gap-1 justify-end">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            title={p.is_enabled ? t('disable') : t('enable')}
-            onClick={e => { e.stopPropagation(); handleToggle(p) }}
-          >
-            {p.is_enabled
-              ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
-              : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
-            }
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            title={t('edit')}
-            onClick={e => { e.stopPropagation(); openEdit(p) }}
-          >
-            <Pencil className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="text-destructive hover:text-destructive hover:bg-destructive/10"
-            title={t('delete')}
-            onClick={e => { e.stopPropagation(); setDeleteTarget(p) }}
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </Button>
-        </div>
-      ),
-    },
-  ]
-
   return (
-    <div data-testid="admin-exchange-providers-manager">
-    {deleteTarget && (
-      <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>{t('delete_confirm')}</DialogTitle>
-            <DialogDescription>{deleteTarget.name}</DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isPending}>{tc('cancel')}</Button>
-            <Button variant="destructive" onClick={handleDelete} disabled={isPending} className="gap-1.5">
-              {isPending && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
-              {tc('delete')}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    )}
-    <div className="flex flex-col gap-4">
-      <div className="flex sm:justify-end">
-        <Button onClick={openNew} size="sm" className="rounded-xl gap-2" disabled={isPending}>
-          {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}
-          {t('new')}
-        </Button>
-      </div>
-
-      <AdminTable
-        rows={providers}
-        columns={columns}
-        rowKey={p => String(p.id)}
-        onRowClick={openEdit}
-        emptyState={t('empty')}
-        ariaLabel={t('name')}
-        cardRow={p => ({
-          title: (
-            <button
-              type="button"
-              onClick={e => { e.stopPropagation(); openEdit(p) }}
-              className="font-medium text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-            >
-              {p.name}
-            </button>
-          ),
-          subtitle: (
-            <div className="flex items-center gap-2 flex-wrap mt-1">
-              <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>
-              <Badge variant={p.is_enabled ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
-                {p.is_enabled ? t('is_enabled') : t('disable')}
-              </Badge>
-            </div>
-          ),
-          meta: (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap mt-0.5">
-              <span>{t('priority')}: {p.priority}</span>
-              {p.endpoint_url && <span className="font-mono truncate max-w-50">{p.endpoint_url}</span>}
-              {p.notes && <span className="truncate max-w-40">{p.notes}</span>}
-            </div>
-          ),
-          trailing: (
-            <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                title={p.is_enabled ? t('disable') : t('enable')}
-                onClick={e => { e.stopPropagation(); handleToggle(p) }}
-              >
-                {p.is_enabled
-                  ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
-                  : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
-                }
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
-                title={t('delete')}
-                onClick={e => { e.stopPropagation(); setDeleteTarget(p) }}
-                aria-label={tc('delete')}
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </Button>
-              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" aria-hidden="true" />
-            </div>
-          ),
-        })}
-      />
-
-      {dialogOpen && (
+    <AdminExchangeProvidersView
+      providers={providers}
+      isPending={isPending}
+      deleteTarget={deleteTarget}
+      onNew={openNew}
+      onEdit={openEdit}
+      onToggle={handleToggle}
+      onRequestDelete={setDeleteTarget}
+      onCancelDelete={() => setDeleteTarget(null)}
+      onConfirmDelete={handleDelete}
+      formSlot={dialogOpen ? (
         <ProviderFormDialog
           initial={editing}
           onClose={() => setDialogOpen(false)}
           onSaved={handleSaved}
         />
-      )}
-    </div>
-    </div>
+      ) : null}
+    />
   )
 }

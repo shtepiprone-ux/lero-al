@@ -1557,6 +1557,7 @@
         "name": "Nome fornitore",
         "endpoint": "Endpoint API",
         "api_key": "Chiave API",
+        "api_key_placeholder": "(facoltativo)",
         "refresh_interval": "Intervallo aggiornamento (min)",
         "priority": "Priorità",
         "mode": "Modalità",

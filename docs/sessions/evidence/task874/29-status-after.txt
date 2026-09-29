@@ -1,0 +1,25 @@
+ M docs/admin-ux-rules.md
+ M docs/component-catalog.md
+ M docs/component-coverage-matrix.md
+ M docs/component-risk-register.md
+ M docs/design-system.md
+ M docs/mantine-responsive-design-system.md
+ M docs/mantine-tailadmin-migration-tracker.md
+ M docs/responsive-storybook-inventory.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-stories-rendered.mjs
+ M scripts/governance/tailwind-entropy.allowlist.json
+ M scripts/i18n-dynamic-manifest.json
+ M scripts/mantine-migration-scope.json
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M src/components/admin/AdminExchangeProvidersManager.tsx
+?? docs/sessions/evidence/task874/
+?? src/components/admin/AdminExchangeProvidersView.tsx
+?? src/components/admin/ProviderFormDialogView.tsx
+?? src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx
+?? src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx
+?? src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx

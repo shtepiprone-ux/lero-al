@@ -10,7 +10,7 @@ Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRe
 | `AdminCompaniesManager` | src/components/admin/AdminCompaniesManager.tsx | RAW_BUTTON |
 | `AdminCurrenciesManager` | src/components/admin/AdminCurrenciesManager.tsx | RAW_BUTTON |
 | `AdminDashboardRecentListings` | src/components/admin/AdminDashboardRecentListings.tsx | ARBITRARY_TW |
-| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | RAW_BUTTON |
+| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | — (resolved, Task 874: Mantine Views) |
 | `AdminFooterManager` | src/components/admin/AdminFooterManager.tsx | RAW_BUTTON |
 | `AdminInquiriesManager` | src/components/admin/AdminInquiriesManager.tsx | ARBITRARY_TW |
 | `AdminLegalManager` | src/components/admin/AdminLegalManager.tsx | RAW_BUTTON |
@@ -69,7 +69,7 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `AdminCurrencyTabs` | admin-shared | HIGH |
 | `AdminDashboardRecentListings` | admin-shared | HIGH |
 | `AdminEmailTemplatesManager` | admin-shared | HIGH |
-| `AdminExchangeProvidersManager` | admin-shared | HIGH |
+| `AdminExchangeProvidersManager` | admin-shared | — (migrated, Task 874) |
 | `AdminFooterManager` | admin-shared | HIGH |
 | `AdminInquiriesManager` | admin-shared | HIGH |
 | `AdminLegalManager` | admin-shared | HIGH |
@@ -242,7 +242,7 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 |---|---|---|
 | `loading` | src/app/[locale]/listings/[slug]/loading.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminCurrenciesManager` | src/components/admin/AdminCurrenciesManager.tsx | Grid without 2xl step — verify column count at 2560px |
-| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | Grid without 2xl step — verify column count at 2560px |
+| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | — (resolved, Task 874: `MantineDataTableToCards`) |
 | `AdminInquiriesManager` | src/components/admin/AdminInquiriesManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminLegalManager` | src/components/admin/AdminLegalManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminListingsTable` | src/components/admin/AdminListingsTable.tsx | Grid without 2xl step — verify column count at 2560px |

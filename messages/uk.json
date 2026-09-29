@@ -1557,6 +1557,7 @@
         "name": "Назва постачальника",
         "endpoint": "API ендпоінт",
         "api_key": "API ключ",
+        "api_key_placeholder": "(необов’язково)",
         "refresh_interval": "Інтервал оновлення (хв)",
         "priority": "Пріоритет",
         "mode": "Режим",

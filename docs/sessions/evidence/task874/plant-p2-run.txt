@@ -1,0 +1,313 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx (4 tests | 1 failed) 770ms
+     × case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload 399ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx > AdminExchangeProvidersManager (T1) > case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Show password"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"m_b5489c3c m_d0e2b9cd mantine-Modal-header"[39m
+    [33mstyle[39m=[32m"padding-bottom: 0.5rem;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "New provider":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_615af6c9 mantine-Modal-title"[39m
+    [33mid[39m=[32m"mantine-bljtopd46-title"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "":
+  [36m<button[39m
+    [33mclass[39m=[32m"mantine-focus-auto mantine-active m_220c80f2 m_606cb269 mantine-Modal-close m_86a44da5 mantine-CloseButton-root m_87cf2631 mantine-UnstyledButton-root"[39m
+    [33mdata-variant[39m=[32m"subtle"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------textbox:
+
+  Name "Provider name":
+  [36m<input[39m
+    [33maria-invalid[39m=[32m"false"[39m
+    [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+    [33mdata-variant[39m=[32m"default"[39m
+    [33mid[39m=[32m"mantine-e3jxlb5wa"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "API Endpoint":
+  [36m<input[39m
+    [33maria-invalid[39m=[32m"false"[39m
+    [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+    [33mdata-variant[39m=[32m"default"[39m
+    [33mid[39m=[32m"mantine-9kmnodaib"[39m
+    [33mplaceholder[39m=[32m"https://"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  Name "Notes":
+  [36m<input[39m
+    [33maria-invalid[39m=[32m"false"[39m
+    [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+    [33mdata-variant[39m=[32m"default"[39m
+    [33mid[39m=[32m"mantine-6hfm3lwoq"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  spinbutton:
+
+  Name "Refresh interval (min)":
+  [36m<input[39m
+    [33maria-invalid[39m=[32m"false"[39m
+    [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+    [33mdata-variant[39m=[32m"default"[39m
+    [33mid[39m=[32m"mantine-3a3oe0gm9"[39m
+    [33mmin[39m=[32m"1"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+    [33mtype[39m=[32m"number"[39m
+    [33mvalue[39m=[32m"60"[39m
+  [36m/>[39m
+
+  Name "Priority":
+  [36m<input[39m
+    [33maria-invalid[39m=[32m"false"[39m
+    [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+    [33mdata-variant[39m=[32m"default"[39m
+    [33mid[39m=[32m"mantine-0vlquv1d9"[39m
+    [33mmin[39m=[32m"1"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+    [33mtype[39m=[32m"number"[39m
+    [33mvalue[39m=[32m"10"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  radiogroup:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_cf365364 mantine-SegmentedControl-root"[39m
+    [33mdata-full-width[39m=[32m"true"[39m
+    [33mdata-initialized[39m=[32m"true"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-with-items-borders[39m=[32m"true"[39m
+    [33mrole[39m=[32m"radiogroup"[39m
+    [33mstyle[39m=[32m"border: 1px solid var(--mantine-color-gray-2); --sc-radius: var(--mantine-radius-lg); --sc-shadow: var(--mantine-shadow-xs); --sc-padding: var(--sc-padding-sm); --sc-font-size: var(--mantine-font-size-sm);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  radio:
+
+  Name "Auto":
+  [36m<input[39m
+    [33mchecked[39m=[32m""[39m
+    [33mclass[39m=[32m"m_1714d588 mantine-SegmentedControl-input"[39m
+    [33mdata-focus-ring[39m=[32m"auto"[39m
+    [33mid[39m=[32m"mantine-jly6fcyyh-auto"[39m
+    [33mname[39m=[32m"mantine-jly6fcyyh"[39m
+    [33mtype[39m=[32m"radio"[39m
+    [33mvalue[39m=[32m"auto"[39m
+  [36m/>[39m
+
+  Name "Manual":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_1714d588 mantine-SegmentedControl-input"[39m
+    [33mdata-focus-ring[39m=[32m"auto"[39m
+    [33mid[39m=[32m"mantine-jly6fcyyh-manual"[39m
+    [33mname[39m=[32m"mantine-jly6fcyyh"[39m
+    [33mtype[39m=[32m"radio"[39m
+    [33mvalue[39m=[32m"manual"[39m
+  [36m/>[39m
+
+  Name "Hybrid":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_1714d588 mantine-SegmentedControl-input"[39m
+    [33mdata-focus-ring[39m=[32m"auto"[39m
+    [33mid[39m=[32m"mantine-jly6fcyyh-hybrid"[39m
+    [33mname[39m=[32m"mantine-jly6fcyyh"[39m
+    [33mtype[39m=[32m"radio"[39m
+    [33mvalue[39m=[32m"hybrid"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Cancel":
+  [36m<button[39m
+    [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_4q_"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mdata-variant[39m=[32m"outline"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--mantine-shadow-xs); --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: transparent; --button-hover: var(--mantine-color-gray-outline-hover); --button-color: var(--mantine-color-gray-outline); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Save":
+  [36m<button[39m
+    [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_4s_"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: var(--mantine-color-brand-filled); --button-hover: var(--mantine-color-brand-filled-hover); --button-color: var(--mantine-color-white); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<section[39m
+  [33maria-describedby[39m=[32m"mantine-bljtopd46-body"[39m
+  [33maria-labelledby[39m=[32m"mantine-bljtopd46-title"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"m_fd1ab0aa m_54c44539 mantine-Modal-content m_1b7284a3 mantine-Paper-root"[39m
+  [33mdata-modal-content[39m=[32m"true"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-lg);"[39m
+  [33mtabindex[39m=[32m"-1"[39m
+[36m>[39m
+  [36m<header[39m
+    [33mclass[39m=[32m"m_b5489c3c m_d0e2b9cd mantine-Modal-header"[39m
+    [33mstyle[39m=[32m"padding-bottom: 0.5rem;"[39m
+  [36m>[39m
+    [36m<h2[39m
+      [33mclass[39m=[32m"m_615af6c9 mantine-Modal-title"[39m
+      [33mid[39m=[32m"mantine-bljtopd46-title"[39m
+    [36m>[39m
+      [0mNew provider[0m
+    [36m</h2>[39m
+    [36m<button[39m
+      [33mclass[39m=[32m"mantine-focus-auto mantine-active m_220c80f2 m_606cb269 mantine-Modal-close m_86a44da5 mantine-CloseButton-root m_87cf2631 mantine-UnstyledButton-root"[39m
+      [33mdata-variant[39m=[32m"subtle"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33mfill[39m=[32m"none"[39m
+        [33mstyle[39m=[32m"width: var(--cb-icon-size, 70%); height: var(--cb-icon-size, 70%);"[39m
+        [33mviewBox[39m=[32m"0 0 15 15"[39m
+        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+      [36m>[39m
+        [36m<path[39m
+          [33mclip-rule[39m=[32m"evenodd"[39m
+          [33md[39m=[32m"M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"[39m
+          [33mfill[39m=[32m"currentColor"[39m
+          [33mfill-rule[39m=[32m"evenodd"[39m
+        [36m/>[39m
+      [36m</svg>[39m
+    [36m</button>[39m
+  [36m</header>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"m_5df29311 mantine-Modal-body"[39m
+    [33mid[39m=[32m"mantine-bljtopd46-body"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m""[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+          [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+          [36m>[39m
+            [36m<label[39m
+              [33mclass[39m=[32m"m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mfor[39m=[32m"mantine-e3jxlb5wa"[39m
+              [33mid[39m=[32m"mantine-e3jxlb5wa-label"[39m
+              [33mstyle[39m=[32m"font-size: var(--mantine-font-size-sm); font-weight: 600; color: var(--mantine-color-gray-7); margin-bottom: 0.375rem; --input-label-size: var(--mantine-font-size-sm);"[39m
+            [36m>[39m
+              [0mProvider name[0m
+            [36m</label>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"default"[39m
+              [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-radius: var(--mantine-radius-lg);"[39m
+            [36m>[39m
+              [36m<input[39m
+                [33maria-invalid[39m=[32m"false"[39m
+                [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+                [33mdata-variant[39m=[32m"default"[39m
+                [33mid[39m=[32m"mantine-e3jxlb5wa"[39m
+                [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+          [36m>[39m
+            [36m<label[39m
+              [33mclass[39m=[32m"m_8fdc1311 mantine-InputWrapper-label mantine-TextInput-label"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mfor[39m=[32m"mantine-9kmnodaib"[39m
+              [33mid[39m=[32m"mantine-9kmnodaib-label"[39m
+              [33mstyle[39m=[32m"font-size: var(--mantine-font-size-sm); font-weight: 600; color: var(--mantine-color-gray-7); margin-bottom: 0.375rem; --input-label-size: var(--mantine-font-size-sm);"[39m
+            [36m>[39m
+              [0mAPI Endpoint[0m
+            [36m</label>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"default"[39m
+              [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-radius: var(--mantine-radius-lg);"[39m
+            [36m>[39m
+              [36m<input[39m
+                [33maria-invalid[39m=[32m"false"[39m
+                [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+                [33mdata-variant[39m=[32m"default"[39m
+                [33mid[39m=[32m"mantine-9kmnodaib"[39m
+                [33mplaceholder[39m=[32m"https://"[39m
+                [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_f61ca620 mantine-PasswordInput-root m_46b77525 mantine-InputWrapper-root mantine-PasswordInput-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mstyle[39m=[32m"--psi-icon-size: var(--psi-icon-size-sm); --psi-button-size: var(--psi-button-size-sm);"[39m
+          [36m>[39m
+            [36m<label[39m
+      ...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx:102:40
+    100|
+    101|     // Mantine's PasswordInput toggles on mouse-down (a click alone ne…
+    102|     fireEvent.mouseDown(within(dialog).getByRole('button', { name: mes…
+       |                                        ^
+    103|     expect(apiKey.type).toBe('text')
+    104|     expect(within(dialog).getByRole('button', { name: messages.common.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  15:05:45
+   Duration  3.96s (transform 570ms, setup 83ms, import 2.20s, tests 770ms, environment 680ms)
+
+EXIT_CODE=1

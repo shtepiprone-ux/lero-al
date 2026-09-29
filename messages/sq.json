@@ -1557,6 +1557,7 @@
         "name": "Emri i ofruesit",
         "endpoint": "Pika fundore API",
         "api_key": "Çelësi API",
+        "api_key_placeholder": "(opsionale)",
         "refresh_interval": "Intervali i rifreskimit (min)",
         "priority": "Prioriteti",
         "mode": "Mënyra",

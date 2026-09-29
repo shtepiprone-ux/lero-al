@@ -1,0 +1,40 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: cac4f6a5d0c2eafbb6917f7e58746b54c7be1048  Head: (working tree)  Merge base: cac4f6a5d0c2eafbb6917f7e58746b54c7be1048
+    Changed paths seen: 22
+    Excluded (21):
+      docs/admin-ux-rules.md  [outside-src]
+      docs/component-catalog.md  [outside-src]
+      docs/component-coverage-matrix.md  [outside-src]
+      docs/component-risk-register.md  [outside-src]
+      docs/design-system.md  [outside-src]
+      docs/mantine-responsive-design-system.md  [outside-src]
+      docs/mantine-tailadmin-migration-tracker.md  [outside-src]
+      docs/responsive-storybook-inventory.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/governance/tailwind-entropy.allowlist.json  [outside-src]
+      scripts/i18n-dynamic-manifest.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/story-realmode-allowlist.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/components/admin/AdminExchangeProvidersManager.stories.tsx  [deleted]
+      src/components/ui/PasswordInput.stories.tsx  [deleted]
+      src/components/ui/PasswordInput.tsx  [deleted]
+    Included surfaces (1):
+      src/app/admin/currency/page.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 443 (carried-forward entries for the 443-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.
+EXIT_CODE=0

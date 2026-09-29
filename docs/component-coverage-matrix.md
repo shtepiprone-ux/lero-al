@@ -22,7 +22,7 @@ Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRe
 | `mobile-bottom-sheet.ts` | ✅ | src/components/ui/mobile-bottom-sheet.ts.stories.tsx |
 | `navigation-menu` | ✅ | src/components/ui/navigation-menu.stories.tsx |
 | `pagination` | ❌ | — |
-| `PasswordInput` | ✅ | src/components/ui/PasswordInput.stories.tsx |
+| `PasswordInput` | ✅ | src/stories/mantine/primitives/PasswordInput.stories.tsx |
 | `popover` | ✅ | src/components/ui/popover.stories.tsx |
 | `progress` | ❌ | — |
 | `radio-group` | ❌ | — |

@@ -7,7 +7,7 @@ wrapper pattern) · owner action **O78-7** · **Status: `KICKOFF FILED` 2026-09-
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Origin: reserved 2026-09-21 by Task 867's design. It is in Sprint 79 by origin and routed to Sprint 78 (admin Mantine)
 by goal fit. The reserved row's full text moves into §3 of this file.
-Precedents to follow: 874 and 877 (`tasks/Sprints/Sprint_78_kickoff_prompt_Task_874_…md`,
+Precedents to follow: 874 and 877 (`tasks/Archive/Sprint_78_kickoff_prompt_Task_874_…md`,
 `…_Task_877_…md`) for the container/View split, `MantineModal` dialogs, the delete confirm, Stories and manifest.
 
 ## 1. Mode and task type

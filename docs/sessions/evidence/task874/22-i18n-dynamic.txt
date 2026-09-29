@@ -1,0 +1,13 @@
+
+> lero-al@0.1.0 check:i18n-dynamic
+> node scripts/check-i18n-dynamic.mjs
+
+check:i18n-dynamic — 34 manifest entries, 195 distinct namespace.key pairs, 4 locales
+  Source: docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md §2 (Task 316)
+
+  All manifest-resolved keys present in all 4 locale files.
+
+Summary: 195 keys checked · 4 locales · 0 baselined-warn(s) · 0 error(s)
+
+check:i18n-dynamic PASSED.
+EXIT_CODE=0

@@ -104,7 +104,7 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminDashboardRecentListings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminEditLayout` | APPROVED | — | — | —  |
 | `AdminEmailTemplatesManager` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
-| `AdminExchangeProvidersManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
+| `AdminExchangeProvidersManager` | MIGRATED (Task 874: containers + `AdminExchangeProvidersView` / `ProviderFormDialogView`) | ✅ | 🌐 | — |
 | `AdminFooterManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminInput` | APPROVED | — | — | —  |
 | `AdminInquiriesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |

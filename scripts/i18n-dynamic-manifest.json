@@ -33,7 +33,7 @@
     },
     {
       "id": "admin-currency-providers-mode",
-      "site": "src/components/admin/AdminExchangeProvidersManager.tsx:132",
+      "site": "src/components/admin/ProviderFormDialogView.tsx:131",
       "namespace": "admin.currency.providers",
       "keys": ["mode_auto", "mode_manual", "mode_hybrid"],
       "note": "audit §2 sites #3-5 — ('auto'|'manual'|'hybrid')."

@@ -93,7 +93,7 @@ Controlled-scroll tables may still use `hidden sm:table-cell` / `hidden md:table
 | `/admin/companies` | `AdminCompaniesManager` | **Controlled scroll** | "Name" | Right-edge fade | Reference table: Logo/Name/Agents/Created; company directory | |
 | `/admin/property-types` | `AdminPropertyTypesManager` | **Controlled scroll** | Human-readable Name/Label | Right-edge fade | Data-dense: 7 cols (ID/Slug/SQ/EN-UK-IT/Sort/Active/Created); multilingual taxonomy | |
 | `/admin/currency` (currencies) | `AdminCurrenciesManager` | **Controlled scroll** | "Code" | Right-edge fade | Reference table: Code/Symbol/Name-EN/Active/Updated | |
-| `/admin/currency` (providers) | `AdminExchangeProvidersManager` | **Controlled scroll** | "Name" | Right-edge fade | Reference table: Name/Endpoint/Priority/Mode/Enabled/Notes; tech config | |
+| `/admin/currency` (providers) | `AdminExchangeProvidersManager` | **Cards below `sm`** (`MantineDataTableToCards`, Task 874) | "Name" | — | `AdminExchangeProvidersView`: Name/Endpoint/Priority/Mode/Enabled/Notes; tech config; edit via name + edit icon | |
 | `/admin/email-templates` | `AdminEmailTemplatesManager` | **Card-row fallback** | — | — | Already a card list layout; template key + locale badges + status as card fields | |
 | `/admin/legal` | `AdminLegalManager` | **Card-row fallback** ⚠️ | — | — | CORRECTED: 3-col light CRUD (Title/Status/Actions); fits 320 without scroll | |
 | `/admin/footer` | `AdminFooterManager` | **Card-row fallback** | — | — | Form-driven locale tabs; link rows need responsive re-layout at narrow (HIGH severity gap — Task 303) | |
@@ -349,7 +349,7 @@ Two admin components use custom `div` overlays instead of the canonical `<Dialog
 | Component | Modal | Issues |
 |-----------|-------|--------|
 | `AdminCurrenciesManager` | `CurrencyFormModal` | Custom `div`, no focus trap, no `aria-modal`, no Escape handler, no `DialogHeader`/`DialogFooter` |
-| `AdminExchangeProvidersManager` | `ProviderFormModal` | Same issues |
+| `AdminExchangeProvidersManager` | `ProviderFormModal` | Migrated (Task 874): `ProviderFormDialogView` on `MantineModal` (bottom sheet <640) |
 
 **Phase 5 (Task 311) MUST migrate both to canonical `<Dialog md>` + Sheet on mobile.**
 
@@ -390,8 +390,8 @@ Two admin components use custom `div` overlays instead of the canonical `<Dialog
 | 9 | `AdminCurrenciesManager` | CurrencyFormModal (custom div ⚠️) | `max-w-lg` | **md** | **Sheet** | No | → Dialog md + Sheet mobile; **migrate from custom div to Dialog primitive** |
 | 10 | `AdminCurrenciesManager` | CurrencyDetailModal | `max-w-md` | **md** | **Sheet** | Delete step | → md + Sheet mobile; delete → AlertDialog |
 | 11 | `AdminCurrenciesManager` | CurrencyDeleteConfirm | `max-w-sm` | **sm** | AlertDialog OK | ✅ | → AlertDialog sm |
-| 12 | `AdminExchangeProvidersManager` | ProviderFormModal (custom div ⚠️) | `max-w-lg` | **md** | **Sheet** | No | → Dialog md + Sheet mobile; **migrate from custom div to Dialog primitive** |
-| 13 | `AdminExchangeProvidersManager` | ProviderDeleteConfirm | `max-w-sm` | **sm** | AlertDialog OK | ✅ | → AlertDialog sm |
+| 12 | `AdminExchangeProvidersManager` | ProviderFormModal → `ProviderFormDialogView` | `MantineModal` | **md** | **Sheet** (<640) | ✅ | Migrated (Task 874) |
+| 13 | `AdminExchangeProvidersManager` | ProviderDeleteConfirm | `MantineModal` (in `AdminExchangeProvidersView`) | **sm** | Sheet (<640) | ✅ | Migrated (Task 874) |
 | 14 | `AdminEmailTemplatesManager` | PreviewDialog | `max-w-2xl` | **lg** | **Sheet** | No | → lg + Sheet mobile |
 | 15 | `AdminEmailTemplatesManager` | TemplateEditorDialog | `sm:max-w-2xl` | **lg** | **Sheet (full-height)** | No | → lg + Sheet mobile |
 | 16 | `AdminEmailTemplatesManager` | DeleteConfirmDialog | `max-w-sm` | **sm** | AlertDialog OK | ✅ | → AlertDialog sm |

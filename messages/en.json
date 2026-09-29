@@ -1557,6 +1557,7 @@
         "name": "Provider name",
         "endpoint": "API Endpoint",
         "api_key": "API Key",
+        "api_key_placeholder": "(optional)",
         "refresh_interval": "Refresh interval (min)",
         "priority": "Priority",
         "mode": "Mode",

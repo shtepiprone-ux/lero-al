@@ -421,7 +421,7 @@ Full route inventories are maintained in the Task 340 session log
 | `/admin/support`,`/inquiries`,`/inquiries/sales`,`/inquiries/support` | `AdminSupportManager`, inquiries managers | mixed | **`AdminSupportManager` migrated (Task 416 Slice 3)** → `tableAtLg` ✅; inquiries managers still raw `<table>` | `AdminSupportManager` `tableAtLg` ✅ (done); inquiries managers `tableAtLg` | 4 |
 | `/admin/reports` | `AdminReportsManager` | mixed | raw `<table>` | `tableAtLg` | 4 |
 | `/admin/locations`,`/popular-locations`,`/companies`,`/property-types`,`/pages`,`/legal` | respective `*Manager` | mixed | raw `<table>` | `tableAtLg` / `nonTabular` | 5 |
-| `/admin/currency` | `AdminCurrenciesManager`,`AdminExchangeProvidersManager` | mixed | `AdminCurrenciesManager` migrated (Task 413) `tableAtLg` ✅; **`AdminExchangeProvidersManager` migrated (Task 416 Slice 3)** provider list → `tableAtLg` ✅ | both `tableAtLg` ✅ (done) + Tabs primitive | — |
+| `/admin/currency` | `AdminCurrenciesManager`,`AdminExchangeProvidersManager` | mixed | `AdminCurrenciesManager` migrated (Task 413) `tableAtLg` ✅; **`AdminExchangeProvidersManager` → containers + `AdminExchangeProvidersView` / `ProviderFormDialogView` on `MantineDataTableToCards` + `MantineModal` (Task 874)** | both `tableAtLg` ✅ (done) + Tabs primitive | — |
 | `/admin/email-templates`,`/footer`,`/settings`,`/permissions` | respective managers | mixed | forms / lists | `AdminEmailTemplatesManager` = `nonTabular` (template list rows) + `formLayout` (editor `Dialog`, canonical, verified Task 416, tablet-stable); `/footer`,`/settings`,`/permissions` `formLayout` / `nonTabular` | 5 |
 
 ---

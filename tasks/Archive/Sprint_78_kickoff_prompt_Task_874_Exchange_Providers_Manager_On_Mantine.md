@@ -1,7 +1,7 @@
 # Task 874 — the exchange-provider manager moves to canonical Mantine, and the last legacy `ui/PasswordInput` goes
 
 Sprint 78 (moved from Sprint 81 by owner decision **D78-7**) · **P3** · QA profile **Q3** · depends on 873 (landed) ·
-owner action **O78-5** · **Status: 🔁 NEEDS REVISION — review 1 (2026-09-29): implementation kept; owner deletes the three R5 files, then Sonnet re-enters at §17**
+owner action **O78-5** · **Status: ✅ APPROVED 2026-09-29 — review 3 (§18); archived**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 (D78-7 is quoted verbatim there and in §5 below). The sibling nodes of `/admin/currency` are filed as **877**.
@@ -645,3 +645,7 @@ is not committed as a repo artifact.
   the three deletions as `D` in Files Changed.
 - Update the 874 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 - AC10 (owner matrix O78-5) stays `MISSING EVIDENCE`, owed by the owner.
+
+## 18. Review 3 — 2026-09-29, `APPROVED`
+
+The owner accepted **O78-5** on 2026-09-29, verbatim: *"accepted"*. That covers the 64 tuples in §13.3, so AC10 is closed. Review 2's verification of R1–R8 and AC1–AC9 against `r2/` stands. The implementation hashes still equal `r2/28-hash-object.txt`. No findings. `AdminTable`/`AdminCardList` and the rest of `/admin/currency` remain **877**'s.

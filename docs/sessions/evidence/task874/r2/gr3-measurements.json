@@ -1,0 +1,1043 @@
+{
+  "AdminExchangeProvidersView/Default": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 810,
+        "width": 320
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 810,
+        "width": 390
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 252,
+        "width": 768
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 252,
+        "width": 1024
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 252,
+        "width": 1440
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "AdminExchangeProvidersView/Empty": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 132,
+        "width": 320
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 132,
+        "width": 390
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 132,
+        "width": 768
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 132,
+        "width": 1024
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 132,
+        "width": 1440
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "AdminExchangeProvidersView/Pending": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 810,
+        "width": 320
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 810,
+        "width": 390
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 252,
+        "width": 768
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 252,
+        "width": 1024
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 252,
+        "width": 1440
+      },
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "AdminExchangeProvidersView/DeleteConfirm": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 810,
+        "width": 320
+      },
+      "dialog": {
+        "left": 0,
+        "right": 320,
+        "top": 667,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialogTitle": {
+        "text": "Delete this provider?",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Delete this provider?",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 810,
+        "width": 390
+      },
+      "dialog": {
+        "left": 0,
+        "right": 390,
+        "top": 667,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialogTitle": {
+        "text": "Delete this provider?",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Delete this provider?",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 252,
+        "width": 768
+      },
+      "dialog": {
+        "left": 164,
+        "right": 604,
+        "top": 372,
+        "bottom": 528,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Delete this provider?",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "BankOfAlbania",
+        "fontSize": 14
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 252,
+        "width": 1024
+      },
+      "dialog": {
+        "left": 292,
+        "right": 732,
+        "top": 372,
+        "bottom": 528,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Delete this provider?",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "BankOfAlbania",
+        "fontSize": 14
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 252,
+        "width": 1440
+      },
+      "dialog": {
+        "left": 500,
+        "right": 940,
+        "top": 372,
+        "bottom": 528,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Delete this provider?",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "BankOfAlbania",
+        "fontSize": 14
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "ProviderFormDialogView/New": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialog": {
+        "left": 0,
+        "right": 320,
+        "top": 90,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialogTitle": {
+        "text": "New provider",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "New provider",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialog": {
+        "left": 0,
+        "right": 390,
+        "top": 90,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialogTitle": {
+        "text": "New provider",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "New provider",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 900,
+        "width": 768
+      },
+      "dialog": {
+        "left": 164,
+        "right": 604,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "New provider",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 900,
+        "width": 1024
+      },
+      "dialog": {
+        "left": 292,
+        "right": 732,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "New provider",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 900,
+        "width": 1440
+      },
+      "dialog": {
+        "left": 500,
+        "right": 940,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "New provider",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "ProviderFormDialogView/Edit": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialog": {
+        "left": 0,
+        "right": 320,
+        "top": 90,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialog": {
+        "left": 0,
+        "right": 390,
+        "top": 90,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 900,
+        "width": 768
+      },
+      "dialog": {
+        "left": 164,
+        "right": 604,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 900,
+        "width": 1024
+      },
+      "dialog": {
+        "left": 292,
+        "right": 732,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 900,
+        "width": 1440
+      },
+      "dialog": {
+        "left": 500,
+        "right": 940,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "ProviderFormDialogView/ApiKeyRevealed": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialog": {
+        "left": 0,
+        "right": 320,
+        "top": 90,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialog": {
+        "left": 0,
+        "right": 390,
+        "top": 90,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 900,
+        "width": 768
+      },
+      "dialog": {
+        "left": 164,
+        "right": 604,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 900,
+        "width": 1024
+      },
+      "dialog": {
+        "left": 292,
+        "right": 732,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 900,
+        "width": 1440
+      },
+      "dialog": {
+        "left": 500,
+        "right": 940,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  },
+  "ProviderFormDialogView/Submitting": {
+    "320": {
+      "vw": 320,
+      "vh": 900,
+      "docScrollW": 320,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 320,
+        "top": 0,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialog": {
+        "left": 0,
+        "right": 320,
+        "top": 90,
+        "bottom": 900,
+        "width": 320
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "390": {
+      "vw": 390,
+      "vh": 900,
+      "docScrollW": 390,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 390,
+        "top": 0,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialog": {
+        "left": 0,
+        "right": 390,
+        "top": 90,
+        "bottom": 900,
+        "width": 390
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Edit",
+        "fontSize": 14
+      },
+      "dialogIsSheet": true,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "768": {
+      "vw": 768,
+      "vh": 900,
+      "docScrollW": 768,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 768,
+        "top": 0,
+        "bottom": 900,
+        "width": 768
+      },
+      "dialog": {
+        "left": 164,
+        "right": 604,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 900,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1024,
+        "top": 0,
+        "bottom": 900,
+        "width": 1024
+      },
+      "dialog": {
+        "left": 292,
+        "right": 732,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "root": {
+        "left": 0,
+        "right": 1440,
+        "top": 0,
+        "bottom": 900,
+        "width": 1440
+      },
+      "dialog": {
+        "left": 500,
+        "right": 940,
+        "top": 118,
+        "bottom": 782,
+        "width": 440
+      },
+      "dialogTitle": {
+        "text": "Edit",
+        "fontSize": 16
+      },
+      "dialogBody": {
+        "text": "Provider name",
+        "fontSize": 16
+      },
+      "dialogIsSheet": false,
+      "dialogInnerOverflow": false,
+      "maxTextFontSize": 16,
+      "hasHeading": true
+    }
+  }
+}

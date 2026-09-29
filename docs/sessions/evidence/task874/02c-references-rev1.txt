@@ -1,0 +1,42 @@
+docs/admin-ux-rules.md:96:| `/admin/currency` (providers) | `AdminExchangeProvidersManager` | **Controlled scroll** | "Name" | Right-edge fade | Reference table: Name/Endpoint/Priority/Mode/Enabled/Notes; tech config | |
+docs/admin-ux-rules.md:352:| `AdminExchangeProvidersManager` | `ProviderFormModal` | Same issues |
+docs/admin-ux-rules.md:393:| 12 | `AdminExchangeProvidersManager` | ProviderFormModal (custom div ⚠️) | `max-w-lg` | **md** | **Sheet** | No | → Dialog md + Sheet mobile; **migrate from custom div to Dialog primitive** |
+docs/admin-ux-rules.md:394:| 13 | `AdminExchangeProvidersManager` | ProviderDeleteConfirm | `max-w-sm` | **sm** | AlertDialog OK | ✅ | → AlertDialog sm |
+docs/component-catalog.md:107:| `AdminExchangeProvidersManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
+docs/component-coverage-matrix.md:25:| `PasswordInput` | ✅ | src/components/ui/PasswordInput.stories.tsx |
+docs/component-risk-register.md:13:| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | RAW_BUTTON |
+docs/component-risk-register.md:72:| `AdminExchangeProvidersManager` | admin-shared | HIGH |
+docs/component-risk-register.md:245:| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | Grid without 2xl step — verify column count at 2560px |
+docs/design-system.md:424:| `/admin/currency` | `AdminCurrenciesManager`,`AdminExchangeProvidersManager` | mixed | `AdminCurrenciesManager` migrated (Task 413) `tableAtLg` ✅; **`AdminExchangeProvidersManager` migrated (Task 416 Slice 3)** provider list → `tableAtLg` ✅ | both `tableAtLg` ✅ (done) + Tabs primitive | — |
+docs/mantine-responsive-design-system.md:467:| `src/components/admin/AdminExchangeProvidersManager.tsx` | Provider CRUD | shadcn Dialog form | P0 risk: dialog not bottom-sheet | Story exists | MIGRATE TO MANTINE | MantineDialogDrawerPattern + MantineAdminSurfacePattern | Phase 3 | — |
+docs/mantine-tailadmin-migration-tracker.md:194:AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager ·
+docs/responsive-storybook-inventory.md:37:| `src/components/ui/PasswordInput.stories.tsx` | ✅ `primitives-passwordinput--default` | Product-rendering story |
+docs/responsive-storybook-inventory.md:64:| `src/components/admin/AdminExchangeProvidersManager.stories.tsx` | ✅ `admin-adminexchangeprovidersmanager--default` | Product-rendering story |
+docs/responsive-storybook-inventory.md:127:| `PasswordInput.stories.tsx` | `primitives-passwordinput--default` | Primitives | PasswordInput (with visibility toggle) | sq/en/uk/it | MEDIUM | NO | Same as Input + icon-only toggle (exempt from full-width). Machine PASS. §12a, §26.4 |
+docs/responsive-storybook-inventory.md:147:| `AdminExchangeProvidersManager.stories.tsx` | `admin-adminexchangeprovidersmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminExchangeProvidersManager (exchange rate provider list) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision not yet declared in design-system inventory. Manual QA: is this `tableAtLg` or `nonTabular`? Verify at 768/1024. §10, §25.1 |
+docs/responsive-storybook-inventory.md:237:**Stories in scope:** AdminExchangeProvidersManager, AdminSupportManager, AdminEmailTemplatesManager, AdminUsersTable, AdminUserProfile
+docs/responsive-storybook-inventory.md:245:**Stories in scope:** AdminExchangeProvidersManager, AdminSupportManager, AdminUsersTable, AdminEmailTemplatesManager, AdminUserProfile
+docs/responsive-storybook-inventory.md:338:admin-adminexchangeprovidersmanager--default  admin-adminlistingstable--default
+docs/responsive-storybook-inventory.md:352:primitives-passwordinput--default          primitives-passwordrequirementshint--idle
+docs/responsive-storybook-inventory.md:367:admin-admincompaniesmanager--tablet        admin-adminexchangeprovidersmanager--tablet
+docs/responsive-storybook-inventory.md:378:admin-adminexchangeprovidersmanager--locale-stress  admin-adminlistingstable--locale-stress
+docs/responsive-storybook-inventory.md:439:primitives-input--with-label               primitives-passwordinput--disabled
+docs/responsive-storybook-inventory.md:440:primitives-passwordinput--error-state      primitives-passwordinput--locale-stress
+docs/responsive-storybook-inventory.md:441:primitives-passwordinput--success-state    primitives-passwordinput--with-hint-all-rules-met
+docs/responsive-storybook-inventory.md:442:primitives-passwordinput--with-hint-idle   primitives-passwordrequirementshint--all-met
+scripts/check-stories-rendered.mjs:128:  { id: 'primitives-passwordinput--default',      label: 'PasswordInput/Default',      anchors: [{ type: 'slot', value: 'password-input', label: 'password-input' }] },
+scripts/check-stories-rendered.mjs:161:  { id: 'admin-adminexchangeprovidersmanager--default', label: 'AdminExchangeProvidersManager/Default', anchors: [{ type: 'testid', value: 'admin-exchange-providers-manager', label: 'exchange' }] },
+scripts/governance/tailwind-entropy.allowlist.json:118:      "file": "src/components/admin/AdminExchangeProvidersManager.tsx",
+scripts/i18n-dynamic-manifest.json:36:      "site": "src/components/admin/AdminExchangeProvidersManager.tsx:132",
+scripts/story-realmode-allowlist.json:8:  { "file": "src/components/admin/AdminExchangeProvidersManager.stories.tsx", "export": "FormDialogMobileBottomSheet", "check": 12, "reason": "Real overlay mode: provider form dialog bottom-sheet open state." },
+scripts/surface-census-baseline.json:298:    "src/app/admin/currency/page.tsx :: src/components/admin/AdminExchangeProvidersManager.tsx :: tier1-unenrolled-or-unstoried": {
+scripts/surface-census-baseline.json:307:    "src/app/admin/currency/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive": {
+src/components/admin/AdminCurrencyTabs.tsx:5:import { AdminExchangeProvidersManager } from '@/components/admin/AdminExchangeProvidersManager'
+src/components/admin/AdminCurrencyTabs.tsx:28:        <AdminExchangeProvidersManager initialProviders={providers} />
+src/components/admin/AdminExchangeProvidersManager.stories.tsx:2:import { AdminExchangeProvidersManager, ProviderFormDialog } from './AdminExchangeProvidersManager'
+src/components/admin/AdminExchangeProvidersManager.stories.tsx:5:const meta: Meta<typeof AdminExchangeProvidersManager> = {
+src/components/admin/AdminExchangeProvidersManager.stories.tsx:6:  title: 'Admin/AdminExchangeProvidersManager',
+src/components/admin/AdminExchangeProvidersManager.stories.tsx:7:  component: AdminExchangeProvidersManager,
+src/components/admin/AdminExchangeProvidersManager.stories.tsx:12:type Story = StoryObj<typeof AdminExchangeProvidersManager>
+src/components/admin/AdminExchangeProvidersManager.tsx:11:import { PasswordInput } from '@/components/ui/PasswordInput'
+src/components/admin/AdminExchangeProvidersManager.tsx:161:export function AdminExchangeProvidersManager({ initialProviders }: Props) {

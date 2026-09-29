@@ -191,7 +191,7 @@ AdminShell (✅ Task 852) · AdminSidebar (✅ Task 852) · AdminHeader (✅ Tas
 AdminPageShell · AdminPageHeader · AdminEditLayout · AdminTable ·
 AdminCardList · AdminInput · AdminSearchInput · AdminUserAvatar · AdminUsersTable (🟡 Task 485 — close AFTER its
 primitives) · AdminUserProfile · AdminUserCreate · AdminListingsTable · AdminDashboardRecentListings ·
-AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager ·
+AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager (✅ Task 874) ·
 AdminEmailTemplatesManager · AdminFooterManager · AdminInquiriesManager · AdminLegalManager · AdminLocationsManager ·
 AdminPopularLocationsManager · AdminPagesManager · AdminPermissionsManager · AdminPropertyTypesManager ·
 AdminReportsManager · AdminSettings · AdminSupportManager · AdminLocaleSwitcher (✅ Task 852) · StatusChangeControl ·

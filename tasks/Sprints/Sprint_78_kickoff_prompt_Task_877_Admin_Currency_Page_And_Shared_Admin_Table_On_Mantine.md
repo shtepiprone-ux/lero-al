@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET — 874 approved 2026-09-29, dependency met**
+owner action **O78-6** · **Status: 🔁 NEEDS REVISION — review 1 (2026-09-29) of the partial Phase A; the executor re-enters at §16.4**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -9,7 +9,7 @@ Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sp
 
 `IMPLEMENTATION`, three ordered phases, one route:
 - **Phase A:** two canonical patterns are **extended**, and two shared admin components become **thin adapters** over
-  them. `AdminTable` (5 consumers after 874) wraps `MantineDataTableToCards`; `AdminPageHeader` (16 consumers) wraps
+  them. `AdminTable` (5 consumers after 874) wraps `MantineDataTableToCards`; `AdminPageHeader` (14 consumers, §16.2) wraps
   `MantineDashboardHeader`.
 - **Phase B:** the `/admin/currency` surface migrates: container/View splits, Mantine `Tabs`, the page wrapper.
 - **Phase C:** deletions (`AdminCardList` and three legacy Stories), the reference audit, and baselines.
@@ -77,8 +77,8 @@ Bundles:
 - **F6 (FACT) — `AdminPageHeader`** (17 lines): `div.admin-page-header` with `h1 text-2xl font-bold` and
   `p text-sm text-muted-foreground mt-0.5`, `action` on the right, `mb-6`.
 
-  It has **16 production consumers**: 15 `src/app/admin/**/page.tsx` plus `AdminUserCreate.tsx:179`. The owner was
-  told 17; the grep had counted the file itself.
+  **Corrected at review 1 (§16.2):** it has **14 production consumers**, 13 `src/app/admin/**/page.tsx` plus
+  `AdminUserCreate.tsx`. The design-time "16" and the owner's "17" were both miscounts.
 
   `MantineDashboardHeader` (`patterns/MantineDashboardHeader.tsx`, manifest `:91`, Story
   `Patterns/Mantine/DashboardHeader`) is the canonical page header. Its own doc (`:28-30`) says title
@@ -107,7 +107,7 @@ Bundles:
 - **F9 (FACT, tokens).** Theme spacing (`theme.ts`) has `xl` = 1.5rem and `2xl` = 2rem (`:548`, `:553`).
   - There is **no** token for 64rem as a content width; the only `64rem` is `other.layout.lightboxMediaMaxWidth`,
     whose role is different (`:649`).
-  - There is no z-index token.
+  - ~~There is no z-index token.~~ **Corrected at review 1 (§16.2):** `theme.other.zIndex` exists (Task 879, `theme.ts:150` type, `:699-701` value `siteHeader: 30`).
   - D71-4 (Sprint 71): *"raw px never acceptable — create the token"*. Precedent: Task 825 created
     `lightboxMediaMaxWidth` from the legacy `max-w-5xl`.
 - **F10 (FACT, TailAdmin).** `docs/tailadmin-style-reference.md:74`: a status badge is `Badge` pill, `size sm`,
@@ -124,7 +124,8 @@ Bundles:
   - `src/app/globals.css:744-762`: `.admin-table-scroll-wrap`.
   - Docs: `docs/component-coverage-matrix.md`, `docs/component-catalog.md`, `docs/responsive-storybook-inventory.md`,
     `docs/storybook-governance.md`, `docs/design-system.md`, `docs/admin-ux-rules.md`, `docs/component-governance.md`.
-    The executor lists each hit at I0.
+    The executor lists each hit at I0. **Review 1 (§16.2):** `docs/mantine-tailadmin-migration-tracker.md:192` is also
+    a live hit; `component-coverage-matrix.md` and `component-governance.md` have no hit.
 
   `scripts/__tests__/mantine-story-scope.test.ts:23`, `:46` use `'Admin/AdminCardList'` only as a **title string**
   in a negative test; they stay. The comments in `scripts/check-design-tokens.mjs:926`, `:1256` stay.
@@ -135,7 +136,7 @@ Bundles:
 
 | ID | Source | Observable requirement | P | Verification | Status |
 |---|---|---|---|---|---|
-| **R1** | F2, F3, F5, D78-8 | **EXTEND `MantineDataTableToCards`**, additive and optional, so `AdminUsersTable` is unchanged:<br>• `onRowClick?(row)`: the table row and the card get click, `tabIndex=0` and Enter/Space (the F2/F4 behaviour), plus Mantine `highlightOnHover` on the table. When set, an `aria-hidden` chevron is added at `theme.other.iconSize.compact`, `c="gray.4"`.<br>• `TableColumn.visibleFrom?: MantineBreakpoint`, applied to `Table.Th`/`Table.Td`.<br>• `stickyColumnIndex?: number`: `pos="sticky" left={0}`, body background, z-index from the new token `theme.other.layer.tableStickyColumn = 1` (legacy `z-[1]`, D71-4). Use Mantine `Table stickyHeader` for the header.<br>• `CardConfig.detail?(row): ReactNode`, a free-form region below one divider, used where `meta[]` is absent.<br>• `emptyLabel` and `TableColumn.label` widen to `ReactNode`.<br>• `ariaLabel?` on `Table`.<br>The pattern's own Story `Mantine/Primitives/Table` gains exports `RowClick`, `ResponsiveColumns`, `StickyColumn` and `CardDetail`. | P0 | AC1, AC2 | Confirmed |
+| **R1** | F2, F3, F5, D78-8 | **EXTEND `MantineDataTableToCards`**, additive and optional, so `AdminUsersTable` is unchanged:<br>• `onRowClick?(row)`: the table row and the card get click, `tabIndex=0` and Enter/Space (the F2/F4 behaviour), plus Mantine `highlightOnHover` on the table. When set, an `aria-hidden` chevron is added (table: its own trailing column; card: only when `actions` returns nothing — the F4 rule, §16.2) at `theme.other.iconSize.compact`, `c="gray.4"`.<br>• `TableColumn.visibleFrom?: MantineBreakpoint`, applied to `Table.Th`/`Table.Td`.<br>• `stickyColumnIndex?: number`: `pos="sticky" left={0}`, body background, z-index from the new role `theme.other.zIndex.tableStickyColumn = 1` in the existing Task 879 `zIndex` map (§16.2) (legacy `z-[1]`, D71-4). Use Mantine `Table stickyHeader` for the header.<br>• `CardConfig.detail?(row): ReactNode`, a free-form region below one divider, used where `meta[]` is absent.<br>• `emptyLabel` and `TableColumn.label` widen to `ReactNode`.<br>• `ariaLabel?` on `Table`.<br>The pattern's own Story `Mantine/Primitives/Table` gains exports `RowClick`, `ResponsiveColumns`, `StickyColumn` and `CardDetail`. | P0 | AC1, AC2 | Confirmed |
 | **R2** | F2, F3, F4, D78-8 | **`AdminTable` becomes an adapter.** Same path, same `AdminTableColumn`/prop names **minus** the F3 dead ones. It renders only `<MantineDataTableToCards>`:<br>• `rowKey` → a string `id` wrapper, unwrapped in `render`/`card`;<br>• `header` → `label`, `cell` → `render`, `visibility` → `visibleFrom`, `align` → `align`;<br>• `cardRow` → `CardConfig` (`title`, `subtitle`, `meta` → `detail`, `trailing` → `actions`);<br>• with no `cardRow`, the legacy `synthesizeCard` rule (`:104-127`), rebuilt from Mantine `Group`;<br>• `onRowClick`, `rowClassName`, `stickyColumnIndex` and `ariaLabel` passed through; `emptyState` → `emptyLabel`.<br>Column `className` is **not** forwarded (§5 item 3). The result has 0 `className`, 0 `@/components/ui/*` imports and no `AdminCardList` import. It has its own Story, `Patterns/Mantine/AdminTable` (`Default`, `Synthesized`, `Empty`, `RowClick`), and a manifest entry. | P0 | AC3, AC4, AC11 | Confirmed |
 | **R3** | F6, D78-8 | **EXTEND `MantineDashboardHeader`** with `actions?: ReactNode`, rendered at the right end of the right column (below `sm`, after the status line and period control, full width). Its Story gains `WithActions`. **`AdminPageHeader` becomes an adapter** with the same props: `<Box mb="xl"><MantineDashboardHeader title subtitle actions={action} /></Box>`. It has 0 `className`, its own Story `Patterns/Mantine/AdminPageHeader` (`Default`, `WithAction`) and a manifest entry. Its `story-coverage-exempt.json` row is removed. | P1 | AC5 | Confirmed |
 | **R4** | F7, component-rules P0 | **`AdminCurrenciesManager.tsx` splits.** The containers `AdminCurrenciesManager` and `CurrencyFormDialog` keep their exported APIs. All state, actions, `toast` and error mapping stay unchanged, and each renders only its View. They have 0 `className` and 0 `ui/*` imports. The Views:<br>• `src/components/admin/AdminCurrenciesView.tsx`: search `TextInput` with a `Search` `leftSection`, the "new" `Button` (`loading`), `AdminTable` (R2) with today's columns and `cardRow`, the delete `MantineModal`, and `CurrencyDetailDialogView` when a detail target is set;<br>• `src/components/admin/CurrencyFormDialogView.tsx`: a controlled `MantineModal`; `TextInput` for code (`disabled` when editing, upper-cased by the container as today), symbol and the four names; `TextInput type="number"` for decimals (0–8);<br>• `src/components/admin/CurrencyDetailDialogView.tsx`: the old `CurrencyDetailDialog` on `MantineModal`; fields in a `SimpleGrid cols={2}` with `Text size="xs" c="dimmed"` labels; the same footer actions and conditions.<br>Badges: "default" → `Badge size="sm" variant="light" color="brand"` (F10 primary); active/inactive → `color="green"` / `color="gray"`, `size="sm" variant="light"` (F10 status). Each View has its own Story and a manifest entry: `Patterns/Mantine/AdminCurrenciesView` (`Default`, `Empty`, `DeleteConfirm`, `Detail`), `…/CurrencyFormDialogView` (`New`, `Edit`, `Submitting`), `…/CurrencyDetailDialogView` (`Default`, `DefaultCurrency`, `Inactive`). | P0 | AC6, AC7, AC11 | Confirmed |
@@ -159,7 +160,7 @@ Bundles:
      markup that already exists in a canonical pattern (F5, F6). So "rewrite on Mantine" is delivered as an **adapter
      over the extended canonical pattern**. The owner's "Group/Title/Text" is exactly `MantineDashboardHeader`'s
      anatomy (F6).
-2. **Authorized visual changes on the 5 table pages and 16 header pages** (inside D78-8's stated blast radius):
+2. **Authorized visual changes on the 5 table pages and 14 header consumers** (inside D78-8's stated blast radius):
    - Cards switch at **640px** (canonical) instead of 1024px, so 640–1023px now shows the table.
    - Card anatomy becomes `CardConfig` (actions in the header row, `detail` below one divider).
    - The scroll fade is replaced by the `ScrollArea` scrollbar.
@@ -193,7 +194,7 @@ Bundles:
 **Phase A:**
 - `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`: R1
 - `src/design-system/mantine/patterns/MantineDashboardHeader.tsx`: R3
-- `src/design-system/mantine/theme.ts`: the two new tokens only (`other.layer.tableStickyColumn`,
+- `src/design-system/mantine/theme.ts`: the two new tokens only (`other.zIndex.tableStickyColumn`,
   `other.layout.adminPageMaxWidth`) and their type entries
 - `src/stories/mantine/primitives/Table.stories.tsx`, `src/stories/patterns/mantine/DashboardHeader.stories.tsx`: new
   exports only
@@ -222,7 +223,7 @@ Bundles:
 
 ## 8. Out of scope
 
-- The **five consumer files** of `AdminTable` and the **15 admin pages + `AdminUserCreate`** that consume
+- The **five consumer files** of `AdminTable` and the **13 admin pages + `AdminUserCreate`** (§16.2) that consume
   `AdminPageHeader`. None of them is edited. Their surfaces change only through the two adapters, and each will get
   its own migration task.
 - The `p-6 lg:p-8 max-w-5xl` wrapper on the other 15 admin pages.
@@ -239,7 +240,7 @@ Bundles:
 | Admin tables 640–1023px | legacy card list | canonical table (§5 item 2) |
 | Admin tables ≥1024px | legacy table, sticky header/column, fade | canonical table; `stickyHeader`; sticky column (Listings: column 1); `ScrollArea` |
 | Row click (4 managers) | mouse + Enter/Space, chevron | same |
-| Admin page header (16 consumers) | legacy `h1` 24/700 + muted subtitle, `mb-6` | `MantineDashboardHeader` 24/600 + `gray.5`, `mb="xl"` (24px) |
+| Admin page header (14 consumers) | legacy `h1` 24/700 + muted subtitle, `mb-6` | `MantineDashboardHeader` 24/600 + `gray.5`, `mb="xl"` (24px) |
 | `/admin/currency` tabs | legacy `ui/tabs` | Mantine `Tabs` (TailAdmin §6c through theme) |
 | Currencies: search / new / detail / form / delete / toggle / set default | legacy | the same flows, texts and error toasts, on the Views |
 | "default" badge | gold | brand-light (§5 item 2) |
@@ -290,7 +291,7 @@ Bundles:
 
 - The new and changed files have no `className`, `style` object with a visual value, CSS module, raw px/hex or
   arbitrary utility. A non-visual mechanism is recorded in the session log with its reason, as in 878's ledger rule.
-- The only new theme keys are `other.layer.tableStickyColumn` and `other.layout.adminPageMaxWidth`. Any other missing
+- The only new theme keys are `other.zIndex.tableStickyColumn` (a new role in the existing Task 879 map, §16.2) and `other.layout.adminPageMaxWidth`. Any other missing
   token means stopping with `CANONICAL STYLE DECISION REQUIRED`.
 - UTF-8 without BOM. Use the Edit tool or Node `fs`. Every multi-file mechanical write needs a relative-path manifest
   (clause 14).
@@ -457,6 +458,7 @@ Expected results:
    | Story | Exports | Widths |
    |---|---|---|
    | `Mantine/Primitives/Table` | `RowClick`, `ResponsiveColumns`, `StickyColumn`, `CardDetail` | 390, 768, 1440 |
+   | `Mantine/Primitives/Table` (§16.3 item 3) | `Default` (the card subtitle is now a `div`) | 390 |
    | `Patterns/Mantine/DashboardHeader` | `WithActions` | 390, 1440 |
    | `Patterns/Mantine/AdminTable` | all 4 | 390, 768, 1440 |
    | `Patterns/Mantine/AdminPageHeader` | both | 390, 1440 |
@@ -495,10 +497,106 @@ Update the 877 backlog state cell. Write the session log with a Files Changed ta
 |---|---|
 | Executable without chat context | Yes — facts cited by file:line, D78-8 verbatim, one route in three ordered phases with checkpoints |
 | GR-0 canonical-first | `AdminTable` and `AdminPageHeader` become adapters over **extended** canonical patterns, not parallel Mantine copies (§5 item 1) |
-| GR-1 | full census (F1); every tier-1 node is migrated, container-exempt, or the baselined route root; the 5 table consumers and 16 header consumers are **not** edited, so their own surfaces stay their own tasks |
+| GR-1 | full census (F1); every tier-1 node is migrated, container-exempt, or the baselined route root; the 5 table consumers and 14 header consumers are **not** edited, so their own surfaces stay their own tasks |
 | Container / View split | P0 rule applied to `AdminCurrenciesManager`/`CurrencyFormDialog`; `AdminCurrencyTabs` made presentational with slots |
 | Absence claims traced | F3 dead props: every production consumer's props enumerated; the only user is the legacy Story |
 | Tokens | two new tokens, each with legacy provenance and the D71-4/825 precedent; the badge colours cite TailAdmin §6 |
-| Blast radius stated | 5 table pages and 16 header pages; the visual changes are listed (§5 item 2) and covered by the matrix |
+| Blast radius stated | 5 table pages and 14 header consumers; the visual changes are listed (§5 item 2) and covered by the matrix |
 | Two-armed control | P1–P4, transcripts kept |
 | Detector blind spots stated | R8 is class-bounded because the post-change graph cannot be simulated in advance; `governance:tailwind` is red at HEAD; `check-stories-rendered.mjs` is retired |
+
+## 16. Review 1 — NEEDS REVISION (2026-09-29), revision 1
+
+### 16.1 What review 1 inspected
+
+It inspected the executor's `PARTIALLY IMPLEMENTED` handoff, which stopped in Phase A. The real diff was nine paths:
+- ` M`: `theme.ts`, `MantineDataTableToCards.tsx`, `MantineDashboardHeader.tsx`, `AdminTable.tsx`, `AdminPageHeader.tsx`;
+- ` D`: the four R6 files;
+- `??`: `docs/sessions/evidence/task877/` (`01`, `02a`, `02b`, `02c`).
+
+Two checks were re-run in native PowerShell on that tree (win32 v22.22.3):
+- `npm.cmd run typecheck`: exit 0;
+- `AdminUsersTable.smoke.test.tsx`: 21/21 passed.
+
+The code kept from review 1 is:
+- the adapter mapping in `AdminTable.tsx`;
+- the `AdminPageHeader` adapter;
+- the `actions` slot;
+- `visibleFrom`, `detail`, `ariaLabel`, `stickyHeader` and the `ReactNode` widening in the pattern.
+
+Only the items in §16.2 change.
+
+### 16.2 Corrections (each one supersedes the text it names)
+
+1. **The z-index token goes in the existing map. This corrects F9, R1, §7 and §10.4.** `theme.other.zIndex` exists:
+   its type is at `theme.ts:150`, `zIndex: Record<'siteHeader', number>`, and its value is at `:699-701`,
+   `siteHeader: 30` (Task 879). The kickoff's "there is no z-index token" was false, and the executor's
+   `other.layer` created a second, parallel namespace (GR-0: extend the owner, never parallel it).
+   - Delete `other.layer`, both its type entry and its value.
+   - Add `tableStickyColumn: 1` to `other.zIndex`, and widen its type to `Record<'siteHeader' | 'tableStickyColumn', number>`.
+   - The pattern reads `theme.other.zIndex.tableStickyColumn`.
+   - Afterwards, a search of `src/` for `other.layer` or `.layer.` returns no line.
+2. **The card chevron follows the F4 rule. This corrects R1.** Legacy `AdminCardList` (`HEAD:src/components/admin/AdminCardList.tsx`,
+   the trailing slot) rendered `trailing ?? chevron`: an automatic chevron **only when `trailing` was absent**. The
+   pattern now appends the chevron whenever `onRowClick` is set, so `AdminCompaniesManager.tsx:377-389` shows two:
+   its own delete button plus `ChevronRight`, then the pattern's. That page is out of scope and is not edited.
+   - In `renderDesignedCard`, call `cfg.actions?.(row)` **once**. Render the chevron only when `onRowClick` is set
+     and that result is `null`/`undefined`/`false`.
+   - The header row still renders when only the chevron is present.
+   - The table keeps its dedicated trailing chevron column, as legacy did.
+   - Phase B: `AdminCurrenciesView`'s `cardRow` passes **no** `trailing`, because the pattern supplies the chevron.
+     Today's `AdminCurrenciesManager.tsx:451` passes one explicitly.
+   - T2 gains a case: a card whose `cardRow` returns `trailing` shows exactly one chevron-or-trailing (no automatic
+     chevron), and a card without `trailing` shows the automatic one.
+3. **Consumer counts and references. This corrects F1, F6 and F11.**
+   - The census (`02a`) has **21** nodes. The net extra three come from 874's View subtree: `AdminExchangeProvidersView`,
+     `ProviderFormDialogView`, `MantineDataTableToCards` and `MantineModal` are all `manifest:yes story:yes`, and
+     `PasswordInput` is gone.
+   - `AdminPageHeader` has **14** consumers: 13 pages plus `AdminUserCreate`.
+   - F11 gains `docs/mantine-tailadmin-migration-tracker.md:192`. `component-coverage-matrix.md` and
+     `component-governance.md` have no hit, so the executor does not edit them.
+   - **I0 is incomplete:** `02d-references-before.txt` was never written. Write it now, with the §10.1 step 3
+     command, and note in the session log that it post-dates the R6 deletions.
+4. **P3 — compute each card once per row.** `AdminTable.tsx:109-112` calls `resolveCard(w.row)` up to four times
+   per row, and each call re-runs `cardRow` or `synthesizeCard` and every cell renderer. Build one
+   `Map<string, AdminTableCard>` per render from `wrappedRows`, and have the four `CardConfig` callbacks read it.
+
+### 16.3 Executor deviations accepted by review 1 (record each in the session log)
+
+1. **The Enter/Space guard, `e.target !== e.currentTarget`.** Legacy `HEAD:AdminTable.tsx` (the row `onKeyDown`)
+   and `AdminCardList` called `preventDefault()` on an Enter/Space that bubbled from a focused inner button, which
+   cancelled that button's own activation. Only row-focused keys activate the row now. This fixes a defect, and no
+   capability is lost. T2's keyboard case focuses the row itself. Add a second T2 case: Enter on a focused inner
+   `button` inside a clickable row does **not** call `onRowClick`.
+2. **`AdminTableColumn.className` stays declared, and is not forwarded.** `AdminListingsTable.tsx:480` and
+   `AdminCompaniesManager.tsx:279` pass it, and they are out of scope, so AC3's typecheck needs the field. Mark it
+   `@deprecated` in its JSDoc. AC3's clause "no longer declares the F3 dead fields" is unaffected, because
+   `className` is not an F3 field.
+3. **The card subtitle `Text` becomes `component="div"`.** This also changes the existing `AdminUsersTable` cards. It
+   is covered by the added O78-6 row (`Mantine/Primitives/Table` `Default` at 390, §13.3).
+4. **The R6 deletions landed in Phase A, not Phase C.** The legacy `AdminTable.stories.tsx` passed the removed F3
+   props and could not typecheck against the adapter. `check:stories` may stay red until the Phase C row edit in
+   `story-realmode-allowlist.json:8`. It is not part of the Phase A or Phase B checkpoint, and it is asserted only
+   in §13.2.
+5. **Two non-visual `style` mechanisms, recorded under §10.4:**
+   - `cursor: 'pointer'` on a clickable row or card (legacy `cursor-pointer`);
+   - `zIndex` on the sticky cell (legacy `z-[1]`). Mantine has no prop for either.
+
+### 16.4 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. **Keep** the current working-tree code and `01`–`02c`. Do **not** re-run `01-status-before.txt`,
+because the tree is no longer the pre-task state. Execute, in order:
+
+1. §16.2 item 3 (`02d`), then items 1, 2 and 4.
+2. The rest of Phase A, as §10.3 step 1 lists it:
+   - the four `Mantine/Primitives/Table` exports (R1);
+   - the `DashboardHeader` `WithActions` export;
+   - the `AdminTable` and `AdminPageHeader` Stories;
+   - their two manifest entries;
+   - the removal of the `story-coverage-exempt.json:10` row;
+   - `A-checkpoint.txt` (typecheck, `AdminUsersTable` smoke, `check:story-coverage`).
+
+   Emit the GR-0 / GR-3a / GR-3 / GR-3b / GR-3c receipts for each Story before writing it.
+3. Phase B and Phase C unchanged, except that T2 now carries the §16.2 item 2 and §16.3 item 1 cases.
+4. Run the §13.2 gate block and plants P1–P4. The completion report lists §16.2 items 1–4 as `DONE` or
+   `NOT DONE`, each with its evidence file.

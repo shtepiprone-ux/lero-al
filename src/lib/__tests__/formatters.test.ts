@@ -9,7 +9,57 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { formatPrice, formatListingDate, formatShortDate, formatMonthAbbrev, formatFullDate, formatMonthFull, formatWeekdayShort } from '../formatters'
+import { formatPrice, formatListingDate, formatShortDate, formatMonthAbbrev, formatFullDate, formatMonthFull, formatWeekdayShort, formatDateOnly } from '../formatters'
+
+// ── formatDateOnly — plain 'YYYY-MM-DD' calendar date, no time component ──────
+// Task 854 revision 1, N3/AC13: must never shift the day in a negative-UTC-offset runtime, so it
+// is tested by exact per-locale string, not just "contains the year" like formatListingDate above.
+
+describe('formatDateOnly — plain YYYY-MM-DD calendar date, all 4 locales', () => {
+  it('en: 2026-08-01 -> 08/01/2026 (mdy, "/")', () => {
+    expect(formatDateOnly('2026-08-01', 'en')).toBe('08/01/2026')
+  })
+
+  it('sq: 2026-08-01 -> 01.08.2026 (dmy, ".")', () => {
+    expect(formatDateOnly('2026-08-01', 'sq')).toBe('01.08.2026')
+  })
+
+  it('uk: 2026-08-01 -> 01.08.2026 (dmy, ".")', () => {
+    expect(formatDateOnly('2026-08-01', 'uk')).toBe('01.08.2026')
+  })
+
+  it('it: 2026-08-01 -> 01/08/2026 (dmy, "/")', () => {
+    expect(formatDateOnly('2026-08-01', 'it')).toBe('01/08/2026')
+  })
+
+  it('a malformed input returns "—"', () => {
+    expect(formatDateOnly('not-a-date', 'en')).toBe('—')
+  })
+
+  it('a real-looking but impossible calendar date (2026-02-30) returns "—"', () => {
+    expect(formatDateOnly('2026-02-30', 'en')).toBe('—')
+  })
+
+  describe('TZ=America/New_York — never shifts the day in a negative-UTC-offset runtime', () => {
+    const originalTZ = process.env.TZ
+
+    beforeAll(() => {
+      process.env.TZ = 'America/New_York'
+    })
+
+    afterAll(() => {
+      if (originalTZ === undefined) delete process.env.TZ
+      else process.env.TZ = originalTZ
+    })
+
+    it('2026-08-01 is still 08/01/2026, not 07/31/2026', () => {
+      // The exact bug this function exists to avoid: new Date('2026-08-01') parses as UTC
+      // midnight, and a LOCAL getter (Date#getDate()) reads it back as 31 July under
+      // America/New_York (UTC-4/-5). formatDateOnly never calls a local getter on a parsed string.
+      expect(formatDateOnly('2026-08-01', 'en')).toBe('08/01/2026')
+    })
+  })
+})
 
 // ── formatPrice — single-currency-marker contract ─────────────────────────────
 

@@ -1,0 +1,127 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by process 15536, using available port 3001 instead.
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.20.252:3001
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ○ Compiling instrumentation Node.js ...
+ ✓ Compiled instrumentation Node.js in 517ms
+ ✓ Compiled instrumentation Edge in 210ms
+ ✓ Compiled middleware in 179ms
+ ✓ Ready in 3s
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 5.2s
+ GET /en 200 in 7573ms
+ ✓ Compiled /api/exchange-rate in 445ms
+ GET /api/property-types?locale=en 200 in 755ms
+ GET /api/exchange-rate 200 in 1395ms
+ ✓ Compiled /api/auth/me in 178ms
+ GET /api/auth/me 200 in 665ms
+ GET /en 200 in 576ms
+ GET /en 200 in 551ms
+ GET /api/property-types?locale=en 200 in 138ms
+ GET /api/exchange-rate 200 in 187ms
+ GET /api/auth/me 200 in 495ms
+ ○ Compiling /[locale]/cabinet/statistics ...
+ ✓ Compiled /[locale]/cabinet/statistics in 1098ms
+ GET /en/cabinet/statistics 307 in 2336ms
+ ○ Compiling /[locale]/cabinet ...
+ ✓ Compiled /[locale]/cabinet in 1350ms
+ GET /en/cabinet 200 in 2713ms
+ ✓ Compiled /api/presence in 140ms
+ GET /api/exchange-rate 200 in 287ms
+ POST /api/presence 200 in 1221ms
+ GET /api/auth/me 200 in 2464ms
+ GET /en 200 in 1275ms
+ GET /api/exchange-rate 200 in 280ms
+ GET /api/property-types?locale=en 200 in 282ms
+ GET /api/auth/me 200 in 490ms
+ GET /en 200 in 450ms
+ GET /en 200 in 531ms
+ GET /api/property-types?locale=en 200 in 163ms
+ GET /api/exchange-rate 200 in 236ms
+ GET /api/auth/me 200 in 445ms
+ GET /en/cabinet/statistics 307 in 451ms
+ GET /en/cabinet 200 in 1010ms
+ GET /api/exchange-rate 200 in 302ms
+ GET /api/auth/me 200 in 421ms
+ POST /api/presence 200 in 571ms
+ GET /en 200 in 370ms
+ GET /api/exchange-rate 200 in 346ms
+ GET /api/property-types?locale=en 200 in 293ms
+ GET /api/auth/me 200 in 441ms
+ GET /en 200 in 406ms
+ GET /en 200 in 517ms
+ GET /api/property-types?locale=en 200 in 111ms
+ GET /api/exchange-rate 200 in 160ms
+ GET /api/auth/me 200 in 430ms
+ GET /en/cabinet/statistics 200 in 772ms
+ GET /api/auth/me 200 in 476ms
+ GET /en 200 in 414ms
+ GET /api/exchange-rate 200 in 285ms
+ GET /api/property-types?locale=en 200 in 285ms
+ GET /api/auth/me 200 in 425ms
+ GET /en 200 in 385ms
+ GET /en 200 in 571ms
+ GET /api/property-types?locale=en 200 in 172ms
+ GET /api/exchange-rate 200 in 230ms
+ GET /api/auth/me 200 in 458ms
+ GET /en/cabinet/statistics 200 in 608ms
+ GET /api/auth/me 200 in 485ms
+ GET /en 200 in 615ms
+ GET /api/exchange-rate 200 in 288ms
+ GET /api/property-types?locale=en 200 in 299ms
+ GET /api/auth/me 200 in 450ms
+ GET /en 200 in 399ms
+ GET /en 200 in 512ms
+ GET /api/property-types?locale=en 200 in 104ms
+ GET /api/exchange-rate 200 in 159ms
+ GET /api/auth/me 200 in 440ms
+ GET /en/cabinet/statistics 200 in 710ms
+ GET /api/auth/me 200 in 460ms
+ GET /en 200 in 429ms
+ GET /api/exchange-rate 200 in 285ms
+ GET /api/property-types?locale=en 200 in 290ms
+ GET /api/auth/me 200 in 417ms
+ GET /en 200 in 383ms
+ GET /en 200 in 513ms
+ GET /api/property-types?locale=en 200 in 110ms
+ GET /api/exchange-rate 200 in 174ms
+ GET /api/auth/me 200 in 445ms
+ GET /en/cabinet/statistics 200 in 605ms
+ GET /api/auth/me 200 in 463ms
+ GET /en 200 in 620ms
+ GET /api/exchange-rate 200 in 289ms
+ GET /api/property-types?locale=en 200 in 303ms
+ GET /api/auth/me 200 in 439ms
+ GET /en 200 in 374ms
+ GET /en 200 in 511ms
+ GET /api/property-types?locale=en 200 in 112ms
+ GET /api/exchange-rate 200 in 162ms
+ GET /api/auth/me 200 in 428ms
+ GET /en/cabinet/statistics 307 in 389ms
+ GET /en/cabinet 200 in 666ms
+ GET /api/exchange-rate 200 in 304ms
+ POST /api/presence 200 in 522ms
+ GET /api/auth/me 200 in 431ms
+ GET /en 200 in 361ms
+ GET /api/exchange-rate 200 in 288ms
+ GET /api/property-types?locale=en 200 in 287ms
+ GET /api/auth/me 200 in 421ms
+ GET /en 200 in 345ms
+ GET /en 200 in 569ms
+ GET /api/exchange-rate 200 in 228ms
+ GET /api/property-types?locale=en 200 in 153ms
+ GET /api/auth/me 200 in 423ms
+ GET /en/cabinet/statistics 307 in 378ms
+ GET /en/cabinet 200 in 888ms
+ GET /api/exchange-rate 200 in 314ms
+ POST /api/presence 200 in 523ms
+ GET /api/auth/me 200 in 419ms

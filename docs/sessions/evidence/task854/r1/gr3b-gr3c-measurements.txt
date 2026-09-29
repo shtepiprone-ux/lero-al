@@ -1,0 +1,56 @@
+=== GR-3b: root width vs viewport, 320/390/1024/1440 ===
+patterns-mantine-agentstatisticsview--default  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+patterns-mantine-agentstatisticsview--agt-10-empty  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+patterns-mantine-agentstatisticsview--many-listings  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+mantine-primitives-usermenu--default  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+mantine-primitives-mobilenavdrawer--agent  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+mantine-primitives-table--cards-below-md  320:320/320  390:390/390  1024:1024/1024  1440:1440/1440
+
+=== GR-3c: heading + largest visible text-node font sizes (scoped to #storybook-root), 320/390/768/1440 ===
+
+-- patterns-mantine-agentstatisticsview--default --
+  320px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  390px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  768px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+  1440px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+
+-- patterns-mantine-agentstatisticsview--agt-10-empty --
+  320px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  390px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  768px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="0" 30px
+  1440px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="0" 30px
+
+-- patterns-mantine-agentstatisticsview--agt-10-filtered-empty --
+  320px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  390px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  768px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+  1440px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+
+-- patterns-mantine-agentstatisticsview--many-listings --
+  320px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  390px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"20px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="My dashboard" 20px
+  768px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+  1440px: headings=[{"tag":"H1","text":"My dashboard","fontSize":"24px"},{"tag":"H2","text":"Needs my action","fontSize":"20px"},{"tag":"H2","text":"Results by listing","fontSize":"20px"}] | largest-visible-text="12" 30px
+
+-- mantine-primitives-usermenu--default --
+  320px: headings=[] | largest-visible-text="Alba Krasniqi" 14px
+  390px: headings=[] | largest-visible-text="Alba Krasniqi" 14px
+  768px: headings=[] | largest-visible-text="Alba Krasniqi" 14px
+  1440px: headings=[] | largest-visible-text="Alba Krasniqi" 14px
+
+-- mantine-primitives-mobilenavdrawer--agent --
+  320px: headings=[] | largest-visible-text="Logged-in — user header," 12px
+  390px: headings=[] | largest-visible-text="Logged-in — user header," 12px
+  768px: headings=[] | largest-visible-text="Logged-in — user header," 12px
+  1440px: headings=[] | largest-visible-text="Logged-in — user header," 12px
+
+-- mantine-primitives-table--cards-below-md --
+  320px: headings=[] | largest-visible-text="AR" 16px
+  390px: headings=[] | largest-visible-text="AR" 16px
+  768px: headings=[] | largest-visible-text="Arben Krasniqi" 14px
+  1440px: headings=[] | largest-visible-text="Arben Krasniqi" 14px
+
+=== many-listings: pagination width vs card content width, 320/390 ===
+  320px: pagination=148px card=288px overflow=false
+  390px: pagination=148px card=358px overflow=false

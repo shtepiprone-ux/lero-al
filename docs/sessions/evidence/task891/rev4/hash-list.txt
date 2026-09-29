@@ -1,0 +1,12 @@
+5f394748f8378429d6745c49866a1ee3e3d439b2 src/design-system/mantine/patterns/RangeDatePicker.tsx
+770fedc3d6b122d59ba69b4fbfc7103c59aa88e1 src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+d7dd32f39a126c7909eb39e86be008df91a898a4 src/design-system/mantine/range-date-picker-chrome.css
+8b00ba3c3e3271986ca9eca10cd28281ecdd2945 src/design-system/mantine/input-chrome.css
+72f9d7995a11929f4e8a7e52a7b4e9c364c0f86e src/design-system/mantine/theme.ts
+2dfff66c24d7c6e34a8899e86b6816b55b952496 src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+b79790fec74f108db5acbaa778630cfc61973cd7 src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+a0849a4f90ec564095ecc300efa04fc4eb2112ce docs/critical-flow-registry.md
+33755c94c722a8b65c9da51f99538554e45b8004 src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+4bf94964e97e4e93da230c0f50a2ee6118e63bac src/stories/patterns/mantine/DashboardCard.stories.tsx
+1312070c7a0c4760c5903f0bd3a2b73692372e8e src/stories/patterns/mantine/DashboardDonut.stories.tsx
+587620d2737d9f1ddcb53a72b5b779cd5bafb09f docs/sessions/evidence/task891/rev4/measure.mjs

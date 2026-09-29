@@ -134,7 +134,10 @@ declare module '@mantine/core' {
       // Task 879 (D81-7, R10) — AuthSheet's register-agent company-logo tile, both the image and
       // placeholder-icon variants (pre-879 `AuthSheet.module.css` `.logoImg`/`.logoPlaceholder`,
       // migrated exactly, one shared role for the two visual states of the same tile).
-      | 'providerLogoTile', // 2.25rem (36px) — Task 879: AuthSheet company-logo tile (R10)
+      | 'providerLogoTile' // 2.25rem (36px) — Task 879: AuthSheet company-logo tile (R10)
+      // Task 854 (spec §17.3 AGT-10, "listing thumbnail 40 px"): the agent statistics results
+      // table's cover-image cell — a fixed square wrapper around `AppImage variant="listing-thumb"`.
+      | 'dashboardListingThumb', // 2.5rem (40px) — Task 854: AgentStatisticsView table thumbnail
       string
     >
     // Task 879 (D81-7, R2) — the site header's stacking level, the project's first `zIndex` role.
@@ -322,6 +325,18 @@ declare module '@mantine/core' {
     }
     // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
     accentHeroGradient: MantineGradient
+    // Task 891 review 5 (F13 item 1, GR-0 EXTEND): `RangeDatePicker`'s own raw-value role group.
+    // Every value already existed as a literal in that file with recorded provenance (cited per
+    // key below) — this gives each one a named owner instead of inventing a replacement.
+    rangeDatePicker: {
+      dayCell: number               // 39px — §6t resting day-cell size (Task 561; unchanged by D891-1)
+      weekdayRowHeight: number      // 24px — the weekday-initials row above each month grid
+      monthTriggerWidth: number     // 150px — the in-calendar month `MantineCombobox` trigger (Task 774)
+      yearTriggerWidth: number      // 100px — the in-calendar year `MantineCombobox` trigger (Task 774)
+      monthDropdownMinWidth: number // 190px — Task 774's measured month-label dropdown floor
+      yearDropdownMinWidth: number  // 140px — Task 774's measured year-label dropdown floor
+      mobileListHeight: string      // '45dvh' — Task 561 D4: the mobile scrolling month-list's fixed height
+    }
   }
 }
 
@@ -734,6 +749,7 @@ export const theme = createTheme({
       dashboardContentMaxWidth: '90rem', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1)
       siteHeaderBar: '4rem',      // 64px — Task 879: HeaderView `.bar` height ≥390px (R3/F7)
       providerLogoTile: '2.25rem', // 36px — Task 879: AuthSheet company-logo tile (R10)
+      dashboardListingThumb: '2.5rem', // 40px — Task 854: AGT-10 results-table cover thumbnail (spec §17.3)
     },
     // Task 784 Revision 3 (D69-18) — see the `MantineThemeOther` augmentation above for full
     // per-role provenance. Every value below is an exact, one-time migration of a cited pre-D69-16
@@ -851,6 +867,18 @@ export const theme = createTheme({
     },
     // Task 889 rev 3, D889-2: brand coral hero-card gradient, light top → dark bottom; the text stack sits in the lower half, on the dark end
     accentHeroGradient: { from: 'brand.7', to: 'brand.9', deg: 180 },
+    // Task 891 review 5 (F13 item 1) — see the `MantineThemeOther` augmentation above for each
+    // key's provenance. Every value is the exact pre-existing `RangeDatePicker.tsx` literal it
+    // replaces (Task 561 §6t; Task 774's measured dropdown floors) — D891-1 keeps every size.
+    rangeDatePicker: {
+      dayCell: 39,
+      weekdayRowHeight: 24,
+      monthTriggerWidth: 150,
+      yearTriggerWidth: 100,
+      monthDropdownMinWidth: 190,
+      yearDropdownMinWidth: 140,
+      mobileListHeight: '45dvh',
+    },
   },
 
   // Component-level defaults aligned to TailAdmin density (§1.4 / §1b).

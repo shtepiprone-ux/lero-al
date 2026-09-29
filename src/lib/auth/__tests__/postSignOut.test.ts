@@ -11,6 +11,9 @@ describe('resolvePostSignOutPath — classification table', () => {
       it(`${locale}: /cabinet -> /${locale}`, () => {
         expect(resolvePostSignOutPath(`/${locale}/cabinet`, locale)).toBe(`/${locale}`)
       })
+      it(`${locale}: /cabinet/statistics -> /${locale}`, () => {
+        expect(resolvePostSignOutPath(`/${locale}/cabinet/statistics`, locale)).toBe(`/${locale}`)
+      })
       it(`${locale}: /favorites -> /${locale}`, () => {
         expect(resolvePostSignOutPath(`/${locale}/favorites`, locale)).toBe(`/${locale}`)
       })

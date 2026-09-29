@@ -1,19 +1,25 @@
 /**
- * Agent statistics data layer — Task 848 (R2–R6).
+ * Agent statistics data layer — Task 848 (R2–R6), rebuilt by Task 891 (R7): AGT-05 and the
+ * `listing_inquiries` service-role reads are gone; AGT-10's form-inquiries/recorded-views/WhatsApp/
+ * last-activity columns and their sorts all merge from `activityByListing`, a `Promise` the caller
+ * (page.tsx in production, this file's fixtures in a test) starts before calling
+ * `getAgentStatisticsData` and passes straight through — proving the exact "one Promise.all with
+ * 848's data" concurrency shape R1 requires without a second, redundant fetch inside this module.
  *
- * Both Supabase clients are replaced by one recording, thenable query builder. Every chained call is
- * captured on the `Call` (with the client that made it), and `state.respond` answers per query. The
- * visibility helpers are wrapped in spies that still run the real implementation, so the real predicate
- * reaches the recorded filters. Listing expiry dates in fixtures are far past / far future so the
- * canonical `isListingPubliclyVisible` (which reads the machine clock) is deterministic.
+ * The one Supabase client is a recording, thenable query builder. Every chained call is captured on
+ * the `Call`, and `state.respond` answers per query. The visibility helpers are wrapped in spies that
+ * still run the real implementation, so the real predicate reaches the recorded filters. Listing
+ * expiry dates in fixtures are far past / far future so the canonical `isListingPubliclyVisible`
+ * (which reads the machine clock) is deterministic.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import type { Period } from '@/lib/dashboard/period'
+import type { ActivityByListingRow } from '@/modules/analytics/activity/types'
+import type { BlockResult } from '@/lib/dashboard/blockResult'
 import type { Agt10Table, AgentOwnerId } from '../types'
 
 interface Filter { op: string; args: unknown[] }
 interface Call {
-  client: 'user' | 'service'
   table: string
   columns: string
   opts?: { count?: string; head?: boolean }
@@ -26,11 +32,11 @@ const state = vi.hoisted(() => ({
   respond: ((): Answer => ({})) as (call: Call) => Answer,
 }))
 
-function makeClient(client: 'user' | 'service') {
+function makeClient() {
   return {
     from: (table: string) => ({
       select: (columns: string, opts?: { count?: string; head?: boolean }) => {
-        const call: Call = { client, table, columns, opts, filters: [] }
+        const call: Call = { table, columns, opts, filters: [] }
         state.calls.push(call)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const builder: any = {}
@@ -50,8 +56,7 @@ function makeClient(client: 'user' | 'service') {
   }
 }
 
-vi.mock('@/lib/supabase/server', () => ({ createClient: async () => makeClient('user') }))
-vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => makeClient('service') }))
+vi.mock('@/lib/supabase/server', () => ({ createClient: async () => makeClient() }))
 
 const visibilitySpies = vi.hoisted(() => ({
   applyPublicVisibility: vi.fn(),
@@ -69,7 +74,7 @@ vi.mock('@/modules/listings/lib/visibility', async (importOriginal) => {
   }
 })
 
-const { getAgentStatisticsData } = await import('../data')
+const { getAgentStatisticsData, getOwnListingTitles } = await import('../data')
 
 // ── fixtures ─────────────────────────────────────────────────────────────────────────────────
 
@@ -81,8 +86,6 @@ const PAST = '2000-01-01T00:00:00Z'
 const NOW = new Date('2026-09-18T22:30:00Z')
 
 const PERIOD: Period = { from: '2026-09-01', to: '2026-09-07', days: 7 }
-const CURRENT_BOUNDS = { start: '2026-08-31T22:00:00.000Z', end: '2026-09-07T22:00:00.000Z' }
-const PREVIOUS_BOUNDS = { start: '2026-08-24T22:00:00.000Z', end: '2026-08-31T22:00:00.000Z' }
 
 const TABLE: Agt10Table = { sort: 'created_at', direction: 'desc', page: 1 }
 
@@ -100,8 +103,6 @@ const W = {
   expiring: 3,
   sale: 8,
   rent: 4,
-  inquiriesCurrent: 7,
-  inquiriesPrevious: 4,
 }
 
 interface ListingRow {
@@ -128,8 +129,18 @@ function listingRows(n: number, over: (i: number) => Partial<ListingRow> = () =>
   }))
 }
 
+function activityRow(over: Partial<ActivityByListingRow>): ActivityByListingRow {
+  return {
+    listingId: 'l-01',
+    recordedViews: 0,
+    whatsappClicks: 0,
+    listingInquirySubmissions: 0,
+    lastActivityDate: '2026-09-05',
+    ...over,
+  }
+}
+
 let rows: ListingRow[]
-let inquiryRows: Array<{ listing_id: string }>
 let images: Record<string, Array<{ url: string; is_cover: boolean | null; order: number | null }>>
 
 const has = (c: Call, op: string, ...args: unknown[]) =>
@@ -151,19 +162,13 @@ function defaultRespond(c: Call): Answer {
     } else if (c.columns.includes('images')) {
       const ids = (c.filters.find((f) => f.op === 'in')?.args[1] as string[]) ?? []
       return { data: ids.map((id) => ({ id, images: images[id] ?? [] })) }
+    } else if (c.columns === 'id, title') {
+      return { data: rows.map((r) => ({ id: r.id, title: r.title })) }
     } else {
       return { data: rows }
     }
   }
-  if (c.table === 'listing_inquiries') {
-    if (isCount(c)) {
-      if (has(c, 'gte', 'created_at', CURRENT_BOUNDS.start)) return { count: W.inquiriesCurrent }
-      if (has(c, 'gte', 'created_at', PREVIOUS_BOUNDS.start)) return { count: W.inquiriesPrevious }
-    } else {
-      return { data: inquiryRows }
-    }
-  }
-  throw new Error(`unanswered query: ${c.client} ${c.table} ${c.columns} ${JSON.stringify(c.filters)}`)
+  throw new Error(`unanswered query: ${c.table} ${c.columns} ${JSON.stringify(c.filters)}`)
 }
 
 let errorSpy: ReturnType<typeof vi.spyOn>
@@ -172,7 +177,6 @@ beforeEach(() => {
   state.calls = []
   state.respond = defaultRespond
   rows = listingRows(20)
-  inquiryRows = []
   images = {}
   visibilitySpies.applyPublicVisibility.mockClear()
   visibilitySpies.applyPublicEligibleButHidden.mockClear()
@@ -183,12 +187,19 @@ afterEach(() => {
   errorSpy.mockRestore()
 })
 
-const run = (over: { table?: Partial<Agt10Table>; period?: Period; now?: Date } = {}) =>
+const okActivity = (rows: ActivityByListingRow[] = []): Promise<BlockResult<ActivityByListingRow[]>> =>
+  Promise.resolve({ ok: true, data: rows })
+const failedActivity: Promise<BlockResult<ActivityByListingRow[]>> = Promise.resolve({ ok: false, error: 'query_failed' })
+
+const run = (
+  over: { table?: Partial<Agt10Table>; period?: Period; now?: Date; activityByListing?: Promise<BlockResult<ActivityByListingRow[]>> } = {},
+) =>
   getAgentStatisticsData({
     ownerId: OWNER,
     now: over.now ?? NOW,
     period: over.period ?? PERIOD,
     table: { ...TABLE, ...over.table },
+    activityByListing: over.activityByListing ?? okActivity(),
   })
 
 /** Answer `failing` queries with a Supabase error; everything else with the default world. */
@@ -196,7 +207,7 @@ function failWhen(failing: (c: Call) => boolean, code = 'XX000') {
   state.respond = (c) => (failing(c) ? { error: { code } } : defaultRespond(c))
 }
 
-const BLOCKS = ['agt01', 'agt02', 'agt05', 'agt10'] as const
+const BLOCKS = ['agt01', 'agt02', 'agt10'] as const
 
 // ── tests ────────────────────────────────────────────────────────────────────────────────────
 
@@ -206,7 +217,6 @@ describe('getAgentStatisticsData — positive flow', () => {
 
     for (const block of BLOCKS) expect(data[block].ok).toBe(true)
     expect(data.agt01).toEqual({ ok: true, data: { pending: 2, hidden: 2, expiring: 3 } })
-    expect(data.agt05).toEqual({ ok: true, data: { current: 7, previous: 4 } })
 
     if (!data.agt02.ok) throw new Error('agt02 failed')
     expect(data.agt02.data).toMatchObject({ visible: 12, pending: 2, inactive: 3, sold: 1, rented: 0 })
@@ -232,39 +242,26 @@ describe('getAgentStatisticsData — positive flow', () => {
 })
 
 describe('owner isolation (R2, R3)', () => {
-  it('every query — listings and inquiries — is constrained by the owner id', async () => {
-    await run({ table: { sort: 'form_inquiries' } })
+  it('every listings query is constrained by the owner id', async () => {
+    await run()
     expect(state.calls.length).toBeGreaterThan(0)
     for (const c of state.calls) {
-      const ownerColumn = c.table === 'listing_inquiries' ? 'listing_owner_id' : 'user_id'
-      expect(has(c, 'eq', ownerColumn, OWNER), `${c.table} ${c.columns} has eq(${ownerColumn}, owner)`).toBe(true)
+      expect(has(c, 'eq', 'user_id', OWNER), `${c.table} ${c.columns} has eq(user_id, owner)`).toBe(true)
     }
   })
 
-  it('only the two owned tables are read, listings with the user client and inquiries with the service client', async () => {
+  it('only the listings table is read', async () => {
     await run()
-    expect(new Set(state.calls.map((c) => c.table))).toEqual(new Set(['listings', 'listing_inquiries']))
-    for (const c of state.calls) {
-      expect(c.client).toBe(c.table === 'listing_inquiries' ? 'service' : 'user')
-    }
+    expect(new Set(state.calls.map((c) => c.table))).toEqual(new Set(['listings']))
   })
 
   it('filters only narrow the agent\'s own rows — the owner constraint stays on the table queries', async () => {
     await run({ table: { status: 'active', listingType: 'rent', visibility: 'visible' } })
-    const q1 = state.calls.find((c) => c.table === 'listings' && !isCount(c) && !c.columns.includes('images'))
+    const q1 = state.calls.find((c) => c.table === 'listings' && !isCount(c) && !c.columns.includes('images') && c.columns !== 'id, title')
     expect(q1).toBeDefined()
     expect(has(q1!, 'eq', 'user_id', OWNER)).toBe(true)
     expect(has(q1!, 'eq', 'status', 'active')).toBe(true)
     expect(has(q1!, 'eq', 'listing_type', 'rent')).toBe(true)
-  })
-
-  it('AGT-05 and per-listing inquiries never select personal columns', async () => {
-    inquiryRows = [{ listing_id: 'l-01' }]
-    const data = await run({ table: { sort: 'form_inquiries' } })
-    for (const c of state.calls.filter((x) => x.table === 'listing_inquiries')) {
-      expect(c.columns).toMatch(/^(id|listing_id)$/)
-    }
-    expect(JSON.stringify(data)).not.toMatch(/email|message|requester_ip/)
   })
 })
 
@@ -321,49 +318,12 @@ describe('AGT-02', () => {
   })
 })
 
-describe('AGT-05 (R5)', () => {
-  it('counts the completed period and the previous period in Tirane UTC bounds', async () => {
-    await run()
-    const inquiryCounts = state.calls.filter((c) => c.table === 'listing_inquiries' && isCount(c))
-    expect(inquiryCounts).toHaveLength(2)
-    const current = inquiryCounts.find((c) => has(c, 'gte', 'created_at', CURRENT_BOUNDS.start))
-    const previous = inquiryCounts.find((c) => has(c, 'gte', 'created_at', PREVIOUS_BOUNDS.start))
-    expect(current && has(current, 'lt', 'created_at', CURRENT_BOUNDS.end)).toBe(true)
-    expect(previous && has(previous, 'lt', 'created_at', PREVIOUS_BOUNDS.end)).toBe(true)
-  })
-
-  it('ignores the inquiry status — no query filters on it', async () => {
-    await run({ table: { sort: 'form_inquiries' } })
-    for (const c of state.calls.filter((x) => x.table === 'listing_inquiries')) {
-      expect(c.filters.some((f) => f.args[0] === 'status')).toBe(false)
-    }
-  })
-
-  it('a zero previous period is returned as a real zero, ok:true', async () => {
-    W.inquiriesPrevious = 0
-    try {
-      const data = await run()
-      expect(data.agt05).toEqual({ ok: true, data: { current: 7, previous: 0 } })
-    } finally {
-      W.inquiriesPrevious = 4
-    }
-  })
-})
-
 describe('failures never read as zero (R4)', () => {
-  it('a failing inquiry count fails AGT-05 alone', async () => {
-    failWhen((c) => c.table === 'listing_inquiries' && isCount(c) && has(c, 'gte', 'created_at', PREVIOUS_BOUNDS.start))
-    const data = await run()
-    expect(data.agt05).toEqual({ ok: false, error: 'query_failed' })
-    expect(data.agt01.ok && data.agt02.ok && data.agt10.ok).toBe(true)
-    expect(errorSpy).toHaveBeenCalledWith('[AgentStatistics] agt05 failed', expect.objectContaining({ code: 'XX000' }))
-  })
-
   it('a failing hidden count fails AGT-01 alone', async () => {
     failWhen((c) => c.table === 'listings' && isCount(c) && hasOp(c, 'or'))
     const data = await run()
     expect(data.agt01).toEqual({ ok: false, error: 'query_failed' })
-    expect(data.agt02.ok && data.agt05.ok && data.agt10.ok).toBe(true)
+    expect(data.agt02.ok && data.agt10.ok).toBe(true)
   })
 
   it('a count that comes back null with no error is a failure, never 0', async () => {
@@ -377,17 +337,7 @@ describe('failures never read as zero (R4)', () => {
     failWhen((c) => c.table === 'listings' && c.columns.includes('images'))
     const data = await run()
     expect(data.agt10).toEqual({ ok: false, error: 'query_failed' })
-    expect(data.agt01.ok && data.agt02.ok && data.agt05.ok).toBe(true)
-  })
-
-  it('a thrown query is a failed block, not a crash', async () => {
-    state.respond = (c) => {
-      if (c.table === 'listing_inquiries' && isCount(c)) throw new Error('network')
-      return defaultRespond(c)
-    }
-    const data = await run()
-    expect(data.agt05).toEqual({ ok: false, error: 'query_failed' })
-    expect(data.agt01.ok).toBe(true)
+    expect(data.agt01.ok && data.agt02.ok).toBe(true)
   })
 
   it('a listing list that hits the row limit fails AGT-10 instead of paging a truncated set', async () => {
@@ -395,21 +345,26 @@ describe('failures never read as zero (R4)', () => {
     const data = await run()
     expect(data.agt10).toEqual({ ok: false, error: 'query_failed' })
   })
+
+  it('a failed activityByListing read fails AGT-10 alone, never a false zero (R7)', async () => {
+    const data = await run({ activityByListing: failedActivity })
+    expect(data.agt10).toEqual({ ok: false, error: 'query_failed' })
+    expect(data.agt01.ok && data.agt02.ok).toBe(true)
+  })
 })
 
 describe('zero listings', () => {
   it('returns real zeros, ok:true, and no split', async () => {
-    Object.assign(W, { pending: 0, active: 0, inactive: 0, sold: 0, visible: 0, hidden: 0, expiring: 0, inquiriesCurrent: 0, inquiriesPrevious: 0 })
+    Object.assign(W, { pending: 0, active: 0, inactive: 0, sold: 0, visible: 0, hidden: 0, expiring: 0 })
     rows = []
     try {
       const data = await run()
       expect(data.agt01).toEqual({ ok: true, data: { pending: 0, hidden: 0, expiring: 0 } })
-      expect(data.agt05).toEqual({ ok: true, data: { current: 0, previous: 0 } })
       if (!data.agt02.ok) throw new Error('agt02 failed')
       expect(data.agt02.data.split).toBeNull()
       expect(data.agt10).toEqual({ ok: true, data: { rows: [], total: 0, page: 1, pageSize: 10 } })
     } finally {
-      Object.assign(W, { pending: 2, active: 15, inactive: 3, sold: 1, visible: 12, hidden: 2, expiring: 3, inquiriesCurrent: 7, inquiriesPrevious: 4 })
+      Object.assign(W, { pending: 2, active: 15, inactive: 3, sold: 1, visible: 12, hidden: 2, expiring: 3 })
     }
   })
 })
@@ -440,39 +395,66 @@ describe('AGT-10', () => {
     expect(idsOf(await run({ table: { sort: 'expires_at', direction: 'desc' } }))).toEqual(['l-02', 'l-03', 'l-01'])
   })
 
-  it('sorts by form inquiries using one owner-wide inquiry read, then reads only the page\'s covers', async () => {
-    rows = listingRows(12)
-    inquiryRows = [
-      ...Array(3).fill({ listing_id: 'l-05' }),
-      ...Array(5).fill({ listing_id: 'l-02' }),
-      { listing_id: 'l-09' },
-      { listing_id: 'not-mine-anymore' },
-    ]
-    const data = await run({ table: { sort: 'form_inquiries' } })
-    if (!data.agt10.ok) throw new Error('agt10 failed')
-    expect(data.agt10.data.rows.slice(0, 3).map((r) => [r.id, r.formInquiries])).toEqual([
-      ['l-02', 5],
-      ['l-05', 3],
-      ['l-09', 1],
+  it('merges recordedViews/whatsappClicks/formInquiries/lastActivityDate from activityByListing, defaulting to 0/null', async () => {
+    rows = listingRows(2)
+    const activity = okActivity([
+      activityRow({ listingId: 'l-02', recordedViews: 9, whatsappClicks: 4, listingInquirySubmissions: 2, lastActivityDate: '2026-09-03' }),
     ])
-    expect(data.agt10.data.rows[3].formInquiries).toBe(0)
-    const perListing = state.calls.filter((c) => c.table === 'listing_inquiries' && !isCount(c))
-    expect(perListing).toHaveLength(1)
-    expect(has(perListing[0], 'eq', 'listing_owner_id', OWNER)).toBe(true)
+    const data = await run({ table: { direction: 'asc' }, activityByListing: activity })
+    if (!data.agt10.ok) throw new Error('agt10 failed')
+    const r1 = data.agt10.data.rows.find((r) => r.id === 'l-01')!
+    const r2 = data.agt10.data.rows.find((r) => r.id === 'l-02')!
+    expect(r1).toMatchObject({ recordedViews: 0, whatsappClicks: 0, formInquiries: 0, lastActivityDate: null })
+    expect(r2).toMatchObject({ recordedViews: 9, whatsappClicks: 4, formInquiries: 2, lastActivityDate: '2026-09-03' })
   })
 
-  it('reads the per-listing inquiry counts in one grouped query restricted to the page ids (no N+1)', async () => {
-    inquiryRows = [{ listing_id: 'l-20' }, { listing_id: 'l-20' }, { listing_id: 'l-11' }]
-    const data = await run()
+  it('sorts by recorded_views across the whole matching set before paging, not just the page', async () => {
+    rows = listingRows(12)
+    const activity = okActivity([
+      activityRow({ listingId: 'l-05', recordedViews: 30 }),
+      activityRow({ listingId: 'l-02', recordedViews: 50 }),
+      activityRow({ listingId: 'l-09', recordedViews: 10 }),
+    ])
+    const data = await run({ table: { sort: 'recorded_views', direction: 'desc' }, activityByListing: activity })
     if (!data.agt10.ok) throw new Error('agt10 failed')
-    const perListing = state.calls.filter((c) => c.table === 'listing_inquiries' && !isCount(c))
-    expect(perListing).toHaveLength(1)
-    expect(has(perListing[0], 'gte', 'created_at', CURRENT_BOUNDS.start)).toBe(true)
-    const inFilter = perListing[0].filters.find((f) => f.op === 'in')
-    expect(inFilter?.args[0]).toBe('listing_id')
-    expect(inFilter?.args[1]).toEqual(data.agt10.data.rows.map((r) => r.id))
-    expect(data.agt10.data.rows.find((r) => r.id === 'l-20')?.formInquiries).toBe(2)
-    expect(data.agt10.data.rows.find((r) => r.id === 'l-11')?.formInquiries).toBe(1)
+    expect(data.agt10.data.rows.slice(0, 3).map((r) => [r.id, r.recordedViews])).toEqual([
+      ['l-02', 50],
+      ['l-05', 30],
+      ['l-09', 10],
+    ])
+  })
+
+  it('review 1 F6 — the top view-count listing sits outside the naive first-page slice, but a correct whole-set sort still puts it first on page 1', async () => {
+    // `listingRows(12)` builds the mocked query's own return order as l-01..l-12 (unsorted). A
+    // "slice the first 10 by that natural order, then sort" bug would fetch only l-01..l-10 into
+    // its page and never see l-12 at all; a correct "sort the whole matching set, then slice"
+    // implementation sorts all 12 first, so l-12's 99 views win regardless of array position.
+    rows = listingRows(12)
+    const activity = okActivity([
+      activityRow({ listingId: 'l-12', recordedViews: 99 }),
+      activityRow({ listingId: 'l-01', recordedViews: 5 }),
+    ])
+    const page1 = await run({ table: { sort: 'recorded_views', direction: 'desc' }, activityByListing: activity })
+    if (!page1.agt10.ok) throw new Error('agt10 failed')
+    expect(page1.agt10.data.rows[0]).toMatchObject({ id: 'l-12', recordedViews: 99 })
+
+    const page2 = await run({ table: { sort: 'recorded_views', direction: 'desc', page: 2 }, activityByListing: activity })
+    if (!page2.agt10.ok) throw new Error('agt10 failed')
+    const page1Last = page1.agt10.data.rows[page1.agt10.data.rows.length - 1].recordedViews
+    expect(page2.agt10.data.rows[0].recordedViews).toBeLessThanOrEqual(page1Last)
+  })
+
+  it('sorts by whatsapp_clicks and by last_activity_date (missing activity sorts last)', async () => {
+    rows = listingRows(3)
+    const activity = okActivity([
+      activityRow({ listingId: 'l-01', whatsappClicks: 1, lastActivityDate: '2026-09-01' }),
+      activityRow({ listingId: 'l-02', whatsappClicks: 5, lastActivityDate: '2026-09-05' }),
+    ])
+    const byWhatsapp = await run({ table: { sort: 'whatsapp_clicks', direction: 'desc' }, activityByListing: activity })
+    expect(idsOf(byWhatsapp)).toEqual(['l-02', 'l-01', 'l-03'])
+
+    const byActivity = await run({ table: { sort: 'last_activity_date', direction: 'desc' }, activityByListing: activity })
+    expect(idsOf(byActivity)).toEqual(['l-02', 'l-01', 'l-03'])
   })
 
   it('derives visibility from the canonical helper and filters on it', async () => {
@@ -518,11 +500,25 @@ describe('AGT-10', () => {
     expect(has(coverQuery!, 'eq', 'user_id', OWNER)).toBe(true)
   })
 
-  it('makes no cover or per-listing query for an empty page', async () => {
+  it('makes no cover query for an empty page', async () => {
     rows = []
     await run()
     expect(state.calls.some((c) => c.columns.includes('images'))).toBe(false)
-    expect(state.calls.some((c) => c.table === 'listing_inquiries' && !isCount(c))).toBe(false)
+  })
+})
+
+describe('getOwnListingTitles (R5)', () => {
+  it('reads the owner\'s own id/title list, unfiltered', async () => {
+    rows = listingRows(3)
+    const result = await getOwnListingTitles(OWNER)
+    expect(result).toEqual({ ok: true, data: rows.map((r) => ({ id: r.id, title: r.title })) })
+    const c = state.calls.find((x) => x.columns === 'id, title')
+    expect(c && has(c, 'eq', 'user_id', OWNER)).toBe(true)
+  })
+
+  it('fails, never an empty list, when the query errors', async () => {
+    failWhen((c) => c.columns === 'id, title')
+    expect(await getOwnListingTitles(OWNER)).toEqual({ ok: false, error: 'query_failed' })
   })
 })
 

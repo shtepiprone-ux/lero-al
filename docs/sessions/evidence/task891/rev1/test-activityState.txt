@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__/activityState.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  19:02:33
+   Duration  894ms (transform 30ms, setup 84ms, import 17ms, tests 3ms, environment 663ms)
+
+EXIT_CODE=0

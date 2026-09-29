@@ -1,0 +1,193 @@
+PRE-PLANT HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+Tue Sep 29 11:04:10 CEDT 2026
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (36 tests | 1 failed) 12708ms
+     × with no staged value and a maxDate, the right-hand month is maxDate's month (review 5, F13 item 4) 129ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only custom-range flow, 'desktop ≥640' (Task 861) > with no staged value and a maxDate, the right-hand month is maxDate's month (review 5, F13 item 4)
+TestingLibraryElementError: Unable to find an element with the text: December 2026. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m""[39m
+      [33mstyle[39m=[32m"align-self: stretch;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+        [33mdata-size[39m=[32m"sm"[39m
+        [33mstyle[39m=[32m"width: 100%;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+          [33mdata-pointer[39m=[32m"true"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mdata-variant[39m=[32m"default"[39m
+          [33mdata-with-left-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-radius: var(--mantine-radius-lg);"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
+            [33mdata-position[39m=[32m"left"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"16"[39m
+              [33mstroke[39m=[32m"var(--mantine-color-gray-5)"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"16"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M8 2v4"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M16 2v4"[39m
+              [36m/>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"4"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M3 10h18"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M8 14h.01"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 14h.01"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M16 14h.01"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M8 18h.01"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 18h.01"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M16 18h.01"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33maria-controls[39m=[32m"mantine-wd98bae43-dropdown"[39m
+            [33maria-expanded[39m=[32m"true"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-invalid[39m=[32m"false"[39m
+            [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+            [33mdata-variant[39m=[32m"default"[39m
+            [33mid[39m=[32m"mantine-wd98bae43-target"[39m
+            [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_88bacfd0 mantine-InputPlaceholder-placeholder"[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-gray-4);"[39m
+            [36m>[39m
+              [0mSelect dates[0m
+            [36m</span>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"mantine-wd98bae43-target"[39m
+        [33mclass[39m=[32m"m_38a85659 mantine-Popover-dropdown"[39m
+        [33mdata-position[39m=[32m"bottom-start"[39m
+        [33mid[39m=[32m"mantine-wd98bae43-dropdown"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mstyle[39m=[32m"border: 1px solid var(--mantine-color-gray-2); padding: 0.75rem; --popover-radius: var(--mantine-radius-xl); --popover-shadow: var(--mantine-shadow-lg); z-index: 300; top: 0px; left: 0px; width: max-content;"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+          [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mstyle[39m=[32m"width: 17.5rem;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-variant[39m=[32m"default"[39m
+                [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); --input-radius: var(--mantine-radius-lg);"[39m
+              [36m>[39m
+                [36m<input[39m
+                  [33maria-invalid[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+                  [33mdata-variant[39m=[32m"default"[39m
+                  [33mid[39m=[32m"mantine-w20slpdo9"[39m
+                  [33mplaceholder[39m=[32m"Select dates"[39m
+                  [33mreadonly[39m=[32m""[39m
+                  [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"mantine-focus-auto m_849cf0da m_b6d8b162 mantine-Text-root mantine-Anchor-root"...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:474:49
+    472|       trigger.focus()
+    473|       pressKey(trigger, 'Enter')
+    474|       expect(within(baseElement as HTMLElement).getByText(monthYearLab…
+       |                                                 ^
+    475|     })
+    476|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 passed (36)
+   Start at  11:04:10
+   Duration  15.34s (transform 162ms, setup 96ms, import 1.56s, tests 12.71s, environment 822ms)
+
+EXIT_CODE=1
+RESTORED HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+MATCH: YES
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Start at  11:04:39
+   Duration  13.00s (transform 141ms, setup 81ms, import 1.42s, tests 10.58s, environment 699ms)
+
+EXIT_CODE=0

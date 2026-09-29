@@ -1,9 +1,66 @@
-/* Task 558 — RangeDatePicker day-cell hover chrome (§6t "hover / focus" row: bg gray-200).
-   State selectors (:hover) cannot be expressed via `theme.styles` (inline, no cascade — §18
-   precedent, same reason input-chrome.css/slider-chrome.css exist as separate stylesheets
-   instead of theme.ts inline styles). Resting/selected/inRange/today/disabled colors are all
-   applied inline per-cell (data-driven, not state-driven), so only :hover needs a stylesheet rule. */
+/* Task 558 — RangeDatePicker day-cell state chrome (§6t "hover / focus" row + resting/selected/
+   inRange/today/disabled). State selectors (`:hover`, `:disabled`) and the in-range band's shape
+   cannot be expressed via `theme.styles` (inline, no cascade — §18 precedent, same reason
+   input-chrome.css/slider-chrome.css exist as separate stylesheets instead of theme.ts inline
+   styles). Task 891 review 5 (F13 item 1): every per-cell colour/border/cursor/opacity that used
+   to be a `RangeDatePicker.tsx` inline `style` object now lives here instead, keyed on the
+   `data-*` attributes `DayCell` sets — the component only decides WHICH attribute applies, never
+   the resulting CSS value. Source order matters: a later rule wins a tie (equal specificity),
+   matching the original component's priority `!inMonth > blocked > boundary > default`. */
+
+.range-day-cell {
+  cursor: pointer;
+  color: var(--mantine-color-gray-7);
+}
+
+.range-day-cell:disabled {
+  cursor: not-allowed;
+}
 
 .range-day-cell:hover:not(:disabled):not([data-boundary='true']) {
   background-color: var(--mantine-color-gray-2);
+}
+
+.range-day-cell[data-today='true'] {
+  border: 1px solid var(--mantine-color-gray-4); /* design-tokens-allow: border: 1px — hairline border width; no project token represents border width */
+}
+
+/* Selected boundary (start/end) — solid brand fill, white text. Background stays set even for an
+   out-of-month filler cell that happens to equal a staged boundary date (matches the original
+   component's own unconditional `backgroundColor: isBoundary ? brand7 : transparent`); only the
+   TEXT colour is re-prioritized below. */
+.range-day-cell[data-boundary='true'] {
+  color: var(--mantine-color-white);
+  background-color: var(--mantine-color-brand-7);
+}
+
+/* In-month but blocked by minDate/maxDate — wins the colour (not the background) over boundary,
+   matching the original ternary's `disabled ? gray3 : isBoundary ? white : gray7` priority. */
+.range-day-cell[data-blocked='true'] {
+  color: var(--mantine-color-gray-3);
+  opacity: 0.4;
+}
+
+/* Out-of-month filler day — the highest-priority colour rule (source order), same as the original
+   ternary's `!inMonth` short-circuit. */
+.range-day-cell:not([data-in-month]) {
+  color: var(--mantine-color-gray-4);
+}
+
+/* The in-range fill band rendered behind start/end/middle cells (see `DayCell`'s `data-band-shape`).
+   `inRange` fill colour has no §6t citation (documented divergence, RangeDatePicker.tsx's own doc
+   comment) — reuses the existing `brand.0` token, used nowhere else as a fill. */
+.range-day-band {
+  background-color: var(--mantine-color-brand-0);
+}
+.range-day-band[data-band-shape='pill'] {
+  border-radius: var(--mantine-radius-pill);
+}
+.range-day-band[data-band-shape='start'] {
+  border-start-start-radius: var(--mantine-radius-pill);
+  border-end-start-radius: var(--mantine-radius-pill);
+}
+.range-day-band[data-band-shape='end'] {
+  border-start-end-radius: var(--mantine-radius-pill);
+  border-end-end-radius: var(--mantine-radius-pill);
 }

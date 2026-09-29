@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:auth
+> vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/postSignOut.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts src/modules/auth/__tests__/AuthContext.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx src/modules/notifications/lib/emails/__tests__/emailChange.test.ts src/lib/__tests__/timezone-literals.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  11 passed (11)
+      Tests  78 passed (78)
+   Start at  19:02:37
+   Duration  3.86s (transform 1.79s, setup 1.15s, import 4.24s, tests 2.29s, environment 11.36s)
+
+EXIT_CODE=0

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text } from '@mantine/core'
+import { Box, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { RangeDatePicker, type DateRange } from '@/design-system/mantine/patterns/RangeDatePicker'
 import { MantineStoryShell } from '../_MantineStoryShell'
+import { theme } from '@/design-system/mantine/theme'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/RangeDatePicker',
@@ -61,7 +62,11 @@ function RangeDatePickerOpen({
   }, [])
 
   return (
-    <div ref={containerRef} style={{ maxWidth: 480 }}>
+    // Review 5 (F13 item 8, GR-3b): a bare `maxWidth: 480` fixed the Story's own width, which
+    // GR-3b forbids. `MantineDashboardPeriodControl.tsx:128` is the real production parent's own
+    // contract for this exact component (its `custom` period's date-range field) — reused here
+    // verbatim instead of an invented Story-only value.
+    <Box ref={containerRef} w={{ base: '100%', sm: theme.other!.boxSize!.compactTrigger }}>
       <RangeDatePicker
         value={current}
         onChange={setCurrent}
@@ -69,7 +74,7 @@ function RangeDatePickerOpen({
         disablePastDates={disablePastDates}
         placeholder={placeholder}
       />
-    </div>
+    </Box>
   )
 }
 
@@ -124,7 +129,7 @@ export const Default: Story = {
               consecutive pair + shared header (arrows + month/year dropdowns + gray right-month
               label) + range summary + Clear/Cancel/Apply; &lt;640: FIXED header with month + year
               dropdowns (no duplicate month label), vertically-scrolling month list where each
-              section is Title → Monday-first weekday row → 39px day grid, and a FIXED bottom bar
+              section is Title → Monday-first weekday row → day grid (`theme.other.rangeDatePicker.dayCell`), and a FIXED bottom bar
               (range summary + full-width Confirm) that does not scroll with the list. inRange fill
               + maxDate disabled tail both visible. ONE forced-open instance only — a second
               simultaneous one was tried and reverted (see the row above).
@@ -132,6 +137,28 @@ export const Default: Story = {
             <RangeDatePickerOpen value={spanningRange} maxDate={boundedMaxDate} placeholder={t('range_placeholder')} />
           </Stack>
         </Stack>
+      </MantineStoryShell>
+    )
+  },
+}
+
+/**
+ * Task 891 review 5 (F13 items 3–5, GR-3a EXTEND) — no staged value AND a fixed `maxDate`: the one
+ * state that previously (a) opened on the wrong months (item 4 — anchored to "today" regardless of
+ * `maxDate`, sometimes showing an entirely-disabled right-hand month) and (b) swallowed initial
+ * focus into the read-only summary field (item 5). `maxDate` is fixed (no wall-clock) so the
+ * right-hand month is deterministic: 2026-09-17 → the desktop pair opens on August/September 2026,
+ * and the mobile sheet opens scrolled to September 2026.
+ */
+export const OpenBoundedNoValue: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const maxDate = new Date(2026, 8, 17)
+
+    return (
+      <MantineStoryShell>
+        <RangeDatePickerOpen value={{ from: undefined, to: undefined }} maxDate={maxDate} placeholder={t('range_placeholder')} />
       </MantineStoryShell>
     )
   },
@@ -150,7 +177,8 @@ function RangeDatePickerRow({
 }) {
   const [current, setCurrent] = useState<DateRange>(value ?? { from: undefined, to: undefined })
   return (
-    <div style={{ maxWidth: 480 }}>
+    // Review 5 (F13 item 8, GR-3b) — see `RangeDatePickerOpen`'s own comment above.
+    <Box w={{ base: '100%', sm: theme.other!.boxSize!.compactTrigger }}>
       <RangeDatePicker
         value={current}
         onChange={setCurrent}
@@ -158,6 +186,6 @@ function RangeDatePickerRow({
         disablePastDates={disablePastDates}
         placeholder={placeholder}
       />
-    </div>
+    </Box>
   )
 }

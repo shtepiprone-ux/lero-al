@@ -1,0 +1,63 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__/data.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts (29 tests | 2 failed) 30ms
+     × sorts by created_at descending by default and ascending on request 5ms
+     × review 1 F6 — the top view-count listing sits outside the naive first-page slice, but a correct whole-set sort still puts it first on page 1 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/data.test.ts > AGT-10 > sorts by created_at descending by default and ascending on request
+AssertionError: expected 'l-10' to be 'l-20' // Object.is equality
+
+Expected: "l-20"
+Received: "l-10"
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts:388:35
+    386|
+    387|   it('sorts by created_at descending by default and ascending on reque…
+    388|     expect(idsOf(await run())[0]).toBe('l-20')
+       |                                   ^
+    389|     expect(idsOf(await run({ table: { direction: 'asc' } }))[0]).toBe(…
+    390|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/data.test.ts > AGT-10 > review 1 F6 — the top view-count listing sits outside the naive first-page slice, but a correct whole-set sort still puts it first on page 1
+AssertionError: expected { Object (id, slug, ...) } to match object { id: 'l-12', recordedViews: 99 }
+(12 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "id": "l-12",
+-   "recordedViews": 99,
++   "id": "l-01",
++   "recordedViews": 5,
+  }
+
+ ❯ src/modules/cabinet/statistics/__tests__/data.test.ts:439:38
+    437|     const page1 = await run({ table: { sort: 'recorded_views', directi…
+    438|     if (!page1.agt10.ok) throw new Error('agt10 failed')
+    439|     expect(page1.agt10.data.rows[0]).toMatchObject({ id: 'l-12', recor…
+       |                                      ^
+    440|
+    441|     const page2 = await run({ table: { sort: 'recorded_views', directi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 27 passed (29)
+   Start at  18:58:30
+   Duration  1.12s (transform 131ms, setup 84ms, import 156ms, tests 30ms, environment 640ms)
+
+PLANTED_EXIT_CODE=1
+---
+PRE_PLANT_HASH=e43f72c30cfdb0a0d396a893818f7cdeb66e5c11
+POST_RESTORE_HASH=e43f72c30cfdb0a0d396a893818f7cdeb66e5c11 (matches pre-plant)

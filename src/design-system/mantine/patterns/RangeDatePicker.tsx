@@ -6,6 +6,10 @@ import {
   Anchor,
   Box,
   Button,
+  Center,
+  Divider,
+  Flex,
+  FocusTrap,
   Group,
   Input,
   ScrollArea,
@@ -55,7 +59,6 @@ export interface RangeDatePickerProps {
   minDate?: Date
   /** Trigger placeholder when no range is set. */
   placeholder?: string
-  className?: string
   /**
    * Task 561 (additive, default false): when true, days before *today* are disabled and
    * unreachable on both breakpoints (rental context). When false (default), past dates stay
@@ -72,9 +75,6 @@ interface StagedRange {
 
 type TFunc = ReturnType<typeof useTranslations>
 
-// §6t resting day-cell size — ALL breakpoints INCLUDING the <640 bottom sheet (documented owner
-// exemption from the clause-11 ≥44px touch minimum, docs/tailadmin-style-reference.md §6t).
-const DAY_CELL_PX = 39
 // Mobile scrolling window (Task 561): [minDate ?? anchor-12mo, maxDate ?? anchor+15mo], capped so
 // the rendered DOM stays bounded regardless of how wide minDate/maxDate are apart.
 const MOBILE_MAX_MONTHS = 60
@@ -112,6 +112,29 @@ function scrollViewportTo(viewport: HTMLDivElement | null, top: number): void {
   if (viewport && typeof viewport.scrollTo === 'function') {
     viewport.scrollTo({ top, behavior: 'auto' })
   }
+}
+
+/**
+ * Review 6 F17: the mobile fixed header must read the section actually scrolled into view. The
+ * closest-offset rule (last section whose top is at or above `scrollTop + 4`) is right everywhere
+ * except the final page, where `maxDate`'s trailing section can be shorter than the viewport, so
+ * the scroll clamps before that section's own top crosses the threshold and the header lags one
+ * month behind (August shown while September is on screen). At the bottom of the scrollable range
+ * the last section is always the one visible, regardless of its offset.
+ */
+export function pickVisibleMonthIdx(
+  sectionTops: number[],
+  scrollTop: number,
+  clientHeight: number,
+  scrollHeight: number,
+): number {
+  if (sectionTops.length === 0) return 0
+  if (scrollTop + clientHeight >= scrollHeight - 1) return sectionTops.length - 1
+  let idx = 0
+  for (let i = 0; i < sectionTops.length; i++) {
+    if (sectionTops[i] <= scrollTop + 4) idx = i
+  }
+  return idx
 }
 
 /**
@@ -217,135 +240,115 @@ function formatSummaryDate(d: Date, cal: CalendarLocaleData): string {
   return cal.summaryOrder === 'month_day' ? `${mon} ${day}` : `${day} ${mon}`
 }
 
+// Task 891 review 5 (F13 item 7): a day's accessible name previously came from `date-fns`'
+// English-only `format(day, 'd MMMM yyyy')`, so every non-`en` locale announced English month
+// names. Built from the same static `common.calendar_*` data (and order) as the visible summary —
+// full month name + year, never `Intl`/`date-fns` locale formatting (Task 562's own rule, above).
+function dayAriaLabel(day: Date, cal: CalendarLocaleData): string {
+  const dayNum = day.getDate()
+  const month = cal.months[day.getMonth()]
+  const year = day.getFullYear()
+  return cal.summaryOrder === 'month_day' ? `${month} ${dayNum} ${year}` : `${dayNum} ${month} ${year}`
+}
+
 // ── Day cell ─────────────────────────────────────────────────────────────────
-// §6t day-cell state matrix: resting pill/gray-700, hover gray-200 (CSS :hover, see
-// range-date-picker-chrome.css — cannot be expressed via inline style), start/end brand-700 fill,
-// inRange light brand tint spanning the row (rendered as a background layer behind the day
-// button so start/end's solid fill visually "connects" to the lighter band), today gray-400
-// border, out-of-month gray-400, disabled very-light/non-interactive.
+// §6t day-cell state matrix: resting pill/gray-700, hover gray-200 (CSS :hover), start/end
+// brand-700 fill, inRange light brand tint spanning the row, today gray-400 border, out-of-month
+// gray-400, disabled very-light/non-interactive. Review 5 (F13 item 1): every state color/border/
+// cursor moved to `range-date-picker-chrome.css`, keyed on the `data-*` attributes below — this
+// component only sets layout (Mantine style props, no `style=`) and which attribute applies.
 function DayCell({
   day,
   inMonth,
   staged,
   disabled,
+  cal,
   onSelect,
 }: {
   day: Date
   inMonth: boolean
   staged: StagedRange
   disabled: boolean
+  cal: CalendarLocaleData
   onSelect: (day: Date) => void
 }) {
+  const theme = useMantineTheme()
+  const cellSize = theme.other.rangeDatePicker.dayCell
   const isStart = !!staged.from && isSameDay(day, staged.from)
   const isEnd = !!staged.to && isSameDay(day, staged.to)
   const isBoundary = isStart || isEnd
   const inRangeSpan =
     !!staged.from && !!staged.to && isWithinInterval(day, { start: staged.from, end: staged.to })
   const todayFlag = isToday(day)
-
   const showBand = inMonth && !disabled && inRangeSpan
-  let bandRadius = '0px'
-  if (isStart && isEnd) bandRadius = '9999px'
-  else if (isStart) bandRadius = '9999px 0 0 9999px'
-  else if (isEnd) bandRadius = '0 9999px 9999px 0'
+  const bandShape = isStart && isEnd ? 'pill' : isStart ? 'start' : isEnd ? 'end' : 'middle'
 
   return (
-    <Box style={{ position: 'relative', width: DAY_CELL_PX, height: DAY_CELL_PX, flexShrink: 0 }}>
-      {showBand && (
-        <Box
-          aria-hidden
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundColor: 'var(--mantine-color-brand-0)',
-            borderRadius: bandRadius,
-          }}
-        />
-      )}
+    <Box pos="relative" w={cellSize} h={cellSize} flex="0 0 auto">
+      {showBand && <Box aria-hidden className="range-day-band" data-band-shape={bandShape} pos="absolute" inset={0} />}
       <UnstyledButton
         type="button"
         className="range-day-cell"
         data-boundary={isBoundary ? 'true' : undefined}
+        data-today={todayFlag && !isBoundary && inMonth ? 'true' : undefined}
+        data-in-month={inMonth ? 'true' : undefined}
+        data-blocked={disabled ? 'true' : undefined}
         data-date={toISO(day)}
-        aria-label={format(day, 'd MMMM yyyy')}
+        aria-label={dayAriaLabel(day, cal)}
         disabled={disabled || !inMonth}
         onClick={() => {
           if (inMonth && !disabled) onSelect(day)
         }}
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: '9999px',
-          fontSize: 'var(--mantine-font-size-sm)',
-          fontWeight: isBoundary ? 600 : 400,
-          color: !inMonth
-            ? 'var(--mantine-color-gray-4)'
-            : disabled
-              ? 'var(--mantine-color-gray-3)'
-              : isBoundary
-                ? 'var(--mantine-color-white)'
-                : 'var(--mantine-color-gray-7)',
-          backgroundColor: isBoundary ? 'var(--mantine-color-brand-7)' : 'transparent',
-          border:
-            todayFlag && !isBoundary && inMonth
-              ? '1px solid var(--mantine-color-gray-4)'
-              : '1px solid transparent',
-          cursor: disabled || !inMonth ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.4 : 1,
-        }}
+        pos="relative"
+        w="100%"
+        h="100%"
+        bdrs="pill"
       >
-        {day.getDate()}
+        <Center h="100%">
+          <Text component="span" size="sm" fw={isBoundary ? 600 : 400}>
+            {day.getDate()}
+          </Text>
+        </Center>
       </UnstyledButton>
     </Box>
   )
 }
 
 // ── Month grid (weekday header + 6×7 day grid) ────────────────────────────────
-// Task 561 D3: every consumer (desktop's shared-header grids AND each mobile section) now shows
-// its own weekday header directly above its day grid — the old mobile-only `showWeekdayHeader`
-// toggle is gone, this component always renders both.
+// Task 561 D3: every consumer (desktop's shared-header grids AND each mobile section) shows its
+// own weekday header directly above its day grid.
 function MonthGrid({
   month,
   staged,
   minDate,
   maxDate,
-  weekdays,
+  cal,
   onSelect,
 }: {
   month: Date
   staged: StagedRange
   minDate?: Date
   maxDate?: Date
-  weekdays: string[]
+  cal: CalendarLocaleData
   onSelect: (day: Date) => void
 }) {
+  const theme = useMantineTheme()
+  const cellSize = theme.other.rangeDatePicker.dayCell
+  const rowHeight = theme.other.rangeDatePicker.weekdayRowHeight
+  const gridWidth = cellSize * 7
   const days = useMemo(() => buildMonthDays(month), [month])
   return (
     <Box>
-      <Box style={{ display: 'flex', width: DAY_CELL_PX * 7, marginBottom: 8 }}>
-        {weekdays.map((w, i) => (
-          <Box
-            key={i}
-            style={{
-              width: DAY_CELL_PX,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 24,
-            }}
-          >
+      <Group gap={0} wrap="nowrap" mb="xs" w={gridWidth}>
+        {cal.weekdaysShort.map((w, i) => (
+          <Center key={i} w={cellSize} h={rowHeight}>
             <Text size="xs" fw={700} c="gray.5">
               {w}
             </Text>
-          </Box>
+          </Center>
         ))}
-      </Box>
-      <Box style={{ display: 'flex', flexWrap: 'wrap', width: DAY_CELL_PX * 7 }}>
+      </Group>
+      <Flex wrap="wrap" w={gridWidth}>
         {days.map((day) => (
           <DayCell
             key={day.toISOString()}
@@ -353,10 +356,11 @@ function MonthGrid({
             inMonth={isSameMonth(day, month)}
             staged={staged}
             disabled={isDayDisabled(day, minDate, maxDate)}
+            cal={cal}
             onSelect={onSelect}
           />
         ))}
-      </Box>
+      </Flex>
     </Box>
   )
 }
@@ -386,7 +390,9 @@ function DesktopBody({
   onCancel: () => void
 }) {
   const theme = useMantineTheme()
+  const rdp = theme.other.rangeDatePicker
   const rightMonth = addMonths(anchorMonth, 1)
+  const columnWidth = rdp.dayCell * 7
 
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
 
@@ -413,39 +419,53 @@ function DesktopBody({
     : ''
 
   return (
-    <Box style={{ width: DAY_CELL_PX * 14 + 32, maxWidth: '90vw' }}>
-      <Stack gap="md">
-        <Group justify="space-between" align="center" wrap="wrap" gap="sm">
-          <TextInput
-            readOnly
-            value={rangeSummary}
-            placeholder={t('select_range')}
-            radius="lg"
-            w={theme.other.boxSize.compactTrigger}
-          />
-          <Group gap="md" wrap="nowrap">
-            <Anchor
-              component="button"
-              type="button"
-              fz="var(--mantine-font-size-xs)"
-              fw={500}
-              c="brand.7"
-              mih="2.75rem"
-              onClick={() => setStaged({ from: undefined, to: undefined })}
-            >
-              {t('clear_filters')}
-            </Anchor>
-            <Button variant="default" onClick={onCancel}>
-              {t('cancel')}
-            </Button>
-            {/* Task 561 D1: enabled once `from` is staged — commit() maps missing `to` to `from`. */}
-            <Button color="brand" disabled={!staged.from} onClick={onApply}>
-              {t('apply')}
-            </Button>
-          </Group>
+    <Stack gap="md">
+      <Group justify="space-between" align="center" wrap="wrap" gap="sm">
+        <TextInput
+          readOnly
+          value={rangeSummary}
+          placeholder={t('select_range')}
+          radius="lg"
+          w={theme.other.boxSize.compactTrigger}
+        />
+        <Group gap="md" wrap="nowrap">
+          {/* Review 5 (F13 item 6): reuses the existing "Clear" string — a dashboard/filter row has
+              no "filters" of its own, so `clear_filters` overstated what this link does. */}
+          <Anchor
+            component="button"
+            type="button"
+            fz="xs"
+            fw={500}
+            c="brand.7"
+            mih={theme.other.touchTarget}
+            onClick={() => setStaged({ from: undefined, to: undefined })}
+          >
+            {t('aria_clear')}
+          </Anchor>
+          <Button variant="default" onClick={onCancel}>
+            {t('cancel')}
+          </Button>
+          {/* Task 561 D1: enabled once `from` is staged — commit() maps missing `to` to `from`. */}
+          <Button color="brand" disabled={!staged.from} onClick={onApply}>
+            {t('apply')}
+          </Button>
         </Group>
+      </Group>
 
-        <Group justify="space-between" align="center" wrap="nowrap">
+      {/* Review 5 (F13 item 3): two columns, each exactly the width of its own month grid
+          (7 × dayCell), separated by the grids' own `xl` gap — the header now sits directly above
+          the grids it controls instead of an eyeballed `justify="space-between"` row across the
+          whole width. The month/year selectors alone (150 + 100 + an `xs` gap, D891-1 sizes) are
+          already wider than one grid column, so an arrow cannot also fit INSIDE that same column
+          without overflowing it (measured live: the column's own width — `dayCell × 7` — is
+          narrower than the two selectors' combined rendered width, leaving no room for an arrow
+          on either side). Each arrow instead sits
+          OUTSIDE its column, and the grid row below gets the exact same "arrow + gap" leading
+          offset from a matching invisible spacer — so the CONTENT columns (selectors/label above,
+          day grids below) still align exactly, and the visible arrows sit at the true outer edges
+          of the whole two-month panel. */}
+      <Group align="center" gap="xl" wrap="nowrap">
+        <Group gap="xs" align="center" wrap="nowrap">
           <ActionIcon
             variant="default"
             aria-label={t('aria_prev')}
@@ -454,50 +474,63 @@ function DesktopBody({
           >
             <ChevronLeft size={theme.other.iconSize.standard} />
           </ActionIcon>
-          <Group gap="xs" wrap="nowrap">
-            {/* Task 774 — `dropdownMinWidth` on both selectors. The list inherits the TRIGGER's
-                width (Mantine `Combobox` defaults `width: "target"`), and the row chrome eats a
-                fixed 93px of it before a single glyph is drawn: 24px dropdown padding (theme.ts
-                `Combobox.styles.dropdown` 0.75rem) + 24px option padding (`…styles.option`
-                0.625rem 0.75rem) + 2px border + 12px `Group gap="sm"` + 14px CheckIcon on the
-                SELECTED row + ~17px classic scrollbar (the `mah={220}` cap always overflows).
-                So `min width = widest label + 93`. Measured in Chromium at 14px Open Sans across
-                sq/en/uk/it: widest month = 64.6px (uk «Вересень»/«Березень»), year = 32px.
-                -> month needs 158, year needs 125; set to 190/140 for locale headroom. Below
-                that the label wraps mid-token — the reported «202 / 6» defect. Re-measure these
-                two numbers if a locale with longer month names is added. */}
-            {/* Task 773: `withinPortal={false}` on BOTH in-calendar selectors. These render inside
-                the desktop calendar's own `MantinePopover` dropdown; a portalled option list is a
-                sibling of that dropdown in Mantine's shared portal node, never a descendant, so
-                the `mousedown` that selects an option fails the popover's
-                `composedPath().includes(dropdownNode)` outside-click test and closes the whole
-                calendar before the pick lands. Rendering the list inline keeps it inside the
-                popover's DOM subtree. Owner-reported 2026-08-27. */}
-            <MantineCombobox
-              variant="button"
-              options={monthOptions}
-              value={String(anchorMonth.getMonth())}
-              onChange={(v) => setLeftMonth(new Date(anchorMonth.getFullYear(), Number(v), 1))}
-              noResultsLabel={t('no_results')}
-              triggerAriaLabel={t('period_month')}
-              triggerWidth={150}
-              withinPortal={false}
-              dropdownMinWidth={190}
-            />
-            <MantineCombobox
-              variant="button"
-              options={yearOptions}
-              value={String(anchorMonth.getFullYear())}
-              onChange={(v) => setLeftMonth(new Date(Number(v), anchorMonth.getMonth(), 1))}
-              noResultsLabel={t('no_results')}
-              triggerWidth={100}
-              withinPortal={false}
-              dropdownMinWidth={140}
-            />
-          </Group>
-          <Text c="gray.5" fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>
-            {formatMonthYearLabel(rightMonth, cal)}
-          </Text>
+          <Center w={columnWidth}>
+            <Group gap="xs" wrap="nowrap">
+              {/* Review 5 (F13 item 5): opening the panel previously auto-focused the read-only
+                  summary field (the first tabbable descendant) because `MantinePopover`'s
+                  `Popover` runs `trapFocus`, whose `useFocusTrap` targets the first
+                  `[data-autofocus]` descendant when one exists. `FocusTrap.InitialFocus` is
+                  Mantine's own canonical component for exactly this — a visually-hidden,
+                  `data-autofocus`-carrying anchor — so opening lands on this header instead of
+                  the decorative summary field, with no effect and no raw markup of our own. */}
+              <FocusTrap.InitialFocus />
+              {/* Task 774 — `dropdownMinWidth` on both selectors. The list inherits the
+                  TRIGGER's width (Mantine `Combobox` defaults `width: "target"`), and the row
+                  chrome eats a fixed part of it before a single glyph is drawn (dropdown padding
+                  + option padding + border + `Group gap="sm"` + the selected row's `CheckIcon` +
+                  a classic scrollbar). Measured in Chromium (Open Sans, the theme's `sm` font
+                  size) across sq/en/uk/it — widest month label uk «Вересень»/«Березень», widest
+                  year 4 digits — set to the values below for locale headroom
+                  (`theme.other.rangeDatePicker`). Re-measure if a locale with longer month names
+                  is added. */}
+              {/* Task 773: `withinPortal={false}` on BOTH in-calendar selectors. These render
+                  inside the desktop calendar's own `MantinePopover` dropdown; a portalled option
+                  list is a sibling of that dropdown in Mantine's shared portal node, never a
+                  descendant, so the `mousedown` that selects an option fails the popover's
+                  `composedPath().includes(dropdownNode)` outside-click test and closes the whole
+                  calendar before the pick lands. Rendering the list inline keeps it inside the
+                  popover's DOM subtree. Owner-reported 2026-08-27. */}
+              <MantineCombobox
+                variant="button"
+                options={monthOptions}
+                value={String(anchorMonth.getMonth())}
+                onChange={(v) => setLeftMonth(new Date(anchorMonth.getFullYear(), Number(v), 1))}
+                noResultsLabel={t('no_results')}
+                triggerAriaLabel={t('period_month')}
+                triggerWidth={rdp.monthTriggerWidth}
+                withinPortal={false}
+                dropdownMinWidth={rdp.monthDropdownMinWidth}
+              />
+              <MantineCombobox
+                variant="button"
+                options={yearOptions}
+                value={String(anchorMonth.getFullYear())}
+                onChange={(v) => setLeftMonth(new Date(Number(v), anchorMonth.getMonth(), 1))}
+                noResultsLabel={t('no_results')}
+                triggerWidth={rdp.yearTriggerWidth}
+                withinPortal={false}
+                dropdownMinWidth={rdp.yearDropdownMinWidth}
+              />
+            </Group>
+          </Center>
+        </Group>
+
+        <Group gap="xs" align="center" wrap="nowrap">
+          <Center w={columnWidth}>
+            <Text c="gray.5" fw={600} size="sm" truncate="end">
+              {formatMonthYearLabel(rightMonth, cal)}
+            </Text>
+          </Center>
           <ActionIcon
             variant="default"
             aria-label={t('aria_next')}
@@ -507,27 +540,40 @@ function DesktopBody({
             <ChevronRight size={theme.other.iconSize.standard} />
           </ActionIcon>
         </Group>
+      </Group>
 
-        <Group align="flex-start" gap="xl" wrap="wrap">
+      <Group align="flex-start" gap="xl" wrap="wrap">
+        <Group gap="xs" wrap="nowrap">
+          {/* Invisible spacer — same control/size as the real Prev arrow above, so this grid's
+              own leading offset matches the header's, keeping the two rows aligned. */}
+          <ActionIcon variant="default" disabled aria-hidden="true" tabIndex={-1} opacity={0}>
+            <ChevronLeft size={theme.other.iconSize.standard} />
+          </ActionIcon>
           <MonthGrid
             month={anchorMonth}
             staged={staged}
             minDate={minDate}
             maxDate={maxDate}
-            weekdays={cal.weekdaysShort}
+            cal={cal}
             onSelect={(d) => setStaged(pickDay(staged, d))}
           />
+        </Group>
+        <Group gap="xs" wrap="nowrap">
           <MonthGrid
             month={rightMonth}
             staged={staged}
             minDate={minDate}
             maxDate={maxDate}
-            weekdays={cal.weekdaysShort}
+            cal={cal}
             onSelect={(d) => setStaged(pickDay(staged, d))}
           />
+          {/* Invisible spacer — mirrors the real Next arrow above. */}
+          <ActionIcon variant="default" disabled aria-hidden="true" tabIndex={-1} opacity={0}>
+            <ChevronRight size={theme.other.iconSize.standard} />
+          </ActionIcon>
         </Group>
-      </Stack>
-    </Box>
+      </Group>
+    </Stack>
   )
 }
 
@@ -555,6 +601,8 @@ function MobileBody({
   t: TFunc
   onConfirm: () => void
 }) {
+  const theme = useMantineTheme()
+  const rdp = theme.other.rangeDatePicker
 
   // Window bounds (Task 561 point 5 / D2): reaches PAST months via minDate (already the
   // disablePastDates-clamped effective bound by the time it reaches here) instead of the old
@@ -581,9 +629,9 @@ function MobileBody({
   const viewportRef = useRef<HTMLDivElement | null>(null)
   const [visibleMonthIdx, setVisibleMonthIdx] = useState(initialIdx)
 
-  // Opens scrolled to value.from's month (or today) — same as desktop's anchor — since the
-  // window can now start up to 12 months BEFORE the anchor (point 5), index 0 is no longer
-  // necessarily "today"/anchor.
+  // Opens scrolled to value.from's month (or maxDate's, or today) — same anchor rule as desktop's
+  // right-hand month (review 5, F13 item 4) — since the window can now start up to 12 months
+  // BEFORE the anchor (point 5), index 0 is no longer necessarily "today"/anchor.
   useLayoutEffect(() => {
     const el = sectionRefs.current[initialIdx]
     if (el) scrollViewportTo(viewportRef.current, el.offsetTop)
@@ -594,12 +642,12 @@ function MobileBody({
   // Fixed-header dropdowns reflect the month currently scrolled into view (D2) — whichever
   // section's top has scrolled past the viewport top is the "currently visible" month.
   function handleScrollPositionChange(pos: { x: number; y: number }) {
-    let idx = 0
-    for (let i = 0; i < sectionRefs.current.length; i++) {
-      const el = sectionRefs.current[i]
-      if (el && el.offsetTop <= pos.y + 4) idx = i
-    }
-    setVisibleMonthIdx(idx)
+    const viewport = viewportRef.current
+    const sectionTops = sectionRefs.current.map((el) => el?.offsetTop ?? 0)
+    const clientHeight = viewport?.clientHeight ?? 0
+    // No viewport metrics yet: fall back to the closest-offset rule only (never claim "at the end").
+    const scrollHeight = viewport?.scrollHeight ?? Number.POSITIVE_INFINITY
+    setVisibleMonthIdx(pickVisibleMonthIdx(sectionTops, pos.y, clientHeight, scrollHeight))
   }
 
   function jumpTo(target: Date) {
@@ -633,7 +681,7 @@ function MobileBody({
     : t('select_range')
 
   return (
-    <Box style={{ display: 'flex', flexDirection: 'column' }}>
+    <Flex direction="column">
       {/* fixed header (D2) — month + year dropdowns, does NOT scroll. Replaces the old redundant
           sticky month/year label (point 1) and reaches past months + any year directly. */}
       <Group justify="center" gap="xs" pb="sm" wrap="nowrap">
@@ -644,7 +692,7 @@ function MobileBody({
           onChange={(v) => jumpTo(new Date(visibleMonth.getFullYear(), Number(v), 1))}
           noResultsLabel={t('no_results')}
           triggerAriaLabel={t('period_month')}
-          triggerWidth={150}
+          triggerWidth={rdp.monthTriggerWidth}
         />
         <MantineCombobox
           variant="button"
@@ -653,21 +701,18 @@ function MobileBody({
           onChange={handleYearChange}
           noResultsLabel={t('no_results')}
           triggerAriaLabel={t('period_year')}
-          triggerWidth={100}
+          triggerWidth={rdp.yearTriggerWidth}
         />
       </Group>
 
-      {/* scrolling month list — the ONLY scroll region (D4). Fixed `height` (not an
-          ancestor-dependent `flex:1`/percentage) so this component's own total height stays
-          well under the sheet's 90dvh cap regardless of how tall the header/footer render,
-          which keeps the OUTER ResponsiveBottomSheet body from ever needing to scroll too —
-          avoiding a double-scroll container that would let the footer drift with the list. */}
-      <ScrollArea
-        style={{ height: '45dvh' }}
-        viewportRef={viewportRef}
-        onScrollPositionChange={handleScrollPositionChange}
-      >
-        <Stack gap="lg" style={{ position: 'relative' }} align="center">
+      {/* scrolling month list — the ONLY scroll region (D4). Fixed `height`
+          (`theme.other.rangeDatePicker.mobileListHeight`, not an ancestor-dependent
+          `flex:1`/percentage) so this component's own total height stays well under the sheet's
+          own dvh cap regardless of how tall the header/footer render, which keeps the OUTER
+          ResponsiveBottomSheet body from ever needing to scroll too — avoiding a double-scroll
+          container that would let the footer drift with the list. */}
+      <ScrollArea h={rdp.mobileListHeight} viewportRef={viewportRef} onScrollPositionChange={handleScrollPositionChange}>
+        <Stack gap="lg" pos="relative" align="center">
           {months.map((m, i) => (
             <Box
               key={m.toISOString()}
@@ -676,7 +721,7 @@ function MobileBody({
               }}
             >
               {/* D3: Title → weekday row (inside MonthGrid) → day grid, in this order, per section. */}
-              <Text fw={600} size="sm" c="gray.8" mb={8} ta="center">
+              <Text fw={600} size="sm" c="gray.8" mb="xs" ta="center">
                 {formatMonthYearLabel(m, cal)}
               </Text>
               <MonthGrid
@@ -684,7 +729,7 @@ function MobileBody({
                 staged={staged}
                 minDate={minDate}
                 maxDate={maxDate}
-                weekdays={cal.weekdaysShort}
+                cal={cal}
                 onSelect={(d) => setStaged(pickDay(staged, d))}
               />
             </Box>
@@ -692,22 +737,21 @@ function MobileBody({
         </Stack>
       </ScrollArea>
 
-      {/* fixed bottom bar (D4) — range summary + full-width Confirm CTA, does NOT scroll. */}
-      <Box
-        style={{
-          paddingTop: 12,
-          borderTop: '1px solid var(--mantine-color-gray-2)',
-        }}
-      >
-        <Text size="sm" c="gray.7" mb={8}>
+      {/* fixed bottom bar (D4) — range summary + full-width Confirm CTA, does NOT scroll.
+          Review 6 F16: a Mantine `Divider` (theme default gray.2, one hairline wide) replaces
+          the old all-sides `bd` border, which boxed the bar on four sides instead of separating
+          it from the scrolling list above. */}
+      <Divider />
+      <Box pt="sm">
+        <Text size="sm" c="gray.7" mb="xs">
           {rangeSummary}
         </Text>
         {/* Task 561 D1: enabled once `from` is staged — commit() maps missing `to` to `from`. */}
-        <Button fullWidth color="brand" mih="2.75rem" disabled={!staged.from} onClick={onConfirm}>
+        <Button fullWidth color="brand" mih={theme.other.touchTarget} disabled={!staged.from} onClick={onConfirm}>
           {t('confirm')}
         </Button>
       </Box>
-    </Box>
+    </Flex>
   )
 }
 
@@ -734,7 +778,21 @@ function RangeCalendarBody({
   const initialFrom = parseRangeDate(value.from)
   const initialTo = parseRangeDate(value.to)
   const [staged, setStaged] = useState<StagedRange>({ from: initialFrom, to: initialTo })
-  const [anchorMonth, setAnchorMonth] = useState<Date>(() => startOfMonth(initialFrom ?? new Date()))
+
+  // Review 5 (F13 item 4): with no staged value and a `maxDate`, desktop's RIGHT-hand month (not
+  // the anchor) must be `maxDate`'s month — so the anchor (desktop's LEFT/mutable month) is
+  // `maxDate` minus one — while mobile's initial scroll target is `maxDate`'s month DIRECTLY. Two
+  // different months from the same rule; `initialMobileMonth` is computed once (mount-only, like
+  // the pre-existing scroll effect below) and never changes after, independent of desktop's own
+  // `anchorMonth` navigation state.
+  const initialMobileMonth = useMemo(
+    () => startOfMonth(initialFrom ?? maxDate ?? new Date()),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  )
+  const [anchorMonth, setAnchorMonth] = useState<Date>(() =>
+    startOfMonth(initialFrom ?? (maxDate ? subMonths(maxDate, 1) : new Date())),
+  )
 
   // Apply/Confirm-enablement decision (Task 561 D1, owner-locked 2026-07-08): enabled once `from`
   // is staged. Committing with no `to` emits a single-day range `{from, to: from}` — never a
@@ -751,7 +809,7 @@ function RangeCalendarBody({
       <MobileBody
         staged={staged}
         setStaged={setStaged}
-        anchorMonth={anchorMonth}
+        anchorMonth={initialMobileMonth}
         minDate={minDate}
         maxDate={maxDate}
         cal={cal}
@@ -779,11 +837,12 @@ function RangeCalendarBody({
 
 /**
  * Booking.com-style range date picker (Task 558 / Sprint 42 / Epic MM Phase-2; reworked by Task
- * 561 after an owner rejection of the first mobile render, 2026-07-08).
+ * 561 after an owner rejection of the first mobile render, 2026-07-08; composition and tokens
+ * corrected by Task 891 review 5, F13).
  *
  * Desktop `≥640`: anchored `MantinePopover` panel — two-month CONSECUTIVE pair with a single
  * shared header (prev/next arrows shift the pair, month/year dropdowns anchor the LEFT month,
- * gray non-interactive label for the right month), a range-summary field, "Clear filters", and
+ * gray non-interactive label for the right month), a range-summary field, "Clear", and
  * Cancel/Apply. Mobile `<640`: full-width bottom sheet — a FIXED header with month + year
  * dropdowns (§6c chrome, same mechanism as desktop, Task 561 D2), a vertically-scrolling
  * multi-month list (the ONLY scroll region; each section is Title → weekday row → grid, Task 561
@@ -806,7 +865,6 @@ export function RangeDatePicker({
   maxDate,
   minDate,
   placeholder,
-  className,
   disablePastDates,
 }: RangeDatePickerProps) {
   const t = useTranslations('common')
@@ -839,15 +897,15 @@ export function RangeDatePicker({
     // renders InputBase with a caller-overridable `component`) so the theme's TextInput defaults and
     // input-chrome.css (keyed on .mantine-TextInput-input) keep applying — chrome unchanged, no new value.
     // `component` is not in TextInput's public types, hence the one narrow cast. The clear-X below is a
-    // SIBLING inside .mantine-Input-wrapper, never nested in the button.
+    // SIBLING inside .mantine-Input-wrapper, never nested in the button. `pointer` (below) already gives
+    // it `cursor:pointer` — Mantine's own Input prop, not a component-local style override.
     <TextInput
       {...({ component: 'button' } as object)}
       type="button"
       pointer
       w="100%"
       radius="lg"
-      className={className}
-      leftSection={<CalendarDays size={theme.other.iconSize.standard} style={{ color: 'var(--mantine-color-gray-5)' }} />}
+      leftSection={<CalendarDays size={theme.other.iconSize.standard} color="var(--mantine-color-gray-5)" />}
       rightSection={
         hasValue ? (
           <ActionIcon
@@ -862,7 +920,6 @@ export function RangeDatePicker({
           </ActionIcon>
         ) : undefined
       }
-      style={{ cursor: 'pointer' }}
     >
       {displayText || <Input.Placeholder c="gray.4">{placeholder ?? t('select_range')}</Input.Placeholder>}
     </TextInput>

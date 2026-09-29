@@ -1,7 +1,7 @@
 'use client'
 
 import { useLocale } from 'next-intl'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistance, formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
 import { Text } from '@mantine/core'
@@ -38,12 +38,22 @@ interface Props {
    * time on hover; only the keyboard tab stop is suppressed. `absoluteLabel`'s `aria-label` and
    * the hover Tooltip stay in either case. */
   focusable?: boolean
+  /** Task 891 review 1, F4a (GR-0 EXTEND): an ISO instant to compare `date` against, instead of
+   * the machine clock. Every other existing consumer omits this and keeps its exact prior
+   * `formatDistanceToNow` render (today, on whichever clock is reading — server during SSR,
+   * browser after hydration). Set this whenever the caller already has its own frozen/server
+   * "now" and must not let `RelativeTime` read a different one (e.g. a dashboard whose own
+   * contract is "never reads the clock" — passing its own `now` keeps that contract true instead
+   * of merely stating it). */
+  baseDate?: string
 }
 
-export function RelativeTime({ date, absoluteLabel, focusable = true, ...rest }: Props) {
+export function RelativeTime({ date, absoluteLabel, focusable = true, baseDate, ...rest }: Props) {
   const locale = useLocale()
   const dfLocale = LOCALE_MAP[locale] ?? enUS
-  const relative = formatDistanceToNow(new Date(date), { addSuffix: true, locale: dfLocale })
+  const relative = baseDate
+    ? formatDistance(new Date(date), new Date(baseDate), { addSuffix: true, locale: dfLocale })
+    : formatDistanceToNow(new Date(date), { addSuffix: true, locale: dfLocale })
   const hasAbsoluteLabel = Boolean(absoluteLabel)
   const showTabIndex = hasAbsoluteLabel && focusable
 

@@ -1,0 +1,28 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (33 tests | 1 failed | 32 skipped) 356ms
+     × opening does not focus the read-only summary field (review 5, F13 item 5) 354ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only custom-range flow, 'desktop ≥640' (Task 861) > opening does not focus the read-only summary field (review 5, F13 item 5)
+AssertionError: expected <input …(8)></input> not to be <input …(8)></input> // Object.is equality
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:489:42
+    487|       const summaryInput = baseElement.querySelector('input[readonly]')
+    488|       expect(summaryInput).toBeTruthy()
+    489|       expect(document.activeElement).not.toBe(summaryInput)
+       |                                          ^
+    490|     })
+    491|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 skipped (33)
+   Start at  00:14:35
+   Duration  2.72s (transform 141ms, setup 79ms, import 1.50s, tests 356ms, environment 662ms)
+
+PLANT_EXIT_CODE=1
+4a1d6165a77c6905b6246944d46738dfc0683c8b

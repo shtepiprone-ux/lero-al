@@ -127,3 +127,33 @@ export const Default: Story = {
     expect(nestedTime.getAttribute('aria-label') ?? '').toContain('29.07.2026 23:00')
   },
 }
+
+// Task 891 review 1, F4a (GR-0 EXTEND) — `baseDate` compares `date` against a caller-supplied
+// instant instead of the live/preview clock. `date` is 5 real days before `FIXTURE_ANCHOR`;
+// `baseDate` is `FIXTURE_ANCHOR` + 10 days — so the correct render is "15 days ago" (5 + 10), never
+// the "5 days ago" the no-`baseDate` `Default` story would show for the same `date`.
+export const WithBaseDate: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const baseDate = fixtureDate(-10 * DAY)
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {t('relative_time_section_base_date')}
+          </Text>
+          <Text size="sm">
+            <RelativeTime date={fixtureDate(5 * DAY)} baseDate={baseDate} />
+          </Text>
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  play: async ({ canvasElement }) => {
+    const el = canvasElement.querySelector('time')!
+    expect(el.textContent ?? '').toContain('15')
+  },
+}

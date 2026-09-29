@@ -1,0 +1,120 @@
+
+> lero-al@0.1.0 test:auth
+> vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/lib/auth/__tests__/postSignOut.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts src/modules/auth/__tests__/AuthContext.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx src/modules/notifications/lib/emails/__tests__/emailChange.test.ts src/lib/__tests__/timezone-literals.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts (29 tests | 5 failed) 18ms
+       × sq: /cabinet/statistics -> /sq 4ms
+       × en: /cabinet/statistics -> /en 1ms
+       × uk: /cabinet/statistics -> /uk 1ms
+       × it: /cabinet/statistics -> /it 1ms
+     × SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — classification table > session-required routes stay guarded (return home) in every locale > sq: /cabinet/statistics -> /sq
+AssertionError: expected null to be '/sq' // Object.is equality
+
+- Expected:
+"/sq"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:15:81
+     13|       })
+     14|       it(`${locale}: /cabinet/statistics -> /${locale}`, () => {
+     15|         expect(resolvePostSignOutPath(`/${locale}/cabinet/statistics`,…
+       |                                                                                 ^
+     16|       })
+     17|       it(`${locale}: /favorites -> /${locale}`, () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — classification table > session-required routes stay guarded (return home) in every locale > en: /cabinet/statistics -> /en
+AssertionError: expected null to be '/en' // Object.is equality
+
+- Expected:
+"/en"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:15:81
+     13|       })
+     14|       it(`${locale}: /cabinet/statistics -> /${locale}`, () => {
+     15|         expect(resolvePostSignOutPath(`/${locale}/cabinet/statistics`,…
+       |                                                                                 ^
+     16|       })
+     17|       it(`${locale}: /favorites -> /${locale}`, () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — classification table > session-required routes stay guarded (return home) in every locale > uk: /cabinet/statistics -> /uk
+AssertionError: expected null to be '/uk' // Object.is equality
+
+- Expected:
+"/uk"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:15:81
+     13|       })
+     14|       it(`${locale}: /cabinet/statistics -> /${locale}`, () => {
+     15|         expect(resolvePostSignOutPath(`/${locale}/cabinet/statistics`,…
+       |                                                                                 ^
+     16|       })
+     17|       it(`${locale}: /favorites -> /${locale}`, () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — classification table > session-required routes stay guarded (return home) in every locale > it: /cabinet/statistics -> /it
+AssertionError: expected null to be '/it' // Object.is equality
+
+- Expected:
+"/it"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:15:81
+     13|       })
+     14|       it(`${locale}: /cabinet/statistics -> /${locale}`, () => {
+     15|         expect(resolvePostSignOutPath(`/${locale}/cabinet/statistics`,…
+       |                                                                                 ^
+     16|       })
+     17|       it(`${locale}: /favorites -> /${locale}`, () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/lib/auth/__tests__/postSignOut.test.ts > resolvePostSignOutPath — drift test against real guest guards > SESSION_REQUIRED_ROUTE_PATTERNS equals the set of guest-guarded [locale] pages
+AssertionError: SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [], extra: [/cabinet/statistics]: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/postSignOut.test.ts:102:7
+    100|       missing.length === 0 && extra.length === 0,
+    101|       `SESSION_REQUIRED_ROUTE_PATTERNS drift — missing: [${missing.joi…
+    102|     ).toBe(true)
+       |       ^
+    103|   })
+    104| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed | 10 passed (11)
+      Tests  5 failed | 73 passed (78)
+   Start at  17:30:40
+   Duration  5.26s (transform 2.38s, setup 1.33s, import 5.42s, tests 3.31s, environment 14.47s)
+
+PLANTED_EXIT_CODE=1
+PRE_PLANT_HASH=90a7ff59d47e2c260768a501bfba1d317a4e12bf
+POST_RESTORE_HASH=90a7ff59d47e2c260768a501bfba1d317a4e12bf

@@ -4,6 +4,7 @@
  */
 import type { BlockResult } from '@/lib/dashboard/blockResult'
 import type { Period } from '@/lib/dashboard/period'
+import type { ActivityByListingRow } from '@/modules/analytics/activity/types'
 import type { HiddenReason } from '@/modules/listings/lib/visibility'
 import type { ListingStatus, ListingType } from '@/types/database'
 
@@ -42,13 +43,13 @@ export interface Agt02 {
   statusCounts: Record<ListingStatus, number>
 }
 
-/** AGT-05 — form inquiries in the completed period and the previous equal period. Counts only. */
-export interface Agt05 {
-  current: number
-  previous: number
-}
-
-export type Agt10Sort = 'expires_at' | 'created_at' | 'form_inquiries'
+export type Agt10Sort =
+  | 'expires_at'
+  | 'created_at'
+  | 'form_inquiries'
+  | 'recorded_views'
+  | 'whatsapp_clicks'
+  | 'last_activity_date'
 export type Agt10Direction = 'asc' | 'desc'
 export type Agt10Visibility = 'visible' | 'hidden'
 
@@ -74,8 +75,18 @@ export interface Agt10Row {
   listingType: ListingType
   createdAt: string
   coverUrl: string | null
-  /** Form inquiries received in the selected period. */
+  /** Form inquiries received in the selected period (Task 891: from the activity aggregate's
+   * `listingInquirySubmissions`, not a direct `listing_inquiries` read). */
   formInquiries: number
+  /** Recorded views in the selected period (Task 891, 849's activity aggregate). `0` only after a
+   * successful `getOwnerActivityByListing` read; missing from that read also reads as `0`. */
+  recordedViews: number
+  /** WhatsApp click-throughs in the selected period (Task 891, 849's activity aggregate). */
+  whatsappClicks: number
+  /** The latest Tirane day in the period with any recorded activity; `null` when the by-listing
+   * read had no row for this listing (never a false "no activity" when the read itself failed —
+   * a failed read fails the whole `agt10` block, see `readAgt10`). */
+  lastActivityDate: string | null
 }
 
 export interface Agt10 {
@@ -89,7 +100,6 @@ export interface Agt10 {
 export interface AgentStatisticsData {
   agt01: BlockResult<Agt01>
   agt02: BlockResult<Agt02>
-  agt05: BlockResult<Agt05>
   agt10: BlockResult<Agt10>
 }
 
@@ -99,4 +109,12 @@ export interface AgentStatisticsInput {
   now: Date
   period: Period
   table: Agt10Table
+  /**
+   * Task 891 (R1/R7): the page's own `getOwnerActivityByListing(ownerId, period)` call, started
+   * before this module is invoked so the network round-trip runs concurrently with every other
+   * block's queries (one call, shared with the page's own top-listings ranking) — `readAgt10`
+   * awaits it to merge AGT-10's activity columns and to sort by them across the owner's whole
+   * matching set before paging. A failed read fails the `agt10` block (never a false `0`).
+   */
+  activityByListing: Promise<BlockResult<ActivityByListingRow[]>>
 }

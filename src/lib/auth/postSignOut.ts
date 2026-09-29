@@ -2,6 +2,7 @@ import { routing } from '@/i18n/routing'
 
 export const SESSION_REQUIRED_ROUTE_PATTERNS = [
   '/cabinet',
+  '/cabinet/statistics',
   '/favorites',
   '/listings/create',
   '/listings/[slug]/edit',

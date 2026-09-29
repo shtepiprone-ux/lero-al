@@ -171,6 +171,39 @@ export const WithChart: Story = {
   },
 };
 
+// Task 891 review 3 (R18, GR-3a EXTEND) — the hero's inventory sub-stats (Lahomes "My Balance").
+// Reuses the real `cabinet.statistics.agt02_*` production keys (no new message added — every string
+// this task touches already exists).
+export const AccentWithSubstats: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} p="md">
+        <MantineDashboardStatCard
+          icon={<ClipboardList size={theme.other!.iconSize!.decorative} />}
+          label={storyT(l, 'cabinet.statistics.agt02_label')}
+          value="12"
+          state="ready"
+          variant="accent"
+          substats={[
+            { key: 'pending', label: storyT(l, 'cabinet.statistics.agt02_pending'), value: '2', href: '/cabinet/statistics?status=pending' },
+            { key: 'inactive', label: storyT(l, 'cabinet.statistics.agt02_inactive'), value: '3', href: '/cabinet/statistics?status=inactive' },
+            { key: 'sold', label: storyT(l, 'cabinet.statistics.agt02_sold'), value: '1', href: '/cabinet/statistics?status=sold' },
+            { key: 'rented', label: storyT(l, 'cabinet.statistics.agt02_rented'), value: '2', href: '/cabinet/statistics?status=rented' },
+          ]}
+        />
+      </SimpleGrid>
+    );
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  // AC24 — 4 sub-stat links, each a real <a> distinct from the card's own (this card has no `href`,
+  // so all 4 anchors are the sub-stats).
+  play: async ({ canvasElement }) => {
+    const anchors = canvasElement.querySelectorAll('a');
+    expect(anchors.length).toBe(4);
+  },
+};
+
 export const Accent: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';

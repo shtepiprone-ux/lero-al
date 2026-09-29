@@ -28,8 +28,14 @@ import { MantineStoryShell } from '../_MantineStoryShell'
 const meta: Meta = {
   title: 'Mantine/Primitives/MobileNavDrawer',
   parameters: { skipCanvas: true, layout: 'fullscreen' },
-  args: { loggedIn: true },
-  argTypes: { loggedIn: { control: 'boolean' } },
+  args: { loggedIn: true, role: 'user' },
+  argTypes: {
+    loggedIn: { control: 'boolean' },
+    // Task 854 (GR-3a EXTEND, R5/AC6): the agent state — "Statistics" right after "Profile".
+    // Args-driven, matching this Story's existing `loggedIn` mechanism (exactly one open overlay
+    // per page load; see this file's header comment).
+    role: { control: 'select', options: ['user', 'agent'] },
+  },
 }
 export default meta
 type Story = StoryObj<typeof meta>
@@ -39,6 +45,7 @@ export const Default: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
     const loggedIn = (args as { loggedIn?: boolean }).loggedIn ?? true
+    const role = (args as { role?: string }).role ?? 'user'
 
     return (
       <MantineStoryShell>
@@ -48,7 +55,7 @@ export const Default: Story = {
         <MobileNavDrawer
           opened
           onClose={() => {}}
-          user={loggedIn ? { name: 'Alba Krasniqi', avatar_url: null } : null}
+          user={loggedIn ? { name: 'Alba Krasniqi', avatar_url: null, role } : null}
           locale={locale}
           onNavigate={() => {}}
           onOpenAuth={() => {}}
@@ -57,4 +64,12 @@ export const Default: Story = {
       </MantineStoryShell>
     )
   },
+}
+
+// Task 854 (R5/AC6): a separate page-load fixture (`&args=role:agent`) proving the agent state as
+// rendered evidence, not just verified by code inspection — same rationale as the existing
+// `loggedIn:false` logged-out fixture (this file's header comment, Task 755).
+export const Agent: Story = {
+  ...Default,
+  args: { loggedIn: true, role: 'agent' },
 }

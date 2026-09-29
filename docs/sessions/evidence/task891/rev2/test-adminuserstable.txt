@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+   Start at  20:51:17
+   Duration  1.25s (transform 80ms, setup 84ms, import 121ms, tests 249ms, environment 675ms)
+
+EXIT_CODE=0

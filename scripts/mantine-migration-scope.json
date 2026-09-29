@@ -107,5 +107,6 @@
   "src/components/admin/AdminHeader.tsx",
   "src/components/admin/AdminLocaleSwitcher.tsx",
   "src/modules/admin/dashboard/components/AdminDashboardView.tsx",
-  "src/components/admin/AdminDashboardRecentListings.tsx"
+  "src/components/admin/AdminDashboardRecentListings.tsx",
+  "src/modules/cabinet/statistics/components/AgentStatisticsView.tsx"
 ]

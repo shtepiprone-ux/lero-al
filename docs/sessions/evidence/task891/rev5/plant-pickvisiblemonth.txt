@@ -1,0 +1,56 @@
+PRE-PLANT HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+Tue Sep 29 11:01:27 CEDT 2026
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (36 tests | 1 failed) 20649ms
+     × at the end: scrollTop at the scroll max resolves to the LAST section, not the closest-offset one 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > pickVisibleMonthIdx (Task 891 review 6, F17) > at the end: scrollTop at the scroll max resolves to the LAST section, not the closest-offset one
+AssertionError: expected 2 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 2
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:537:88
+    535|     // The closest-offset rule alone would answer index 2 here (700 <=…
+    536|     // this is the exact review 6 defect (the header read "August" whi…
+    537|     expect(pickVisibleMonthIdx(sectionTops, maxScrollTop, clientHeight…
+       |                                                                                        ^
+    538|   })
+    539| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 passed (36)
+   Start at  11:01:28
+   Duration  22.89s (transform 142ms, setup 76ms, import 1.35s, tests 20.65s, environment 688ms)
+
+EXIT_CODE=1
+RESTORED HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+MATCH: YES
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Start at  11:02:04
+   Duration  11.81s (transform 138ms, setup 76ms, import 1.31s, tests 9.62s, environment 680ms)
+
+EXIT_CODE=0

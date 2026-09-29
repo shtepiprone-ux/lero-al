@@ -11,7 +11,10 @@ type MobileAuthView = 'login' | 'register' | 'register-agent'
 export interface MobileNavDrawerProps {
   opened: boolean
   onClose: () => void
-  user: { name: string | null; avatar_url: string | null } | null
+  /** Task 854 (R5, revision 1 N1): `role` is optional so a caller that omits it never shows the
+   * agent-only Statistics link. The single production caller, `HeaderView.tsx:194-197`, already
+   * passes a `role`-carrying object (its own `user` prop requires `role`, `HeaderView.tsx:52`). */
+  user: { name: string | null; avatar_url: string | null; role?: string } | null
   locale: string
   onNavigate: (path: string) => void
   onOpenAuth: (view: MobileAuthView) => void
@@ -68,6 +71,19 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
               <Button component={Link} href={`/${locale}/cabinet`} variant="transparent" fullWidth justify="flex-start" pl={0} onClick={() => navigate(`/${locale}/cabinet`)}>
                 {t('profile')}
               </Button>
+              {user.role === 'agent' && (
+                <Button
+                  component={Link}
+                  href={`/${locale}/cabinet/statistics`}
+                  variant="transparent"
+                  fullWidth
+                  justify="flex-start"
+                  pl={0}
+                  onClick={() => navigate(`/${locale}/cabinet/statistics`)}
+                >
+                  {t('statistics')}
+                </Button>
+              )}
               <Button
                 component={Link}
                 href={`/${locale}/cabinet?tab=listings`}

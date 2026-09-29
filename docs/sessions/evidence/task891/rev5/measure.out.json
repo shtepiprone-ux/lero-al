@@ -1,0 +1,988 @@
+{
+  "ac30": {
+    "1024": {
+      "cardCount": 3,
+      "cardInfo": [
+        {
+          "cardHeight": 291,
+          "sparklineTop": 275,
+          "valueBottom": 259,
+          "valueTop": 221,
+          "infoAriaLabel": null,
+          "infoTop": null
+        },
+        {
+          "cardHeight": 291,
+          "sparklineTop": 275,
+          "valueBottom": 259,
+          "valueTop": 221,
+          "infoAriaLabel": null,
+          "infoTop": null
+        },
+        {
+          "cardHeight": 291,
+          "sparklineTop": 275,
+          "valueBottom": 259,
+          "valueTop": 221,
+          "infoAriaLabel": "More information",
+          "infoTop": 129
+        }
+      ]
+    },
+    "1440": {
+      "cardCount": 3,
+      "cardInfo": [
+        {
+          "cardHeight": 209,
+          "sparklineTop": 193,
+          "valueBottom": 288,
+          "valueTop": 250,
+          "infoAriaLabel": null,
+          "infoTop": null
+        },
+        {
+          "cardHeight": 209,
+          "sparklineTop": 193,
+          "valueBottom": 288,
+          "valueTop": 250,
+          "infoAriaLabel": null,
+          "infoTop": null
+        },
+        {
+          "cardHeight": 209,
+          "sparklineTop": 193,
+          "valueBottom": 288,
+          "valueTop": 250,
+          "infoAriaLabel": "More information",
+          "infoTop": 129
+        }
+      ]
+    },
+    "agt05TooltipFocus": {
+      "found": true,
+      "ariaLabel": "More information"
+    },
+    "agt05TooltipContent": {
+      "text": "A stored inquiry; it does not confirm email delivery or reading."
+    }
+  },
+  "ac31": {
+    "fill": [
+      {
+        "width": 320,
+        "cardCount": 2,
+        "widths": [
+          288,
+          288
+        ],
+        "stackedSameLeft": true,
+        "bottoms": [
+          222,
+          364
+        ],
+        "bottomsEqualWithin1": false,
+        "containerWidth": 320
+      },
+      {
+        "width": 390,
+        "cardCount": 2,
+        "widths": [
+          358,
+          358
+        ],
+        "stackedSameLeft": true,
+        "bottoms": [
+          222,
+          364
+        ],
+        "bottomsEqualWithin1": false,
+        "containerWidth": 390
+      },
+      {
+        "width": 768,
+        "cardCount": 2,
+        "widths": [
+          720,
+          720
+        ],
+        "stackedSameLeft": true,
+        "bottoms": [
+          222,
+          372
+        ],
+        "bottomsEqualWithin1": false,
+        "containerWidth": 768
+      },
+      {
+        "width": 1024,
+        "cardCount": 2,
+        "widths": [
+          643,
+          309
+        ],
+        "stackedSameLeft": false,
+        "bottoms": [
+          222,
+          222
+        ],
+        "bottomsEqualWithin1": true,
+        "containerWidth": 1024
+      },
+      {
+        "width": 1440,
+        "cardCount": 2,
+        "widths": [
+          920,
+          448
+        ],
+        "stackedSameLeft": false,
+        "bottoms": [
+          222,
+          222
+        ],
+        "bottomsEqualWithin1": true,
+        "containerWidth": 1440
+      }
+    ],
+    "withCounts": [
+      {
+        "width": 320,
+        "cardWidth": 288,
+        "viewportWidth": 320,
+        "bodyOverflow": false
+      },
+      {
+        "width": 390,
+        "cardWidth": 358,
+        "viewportWidth": 390,
+        "bodyOverflow": false
+      },
+      {
+        "width": 768,
+        "cardWidth": 736,
+        "viewportWidth": 768,
+        "bodyOverflow": false
+      },
+      {
+        "width": 1024,
+        "cardWidth": 992,
+        "viewportWidth": 1024,
+        "bodyOverflow": false
+      },
+      {
+        "width": 1440,
+        "cardWidth": 1408,
+        "viewportWidth": 1440,
+        "bodyOverflow": false
+      }
+    ]
+  },
+  "ac32": {
+    "perStory": {
+      "patterns-mantine-dashboardcard--fill": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 304
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 374
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 720,
+          "parentW": 744
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 643,
+          "parentW": 667
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 920,
+          "parentW": 944
+        }
+      ],
+      "patterns-mantine-dashboarddonut--with-counts": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 320
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 390
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 736,
+          "parentW": 768
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 992,
+          "parentW": 1024
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "componentW": 1408,
+          "parentW": 1440
+        }
+      ],
+      "patterns-mantine-dashboardstatcard--accent-with-substats": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "componentW": 288,
+          "parentW": 320
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "componentW": 358,
+          "parentW": 390
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "componentW": 360,
+          "parentW": 768
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "componentW": 236,
+          "parentW": 1024
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "componentW": 340,
+          "parentW": 1440
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--default": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-01-all-zero": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-10-empty": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-10-filtered-empty": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--activity-stale": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--activity-error": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--no-activity": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--sorted-by-views": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 288,
+          "parentW": 288
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "componentW": 358,
+          "parentW": 358
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 348,
+          "parentW": 720
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 309,
+          "parentW": 976
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "componentW": 448,
+          "parentW": 1392
+        }
+      ]
+    }
+  },
+  "ac33": {
+    "note": "recorded in the session log from docs/sessions/evidence/task891/rev5/check-locale-leak.txt (rerun skipped per §22.1 — revision 5 adds/changes no string)"
+  },
+  "ac34": {
+    "1024": {
+      "found": true,
+      "scrollHeight": 296,
+      "clientHeight": 296,
+      "withinBound": true,
+      "linkCount": 4,
+      "allLinksInside": true
+    },
+    "1440": {
+      "found": true,
+      "scrollHeight": 278,
+      "clientHeight": 278,
+      "withinBound": true,
+      "linkCount": 4,
+      "allLinksInside": true
+    }
+  },
+  "ac35": {
+    "dayCellSize": {
+      "w": 39,
+      "h": 39
+    },
+    "triggerWidths": [
+      150,
+      100
+    ],
+    "clearLinkFound": true,
+    "clearLinkText": "Clear",
+    "sqAriaLabel": {
+      "sample": "1 gusht 2026"
+    },
+    "storyWidths": {
+      "320": {
+        "width": 288,
+        "viewportWidth": 320
+      },
+      "390": {
+        "width": 358,
+        "viewportWidth": 390
+      },
+      "1024": {
+        "width": 280,
+        "viewportWidth": 1024
+      },
+      "1440": {
+        "width": 280,
+        "viewportWidth": 1440
+      }
+    }
+  },
+  "ac36": {
+    "triggerTextCenterY": 71,
+    "triggerCenterY": 71,
+    "selectorGroupCenterX": 235,
+    "leftGridCenterX": 235,
+    "rightLabelCenterX": 531,
+    "rightGridCenterX": 532,
+    "rightMonthLabelText": "September 2026",
+    "activeElementIsSummaryInput": false,
+    "activeElementTag": "SPAN",
+    "activeElementHasAutofocus": true,
+    "withValueTriggerCentre": {
+      "found": true,
+      "triggerCenterY": 191,
+      "textCenterY": null
+    },
+    "mobile390": {
+      "found": true,
+      "scrollTop": 3273,
+      "visibleSectionTitle": "September 2026"
+    },
+    "agentStatisticsCustom": {
+      "customLabelFound": true
+    },
+    "agentStatisticsCustomTrigger": {
+      "found": true,
+      "triggerCenterY": 110,
+      "textCenterY": 110
+    }
+  },
+  "ac38": {
+    "openBoundedNoValue": {
+      "tokens": {
+        "gray3": "rgb(208, 213, 221)",
+        "gray4": "rgb(152, 162, 179)",
+        "gray7": "rgb(52, 64, 84)"
+      },
+      "blockedAfterMaxDate": {
+        "found": true,
+        "color": "rgb(208, 213, 221)",
+        "opacity": "0.4",
+        "cursor": "not-allowed",
+        "htmlDisabled": true
+      },
+      "outOfMonthFiller": {
+        "found": true,
+        "color": "rgb(152, 162, 179)",
+        "opacity": "0.4",
+        "cursor": "not-allowed",
+        "htmlDisabled": true
+      },
+      "normalDay": {
+        "found": true,
+        "color": "rgb(52, 64, 84)",
+        "opacity": "1",
+        "cursor": "pointer",
+        "htmlDisabled": false
+      }
+    },
+    "defaultBoundaryAndBand": {
+      "tokens": {
+        "brand7Bg": "rgb(236, 84, 71)",
+        "brand0Bg": "rgb(253, 238, 237)",
+        "whiteColor": "rgb(255, 255, 255)"
+      },
+      "boundaryCount": 3,
+      "boundaryInfo": [
+        {
+          "date": "2026-01-28",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(236, 84, 71)"
+        },
+        {
+          "date": "2026-01-28",
+          "color": "rgb(152, 162, 179)",
+          "backgroundColor": "rgb(236, 84, 71)"
+        },
+        {
+          "date": "2026-02-05",
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(236, 84, 71)"
+        }
+      ],
+      "bandInfo": {
+        "backgroundColor": "rgb(253, 238, 237)"
+      }
+    }
+  },
+  "ac39": {
+    "barFound": true,
+    "borderLeftWidth": "0px",
+    "borderRightWidth": "0px",
+    "borderBottomWidth": "0px",
+    "dividerFound": true,
+    "dividerTag": "DIV",
+    "dividerBorderTopWidth": "1px",
+    "dividerBorderTopColor": "rgb(228, 231, 236)",
+    "dividerWidth": 358,
+    "barWidth": 358
+  },
+  "ac40": {
+    "openBoundedNoValue_en": {
+      "found": true,
+      "monthLabel": "September",
+      "scrollTop": 3273,
+      "scrollHeight": 3633,
+      "clientHeight": 360
+    },
+    "openBoundedNoValue_sq": {
+      "found": true,
+      "monthLabel": "Shtator",
+      "scrollTop": 3273,
+      "scrollHeight": 3633,
+      "clientHeight": 360
+    },
+    "default_en": {
+      "found": true,
+      "monthLabel": "January",
+      "scrollTop": 3378,
+      "scrollHeight": 3908,
+      "clientHeight": 360
+    }
+  }
+}

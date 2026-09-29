@@ -2,9 +2,9 @@
 
 Sprint 78 · P1 · QA profile **Q3** (+ 854's Q4 isolation evidence carried forward) · Wave D (D78-9) · depends on
 **889** approved · builds on **854's working tree** and closes **854 jointly** · folds **855**'s agent half and **856** ·
-**Status: 🔁 NEEDS REVISION (review 6, 2026-09-29) — execute §22 (revision 5: `RangeDatePicker` chrome in Storybook, mobile bar divider, mobile header month, fresh evidence) on top of the current working tree**
+**Status: ✅ APPROVED WITH NOTES (review 8, 2026-09-29) — 854 closed jointly (§24)**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для … агента"*. Their chart
 choices were *"Area-графік активності, Donut портфеля, Топ-оголошення (стовпчики), KPI з міні-графіком"*. D854-1 was
 answered *"A: перенос у 2 рядки (Рекомендовано)"*, and the style is *"Композиція референсів"* (D78-5 stands).
@@ -1518,3 +1518,28 @@ block re-runs.
   has an mtime later than 12:00 on 2026-09-29.
 
 Review 8 checks only those three things, then approves.
+
+## 24. Review 8 — ✅ APPROVED WITH NOTES (Opus, 2026-09-29) — 854 + 891 closed jointly
+
+The reviewer checked revision 5a (§23.4) after 12:07 on 2026-09-29, natively on `win32 v22.22.3`:
+- PID 17100 is gone.
+- The session log has the D891-3 quote, the "stopped at 12:04:20" route-proof row, the aborted-run Deviations bullet,
+  the measured AC41 order, the answered open question and the O891-1 acceptance. None of the false phrases remain.
+- `rev5/hash-list.txt` was written at 12:06:44, the last write in `rev5/`. Its 6 hashes equal the current
+  `git hash-object` of each path.
+- No file under `src/`, `.storybook/` or `messages/` changed after 12:00.
+
+Revision 5's code was accepted in §23.1. O891-1 was accepted by the owner (§23.3).
+
+**Notes (P3, non-blocking):**
+- **N1.** Revision 5's `check:locale-leak` was not re-measured, because owner D891-3 waived it. The last completed
+  run is revision 4's, with zero findings for `mantine-primitives-rangedatepicker`. The only rendered-text change was
+  the mobile header month. The reviewer measured it directly: `en` September, `sq` Shtator, `uk` Вересень.
+- **N2.** The revision 5 records needed two correction rounds (E1/E2, then §23.4). Both rounds are resolved.
+- **N3.** On `Default`, the out-of-month boundary filler keeps the boundary fill. This dates from Task 558. The owner
+  accepted it inside O891-1.
+
+The GR-1 census re-run gave `AgentStatisticsView` 24/24 tier1. `FiltersPanel` has 4 baselined nodes, which are filed
+as **840**.
+
+Both kickoffs moved to `tasks/Archive/`. The ledger rows are in `docs/backlog-archive.md`.

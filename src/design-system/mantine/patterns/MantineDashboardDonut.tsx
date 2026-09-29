@@ -32,6 +32,11 @@ export interface MantineDashboardDonutProps {
   retryLabel?: string
   onRetry?: () => void
   loadingAriaLabel?: string
+  /** Task 891 review 3 (R21, GR-0 EXTEND): when `true`, each legend entry reads
+   * `"<label> · <count>"` instead of the bare label — the ring's own `labels` (and its tooltip,
+   * which already shows the value on its own row) are unaffected. Defaults to `false`, byte-
+   * identical output (853/855 consumers unaffected). */
+  showCounts?: boolean
 }
 
 /** `listingStatusTone.ts`'s badge palette deliberately buckets several statuses onto the same
@@ -117,6 +122,7 @@ export function MantineDashboardDonut({
   retryLabel,
   onRetry,
   loadingAriaLabel,
+  showCounts = false,
 }: MantineDashboardDonutProps) {
   const theme = useMantineTheme()
   const mirrorRef = useApexTooltipMirror()
@@ -233,7 +239,12 @@ export function MantineDashboardDonut({
             X regardless of card width or locale, instead of the legend sitting wherever the ring's
             own width happened to leave it. Mobile (full width) is unchanged. */}
         <MantineDashboardChartLegend
-          items={segments.map((s) => ({ key: s.key, label: s.label, color: distinctColors.get(s.key)!, visible: !hiddenKeys.has(s.key) }))}
+          items={segments.map((s) => ({
+            key: s.key,
+            label: showCounts ? `${s.label} · ${formatCount(s.count)}` : s.label,
+            color: distinctColors.get(s.key)!,
+            visible: !hiddenKeys.has(s.key),
+          }))}
           onToggle={toggleSegment}
           layout="column"
           columnWidth={theme.other.boxSize.dashboardPeriodColumn}

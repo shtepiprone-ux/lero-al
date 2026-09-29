@@ -1,0 +1,49 @@
+PRE-PLANT HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+Tue Sep 29 11:05:22 CEDT 2026
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (36 tests | 1 failed) 10290ms
+     × opening does not focus the read-only summary field (review 5, F13 item 5) 122ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only custom-range flow, 'desktop ≥640' (Task 861) > opening does not focus the read-only summary field (review 5, F13 item 5)
+AssertionError: expected <input …(8)></input> not to be <input …(8)></input> // Object.is equality
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:489:42
+    487|       const summaryInput = baseElement.querySelector('input[readonly]')
+    488|       expect(summaryInput).toBeTruthy()
+    489|       expect(document.activeElement).not.toBe(summaryInput)
+       |                                          ^
+    490|     })
+    491|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 passed (36)
+   Start at  11:05:23
+   Duration  12.59s (transform 141ms, setup 79ms, import 1.39s, tests 10.29s, environment 702ms)
+
+EXIT_CODE=1
+RESTORED HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+MATCH: YES
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Start at  11:05:50
+   Duration  12.88s (transform 139ms, setup 77ms, import 1.35s, tests 10.64s, environment 695ms)
+
+EXIT_CODE=0

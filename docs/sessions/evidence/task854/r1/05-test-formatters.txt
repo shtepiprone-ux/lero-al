@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/lib/__tests__/formatters.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  53 passed (53)
+   Start at  14:39:28
+   Duration  1.14s (transform 85ms, setup 93ms, import 88ms, tests 26ms, environment 790ms)
+
+EXIT_CODE=0

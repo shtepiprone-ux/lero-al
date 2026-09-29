@@ -109,4 +109,29 @@ describe('RangeDatePicker — calendar-body localization (Task 562)', () => {
     expect(screen.getAllByText('lun').length).toBeGreaterThan(0)
     expect(screen.queryAllByText('Mon').length).toBe(0)
   })
+
+  // Task 891 review 5 (F13 item 7) — a day cell's own accessible name previously came from
+  // `date-fns`' English-only `format(day, 'd MMMM yyyy')`, so every non-`en` locale announced
+  // English month names to a screen reader even though the visible month header was already
+  // correctly localized. Planted-violation (verified once, reverted): reverting `dayAriaLabel` to
+  // `format(day, 'd MMMM yyyy')` makes this FAIL (every day cell's aria-label becomes English, e.g.
+  // "9 July 2026") — restored, hash before/after in
+  // `docs/sessions/evidence/task891/rev4/plant-arialabel.txt`.
+  it('sq: a day cell aria-label is Albanian, not English (review 5, F13 item 7)', () => {
+    const screen = renderOpen('sq')
+    const messages = loadMessages('sq')
+    const albanianMonths: string[] = messages.common.calendar_months
+    const dayButtons = screen.getAllByRole('button').filter((btn) => /^\d+ /.test(btn.getAttribute('aria-label') || ''))
+    expect(dayButtons.length).toBeGreaterThan(0)
+    const allAlbanian = dayButtons.every((btn) =>
+      albanianMonths.some((m) => (btn.getAttribute('aria-label') || '').includes(m)),
+    )
+    const anyEnglish = dayButtons.some((btn) =>
+      /January|February|March|April|May|June|July|August|September|October|November|December/.test(
+        btn.getAttribute('aria-label') || '',
+      ),
+    )
+    expect(allAlbanian).toBe(true)
+    expect(anyEnglish).toBe(false)
+  })
 })

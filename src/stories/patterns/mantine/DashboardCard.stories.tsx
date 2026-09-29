@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Text, Box } from '@mantine/core';
+import { SimpleGrid, Text, Box, Stack } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineDashboardCard } from '@/design-system/mantine/patterns/MantineDashboardCard';
+import { MantineDashboardGrid, MantineDashboardGridSplit } from '@/design-system/mantine/patterns/MantineDashboardGrid';
 import { theme } from '@/design-system/mantine/theme';
 
 const meta: Meta<typeof MantineDashboardCard> = {
@@ -75,6 +76,51 @@ export const Loading: Story = {
           loadingAriaLabel={storyT(l, 'dashboard.common.loading_label')}
         />
       </Box>
+    );
+  },
+};
+
+// Task 891 review 3 (R20, GR-3a EXTEND) — `fill`: two cards of different content height in the same
+// row end at the same bottom edge (AC25/AC28's own equal-height check against this Story).
+// Review 5 (F12): a bare fixed-column grid forced two columns at every width (320 gave narrow,
+// cramped cards) — GR-3b forbids a Story fixing a width. `MantineDashboardGridSplit` is the real
+// production parent (`main` 8-of-12, `side` 4-of-12, stacking below `lg`), so this renders through
+// it instead, removing that grid entirely.
+export const Fill: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <MantineDashboardGrid>
+        <MantineDashboardGridSplit
+          main={
+            <MantineDashboardCard
+              title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+              scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+              state="ready"
+              fill
+            >
+              <Stack gap="sm">
+                <Text size="sm" c="gray.7">{storyT(l, 'storybook.mantine.dashboard_card_body')}</Text>
+                <Text size="sm" c="gray.7">{storyT(l, 'storybook.mantine.dashboard_card_body')}</Text>
+                <Text size="sm" c="gray.7">{storyT(l, 'storybook.mantine.dashboard_card_body')}</Text>
+                <Text size="sm" c="gray.7">{storyT(l, 'storybook.mantine.dashboard_card_body')}</Text>
+              </Stack>
+            </MantineDashboardCard>
+          }
+          side={
+            <MantineDashboardCard
+              title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+              scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+              state="ready"
+              fill
+            >
+              <Text size="sm" c="gray.7">
+                {storyT(l, 'storybook.mantine.dashboard_card_body')}
+              </Text>
+            </MantineDashboardCard>
+          }
+        />
+      </MantineDashboardGrid>
     );
   },
 };

@@ -1,0 +1,643 @@
+{
+  "perStory": {
+    "patterns-mantine-agentstatisticsview--default": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--agt-01-all-zero": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--agt-10-empty": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--agt-10-filtered-empty": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": null,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--activity-stale": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--activity-error": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--no-activity": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ],
+    "patterns-mantine-agentstatisticsview--sorted-by-views": [
+      {
+        "width": 320,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 390,
+        "rootWidth": 390,
+        "viewportWidth": 390,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 20,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 768,
+        "rootWidth": 768,
+        "viewportWidth": 768,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1024,
+        "rootWidth": 1024,
+        "viewportWidth": 1024,
+        "tableScrollAreaOverflow": true,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      },
+      {
+        "width": 1440,
+        "rootWidth": 1440,
+        "viewportWidth": 1440,
+        "tableScrollAreaOverflow": false,
+        "bodyOverflow": false,
+        "pageTitleFontSize": 24,
+        "cardTitleFontSize": 20,
+        "tableCellFontSize": 14,
+        "openPortalCount": 1
+      }
+    ]
+  },
+  "ac2Default1440": {
+    "heroBackgroundColor": "rgba(0, 0, 0, 0)",
+    "heroBackgroundImage": "linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)",
+    "sparklineCount": 3,
+    "sparklineBarCounts": [
+      30,
+      30,
+      30
+    ]
+  },
+  "ac14TableWrap": {
+    "columnCount": 4,
+    "thWhiteSpace": [
+      "nowrap",
+      "nowrap",
+      "nowrap",
+      "normal"
+    ],
+    "tdWhiteSpace": [
+      "nowrap",
+      "nowrap",
+      "nowrap",
+      "normal"
+    ],
+    "wrappedColumnIndex": 3
+  },
+  "ac10": [
+    {
+      "width": 1440,
+      "locale": "en",
+      "scrollWidth": 1348,
+      "clientWidth": 1348,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "width": 768,
+      "locale": "en",
+      "scrollWidth": 1087,
+      "clientWidth": 676,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "width": 1024,
+      "locale": "en",
+      "scrollWidth": 1087,
+      "clientWidth": 932,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "width": 1280,
+      "locale": "en",
+      "scrollWidth": 1188,
+      "clientWidth": 1188,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "width": 1440,
+      "locale": "uk",
+      "scrollWidth": 1348,
+      "clientWidth": 1348,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2,
+        1,
+        2,
+        2
+      ]
+    }
+  ],
+  "relativeTimeBaseDate": {
+    "text": "15 days ago"
+  },
+  "ac16Default": {
+    "relativeTexts": [
+      "in 20 days",
+      "1 day ago",
+      "in 20 days",
+      "2 days ago",
+      "in 20 days",
+      "3 days ago",
+      "in 20 days",
+      "4 days ago",
+      "in 20 days",
+      "5 days ago",
+      "in 20 days",
+      "in 20 days",
+      "in 20 days",
+      "in 20 days",
+      "in 20 days"
+    ],
+    "topListingsBarCount": 95
+  },
+  "ac16NoActivity": {
+    "rowCellsSample": [
+      [
+        "Modern Apartment in Tirana Center",
+        "Active",
+        "Visible",
+        "10/08/2026 (in 20 days)",
+        "0",
+        "0",
+        "0",
+        "—",
+        "Edit"
+      ],
+      [
+        "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
+        "Active",
+        "Visible",
+        "10/08/2026 (in 20 days)",
+        "0",
+        "0",
+        "0",
+        "—",
+        "Edit"
+      ],
+      [
+        "Cozy Studio in Sauk District",
+        "Under review",
+        "Visible",
+        "10/08/2026 (in 20 days)",
+        "0",
+        "0",
+        "0",
+        "—",
+        "Edit"
+      ]
+    ]
+  }
+}

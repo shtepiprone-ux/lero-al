@@ -1,0 +1,39 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by process 15536, using available port 3001 instead.
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.20.252:3001
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ✓ Compiled instrumentation Node.js in 501ms
+ ✓ Compiled instrumentation Edge in 197ms
+ ✓ Compiled middleware in 172ms
+ ✓ Ready in 2.9s
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 4.8s
+ GET /en 200 in 6969ms
+ ✓ Compiled /api/exchange-rate in 429ms
+ GET /api/property-types?locale=en 200 in 663ms
+ GET /api/exchange-rate 200 in 823ms
+ ✓ Compiled /api/auth/me in 147ms
+ GET /en 200 in 431ms
+ GET /api/auth/me 200 in 595ms
+ ○ Compiling /[locale]/cabinet/statistics ...
+ ✓ Compiled /[locale]/cabinet/statistics in 1157ms
+ GET /en/cabinet/statistics 200 in 2599ms
+ GET /api/auth/me 200 in 474ms
+ GET /en 200 in 428ms
+ GET /api/exchange-rate 200 in 290ms
+ GET /api/property-types?locale=en 200 in 294ms
+ GET /api/auth/me 200 in 425ms
+ GET /en 200 in 368ms
+ GET /en/cabinet/statistics 200 in 748ms
+ GET /api/auth/me 200 in 473ms
+ GET /en/cabinet/statistics?status=apartment-mujs0c4u&page=apartment-mujs0c4u 200 in 718ms
+ GET /api/auth/me 200 in 451ms

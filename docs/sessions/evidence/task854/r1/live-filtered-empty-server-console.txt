@@ -1,0 +1,55 @@
+URL 1 (status=sold): http://localhost:3001/en/cabinet/statistics?status=sold -> status 200
+AGT-10 card content:
+Results by listing
+
+No listings match these filters
+  contains "No listings match these filters": true
+  contains "You have no listings yet": false
+  contains "Add listing" (CTA, scoped to card): false
+  filter/sort aria-labels present: ["Status","Visibility","Offer type","Sort by"]
+
+URL 2 (after choosing All statuses): http://localhost:3001/en/cabinet/statistics?period=30d&sort=created_desc
+AGT-10 card content after clearing filter:
+Results by listing
+
+Listing
+
+	
+
+Status
+
+	
+
+Visibility
+
+	
+
+Expires
+
+	
+
+Form inquiries
+
+	
+
+Actions
+
+
+
+Shitet hyrje ap. Lagj.12 Kat.3, Korce, Vile trekatëshe
+	
+Active
+	
+Visible
+	
+
+10/27/2026 (in 30 days)
+
+	
+
+0
+
+	
+Edit
+URL: http://localhost:3001/en/cabinet/statistics?period=custom&from=2026-08-01&to=2026-08-12 -> status 200
+AGT-05 label: Form inquiries · 08/01/2026 – 08/12/2026

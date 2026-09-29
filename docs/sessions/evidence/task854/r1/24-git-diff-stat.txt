@@ -1,0 +1,21 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+ messages/en.json                                   |  51 +++++++-
+ messages/it.json                                   |  51 +++++++-
+ messages/sq.json                                   |  51 +++++++-
+ messages/uk.json                                   |  51 +++++++-
+ scripts/mantine-migration-scope.json               |   3 +-
+ scripts/story-realmode-allowlist.json              |   3 +-
+ src/components/layout/MobileNavDrawer.tsx          |  18 ++-
+ src/components/layout/UserMenu.tsx                 |   9 +-
+ .../mantine/patterns/MantineDataTableToCards.tsx   | 130 ++++++++++++---------
+ src/design-system/mantine/theme.ts                 |   6 +-
+ src/lib/__tests__/formatters.test.ts               |  52 ++++++++-
+ src/lib/formatters.ts                              |  21 ++++
+ .../mantine/primitives/MobileNavDrawer.stories.tsx |  21 +++-
+ src/stories/mantine/primitives/Table.stories.tsx   |  19 +++
+ .../mantine/primitives/UserMenu.stories.tsx        |  14 +++
+ 15 files changed, 433 insertions(+), 67 deletions(-)
+EXIT_CODE=0

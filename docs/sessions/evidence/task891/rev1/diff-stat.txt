@@ -1,0 +1,28 @@
+warning: in the working copy of 'messages/en.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/it.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/sq.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'messages/uk.json', CRLF will be replaced by LF the next time Git touches it
+ messages/en.json                                   |  85 ++++++-
+ messages/it.json                                   |  85 ++++++-
+ messages/sq.json                                   |  85 ++++++-
+ messages/uk.json                                   |  85 ++++++-
+ scripts/mantine-migration-scope.json               |   3 +-
+ scripts/story-realmode-allowlist.json              |   3 +-
+ scripts/surface-census-baseline.json               |  21 --
+ src/components/layout/MobileNavDrawer.tsx          |  18 +-
+ src/components/layout/UserMenu.tsx                 |   9 +-
+ src/components/shared/RelativeTime.tsx             |  16 +-
+ .../mantine/patterns/MantineDataTableToCards.tsx   | 141 ++++++-----
+ src/design-system/mantine/theme.ts                 |   6 +-
+ src/lib/__tests__/formatters.test.ts               |  52 ++++-
+ src/lib/auth/__tests__/postSignOut.test.ts         |   3 +
+ src/lib/auth/postSignOut.ts                        |   1 +
+ src/lib/formatters.ts                              |  21 ++
+ .../cabinet/statistics/__tests__/data.test.ts      | 258 ++++++++++-----------
+ src/modules/cabinet/statistics/data.ts             | 232 +++++++-----------
+ src/modules/cabinet/statistics/types.ts            |  36 ++-
+ .../mantine/primitives/MobileNavDrawer.stories.tsx |  21 +-
+ .../mantine/primitives/RelativeTime.stories.tsx    |  30 +++
+ src/stories/mantine/primitives/Table.stories.tsx   |  26 +++
+ .../mantine/primitives/UserMenu.stories.tsx        |  14 ++
+ 23 files changed, 868 insertions(+), 383 deletions(-)

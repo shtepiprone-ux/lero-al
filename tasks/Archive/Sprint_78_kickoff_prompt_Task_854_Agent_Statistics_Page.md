@@ -1,16 +1,14 @@
 # Task 854 — `/{locale}/cabinet/statistics`: the agent dashboard (P0 blocks), reached from a "Statistics" item next to "Profile"
 
 Sprint 78 · P1 · QA profile **Q4** (new authenticated route with owner isolation) + Q3 visual matrix · Wave C ·
-depends on **843, 844, 845, 846, 848** approved · **Status: 🔁 NEEDS REVISION — review 2, 2026-09-27; D854-1 = A (owner, 2026-09-27). 854 is
-not executed on its own any more: it closes jointly with Task 891 (D78-9), which applies §17.4 as its R12. Do not
-re-run §10, §16 or §17.4 here.**
+depends on **843, 844, 845, 846, 848** approved · **Status: ✅ APPROVED WITH NOTES — closed jointly with Task 891 by 891 review 8 (2026-09-29; see 891 kickoff §24). Earlier: review 2 NEEDS REVISION, D854-1 = A (owner, 2026-09-27).**
 
 > **Revised 2026-09-25 (864's finding, applied before execution):** every `git grep` command in this file now
 > carries `--untracked`. Without it `git grep` reads only the index, so a "prints nothing" check over files this task
 > **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
 > searches tracked files, so no check lost coverage.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 - **D78-3** (owner, 2026-09-18): *"role=agent. Нова стоірнка, кнопка "Statistics" на цю сторінку знаходиться у меню
   користувача, біля кнопки "Профіль""*.
 - **D78-6**: *"/{locale}/cabinet/statistics"*.

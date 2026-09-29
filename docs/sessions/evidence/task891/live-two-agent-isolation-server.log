@@ -1,0 +1,76 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by process 15536, using available port 3001 instead.
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.20.252:3001
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ○ Compiling instrumentation Node.js ...
+ ✓ Compiled instrumentation Node.js in 940ms
+ ○ Compiling instrumentation Edge ...
+ ✓ Compiled instrumentation Edge in 592ms
+ ✓ Compiled middleware in 455ms
+ ✓ Ready in 10.5s
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 7.7s
+ GET /en 200 in 10703ms
+ ○ Compiling /[locale]/auth/login ...
+ ✓ Compiled /[locale]/auth/login in 1830ms
+ GET /en/auth/login 200 in 3063ms
+ GET /en/auth/login 200 in 460ms
+ ○ Compiling /[locale]/cabinet/statistics ...
+ ✓ Compiled /[locale]/cabinet/statistics in 1392ms
+ GET /en/cabinet/statistics 307 in 2547ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 511ms
+ GET /en/auth/login 200 in 513ms
+ GET /en/cabinet/statistics 307 in 357ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 486ms
+ GET /en/cabinet/statistics?status=unknown&sort=unknown 307 in 379ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 519ms
+ GET /en/cabinet/statistics?status=sold 307 in 381ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 445ms
+ GET /en/auth/login 200 in 568ms
+ GET /en/auth/login 200 in 529ms
+ GET /en/auth/login 200 in 532ms
+ GET /en/cabinet/statistics 307 in 332ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 403ms
+ GET /en/auth/login 200 in 886ms
+ GET /en/cabinet/statistics 307 in 381ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 457ms
+ GET /en/cabinet/statistics?status=unknown&sort=unknown 307 in 378ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 463ms
+ GET /en/cabinet/statistics?status=sold 307 in 388ms
+ GET /en/auth/login?next=%2Fen%2Fcabinet%2Fstatistics&session=lost 200 in 412ms
+ GET /en/auth/login 200 in 511ms
+ GET /en/auth/login 200 in 529ms
+ ○ Compiling /api/auth/me ...
+ ✓ Compiled /api/auth/me in 507ms
+ GET /en 200 in 603ms
+ GET /api/auth/me 200 in 1148ms
+ GET /en 200 in 686ms
+ ○ Compiling /[locale]/cabinet ...
+ ✓ Compiled /[locale]/cabinet in 2.1s
+ GET /en/cabinet 200 in 2807ms
+ GET /en/cabinet/statistics 200 in 1579ms
+ GET /api/auth/me 200 in 678ms
+ GET /en/auth/login 200 in 439ms
+ GET /api/auth/me 200 in 549ms
+ GET /en 200 in 506ms
+ GET /en 200 in 484ms
+ GET /en/cabinet 200 in 519ms
+ ✓ Compiled /api/exchange-rate in 341ms
+ POST /api/presence 200 in 923ms
+ POST /api/presence 200 in 1016ms
+ GET /api/exchange-rate 200 in 1386ms
+ GET /en/cabinet/statistics 200 in 1317ms
+ GET /api/auth/me 200 in 524ms
+ GET /en/cabinet/statistics?status=%2Fen%2Flistings%2Fapartment-mujs0c4u&sort=%2Fen%2Flistings%2Fapartment-mujs0c4u 200 in 1243ms
+ GET /api/auth/me 200 in 530ms
+ GET /en/cabinet/statistics?status=sold 200 in 1002ms
+ GET /api/auth/me 200 in 492ms

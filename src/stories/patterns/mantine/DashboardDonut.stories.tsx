@@ -156,6 +156,41 @@ export const Default: Story = {
   },
 };
 
+// Task 891 review 3 (R21, GR-3a EXTEND) — `showCounts`: each legend entry reads "<label> · <count>"
+// (the agent portfolio donut's own contract), the ring/tooltip stay unaffected.
+// Review 5 (F12): the pre-existing siblings' `maw={theme.other.boxSize.content}` is a max-width
+// container that happens to already exist on those exports; carrying it onto this NEW export fixed
+// a width, which GR-3b forbids for a Story. Fluid `Box p="md"` with no `maw`, matching this pattern's
+// production parent (the agent portfolio card, which has no width cap of its own).
+export const WithCounts: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <Box p="md">
+        <MantineDashboardCard title={storyT(l, 'storybook.mantine.dashboard_donut_card_title')} state="ready">
+          <MantineDashboardDonut
+            segments={buildSegments(l, 'month')}
+            formatCount={(n) => formatCount(n, l)}
+            state="ready"
+            ariaLabel={storyT(l, 'storybook.mantine.dashboard_donut_aria_label')}
+            showCounts
+          />
+        </MantineDashboardCard>
+      </Box>
+    );
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  // Every legend toggle's text contains the segment's own formatted count.
+  play: async ({ canvasElement }) => {
+    const legendToggles = canvasElement.querySelectorAll('button[aria-pressed]');
+    const counts = SEGMENT_COUNTS.month;
+    expect(legendToggles.length).toBe(counts.length);
+    legendToggles.forEach((toggle, i) => {
+      expect(toggle.textContent ?? '').toContain(String(counts[i]));
+    });
+  },
+};
+
 export const OneSegmentHidden: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';

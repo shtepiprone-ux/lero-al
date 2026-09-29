@@ -1,0 +1,6 @@
+GREP1_EXIT=1
+src/stories/patterns/mantine/DashboardCard.stories.tsx:71:      <Box p="md" maw={theme.other!.boxSize!.emptyState}>
+src/stories/patterns/mantine/DashboardCard.stories.tsx:85:// Review 5 (F12): a bare `SimpleGrid cols={2}` fixed two columns at every width (320 gave ~136px
+src/stories/patterns/mantine/DashboardCard.stories.tsx:131:      <Box p="md" maw={theme.other!.boxSize!.emptyState}>
+GREP2_EXIT=0
+GREP3_EXIT=1

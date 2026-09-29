@@ -57,6 +57,20 @@ export const Default: Story = {
               onLogout={() => {}}
             />
           </Stack>
+
+          {/* Task 854 (GR-3a EXTEND, R5/AC6): the agent state — "Statistics" right after "Profile". */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('user_menu_agent_caption')}
+            </Text>
+            <UserMenu
+              user={{ name: 'Blerim Hoxha', avatar_url: null, role: 'agent' }}
+              locale={locale}
+              onNavigate={() => {}}
+              onOpenAdmin={() => {}}
+              onLogout={() => {}}
+            />
+          </Stack>
         </Stack>
       </MantineStoryShell>
     )

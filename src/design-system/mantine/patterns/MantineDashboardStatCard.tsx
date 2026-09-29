@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { Box, Card, Flex, Group, Stack, Text, ThemeIcon, Skeleton, Button, useMantineTheme, getGradient } from '@mantine/core'
+import { Box, Card, Flex, Group, SimpleGrid, Stack, Text, ThemeIcon, Skeleton, Button, useMantineTheme, getGradient } from '@mantine/core'
 import { Check } from 'lucide-react'
 import { VARIANT_COLORS } from '@/design-system/mantine/notificationVariants'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
@@ -43,6 +43,11 @@ export interface MantineDashboardStatCardProps {
    * text in white. Applies to `ready`/`zero` only —
    * `loading`/`error` always keep the default chrome. Defaults to `'default'` (unchanged). */
   variant?: 'default' | 'accent'
+  /** Task 891 review 3 (R18, GR-0 EXTEND): the hero card's inventory sub-stats (Lahomes "My
+   * Balance"), rendered only for `variant="accent"`, as a 2-column grid under the value. With an
+   * `href`, the whole sub-stat is a `next/link` whose text is the label and value; without one, it
+   * is plain text. Omitted, the output is byte-identical (853/889 consumers unaffected). */
+  substats?: { key: string; label: ReactNode; value: ReactNode; href?: string }[]
 }
 
 /**
@@ -104,6 +109,7 @@ export function MantineDashboardStatCard({
   loadingAriaLabel,
   chart,
   variant = 'default',
+  substats,
 }: MantineDashboardStatCardProps) {
   const theme = useMantineTheme()
   const isAccent = variant === 'accent'
@@ -197,6 +203,29 @@ export function MantineDashboardStatCard({
         )
       )}
       {secondaryLine}
+      {isAccent && substats && substats.length > 0 && (
+        <SimpleGrid cols={2} spacing="xs" pt={theme.spacing.xs}>
+          {substats.map((s) => {
+            const content = (
+              <Stack gap={0}>
+                <Text size="xs" c="white">
+                  {s.label}
+                </Text>
+                <Text size="sm" fw={600} c="white">
+                  {s.value}
+                </Text>
+              </Stack>
+            )
+            return s.href ? (
+              <Box key={s.key} component={Link} href={s.href} td="none">
+                {content}
+              </Box>
+            ) : (
+              <Box key={s.key}>{content}</Box>
+            )
+          })}
+        </SimpleGrid>
+      )}
     </Stack>
   )
 

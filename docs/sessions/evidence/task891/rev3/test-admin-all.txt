@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/components/admin/__tests__
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  32 passed (32)
+   Start at  22:31:32
+   Duration  1.57s (transform 253ms, setup 197ms, import 327ms, tests 542ms, environment 1.65s)
+
+EXIT_CODE=0

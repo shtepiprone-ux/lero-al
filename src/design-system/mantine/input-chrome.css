@@ -69,6 +69,20 @@
   box-shadow: none;
 }
 
+/* Task 891 review 5 (F13 item 2) — `RangeDatePicker`'s trigger is a `TextInput` rendered as a real
+   `<button>` (Task 861), so it keeps `.mantine-TextInput-input`'s shared chrome, but a native
+   `<button>` computes its own line-height independent of the shared `--input-line-height` formula
+   the rule above relies on for vertical centring — measured live: the label's text-centre sat
+   5.5px below the leftSection icon's centre (`padding: 10px 16px 10px 34px` plus a 34px button
+   line-height). Flex centring is layout-only — no raw value — and holds regardless of the button
+   UA's own line-height, unlike pinning a literal line-height number. `[type="button"]` scopes this
+   to the one button-rendered trigger; every other `.mantine-TextInput-input` is a plain `<input>`
+   with a different `type` (or none), so it is unaffected. */
+.mantine-TextInput-input[type='button'] {
+  display: flex;
+  align-items: center;
+}
+
 /* Combobox in-dropdown search field (Task 537 / MantineCombobox, `variant="button"` + `searchable`) —
    Mantine's own default is a bottom-border-only divider row (border-width: 0 0 1px), not a standalone
    §6e input box. STOP-and-ASK #4 (Task 537 kickoff) resolved to reuse §6d/§6e input chrome VERBATIM

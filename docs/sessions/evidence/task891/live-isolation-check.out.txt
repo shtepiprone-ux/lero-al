@@ -1,0 +1,23 @@
+AGENT1: {
+  "url": "http://localhost:3001/en/cabinet/statistics",
+  "rows": 1,
+  "titles": [
+    "Shitet hyrje ap. Lagj.12 Kat.3, Korce, Vile trekatëshe"
+  ]
+}
+AGENT2: {
+  "url": "http://localhost:3001/en/cabinet/statistics",
+  "rows": 1,
+  "titles": [
+    "Apartment"
+  ]
+}
+AGENT2 slug href: /en/listings/apartment-mujs0c4u
+AGENT1 TAMPERED: {
+  "rows": 1,
+  "titles": [
+    "Shitet hyrje ap. Lagj.12 Kat.3, Korce, Vile trekatëshe"
+  ]
+}
+AGENT1 status=sold contains "No listings match these filters": true
+DONE

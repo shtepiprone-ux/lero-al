@@ -213,6 +213,10 @@ export interface TableColumn<R = TableRow> {
   width?: string | number
   /** Rich cell renderer — takes precedence over key-based value lookup when provided. */
   render?: (row: R) => ReactNode
+  /** Task 891 (D854-1 = A): `true` lets this column's cell content wrap (e.g. a two-line clamped
+   * title, or a date whose "(in N days)" detail drops to its own line) instead of the table's own
+   * default `nowrap`. Defaults to `false` — every existing consumer keeps `nowrap` unchanged. */
+  wrap?: boolean
 }
 
 export interface TableRow {
@@ -233,6 +237,13 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
   card?: CardConfig<R>
   /** Optional header slot rendered above the table inside the card (title + actions). */
   tableHeader?: ReactNode
+  /**
+   * The breakpoint below which cards render instead of the table. `'sm'` (default, 640px) is the
+   * original `useMediaQuery` path, byte-for-byte unchanged. `'md'` (768px, Task 854, spec §17.1)
+   * renders BOTH layouts and switches with Mantine's CSS `hiddenFrom`/`visibleFrom` — no
+   * `useMediaQuery`, so there is no first-paint flash on a public-site page.
+   */
+  cardsBelow?: 'sm' | 'md'
 }
 
 /**
@@ -248,10 +259,13 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
  *   Paper(radius 2xl, gray-2 border, overflow hidden) > ScrollArea > Table.
  *   verticalSpacing/horizontalSpacing from theme (sm=12px / xl=24px per §6b).
  *   Thead: bg-gray-50 + border-y gray-100. Th: 12px fw=500 gray-500, NOT uppercase.
- *   Td: 14px gray-700, whitespace-nowrap. Row dividers gray-100, hover gray-50.
+ *   Td: 14px gray-700, whitespace-nowrap by default — `TableColumn.wrap` (Task 891, D854-1 = A)
+ *   sets that one column's Th/Td to `whitespace: normal` instead. Row dividers gray-100, hover gray-50.
  *
- * Responsive API: useMediaQuery('(max-width: 40em)').
- * SSR caveat: returns false on first render; admin pages are auth-gated, no visible flash.
+ * Responsive API: `cardsBelow="sm"` (default) uses `useMediaQuery('(max-width: 40em)')` — SSR
+ * caveat: returns false on first render; admin pages are auth-gated, no visible flash.
+ * `cardsBelow="md"` (Task 854) renders both layouts and switches with `hiddenFrom`/`visibleFrom`
+ * (CSS media queries, no JS, no first-paint flash) — for public-site pages, spec §17.1.
  *
  * Spacing rule (§7.1): ALL spacing uses theme tokens. Raw px forbidden (touch-target rem exempt).
  * Card anatomy rule (§7.2): CardConfig is the ONLY canonical admin card design.
@@ -263,8 +277,10 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
   rowClassName,
   card,
   tableHeader,
+  cardsBelow = 'sm',
 }: MantineDataTableToCardsProps<R>) {
   const theme = useMantineTheme()
+  // Only consulted for the default 'sm' (useMediaQuery) path; the 'md' (CSS-switch) path ignores it.
   const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
 
   if (rows.length === 0) {
@@ -346,63 +362,61 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
     )
   }
 
-  if (isMobile) {
-    return (
-      <Stack gap="sm">
-        {rows.map((row) =>
-          card
-            ? renderDesignedCard(row)
-            : (
-              <Card
-                key={row.id}
-                withBorder
-                className={rowClassName?.(row)}
-              >
-                {columns.map((col, idx) => (
-                  <Group
-                    key={col.key}
-                    gap="sm"
-                    wrap="nowrap"
-                    align="center"
-                    py="xs"
-                    mih={theme.other.touchTarget}
-                    style={
-                      idx < columns.length - 1
-                        ? { borderBottom: '1px solid var(--mantine-color-gray-2)' }
-                        : undefined
-                    }
+  const cardsMarkup = (
+    <Stack gap="sm">
+      {rows.map((row) =>
+        card
+          ? renderDesignedCard(row)
+          : (
+            <Card
+              key={row.id}
+              withBorder
+              className={rowClassName?.(row)}
+            >
+              {columns.map((col, idx) => (
+                <Group
+                  key={col.key}
+                  gap="sm"
+                  wrap="nowrap"
+                  align="center"
+                  py="xs"
+                  mih={theme.other.touchTarget}
+                  style={
+                    idx < columns.length - 1
+                      ? { borderBottom: '1px solid var(--mantine-color-gray-2)' }
+                      : undefined
+                  }
+                >
+                  <Text size="xs" c="dimmed" fw={500} style={{ width: '38%', flexShrink: 0 }}>
+                    {col.label}
+                  </Text>
+                  <Box
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent:
+                        col.align === 'left'
+                          ? 'flex-start'
+                          : col.align === 'center'
+                            ? 'center'
+                            : 'flex-end',
+                    }}
                   >
-                    <Text size="xs" c="dimmed" fw={500} style={{ width: '38%', flexShrink: 0 }}>
-                      {col.label}
-                    </Text>
-                    <Box
-                      style={{
-                        flex: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent:
-                          col.align === 'left'
-                            ? 'flex-start'
-                            : col.align === 'center'
-                              ? 'center'
-                              : 'flex-end',
-                      }}
-                    >
-                      {renderCell(col, row)}
-                    </Box>
-                  </Group>
-                ))}
-              </Card>
-            )
-        )}
-      </Stack>
-    )
-  }
+                    {renderCell(col, row)}
+                  </Box>
+                </Group>
+              ))}
+            </Card>
+          )
+      )}
+    </Stack>
+  )
 
   // Desktop: TailAdmin CRM card-wrapped table (§6b).
   // Paper provides rounded-2xl card with gray-2 border; Table fills it edge-to-edge
   // so thead border-y spans the full card width. Cell padding (xl×sm = 24×12) provides visual inset.
-  return (
+  const tableMarkup = (
     <Paper
       withBorder
       style={{
@@ -435,7 +449,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
               {columns.map((col) => (
                 <Table.Th
                   key={col.key}
-                  style={{ width: col.width, textAlign: col.align ?? 'left' }}
+                  style={{ width: col.width, textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}) }}
                 >
                   <Text size="xs" fw={500} c="gray.5">
                     {col.label}
@@ -450,7 +464,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
                 {columns.map((col) => (
                   <Table.Td
                     key={col.key}
-                    style={{ textAlign: col.align ?? 'left' }}
+                    style={{ textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}) }}
                   >
                     {renderCell(col, row)}
                   </Table.Td>
@@ -462,4 +476,17 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
       </ScrollArea>
     </Paper>
   )
+
+  if (cardsBelow === 'md') {
+    // CSS-driven switch (no `useMediaQuery`, no first-paint flash): both trees render, and Mantine's
+    // `hiddenFrom`/`visibleFrom` toggle their `display` via a media query. Task 854, spec §17.1.
+    return (
+      <>
+        <Box hiddenFrom="md">{cardsMarkup}</Box>
+        <Box visibleFrom="md">{tableMarkup}</Box>
+      </>
+    )
+  }
+
+  return isMobile ? cardsMarkup : tableMarkup
 }

@@ -1,0 +1,56 @@
+PRE-PLANT HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+Tue Sep 29 11:06:24 CEDT 2026
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx (3 tests | 1 failed) 762ms
+     × sq: a day cell aria-label is Albanian, not English (review 5, F13 item 7) 208ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx > RangeDatePicker — calendar-body localization (Task 562) > sq: a day cell aria-label is Albanian, not English (review 5, F13 item 7)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx:134:25
+    132|       ),
+    133|     )
+    134|     expect(allAlbanian).toBe(true)
+       |                         ^
+    135|     expect(anyEnglish).toBe(false)
+    136|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  11:06:25
+   Duration  3.02s (transform 144ms, setup 79ms, import 1.37s, tests 762ms, environment 674ms)
+
+EXIT_CODE=1
+RESTORED HASH: d3a4f6cf00943e735c781fa3f4f29e1da34fc3ed
+MATCH: YES
+
+> lero-al@0.1.0 test
+> vitest run src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  11:06:42
+   Duration  3.21s (transform 135ms, setup 80ms, import 1.40s, tests 806ms, environment 689ms)
+
+EXIT_CODE=0

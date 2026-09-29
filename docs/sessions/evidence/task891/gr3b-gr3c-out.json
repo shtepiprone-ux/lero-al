@@ -1,0 +1,175 @@
+{
+  "agentStatsDefaultGr3b": [
+    {
+      "width": 320,
+      "rootWidth": 320,
+      "viewportWidth": 320,
+      "tableScrollAreaCount": 1,
+      "scrollAreaOverflow": false,
+      "bodyOverflow": false
+    },
+    {
+      "width": 390,
+      "rootWidth": 390,
+      "viewportWidth": 390,
+      "tableScrollAreaCount": 1,
+      "scrollAreaOverflow": false,
+      "bodyOverflow": false
+    },
+    {
+      "width": 1024,
+      "rootWidth": 1024,
+      "viewportWidth": 1024,
+      "tableScrollAreaCount": 1,
+      "scrollAreaOverflow": true,
+      "bodyOverflow": false
+    },
+    {
+      "width": 1440,
+      "rootWidth": 1440,
+      "viewportWidth": 1440,
+      "tableScrollAreaCount": 1,
+      "scrollAreaOverflow": false,
+      "bodyOverflow": false
+    }
+  ],
+  "agentStatsDefaultGr3c": [
+    {
+      "width": 320,
+      "pageTitle": 20,
+      "cardTitle": 20,
+      "tableCell": 14
+    },
+    {
+      "width": 390,
+      "pageTitle": 20,
+      "cardTitle": 20,
+      "tableCell": 14
+    },
+    {
+      "width": 768,
+      "pageTitle": 24,
+      "cardTitle": 20,
+      "tableCell": 14
+    },
+    {
+      "width": 1440,
+      "pageTitle": 24,
+      "cardTitle": 20,
+      "tableCell": 14
+    }
+  ],
+  "ac10": [
+    {
+      "width": 1440,
+      "locale": "en",
+      "scrollWidth": 1348,
+      "clientWidth": 1348,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "width": 768,
+      "locale": "en",
+      "scrollWidth": 984,
+      "clientWidth": 676,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "width": 1024,
+      "locale": "en",
+      "scrollWidth": 984,
+      "clientWidth": 932,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "width": 1280,
+      "locale": "en",
+      "scrollWidth": 1188,
+      "clientWidth": 1188,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        2,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "width": 1440,
+      "locale": "uk",
+      "scrollWidth": 1348,
+      "clientWidth": 1348,
+      "titleRowCount": 10,
+      "titleLineCounts": [
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        2,
+        1,
+        2,
+        2
+      ]
+    }
+  ],
+  "tableWrapCheck": {
+    "columnCount": 4,
+    "thWhiteSpace": [
+      "normal",
+      "normal",
+      "normal",
+      "normal"
+    ],
+    "tdWhiteSpace": [
+      "normal",
+      "normal",
+      "normal",
+      "normal"
+    ],
+    "wrappedColumnIndex": 3
+  }
+}

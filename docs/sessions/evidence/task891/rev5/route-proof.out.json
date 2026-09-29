@@ -1,0 +1,48 @@
+{
+  "w1440": {
+    "width": 1440,
+    "found": true,
+    "cellCount": 77,
+    "tokens": {
+      "gray3": "rgb(208, 213, 221)",
+      "gray7": "rgb(52, 64, 84)"
+    },
+    "blockedDayAfterToday": {
+      "found": true,
+      "date": "2026-09-30",
+      "color": "rgb(208, 213, 221)",
+      "opacity": "0.4",
+      "cursor": "not-allowed"
+    },
+    "availableDay": {
+      "found": true,
+      "date": "2026-08-01",
+      "color": "rgb(52, 64, 84)",
+      "opacity": "1",
+      "cursor": "pointer"
+    }
+  },
+  "w390": {
+    "width": 390,
+    "found": true,
+    "cellCount": 469,
+    "tokens": {
+      "gray3": "rgb(208, 213, 221)",
+      "gray7": "rgb(52, 64, 84)"
+    },
+    "blockedDayAfterToday": {
+      "found": true,
+      "date": "2026-09-30",
+      "color": "rgb(208, 213, 221)",
+      "opacity": "0.4",
+      "cursor": "not-allowed"
+    },
+    "availableDay": {
+      "found": true,
+      "date": "2025-09-01",
+      "color": "rgb(52, 64, 84)",
+      "opacity": "1",
+      "cursor": "pointer"
+    }
+  }
+}

@@ -24,6 +24,13 @@ export interface MantineDashboardCardProps {
   staleLabel?: string
   staleTime?: ReactNode
   loadingAriaLabel?: string
+  /** Task 891 review 3 (R20, GR-0 EXTEND): when `true`, the card fills its grid column's full
+   * height instead of its own content height — `Card` gets `h="100%"` and its body `Stack` gets
+   * `flex={1}` (`Card`'s own default CSS is already `display:flex; flex-direction:column`, so the
+   * Stack genuinely grows to fill the remaining space). Two cards of different content length in
+   * the same grid row then end at the same bottom edge. Defaults to `false`, byte-identical output
+   * — every existing consumer (853) is unaffected. */
+  fill?: boolean
   children?: ReactNode
 }
 
@@ -59,6 +66,7 @@ export function MantineDashboardCard({
   staleLabel,
   staleTime,
   loadingAriaLabel,
+  fill = false,
   children,
 }: MantineDashboardCardProps) {
   const theme = useMantineTheme()
@@ -80,8 +88,13 @@ export function MantineDashboardCard({
   )
 
   return (
-    <Card withBorder>
-      <Stack gap="md" aria-busy={state === 'loading' || undefined} aria-label={state === 'loading' ? loadingAriaLabel : undefined}>
+    <Card withBorder h={fill ? '100%' : undefined}>
+      <Stack
+        gap="md"
+        flex={fill ? 1 : undefined}
+        aria-busy={state === 'loading' || undefined}
+        aria-label={state === 'loading' ? loadingAriaLabel : undefined}
+      >
         {header}
 
         {state === 'stale' && staleLabel && (

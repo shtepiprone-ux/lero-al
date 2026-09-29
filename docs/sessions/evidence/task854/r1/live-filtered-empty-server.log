@@ -1,0 +1,45 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by process 15536, using available port 3001 instead.
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.20.252:3001
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ✓ Compiled instrumentation Node.js in 480ms
+ ✓ Compiled instrumentation Edge in 191ms
+ ✓ Compiled middleware in 172ms
+ ✓ Ready in 2.9s
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 4.6s
+ GET /en 200 in 6555ms
+ ✓ Compiled /api/exchange-rate in 435ms
+ GET /api/property-types?locale=en 200 in 637ms
+ GET /api/exchange-rate 200 in 816ms
+ ✓ Compiled /api/auth/me in 140ms
+ GET /api/auth/me 200 in 593ms
+ GET /en 200 in 448ms
+ ○ Compiling /[locale]/cabinet/statistics ...
+ ✓ Compiled /[locale]/cabinet/statistics in 1166ms
+ GET /en/cabinet/statistics?status=sold 200 in 2558ms
+ GET /api/auth/me 200 in 503ms
+ GET /en 200 in 457ms
+ GET /api/exchange-rate 200 in 299ms
+ GET /api/property-types?locale=en 200 in 303ms
+ GET /api/auth/me 200 in 427ms
+ GET /en 200 in 370ms
+ GET /en/cabinet/statistics?status=sold 200 in 645ms
+ GET /api/auth/me 200 in 463ms
+ GET /en/cabinet/statistics?period=30d&sort=created_desc 200 in 488ms
+ GET /en 200 in 445ms
+ GET /api/exchange-rate 200 in 283ms
+ GET /api/property-types?locale=en 200 in 291ms
+ GET /api/auth/me 200 in 413ms
+ GET /en 200 in 379ms
+ GET /en/cabinet/statistics?period=custom&from=2026-08-01&to=2026-08-12 200 in 818ms
+ GET /api/auth/me 200 in 464ms

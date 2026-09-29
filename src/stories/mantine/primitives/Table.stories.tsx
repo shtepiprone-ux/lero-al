@@ -159,3 +159,29 @@ export const Default: Story = {
     )
   },
 }
+
+// Task 854 (R6/AC7, GR-3a EXTEND): `cardsBelow="md"` — the CSS `hiddenFrom`/`visibleFrom` switch at
+// 768px, instead of the default `useMediaQuery` 640px path above. Both trees render; only one is
+// visible at a given viewport (checked at 700/800px — AC7).
+//
+// Task 891 (R12/AC10, GR-3a EXTEND — no new export or string): the existing `date` column gets
+// `wrap: true` here only (not in `Default`), proving `TableColumn.wrap`'s desktop `Table.Th`/
+// `Table.Td` render `white-space: normal` while every other column keeps `nowrap`.
+export const CardsBelowMd: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const args = makeArgs(l)
+    const columns = args.columns.map((col) => (col.key === 'date' ? { ...col, wrap: true } : col))
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...args}
+          columns={columns}
+          card={makeCardConfig(l)}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
+          cardsBelow="md"
+        />
+      </MantineStoryShell>
+    )
+  },
+}

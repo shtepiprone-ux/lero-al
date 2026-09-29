@@ -1,0 +1,980 @@
+{
+  "ac23": {
+    "1024": {
+      "cardCount": 3,
+      "cardInfo": [
+        {
+          "cardHeight": 321,
+          "sparklineTop": 275,
+          "valueBottom": 259,
+          "besideNotUnder": false,
+          "visibleTooltipDuplicate": false
+        },
+        {
+          "cardHeight": 321,
+          "sparklineTop": 275,
+          "valueBottom": 259,
+          "besideNotUnder": false,
+          "visibleTooltipDuplicate": false
+        },
+        {
+          "cardHeight": 321,
+          "sparklineTop": 305,
+          "valueBottom": 259,
+          "besideNotUnder": false,
+          "visibleTooltipDuplicate": false
+        }
+      ]
+    },
+    "1440": {
+      "cardCount": 3,
+      "cardInfo": [
+        {
+          "cardHeight": 210,
+          "sparklineTop": 193,
+          "valueBottom": 288,
+          "besideNotUnder": true,
+          "visibleTooltipDuplicate": false
+        },
+        {
+          "cardHeight": 210,
+          "sparklineTop": 193,
+          "valueBottom": 288,
+          "besideNotUnder": true,
+          "visibleTooltipDuplicate": false
+        },
+        {
+          "cardHeight": 210,
+          "sparklineTop": 194,
+          "valueBottom": 259,
+          "besideNotUnder": true,
+          "visibleTooltipDuplicate": false
+        }
+      ]
+    }
+  },
+  "ac24": {
+    "at1440": {
+      "heroFound": true,
+      "heroIsFirstChild": true,
+      "substatLinkCount": 4,
+      "hrefs": [
+        "/en/cabinet?tab=listings&filter=HIDDEN",
+        "/en/cabinet?tab=listings&filter=HIDDEN",
+        "/en/cabinet?tab=listings&filter=CLOSED",
+        "/en/cabinet?tab=listings&filter=CLOSED"
+      ],
+      "statRowsInPortfolioCard": 0,
+      "bodyOverflow": false
+    },
+    "accentWithSubstatsOverflow": {
+      "320": {
+        "bodyOverflow": false,
+        "anchorCount": 4
+      },
+      "1440": {
+        "bodyOverflow": false,
+        "anchorCount": 4
+      }
+    }
+  },
+  "ac25": {
+    "1024": {
+      "activityBottom": 1015,
+      "agt01Bottom": 1015,
+      "topListingsBottom": 1517,
+      "portfolioBottom": 1517,
+      "activityHasDescriptionParagraph": false,
+      "bodyOverflow": false
+    },
+    "1440": {
+      "activityBottom": 886,
+      "agt01Bottom": 886,
+      "topListingsBottom": 1388,
+      "portfolioBottom": 1388,
+      "activityHasDescriptionParagraph": false,
+      "bodyOverflow": false
+    },
+    "headerTooltip": {
+      "found": true,
+      "ariaLabel": "More information"
+    },
+    "headerTooltipContent": {
+      "text": "Views: a recorded view after de-duplication, not a unique visitor.WhatsApp clicks: a recorded attempt to follow the button; it does not confirm a message or reply.Form inquiries: a stored inquiry; it does not confirm email delivery or reading."
+    },
+    "belowLg": {
+      "320": {
+        "bodyOverflow": false
+      },
+      "390": {
+        "bodyOverflow": false
+      },
+      "768": {
+        "bodyOverflow": false
+      }
+    }
+  },
+  "ac26": {
+    "leftGap": 1,
+    "rightGap": 1,
+    "legendButtons": [
+      "Visible · 12",
+      "Needs action · 4",
+      "Not visible · 6"
+    ],
+    "heroValue": "12"
+  },
+  "ac28": {
+    "cardCount": 8,
+    "heights": [
+      355,
+      758,
+      310,
+      310,
+      310,
+      284,
+      284,
+      300
+    ]
+  },
+  "ac29": {
+    "perStory": {
+      "patterns-mantine-agentstatisticsview--default": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-01-all-zero": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-10-empty": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--agt-10-filtered-empty": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--activity-stale": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--activity-error": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--no-activity": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-agentstatisticsview--sorted-by-views": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 20,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": true,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": 24,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            30,
+            30,
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-dashboardstatcard--accent-with-substats": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "kpiValueFontSizes": [
+            20
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "kpiValueFontSizes": [
+            20
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "kpiValueFontSizes": [
+            30
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "kpiValueFontSizes": [
+            30
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": null,
+          "kpiValueFontSizes": [
+            30
+          ]
+        }
+      ],
+      "patterns-mantine-dashboardcard--fill": [
+        {
+          "width": 320,
+          "rootWidth": 320,
+          "viewportWidth": 320,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null
+          ]
+        },
+        {
+          "width": 390,
+          "rootWidth": 390,
+          "viewportWidth": 390,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null
+          ]
+        },
+        {
+          "width": 768,
+          "rootWidth": 768,
+          "viewportWidth": 768,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null
+          ]
+        },
+        {
+          "width": 1024,
+          "rootWidth": 1024,
+          "viewportWidth": 1024,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null
+          ]
+        },
+        {
+          "width": 1440,
+          "rootWidth": 1440,
+          "viewportWidth": 1440,
+          "anyScrollAreaOverflow": false,
+          "bodyOverflow": false,
+          "pageTitleFontSize": null,
+          "cardTitleFontSize": 20,
+          "kpiValueFontSizes": [
+            null,
+            null
+          ]
+        }
+      ]
+    }
+  },
+  "ac27": {
+    "default": {
+      "barVsRow": [
+        {
+          "title": "Modern Apartment in Tirana Center",
+          "barValue": 42,
+          "agt10Views": 42,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
+          "barValue": 30,
+          "agt10Views": 30,
+          "equal": true
+        },
+        {
+          "title": "Cozy Studio in Sauk District",
+          "barValue": 18,
+          "agt10Views": 18,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana",
+          "barValue": 9,
+          "agt10Views": 9,
+          "equal": true
+        },
+        {
+          "title": "Villa with Garden in Durrës",
+          "barValue": 4,
+          "agt10Views": 4,
+          "equal": true
+        }
+      ],
+      "kpiNumbers": [
+        103,
+        9,
+        3
+      ]
+    },
+    "activityStale": {
+      "barVsRow": [
+        {
+          "title": "Modern Apartment in Tirana Center",
+          "barValue": 42,
+          "agt10Views": 42,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
+          "barValue": 30,
+          "agt10Views": 30,
+          "equal": true
+        },
+        {
+          "title": "Cozy Studio in Sauk District",
+          "barValue": 18,
+          "agt10Views": 18,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana",
+          "barValue": 9,
+          "agt10Views": 9,
+          "equal": true
+        },
+        {
+          "title": "Villa with Garden in Durrës",
+          "barValue": 4,
+          "agt10Views": 4,
+          "equal": true
+        }
+      ],
+      "kpiNumbers": [
+        103,
+        9,
+        3
+      ]
+    },
+    "sortedByViews": {
+      "barVsRow": [
+        {
+          "title": "Modern Apartment in Tirana Center",
+          "barValue": 200,
+          "agt10Views": 200,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
+          "barValue": 190,
+          "agt10Views": 190,
+          "equal": true
+        },
+        {
+          "title": "Cozy Studio in Sauk District",
+          "barValue": 180,
+          "agt10Views": 180,
+          "equal": true
+        },
+        {
+          "title": "Modern Apartment in Tirana",
+          "barValue": 170,
+          "agt10Views": 170,
+          "equal": true
+        },
+        {
+          "title": "Villa with Garden in Durrës",
+          "barValue": 160,
+          "agt10Views": 160,
+          "equal": true
+        }
+      ],
+      "kpiNumbers": [
+        1550,
+        55,
+        9
+      ]
+    },
+    "expectedTotals": {
+      "default": {
+        "views": 103,
+        "whatsapp": 9,
+        "forms": 3
+      },
+      "sortedByViews": {
+        "views": 1550,
+        "whatsapp": 55,
+        "forms": 9
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Button, Avatar, Text, useMantineTheme } from '@mantine/core'
-import { ChevronDown, User, ListPlus, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
+import { ChevronDown, User, ListPlus, LogOut, LayoutList, LayoutDashboard, ChartColumn } from 'lucide-react'
 import { MantineDropdownMenu, type DropdownMenuItemDef } from '@/design-system/mantine/patterns'
 
 export interface UserMenuProps {
@@ -21,6 +21,13 @@ export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout, isSi
 
   const items: DropdownMenuItemDef[] = [
     { label: t('profile'), icon: <User size={theme.other.iconSize.standard} />, onClick: () => onNavigate(`/${locale}/cabinet`) },
+    ...(user.role === 'agent'
+      ? [{
+          label: t('statistics'),
+          icon: <ChartColumn size={theme.other.iconSize.standard} />,
+          onClick: () => onNavigate(`/${locale}/cabinet/statistics`),
+        }]
+      : []),
     { label: t('my_listings'), icon: <LayoutList size={theme.other.iconSize.standard} />, onClick: () => onNavigate(`/${locale}/cabinet?tab=listings`) },
     { label: t('add_listing'), icon: <ListPlus size={theme.other.iconSize.standard} />, onClick: () => onNavigate(`/${locale}/listings/create`), separator: true },
     ...(user.role === 'admin' || user.role === 'moderator'

@@ -135,6 +135,27 @@ export function formatDate(dateStr: string | null | undefined, locale: string): 
 }
 
 /**
+ * Formats a plain `'YYYY-MM-DD'` calendar date — no time component, e.g. `Period.from`/`.to` from
+ * `src/lib/dashboard/period.ts` — using the same locale-ordered composition as `formatDate`
+ * (Task 854 revision 1, N3). Never parses the string through `new Date('YYYY-MM-DD')`: that
+ * constructor reads the string as UTC midnight, and a LOCAL getter such as `Date#getDate()` then
+ * reads the day back as the previous date in every negative-UTC-offset timezone. This function
+ * only ever splits the string and composes the parts directly, so no timezone can shift the day.
+ * Validates the date is real (rejects e.g. `'2026-02-30'`). Returns '—' on any malformed input.
+ */
+export function formatDateOnly(dateStr: string, locale: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr)
+  if (!match) return '—'
+  const year = Number(match[1])
+  const month = Number(match[2])
+  const day = Number(match[3])
+  const asUtcMs = Date.UTC(year, month - 1, day)
+  const check = new Date(asUtcMs)
+  if (check.getUTCFullYear() !== year || check.getUTCMonth() !== month - 1 || check.getUTCDate() !== day) return '—'
+  return composeDateParts(day, month, year, locale)
+}
+
+/**
  * Formats an ISO datetime string as a locale-aware absolute date+time (day/month/year hour:minute).
  * Uses an explicit fixed timezone (UTC) so the Node.js server and the browser always produce
  * byte-identical text, preventing SSR/CSR hydration mismatches caused by Intl locale or timezone

@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/cabinet/statistics/__tests__/data.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  29 passed (29)
+   Start at  19:02:35
+   Duration  1.04s (transform 123ms, setup 80ms, import 147ms, tests 23ms, environment 664ms)
+
+EXIT_CODE=0

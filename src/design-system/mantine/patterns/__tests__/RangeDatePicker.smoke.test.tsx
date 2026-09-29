@@ -47,7 +47,7 @@ import { format, subMonths } from 'date-fns'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { theme } from '@/design-system/mantine/theme'
-import { RangeDatePicker } from '../RangeDatePicker'
+import { RangeDatePicker, pickVisibleMonthIdx } from '../RangeDatePicker'
 import type { DateRange } from '../RangeDatePicker'
 
 const messages = JSON.parse(readFileSync(join(process.cwd(), 'messages', 'en.json'), 'utf-8'))
@@ -68,6 +68,18 @@ const DAY_10 = format(new Date(today.getFullYear(), today.getMonth(), 10), 'yyyy
 const DAY_15 = format(new Date(today.getFullYear(), today.getMonth(), 15), 'yyyy-MM-dd')
 const DAY_20 = format(new Date(today.getFullYear(), today.getMonth(), 20), 'yyyy-MM-dd')
 const PAST_MONTH_DAY = format(subMonths(new Date(today.getFullYear(), today.getMonth(), 10), 1), 'yyyy-MM-dd')
+
+function capitalizeFirst(s: string): string {
+  return s.length ? s[0].toUpperCase() + s.slice(1) : s
+}
+
+// Same data source `formatMonthYearLabel` reads (`common.calendar_months`/`calendar_month_year_suffix`)
+// — read directly from `en.json`, not re-derived from the component, so this proves the RENDERED
+// text, not just that the component echoes its own input (same discipline as
+// `RangeDatePickerLocalization.test.tsx`'s `expectedRightMonthLabel`).
+function monthYearLabel(d: Date): string {
+  return `${capitalizeFirst(messages.common.calendar_months[d.getMonth()])} ${d.getFullYear()}${messages.common.calendar_month_year_suffix}`
+}
 
 function withProviders(children: React.ReactNode) {
   // env="test" — see MantinePopover.smoke.test.tsx: makes the Popover/Drawer Transition render
@@ -442,6 +454,40 @@ describe.each([
       await waitFor(() => expect(surface(baseElement)).toBeNull())
       await waitFor(() => expect(document.activeElement).toBe(trigger))
     })
+
+    // Task 891 review 5 (F13 item 4) — with no staged value AND a `maxDate`, the desktop pair's
+    // right-hand month must be `maxDate`'s own month, not `new Date()`'s (the pre-fix defect: the
+    // dashboard's period ends yesterday, yet the pair shown was unrelated to it, and the right
+    // month could be entirely disabled). Planted-violation (verified once, reverted): reverting
+    // `RangeCalendarBody`'s anchor to `startOfMonth(initialFrom ?? new Date())` (the pre-891 rev4
+    // line) makes this FAIL whenever the real run month differs from `maxDate`'s month — restored,
+    // hash before/after in `docs/sessions/evidence/task891/rev4/plant-anchor.txt`.
+    it("with no staged value and a maxDate, the right-hand month is maxDate's month (review 5, F13 item 4)", () => {
+      const maxDate = new Date(today.getFullYear(), today.getMonth() + 3, 17)
+      const onChange = vi.fn<(next: DateRange) => void>()
+      const { baseElement, container } = render(
+        withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} maxDate={maxDate} />),
+      )
+      const trigger = getTrigger(container)
+      trigger.focus()
+      pressKey(trigger, 'Enter')
+      expect(within(baseElement as HTMLElement).getByText(monthYearLabel(maxDate))).toBeTruthy()
+    })
+
+    // Task 891 review 5 (F13 item 5) — opening previously auto-focused the read-only summary field
+    // (the first tabbable descendant inside the trapped popover). Planted-violation (verified once,
+    // reverted): removing `<FocusTrap.InitialFocus />` from `DesktopBody`'s header makes this FAIL
+    // (`useFocusTrap` falls back to the first tabbable descendant, the summary `<input readonly>`)
+    // — restored, hash before/after in `docs/sessions/evidence/task891/rev4/plant-focus.txt`.
+    it('opening does not focus the read-only summary field (review 5, F13 item 5)', async () => {
+      const { baseElement, trigger } = rendered()
+      trigger.focus()
+      pressKey(trigger, 'Enter')
+      await waitFor(() => expect(insideSurface(baseElement)).toBe(true))
+      const summaryInput = baseElement.querySelector('input[readonly]')
+      expect(summaryInput).toBeTruthy()
+      expect(document.activeElement).not.toBe(summaryInput)
+    })
   }
 
   it('clear-X is a sibling of the trigger (no button-in-button) and commits {undefined,undefined} without opening (AC5)', () => {
@@ -458,5 +504,36 @@ describe.each([
     })
     expect(onChange).toHaveBeenCalledWith({ from: undefined, to: undefined })
     expect(surface(baseElement)).toBeNull()
+  })
+})
+
+// Task 891 review 6 (F17) — the mobile fixed header's month must reflect the section actually
+// scrolled into view. The closest-offset rule alone (last section whose top is at or above
+// `scrollTop + 4`) left the header pinned one month behind whenever the trailing section (e.g.
+// `maxDate`'s month) is shorter than the viewport, because the scroll clamps before that section's
+// own top crosses the threshold. `pickVisibleMonthIdx` is exercised directly (pure function, no
+// render needed) with a trailing section shorter than the viewport, so the "at the end" case only
+// passes when the end-of-list override fires.
+describe('pickVisibleMonthIdx (Task 891 review 6, F17)', () => {
+  // 4 sections at offsets 0/300/700/900, document height 1000 — the last section is only 100px
+  // tall, well under the 300px viewport, so its own top never reaches "scrolled past" at the
+  // maximum scroll position (700 = scrollHeight - clientHeight).
+  const sectionTops = [0, 300, 700, 900]
+  const clientHeight = 300
+  const scrollHeight = 1000
+
+  it('at the top: scrollTop 0 resolves to the first section', () => {
+    expect(pickVisibleMonthIdx(sectionTops, 0, clientHeight, scrollHeight)).toBe(0)
+  })
+
+  it('mid-list: scrollTop 300 resolves via the closest-offset rule', () => {
+    expect(pickVisibleMonthIdx(sectionTops, 300, clientHeight, scrollHeight)).toBe(1)
+  })
+
+  it('at the end: scrollTop at the scroll max resolves to the LAST section, not the closest-offset one', () => {
+    const maxScrollTop = scrollHeight - clientHeight // 700
+    // The closest-offset rule alone would answer index 2 here (700 <= 700+4, 900 > 700+4) —
+    // this is the exact review 6 defect (the header read "August" while "September" was on screen).
+    expect(pickVisibleMonthIdx(sectionTops, maxScrollTop, clientHeight, scrollHeight)).toBe(3)
   })
 })

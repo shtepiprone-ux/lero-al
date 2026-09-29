@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 3 (2026-09-29): the owner returned two O78-6 tuples and added GR-3d; the executor re-enters at §18.3, which includes §17.3's step**
+owner action **O78-6** · **Status: 🔁 NEEDS REVISION — review 4 (2026-09-29): the Story gutter profile does not match GR-3d; the executor re-enters at §19.2**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -618,7 +618,7 @@ because the tree is no longer the pre-task state. Execute, in order:
 - **24b is replaced for the in-scope Stories.** The full `check:locale-leak:mantine-only` (296 Stories) did not finish
   in 76 minutes. That run is 836's problem, not 877's. Review 2 ran the same detector over only the 27 Stories 877
   created or extended:
-  - generator: `r2-review/make-leak877-scoped.cjs`;
+  - generator: `r2-review/make-leak877-scoped.mjs`;
   - transcript: `r2-review/leak877-run.txt`;
   - report: `r2-review/leak877-report.json`.
 
@@ -660,7 +660,7 @@ use the Edit tool: the tokens contain `…` and `—`, so a PowerShell read/writ
    New-Item -ItemType Directory -Force $ev | Out-Null
    node.exe -p "process.platform + ' ' + process.version" *>&1 | Tee-Object "$ev\10-platform.txt"
    git --no-optional-locks hash-object scripts/check-locale-leak.mjs *>&1 | Tee-Object "$ev\00-pre-hash.txt"
-   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.cjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
+   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.mjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
    node.exe .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-locale-leak-877-scoped.txt"
    npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
    npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
@@ -766,7 +766,7 @@ Put the new evidence in `docs/sessions/evidence/task877/r3/`.
    node.exe scripts\check-surface-census-changed.mjs --base $base *>&1 | Tee-Object "$ev\19-census-changed.txt"
    npm.cmd run check:stories *>&1 | Tee-Object "$ev\22-check-stories.txt"
    npm.cmd run build-storybook *>&1 | Tee-Object "$ev\24-build-storybook.txt"
-   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.cjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
+   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.mjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
    node.exe .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-locale-leak-877-scoped.txt"
    npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
    npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
@@ -803,3 +803,57 @@ Use the toolbar locales `en` and `uk`.
 | `Mantine/Primitives/Table` `Default` · `Patterns/Mantine/AdminExchangeProvidersView` `Default` | — | 1024 | blast radius of step 3 |
 
 Every other O78-6 tuple stays accepted. Approval needs O78-6b accepted and §18.3 done.
+
+## 19. Review 4 — NEEDS REVISION (2026-09-29), revision 4
+
+### 19.1 What review 4 found
+
+The implementation hashes match `r3/28-hash-object.txt`. Four items are done:
+- the `PER_STORY_TOKENS` entries (`scripts/check-locale-leak.mjs:189-192`), with `24c` reporting `ZERO leaks across 27
+  stories`;
+- the detail dialog's single `SimpleGrid cols={2}` (`CurrencyDetailDialogView.tsx:90-97`);
+- `miw="max-content"` on the desktop table (`MantineDataTableToCards.tsx:509`);
+- tests, typecheck, check:stories, build-storybook and `npm run build`, all at exit 0.
+
+**P1 — the gutter profile follows the superseded draft of §18.3 step 4, not the amended rule (`docs/golden-rules.md`
+GR-3d).**
+- `src/stories/_StoryPageGutter.tsx` has a `surface: 'admin'` prop, a `void surface` line, and
+  `p={{ base: 'xl', lg: '2xl' }}`. That is 24/24/32/32 px, not the rule's 16/16/32/32.
+- The seven call sites pass `surface="admin"`.
+- `DashboardHeader.stories.tsx` still writes `Stack p="md"` in all four exports (`:41`, `:67`, `:89`, `:105`).
+
+The owner replaced the per-surface gutter with **one profile for all Stories**, and amended §18.3 step 4 before this
+run. That step is the binding text.
+
+**Closed by the reviewer:** `14-lint` exit 1. The one error was the reviewer's own generator
+`r2-review/make-leak877-scoped.cjs` (`require()`). It is now `r2-review/make-leak877-scoped.mjs`, in ESM form, and it
+lints clean. The `.cjs` file is deleted, and §17.3 and §18.3 now name the `.mjs` file.
+
+### 19.2 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. Keep all code and evidence. Put the new evidence in `docs/sessions/evidence/task877/r4/`.
+
+1. Make `src/stories/_StoryPageGutter.tsx` exactly as §18.3 step 4 says:
+   - `StoryPageGutter({ children })`, with **no other prop**;
+   - it renders `<Box px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl">{children}</Box>`;
+   - the comment cites GR-3d and its source, the `.container-wide` ladder (`src/app/globals.css:714-724`) with the
+     canvas `py-6` (`.storybook/preview.tsx` `withCanvas`);
+   - no `surface` wording and no mention of 898.
+2. Remove `surface="admin"` from every call site: `AdminTable.stories.tsx` (4), `AdminPageHeader.stories.tsx`,
+   `AdminCurrencyTabs.stories.tsx` and `AdminCurrenciesView.stories.tsx`.
+3. `DashboardHeader.stories.tsx`, all 4 exports: `Stack p="md"` becomes `<StoryPageGutter><Stack …>`, and the `Stack`
+   keeps its other props but not `p`.
+4. Run the §18.3 step 5 block into `r4/`, with `$ev` set to `docs\sessions\evidence\task877\r4`. Expected: every
+   command exits 0, **including `14-lint`**.
+5. Measure on the new `storybook-static`, and save the result as `r4/30-measurements.json`:
+   - **GR-3d:** the edge gap of the first page-content box at 320/390/1024/1440 is **16/16/32/32** for the Stories of
+     `AdminTable`, `AdminPageHeader`, `AdminCurrenciesView`, `AdminCurrencyTabs` and `DashboardHeader`;
+   - **GR-3b/GR-3c:** the same Stories at 320/390/768/1024/1440;
+   - one `GR-3d STORY GUTTER CHECK` receipt per Story.
+6. Record the hash-object of every created or changed file in `r4/28-hash-object.txt`. Add a "Revision 4" section to
+   the session log. Set the 877 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 19.3 Owner
+
+O78-6b (§18.4) runs after this re-entry. Its gutter row now includes `DashboardHeader`, and the gutter it checks is
+16px on a phone, 24px from 640px and 32px from 1024px.
